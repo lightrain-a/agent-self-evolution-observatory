@@ -1,263 +1,4486 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "artifact_type": "provider-price-comparison-snapshot",
-  "snapshot_date": "2026-09-03",
-  "currency": "CNY",
-  "unit": "RMB per 1M tokens unless noted",
-  "sources": {
-    "ark": "https://www.volcengine.com/docs/82379/2366394?lang=zh",
-    "dianming": "https://www.aa.com.cn/pricing",
-    "chatanywhere_pricing": "https://chatanywhere.tech/pricing",
-    "chatanywhere_docs": "https://docs.chatanywhere.tech/doc-2694962",
-    "junliai": "https://openapi.junliai.org/model-plaza",
-    "junliai_public_settings": "https://openapi.junliai.org/api/v1/settings/public",
-    "junliai_public_snapshot": "https://mozhenzhen.com/providers/junliai-org-673"
+  "checked_at": "2026-09-03",
+  "scope": "all publicly listed text/reasoning/code model IDs from the compared provider pricing surfaces; image/video/audio-only products excluded from the token matrix",
+  "unit": "CNY per 1M tokens",
+  "row_count": 160,
+  "family_counts": {
+    "OpenAI / GPT": 70,
+    "Claude": 12,
+    "Gemini": 11,
+    "DeepSeek": 6,
+    "Qwen": 32,
+    "Kimi": 5,
+    "GLM": 6,
+    "MiniMax": 6,
+    "Doubao": 3,
+    "Hunyuan": 3,
+    "ERNIE": 2,
+    "Grok": 4
   },
-  "caveats": [
-    "ChatAnywhere official docs state CA coin is denominated in yuan, so 0.0012 CA/1K = ¥1.2/1M; no USD conversion is applied.",
-    "Junliai public settings report model_plaza_require_auth=true. No authenticated Junliai account is available in this workspace, so only exact-model prices visible in an independent public snapshot are shown; missing cells are not inferred from aliases.",
-    "Ark Agent Plan is AFP subscription accounting, not raw input/output token billing. Its cells are labeled full-use AFP-equivalent RMB per 1M tokens and should not be read as an input or output tariff.",
-    "Tiered providers use the lowest/default context band stated in the row; higher-context and peak-time bands are noted separately where material.",
-    "Exact model-name matching is required; similar versions are not merged into one row."
+  "sources": {
+    "chatanywhere": "https://docs.chatanywhere.tech/doc-2694962",
+    "dianming": "https://www.aa.com.cn/pricing",
+    "junliai_public_projection": "https://mozhenzhen.com/providers/junliai-org-673",
+    "junliai_service": "https://openapi.junliai.org",
+    "ark_agent_plan": "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+  },
+  "conversion": {
+    "chatanywhere": "CA coin is RMB; published /1K-token prices multiplied by 1000",
+    "dianming": "published RMB /1000-token prices multiplied by 1000",
+    "junliai": "public model-summary values are already CNY per 1M tokens; group/route prices may vary",
+    "ark": "AFP subscription full-use equivalent; no fabricated input/output tariff"
+  },
+  "excluded_from_matrix": [
+    "gemini-2.5-flash-image-preview",
+    "gemini-3-pro-image-preview",
+    "gemini-3.1-flash-image-preview"
   ],
   "rows": [
     {
-      "model": "DeepSeek V4 Flash",
-      "ark": {
-        "rmb_per_million_afp_equivalent": 0.1,
-        "basis": "Agent Plan full-use equivalent; no input/output split"
-      },
-      "dianming": {
-        "input_rmb_per_million": 1.5,
-        "output_rmb_per_million": 4.5,
-        "basis": "off-peak; peak 3/9"
-      },
+      "model": "o4-mini-2025-04-16",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 1.2,
-        "output_rmb_per_million": 3.6,
-        "basis": "CA币=元; 0.0012/0.0036 per 1K"
+        "input": 8.8,
+        "output": 35.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "o4-mini-2025-04-16",
+          "0.0088 / 1K Tokens",
+          "0.0352 / 1K Tokens",
+          "支持",
+          "为数学、科学、编码、视觉推理任务和技术写作设定了新的标准。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "o4-mini",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.8,
+        "output": 35.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "o4-mini",
+          "0.0088 / 1K Tokens",
+          "0.0352 / 1K Tokens",
+          "支持",
+          "为数学、科学、编码、视觉推理任务和技术写作设定了新的标准。 指向o4-mini-2025-04-16"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "o3-mini",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.8,
+        "output": 35.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "o3-mini [5]",
+          "0.0088 / 1K Tokens",
+          "0.0352 / 1K Tokens",
+          "支持",
+          "针对复杂任务的推理模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "o3-2025-04-16",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 14.0,
+        "output": 56.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "o3-2025-04-16",
+          "0.014 / 1K Tokens",
+          "0.056 / 1K Tokens",
+          "支持",
+          "为数学、科学、编码、视觉推理任务和技术写作设定了新的标准。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "o3",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 14.0,
+        "output": 56.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "o3",
+          "0.014 / 1K Tokens",
+          "0.056 / 1K Tokens",
+          "支持",
+          "为数学、科学、编码、视觉推理任务和技术写作设定了新的标准。 指向o3-2025-04-16"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-oss-20b",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.8,
+        "output": 3.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-oss-20b",
+          "0.0008 / 1K Tokens",
+          "0.0032 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的开源模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-oss-120b",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 4.4,
+        "output": 17.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-oss-120b",
+          "0.0044 / 1K Tokens",
+          "0.0176 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的开源模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.6-terra-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.0,
+        "output": 48.0,
+        "note_zh": "阶梯计价 · 展示首档 · CA route",
+        "note_en": "tiered · first tier shown · CA route",
+        "raw": [
+          "gpt-5.6-terra-ca",
+          "0.008 / 1K Tokens [7阶梯计价]",
+          "0.048 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.6-terra",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 14.0,
+        "output": 84.0,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "gpt-5.6-terra",
+          "0.014 / 1K Tokens [7阶梯计价]",
+          "0.084 / 1K Tokens",
+          "支持",
+          "GPT-5.6 Terra 专为兼顾智能和成本的工作负载而设计。它大致相当于早期 GPT-5 系列中使用的mini模型级别。"
+        ]
       },
       "junliai": {
-        "input_rmb_per_million": 0.7,
-        "output_rmb_per_million": 1.4,
-        "basis": "public third-party snapshot of provider-data:group_40; direct plaza requires login"
+        "listed": true,
+        "input": 0.3,
+        "output": 1.8,
+        "display_name": "GPT-5.6 Terra",
+        "link_count": 4,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.3,
+          "output_amount": 1.8,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.03,
+          "cache_write_amount": 0.375,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 2.5,
+          "official_price_source": "OpenAI",
+          "official_output_amount": 15,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.25,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180471,
+            343180472,
+            343180473,
+            343180474,
+            343180475,
+            343180476,
+            343180477,
+            343180478,
+            343180479,
+            343180480,
+            343180481,
+            343180482,
+            343180483,
+            343180484
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct",
+            "sub2api_direct_token_cash_cny_interval_0",
+            "sub2api_direct_token_cash_cny_interval_1"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
       }
     },
     {
-      "model": "DeepSeek V4 Pro",
-      "ark": {
-        "rmb_per_million_afp_equivalent": 1.1,
-        "basis": "Agent Plan full-use equivalent; no input/output split"
-      },
-      "dianming": {
-        "input_rmb_per_million": 4.5,
-        "output_rmb_per_million": 13.5,
-        "basis": "off-peak; peak 9/27"
-      },
+      "model": "gpt-5.6-sol-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 4.5,
-        "output_rmb_per_million": 13.5,
-        "basis": "CA币=元; 0.0045/0.0135 per 1K"
+        "input": 16.0,
+        "output": 80.0,
+        "note_zh": "阶梯计价 · 展示首档 · CA route",
+        "note_en": "tiered · first tier shown · CA route",
+        "raw": [
+          "gpt-5.6-sol-ca",
+          "0.016 / 1K Tokens [7阶梯计价]",
+          "0.08 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
       },
       "junliai": null
     },
     {
-      "model": "qwen3.5-397b-a17b",
-      "ark": null,
-      "dianming": {
-        "input_rmb_per_million": 1.204,
-        "output_rmb_per_million": 7.224,
-        "basis": "<=128K"
-      },
+      "model": "gpt-5.6-sol",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 0.84,
-        "output_rmb_per_million": 5.04,
-        "basis": "<=128K; CA币=元"
+        "input": 28.0,
+        "output": 140.0,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "gpt-5.6-sol",
+          "0.028 / 1K Tokens [7阶梯计价]",
+          "0.14 / 1K Tokens",
+          "支持",
+          "GPT-5.6 Sol 是 GPT-5.6 系列中的前沿模型。它大致对应于早期 GPT-5 系列中使用的无后缀模型层级"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.75,
+        "output": 4.5,
+        "display_name": "GPT-5.6 Sol",
+        "link_count": 4,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.75,
+          "output_amount": 4.5,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.075,
+          "cache_write_amount": 0.9375,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 5,
+          "official_price_source": "OpenAI",
+          "official_output_amount": 30,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.5,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180367,
+            343180368,
+            343180369,
+            343180370,
+            343180371,
+            343180372,
+            343180373,
+            343180374,
+            343180375,
+            343180376,
+            343180377,
+            343180378,
+            343180379,
+            343180380
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct",
+            "sub2api_direct_token_cash_cny_interval_0",
+            "sub2api_direct_token_cash_cny_interval_1"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gpt-5.6-luna-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.8,
+        "output": 4.8,
+        "note_zh": "阶梯计价 · 展示首档 · CA route",
+        "note_en": "tiered · first tier shown · CA route",
+        "raw": [
+          "gpt-5.6-luna-ca",
+          "0.0008 / 1K Tokens [7阶梯计价]",
+          "0.0048 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
       },
       "junliai": null
     },
     {
-      "model": "qwen3-235b-a22b",
-      "ark": null,
-      "dianming": {
-        "input_rmb_per_million": 2.009,
-        "output_rmb_per_million": 20.076,
-        "basis": "default"
-      },
+      "model": "gpt-5.6-luna",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 1.4,
-        "output_rmb_per_million": 5.6,
-        "basis": "CA币=元"
+        "input": 1.4,
+        "output": 8.4,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "gpt-5.6-luna",
+          "0.0014 / 1K Tokens [7阶梯计价]",
+          "0.0084 / 1K Tokens",
+          "支持",
+          "GPT-5.6 Luna 专为对成本要求高、处理量大的工作负载而设计。它大致相当于早期 GPT-5 系列中使用的 nano 模型层级。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "GPT-5.6 Luna",
+        "link_count": 1,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
+      }
+    },
+    {
+      "model": "gpt-5.5-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 20.0,
+        "output": 120.0,
+        "note_zh": "阶梯计价 · 展示首档 · CA route",
+        "note_en": "tiered · first tier shown · CA route",
+        "raw": [
+          "gpt-5.5-ca",
+          "0.02 / 1K Tokens [7阶梯计价]",
+          "0.12 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
       },
       "junliai": null
     },
     {
-      "model": "qwen3.5-plus",
-      "ark": null,
-      "dianming": {
-        "input_rmb_per_million": 0.805,
-        "output_rmb_per_million": 4.816,
-        "basis": "<=128K"
-      },
+      "model": "gpt-5.5",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 0.56,
-        "output_rmb_per_million": 3.36,
-        "basis": "<=128K; CA币=元"
+        "input": 35.0,
+        "output": 210.0,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "gpt-5.5",
+          "0.035 / 1K Tokens [7阶梯计价]",
+          "0.21 / 1K Tokens",
+          "支持",
+          "openai最新的前沿模型，专为处理最复杂的专业工作而设计"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.75,
+        "output": 4.5,
+        "display_name": "GPT-5.5",
+        "link_count": 4,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.75,
+          "output_amount": 4.5,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.075,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 5,
+          "official_price_source": "OpenAI",
+          "official_output_amount": 30,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.5,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180187,
+            343180188,
+            343180189,
+            343180190,
+            343180191,
+            343180192,
+            343180193,
+            343180194,
+            343180195,
+            343180196,
+            343180197,
+            343180198,
+            343180199,
+            343180200
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct",
+            "sub2api_direct_token_cash_cny_interval_0",
+            "sub2api_direct_token_cash_cny_interval_1"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gpt-5.4-nano-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.8,
+        "output": 5.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5.4-nano-ca",
+          "0.0008 / 1K Tokens",
+          "0.005 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
       },
       "junliai": null
     },
     {
-      "model": "qwen3-coder-plus",
-      "ark": null,
-      "dianming": {
-        "input_rmb_per_million": 4.018,
-        "output_rmb_per_million": 16.058,
-        "basis": "<=32K"
-      },
+      "model": "gpt-5.4-nano-2026-03-17",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 2.8,
-        "output_rmb_per_million": 11.2,
-        "basis": "CA币=元"
+        "input": 1.4,
+        "output": 8.75,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.4-nano-2026-03-17",
+          "0.0014 / 1K Tokens",
+          "0.00875 / 1K Tokens",
+          "支持",
+          "openai最便宜的GPT-5.4级型号，适用于简单的高容量任务"
+        ]
       },
       "junliai": null
     },
     {
-      "model": "qwen3-coder-next",
-      "ark": null,
+      "model": "gpt-5.4-nano",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.4,
+        "output": 8.75,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.4-nano",
+          "0.0014 / 1K Tokens",
+          "0.00875 / 1K Tokens",
+          "支持",
+          "openai最便宜的GPT-5.4级型号，适用于\u0000简单的高容量任务"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.4-mini-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 3.0,
+        "output": 18.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5.4-mini-ca",
+          "0.003 / 1K Tokens",
+          "0.018 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.4-mini-2026-03-17",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 5.25,
+        "output": 31.5,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.4-mini-2026-03-17",
+          "0.00525 / 1K Tokens",
+          "0.0315 / 1K Tokens",
+          "支持",
+          "openai2026年3月17日为止最强大的编码、计算机使用和子代理迷你模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.4-mini",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 5.25,
+        "output": 31.5,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.4-mini",
+          "0.00525 / 1K Tokens",
+          "0.0315 / 1K Tokens",
+          "支持",
+          "openai2026年3月17日为止最强大的编码、计算机使用和子代理迷你模型"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.1125,
+        "output": 0.675,
+        "display_name": "GPT-5.4 mini",
+        "link_count": 4,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.1125,
+          "output_amount": 0.675,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.01125,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 0.75,
+          "official_price_source": "OpenAI",
+          "official_output_amount": 4.5,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.075,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180163,
+            343180164,
+            343180165,
+            343180166,
+            343180167,
+            343180168
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gpt-5.4-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 10.0,
+        "output": 60.0,
+        "note_zh": "阶梯计价 · 展示首档 · CA route",
+        "note_en": "tiered · first tier shown · CA route",
+        "raw": [
+          "gpt-5.4-ca",
+          "0.01 / 1K Tokens [7阶梯计价]",
+          "0.06 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.4-2026-03-05",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 17.5,
+        "output": 105.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.4-2026-03-05",
+          "0.0175 / 1K Tokens",
+          "0.105 / 1K Tokens",
+          "支持",
+          "openai最新推出的面向各行各业的编码和智能体任务的旗舰模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.4",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 17.5,
+        "output": 105.0,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "gpt-5.4",
+          "0.0175 / 1K Tokens [7阶梯计价]",
+          "0.105 / 1K Tokens",
+          "支持",
+          "用于处理复杂专业工作的前沿模型"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.375,
+        "output": 2.25,
+        "display_name": "GPT-5.4",
+        "link_count": 7,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.375,
+          "output_amount": 2.25,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.0375,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 2.5,
+          "official_price_source": "OpenAI",
+          "official_output_amount": 15,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.25,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180279,
+            343180280,
+            343180281,
+            343180282,
+            343180283,
+            343180284,
+            343180285,
+            343180286,
+            343180287,
+            343180288,
+            343180289,
+            343180290,
+            343180291,
+            343180292
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct",
+            "sub2api_direct_token_cash_cny_interval_0",
+            "sub2api_direct_token_cash_cny_interval_1"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gpt-5.3-codex-spark",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "GPT-5.3 Codex Spark",
+        "link_count": 1,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
+      }
+    },
+    {
+      "model": "gpt-5.3-codex",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "GPT-5.3 Codex",
+        "link_count": 2,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
+      }
+    },
+    {
+      "model": "gpt-5.2-pro-2025-12-11",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 147.0,
+        "output": 1176.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.2-pro-2025-12-11",
+          "0.147 / 1K Tokens",
+          "1.176 / 1K Tokens",
+          "支持",
+          "目前仅在响应 API 中可用，用于支持在响应 API 请求之前进行多轮模型交互。此模型回复较慢比较长的问题不建议使用有可能会超时"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.2-pro",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 147.0,
+        "output": 1176.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.2-pro",
+          "0.147 / 1K Tokens",
+          "1.176 / 1K Tokens",
+          "支持",
+          "目前仅在响应 API 中可用，用于支持在响应 API 请求之前进行多轮模型交互。此模型回复较慢比较长的问题不建议使用有可能会超时。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.2-codex-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 7.0,
+        "output": 56.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5.2-codex-ca",
+          "0.007 / 1K Tokens",
+          "0.056 / 1K Tokens",
+          "支持",
+          "支持在codex中使用第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.2-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 7.0,
+        "output": 56.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5.2-ca",
+          "0.007 / 1K Tokens",
+          "0.056 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.2-2025-12-11",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 12.25,
+        "output": 98.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.2-2025-12-11",
+          "0.01225 / 1K Tokens",
+          "0.098 / 1K Tokens",
+          "支持",
+          "面向各行各业的编码和智能体任务的旗舰模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.2",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 12.25,
+        "output": 98.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.2",
+          "0.01225 / 1K Tokens",
+          "0.098 / 1K Tokens",
+          "支持",
+          "面向各行各业的编码和智能体任务的旗舰模型"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "GPT-5.2",
+        "link_count": 3,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
+      }
+    },
+    {
+      "model": "gpt-5.1-2025-11-13",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.75,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.1-2025-11-13",
+          "0.00875 / 1K Tokens",
+          "0.07 / 1K Tokens",
+          "支持",
+          "用于编码和智能体任务的旗舰模型，它具备可配置的推理和非推理能力"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5.1",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.75,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5.1",
+          "0.00875 / 1K Tokens",
+          "0.07 / 1K Tokens",
+          "支持",
+          "用于编码和智能体任务的旗舰模型，它具备可配置的推理和非推理能力"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-search-api",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.75,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5-search-api",
+          "0.00875 / 1K Tokens",
+          "0.07 / 1K Tokens + 搜索费用[6]",
+          "支持",
+          "Openai 出的搜索模型,支持网络搜索,指向最新的gpt-5的搜索模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-pro",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 105.0,
+        "output": 840.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5-pro",
+          "0.105 / 1K Tokens",
+          "0.84 / 1K Tokens",
+          "支持",
+          "使用更多的计算来更努力地思考，并始终如一地提供更好的答案。此模型回复较慢比较长的问题不建议使用有可能会超时"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-nano-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.2,
+        "output": 1.6,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5-nano-ca",
+          "0.0002 / 1K Tokens",
+          "0.0016 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-nano",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.35,
+        "output": 2.8,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5-nano",
+          "0.00035 / 1K Tokens",
+          "0.0028 / 1K Tokens",
+          "支持",
+          "GPT-5 Nano 是速度最快、成本最低的 GPT-5 版本。它非常适合摘要和分类任务"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-mini-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.0,
+        "output": 8.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5-mini-ca",
+          "0.001 / 1K Tokens",
+          "0.008 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-mini",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.75,
+        "output": 14.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5-mini",
+          "0.00175 / 1K Tokens",
+          "0.014 / 1K Tokens",
+          "支持",
+          "GPT-5 mini 是 GPT-5 的一个更快、更经济的版本。它非常适合执行定义明确的任务和精准的提示"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-codex",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.75,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5-codex",
+          "0.00875 / 1K Tokens",
+          "0.07 / 1K Tokens",
+          "支持",
+          "GPT-5-Codex 是针对代理编码任务优化。它可在 Responses API仅限此版本，底层模型快照将定期更新。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-chat-latest",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.75,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5-chat-latest",
+          "0.00875 / 1K Tokens",
+          "0.07 / 1K Tokens",
+          "支持",
+          "GPT-5 Chat 指的是 ChatGPT 当前使用的 GPT-5 快照"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 5.0,
+        "output": 40.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-5-ca",
+          "0.005 / 1K Tokens",
+          "0.04 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-5",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.75,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-5",
+          "0.00875 / 1K Tokens",
+          "0.07 / 1K Tokens",
+          "支持",
+          "GPT-5 是用于跨领域编码、推理和代理任务的旗舰模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-search-preview-2025-03-11",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 17.5,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4o-search-preview-2025-03-11",
+          "0.0175/1K Tokens",
+          "0.07/1K Tokens + 搜索费用[6]",
+          "支持",
+          "Openai 出的搜索模型,支持网络搜索"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-search-preview",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 17.5,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4o-search-preview",
+          "0.0175/1K Tokens",
+          "0.07/1K Tokens + 搜索费用[6]",
+          "支持",
+          "Openai 出的搜索模型,支持网络搜索,指向最新的4o的搜索模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-mini-search-preview-2025-03-11",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.05,
+        "output": 4.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4o-mini-search-preview-2025-03-11",
+          "0.00105/1K Tokens",
+          "0.0042/1K Tokens + 搜索费用[6]",
+          "支持",
+          "Openai 出的搜索模型,支持网络搜索"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-mini-search-preview",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.05,
+        "output": 4.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4o-mini-search-preview",
+          "0.00105/1K Tokens",
+          "0.0042/1K Tokens + 搜索费用[6]",
+          "支持",
+          "Openai 出的搜索模型,支持网络搜索,指向最新的4o-mini的搜索模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-mini-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.75,
+        "output": 3.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-4o-mini-ca",
+          "0.00075 / 1K Tokens",
+          "0.003 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.05,
+        "output": 4.2,
+        "note_zh": "另有图片输入费",
+        "note_en": "image input charged separately",
+        "raw": [
+          "gpt-4o-mini",
+          "0.00105/1K Tokens + 图片费用[2]",
+          "0.0042/1K Tokens",
+          "支持",
+          "输出质量在3.5之上4o之下, 并且支持读图"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 10.0,
+        "output": 40.0,
+        "note_zh": "另有图片输入费 · CA route",
+        "note_en": "image input charged separately · CA route",
+        "raw": [
+          "gpt-4o-ca",
+          "0.01 / 1K Tokens + 0.0289*图片个数[3]",
+          "0.04 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o-2024-11-20",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 17.5,
+        "output": 70.0,
+        "note_zh": "另有图片输入费",
+        "note_en": "image input charged separately",
+        "raw": [
+          "gpt-4o-2024-11-20",
+          "0.0175/1K Tokens + 图片费用[2]",
+          "0.07/1K Tokens",
+          "支持",
+          "Openai 2024-11-20出的gpt-4o模型, 该模型的创意写作能力得到了提升一更自然、更有吸引力、更有针对性的写作"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4o",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 17.5,
+        "output": 70.0,
+        "note_zh": "另有图片输入费",
+        "note_en": "image input charged separately",
+        "raw": [
+          "gpt-4o",
+          "0.0175/1K Tokens + 图片费用[2]",
+          "0.07/1K Tokens",
+          "支持",
+          "Openai 价格更低, 速度更快更聪明,指向最新版的4o版本"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-nano-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.4,
+        "output": 3.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-4.1-nano-ca",
+          "0.0004 / 1K Tokens",
+          "0.003 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-nano-2025-04-14",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.7,
+        "output": 2.8,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4.1-nano-2025-04-14",
+          "0.0007 / 1K Tokens",
+          "0.0028 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的模型 在编码、指令跟踪和长上下文方面都有重大改进1M输入32k输出"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-nano",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.7,
+        "output": 2.8,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4.1-nano",
+          "0.0007 / 1K Tokens",
+          "0.0028 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的模型 在编码、指令跟踪和长上下文方面都有重大改进1M输入32k输出 指向gpt-4.1-nano-2025-04-14"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-mini-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.6,
+        "output": 6.4,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-4.1-mini-ca",
+          "0.0016 / 1K Tokens",
+          "0.0064 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-mini-2025-04-14",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 2.8,
+        "output": 11.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4.1-mini-2025-04-14",
+          "0.0028 / 1K Tokens",
+          "0.0112 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的模型 在编码、指令跟踪和长上下文方面都有重大改进1M输入32k输出"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 2.8,
+        "output": 11.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4.1-mini",
+          "0.0028 / 1K Tokens",
+          "0.0112 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的模型 在编码、指令跟踪和长上下文方面都有重大改进1M输入32k输出 指向gpt-4.1-mini-2025-04-14"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.0,
+        "output": 32.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-4.1-ca",
+          "0.008 / 1K Tokens",
+          "0.032 / 1K Tokens",
+          "支持",
+          "第三方优质提供商提供的服务,优点价格便宜,但是稳定性没有非-ca的好, 模型返回和能力都是一样的"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1-2025-04-14",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 14.0,
+        "output": 56.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4.1-2025-04-14",
+          "0.014 / 1K Tokens",
+          "0.056 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的模型 在编码、指令跟踪和长上下文方面都有重大改进1M输入32k输出"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4.1",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 14.0,
+        "output": 56.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4.1",
+          "0.014 / 1K Tokens",
+          "0.056 / 1K Tokens",
+          "支持",
+          "OpenAI最新推出的模型 在编码、指令跟踪和长上下文方面都有重大改进1M输入32k输出 指向gpt-4.1-2025-04-14"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4-ca",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 120.0,
+        "output": 240.0,
+        "note_zh": "CA route",
+        "note_en": "CA route",
+        "raw": [
+          "gpt-4-ca",
+          "0.12 / 1K Tokens",
+          "0.24 / 1K Tokens",
+          "支持",
+          "由于Azure openai已经下架gpt-4,故-ca版本的4以不可以用,请使用gpt-4o或者gpt-4.1或者更高的模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4-0613",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 210.0,
+        "output": 420.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4-0613",
+          "0.21 / 1K Tokens",
+          "0.42 / 1K Tokens",
+          "支持",
+          "2023年6月13日更新的模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-4",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 210.0,
+        "output": 420.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-4",
+          "0.21 / 1K Tokens",
+          "0.42 / 1K Tokens",
+          "支持",
+          "默认模型，等于gpt-4-0613"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-3.5-turbo-instruct",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 10.5,
+        "output": 14.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-3.5-turbo-instruct",
+          "0.0105 / 1K Tokens",
+          "0.014 / 1K Tokens",
+          "支持",
+          "Completions模型 用于文本生成，提供准确的自然语言处理模型一般人用不上"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-3.5-turbo-16k",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 21.0,
+        "output": 28.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-3.5-turbo-16k",
+          "0.021 / 1K Tokens",
+          "0.028 / 1K Tokens",
+          "支持",
+          "适合快速回答简单问题,字数更多"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-3.5-turbo-1106",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 7.0,
+        "output": 14.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-3.5-turbo-1106",
+          "0.007 / 1K Tokens",
+          "0.014 / 1K Tokens",
+          "支持",
+          "2023年11月6日更新的模型"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-3.5-turbo-0125",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 3.5,
+        "output": 10.5,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-3.5-turbo-0125",
+          "0.0035 / 1K Tokens",
+          "0.0105 / 1K Tokens",
+          "支持",
+          "2024年1月25日最新模型，数据最新，价格更更低，速度更快，修复了一些1106的bug。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gpt-3.5-turbo",
+      "family": "OpenAI / GPT",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 3.5,
+        "output": 10.5,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gpt-3.5-turbo",
+          "0.0035 / 1K Tokens",
+          "0.0105 / 1K Tokens",
+          "支持",
+          "默认模型，等于gpt-3.5-turbo-0125"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "claude-sonnet-5",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 10.0,
+        "output": 50.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-sonnet-5",
+          "0.01 / 1K Tokens",
+          "0.05 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.3,
+        "output": 1.5,
+        "display_name": "Claude Sonnet 5",
+        "link_count": 3,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.3,
+          "output_amount": 1.5,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.03,
+          "cache_write_amount": 0.375,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 2,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 10,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.2,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180249,
+            343180250,
+            343180251,
+            343180252,
+            343180253,
+            343180254
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "claude-sonnet-4-6",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 15.0,
+        "output": 75.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-sonnet-4-6",
+          "0.015 / 1K Tokens",
+          "0.075 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，现在使用的为Claude code的逆向或官方逆向的渠道。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.45,
+        "output": 2.25,
+        "display_name": "Claude Sonnet 4.6",
+        "link_count": 4,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.45,
+          "output_amount": 2.25,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.045,
+          "cache_write_amount": 0.5625,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 3,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 15,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.3,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180423,
+            343180424,
+            343180425,
+            343180426,
+            343180427,
+            343180428
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "claude-sonnet-4-5-20250929",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 15.0,
+        "output": 75.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-sonnet-4-5-20250929",
+          "0.015 / 1K Tokens",
+          "0.075 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，现在使用的为Claude code的逆向或官方逆向的渠道。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "claude-opus-5",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 25.0,
+        "output": 125.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-opus-5",
+          "0.025 / 1K Tokens",
+          "0.125 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "claude-opus-4-8",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 25.0,
+        "output": 125.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-opus-4-8",
+          "0.025 / 1K Tokens",
+          "0.125 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.75,
+        "output": 3.75,
+        "display_name": "Claude Opus 4.8",
+        "link_count": 3,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.75,
+          "output_amount": 3.75,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.075,
+          "cache_write_amount": 0.9375,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 5,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 25,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.5,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180273,
+            343180274,
+            343180275,
+            343180276,
+            343180277,
+            343180278
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "claude-opus-4-7",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 25.0,
+        "output": 125.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-opus-4-7",
+          "0.025 / 1K Tokens",
+          "0.125 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.75,
+        "output": 3.75,
+        "display_name": "Claude Opus 4.7",
+        "link_count": 3,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.75,
+          "output_amount": 3.75,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.075,
+          "cache_write_amount": 0.9375,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 5,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 25,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.5,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180459,
+            343180460,
+            343180461,
+            343180462,
+            343180463,
+            343180464
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "claude-opus-4-6",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 25.0,
+        "output": 125.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-opus-4-6",
+          "0.025 / 1K Tokens",
+          "0.125 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 2.25,
+        "output": 11.25,
+        "display_name": "Claude Opus 4.6",
+        "link_count": 3,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 2.25,
+          "output_amount": 11.25,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.225,
+          "cache_write_amount": 2.8125,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 5,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 25,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.5,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180157,
+            343180158,
+            343180159,
+            343180160,
+            343180161,
+            343180162
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "claude-opus-4-5-20251101",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 25.0,
+        "output": 125.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-opus-4-5-20251101",
+          "0.025 / 1K Tokens",
+          "0.125 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "claude-haiku-4-5-20251001",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 5.0,
+        "output": 25.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-haiku-4-5-20251001",
+          "0.005 / 1K Tokens",
+          "0.025 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 1.0,
+        "output": 5.0,
+        "display_name": "Claude Haiku 4.5",
+        "link_count": 1,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 1,
+          "output_amount": 5,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.1,
+          "cache_write_amount": 1.25,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 1,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 5,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.1,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180335,
+            343180336,
+            343180337,
+            343180338,
+            343180339,
+            343180340
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "Claude Haiku 4.5 (latest)",
+        "link_count": 2,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
+      }
+    },
+    {
+      "model": "claude-fable-5-1",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 50.0,
+        "output": 250.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-fable-5-1",
+          "0.05 / 1K Tokens",
+          "0.25 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "claude-fable-5",
+      "family": "Claude",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 50.0,
+        "output": 250.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "claude-fable-5",
+          "0.05 / 1K Tokens",
+          "0.25 / 1K Tokens",
+          "支持",
+          "claude的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 10.0,
+        "output": 50.0,
+        "display_name": "Claude Fable 5",
+        "link_count": 2,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 10,
+          "output_amount": 50,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 1,
+          "cache_write_amount": 12.5,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 10,
+          "official_price_source": "Anthropic",
+          "official_output_amount": 50,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 1,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180441,
+            343180442,
+            343180443,
+            343180444,
+            343180445,
+            343180446
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gemini-3.8-flash",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 3.0,
+        "output": 15.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.8-flash",
+          "0.003 / 1K Tokens",
+          "0.015 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-3.7-flash",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 3.0,
+        "output": 15.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.7-flash",
+          "0.003 / 1K Tokens",
+          "0.015 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-3.6-flash",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 6.0,
+        "output": 30.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.6-flash",
+          "0.006 / 1K Tokens",
+          "0.03 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.3,
+        "output": 1.5,
+        "display_name": "Gemini 3.6 Flash",
+        "link_count": 1,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.3,
+          "output_amount": 1.5,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.03,
+          "cache_write_amount": 0,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180341,
+            343180342,
+            343180343,
+            343180344,
+            343180345,
+            343180346
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.2,
+        "output": 10.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.5-flash-lite",
+          "0.0012 / 1K Tokens",
+          "0.01 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-3.5-flash",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 7.5,
+        "output": 45.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.5-flash",
+          "0.0075 / 1K Tokens",
+          "0.045 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.3,
+        "output": 1.8,
+        "display_name": "Gemini 3.5 Flash",
+        "link_count": 1,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.3,
+          "output_amount": 1.8,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.03,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 1.5,
+          "official_price_source": "Google",
+          "official_output_amount": 9,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.15,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180453,
+            343180454,
+            343180455,
+            343180456,
+            343180457,
+            343180458
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gemini-3.1-pro-preview",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.0,
+        "output": 48.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.1-pro-preview",
+          "0.008 / 1K Tokens",
+          "0.048 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.4,
+        "output": 2.4,
+        "display_name": "Gemini 3.1 Pro Preview",
+        "link_count": 1,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.4,
+          "output_amount": 2.4,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.04,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 2,
+          "official_price_source": "Google",
+          "official_output_amount": 12,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.2,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180243,
+            343180244,
+            343180245,
+            343180246,
+            343180247,
+            343180248
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "gemini-3.1-flash-lite-preview",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.0,
+        "output": 6.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3.1-flash-lite-preview",
+          "0.001 / 1K Tokens",
+          "0.006 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 8.0,
+        "output": 48.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3-pro-preview",
+          "0.008 / 1K Tokens",
+          "0.048 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-3-flash-preview",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 2.0,
+        "output": 12.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-3-flash-preview",
+          "0.002 / 1K Tokens",
+          "0.012 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-2.5-flash-lite",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 0.4,
+        "output": 1.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-2.5-flash-lite",
+          "0.0004 / 1K Tokens",
+          "0.0016 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "family": "Gemini",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.2,
+        "output": 10.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "gemini-2.5-flash",
+          "0.0012 / 1K Tokens",
+          "0.01 / 1K Tokens",
+          "支持",
+          "Google Gemini 的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": 0.06,
+        "output": 0.5,
+        "display_name": "Gemini 2.5 Flash",
+        "link_count": 1,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.06,
+          "output_amount": 0.5,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.006,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 0.3,
+          "official_price_source": "Google",
+          "official_output_amount": 2.5,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.03,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180133,
+            343180134,
+            343180135,
+            343180136,
+            343180137,
+            343180138
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "family": "DeepSeek",
+      "ark_full_use_equivalent": "¥1.10/M",
       "dianming": {
-        "input_rmb_per_million": 1.00345,
-        "output_rmb_per_million": 4.01387,
-        "basis": "<=32K"
+        "input": 4.5,
+        "output": 13.5,
+        "note_zh": "首档：默认 平时 12:00-14:00 00:00-09:00 18:00-00:00",
+        "note_en": "first tier: 默认 平时 12:00-14:00 00:00-09:00 18:00-00:00",
+        "raw": [
+          "deepseek-v4-pro",
+          "默认 平时 12:00-14:00 00:00-09:00 18:00-00:00",
+          "1000000",
+          "￥0.0045 / 1000 tokens",
+          "￥0.0135 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 4.5,
+        "output": 13.5,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "deepseek-v4-pro",
+          "0.0045 / 1K Tokens",
+          "0.0135 / 1K Tokens",
+          "支持",
+          "因供应商价格较高，目前与官方同价；叠加充值优惠后，相当于官方价9折。此价格为低谷价格高峰价格请查看顶部新版本价格页面, deepseek的聊天模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "DeepSeek V4 Pro",
+        "link_count": 1,
+        "raw_summary": {
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "official_input_amount": 2.381625,
+          "official_price_source": "price_fact_cny",
+          "official_output_amount": 4.76325,
+          "official_cache_read_amount": 0.019847
+        }
+      }
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "family": "DeepSeek",
+      "ark_full_use_equivalent": "¥0.10/M",
+      "dianming": {
+        "input": 1.5,
+        "output": 4.5,
+        "note_zh": "首档：默认 平时 00:00-09:00 18:00-00:00 12:00-14:00",
+        "note_en": "first tier: 默认 平时 00:00-09:00 18:00-00:00 12:00-14:00",
+        "raw": [
+          "deepseek-v4-flash",
+          "默认 平时 00:00-09:00 18:00-00:00 12:00-14:00",
+          "1000000",
+          "￥0.0015 / 1000 tokens",
+          "￥0.0045 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 1.2,
+        "output": 3.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "deepseek-v4-flash",
+          "0.0012 / 1K Tokens",
+          "0.0036 / 1K Tokens",
+          "支持",
+          "此价格为低谷价格高峰价格请查看顶部新版本价格页面, deepseek的聊天模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "DeepSeek V4 Flash",
+        "link_count": 1,
+        "raw_summary": {
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "official_input_amount": 0.7665,
+          "official_price_source": "price_fact_cny",
+          "official_output_amount": 1.533,
+          "official_cache_read_amount": 0.01533
+        }
+      }
+    },
+    {
+      "model": "deepseek-v3.2",
+      "family": "DeepSeek",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.50225,
+        "output": 0.7542500000000001,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "deepseek-v3.2",
+          "默认",
+          "128000",
+          "￥0.00050225 / 1000 tokens",
+          "￥0.00075425 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 1.2,
+        "output": 1.8,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "deepseek-v3.2",
+          "0.0012 / 1K Tokens",
+          "0.0018 / 1K Tokens",
+          "支持",
+          "deepseek的聊天模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "deepseek-reasoner",
+      "family": "DeepSeek",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 2.4,
+        "output": 9.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "deepseek-reasoner",
+          "0.0024 / 1K Tokens",
+          "0.0096 / 1K Tokens",
+          "支持",
+          "deepseek的思考R1模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "deepseek-r1",
+      "family": "DeepSeek",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 2.4,
+        "output": 9.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "deepseek-r1",
+          "0.0024 / 1K Tokens",
+          "0.0096 / 1K Tokens",
+          "支持",
+          "deepseek的思考R1模型, 此模型由第三方(火山引擎)供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "deepseek-chat",
+      "family": "DeepSeek",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.2,
+        "output": 1.8,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "deepseek-chat",
+          "0.0012 / 1K Tokens",
+          "0.0018 / 1K Tokens",
+          "支持",
+          "deepseek的聊天模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3.8-max",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 12.0,
+        "output": 36.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3.8-max",
+          "默认",
+          "1000000",
+          "￥0.012 / 1000 tokens",
+          "￥0.036 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 12.0,
+        "output": 36.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "qwen3.8-max",
+          "0.012 / 1K Tokens",
+          "0.036 / 1K Tokens",
+          "支持",
+          "qwen的开源模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。因供应商价格较高，目前与官方同价；叠加充值优惠后，最低折扣相当于官方价9折。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3.8-flash",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.8,
+        "output": 2.7,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3.8-flash",
+          "默认",
+          "1000000",
+          "￥0.0008 / 1000 tokens",
+          "￥0.0027 / 1000 tokens",
+          "接入文档"
+        ]
       },
       "chatanywhere": null,
       "junliai": null
     },
     {
       "model": "qwen3.7-plus",
-      "ark": null,
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
       "dianming": {
-        "input_rmb_per_million": 1.932,
-        "output_rmb_per_million": 7.707,
-        "basis": "<=256K"
+        "input": 1.932,
+        "output": 7.707000000000001,
+        "note_zh": "首档：Token≤256k",
+        "note_en": "first tier: Token≤256k",
+        "raw": [
+          "qwen3.7-plus",
+          "Token≤256k",
+          "1000000",
+          "￥0.001932 / 1000 tokens",
+          "￥0.007707 / 1000 tokens",
+          "接入文档"
+        ]
       },
       "chatanywhere": null,
       "junliai": null
     },
     {
-      "model": "Kimi K2.7 Code",
-      "ark": {
-        "rmb_per_million_afp_equivalent": 0.9,
-        "basis": "Agent Plan full-use equivalent"
-      },
+      "model": "qwen3.7-max",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
       "dianming": {
-        "input_rmb_per_million": 6.5,
-        "output_rmb_per_million": 27.0,
-        "basis": "default"
+        "input": 5.7749999999999995,
+        "output": 17.328500000000002,
+        "note_zh": "首档：0<Token≤1M",
+        "note_en": "first tier: 0<Token≤1M",
+        "raw": [
+          "qwen3.7-max",
+          "0<Token≤1M",
+          "1000000",
+          "￥0.005775 / 1000 tokens",
+          "￥0.0173285 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.7-flash",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.6,
+        "output": 2.4,
+        "note_zh": "首档：32k<Token≤256k",
+        "note_en": "first tier: 32k<Token≤256k",
+        "raw": [
+          "qwen3.7-flash",
+          "32k<Token≤256k",
+          "1000000",
+          "￥0.0006 / 1000 tokens",
+          "￥0.0024 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.6-plus",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.932,
+        "output": 11.557,
+        "note_zh": "首档：0<Token<=256K",
+        "note_en": "first tier: 0<Token<=256K",
+        "raw": [
+          "qwen3.6-plus",
+          "0<Token<=256K",
+          "1000000",
+          "￥0.001932 / 1000 tokens",
+          "￥0.011557 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.6-flash",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.155,
+        "output": 6.930000000000001,
+        "note_zh": "首档：0<Token<=256K",
+        "note_en": "first tier: 0<Token<=256K",
+        "raw": [
+          "qwen3.6-flash",
+          "0<Token<=256K",
+          "1000000",
+          "￥0.001155 / 1000 tokens",
+          "￥0.00693 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.6-35b-a3b",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.736,
+        "output": 10.395,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3.6-35b-a3b",
+          "默认",
+          "256000",
+          "￥0.001736 / 1000 tokens",
+          "￥0.010395 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-plus",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.805,
+        "output": 4.816,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen3.5-plus",
+          "0<Token<=128K",
+          "10000000",
+          "￥0.000805 / 1000 tokens",
+          "￥0.004816 / 1000 tokens",
+          "接入文档"
+        ]
       },
       "chatanywhere": {
-        "input_rmb_per_million": 5.2,
-        "output_rmb_per_million": 21.6,
-        "basis": "CA币=元"
+        "input": 0.5599999999999999,
+        "output": 3.3600000000000003,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "qwen3.5-plus",
+          "0.00056 / 1K Tokens[7阶梯计价]",
+          "0.00336 / 1K Tokens",
+          "支持",
+          "qwen的模型, 此模型阶梯定价具体定价请查看文档最后的注释,此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-flash",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.203,
+        "output": 2.009,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen3.5-flash",
+          "0<Token<=128K",
+          "1000000",
+          "￥0.000203 / 1000 tokens",
+          "￥0.002009 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-397b-a17b",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.204,
+        "output": 7.224,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen3.5-397b-a17b",
+          "0<Token<=128K",
+          "256000",
+          "￥0.001204 / 1000 tokens",
+          "￥0.007224 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 0.8400000000000001,
+        "output": 5.04,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "qwen3.5-397b-a17b",
+          "0.00084 / 1K Tokens[7阶梯计价]",
+          "0.00504 / 1K Tokens",
+          "支持",
+          "qwen的模型, 此模型阶梯定价具体定价请查看文档最后的注释,此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-35b-a3b",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.399,
+        "output": 3.213,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen3.5-35b-a3b",
+          "0<Token<=128K",
+          "256000",
+          "￥0.000399 / 1000 tokens",
+          "￥0.003213 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-27b",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.602,
+        "output": 4.816,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen3.5-27b",
+          "0<Token<=128K",
+          "256000",
+          "￥0.000602 / 1000 tokens",
+          "￥0.004816 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-122b-a10b",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.805,
+        "output": 6.4190000000000005,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen3.5-122b-a10b",
+          "0<Token<=128K",
+          "256000",
+          "￥0.000805 / 1000 tokens",
+          "￥0.006419 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-vl-32b-thinking",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 2.009,
+        "output": 20.076,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3-vl-32b-thinking",
+          "默认",
+          "128000",
+          "￥0.002009 / 1000 tokens",
+          "￥0.020076 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-vl-32b-instruct",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 2.009,
+        "output": 8.029,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3-vl-32b-instruct",
+          "默认",
+          "128000",
+          "￥0.002009 / 1000 tokens",
+          "￥0.008029 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-vl-30b-a3b-thinking",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.756,
+        "output": 7.5249999999999995,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3-vl-30b-a3b-thinking",
+          "默认",
+          "128000",
+          "￥0.000756 / 1000 tokens",
+          "￥0.007525 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-vl-30b-a3b-instruct",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.756,
+        "output": 3.0100000000000002,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3-vl-30b-a3b-instruct",
+          "默认",
+          "128000",
+          "￥0.000756 / 1000 tokens",
+          "￥0.00301 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-max-preview",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 6.027,
+        "output": 24.087,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "qwen3-max-preview",
+          "0<Token<=32K",
+          "256000",
+          "￥0.006027 / 1000 tokens",
+          "￥0.024087 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-max-2026-01-23",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.75,
+        "output": 7.0,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "qwen3-max-2026-01-23",
+          "0.00175 / 1K Tokens[7阶梯计价]",
+          "0.007 / 1K Tokens",
+          "支持",
+          "qwen的模型, 此模型阶梯定价具体定价请查看文档最后的注释,此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-max",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 2.513,
+        "output": 10.038,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "qwen3-max",
+          "0<Token<=32K",
+          "256000",
+          "￥0.002513 / 1000 tokens",
+          "￥0.010038 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-coder-plus",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 4.018,
+        "output": 16.058,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "qwen3-coder-plus",
+          "0<Token<=32K",
+          "1000000",
+          "￥0.004018 / 1000 tokens",
+          "￥0.016058 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 2.8,
+        "output": 11.2,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "qwen3-coder-plus",
+          "0.0028 / 1K Tokens",
+          "0.0112 / 1K Tokens",
+          "支持",
+          "qwen的开源模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-coder-next",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.00345,
+        "output": 4.01387,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "qwen3-coder-next",
+          "0<Token<=32K",
+          "256000",
+          "￥0.00100345 / 1000 tokens",
+          "￥0.00401387 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-coder-flash",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.008,
+        "output": 4.018,
+        "note_zh": "首档：0<Token<32K",
+        "note_en": "first tier: 0<Token<32K",
+        "raw": [
+          "qwen3-coder-flash",
+          "0<Token<32K",
+          "1000000",
+          "￥0.001008 / 1000 tokens",
+          "￥0.004018 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3-coder-480b-a35b-instruct",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 4.2,
+        "output": 16.8,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "qwen3-coder-480b-a35b-instruct",
+          "0.0042 / 1K Tokens",
+          "0.0168 / 1K Tokens",
+          "支持",
+          "qwen的开源模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-235b-a22b-instruct-2507",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.4,
+        "output": 5.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "qwen3-235b-a22b-instruct-2507",
+          "0.0014 / 1K Tokens",
+          "0.0056 / 1K Tokens",
+          "支持",
+          "qwen的开源模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-235b-a22b",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 2.009,
+        "output": 20.076,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen3-235b-a22b",
+          "默认",
+          "256000",
+          "￥0.002009 / 1000 tokens",
+          "￥0.020076 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 1.4,
+        "output": 5.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "qwen3-235b-a22b",
+          "0.0014 / 1K Tokens",
+          "0.0056 / 1K Tokens",
+          "支持",
+          "qwen的开源模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen-plus-latest",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.805,
+        "output": 2.009,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen-plus-latest",
+          "0<Token<=128K",
+          "1000000",
+          "￥0.000805 / 1000 tokens",
+          "￥0.002009 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen-plus-character",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.805,
+        "output": 2.009,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen-plus-character",
+          "默认",
+          "32000",
+          "￥0.000805 / 1000 tokens",
+          "￥0.002009 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen-plus",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.805,
+        "output": 2.009,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen-plus",
+          "0<Token<=128K",
+          "1000000",
+          "￥0.000805 / 1000 tokens",
+          "￥0.002009 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen-flash-character",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.23800000000000002,
+        "output": 1.421,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "qwen-flash-character",
+          "默认",
+          "8000",
+          "￥0.000238 / 1000 tokens",
+          "￥0.001421 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen-flash",
+      "family": "Qwen",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.154,
+        "output": 1.512,
+        "note_zh": "首档：0<Token<=128K",
+        "note_en": "first tier: 0<Token<=128K",
+        "raw": [
+          "qwen-flash",
+          "0<Token<=128K",
+          "1000000",
+          "￥0.000154 / 1000 tokens",
+          "￥0.001512 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "kimi-k3",
+      "family": "Kimi",
+      "ark_full_use_equivalent": "¥2.00/M",
+      "dianming": {
+        "input": 20.0,
+        "output": 100.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "kimi-k3",
+          "默认",
+          "1000000",
+          "￥0.02 / 1000 tokens",
+          "￥0.1 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 14.0,
+        "output": 70.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "kimi-k3",
+          "0.014 / 1K Tokens",
+          "0.07 / 1K Tokens",
+          "支持",
+          "kimi的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
       },
       "junliai": {
-        "input_rmb_per_million": 2.8,
-        "output_rmb_per_million": 11.2,
-        "basis": "public third-party snapshot of provider-data:group_40; direct plaza requires login"
+        "listed": true,
+        "input": 10.0,
+        "output": 50.0,
+        "display_name": "Kimi K3",
+        "link_count": 1,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 10,
+          "output_amount": 50,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 1,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 20,
+          "official_price_source": "model_center_snapshot",
+          "official_output_amount": 100,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "CNY",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 2,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180447,
+            343180448,
+            343180449,
+            343180450,
+            343180451,
+            343180452
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
       }
     },
     {
-      "model": "Kimi K3",
-      "ark": {
-        "rmb_per_million_afp_equivalent": 2.0,
-        "basis": "Agent Plan full-use equivalent"
-      },
+      "model": "kimi-k2.7-code-highspeed",
+      "family": "Kimi",
+      "ark_full_use_equivalent": null,
       "dianming": {
-        "input_rmb_per_million": 20.0,
-        "output_rmb_per_million": 100.0,
-        "basis": "default"
+        "input": 13.0,
+        "output": 54.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "kimi-k2.7-code-highspeed",
+          "默认",
+          "256000",
+          "￥0.013 / 1000 tokens",
+          "￥0.054 / 1000 tokens",
+          "接入文档"
+        ]
       },
-      "chatanywhere": {
-        "input_rmb_per_million": 14.0,
-        "output_rmb_per_million": 70.0,
-        "basis": "CA币=元"
-      },
+      "chatanywhere": null,
       "junliai": null
     },
     {
-      "model": "GLM-5.2",
-      "ark": null,
+      "model": "kimi-k2.7-code",
+      "family": "Kimi",
+      "ark_full_use_equivalent": "¥0.90/M",
       "dianming": {
-        "input_rmb_per_million": 8.0,
-        "output_rmb_per_million": 28.0,
-        "basis": "default"
+        "input": 6.5,
+        "output": 27.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "kimi-k2.7-code",
+          "默认",
+          "256000",
+          "￥0.0065 / 1000 tokens",
+          "￥0.027 / 1000 tokens",
+          "接入文档"
+        ]
       },
       "chatanywhere": {
-        "input_rmb_per_million": 6.4,
-        "output_rmb_per_million": 22.4,
-        "basis": "CA币=元"
+        "input": 5.2,
+        "output": 21.6,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "kimi-k2.7-code",
+          "0.0052 / 1K Tokens",
+          "0.0216 / 1K Tokens",
+          "支持",
+          "kimi的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
       },
       "junliai": {
-        "input_rmb_per_million": 5.0,
-        "output_rmb_per_million": 16.0,
-        "basis": "public third-party snapshot of provider-data:group_40; direct plaza requires login"
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "Kimi K2.7 Code",
+        "link_count": 1,
+        "raw_summary": {
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "official_input_amount": 4.875,
+          "official_price_source": "price_fact_cny",
+          "official_output_amount": 20.25,
+          "official_cache_read_amount": 0.975
+        }
       }
     },
     {
-      "model": "GLM-5.3",
-      "ark": {
-        "rmb_per_million_afp_equivalent": 0.9,
-        "basis": "Agent Plan full-use equivalent"
-      },
+      "model": "kimi-k2.6",
+      "family": "Kimi",
+      "ark_full_use_equivalent": null,
       "dianming": {
-        "input_rmb_per_million": 8.0,
-        "output_rmb_per_million": 28.0,
-        "basis": "default"
+        "input": 6.257300000000001,
+        "output": 25.991699999999998,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "kimi-k2.6",
+          "默认",
+          "256000",
+          "￥0.0062573 / 1000 tokens",
+          "￥0.0259917 / 1000 tokens",
+          "接入文档"
+        ]
       },
-      "chatanywhere": null,
-      "junliai": null
-    },
-    {
-      "model": "GLM-5.3-Flash",
-      "ark": {
-        "rmb_per_million_afp_equivalent_promo": 0.05,
-        "rmb_per_million_afp_equivalent_normal": 0.1,
-        "basis": "Agent Plan full-use equivalent"
-      },
-      "dianming": {
-        "input_rmb_per_million": 0.8,
-        "output_rmb_per_million": 2.8,
-        "basis": "default"
-      },
-      "chatanywhere": null,
-      "junliai": null
-    },
-    {
-      "model": "MiniMax M3",
-      "ark": {
-        "rmb_per_million_afp_equivalent": 0.5,
-        "basis": "Agent Plan full-use equivalent"
-      },
-      "dianming": null,
       "chatanywhere": {
-        "input_rmb_per_million": 1.68,
-        "output_rmb_per_million": 6.72,
-        "basis": "<=512K; CA币=元"
-      },
-      "junliai": null
-    },
-    {
-      "model": "Claude Sonnet 5",
-      "ark": null,
-      "dianming": null,
-      "chatanywhere": {
-        "input_rmb_per_million": 10.0,
-        "output_rmb_per_million": 50.0,
-        "basis": "CA币=元"
+        "input": 4.55,
+        "output": 18.9,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "kimi-k2.6",
+          "0.00455 / 1K Tokens",
+          "0.0189 / 1K Tokens",
+          "支持",
+          "kimi的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
       },
       "junliai": {
-        "input_rmb_per_million": 0.03,
-        "output_rmb_per_million": 0.15,
-        "basis": "public third-party snapshot provider-data:group_37; very low price, no public verification report in snapshot; direct plaza requires login"
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "Kimi K2.6",
+        "link_count": 1,
+        "raw_summary": {
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "official_input_amount": 4.875,
+          "official_price_source": "price_fact_cny",
+          "official_output_amount": 20.25,
+          "official_cache_read_amount": 0.825
+        }
+      }
+    },
+    {
+      "model": "kimi-k2.5",
+      "family": "Kimi",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 4.018,
+        "output": 21.076999999999998,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "kimi-k2.5",
+          "默认",
+          "256000",
+          "￥0.004018 / 1000 tokens",
+          "￥0.021077 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 2.8,
+        "output": 14.7,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "kimi-k2.5",
+          "0.0028 / 1K Tokens",
+          "0.0147 / 1K Tokens",
+          "支持",
+          "kimi的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "glm-5.3-flash",
+      "family": "GLM",
+      "ark_full_use_equivalent": "¥0.05 活动 / ¥0.10 常规",
+      "dianming": {
+        "input": 0.8,
+        "output": 2.8,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "glm-5.3-flash",
+          "默认",
+          "1000000",
+          "￥0.0008 / 1000 tokens",
+          "￥0.0028 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "glm-5.3",
+      "family": "GLM",
+      "ark_full_use_equivalent": "¥0.90/M",
+      "dianming": {
+        "input": 8.0,
+        "output": 28.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "glm-5.3",
+          "默认",
+          "1000000",
+          "￥0.008 / 1000 tokens",
+          "￥0.028 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 8.0,
+        "output": 28.0,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "glm-5.3",
+          "0.008 / 1K Tokens",
+          "0.028 / 1K Tokens",
+          "支持",
+          "glm模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。因供应商价格较高，目前与官方同价；叠加充值优惠后，最低折扣相当于官方价9折。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "glm-5.2",
+      "family": "GLM",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 8.0,
+        "output": 28.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "glm-5.2",
+          "默认",
+          "1000000",
+          "￥0.008 / 1000 tokens",
+          "￥0.028 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 6.4,
+        "output": 22.4,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "glm-5.2",
+          "0.0064 / 1K Tokens",
+          "0.0224 / 1K Tokens",
+          "支持",
+          "glm模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "GLM-5.2",
+        "link_count": 1,
+        "raw_summary": {
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "official_input_amount": 6,
+          "official_price_source": "price_fact_cny",
+          "official_output_amount": 21,
+          "official_cache_read_amount": 1.5
+        }
+      }
+    },
+    {
+      "model": "glm-5.1",
+      "family": "GLM",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 5.7749999999999995,
+        "output": 23.107,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "glm-5.1",
+          "0<Token<=32K",
+          "202000",
+          "￥0.005775 / 1000 tokens",
+          "￥0.023107 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 3.6,
+        "output": 14.4,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "glm-5.1",
+          "0.0036 / 1K Tokens [7阶梯计价]",
+          "0.0144 / 1K Tokens",
+          "支持",
+          "glm模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "GLM-5.1",
+        "link_count": 1,
+        "raw_summary": {
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "official_input_amount": 6,
+          "official_price_source": "price_fact_cny",
+          "official_output_amount": 21,
+          "official_cache_read_amount": 1.5
+        }
+      }
+    },
+    {
+      "model": "glm-5",
+      "family": "GLM",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 4.011,
+        "output": 18.06,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "glm-5",
+          "0<Token<=32K",
+          "198000",
+          "￥0.004011 / 1000 tokens",
+          "￥0.01806 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 2.4,
+        "output": 10.8,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "glm-5",
+          "0.0024 / 1K Tokens [7阶梯计价]",
+          "0.0108 / 1K Tokens",
+          "支持",
+          "glm模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "glm-4.7",
+      "family": "GLM",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 3.0170000000000003,
+        "output": 14.049000000000001,
+        "note_zh": "首档：0<Token<=32K",
+        "note_en": "first tier: 0<Token<=32K",
+        "raw": [
+          "glm-4.7",
+          "0<Token<=32K",
+          "198000",
+          "￥0.003017 / 1000 tokens",
+          "￥0.014049 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "minimax-m3",
+      "family": "MiniMax",
+      "ark_full_use_equivalent": "¥0.50/M",
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.6800000000000002,
+        "output": 6.720000000000001,
+        "note_zh": "阶梯计价 · 展示首档",
+        "note_en": "tiered · first tier shown",
+        "raw": [
+          "minimax-m3",
+          "0.00168 / 1K Tokens",
+          "0.00672[7阶梯计价] / 1K Tokens",
+          "支持",
+          "minimax\u0000\u0000的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "minimax-m2.7-highspeed",
+      "family": "MiniMax",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 4.2,
+        "output": 16.8,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "MiniMax-M2.7-highspeed",
+          "默认",
+          "200000",
+          "￥0.0042 / 1000 tokens",
+          "￥0.0168 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "minimax-m2.7",
+      "family": "MiniMax",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 2.1,
+        "output": 8.4,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "MiniMax-M2.7",
+          "默认",
+          "200000",
+          "￥0.0021 / 1000 tokens",
+          "￥0.0084 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 1.26,
+        "output": 5.04,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "minimax-m2.7",
+          "0.00126 / 1K Tokens",
+          "0.00504 / 1K Tokens",
+          "支持",
+          "minimax的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "minimax-m2.5-highspeed",
+      "family": "MiniMax",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 4.2,
+        "output": 16.8,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "MiniMax-M2.5-highspeed",
+          "默认",
+          "200000",
+          "￥0.0042 / 1000 tokens",
+          "￥0.0168 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "minimax-m2.5",
+      "family": "MiniMax",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 2.128,
+        "output": 8.491,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "MiniMax-M2.5",
+          "默认",
+          "200000",
+          "￥0.002128 / 1000 tokens",
+          "￥0.008491 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": {
+        "input": 1.26,
+        "output": 5.04,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "minimax-m2.5",
+          "0.00126 / 1K Tokens",
+          "0.00504 / 1K Tokens",
+          "支持",
+          "minimax的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "minimax-m2.1",
+      "family": "MiniMax",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input": 1.26,
+        "output": 5.04,
+        "note_zh": "",
+        "note_en": "",
+        "raw": [
+          "minimax-m2.1",
+          "0.00126 / 1K Tokens",
+          "0.00504 / 1K Tokens",
+          "支持",
+          "minimax的模型, 此模型由第三方供应商提供，有小概率可能会出现响应速度较慢或报错的情况。"
+        ]
+      },
+      "junliai": null
+    },
+    {
+      "model": "doubao-seed-2.0-pro",
+      "family": "Doubao",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 3.2,
+        "output": 16.0,
+        "note_zh": "首档：输入 ≤ 32k",
+        "note_en": "first tier: 输入 ≤ 32k",
+        "raw": [
+          "Doubao-Seed-2.0-pro",
+          "输入 ≤ 32k",
+          "256000",
+          "￥0.0032 / 1000 tokens",
+          "￥0.016 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "doubao-seed-2.0-code",
+      "family": "Doubao",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 3.2,
+        "output": 16.0,
+        "note_zh": "首档：输入 ≤ 32k",
+        "note_en": "first tier: 输入 ≤ 32k",
+        "raw": [
+          "Doubao-Seed-2.0-Code",
+          "输入 ≤ 32k",
+          "256000",
+          "￥0.0032 / 1000 tokens",
+          "￥0.016 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "doubao-seed-1.8",
+      "family": "Doubao",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 0.8,
+        "output": 2.0,
+        "note_zh": "首档：输入<=32k，输出<=200k · 即将下线",
+        "note_en": "first tier: 输入<=32k，输出<=200k",
+        "raw": [
+          "Doubao-Seed-1.8 【即将下线】",
+          "输入<=32k，输出<=200k",
+          "256000",
+          "￥0.0008 / 1000 tokens",
+          "￥0.002 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "hy4 preview",
+      "family": "Hunyuan",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 6.0,
+        "output": 18.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "Hy4 preview",
+          "默认",
+          "1024000",
+          "￥0.006 / 1000 tokens",
+          "￥0.018 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "hy3 preview",
+      "family": "Hunyuan",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.2,
+        "output": 4.0,
+        "note_zh": "首档：Token<16k",
+        "note_en": "first tier: Token<16k",
+        "raw": [
+          "Hy3 preview",
+          "Token<16k",
+          "256000",
+          "￥0.0012 / 1000 tokens",
+          "￥0.004 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "hy3",
+      "family": "Hunyuan",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 1.0,
+        "output": 4.0,
+        "note_zh": "首档：默认",
+        "note_en": "first tier: 默认",
+        "raw": [
+          "hy3",
+          "默认",
+          "256000",
+          "￥0.001 / 1000 tokens",
+          "￥0.004 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "ernie 5.1",
+      "family": "ERNIE",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 4.0,
+        "output": 18.0,
+        "note_zh": "首档：输入<=32k",
+        "note_en": "first tier: 输入<=32k",
+        "raw": [
+          "ERNIE 5.1",
+          "输入<=32k",
+          "119000",
+          "￥0.004 / 1000 tokens",
+          "￥0.018 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "ernie 5.0",
+      "family": "ERNIE",
+      "ark_full_use_equivalent": null,
+      "dianming": {
+        "input": 6.0,
+        "output": 24.0,
+        "note_zh": "首档：输入<=32k",
+        "note_en": "first tier: 输入<=32k",
+        "raw": [
+          "ERNIE 5.0",
+          "输入<=32k",
+          "119000",
+          "￥0.006 / 1000 tokens",
+          "￥0.024 / 1000 tokens",
+          "接入文档"
+        ]
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "grok-build-0.1",
+      "family": "Grok",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "Grok Build 0.1",
+        "link_count": 2,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
+      }
+    },
+    {
+      "model": "grok-4.6",
+      "family": "Grok",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": 0.04,
+        "output": 0.12,
+        "display_name": "Grok 4.6",
+        "link_count": 2,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.04,
+          "output_amount": 0.12,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.01,
+          "cache_write_amount": 0,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180261,
+            343180262,
+            343180263,
+            343180264,
+            343180265,
+            343180266
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "grok-4.5",
+      "family": "Grok",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": 0.04,
+        "output": 0.12,
+        "display_name": "Grok 4.5",
+        "link_count": 3,
+        "raw_summary": {
+          "price_unit": "per_1m_tokens",
+          "price_state": "current_actual_payment",
+          "input_amount": 0.04,
+          "output_amount": 0.12,
+          "billing_method": "token",
+          "price_currency": "CNY",
+          "cache_read_amount": 0.01,
+          "cache_write_amount": 0,
+          "official_price_unit": "per_1m_tokens",
+          "official_input_amount": 2,
+          "official_price_source": "xAI",
+          "official_output_amount": 6,
+          "actual_price_confidence": 0.95,
+          "actual_price_expires_at": "2026-09-03T18:11:15+08:00",
+          "official_price_currency": "USD",
+          "actual_price_observed_at": "2026-08-31T18:11:15+08:00",
+          "actual_price_evidence_ids": [
+            552731
+          ],
+          "actual_price_source_scope": "adapter:sub2api:model_plaza",
+          "official_cache_read_amount": 0.5,
+          "actual_price_confidence_level": "high",
+          "actual_price_pricing_fact_ids": [
+            343180139,
+            343180140,
+            343180141,
+            343180142,
+            343180143,
+            343180144
+          ],
+          "actual_price_recharge_rule_key": "8a1fd15d6faabb712938f5495cf54ef0",
+          "actual_price_calculation_methods": [
+            "sub2api_direct_token_cash_cny_direct"
+          ],
+          "actual_price_calculation_versions": [
+            "sub2api_v2"
+          ]
+        }
+      }
+    },
+    {
+      "model": "grok-4.3",
+      "family": "Grok",
+      "ark_full_use_equivalent": null,
+      "dianming": null,
+      "chatanywhere": null,
+      "junliai": {
+        "listed": true,
+        "input": null,
+        "output": null,
+        "display_name": "Grok 4.3",
+        "link_count": 1,
+        "raw_summary": {
+          "observed_at": "2026-08-05T04:32:27+08:00",
+          "price_state": "actual_price_unavailable",
+          "billing_method": "token",
+          "calculation_method": "sub2api_direct_token_cash_cny_direct",
+          "calculation_version": "sub2api_v2"
+        }
       }
     }
   ]
