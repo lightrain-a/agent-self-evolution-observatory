@@ -1,0 +1,63 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-attempt1-interruption-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_ATTEMPT1_PRE_GRADIENT_HOST_RESOURCE_INTERRUPTION",
+  "scope": "resource-only adjudication before any real or synthetic gradient execution",
+  "consumed_attempt": {
+    "host": "222.20.126.69",
+    "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-result-20260903.json",
+    "result_sha256": "9e7602d8e1783818881ab24d9dc3cb0b385db43eea56834d21c805e229349193",
+    "last_durable_status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_STARTED",
+    "generated_at": "2026-09-03T11:07:51.551643+00:00",
+    "gpu_before_memory_used_mib": 14,
+    "gpu_before_utilization_percent": 0,
+    "resource_memory_max_bytes": 21474836480,
+    "resource_memory_swap_max_bytes": 0
+  },
+  "runner_write_order_evidence": {
+    "started_receipt_is_written_before_step0_state_restore": true,
+    "micro_gradient_started_receipt_is_written_only_after_step0_train_state_ready": true,
+    "micro_gradient_started_receipt_is_written_before_each_gradient_call": true,
+    "observed_micro_gradient_started_receipt": false,
+    "inference": "The process terminated before the first synthetic micro-gradient call."
+  },
+  "host_resource_evidence": {
+    "log_path": "/data/wyt/formal-goal-pi05-synthetic-fused-accum8x8-safe69-20260903.log",
+    "log_sha256": "4afd6fb9a7175a61dc4fcd9a8dbcbaba4458bdca99721b045a903de3119147ce",
+    "admission_pass_local_time": "2026-09-03T19:07:50+08:00",
+    "first_pinned_host_memory_registration_failures_local_time": "2026-09-03T19:08:37+08:00",
+    "terminal_resource_signal": "xla_gpu_host_bfc failed to allocate 72.00 MiB after repeated CUDA pinned-host-memory registration failures",
+    "failure_class": "host pinned-memory/resource containment failure before first micro-gradient"
+  },
+  "scientific_safety": {
+    "dataset_accessed": false,
+    "policy_outcomes_read": false,
+    "micro_gradients_completed": 0,
+    "gradient_execution_started": false,
+    "gradient_numerical_values_read": false,
+    "loss_value_retained_or_reported": false,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "scientific_training_started": false
+  },
+  "decision": "CLOSE_ATTEMPT1_AND_OPEN_ONE_HOST_SUBSTITUTION_REPAIR",
+  "repair_boundary": {
+    "allowed": [
+      "move the identical synthetic fused 8x8 resource qualification to host 67 with one idle A100-SXM4-80GB and a clean host-memory state",
+      "use the same portable OpenPI parent/config bytes, exact checkpoint bytes, environment versions, RNG, microbatch size 8, accumulation count 8, and direct-device loader",
+      "run exactly one repair1 synthetic attempt"
+    ],
+    "forbidden": [
+      "reuse the consumed attempt1 authority",
+      "change model, checkpoint, optimizer, seed, effective batch, microbatch, accumulation count, or gradient implementation",
+      "access BEHAVIOR data, policy outcomes, or loss values",
+      "execute any optimizer or parameter update",
+      "run more than one repair1 synthetic attempt"
+    ]
+  },
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate": "NEW_EXACTLY_ONCE_SYNTHETIC_FUSED_ACCUM8X8_REPAIR1_AUTHORITY_HOST67"
+}

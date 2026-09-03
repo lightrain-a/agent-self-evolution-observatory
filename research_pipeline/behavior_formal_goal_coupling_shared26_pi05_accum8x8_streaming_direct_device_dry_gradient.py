@@ -12,6 +12,7 @@ CHILD_COMMIT='0d05f46ef40a6a0ff0a9b61f078835a71fececde'
 PREREG_SHA='0d0a88b20f15d3a0fa2e8721da865bd5488cc39c43523a518608063c8a51a8d7'
 HOST_EXIT_ADJ_SHA='7fce8b714c2b46c1561930c34f0c2e5b67987ddaa63e4868f42f752e076afad8'
 DATA_ORDER_SHA='a218a76893b8e97dc849eb2d7dd63cf3a7516acbc0d0ded3822e20a0a211446d'
+SYNTH_REPAIR1_AUTH_SHA='fabc21ba26908a6d94eeda6778a9d41515c4d81eaa7995f9fff680be21ad43ab'
 RESOURCE_SHA='b7c010d45c21a83db57567a2fe599d59bf2933c327423d1bc4cd2e265e376275'
 MODEL_LOAD_SHA='fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c'
 LOADER_SHA='91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2'
@@ -105,8 +106,10 @@ def main():
     synth_path=(repo_root/synth_binding.get('path','')).resolve()
     require(synth_path,synth_binding.get('sha256',''),'synthetic fused 8x8 result')
     synth=json.loads(synth_path.read_text())
-    if synth.get('status')!='PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_PASS' or synth.get('micro_gradients_completed')!=8 or not synth.get('accumulated_gradient_complete'):
-        raise RuntimeError('synthetic fused 8x8 gate not PASS')
+    if synth.get('status')!='PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR1_PASS' or synth.get('micro_gradients_completed')!=8 or not synth.get('accumulated_gradient_complete'):
+        raise RuntimeError('synthetic fused 8x8 repair1 gate not PASS')
+    if synth.get('authority_sha256')!=SYNTH_REPAIR1_AUTH_SHA:
+        raise RuntimeError('synthetic fused 8x8 repair1 authority drift')
     if any(synth.get(k) not in (False,None) for k in ['dataset_accessed','optimizer_update','parameter_update','checkpoint_written','scientific_training_started','formal_training_authorized']):
         raise RuntimeError('synthetic fused 8x8 crossed forbidden boundary')
     pre=json.loads(P['preregistration'].read_text()); first=pre['microbatch_resource_ladder'][1]

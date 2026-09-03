@@ -2,7 +2,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DIRECT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json"
-SYNTH="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-result-20260903.json"
+SYNTH="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-repair1-host67-result-20260903.json"
 AUTH="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-streaming-accum8x8-safe69-authority-20260903.json"
 FINAL="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-streaming-accum8x8-safe69-result-20260903.json"
 LOG=/data/wyt/formal-goal-pi05-direct-to-streaming8x8-safe69-chain-20260903.log
@@ -15,7 +15,7 @@ if [[ "$STATUS" != PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS ]]; the
 fi
 while [[ ! -e "$SYNTH" ]]; do sleep 30; done
 SYNTH_STATUS=$(python3 -c "import json; print(json.load(open('$SYNTH')).get('status',''))")
-if [[ "$SYNTH_STATUS" != PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_PASS ]]; then
+if [[ "$SYNTH_STATUS" != PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR1_PASS ]]; then
   echo "synthetic fused 8x8 gate failed/held: $SYNTH_STATUS; no streaming authority"; exit 5
 fi
 if [[ ! -e "$AUTH" ]]; then

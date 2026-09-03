@@ -10,7 +10,8 @@ from pathlib import Path
 OBJECT_ID = "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL"
 CHILD_ID = "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION"
 EXPECTED_DIRECT_STATUS = "PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS"
-EXPECTED_SYNTHETIC_STATUS = "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_PASS"
+EXPECTED_SYNTHETIC_STATUS = "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR1_PASS"
+EXPECTED_SYNTHETIC_AUTHORITY_SHA = "fabc21ba26908a6d94eeda6778a9d41515c4d81eaa7995f9fff680be21ad43ab"
 EXPECTED_ATTEMPT1_RESULT_SHA = "9202758ef8e25fa079f340bff74da4749115e536bf166b6017c8c3ceefe4a0bb"
 EXPECTED_ADJ_SHA = "7fce8b714c2b46c1561930c34f0c2e5b67987ddaa63e4868f42f752e076afad8"
 EXPECTED_DESIGN_SHA = "b6c9cebe63b4b16125ce4fb6a9995a93ccb79e58ccebfc4cf9b285ca8e654c30"
@@ -57,6 +58,8 @@ def main() -> int:
         raise RuntimeError(f"synthetic fused 8x8 gate is not PASS: {synthetic.get('status')}")
     if synthetic.get("object_id") != OBJECT_ID or synthetic.get("micro_gradients_completed") != 8:
         raise RuntimeError("synthetic fused 8x8 identity/completion drift")
+    if synthetic.get("authority_sha256") != EXPECTED_SYNTHETIC_AUTHORITY_SHA:
+        raise RuntimeError("synthetic fused 8x8 repair1 authority drift")
     if not synthetic.get("accumulated_gradient_complete"):
         raise RuntimeError("synthetic fused 8x8 accumulator did not complete")
     synthetic_forbidden = [

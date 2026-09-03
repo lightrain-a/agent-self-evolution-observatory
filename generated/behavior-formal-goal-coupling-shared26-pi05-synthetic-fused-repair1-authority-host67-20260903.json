@@ -1,0 +1,81 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair1-authority-host67-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR1_HOST67",
+  "scope": "exactly-once host-substitution resource qualification after consumed host69 pre-gradient interruption; synthetic model-shaped inputs only",
+  "parent_consumed_attempt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-result-20260903.json",
+    "sha256": "9e7602d8e1783818881ab24d9dc3cb0b385db43eea56834d21c805e229349193",
+    "last_status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_STARTED",
+    "micro_gradients_completed": 0,
+    "optimizer_update": false
+  },
+  "interruption_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-attempt1-interruption-adjudication-20260903.json",
+    "sha256": "de5d5eb61350bf2112990244aa5450db07406a113938b9f729efd3a75b202542",
+    "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_ATTEMPT1_PRE_GRADIENT_HOST_RESOURCE_INTERRUPTION"
+  },
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_synthetic_fused_direct_device_repair1.py",
+    "sha256": "ef68cfcafb7e665279f18636975a0d9e84bc1b98a8bd097cc628bf4467f24303"
+  },
+  "candidate": {
+    "priority": 2,
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "seed": 42,
+    "gradient_semantics": "first micro returns grad/8; micros 2-8 fuse gradient computation and addition into donated accumulator"
+  },
+  "host_substitution": {
+    "from_host": "222.20.126.69",
+    "to_host": "222.20.126.67",
+    "to_gpu": "1x NVIDIA A100-SXM4-80GB",
+    "reason": "host69 attempt terminated before first micro-gradient due pinned-host-memory resource failure; host67 has clean host-memory state and identical A100 class",
+    "scientific_change": false
+  },
+  "portable_runtime_invariants": {
+    "openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "uv_lock_sha256": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6",
+    "python": "3.11.16",
+    "jax": "0.5.3",
+    "torch": "2.7.1+cu128",
+    "checkpoint_canonical_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+    "checkpoint_object_count": 20,
+    "checkpoint_bytes": 12441721931
+  },
+  "required_resource_scope": {
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9,
+    "gpu_compute_apps_before_attempt": 0,
+    "gpu_memory_used_max_mib_before_attempt": 1024
+  },
+  "authorized_operations": [
+    "restore the same frozen pi0.5 checkpoint directly as jax.Array leaves on host67",
+    "construct one synthetic fake_obs/fake_act batch of size 8",
+    "execute exactly eight deterministic micro-gradients and accumulate grad/8 into a donated accumulator",
+    "inspect only structural gradient metadata and allocator/GPU memory counters"
+  ],
+  "forbidden_operations": [
+    "BEHAVIOR dataset access",
+    "policy rollout or outcome read",
+    "loss retention/reporting",
+    "gradient numerical inspection",
+    "optimizer update",
+    "parameter or EMA mutation",
+    "checkpoint write",
+    "more than one repair1 attempt",
+    "automatic advance to another candidate if repair1 fails"
+  ],
+  "optimizer_update_count_authorized": 0,
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate_if_pass": "REAL_DATA_STREAMING_ACCUM8X8_REPAIR_AUTHORITY",
+  "next_gate_if_fail": "SYNTHETIC_REPAIR1_FAILURE_ADJUDICATION"
+}
