@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-SOURCE-T0-20260903",
+  "status": "FRESH2_ATOMGIT_MSR_SOURCE_PRELAUNCH_PASS",
+  "execution_git_sha": "b687bd37c2402531523d22004c4fbebfc4a3b8b6",
+  "prelaunch_receipt_sha256": "addd866b4523d0f3db912e3157be5f5404136b16a506c050061375b3b7b5a1fa",
+  "qualified": 10,
+  "total": 10,
+  "source_order": [
+    "pydata__xarray-3677",
+    "matplotlib__matplotlib-20488",
+    "sympy__sympy-16450",
+    "scikit-learn__scikit-learn-25931",
+    "psf__requests-5414",
+    "sphinx-doc__sphinx-11445",
+    "pytest-dev__pytest-7490",
+    "astropy__astropy-14995",
+    "django__django-15503",
+    "pylint-dev__pylint-6903"
+  ],
+  "provider_calls": 0,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_executions": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "next": "Run one frozen synthetic multistep AtomGit Qwen3.8 smoke. Scientific source acquisition remains closed until the smoke gate passes and is content-addressed."
+}
