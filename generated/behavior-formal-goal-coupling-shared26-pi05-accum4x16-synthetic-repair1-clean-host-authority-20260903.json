@@ -1,0 +1,81 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-repair1-clean-host-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SYNTHETIC_FUSED_ACCUM4X16_DIRECT_DEVICE_REPAIR1_CLEAN_HOST",
+  "scope": "Exactly one clean-host technical repair of the preregistered candidate-3 synthetic 4x16 resource gate after host69 pre-gradient cgroup OOM; no scientific outcome authority.",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum4x16_synthetic_fused_direct_device_repair1.py",
+    "sha256": "edb3f3e443231f257a65ed15033823307f29b6a264be6164479a738ad439bb1b"
+  },
+  "runner_sha256": "edb3f3e443231f257a65ed15033823307f29b6a264be6164479a738ad439bb1b",
+  "lineage": {
+    "consumed_attempt1": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-fused-direct-device-result-20260903.json",
+      "sha256": "9dd2f352c84dadbbea8725dc09ee5da28960f44169251dd95550265823c20f43",
+      "required_status": "PI05_SYNTHETIC_FUSED_ACCUM4X16_DIRECT_DEVICE_STARTED"
+    },
+    "attempt1_adjudication": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-attempt1-host-cgroup-oom-adjudication-20260903.json",
+      "sha256": "b05ae019ca0ab2ce8b697277f398a2720e6c36c922a7521a2c44fed9f5c1fa09",
+      "required_status": "PI05_SYNTHETIC_FUSED_ACCUM4X16_ATTEMPT1_PRE_GRADIENT_HOST_CGROUP_OOM"
+    },
+    "accum8x8_resource_failure_adjudication": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-accum8x8-resource-failure-adjudication-20260903.json",
+      "sha256": "d9306c6f8731bbd875e513a7584a1c8d463a508a731ba572ff64ae086bef55cd"
+    },
+    "accum4x16_data_order_qualification": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-data-order-qualification-20260903.json",
+      "sha256": "34da62085824d5725fbd2044f3f12fccc42971a137eb498999b02391a769f101",
+      "required_status": "PI05_ACCUM_4X16_DATA_ORDER_QUALIFICATION_PASS"
+    },
+    "portable_direct_device_model_load_result": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json",
+      "sha256": "5f27f14cfce284f1a75acefafbf9c404556f527b5037007ee8f119df3ddc90df",
+      "required_status": "PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS"
+    }
+  },
+  "candidate": {
+    "priority": 3,
+    "physical_micro_batch": 4,
+    "accumulation_steps": 16,
+    "effective_batch": 64,
+    "seed": 42
+  },
+  "clean_host_admission": {
+    "preferred_host": "222.20.126.231",
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "gpu_compute_apps_required": 0,
+    "gpu_memory_used_max_mib_before": 1024,
+    "host_mem_available_min_gib": 32,
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "scientific_invariants": {
+    "model": "pi0.5 B1K R1Pro unchanged",
+    "base_checkpoint": "same 20-object content-addressed pi05_base params",
+    "effective_batch": 64,
+    "optimizer_updates": 0,
+    "seed": 42,
+    "optimizer_lr_ema_normalization_action_horizon": "unchanged",
+    "synthetic_input_only": true,
+    "behavior_dataset_access": false,
+    "policy_outcomes_read": false
+  },
+  "forbidden": [
+    "more than one repair1 attempt",
+    "optimizer update or parameter/EMA mutation",
+    "BEHAVIOR dataset access or policy outcome read",
+    "loss retention/reporting or gradient-value inspection",
+    "change microbatch/accumulation/effective batch/model/checkpoint/seed/optimizer/LR/EMA/normalization/action horizon/GPU topology",
+    "automatic practical-batch fallback without repair1 adjudication"
+  ],
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate_if_pass": "REAL_DATA_STREAMING_ACCUM4X16_IMPLEMENTATION_AUTHORITY",
+  "next_gate_if_fail": "ACCUMULATION_LADDER_EXHAUSTED_RESOURCE_ADJUDICATION_BEFORE_PRACTICAL_BATCH_CHILD"
+}

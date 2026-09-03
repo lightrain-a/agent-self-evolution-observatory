@@ -1,0 +1,51 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum4x16-attempt1-host-cgroup-oom-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "PI05_SYNTHETIC_FUSED_ACCUM4X16_ATTEMPT1_PRE_GRADIENT_HOST_CGROUP_OOM",
+  "scope": "Technical resource adjudication only; no BEHAVIOR data or scientific outcomes accessed.",
+  "consumed_attempt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-fused-direct-device-result-20260903.json",
+    "sha256": "9dd2f352c84dadbbea8725dc09ee5da28960f44169251dd95550265823c20f43",
+    "last_durable_status": "PI05_SYNTHETIC_FUSED_ACCUM4X16_DIRECT_DEVICE_STARTED",
+    "micro_gradients_completed": 0,
+    "accumulated_gradient_complete": false,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "scientific_training_started": false
+  },
+  "host69_systemd_evidence": {
+    "unit": "pi05-synthetic-fused-accum4x16-69-20260903-r1.service",
+    "started_at": "2026-09-03T22:45:00+08:00",
+    "oom_kill_at": "2026-09-03T22:45:52+08:00",
+    "exit": "status=9/KILL; Failed with result 'oom-kill'",
+    "cpu_time_seconds": 42.057,
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "gpu_before_mib": 14,
+    "durable_micro_gradient_started_marker_present": false
+  },
+  "post_failure_host_observation": {
+    "host": "222.20.126.69",
+    "mem_available_approx_gib": 3.0,
+    "swap_used_approx_gib": 17.0,
+    "interpretation": "Host 69 was already under severe stale-memory pressure; this is not evidence that candidate-3 microbatch4/accum16 is GPU-infeasible."
+  },
+  "comparative_resource_evidence": {
+    "host67_accum8x8_repair3_memory_max_gib": 20,
+    "host67_accum8x8_repair3_reached_step0_state": true,
+    "host67_accum8x8_repair3_completed_first_micro_gradient": true,
+    "interpretation": "The same 20-GiB host cap is sufficient on a clean host to restore the direct-device state and execute a micro-gradient; therefore attempt1 is classified as host-state/resource contamination rather than a candidate-3 GPU result."
+  },
+  "decision": "AUTHORIZE_ONE_CLEAN_HOST_REPAIR1_FOR_SAME_4X16_CANDIDATE",
+  "allowed_change": "Move the unchanged synthetic 4x16 resource gate to a clean A100-80GB host with adequate MemAvailable while retaining MemoryMax=20G, MemorySwapMax=0, CPU affinity 0-63, CUDA-only JAX, and all frozen scientific variables.",
+  "forbidden": [
+    "treat attempt1 as 4x16 GPU infeasibility",
+    "change physical microbatch, accumulation count, effective batch, seed, model, checkpoint, optimizer, LR schedule, EMA, normalization, action horizon, or GPU topology",
+    "read BEHAVIOR demos or policy outcomes",
+    "perform any optimizer update",
+    "silently replay attempt1 under its consumed authority"
+  ],
+  "next_gate": "NEW_EXACTLY_ONCE_ACCUM4X16_SYNTHETIC_REPAIR1_ON_CLEAN_A100_HOST"
+}
