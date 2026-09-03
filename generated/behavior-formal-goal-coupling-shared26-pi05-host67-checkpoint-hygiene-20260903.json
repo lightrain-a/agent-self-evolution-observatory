@@ -1,0 +1,90 @@
+{
+  "formal_bytes": 12441721931,
+  "formal_object_count": 20,
+  "gpu_used": false,
+  "model_loaded": false,
+  "optimizer_update": false,
+  "part_bytes_quarantined": 2801999620,
+  "part_files_quarantined": 15,
+  "policy_outcomes_read": false,
+  "quarantine_root": "/data/wyt/formal-goal-pi05-base-params-v1.transport-residue-quarantine-20260903",
+  "residues": [
+    {
+      "bytes": 258,
+      "corresponding_final": "_CHECKPOINT_METADATA",
+      "relative_path": "_CHECKPOINT_METADATA.part"
+    },
+    {
+      "bytes": 21402,
+      "corresponding_final": "_METADATA",
+      "relative_path": "_METADATA.part"
+    },
+    {
+      "bytes": 11420,
+      "corresponding_final": "_sharding",
+      "relative_path": "_sharding.part"
+    },
+    {
+      "bytes": 8856,
+      "corresponding_final": "array_metadatas/process_0",
+      "relative_path": "array_metadatas/process_0.part"
+    },
+    {
+      "bytes": 0,
+      "corresponding_final": "commit_success.txt",
+      "relative_path": "commit_success.txt.part"
+    },
+    {
+      "bytes": 2132,
+      "corresponding_final": "d/1c4302d2d2000b5f3eb4fa1350fdef9a",
+      "relative_path": "d/1c4302d2d2000b5f3eb4fa1350fdef9a.part"
+    },
+    {
+      "bytes": 117,
+      "corresponding_final": "manifest.ocdbt",
+      "relative_path": "manifest.ocdbt.part"
+    },
+    {
+      "bytes": 1110433792,
+      "corresponding_final": "ocdbt.process_0/d/0832cad6c37f82d4eedd897dcbb8da9d",
+      "relative_path": "ocdbt.process_0/d/0832cad6c37f82d4eedd897dcbb8da9d.part"
+    },
+    {
+      "bytes": 34945019,
+      "corresponding_final": "ocdbt.process_0/d/247d4b7c814d8b1a23fa8a20f36a88f7",
+      "relative_path": "ocdbt.process_0/d/247d4b7c814d8b1a23fa8a20f36a88f7.part"
+    },
+    {
+      "bytes": 70041571,
+      "corresponding_final": "ocdbt.process_0/d/35a545f74995e511808d4f94dfbef3b6",
+      "relative_path": "ocdbt.process_0/d/35a545f74995e511808d4f94dfbef3b6.part"
+    },
+    {
+      "bytes": 2935855,
+      "corresponding_final": "ocdbt.process_0/d/73bbae8a4deba6498bf07d96b215a574",
+      "relative_path": "ocdbt.process_0/d/73bbae8a4deba6498bf07d96b215a574.part"
+    },
+    {
+      "bytes": 133821,
+      "corresponding_final": "ocdbt.process_0/d/7d78f38c5d8be1eea31406644dde9bd6",
+      "relative_path": "ocdbt.process_0/d/7d78f38c5d8be1eea31406644dde9bd6.part"
+    },
+    {
+      "bytes": 929,
+      "corresponding_final": "ocdbt.process_0/d/828bee85475e37c61e1cc19e32d1c5ef",
+      "relative_path": "ocdbt.process_0/d/828bee85475e37c61e1cc19e32d1c5ef.part"
+    },
+    {
+      "bytes": 975269888,
+      "corresponding_final": "ocdbt.process_0/d/8c5d7070ea57bdce2f0a19f95b8a21b4",
+      "relative_path": "ocdbt.process_0/d/8c5d7070ea57bdce2f0a19f95b8a21b4.part"
+    },
+    {
+      "bytes": 608194560,
+      "corresponding_final": "ocdbt.process_0/d/b4349aaadb7dfa45c3a53fc67c04b8f6",
+      "relative_path": "ocdbt.process_0/d/b4349aaadb7dfa45c3a53fc67c04b8f6.part"
+    }
+  ],
+  "status": "PI05_BASE_HOST67_CHECKPOINT_HYGIENE_PASS",
+  "training_started": false
+}

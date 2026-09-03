@@ -1,0 +1,72 @@
+{
+  "authorized_operations": [
+    "restore the same frozen pi0.5 checkpoint directly as jax.Array leaves",
+    "construct one synthetic fake_obs/fake_act batch of size 8",
+    "execute exactly eight deterministic micro-gradients and accumulate grad/8 into a donated accumulator",
+    "inspect only structural gradient metadata and allocator/GPU counters"
+  ],
+  "candidate": {
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "physical_micro_batch": 8,
+    "priority": 2,
+    "seed": 42
+  },
+  "checkpoint_exact_seal": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-host67-checkpoint-exact-seal-20260903.json",
+    "sha256": "64fcbd5023247561d59cd6d5ffb9b34c3f91604094904ae7f75959d73fd8295f"
+  },
+  "checkpoint_hygiene": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-host67-checkpoint-hygiene-20260903.json",
+    "sha256": "6d64a3ec6fe80f3fc6164283ec03401af4ba28f0b958e0f09b400403b410fa91"
+  },
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "forbidden_operations": [
+    "BEHAVIOR dataset access",
+    "policy rollout or outcome read",
+    "loss retention/reporting",
+    "gradient numerical inspection",
+    "optimizer update",
+    "parameter or EMA mutation",
+    "checkpoint write",
+    "more than one repair2 attempt",
+    "automatic advance after repair2 failure"
+  ],
+  "formal_training_authorized": false,
+  "host_substitution": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "host": "222.20.126.67",
+    "scientific_change": false
+  },
+  "next_gate_if_fail": "SYNTHETIC_REPAIR2_FAILURE_ADJUDICATION",
+  "next_gate_if_pass": "REAL_DATA_STREAMING_ACCUM8X8_REPAIR_AUTHORITY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_count_authorized": 0,
+  "repair1_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair1-checkpoint-residue-adjudication-20260903.json",
+    "sha256": "7beee1431014a2287a1ec3b1840fde68e42233751d211fbdfd114a728a0dbf36"
+  },
+  "repair1_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-repair1-host67-result-20260903.json",
+    "sha256": "4db9b8f86c5bdc93ca062c7dbbb4e2f0426f2e77ffa760fcf8ae2b2f8bc87bbc"
+  },
+  "required_resource_scope": {
+    "cpu_affinity": "0-63",
+    "gpu_compute_apps_before_attempt": 0,
+    "gpu_memory_used_max_mib_before_attempt": 1024,
+    "jax_platforms": "cuda",
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_synthetic_fused_direct_device_repair2.py",
+    "sha256": "eeaaea7ab143f52edd7da84412a33afa97769da19c45ffb90cf2634a8e8f177a"
+  },
+  "runner_sha256": "eeaaea7ab143f52edd7da84412a33afa97769da19c45ffb90cf2634a8e8f177a",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair2-authority-host67-v1",
+  "scientific_authority": false,
+  "scope": "exactly-once synthetic host67 repair after repair1 pre-model checkpoint-residue HOLD and verified checkpoint hygiene; no scientific outcome authority",
+  "status": "AUTHORIZED_PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR2_HOST67"
+}

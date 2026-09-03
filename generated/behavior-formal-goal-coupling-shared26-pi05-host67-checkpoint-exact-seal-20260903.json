@@ -1,0 +1,14 @@
+{
+  "gpu_used": false,
+  "model_loaded": false,
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "repaired_objects": [
+    "ocdbt.process_0/d/7bc9d3296d23a6fb83a6b3778ac6e964",
+    "ocdbt.process_0/d/deefd3c43390a50472cbcd317b0fff58"
+  ],
+  "status": "PI05_BASE_HOST67_EXACT_SEAL_PASS",
+  "training_started": false,
+  "verified_bytes": 12441721931,
+  "verified_object_count": 20
+}
