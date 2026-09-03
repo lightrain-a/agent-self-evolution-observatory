@@ -286,7 +286,7 @@ def main() -> int:
         raise RuntimeError("repair2 external-stop scientific boundary drift")
     if repair2_adj.get("status") != "PI05_SYNTHETIC_FUSED_ACCUM8X8_REPAIR2_MICRO0_EXTERNAL_USER_SESSION_STOP":
         raise RuntimeError("repair2 session-stop adjudication drift")
-    if durability.get("status") != "HOST67_SESSION_DURABILITY_PREFLIGHT_PASS" or durability.get("resource_and_scientific_safety", {}).get("scientific_training_started") is not False:
+    if durability.get("status") != "HOST67_SESSION_DURABILITY_PREFLIGHT_PASS" or durability.get("resource_and_scientific_safety", {}).get("formal_training_started") is not False:
         raise RuntimeError("host67 durability preflight drift")
     keepalive = validate_keepalive_durability()
     require(paths["preregistration"], PREREG_SHA, "accumulation preregistration")

@@ -1,0 +1,102 @@
+{
+  "authority_amendment": {
+    "gpu_used_before_amendment": false,
+    "micro_gradients_completed_before_amendment": 0,
+    "model_loaded_before_amendment": false,
+    "only_change": "runner reads the already-frozen formal_training_started field; all candidate, checkpoint, host, keepalive, cgroup, synthetic input, and forbidden-operation semantics remain unchanged",
+    "optimizer_update_before_amendment": false,
+    "parent_authority_path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair3-authority-host67-durable-20260903.json",
+    "parent_authority_sha256": "4b7d9d3ebf5fc653a500f2c6cd8e1351e756ca0ff89327f9aa566aab5cdb26f9",
+    "reason": "Pre-attempt schema mismatch: durability preflight records formal_training_started=false while repair3 runner checked scientific_training_started. Result receipt was absent, GPU remained idle, and no scientific attempt was consumed.",
+    "scientific_attempts_consumed_before_amendment": 0,
+    "scientific_change": false
+  },
+  "authorized_operations": [
+    "restore the same frozen pi0.5 checkpoint directly as jax.Array leaves",
+    "construct one synthetic fake_obs/fake_act batch of size 8",
+    "execute exactly eight deterministic micro-gradients and accumulate grad/8 into a donated accumulator",
+    "revalidate keepalive durability before every micro-gradient",
+    "inspect only structural gradient metadata and allocator/GPU memory counters"
+  ],
+  "candidate": {
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "gradient_semantics": "first micro returns grad/8; micros 2-8 fuse gradient computation and addition into donated accumulator",
+    "physical_micro_batch": 8,
+    "priority": 2,
+    "seed": 42
+  },
+  "checkpoint_hygiene_lineage": {
+    "canonical_bytes": 12441721931,
+    "canonical_objects": 20,
+    "exact_seal_sha256": "64fcbd5023247561d59cd6d5ffb9b34c3f91604094904ae7f75959d73fd8295f",
+    "hygiene_sha256": "6d64a3ec6fe80f3fc6164283ec03401af4ba28f0b958e0f09b400403b410fa91",
+    "remaining_part_files": 0
+  },
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "forbidden_operations": [
+    "BEHAVIOR dataset access",
+    "policy rollout or outcome read",
+    "loss retention/reporting",
+    "gradient numerical inspection",
+    "optimizer update",
+    "parameter or EMA mutation",
+    "checkpoint write",
+    "more than one repair3 attempt",
+    "automatic advance after repair3 failure",
+    "changing microbatch, accumulation, checkpoint, model, seed, or GPU topology"
+  ],
+  "formal_training_authorized": false,
+  "host": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "host": "222.20.126.67",
+    "keepalive_source_host": "222.20.126.69",
+    "linger": false,
+    "required_distinctive_keepalive_processes": [
+      "formal-goal-keepalive67-A 21600",
+      "formal-goal-keepalive67-B 21600"
+    ],
+    "user": "wyt"
+  },
+  "next_gate_if_fail": "SYNTHETIC_REPAIR3_FAILURE_ADJUDICATION",
+  "next_gate_if_pass": "REAL_DATA_STREAMING_ACCUM8X8_REPAIR_AUTHORITY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_count_authorized": 0,
+  "repair2_parent_authority_sha256": "524f5e875c64b5d63f6700304a131c28c05d64056e6015bf3669340dfa58d588",
+  "repair2_result": {
+    "last_status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR2_MICRO_GRADIENT_STARTED",
+    "micro_gradients_completed": 0,
+    "optimizer_update": false,
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-repair2-host67-result-20260903.json",
+    "sha256": "4e678226f8b7176d50421d7da231560430f431466f6c4c523f7d36b22496d068"
+  },
+  "repair2_session_stop_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair2-session-stop-adjudication-20260903.json",
+    "sha256": "3986978ca4445e29d7276c64e326f12f74d8dea8ea9baea838e42998da09dd02",
+    "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_REPAIR2_MICRO0_EXTERNAL_USER_SESSION_STOP"
+  },
+  "required_resource_scope": {
+    "cpu_affinity": "0-63",
+    "gpu_compute_apps_before_attempt": 0,
+    "gpu_memory_used_max_mib_before_attempt": 1024,
+    "jax_platforms": "cuda",
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_synthetic_fused_direct_device_repair3.py",
+    "sha256": "1bde615c7c7cb6c95e3b3a9cd7da5ae34c1377cd826d9707a15f393b9046f4b5"
+  },
+  "runner_sha256": "1bde615c7c7cb6c95e3b3a9cd7da5ae34c1377cd826d9707a15f393b9046f4b5",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair3-authority-host67-durable-amendment1-v1",
+  "scientific_authority": false,
+  "scope": "exactly-once synthetic 8x8 resource qualification after repair2 was externally stopped by non-lingering user-session exit; scientific treatment unchanged",
+  "session_durability_preflight": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-host67-session-durability-preflight-20260903.json",
+    "sha256": "98f709804d22a277d98963b042cead6d26de39935b99d25cc3cd87dc33bab847",
+    "status": "HOST67_SESSION_DURABILITY_PREFLIGHT_PASS"
+  },
+  "status": "AUTHORIZED_PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR3_HOST67_DURABLE"
+}
