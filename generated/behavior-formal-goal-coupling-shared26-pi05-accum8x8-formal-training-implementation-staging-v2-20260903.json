@@ -1,0 +1,22 @@
+{
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "control_only_change": "synthetic prerequisite status upgraded from original synthetic PASS to host67 repair2 PASS; training math, microbatch=8, accumulation=8, effective batch=64, optimizer, LR, EMA, seed, data and checkpoint cadence unchanged",
+  "formal_training_authorized": false,
+  "next_gate": "SYNTHETIC_REPAIR2_PASS_THEN_REAL_DATA_STREAMING_ACCUM8X8_PASS",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update": false,
+  "parent_staging": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-formal-training-implementation-staging-20260903.json",
+    "sha256": "88561621c75e14389e166e466197768ae8bc9a4fa2098484d5cc176da1bc2d0d"
+  },
+  "policy_outcomes_read": false,
+  "required_real_data_status": "PI05_STREAMING_ACCUM8X8_DIRECT_DEVICE_NO_UPDATE_DRY_GRADIENT_PASS",
+  "required_synthetic_status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR2_PASS",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_formal_training.py",
+    "sha256": "6a28869426fe08c1c940d12d3899d4f8108bce7948321c44130df9816efd99c5"
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-formal-training-implementation-staging-v2",
+  "scientific_training_started": false,
+  "status": "IMPLEMENTATION_STAGED_NOT_AUTHORIZED"
+}
