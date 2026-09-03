@@ -1,0 +1,54 @@
+\section{Variance-Controlled Typed State Compilation}
+\label{sec:compiler}
+
+The localization result motivates an intervention on $G$, the state-generation interface. The goal is not to give the compiler privileged task semantics. It receives the same learner-visible trajectory text and selected binary verifier score as the free-form updater arm, but replaces open-ended state writing with a finite diagnosis and canonical compilation path.
+
+\subsection{Design requirements}
+A valid generator intervention must satisfy four requirements.
+
+\paragraph{R1: Information parity.}
+The compiler may read only the selected trajectory text and score exposed to the corresponding free-form arm. It cannot condition on the experimental arm, projection name, stream/family label, task family, golden answer, held-out result, historical S1 outcome, or hidden provenance. SHA identifiers are retained only for integrity receipts.
+
+\paragraph{R2: Explicit intermediate representation.}
+The method must expose what it inferred before changing the skill. Otherwise a different free-form prompt merely moves the same uncontrolled synthesis step. We therefore represent each evidence unit by
+\begin{equation}
+d=(\text{failure stage},\text{failed invariants},\text{observed evidence},\text{required repairs}).
+\end{equation}
+
+\paragraph{R3: Canonical state construction.}
+Identical diagnosis bundles must produce byte-identical persistent skills. Duplicate evidence must not increase state length, primitive ordering must be fixed, and redundant repair surfaces must be removed deterministically.
+
+\paragraph{R4: Strong generic falsification.}
+A positive compiler result must exceed a trajectory-blind control that receives the same selected score pattern. Otherwise the apparent benefit could be explained by ``a failure happened, so inject generic spreadsheet hygiene'' rather than trajectory-conditioned diagnosis.
+
+\subsection{Typed diagnosis from learner-visible evidence}
+The current compiler uses three repair primitives:
+\begin{equation}
+\mathcal{R}=\{\texttt{VERIFY\_OUTPUT},\texttt{COMPLETE\_WORKFLOW},\texttt{RECOVER\_TOOL\_ERROR}\}.
+\end{equation}
+The vocabulary is intentionally small and frozen for the current development program. For a selected failed trajectory, visible signals map to repairs as follows:
+\begin{itemize}
+    \item no materialized write or output save $\rightarrow$ \texttt{COMPLETE\_WORKFLOW};
+    \item output saved but no visible reload/verification $\rightarrow$ \texttt{VERIFY\_OUTPUT};
+    \item visible tool error without visible clean recovery $\rightarrow$ \texttt{RECOVER\_TOOL\_ERROR}.
+\end{itemize}
+A selected successful trajectory is not automatically labelled as needing a generic repair. Multiple repairs may compose.
+
+These rules are deliberately interpretable and narrow. They should not be read as a universal ontology of agent failure. Their scientific role is to instantiate a controlled state generator whose output variability is structurally bounded.
+
+\subsection{Canonical compiler}
+For diagnoses $D=\{d_i\}_{i=1}^{8}$ and base skill $S_0$, compilation computes
+\begin{equation}
+C(D,S_0)=S_0\oplus \operatorname{Canon}\!\left(\bigcup_i d_i.\texttt{required\_repairs}\right).
+\end{equation}
+The canonicalization operator uses a fixed primitive order and deduplicates repeated requirements. \texttt{COMPLETE\_WORKFLOW} already contains save, reload, and target verification semantics, so a separately rendered \texttt{VERIFY\_OUTPUT} block is omitted when both are requested. \texttt{RECOVER\_TOOL\_ERROR} composes after completion semantics. Every diagnosis bundle and compiled skill is content-addressed.
+
+The current zero-provider implementation passes tests for deterministic compilation, duplicate suppression, hidden-label exclusion, and the three diagnosis routes. For diagnoses corresponding to the manually frozen mechanism interventions, it reproduces the G1 verification, G2 completion, and G3 completion+recovery skill surfaces byte-for-byte. This is an implementation qualification, not evidence that those states improve future utility.
+
+\subsection{Score-only generic control}
+The strongest simple alternative is that trajectory content is unnecessary: a system could observe only that some selected evidence failed and inject the most robust generic checklist available in the same primitive vocabulary. We therefore freeze \texttt{SCORE\_ONLY\_GENERIC\_MAX}. It receives the same ordered eight binary scores but no trajectory text. If all scores are one, it returns $S_0$. If any score is zero, it emits the maximal nonredundant generic v1 bundle, \texttt{COMPLETE\_WORKFLOW}+\texttt{RECOVER\_TOOL\_ERROR}.
+
+Consequently, $\text{FF4\_COMP}>\text{SCORE\_ONLY\_GENERIC\_MAX}$ is required before we attribute a compiler benefit to trajectory-conditioned diagnosis. Failure of this falsifier does not imply that canonical state construction is useless; it specifically blocks the stronger trajectory-conditioned repair claim.
+
+\subsection{What the method comparison identifies}
+The free-form and compiler paths are complete state-generation methods. They differ in more than determinism: the compiler has a finite ontology, canonicalization, bounded redundancy, and no generative writer. Therefore a positive $\comp-\free$ contrast should be interpreted as a \emph{complete state-generation-method effect}, not an isolated causal effect of determinism or constraint. State length, delta tokens, and number of repair clauses are recorded as mechanism diagnostics rather than post-hoc matched away.

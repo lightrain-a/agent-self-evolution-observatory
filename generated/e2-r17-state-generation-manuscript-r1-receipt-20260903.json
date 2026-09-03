@@ -1,0 +1,50 @@
+{
+  "artifact_type": "e2-r17-state-generation-manuscript-checkpoint",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_MANUSCRIPT_CHECKPOINT_NO_CLAIM_EXPANSION",
+  "scientific_object": "E2-R17-STATE-GENERATION-MANUSCRIPT-R1-20260903",
+  "branch": "research/e2-r17-manuscript-state-generation-20260903",
+  "base_scientific_commit": "0be443c04c8a53d834a4dd862304f8f1756a40c9",
+  "working_title": "Same Evidence, Different Skill: Diagnosing State-Generation Variance in Self-Evolving Agents",
+  "manuscript_root": "paper_drafts/e2-state-generation-r1-20260903",
+  "main_tex_sha256": "a1c672967d4bd62e542ae279ce2f316dd0ad23b199d69db07c0fbfd1ffb2e6dd",
+  "pdf_sha256": "19f1cad307f1aaf501d8e6ce4e9645a1dc21f1e9b7e88ae02f3b4abb18360951",
+  "references_sha256": "7a67a8df96e8a553243c8981abd40021ee9b08c3b320b01b8ccd60a150fb98a7",
+  "compile": {
+    "status": "PASS",
+    "pages_total": 13,
+    "appendix_starts_page": 11,
+    "overfull_boxes": 0,
+    "undefined_references": 0
+  },
+  "paper_line": {
+    "primary": "state-generation realization as candidate bottleneck",
+    "parked": "semantic-transfer / evidence-selector expansion",
+    "archetype": "causal_mechanism",
+    "method_name": "variance-controlled typed state compilation",
+    "method_scientific_result_available": false
+  },
+  "completed_evidence_used": [
+    "DeepSeek V2 Repair2 heterogeneous evidence-source result",
+    "single-case S1 witness-selector failure",
+    "two frozen-state stability remeasurements",
+    "two exact-byte-identical-evidence fresh updater realizations",
+    "zero-provider fresh bridge-suite static qualification"
+  ],
+  "explicitly_not_promoted": [
+    "M2 constrained-state Recovery V3 partial outcomes",
+    "M3 future frozen-state stability",
+    "M4 Evidence x Generator bridge outcomes",
+    "E3 untouched confirmation",
+    "second backbone or public benchmark"
+  ],
+  "authority": {
+    "provider_io": false,
+    "experiment_execution": false,
+    "partial_outcome_read": false,
+    "e3": false,
+    "paper_submission": false
+  },
+  "interpretation_boundary": "This receipt freezes a manuscript-only checkpoint. It does not authorize or infer any pending scientific outcome and does not import uncommitted protocol-v3/v4 work from the parallel bridge proposal worktree."
+}

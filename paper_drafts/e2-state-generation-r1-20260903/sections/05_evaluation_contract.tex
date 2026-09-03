@@ -1,0 +1,61 @@
+\section{Evaluation Contract}
+\label{sec:evaluation}
+
+The remaining experiment program is staged so that a negative mechanism result cannot be rescued by opening a larger benchmark or changing the method after outcomes.
+
+\subsection{M2: deterministic state-semantic intervention}
+Before testing an automatic compiler, we ask a narrower sufficiency question on the selected development case. Four frozen persistent states share the same base spreadsheet skill:
+\begin{itemize}
+    \item G0: the exact initial skill;
+    \item G1: G0 plus output save/reload/target-cell verification;
+    \item G2: G0 plus a complete Inspect$\rightarrow$Read$\rightarrow$Compute$\rightarrow$Write$\rightarrow$Save$\rightarrow$Reload/Verify loop;
+    \item G3: G2 plus clean recovery from malformed or failed tool calls.
+\end{itemize}
+No updater is called. Each state is evaluated on the same 18 development held-out tasks with DeepSeek-V4-Pro, temperature zero, thinking disabled, $K=1$, ten turns, and the same deterministic verifier. The primary screen selects the simplest G1$<$G2$<$G3 whose utility exceeds G0 by at least $1/18$. Historical S1 outcomes are excluded from the gate.
+
+This experiment is a state-level mechanism intervention only. G1--G3 were manually constructed after observing the selected strong state and therefore cannot establish automatic learning from failures. If the 18-task primary passes, a pre-frozen 17-task sensitivity excluding the one task split across provider quota eras must remain strictly positive; this sensitivity may veto but never rescue the primary result.
+
+\subsection{M3: frozen-state stability}
+Only if M2 survives both gates do we remeasure G0 and the simplest selected arm in exactly two fresh complete actor replicates. No additional replicate is allowed because an observed result is inconvenient. Failure to retain a directional advantage stops the state-semantic branch before automatic bridge execution.
+
+\subsection{M4: prospective Evidence$\times$Generator bridge}
+The automatic bridge uses a newly generated development suite that is disjoint from the selected S1 panel and from the untouched E3 confirmation lane. It contains 120 formal task artifacts: 96 update tasks arranged as 12 eight-task streams, 12 SCREEN held-out tasks, and 12 different VALIDATION held-out tasks. SCREEN and VALIDATION each contain one stream per failure family and their held-out panels are disjoint.
+
+For each stream we freeze the $2\times2$:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Evidence source & Native free-form updater & Typed compiler \\
+\midrule
+Winner & W\_FREE & W\_COMP \\
+First-Fail-4 & FF4\_FREE & FF4\_COMP \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Winner evidence.}
+All eight update pools expose the served winner trajectory+score package.
+
+\paragraph{First-Fail-4 evidence.}
+A pool is eligible only if it contains both success and failure. A stream is bridge-eligible only with at least four mixed pools. Exactly four eligible pools are selected by a pre-frozen content hash; those expose the deterministic first failed nonwinner, while the other four expose the same winner package as the Winner arm. This equalizes the \emph{replacement count}, not information content or token length.
+
+\paragraph{Information parity.}
+Within an evidence source, free-form and compiler generators receive the same selected trajectory bytes and binary score. The compiler cannot read hidden arm, family, task, rollout, or held-out labels. Before execution, corresponding evidence-input hashes must match.
+
+\paragraph{Stochasticity.}
+The free-form updater and actor both use temperature zero, thinking disabled, and no provider retry. Because the provider does not expose a reliable user-controlled seed for every call, the main bridge estimates the performance of the first prospectively drawn deployed free-form state versus deterministic compilation; it does not claim seed-level determinism. No second updater draw may be requested because the first result is unfavorable.
+
+\subsection{Primary bridge contrasts and stop rules}
+For stream-level held-out utility $J$, define
+\begin{align}
+G_F &= J(\text{FF4\_COMP})-J(\text{FF4\_FREE}),\\
+S_C &= J(\text{FF4\_COMP})-J(\text{W\_COMP}),\\
+I &= [J(\text{FF4\_COMP})-J(\text{FF4\_FREE})]
+ -[J(\text{W\_COMP})-J(\text{W\_FREE})].
+\end{align}
+SCREEN passes only if mean $G_F>0$, at least 4/6 streams have $G_F>0$, mean $S_C>0$, at least 4/6 streams have $S_C>0$, mean $I>0$, FF4\_COMP exceeds \texttt{SCORE\_ONLY\_GENERIC\_MAX}, and no information-parity or technical-integrity failure occurs. VALIDATION remains sealed unless SCREEN passes and repeats the frozen primary rules on six different streams and a disjoint held-out panel.
+
+The decision table is intentionally asymmetric. If $G_F$ fails, we stop the state-generation-method story. If $G_F$ passes but $S_C$ fails, we drop the rejected-failure claim and retain only a possible reliable-compilation contribution. If FF4\_COMP fails the trajectory-blind generic control, we drop trajectory-conditioned diagnosis and interpret any gain as generic/canonical state construction. Only a frozen SCREEN+VALIDATION pass can motivate a separate untouched E3 proposal.
+
+\subsection{Scientific units and non-claims}
+The primary bridge unit is the independently updated stream, not the 12 individual held-out tasks or provider calls. The controlled suite is a mechanism substrate, not a public benchmark. No second backbone, public benchmark, or E3 confirmation is opened to rescue a negative bridge result. These stages are separate claim expansions that require their own frozen contracts.

@@ -1,0 +1,32 @@
+\section{Discussion, Limitations, and Conclusion}
+\label{sec:discussion}
+
+\paragraph{The scientific shift is from data selection to representation generation.}
+The initial E2-R17 hypothesis emphasized which rejected trajectories should reach persistent learning. The closed large-sample study and selector intervention do not support a universal witness rule. The more informative observation is downstream: one persistent state is useful when frozen, yet the same updater does not reliably recreate that utility from identical evidence. This changes the primary scientific object from ``which failure should we show?'' to ``how does evidence become persistent state?''
+
+\paragraph{State-generation variance is a candidate bottleneck, not a completed variance decomposition.}
+The exact-evidence replay varies both the fresh state and its downstream actor evaluation, and it contains only two new updater realizations in one outcome-selected development stream. The frozen-state remeasurement partially separates actor noise, but it does not estimate population-level updater and actor variance components. We therefore use ``candidate bottleneck'' and reserve stronger variance claims for a prospective repeated-synthesis design.
+
+\paragraph{The typed compiler is intentionally not claimed as component-level novelty.}
+Trace-conditioned diagnosis, success/failure contrast, execution-grounded repair, and persistent knowledge accumulation already appear in SkillRevise, SkillCAT, RethinkSkill, and WikiSkill~\citep{liu2026skillrevise,chen2026skillcat,liu2026rethinkskill,tang2026wikiskill}. The present method matters only if canonical state generation changes a controlled evidence-matched outcome. If it does not, a new vocabulary name or implementation detail does not rescue the contribution.
+
+\paragraph{Generic workflow hygiene is a serious alternative.}
+Completion, verification, and error recovery are sensible spreadsheet-agent instructions independent of any rejected trajectory. The score-only generic control is therefore load-bearing, not a decorative baseline. If a maximal generic repair state matches FF4\_COMP, the evidence-conditioned diagnosis claim fails even if both beat the free-form updater.
+
+\paragraph{The controlled suite is not external validity.}
+The six failure families are generated to permit matched causal interventions and deterministic verification. They should not be interpreted as a representative sample of user spreadsheet workflows. SpreadsheetBench and later workflow-level benchmarks can test transport only after the internal mechanism survives; opening them after a negative mechanism result would be benchmark shopping.
+
+\paragraph{Selected-case development remains a source of researcher degrees of freedom.}
+The S1 stream and the semantics used to design G1--G3 were selected after historical outcomes. We treat them as a mechanistic sandbox rather than independent confirmation. The fresh bridge suite exists specifically to break this loop: its tasks, stream assignment, held-out panels, compiler vocabulary, and decision rules are frozen before bridge outcomes.
+
+\paragraph{Practical implication.}
+Persistent text state is often attractive because it is inspectable. Inspectability does not imply reproducibility. If a free-form updater can translate the same evidence into materially different persistent artifacts, then evaluation should report state identity and regeneration stability rather than only the trajectory source and final score. Content-addressed state artifacts and explicit generator comparisons are inexpensive additions to self-evolution studies even when a typed compiler is not used.
+
+\paragraph{Conclusion.}
+Our current evidence rejects a simple universal story that failed trajectories are better training signals and identifies a more specific unresolved mechanism: useful trajectory evidence can be lost or transformed unpredictably when it is synthesized into persistent skill state. A strong state remains useful when frozen, whereas byte-identical evidence does not reliably recreate its advantage through the native updater. We therefore separate evidence selection from state generation and formulate a prospective typed-compilation intervention that can falsify the state-generation bottleneck hypothesis without changing evidence or hiding stronger generic controls. The central lesson at this checkpoint is methodological and causal: in self-evolving agents, the persistent state writer should be treated as an experimental variable, not an invisible implementation detail.
+
+\section*{Reproducibility Statement}
+All load-bearing controlled experiments bind task IDs, initial and learned skill SHA-256 values, trajectory evidence hashes, model identity, provider budgets, retry rules, and completion leases. Completed units are not replayed to repair scientific outcomes. The controlled bridge suite is generated deterministically from content-addressed salts, with disjoint SCREEN and VALIDATION panels. The manuscript distinguishes completed scientific results from zero-provider proposal artifacts and does not infer outcomes from training or execution progress.
+
+\section*{AI Use Statement}
+Generative AI tools were used to assist with hypothesis refinement, research software, literature search, adversarial methodology review, manuscript drafting, and artifact inspection. Quantitative claims are checked against persisted experiment receipts and content-addressed artifacts. The authors are responsible for the final scientific claims, citations, and submission.
