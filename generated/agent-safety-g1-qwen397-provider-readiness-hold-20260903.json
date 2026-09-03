@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "G1-QWEN397-PROVIDER-READINESS-HOLD-20260903",
+  "experiment_id": "G1-QWEN35-397B-CAPABILITY-REQUAL-V2-20260903",
+  "status": "HOLD_MISSING_PROVIDER_CREDENTIAL_ZERO_CALLS",
+  "recorded_date": "2026-09-03",
+  "source_branch": "research/g1-qwen397-capability-requal-20260902",
+  "latest_preflight_commit": "47411280",
+  "prereg_contract_sha256": "d8b1572fc35e18dc4549031519785346e97bb353a99653b60c3161a1bdf61da2",
+  "environment_checks": {
+    "root_at_10_42_8_52_AA_API_KEY": "MISSING_IN_CURRENT_EXECUTION_SHELL",
+    "wyt_at_222_20_126_69_AA_API_KEY": "MISSING_IN_CURRENT_EXECUTION_SHELL",
+    "standard_persisted_environment_configuration_found": false,
+    "historical_shell_or_process_secret_scraping_performed": false
+  },
+  "execution": {
+    "provider_requests": 0,
+    "model_binding_requests": 0,
+    "benign_capability_model_calls": 0,
+    "safety_trajectory_calls": 0,
+    "harmbench_calls": 0,
+    "deepseek_calls": 0
+  },
+  "scientific_interpretation": {
+    "not_a_model_failure": true,
+    "not_a_capability_result": true,
+    "not_a_safety_result": true,
+    "environment_and_measurement_preflight_passed": true
+  },
+  "resume_condition": "AA_API_KEY must be injected securely into the 52 execution environment without being committed or logged. Then run the frozen model-binding gate; capability episodes remain forbidden until MODEL_BINDING_PASS.",
+  "safety_authority": false,
+  "scientific_authority": false,
+  "artifact_sha256": "7f8a231500683dfa56361d38b97d8af205f3138ce6bd08573456f0244f4a0975"
+}
