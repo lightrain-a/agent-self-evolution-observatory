@@ -1,0 +1,54 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "state": "ORACLE_R1_PIVOT_ADJUDICATED_PROSPECTIVE_ONLY",
+  "parent_scientific_state_preserved": true,
+  "historical_artifacts_mutated": false,
+  "oracle_verdict": "PIVOT",
+  "accepted_verdict_changing_fixes": [
+    {
+      "id": "FIX-1",
+      "decision": "ACCEPT",
+      "change": "Replace the pure training-support causal thesis with a topology-first thesis. Treat SGP-12/14 as matched training exposure regimes unless relation-edge/supervision dose is separately equalized.",
+      "reason": "Outcome-blind corpus audit shows 18,360 versus 30,600 total relation edges and mean relation count 1.5 versus 2.5 at equal row count."
+    },
+    {
+      "id": "FIX-2",
+      "decision": "ACCEPT",
+      "change": "Remove count-2 CHAIN-vs-HUB and COMPONENT_BRIDGE_OPTIONAL from the primary panel; use paired CHAIN-vs-HUB only at counts 3 and 4.",
+      "reason": "At count 2 the current undirected CHAIN and HUB are graph-isomorphic P3 = K1,2; count 3 and 4 give non-isomorphic CHAIN/HUB with the same active-node count."
+    },
+    {
+      "id": "FIX-3",
+      "decision": "ACCEPT",
+      "change": "Use unopened validation for one-seed developmental P1 and keep test untouched for multi-seed confirmation. Freeze panel compiler, effect thresholds and GO/STOP before any validation metric is opened.",
+      "reason": "Prevents one-seed development and later confirmation from reusing the same test outcomes."
+    },
+    {
+      "id": "FIX-4",
+      "decision": "ACCEPT",
+      "change": "Pair downstream decoder randomness in predicted/oracle arms, retain every materialized instruction in primary end-to-end denominators, treat exact-identity eligibility as an explicit diagnostic outcome, and block localization if eligibility is topology-dependent or too low.",
+      "reason": "Avoids conditioning the mechanism claim on a post-treatment exact-identity subset."
+    }
+  ],
+  "training_interpretation": {
+    "current_training_remains_useful": true,
+    "current_training_needs_restart_for_topology_first_paper": false,
+    "SGP14_role": "PRIMARY_WITHIN_EXPOSURE_TOPOLOGY_MODEL",
+    "SGP12_role": "SECONDARY_EXPOSURE_REGIME_STRESS_MODEL",
+    "shared_decoder_role": "FIXED_CONTROLLED_DOWNSTREAM_MAPPING",
+    "training_resume_events": "PROVENANCE_ONLY_IF_EXACT_CHECKPOINT_RNG_SAMPLER_CONTRACT_HOLDS"
+  },
+  "next_scientific_gate": "COMPLETE_SGP14_AND_SHARED_DECODER_TRAINING_WITHOUT_OUTCOME_INSPECTION_THEN_REQUEST_SEPARATE_VALIDATION_P1_AUTHORITY",
+  "confirmatory_gate": "ONLY_AFTER_ALL_FROZEN_VALIDATION_GO_GATES_PASS",
+  "forbidden_rescues": [
+    "use SGP-12-only OOD effect as post-hoc primary thesis",
+    "add relation counts 5/6 as novelty",
+    "change primary topology after development results",
+    "drop identity-ineligible hard cases from primary population",
+    "change primary endpoint or thresholds after development results"
+  ],
+  "scientific_outcomes_read": 0,
+  "p1_opened": false,
+  "port010_state_change": false
+}

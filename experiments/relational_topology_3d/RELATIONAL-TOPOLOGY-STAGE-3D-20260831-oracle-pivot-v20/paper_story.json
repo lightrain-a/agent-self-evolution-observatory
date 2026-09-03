@@ -1,0 +1,46 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "state": "ORACLE_R1_PIVOT_PROSPECTIVE_PAPER_STORY_FROZEN_NO_OUTCOMES",
+  "working_title": "Beyond Relation Count: Endpoint-Sharing Topology in Text-Guided 3D Scene Generation",
+  "paper_type": "INDEPENDENT_3D_SCENE_GENERATION_MECHANISM_PAPER",
+  "primary_question": "At fixed relation count and tightly controlled semantic and textual content, does relation-endpoint connectivity create a residual difficulty inside the model's training range, and can an exact-identity same-decoder graph intervention localize how much of that residual is introduced at or before the semantic-graph interface?",
+  "one_sentence_thesis": "In an InstructScene-style cascaded 3D generator, instructions with the same relation count, active object set, predicate composition, text budget, and decoder can nevertheless exhibit different relation realization depending on how relation endpoints are connected, and exact-identity replacement of the predicted semantic graph can test whether this topology-dependent attenuation is introduced primarily at the text-to-graph interface rather than by the shared graph-to-scene decoder.",
+  "primary_scientific_object": {
+    "model": "SGP-14_PLUS_SHARED_SG2SC",
+    "relation_counts": [3, 4],
+    "topology_contrast": ["CHAIN", "HUB"],
+    "reason": "Counts 3-4 are inside SGP-14 training exposure; a within-support topology residual avoids making the standalone thesis depend on count extrapolation or SGP-12 OOD behavior."
+  },
+  "secondary_context": {
+    "SGP-12_vs_SGP-14": "MATCHED_TRAINING_EXPOSURE_REGIME_MODIFIER_ONLY",
+    "count_2": "CALIBRATION_ONLY_NO_CHAIN_HUB_TOPOLOGY_EVIDENCE",
+    "DISJOINT": "SECONDARY_DESCRIPTIVE_ACTIVE_ENDPOINT_COUNT_DIFFERS",
+    "COMPONENT_BRIDGE_OPTIONAL": "EXCLUDED_FROM_PRIMARY_UNTIL_NON_ISOMORPHIC_DEFINITION_IS_FROZEN"
+  },
+  "evidence_chain_required_for_paper": [
+    "A: SGP-14 shows a reproducible paired CHAIN-HUB residual at counts 3-4 despite both counts lying within its training exposure regime.",
+    "B: The topology-effect direction is also present in text-to-graph relation recall.",
+    "C: Exact-identity oracle graph substitution through the identical frozen SG2SC substantially reduces the end-to-end topology gap while downstream randomness is paired.",
+    "D: Independent SGP-14 training seeds reproduce A-C on an untouched test panel."
+  ],
+  "methodological_contribution": "A matched endpoint-sharing topology intervention plus an exact-identity same-decoder graph substitution diagnostic; not a new scene generator.",
+  "defensible_novelty_wording": "We isolate endpoint-sharing structure at fixed relation count and use an exact-identity graph intervention through the identical frozen decoder to distinguish upstream graph-grounding attenuation from downstream graph-to-layout attenuation.",
+  "explicit_non_claims": [
+    "relation-count degradation is novel",
+    "5/6-relation extrapolation is novel",
+    "graph-based 3D generation is novel",
+    "SGP-12 versus SGP-14 proves a causal effect of training support alone",
+    "HUB is universally harder than CHAIN before observing data",
+    "one graph statistic independently causes the effect",
+    "oracle inputs are a fair deployment baseline",
+    "graph grounding is the only possible bottleneck",
+    "one decoder establishes decoder-architecture-independent generality",
+    "the topology effect is an intrinsic human-like reasoning limit",
+    "a scalar relational-capacity breakpoint exists"
+  ],
+  "standalone_stop_rule": "Stop the standalone topology/localization paper if the frozen one-seed SGP-14 validation screen fails any GO gate; do not rescue it post hoc with SGP-12 OOD/exposure effects, count 5/6, alternative topology labels, or changed endpoints.",
+  "scientific_outcomes_read": 0,
+  "p1_opened": false,
+  "review_basis": "ORACLE_R1_PIVOT"
+}

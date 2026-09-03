@@ -1,0 +1,42 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "classification": "OUTCOME_BLIND_TRAINING_INPUT_AUDIT_NOT_SCIENTIFIC_EFFECT",
+  "state": "PURE_SUPPORT_CAUSAL_CLAIM_REJECTED_BY_INPUT_DOSE_AUDIT",
+  "audited_at": "2026-09-03",
+  "corpora": {
+    "SGP-12": {
+      "corpus_sha256": "9884b2afd58e05ed0eb80864154765e55551e5f77632d4fbd6308d0af50dd58b",
+      "rows": 12240,
+      "relation_count_distribution": {"1": 6120, "2": 6120},
+      "total_relation_edges": 18360,
+      "mean_relation_count": 1.5,
+      "mean_exact_clip_token_count": 25.995833333333334,
+      "mean_exact_clip_token_count_by_relation_count": {"1": 18.3410, "2": 33.6507}
+    },
+    "SGP-14": {
+      "corpus_sha256": "51e9e6011250970c660d91c75843919f55192b800423d8ad59a2cfb5c08c4b05",
+      "rows": 12240,
+      "relation_count_distribution": {"1": 3060, "2": 3060, "3": 3060, "4": 3060},
+      "total_relation_edges": 30600,
+      "mean_relation_count": 2.5,
+      "mean_exact_clip_token_count": 41.3359477124183,
+      "mean_exact_clip_token_count_by_relation_count": {"1": 18.3637, "2": 33.8379, "3": 49.0758, "4": 64.0663}
+    }
+  },
+  "derived_differences": {
+    "relation_edge_dose_ratio_SGP14_over_SGP12": 1.6666666666666667,
+    "relation_edge_dose_increase_percent": 66.66666666666667,
+    "mean_relation_count_difference": 1.0,
+    "mean_token_count_difference": 15.340114379084966
+  },
+  "adjudication": {
+    "equal_row_count_implies_equal_relational_supervision_dose": false,
+    "SGP12_vs_SGP14_identifies_training_support_alone": false,
+    "allowed_label": "MATCHED_TRAINING_EXPOSURE_REGIMES",
+    "forbidden_primary_claim": "CAUSAL_EFFECT_OF_TRAINING_RELATION_COUNT_SUPPORT_ALONE",
+    "restart_required_for_topology_first_paper": false,
+    "restart_required_if_pure_support_claim_is_retained": true
+  },
+  "scientific_outcomes_read": 0
+}

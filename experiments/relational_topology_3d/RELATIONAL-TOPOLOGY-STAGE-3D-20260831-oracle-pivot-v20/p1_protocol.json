@@ -1,0 +1,230 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "state": "PROSPECTIVE_DEVELOPMENTAL_P1_PROTOCOL_FROZEN_PROPOSAL_ONLY",
+  "classification": "NO_SCIENTIFIC_EXECUTION_AUTHORITY",
+  "authority_boundary": {
+    "p1_authorized": false,
+    "reproduction_authorized": false,
+    "confirmatory_multiseed_authorized": false,
+    "scientific_outcomes": 0,
+    "training_loss_as_scientific_evidence": false
+  },
+  "split_roles": {
+    "official_split_sha256": "f8f144f2380668b7db999d1b21b0331ade27b72f7e4892b43da068559ffb6d79",
+    "train": "TRAINING_ONLY",
+    "val": "ONE_SEED_DEVELOPMENTAL_P1_SCREEN_AFTER_SEPARATE_AUTHORITY",
+    "test": "UNTOUCHED_CONFIRMATORY_MULTI_SEED_LOCKBOX",
+    "rule": "The one-seed developmental screen must never be run on test. Test remains unopened until a frozen validation GO decision authorizes confirmation."
+  },
+  "primary_model": "SGP-14_PLUS_BEDROOM-SG2SC-SHARED",
+  "secondary_models": {
+    "SGP-12_PLUS_SHARED": "SECONDARY_EXPOSURE_REGIME_STRESS_ONLY_NOT_REQUIRED_FOR_DEVELOPMENTAL_GO"
+  },
+  "primary_relation_counts": [3, 4],
+  "primary_topologies": ["CHAIN", "HUB"],
+  "excluded_primary_cells": {
+    "count_2_CHAIN_vs_HUB": "INVALID_UNDIRECTED_TOPOLOGY_CONTRAST_P3_EQUALS_K1_2",
+    "DISJOINT": "ACTIVE_ENDPOINT_COUNT_DIFFERS; SECONDARY_ONLY",
+    "COMPONENT_BRIDGE_OPTIONAL": "NO_FROZEN_NON_ISOMORPHIC_DEFINITION"
+  },
+  "developmental_panel": {
+    "split": "val",
+    "matched_base_scene_tuples_per_count": 40,
+    "counts": {
+      "3": {"matched_tuples": 40, "instructions_per_tuple": 2, "instruction_count": 80},
+      "4": {"matched_tuples": 40, "instructions_per_tuple": 2, "instruction_count": 80}
+    },
+    "total_matched_tuples": 80,
+    "total_instructions": 160,
+    "failure_if_insufficient_pairs": "If fewer than 40 valid outcome-blind matched tuples are available at either count, HOLD_PANEL_QUALIFICATION; do not relax matching, topology, token, or feasibility constraints after inspecting model outputs."
+  },
+  "matched_tuple_contract": {
+    "exact_within_pair": [
+      "base_scene_id",
+      "active_object_ids",
+      "active_object_classes",
+      "active_object_feature_ids",
+      "active_object_masks",
+      "relation_count",
+      "predicate_multiset",
+      "direction_multiset",
+      "instruction_template",
+      "exact_clip_token_count",
+      "clip_tokenizer_revision",
+      "no_truncation",
+      "decoder_checkpoint",
+      "decoder_inference_parameters",
+      "decoder_random_or_noise_seed"
+    ],
+    "deterministically_counterbalanced": [
+      "object_to_topological_role_assignment",
+      "predicate_to_edge_assignment",
+      "hub_anchor_object_identity_across_tuples"
+    ],
+    "model_independent_qualification": [
+      "semantic_compatibility",
+      "geometric_feasibility"
+    ],
+    "pair_failure_rule": "Discard the whole CHAIN/HUB pair if either member fails a predeclared model-independent qualification. Never keep one member alone.",
+    "forbidden_filters": [
+      "SGP output",
+      "SG2SC output",
+      "relation recall",
+      "end-to-end success",
+      "oracle rescue",
+      "identity eligibility",
+      "any model-derived difficulty score"
+    ]
+  },
+  "topology_templates": {
+    "graph_semantics": "UNDIRECTED_ENDPOINT_CONNECTIVITY_FOR_TOPOLOGY_LABEL",
+    "count_3": {
+      "CHAIN": [["A", "B"], ["B", "C"], ["C", "D"]],
+      "HUB": [["A", "B"], ["A", "C"], ["A", "D"]],
+      "active_nodes_each": 4
+    },
+    "count_4": {
+      "CHAIN": [["A", "B"], ["B", "C"], ["C", "D"], ["D", "E"]],
+      "HUB": [["A", "B"], ["A", "C"], ["A", "D"], ["A", "E"]],
+      "active_nodes_each": 5
+    }
+  },
+  "panel_compiler_contract": {
+    "protocol_version": "RT3D-P1-TOPOLOGY-FIRST-V20",
+    "active_object_salt": "RT3D-P1-ACTIVE-OBJECT-V20",
+    "panel_order_salt": "RT3D-P1-PANEL-ORDER-V20",
+    "procedure": [
+      "For each split and count in {3,4}, enumerate candidate base scenes with at least count+1 eligible objects using only frozen dataset metadata.",
+      "Canonicalize eligible objects by stable object ID.",
+      "Score each eligible object by SHA256(active_object_salt || split_sha256 || base_scene_id || count || object_id); choose the count+1 smallest scores.",
+      "Choose a permitted predicate/direction multiset from the frozen candidate library using a deterministic hash of split_sha256, base_scene_id, count and protocol_version; no model output may enter this choice.",
+      "Construct both CHAIN and HUB endpoint assignments from the frozen templates over the same selected active objects.",
+      "Apply the frozen deterministic role rotation so hub-anchor identity and predicate-to-edge assignment are counterbalanced across tuples.",
+      "Textualize both members with the same frozen instruction-template family.",
+      "Require exact CLIP token-count equality within the pair and no truncation.",
+      "Run only the frozen semantic/geometric feasibility checker on both members; reject the whole pair if either fails.",
+      "Score each surviving tuple by SHA256(panel_order_salt || split_sha256 || base_scene_id || count || canonical_pair_payload_sha256), sort ascending and select the first 40 per count."
+    ],
+    "must_freeze_before_outcomes": [
+      "compiler commit and source SHA",
+      "both salts",
+      "edge templates",
+      "candidate predicate/direction library",
+      "instruction templates",
+      "semantic/geometric feasibility checker and thresholds",
+      "sample size",
+      "final panel manifest SHA256"
+    ]
+  },
+  "predicted_oracle_protocol": {
+    "predicted_arm": "instruction -> frozen SGP-14 -> predicted graph -> frozen shared SG2SC",
+    "oracle_arm": "same instruction/object scaffold -> ground-truth instructed relation graph -> same frozen shared SG2SC",
+    "exact_identity_fields": [
+      "slot_ids",
+      "object_ids",
+      "object_classes",
+      "object_feature_ids",
+      "object_masks"
+    ],
+    "paired_downstream_state": [
+      "SG2SC checkpoint",
+      "decoder inference parameters",
+      "decoder sampling seed",
+      "decoder noise/randomness"
+    ],
+    "oracle_information_interpretation": "Oracle receives correct instructed relations by intervention. It is an upper-bound localization condition, not a deployment baseline or equal-information competitor.",
+    "identity_failure_policy": {
+      "primary_population": "Every materialized instruction remains in text-to-graph and end-to-end denominators.",
+      "diagnostic": "exact_identity_eligible is recorded for every instruction.",
+      "oracle_rescue_population": "Conditional on exact_identity_eligible only.",
+      "repair": "FORBIDDEN",
+      "forbidden_repairs": ["Hungarian matching", "semantic remapping", "heuristic aliasing", "outcome-aware pairing"],
+      "localization_block": "If the identity eligibility gate fails, block the oracle localization claim rather than selecting a cleaner subset."
+    }
+  },
+  "observables_and_denominators": {
+    "text_to_graph_relation_recall": {
+      "denominator": "ALL_INSTRUCTED_GROUND_TRUTH_RELATIONS_OVER_ALL_MATERIALIZED_INSTRUCTIONS",
+      "identity_or_predicate_failure": "COUNTS_AS_FAILURE"
+    },
+    "predicted_graph_to_scene_relation_retention": {
+      "denominator": "INSTRUCTED_RELATIONS_CORRECTLY_REPRESENTED_IN_PREDICTED_DECODER_INPUT_WITH_REQUIRED_IDENTITIES",
+      "interpretation": "CONDITIONAL_STAGE_OBSERVABLE"
+    },
+    "oracle_graph_to_scene_relation_retention": {
+      "denominator": "ALL_INSTRUCTED_ORACLE_RELATIONS",
+      "interpretation": "ORACLE_CONDITIONAL_STAGE_OBSERVABLE"
+    },
+    "end_to_end_relation_iRecall": {
+      "denominator": "ALL_INSTRUCTED_GROUND_TRUTH_RELATIONS_OVER_ALL_MATERIALIZED_INSTRUCTIONS",
+      "primary": true
+    },
+    "exact_all_success": {
+      "denominator": "ALL_MATERIALIZED_INSTRUCTIONS",
+      "primary": false
+    },
+    "stage_warning": "The three stage observables are not an exact multiplicative waterfall. A scene may realize a relation absent from the predicted graph. Causal localization comes from the predicted/oracle intervention."
+  },
+  "primary_estimand": {
+    "name": "PAIRED_SGP14_PREDICTED_END_TO_END_TOPOLOGY_EFFECT",
+    "definition": "Delta_topo = mean_i(iRecall_HUB_i - iRecall_CHAIN_i) over matched base-scene tuples, pooled over counts 3-4.",
+    "mandatory_count_specific_estimates": [3, 4],
+    "primary_endpoint": "end_to_end_relation_iRecall",
+    "secondary_endpoint": "exact_all_success"
+  },
+  "analysis": {
+    "primary_method": "PAIRED_BASE_SCENE_CLUSTER_BOOTSTRAP",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260903,
+    "confidence_interval": "TWO_SIDED_95_PERCENT_PERCENTILE",
+    "resampling_unit": "matched_base_scene_tuple",
+    "four_way_mixed_model_primary": false,
+    "seed_random_effect_in_one_seed_development": false,
+    "continuous_graph_statistics": "DESCRIPTIVE_OR_SECONDARY_ONLY"
+  },
+  "go_stop_rule": {
+    "action_if_all_pass": "ELIGIBLE_TO_REQUEST_SEPARATE_MULTI_SEED_CONFIRMATORY_AUTHORITY",
+    "action_if_any_fail": "STOP_STANDALONE_TOPOLOGY_LOCALIZATION_CONFIRMATION; DO_NOT_RESCUE_POST_HOC",
+    "gates": {
+      "meaningful_topology_residual": {
+        "requirement": "abs(pooled predicted Delta_topo) >= 0.10 AND its 95% base-scene bootstrap CI excludes zero"
+      },
+      "cross_count_consistency": {
+        "requirement": "count-3 and count-4 predicted Delta_topo have the same sign AND abs(effect) >= 0.05 at each count"
+      },
+      "upstream_correspondence": {
+        "requirement": "pooled text-to-graph topology effect has the same sign as pooled predicted end-to-end Delta_topo"
+      },
+      "selective_oracle_recovery": {
+        "requirement": "1 - abs(Delta_oracle)/abs(Delta_predicted) >= 0.50 AND abs(pooled Delta_oracle) <= 0.05"
+      },
+      "oracle_identification": {
+        "requirement": "exact_identity_eligible >= 0.95 in every count x topology primary cell AND absolute CHAIN-HUB eligibility-rate difference <= 0.05 within each count"
+      }
+    },
+    "forbidden_after_outcomes": [
+      "changing relation counts",
+      "adding 5/6 relation counts to rescue novelty",
+      "replacing CHAIN/HUB with another topology class",
+      "adding COMPONENT_BRIDGE to rescue significance",
+      "relaxing exact token matching",
+      "changing panel size",
+      "changing primary endpoint",
+      "changing effect-size threshold",
+      "changing oracle eligibility threshold",
+      "redefining missingness/denominators",
+      "making SGP-12 OOD behavior the new primary thesis"
+    ]
+  },
+  "confirmation_if_go": {
+    "split": "test",
+    "minimum_total_SGP14_training_seeds": 3,
+    "new_independent_SGP14_seeds_required_after_development": 2,
+    "panel_compiler": "SAME_FROZEN_V20_COMPILER_AND_RULES_APPLIED_TO_TEST",
+    "thresholds": "UNCHANGED_FROM_DEVELOPMENTAL_PROTOCOL",
+    "shared_decoder": "ONE_FIXED_SHARED_DECODER; CLAIMS_EXPLICITLY_CONDITIONAL_ON_THIS_DECODER",
+    "SGP12_confirmation": "NOT_REQUIRED_UNLESS_FINAL_PAPER_PREDECLARES_A_SECONDARY_TRAINING_EXPOSURE_REGIME_INTERACTION_CLAIM"
+  },
+  "scientific_outcomes_read": 0
+}
