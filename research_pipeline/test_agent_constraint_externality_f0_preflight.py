@@ -137,7 +137,20 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_AUTHORIZED_AFTER_F0_UPTAKE_FAIL":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V1_TOO_EASY_STOP":
+            self.assertEqual(readiness["status"], "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP")
+            self.assertEqual(readiness["next_authorized_action"], "DESIGN_FRESH_SQ0_V2_TARGET_CHALLENGE")
+            self.assertEqual(readiness["sq0_v1_result_status"], "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP")
+            self.assertEqual(readiness["sq0_v1_closeout_status"], "SQ0_V1_TOO_EASY_CLOSEOUT")
+            self.assertEqual(readiness["sq0_v1_usable_target_failure_count"], 0)
+            self.assertEqual(readiness["sq0_v1_usable_target_failure_rate"], 0.0)
+            self.assertEqual(readiness["sq0_v1_scientific_model_round_count"], 135)
+            self.assertEqual(readiness["sq0_v1_appworld_tool_call_total"], 190)
+            self.assertFalse(readiness["sq0_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_AUTHORIZED_AFTER_F0_UPTAKE_FAIL":
             self.assertEqual(readiness["status"], "SQ0_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY")
             self.assertEqual(readiness["next_authorized_action"], "RUN_SQ0_MIMO25PRO_V1")
             self.assertTrue(readiness["f0_executed"])

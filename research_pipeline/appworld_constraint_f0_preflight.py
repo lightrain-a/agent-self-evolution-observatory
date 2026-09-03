@@ -215,6 +215,8 @@ SQ0_STATIC_QUALIFICATION = GENERATED / "agent-constraint-externality-sq0-target-
 SQ0_HUMAN_AUTHORIZATION = GENERATED / "agent-constraint-externality-sq0-human-authorization-20260903.json"
 SQ0_MIMO25PRO_Q1 = GENERATED / "agent-constraint-externality-sq0-mimo25pro-mcp-q1-predispatch-20260903.json"
 SQ0_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-mimo25pro-execution-contract-v1-20260903.json"
+SQ0_V1_RESULT = GENERATED / "agent-constraint-externality-sq0-mimo25pro-result-v1-20260903.json"
+SQ0_V1_CLOSEOUT = GENERATED / "agent-constraint-externality-sq0-v1-closeout-20260903.json"
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -803,6 +805,28 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("SQ0 execution contract authority boundary drifted.")
         sq0_execution_authorized = True
 
+    sq0_v1_closed = False
+    sq0_v1_result = read_json(SQ0_V1_RESULT) if SQ0_V1_RESULT.is_file() else {}
+    sq0_v1_closeout = read_json(SQ0_V1_CLOSEOUT) if SQ0_V1_CLOSEOUT.is_file() else {}
+    if any((sq0_v1_result, sq0_v1_closeout)):
+        if not all((sq0_v1_result, sq0_v1_closeout)):
+            raise PreflightError("SQ0-V1 result/closeout artifact set is incomplete.")
+        for label, payload in (("SQ0-V1 result", sq0_v1_result), ("SQ0-V1 closeout", sq0_v1_closeout)):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256"); unsigned = dict(payload); unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if sq0_v1_result.get("status") != "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP":
+            raise PreflightError("SQ0-V1 result is not at frozen too-easy stop.")
+        if sq0_v1_result.get("case_count") != 12 or sq0_v1_result.get("usable_target_failure_count") != 0 or sq0_v1_result.get("non_semantic_failure_units") != []:
+            raise PreflightError("SQ0-V1 aggregate drifted.")
+        if sq0_v1_closeout.get("status") != "SQ0_V1_TOO_EASY_CLOSEOUT" or sq0_v1_closeout.get("verdict") != sq0_v1_result.get("status"):
+            raise PreflightError("SQ0-V1 closeout/result mismatch.")
+        if sq0_v1_closeout.get("authority", {}).get("sq0_v2_design") is not True or sq0_v1_closeout.get("authority", {}).get("sq0_v2_execution") is not False:
+            raise PreflightError("SQ0-V1 closeout crossed development-only redesign boundary.")
+        sq0_v1_closed = True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -1103,6 +1127,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif sq0_v1_closed:
+        readiness_status = "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP"
+        blocker = "SQ0-V1 completed without interface/cap contamination but MiMo 2.5 Pro succeeded on all 12 development target challenges, yielding zero usable target failures."
+        next_action = "DESIGN_FRESH_SQ0_V2_TARGET_CHALLENGE"
     elif sq0_execution_authorized:
         readiness_status = "SQ0_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
         blocker = None
@@ -1447,8 +1475,14 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "sq0_mcp_q1_status": sq0_q1.get("status"),
         "sq0_mcp_q1_model_requests": sq0_q1.get("codingplan_model_requests"),
         "sq0_execution_contract_status": sq0_execution_contract.get("status"),
-        "sq0_execution_authorized": sq0_execution_authorized,
-        "f0_r1_sq0_execution_authorized": sq0_execution_authorized,
+        "sq0_v1_result_status": sq0_v1_result.get("status"),
+        "sq0_v1_closeout_status": sq0_v1_closeout.get("status"),
+        "sq0_v1_usable_target_failure_count": int(sq0_v1_result.get("usable_target_failure_count", 0)),
+        "sq0_v1_usable_target_failure_rate": sq0_v1_result.get("usable_target_failure_rate"),
+        "sq0_v1_scientific_model_round_count": int(sq0_v1_result.get("scientific_model_round_count", 0)),
+        "sq0_v1_appworld_tool_call_total": int(sq0_v1_result.get("appworld_tool_call_total", 0)),
+        "sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
+        "f0_r1_sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
         "f0_r1_execution_authorized": False,
         "f0_source_target_success_count": int(f0_source_closeout.get("source_target_success_count", 0)),
         "f0_source_target_failure_count": int(f0_source_closeout.get("source_target_failure_count", 0)),
@@ -1457,7 +1491,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "f0_source_appworld_tool_call_total": int(f0_source_closeout.get("appworld_tool_call_total", 0)),
         "f0_probe_episode_count": int(f0_source_closeout.get("probe_episode_count", 0)),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_SQ0_AUTHORIZED_AFTER_F0_UPTAKE_FAIL"
+            "SELECTED_MIMO25PRO_SQ0_V1_TOO_EASY_STOP"
+            if sq0_v1_closed
+            else "SELECTED_MIMO25PRO_SQ0_AUTHORIZED_AFTER_F0_UPTAKE_FAIL"
             if sq0_execution_authorized
             else "SELECTED_MIMO25PRO_F0_UPDATE_UPTAKE_FAIL"
             if f0_uptake_failed
@@ -1581,7 +1617,7 @@ def main() -> None:
         F0_REPAIRS_MANIFEST, F0_ADJUDICATION, F0_SOURCE_CLOSEOUT,
         F0_UPTAKE_ROOT_CAUSE, F0_R1_PROPOSAL,
         SQ0_STATIC_CONTRACT, SQ0_STATIC_QUALIFICATION, SQ0_HUMAN_AUTHORIZATION,
-        SQ0_MIMO25PRO_Q1, SQ0_EXECUTION_CONTRACT,
+        SQ0_MIMO25PRO_Q1, SQ0_EXECUTION_CONTRACT, SQ0_V1_RESULT, SQ0_V1_CLOSEOUT,
     ):
         if not path.is_file():
             continue

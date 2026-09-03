@@ -187,8 +187,8 @@
       "sha256": "b4e44193048e77145606260237fd288e98b4c3c33f7acfcb20f6ab7dbfb0302d"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 10903,
-      "sha256": "ba734b16010b83f96e8fe7d02a1580fc4d1fb34357ab271f06e2927fb0e26f2e"
+      "bytes": 11342,
+      "sha256": "71bdeee052e5f4005e19cab92aca84673213d6c730086755def0fde686f2406c"
     },
     "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json": {
       "bytes": 1098,
@@ -294,6 +294,10 @@
       "bytes": 886,
       "sha256": "02080431c89eef1a3734eab0531ea1fe0ebae46c239d78751ec9c08a5bf0a0ce"
     },
+    "generated/agent-constraint-externality-sq0-mimo25pro-result-v1-20260903.json": {
+      "bytes": 1148,
+      "sha256": "956fed6496ac6b8b255eb5cde6f91e509cf81ccc6b0ebef21c8746256c995969"
+    },
     "generated/agent-constraint-externality-sq0-target-challenge-v1-contract-20260903.json": {
       "bytes": 8209,
       "sha256": "8fa34555463198f39b3b0a2e9feea1781a418b3f956349b32140d0392a27b6c3"
@@ -301,6 +305,10 @@
     "generated/agent-constraint-externality-sq0-target-challenge-v1-static-qualification-20260903.json": {
       "bytes": 4722,
       "sha256": "944c372a5971b7e4c20d3203122cc65a300f20fec0ea92a79e9da6b7f2061823"
+    },
+    "generated/agent-constraint-externality-sq0-v1-closeout-20260903.json": {
+      "bytes": 1555,
+      "sha256": "ad1ddd0be6333c53ca0a7dee830e70bfde92a09ff69c33a496fd38dd1cf0691c"
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
@@ -322,5 +330,5 @@
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "SQ0_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
+  "status": "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP"
 }
