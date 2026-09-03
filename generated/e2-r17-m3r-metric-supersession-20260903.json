@@ -1,0 +1,64 @@
+{
+  "artifact_type": "e2-r17-m3r-metric-supersession",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_M3R2_COMMENSURATE_METRIC_REPAIR_PROPOSAL_ONLY",
+  "base_commit": "acbaba5f0388832a6eb474e20fbfc73e01bb653d",
+  "branch": "research/e2-r17-m3r-metric-repair-20260903",
+  "superseded": {
+    "proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3-proposal-20260903.md",
+    "proposal_sha256": "ca430d2308df6dae4738c82e27d2bb11a30c1299bfb7424fa19ffb068b0816bd",
+    "metric_path": "research_pipeline/e2_r17_regeneration_metrics.py",
+    "metric_sha256": "50acfa6fbc87417469d151397fda9d05f3bde5017306362879e2efc93d3d2455",
+    "provider_calls": 0,
+    "actor_units": 0,
+    "scientific_outcomes": 0,
+    "execution_authority": false
+  },
+  "replacement": {
+    "proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r2-proposal-20260903.md",
+    "proposal_sha256": "82f6139344d2c78678130a36a32278e4e9cb0d29a4c9200e45982f1a09d44673",
+    "metric_path": "research_pipeline/e2_r17_regeneration_metrics_v2.py",
+    "metric_sha256": "d989b94e43d5c6bfb46ea56faa94960927487ee30f51bb801eb855d9d2da15a0",
+    "test_path": "research_pipeline/test_e2_r17_regeneration_metrics_v2.py",
+    "test_sha256": "f307bbf6346eb9dd1ba848170eece8e9ec339ab0b4ad6b3f6712e92134e4fe8b"
+  },
+  "reason": {
+    "old_primary": "D_U - D_A, where D_U compares absolute differences after within-state actor averaging and D_A is pairwise within-state actor disagreement",
+    "defect": "The two terms are not commensurate pairwise-disagreement quantities; the subtraction has additional finite-realization shrinkage without a direct state-separation expectation.",
+    "new_primary": "E_REAL = D_X - D_A",
+    "identity": "Under exchangeable conditional Bernoulli actor realizations, E[E_REAL] = mean_q (p_A(q)-p_B(q))^2.",
+    "outcome_conditioned": false
+  },
+  "unchanged_design": {
+    "state_count": 4,
+    "task_count": 18,
+    "new_actor_units": 72,
+    "updater_calls": 0,
+    "model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled",
+    "provider_retry_limit": 0,
+    "same_common_win_state": true,
+    "same_selected_development_panel": true,
+    "e3_opened": false
+  },
+  "tests": {
+    "v2_metric_tests": "6/6 PASS",
+    "v1_plus_v2_metric_tests": "11/11 PASS",
+    "exhaustive_expectation_identity_test": true
+  },
+  "authority": {
+    "provider_io": false,
+    "actor_measurement": false,
+    "updater": false,
+    "recovery_v3_modification": false,
+    "m4": false,
+    "semantic_transfer": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "interpretation_boundary": "M3R2 is a prospective zero-provider metric repair of an unused proposal. It supersedes only the M3R primary localization statistic and corresponding interpretation, without changing the measurement budget or reading any M3 outcome."
+}
