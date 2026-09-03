@@ -8,7 +8,7 @@ from pathlib import Path
 from research_pipeline.agent_safety_g1_qwen397_model_binding import BindingError, run_binding
 
 ROOT = Path(__file__).resolve().parents[1]
-PREREG = ROOT / "generated" / "agent-safety-g1-qwen397-capability-requalification-prereg-20260902.json"
+PREREG = ROOT / "generated" / "agent-safety-g1-qwen397-capability-requalification-prereg-v2-20260903.json"
 MODEL = "qwen3.5-397b-a17b"
 
 

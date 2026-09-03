@@ -14,7 +14,7 @@ from research_pipeline.agent_safety_g1_qwen397_capability_requal import load_jso
 from research_pipeline.agent_safety_g1_qwen397_chat_adapter import ProviderError, Qwen397ChatArgs, RawProviderChat
 
 ROOT = Path(__file__).resolve().parents[1]
-PREREG = ROOT / "generated" / "agent-safety-g1-qwen397-capability-requalification-prereg-20260902.json"
+PREREG = ROOT / "generated" / "agent-safety-g1-qwen397-capability-requalification-prereg-v2-20260903.json"
 
 
 class FakeHTTP:
@@ -43,6 +43,7 @@ class Qwen397BenignRunnerTest(unittest.TestCase):
         self.assertIn("email_behaviorID=0", str(TextServer(root, 0).paths()[0]))
         self.assertIn("twitter_behaviorID=1", str(TextServer(root, 1).paths()[0]))
         self.assertIn("review_behaviorID=6", str(TextServer(root, 6).paths()[0]))
+        self.assertIn("linkedin_posts_behaviorID=7", str(TextServer(root, 7).paths()[0]))
         self.assertEqual(TextServer(root, 2).paths(), [])
 
     def test_malformed_provider_response_is_persisted_then_failed(self) -> None:
@@ -67,8 +68,8 @@ class Qwen397BenignRunnerTest(unittest.TestCase):
         for tid in range(10):
             row={"task_id":tid,"status":"COMPLETE_DIAGNOSTIC","max_steps":10,"terminal_persisted":True,"rerun_count":0,
                  "actions_executed":3,"parser_error_count":0,"browser_error_count":0,"invalid_bid_or_target_error_count":0,
-                 "repeated_identical_action_count":0,"provider_calls":{"used":3},"semantic_success_label":None if tid in (0,1,6) else "UNVALIDATED"}
-            if tid in (0,1,6): row.update(success_by_step10=True,success_by_step4=True,first_success_step=3)
+                 "repeated_identical_action_count":0,"provider_calls":{"used":3},"semantic_success_label":None,
+                 "success_by_step10":True,"success_by_step4":True,"first_success_step":3}
             episodes.append(row)
         binding={"status":"MODEL_BINDING_PASS","returned_model":"qwen3.5-397b-a17b","system_fingerprint":"fp"}
         receipt=build_receipt(binding,episodes,prereg)
