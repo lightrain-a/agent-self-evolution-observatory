@@ -8,6 +8,7 @@
     "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_synthetic_fused_direct_device_dry_gradient.py",
     "sha256": "f56a5682634c13f2120d0271a21babf4f1f2c616ccefad7d1f8ced8e2a32302b"
   },
+  "runner_sha256": "f56a5682634c13f2120d0271a21babf4f1f2c616ccefad7d1f8ced8e2a32302b",
   "bound_evidence": {
     "accumulation_preregistration": {
       "path": "generated/behavior-formal-goal-coupling-shared26-pi05-single-gpu-accumulation-child-preregistration-20260902.json",
