@@ -131,7 +131,35 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "STOP_AWAIT_HUMAN_F0_AUTHORIZATION",
+            )
+            self.assertTrue(readiness["eligible_backbone_selected"])
+            self.assertEqual(readiness["mimo25pro_capability_result_status"], "CAPABILITY_CALIBRATION_PASS")
+            self.assertEqual(readiness["mimo25pro_capability_closeout_status"], "CODINGPLAN_MIMO25PRO_B3_PASS_CLOSEOUT")
+            self.assertEqual(readiness["mimo25pro_scientific_model_round_count"], 77)
+            self.assertEqual(readiness["mimo25pro_account_window_request_delta"], 78)
+            self.assertEqual(readiness["mimo25pro_account_level_unattributed_request_count"], 1)
+            self.assertEqual(readiness["mimo25pro_tool_loop_completion_rate"], 0.875)
+            self.assertEqual(readiness["mimo25pro_target_success_rate"], 0.875)
+            self.assertEqual(readiness["selected_backbone_capability_result_status"], "CAPABILITY_CALIBRATION_PASS")
+            self.assertEqual(
+                readiness["selected_backbone"],
+                {
+                    "model_id": "mimo-v2.5-pro",
+                    "model_profile": "AtomGit-mimo-v2.5-pro",
+                    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+                    "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+                },
+            )
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT":
             self.assertEqual(
                 readiness["status"],
                 "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT",

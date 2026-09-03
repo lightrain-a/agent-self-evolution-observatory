@@ -46,6 +46,10 @@
       "bytes": 1823,
       "sha256": "6efd9a58c3408799fff2ebd872e7699495b200e264214cc0ac6f51668dbe67a4"
     },
+    "generated/agent-constraint-externality-capability-backbone-selection-final-20260903.json": {
+      "bytes": 2094,
+      "sha256": "8293ca188af8b03364fe901fb8b4581ffd11f1f5bdfa86b7cf145ac8ed540c5f"
+    },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
       "bytes": 1773,
       "sha256": "8336b5c82aa88531794e541cfa200409644ea52842a9cdd45534f8679f235e25"
@@ -130,6 +134,14 @@
       "bytes": 2005,
       "sha256": "7bbe1c0ce20ab86ff37ec912fcde17cfad9a3a444581fbc7a0b2e2033d9d328c"
     },
+    "generated/agent-constraint-externality-codingplan-mimo25pro-capability-b3-closeout-20260903.json": {
+      "bytes": 3303,
+      "sha256": "2d8b64f3d5808ee234848b4ee642ca3016f07ca33fea799b83d857ac3a31fb10"
+    },
+    "generated/agent-constraint-externality-codingplan-mimo25pro-capability-b3-result-20260903.json": {
+      "bytes": 1998,
+      "sha256": "6af38f2b43b6fe9ee0acb94dc63a98e2d582145443828eb55c103cfee9fb1935"
+    },
     "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-closeout-20260902.json": {
       "bytes": 6490,
       "sha256": "425449ff45935bca00daa9db83a77037b62e1e0b2e3d20e01545a31951e983c9"
@@ -151,8 +163,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 7917,
-      "sha256": "d162295e975fbfbbbc1d7aab6fa0ea75417318d49e8b8fc5977a69db416ca1e6"
+      "bytes": 8991,
+      "sha256": "ee3ae7fb4346064ce6b668e988e2156cfa0fdfcafd7947b3bdae2fca69835647"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -241,10 +253,18 @@
   "gpu_runs": 0,
   "mimo25_codingplan_account_window_requests": 69,
   "mimo25_codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_MIMO25_B2_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
+  "mimo25pro_codingplan_account_window_requests": 78,
+  "mimo25pro_codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_MIMO25PRO_B3_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "provider_calls": 296,
   "provider_calls_accounting_domain": "DIRECT_API_ONLY",
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT"
+  "selected_backbone": {
+    "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_id": "mimo-v2.5-pro",
+    "model_profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "status": "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED"
 }

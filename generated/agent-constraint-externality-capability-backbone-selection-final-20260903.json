@@ -1,0 +1,45 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "backbone_selected": true,
+    "f0": false,
+    "f0_reason": "Separate human F0 authorization is still required after backbone freeze.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "capability_closeout_artifact": "generated/agent-constraint-externality-codingplan-mimo25pro-capability-b3-closeout-20260903.json",
+  "capability_closeout_content_sha256": "a6a886e04a84ff4c50f16154eed7ddfa026001b9d39e0787a891dacc2334ff62",
+  "content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "frozen_gate_result": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.875,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.875,
+    "verdict": "CAPABILITY_CALIBRATION_PASS"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "predeclared_search_state_artifact": "generated/agent-constraint-externality-capability-backbone-search-state-b3-20260903.json",
+  "predeclared_search_state_content_sha256": "8841698c8c90436bd81e2873f9cdb52b6c51bd674911b35477a12db68032cf1e",
+  "remaining_candidate_order": [],
+  "schema_version": "ace-capability-backbone-selection-final-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone": {
+    "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_id": "mimo-v2.5-pro",
+    "model_profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "selection_is_outcome_bounded_by_preregistered_ladder": true,
+  "selection_policy": "FREEZE_CURRENT_ACCOUNT_CATALOG_ORDER_AFTER_EXCLUDING_ALREADY_VALIDLY_TESTED_MODELS; STOP_AT_FIRST_CAPABILITY_PASS",
+  "selection_reason": "FIRST_PREDECLARED_CANDIDATE_TO_PASS_ALL_FROZEN_CAPABILITY_THRESHOLDS",
+  "status": "CAPABILITY_BACKBONE_SELECTED_MIMO25PRO_PASS"
+}

@@ -1,0 +1,57 @@
+{
+  "agent_episode_count": 8,
+  "appworld_tool_call_total": 102,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "Capability selection never self-authorizes F0.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "backbone_search_state_sha256": "8841698c8c90436bd81e2873f9cdb52b6c51bd674911b35477a12db68032cf1e",
+  "codingplan_window_first_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 282,
+    "used": 218
+  },
+  "codingplan_window_last_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 204,
+    "used": 296
+  },
+  "completion_tokens_total": 18706,
+  "content_sha256": "dadf907997be65b381a40fa42e615220c7138a40c7c0fd32a665f2925628660c",
+  "contract_sha256": "cde63f99721309a85deb5fda9ab269dc08667f1218b05ad7bb5f924a777c9b51",
+  "execution_id": "CODINGPLAN-MIMO25PRO-CAPABILITY-B3",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.875,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.875,
+    "verdict": "CAPABILITY_CALIBRATION_PASS"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_sha256": "b63fafefea8508378b8e914ce43f62aae66470d9b153074a6a370e60fb5b0c23",
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "model_round_count": 77,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prompt_tokens_total": 3074569,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-mimo25pro-capability-b3-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_PASS",
+  "valid_capability_measurements": 8
+}
