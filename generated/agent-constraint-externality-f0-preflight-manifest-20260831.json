@@ -187,8 +187,8 @@
       "sha256": "b4e44193048e77145606260237fd288e98b4c3c33f7acfcb20f6ab7dbfb0302d"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 11342,
-      "sha256": "71bdeee052e5f4005e19cab92aca84673213d6c730086755def0fde686f2406c"
+      "bytes": 11772,
+      "sha256": "f1f417926e507b7f75186044a394fb80144504149f4b06fc919913d099cf6e14"
     },
     "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json": {
       "bytes": 1098,
@@ -306,9 +306,29 @@
       "bytes": 4722,
       "sha256": "944c372a5971b7e4c20d3203122cc65a300f20fec0ea92a79e9da6b7f2061823"
     },
+    "generated/agent-constraint-externality-sq0-target-challenge-v2-contract-20260903.json": {
+      "bytes": 4436,
+      "sha256": "2a7acb4e341e1bb1b5032ab53e470f41e697d455dbcb979e40030f4d6f5e225e"
+    },
+    "generated/agent-constraint-externality-sq0-target-challenge-v2-static-qualification-20260903.json": {
+      "bytes": 4710,
+      "sha256": "caa29e832f2fe3531117a760d9461cdf5d456ac4f574d33f391f35db57c28d18"
+    },
     "generated/agent-constraint-externality-sq0-v1-closeout-20260903.json": {
       "bytes": 1555,
       "sha256": "ad1ddd0be6333c53ca0a7dee830e70bfde92a09ff69c33a496fd38dd1cf0691c"
+    },
+    "generated/agent-constraint-externality-sq0-v2-human-authorization-20260903.json": {
+      "bytes": 919,
+      "sha256": "655697ac4037c828fcaedf2b34074b70d2cf1017910019da97368f8ef2370800"
+    },
+    "generated/agent-constraint-externality-sq0-v2-mimo25pro-execution-contract-20260903.json": {
+      "bytes": 2260,
+      "sha256": "fca64deaa3836d7b33b303366596d94018d9a050055ccd11a132692fe3c57d82"
+    },
+    "generated/agent-constraint-externality-sq0-v2-mimo25pro-mcp-q1-predispatch-20260903.json": {
+      "bytes": 896,
+      "sha256": "a12374343a8181d9b83b8b9dc9e75567c8d39ca4bbd40f3adb5dbc1627611549"
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
@@ -330,5 +350,5 @@
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP"
+  "status": "SQ0_V2_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
 }

@@ -137,7 +137,22 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V1_TOO_EASY_STOP":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V2_AUTHORIZED_AFTER_V1_TOO_EASY":
+            self.assertEqual(readiness["status"], "SQ0_V2_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY")
+            self.assertEqual(readiness["next_authorized_action"], "RUN_SQ0_V2_MIMO25PRO")
+            self.assertEqual(readiness["sq0_v2_static_contract_status"], "SQ0_V2_TARGET_CHALLENGE_STATIC_DESIGN_READY")
+            self.assertEqual(readiness["sq0_v2_static_qualification_status"], "SQ0_V2_PUBLIC_REACHABILITY_PASS")
+            self.assertLessEqual(readiness["sq0_v2_static_max_public_tool_calls"], 26)
+            self.assertGreaterEqual(readiness["sq0_v2_static_minimum_headroom"], 10)
+            self.assertEqual(readiness["sq0_v2_human_authorization_status"], "USER_AUTHORIZED_SQ0_V2_DEVELOPMENT_ITERATION_AFTER_V1_TOO_EASY")
+            self.assertEqual(readiness["sq0_v2_mcp_q1_status"], "SQ0_V2_MIMO25PRO_MCP_PREDISPATCH_PASS")
+            self.assertEqual(readiness["sq0_v2_mcp_q1_model_requests"], 0)
+            self.assertEqual(readiness["sq0_v2_execution_contract_status"], "SQ0_V2_MIMO25PRO_EXECUTION_AUTHORIZED")
+            self.assertTrue(readiness["sq0_v2_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V1_TOO_EASY_STOP":
             self.assertEqual(readiness["status"], "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP")
             self.assertEqual(readiness["next_authorized_action"], "DESIGN_FRESH_SQ0_V2_TARGET_CHALLENGE")
             self.assertEqual(readiness["sq0_v1_result_status"], "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP")
