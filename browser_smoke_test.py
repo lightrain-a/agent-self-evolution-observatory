@@ -727,7 +727,7 @@ def main() -> None:
           ("/paper-g1.html", True, ("BrowserART + AWM","HB 0/12","DS 3/12")),
           ("/paper-c1.html", True, ("Shopping","125/172","0.700 vs 0.595")),
           ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · effect unopened")),
-          ("/paper-b1.html", True, ("AgentDojo financial","5/10 eligible","0 calls")),
+          ("/paper-b1.html", True, ("350 / 350","+3.125 pp","0.0 pp")),
           ("/paper-a.html", False, ("MemoryVLA","LIBERO-Plus","0.5541")),
           ("/paper-b.html", False, ("MemoryVLA","24 scopes","longitudinal")),
           ("/paper-agent-constraint.html", False, ("AppWorld-derived matched families","PRE-F0.5","ARK_API_KEY")),
