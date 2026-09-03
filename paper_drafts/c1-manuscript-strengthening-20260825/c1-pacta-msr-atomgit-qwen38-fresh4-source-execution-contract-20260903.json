@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH4-SOURCE-EXECUTION-20260903",
+  "status": "FROZEN_PRE_SOURCE_OUTCOME",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "fresh4_pool_sha256": "9582877385413807dea6316c25585d5714662cce17f83fa298934229dc4f0927",
+  "fresh4_source_schedule_sha256": "43f0fcc39d773edee0ea1cfaeb25055374437839bc1037b28349849f39f87a9f",
+  "fresh4_probe_specs_sha256": "fa94289f89f7cda882cfc4f00ae967fb377001dd370e6b7f9c7a9db66886dc17",
+  "fresh4_transport_amendment_sha256": "c1229439b0b0aa3e80e7c6e2747d49b5378263d93f5af192597735a5bcaa42da",
+  "q02_source_budget_closure_sha256": "c41ebc9df5a28b1e6f2643195be2cdfd170318de5577ef2aff3b1891819959b6",
+  "q02_result_sha256": "c4c7c05f4e14d82fa8ef7d0d0ea2c31a8888295f96eb810b649150da1577b7ce",
+  "q03_controlled_output_closure_sha256": "af311a6a2785bff2d06cc12febf5288de5f4759a156d3ca4ac0407cd550837ea",
+  "runtime_binding": "fresh4 20/20 runtime qualification SHA is mandatory at prepare/prelaunch/smoke/acquire time",
+  "geometry": {
+    "source_units": 10,
+    "repositories": 9,
+    "duplicate_repository": "sphinx-doc/sphinx",
+    "weighting": "equal pair weighting",
+    "replacement": false,
+    "top_up": false
+  },
+  "provider": {
+    "provider_id": "ATOMGIT_CODINGPLAN_ATOMCODE_QWEN38_FRESH4_CONTROLLED_OUTPUT_SOURCE_V1",
+    "allowed_tool": "mcp__c1output__submit_output",
+    "output_kind": "text",
+    "content": "complete MiniSWEAgent assistant turn with THOUGHT and exactly one fenced bash command",
+    "host_tools_allowed": false,
+    "model_rounds_per_logical_output": 1,
+    "source_max_tokens": 32768,
+    "first_decision_budget": 2048,
+    "timeout_seconds": 900,
+    "provider_wrapper_retries": 0
+  },
+  "prelaunch": {
+    "all_10_source_exact_base": true,
+    "provider_calls": 0
+  },
+  "smoke": {
+    "required_before_source": true,
+    "synthetic": true,
+    "must_complete_multistep_docker_observation_and_submission": true
+  },
+  "source_gate": "all 10 source trajectories provenance-valid; any consumed-invalid or incomplete consumed epoch retires the entire fresh4 pool",
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "forbidden": [
+    "replace or top up a failed source",
+    "rerun a consumed-invalid source",
+    "use host/native AtomCode tools",
+    "use plain-text/headless provider instead of controlled-output MCP",
+    "execute any future task before source support is 10/10",
+    "writer/binder/probe/shadow/final before source gate"
+  ]
+}
