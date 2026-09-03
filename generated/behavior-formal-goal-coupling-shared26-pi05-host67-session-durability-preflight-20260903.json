@@ -1,0 +1,55 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-host67-session-durability-preflight-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "HOST67_SESSION_DURABILITY_PREFLIGHT_PASS",
+  "host": "222.20.126.67",
+  "user": "wyt",
+  "uid": 1008,
+  "linger": false,
+  "problem_being_repaired": "repair2 was explicitly stopped by the host67 user systemd manager when exit.target was activated after the last login session disappeared",
+  "mechanism": {
+    "source_host": "222.20.126.69",
+    "independent_ssh_keepalive_connections": 2,
+    "source_ssh_pids_at_preflight": [3911122, 3911123],
+    "remote_keepalive_command": "exec sleep 21600",
+    "remote_sleep_pids_at_preflight": [46321, 46322],
+    "ssh_options": {
+      "BatchMode": true,
+      "ServerAliveInterval_seconds": 10,
+      "ServerAliveCountMax": 180
+    },
+    "purpose": "keep at least two authenticated host67 login sessions alive independently of the transient MCP/control SSH connection, preventing the non-lingering user manager from reaching exit.target solely because the control session closes"
+  },
+  "durability_check": {
+    "user_manager_pid_before_control_session_gap": 46133,
+    "user_manager_pid_after_control_session_gap": 46133,
+    "control_session_gap_seconds": 25,
+    "source_keeper_processes_alive_after_gap": true,
+    "remote_keeper_processes_alive_after_gap": true,
+    "host67_user_state_after_gap": "active",
+    "result": "PASS"
+  },
+  "resource_and_scientific_safety": {
+    "gpu_used": false,
+    "model_loaded": false,
+    "dataset_accessed": false,
+    "micro_gradients_executed": 0,
+    "optimizer_update": false,
+    "policy_outcomes_read": false,
+    "formal_training_started": false,
+    "system_privilege_change": false,
+    "linger_setting_changed": false
+  },
+  "repair3_runtime_requirement": [
+    "both host69 keeper SSH processes must be alive before repair3 admission",
+    "at least two remote host67 sleep 21600 keeper processes must be alive before repair3 admission",
+    "host67 user manager PID must be present and user State=active",
+    "repair3 still runs inside MemoryMax=20G, MemorySwapMax=0, TasksMax=512, CPU affinity 0-63, CUDA-only JAX",
+    "if keeper durability is lost before STARTED receipt, consume no attempt and do not launch",
+    "if keeper durability is lost after STARTED, fail closed and adjudicate rather than auto-retry"
+  ],
+  "scientific_change": false,
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate": "NEW_EXACTLY_ONCE_SYNTHETIC_REPAIR3_AUTHORITY_WITH_KEEPALIVE_DURABILITY"
+}
