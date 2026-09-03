@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R66-POSTORACLE-MANUSCRIPT-RELEASE",
+  "recorded_date": "2026-09-03",
+  "status": "R66_POSTORACLE_MANUSCRIPT_RELEASE_PASS",
+  "role": "PAPER_ONLY_REPAIR_ZERO_NEW_SCIENTIFIC_EXECUTION",
+  "title": "Does Memory Provenance Matter? Explicit Source-Outcome Cues Shift Agent Actions but Rarely Change Terminal Outcomes",
+  "parent_scientific_adjudication": {
+    "path": "generated/d2-failure-memory-provenance-r62-cross-backbone-l2-adjudication.json",
+    "sha256": "67c1848831c93839697262c0626ee0c107c4643f7f94d440ad34fa7f41b6c572"
+  },
+  "review_binding": {
+    "path": "generated/d2-failure-memory-provenance-r66-oracle-review-summary.json",
+    "sha256": "a662372a5b8a26f89485efdb061a083d45fde1666f2da454247312cba769e2a9"
+  },
+  "statistical_audit": {
+    "path": "generated/d2-failure-memory-provenance-r66-sparse-discordance-statistical-audit.json",
+    "sha256": "5b9aeb743dc033e0f3943adc36adddf45cc451d3e2e169886fd445304b44608b"
+  },
+  "isolation_audit": {
+    "path": "generated/d2-failure-memory-provenance-r66-osinteraction-arm-isolation-audit.json",
+    "sha256": "aea60cfbd2fe8c262121c330a0a89e8815a4756ef7434f617d1d25c9d03e425e"
+  },
+  "release_artifacts": {
+    "pdf": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r66-20260903.pdf",
+      "bytes": 277405,
+      "sha256": "7337d7eaf2edbb21673ec147af37d55a36693ed71b17cd1c99ba09a4d96ef957"
+    },
+    "source_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r66-20260903-source.zip",
+      "bytes": 77845,
+      "sha256": "ff45ac8f44a87f6de3b8e2f2db5362dda7cf4f18efad7fd0a9dbbc965009d02b"
+    },
+    "supplement_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r66-20260903-supplement.zip",
+      "bytes": 16644,
+      "sha256": "933e2bec3bbae148dad7a0d70f6d706c1e02bef86ee978d66ff7cdff9463fcc4"
+    }
+  },
+  "stable_hashes": {
+    "pdf": "7337d7eaf2edbb21673ec147af37d55a36693ed71b17cd1c99ba09a4d96ef957",
+    "b1_pdf": "7337d7eaf2edbb21673ec147af37d55a36693ed71b17cd1c99ba09a4d96ef957",
+    "source_zip": "ff45ac8f44a87f6de3b8e2f2db5362dda7cf4f18efad7fd0a9dbbc965009d02b",
+    "supplement_zip": "933e2bec3bbae148dad7a0d70f6d706c1e02bef86ee978d66ff7cdff9463fcc4"
+  },
+  "manuscript_qa": {
+    "pdf_pages": 16,
+    "page_size": "612 x 792 pts (letter)",
+    "all_fonts_embedded": true,
+    "overfull_boxes": 0,
+    "undefined_citations": 0,
+    "undefined_references": 0
+  },
+  "source_rebuild_qa": {
+    "rebuilt_pages": 16,
+    "rendered_pages_identical_to_release_pdf": true
+  },
+  "claim_boundary": {
+    "scientific_values_changed": false,
+    "new_agent_execution": false,
+    "new_provider_calls": 0,
+    "preregistered_15pp_threshold_changed": false,
+    "preregistered_bootstrap_changed": false,
+    "semantic_provenance_reasoning_claimed": false,
+    "plus_minus_15pp_equivalence_claimed": false,
+    "PSMG_efficacy_identified": false,
+    "L3_complete": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "fe239881f89a7502af9c5e74f476aa81a55c06db1973c8a69bdbe38e9944337b"
+}

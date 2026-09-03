@@ -1,0 +1,15 @@
+{
+  "base_url": "https://api.aa.com.cn/api/v1",
+  "catalog_model_count": 201,
+  "catalog_provider_request_count": 1,
+  "catalog_response_sha256": "7918195dd61e6b8e13d298951d0ecd42157a0634bef7bfe579606c4dc5e10b9c",
+  "content_sha256": "df3cbbf0dfdc15f1ae589cc56abb7569f8d9f5df805067267c829021a38ddc44",
+  "max_retries": 0,
+  "model_available": true,
+  "model_id": "qwen3.7-flash",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+  "schema_version": "ace-direct-qwen37flash-v4-r1-catalog-v1",
+  "secrets_persisted": false,
+  "status": "DIRECT_QWEN37FLASH_CATALOG_V4_R1_PASS"
+}

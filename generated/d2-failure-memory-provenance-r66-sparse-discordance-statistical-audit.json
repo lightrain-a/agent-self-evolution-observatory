@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R66-SPARSE-DISCORDANCE-STATISTICAL-AUDIT",
+  "recorded_date": "2026-09-03",
+  "status": "POSTCONFIRMATORY_STATISTICAL_REPAIR_NO_NEW_EXECUTION",
+  "role": "MANUSCRIPT_ONLY_CONSERVATIVE_PAIRED_RISK_DIFFERENCE_AUDIT",
+  "inputs": {
+    "qwen_path": "generated/d2-failure-memory-provenance-r56-qwen-ab-identification-result.json",
+    "qwen_file_sha256": "1b631575d78eeb0beb7c38669ea01611a0ed165e0ea0109e8b0289dbc1ada0f1",
+    "qwen_receipt_sha256": "738a807debc5dbc83cfa7bb573a07df2bdd6bd131e3b6a27a1fdd438d44fcdcc",
+    "llama_path": "generated/d2-failure-memory-provenance-r61-llama-ab-identification-result.json",
+    "llama_file_sha256": "4c22f9ee7e59c5f75b8a4ccb211300719d13e2dc4d1ac52592ab570a273cbbca",
+    "llama_receipt_sha256": "680a1fbdc4ddd573027be7b1292e7de9e43f8b3daf4dbf0f335160e88347ad5f"
+  },
+  "method": {
+    "estimand": "p(B_success,A_fail)-p(A_success,B_fail)",
+    "paired_binary_categories": true,
+    "component_intervals": "two-sided exact Clopper-Pearson",
+    "component_coverage_each": 0.975,
+    "joint_coverage_lower_bound": 0.95,
+    "combination": "Bonferroni: [L_Bonly-U_Aonly, U_Bonly-L_Aonly]",
+    "purpose": "conservative sparse-discordance check of whether +/-15pp is excluded; does not replace preregistered analysis"
+  },
+  "models": [
+    {
+      "model": "Qwen2.5-7B-Instruct",
+      "n_pairs": 32,
+      "B_only_success": 1,
+      "A_only_success": 0,
+      "discordant_pairs": 1,
+      "observed_paired_risk_difference": 0.03125,
+      "preregistered_bootstrap_ci95": [
+        0.0,
+        0.09375
+      ],
+      "exact_two_sided_signflip_p": 1.0,
+      "bonferroni_component_coverage": 0.975,
+      "p_B_only_clopper_pearson": [
+        0.0003930096954137263,
+        0.18343510046636363
+      ],
+      "p_A_only_clopper_pearson": [
+        0.0,
+        0.12797599984079638
+      ],
+      "conservative_paired_risk_difference_ci95": [
+        -0.12758299014538266,
+        0.18343510046636363
+      ],
+      "preregistered_margin_abs": 0.15,
+      "positive_15pp_effect_excluded": false,
+      "negative_15pp_effect_excluded": true,
+      "plus_minus_15pp_equivalence_established": false,
+      "observed_effect_reaches_preregistered_margin": false
+    },
+    {
+      "model": "Meta-Llama-3.1-8B-Instruct",
+      "n_pairs": 32,
+      "B_only_success": 2,
+      "A_only_success": 2,
+      "discordant_pairs": 4,
+      "observed_paired_risk_difference": 0.0,
+      "preregistered_bootstrap_ci95": [
+        -0.125,
+        0.125
+      ],
+      "exact_two_sided_signflip_p": 1.0,
+      "bonferroni_component_coverage": 0.975,
+      "p_B_only_clopper_pearson": [
+        0.0052915996442921,
+        0.23070759127263102
+      ],
+      "p_A_only_clopper_pearson": [
+        0.0052915996442921,
+        0.23070759127263102
+      ],
+      "conservative_paired_risk_difference_ci95": [
+        -0.22541599162833892,
+        0.22541599162833892
+      ],
+      "preregistered_margin_abs": 0.15,
+      "positive_15pp_effect_excluded": false,
+      "negative_15pp_effect_excluded": false,
+      "plus_minus_15pp_equivalence_established": false,
+      "observed_effect_reaches_preregistered_margin": false
+    }
+  ],
+  "adjudication": {
+    "preregistered_15pp_margin_changed": false,
+    "preregistered_bootstrap_changed": false,
+    "new_agent_execution": false,
+    "new_provider_calls": 0,
+    "population_plus_15pp_excluded_for_both_models": false,
+    "plus_minus_15pp_equivalence_established_for_both_models": false,
+    "required_manuscript_wording": "Observed paired effects did not reach the preregistered 15pp threshold; sparse-discordance conservative intervals do not establish +/-15pp equivalence or rule out a +15pp population effect."
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "b5504281dab0d267d84739cfda126c9d1c8508f184d53305936d5887e0a0313c"
+}
