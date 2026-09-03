@@ -1,0 +1,57 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-repair2-memory32g-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SYNTHETIC_FUSED_ACCUM4X16_DIRECT_DEVICE_REPAIR2_MEMORYMAX32G",
+  "scope": "Exactly one resource-only candidate-3 repair at the preregistered 32-GiB host-memory rung; no scientific outcome authority.",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum4x16_synthetic_fused_direct_device_repair2.py",
+    "sha256": "c512ec79250718dfb1c4c1691c17dcd7b5f8714234e1124fa4897b8fb1022873"
+  },
+  "runner_sha256": "c512ec79250718dfb1c4c1691c17dcd7b5f8714234e1124fa4897b8fb1022873",
+  "lineage": {
+    "attempt1": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-fused-direct-device-result-20260903.json", "sha256": "9dd2f352c84dadbbea8725dc09ee5da28960f44169251dd95550265823c20f43"},
+    "attempt1_adjudication": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-attempt1-host-cgroup-oom-adjudication-20260903.json", "sha256": "b05ae019ca0ab2ce8b697277f398a2720e6c36c922a7521a2c44fed9f5c1fa09"},
+    "repair1": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-fused-direct-device-repair1-host231-result-20260903.json", "sha256": "2d128a77c340d9e822e0381f3f8bbc0c0cb7d4d682faf8153bfb0a1011730ab9"},
+    "repair1_adjudication": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-repair1-host231-cgroup-oom-adjudication-20260903.json", "sha256": "9aa65c21014333fb277d8b7d063986bb58282e85ddcc0f4070c4f0e0a9f68281"},
+    "host_memory_ladder": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-host-memory-ladder-preregistration-20260903.json", "sha256": "6fb67f1e1131b8a08778f53ead8f59c635755432bf487e3b1c5ec2ebe7a752c4"},
+    "accum8x8_resource_adjudication": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-accum8x8-resource-failure-adjudication-20260903.json", "sha256": "d9306c6f8731bbd875e513a7584a1c8d463a508a731ba572ff64ae086bef55cd"},
+    "accum4x16_data_order": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-data-order-qualification-20260903.json", "sha256": "34da62085824d5725fbd2044f3f12fccc42971a137eb498999b02391a769f101"},
+    "portable_direct_device_result": {"path": "generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json", "sha256": "5f27f14cfce284f1a75acefafbf9c404556f527b5037007ee8f119df3ddc90df"}
+  },
+  "candidate": {"priority": 3, "physical_micro_batch": 4, "accumulation_steps": 16, "effective_batch": 64, "seed": 42},
+  "resource_scope": {
+    "host": "222.20.126.231",
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "gpu_compute_apps_required": 0,
+    "gpu_memory_used_max_mib_before": 1024,
+    "host_mem_available_min_gib": 40,
+    "memory_max_gib": 32,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "scientific_invariants": {
+    "model_checkpoint_seed_effective_batch_optimizer_lr_ema_normalization_action_horizon_gpu_topology": "unchanged",
+    "behavior_dataset_access": false,
+    "policy_outcomes_read": false,
+    "optimizer_updates_authorized": 0
+  },
+  "failure_routing": {
+    "if_cgroup_oom_before_durable_micro_marker": "ADVANCE_ONCE_TO_PREREGISTERED_MEMORYMAX40G_REPAIR3",
+    "if_any_failure_after_durable_micro_marker": "STOP_HOST_MEMORY_ESCALATION_AND_ADJUDICATE_CANDIDATE3_RESOURCE_RESULT"
+  },
+  "forbidden": [
+    "MemoryMax other than exactly 32 GiB for repair2",
+    "MemorySwapMax above 0",
+    "changing any candidate/scientific variable",
+    "host-memory escalation after a durable micro-gradient marker",
+    "loss or gradient-value inspection, BEHAVIOR data access, policy outcome read, optimizer update",
+    "more than one repair2 attempt"
+  ],
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate_if_pass": "REAL_DATA_STREAMING_ACCUM4X16_IMPLEMENTATION_AUTHORITY"
+}

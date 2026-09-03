@@ -1,0 +1,22 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum4x16-host-memory-ladder-preregistration-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "PREREGISTERED_PRE_GRADIENT_HOST_MEMORY_REPAIR_LADDER",
+  "scope": "Resource-only repair for candidate-3 synthetic 4x16 after two cgroup OOMs before any durable micro-gradient marker.",
+  "memory_max_ladder_gib": [32, 40],
+  "memory_swap_max_gib": 0,
+  "candidate_invariants": {
+    "physical_micro_batch": 4,
+    "accumulation_steps": 16,
+    "effective_batch": 64,
+    "seed": 42,
+    "model_checkpoint_optimizer_lr_ema_normalization_action_horizon_gpu_topology": "unchanged"
+  },
+  "advance_rule": "Advance from 32G to 40G only if the current attempt is killed by the host cgroup OOM mechanism before a durable MICRO_GRADIENT_STARTED marker is written, with optimizer_update=false and no dataset/outcome access.",
+  "hard_stop_rule": "Once any durable micro-gradient marker is written, do not increase host-memory ceiling in response to subsequent failure. Any later GPU/host resource failure is candidate evidence and must be adjudicated before practical-batch fallback.",
+  "selection_inputs_forbidden": ["loss", "gradient numerical values", "BEHAVIOR demos", "reward", "Q", "success", "policy outcomes"],
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate": "ACCUM4X16_REPAIR2_MEMORYMAX32G"
+}
