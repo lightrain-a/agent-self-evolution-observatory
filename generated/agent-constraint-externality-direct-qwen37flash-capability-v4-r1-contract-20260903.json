@@ -1,0 +1,62 @@
+{
+  "authority": {
+    "capability_v4_r1": true,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "source_failure_qualification": false
+  },
+  "base_url": "https://api.aa.com.cn/api/v1",
+  "content_sha256": "1a579ce929da8b459d3aa8ea4048f980ac46fb48f31609ab80a1b2659b8d64e1",
+  "execution": {
+    "application_retry": false,
+    "durable_dispatch_before_first_model_request": true,
+    "provider_max_retries": 0,
+    "replacement": false,
+    "temperature": 0,
+    "tool_call_cap": 16,
+    "unknown_after_dispatch_replay": false
+  },
+  "execution_id": "DIRECT-QWEN37FLASH-CAPABILITY-V4-R1",
+  "gate": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "harness": "APPWORLD_DIRECT_FUNCTION_CALLING_V4",
+  "lineage": {
+    "authorization_content_sha256": "52a57a394229516e46bebd48a82c8c65056cb89a66fb9c55e14fc3dd3b881c80",
+    "catalog_content_sha256": "df3cbbf0dfdc15f1ae589cc56abb7569f8d9f5df805067267c829021a38ddc44",
+    "historical_flash_void_content_sha256": "e1174ead318899d131c0f9a286495b5042f06dc026c8a507b29c1dd0db7e7434",
+    "transport_failure_content_sha256": "5575b1ed62edcac4b89f3708b6800d5274cb5f27f76f75142cd602643e8ad08f"
+  },
+  "model_id": "qwen3.7-flash",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "coupling_arm": "LOW",
+    "episode_count": 8,
+    "family_ids": [
+      "ACE-FG-05",
+      "ACE-FG-06",
+      "ACE-TNF-05",
+      "ACE-TNF-06"
+    ],
+    "historical_invalid_flash_measurements_reused": false,
+    "repeats": [
+      1,
+      2
+    ]
+  },
+  "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+  "schema_version": "ace-direct-qwen37flash-capability-v4-r1-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "DIRECT_QWEN37FLASH_CAPABILITY_V4_R1_AUTHORIZED",
+  "substrate": {
+    "bundle": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+    "v4_contract_content_sha256": "71115f4adef672cfa23301e1332fcada8a41f9516413a76aa86dd6e22f010677",
+    "v4_qualification_content_sha256": "11cf30605784f0472fe0c947380c8b93524f5c0f799f80d0314d9c19911fdc8a"
+  }
+}

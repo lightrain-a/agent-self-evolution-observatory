@@ -1,0 +1,73 @@
+{
+  "classification": "TRANSPORT_SCHEMA_ISOLATION_UNAVAILABLE_IN_OFFICIAL_SIGNED_DAEMON",
+  "content_sha256": "d8097bcb7d4fa5d03d7f5f1750001c58df429efbaf7f7e4814eaa2bf0341af23",
+  "findings": {
+    "daemon_cli_no_tools_flag": false,
+    "daemon_prepare_mcp": "cfg.mcp",
+    "daemon_prepare_tools": true,
+    "generic_tools_disabled_config_exists": false,
+    "headless_cli_no_tools_flag": true,
+    "headless_no_tools_also_disables_mcp": true,
+    "mcp_registration_requires_tools_true": true,
+    "open_source_crypto_is_official_signer": false,
+    "open_source_crypto_stub": true,
+    "permission_guard_effect": "Deny can prevent execution only after the model has selected a native tool; it cannot remove that tool from the model-visible request schema.",
+    "permission_guard_removes_schema_before_model_request": false,
+    "prepare_native_tool_registration": "When PrepareOptions.tools is true, native coding tools and codeintel are registered before MCP tools are appended.",
+    "request_hook_boundary": "pre_request mutates messages, pre_request_options mutates options, on_request is read-only; provider tool definitions are supplied separately.",
+    "request_lifecycle_hook_can_mutate_tool_defs": false,
+    "self_rebuilt_binary_can_preserve_official_codingplan_signing": false,
+    "tools_config_scope": "AtomCode 5.0.9 ToolsConfig contains only todo policy; there is no generic disabled-native-tools list."
+  },
+  "identity": {
+    "installed_binary": "/home/wyt/.local/bin/atomcode",
+    "installed_binary_sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113",
+    "installed_binary_version": "atomcode 5.0.9 (unknown)",
+    "source_commit": "287bff70f9400c24f4afd8fcf4762fbab63d8efa",
+    "source_describe": "快速发布-atomcode-atomgit-202609011806",
+    "source_files": {
+      "crates/atomcode-auth/src/gateway_crypto.rs": "abab7ecdc0535fe1e85643bc24ddf824aa21fd57672424a454e7163a4ef0f201",
+      "crates/atomcode-cli/src/main.rs": "51aad61d14456997f5f37c4f64faf41cecd6087c5b4b859c8cae82e36b692c38",
+      "crates/atomcode-coding/src/parts.rs": "e3aa270b791b5d472fa6852279ddcc7052b4c50f22953f9355a6b7f77af1609f",
+      "crates/atomcode-codingplan-crypto/src/lib.rs": "144efcdf63ad23fb92faa83caf1a812c34ed22b2fcb3e8dca406d3ed6402cff4",
+      "crates/atomcode-daemon/src/kernel_runtime.rs": "fc7f866824a829aa99f8c9e9c9aaeeb16c07100d7495dafdb737324c8955379b"
+    },
+    "source_repository": "https://atomgit.com/atomgit_atomcode/atomcode.git"
+  },
+  "next_authorized_action": "RUN_NON_SCIENTIFIC_JSON_ACTION_TRANSPORT_Q0_ONLY",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prospective_transport_candidate": {
+    "atomcode_headless_no_tools": true,
+    "environment_actions": "External controller supplies a content-addressed JSON action schema in text, executes only declared AppWorld actions, and returns observations on the next signed model round.",
+    "id": "ATOMCODE_SIGNED_NO_TOOLS_JSON_ACTION_V1",
+    "may_not_inherit_mimo25pro_b3_capability_pass": true,
+    "model_visible_mcp_function_tools": 0,
+    "model_visible_native_function_tools": 0,
+    "official_binary_unchanged": true,
+    "official_signing_path_preserved": true,
+    "requires_fresh_harness_and_backbone_qualification": true,
+    "scientific_harness_changed": true
+  },
+  "provider_requests_added_by_audit": 0,
+  "rejected_next_actions": [
+    "RUN_SQ0_V6_UNDER_UNMODIFIED_DAEMON",
+    "TREAT_PERMISSION_DENY_AS_SCHEMA_ISOLATION",
+    "REBUILD_OPEN_SOURCE_BINARY_AND_ASSUME_CODINGPLAN_SIGNING_SURVIVES",
+    "REUSE_V5_CASES_AFTER_TRANSPORT_CHANGE"
+  ],
+  "schema_version": "ace-atomcode-transport-isolation-audit-v1",
+  "scientific_execution_authority": {
+    "f0_r1": false,
+    "new_sq0": false,
+    "p1": false,
+    "paper_claim": false,
+    "sq0_v6": false
+  },
+  "scientific_outcomes_observed": 0,
+  "status": "OFFICIAL_ATOMCODE_5_0_9_DAEMON_CANNOT_PROVIDE_SIGNED_MCP_ONLY_TOOL_SCHEMA",
+  "v5_collision": {
+    "recurrence_establishes_structural_not_one_off_failure": true,
+    "v2_native_tool_collision": "read_file",
+    "v5_native_tool_collision": "read_file"
+  }
+}

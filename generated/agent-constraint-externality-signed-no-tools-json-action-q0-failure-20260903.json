@@ -1,0 +1,55 @@
+{
+  "appworld_action_count": 0,
+  "atomcode_no_tools": true,
+  "authority": {
+    "codingplan_scientific_actor": false,
+    "design_only": true,
+    "f0_r1": false,
+    "new_sq0_execution": false,
+    "p1": false,
+    "paper_claim": false
+  },
+  "classification": "OFFICIAL_SIGNED_RUNTIME_PERSONA_INCOMPATIBLE_WITH_NEUTRAL_JSON_ACTION_ACTOR",
+  "content_sha256": "5575b1ed62edcac4b89f3708b6800d5274cb5f27f76f75142cd602643e8ad08f",
+  "disposition": {
+    "codingplan_may_continue_for_non_scientific_coding_work": true,
+    "prompt_tune_same_q0_after_failure": false,
+    "retry_same_q0": false,
+    "run_f0_r1_with_codingplan": false,
+    "run_scientific_sq0_with_codingplan": false,
+    "scientific_actor_next_transport": "DIRECT_PROVIDER_API_WITHOUT_ATOMCODE_CODING_PERSONA"
+  },
+  "failure": {
+    "coding_persona_present": true,
+    "observed_semantics": "The model identified itself as an AI coding assistant using function calls and declined to execute the supplied JSON action protocol, asking for a software-engineering task instead.",
+    "provider_or_transport_error": false,
+    "response_was_non_json_prose": true,
+    "stage": "FIRST_SYNTHETIC_JSON_ACTION_ROUND",
+    "strict_json_parse": false,
+    "tool_schema_contamination": false
+  },
+  "mcp_mounted": false,
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "model_visible_function_tool_count": 0,
+  "next_authorized_action": "DESIGN_PROSPECTIVE_DIRECT_API_SOURCE_FAILURE_QUALIFICATION_ONLY",
+  "non_scientific_model_request_count": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "runner_source_sha256": "f49de0401006ad9b1f22059407f1e0b130ad429b7cd4df681010888072aee79a",
+  "schema_version": "ace-signed-no-tools-json-action-q0-failure-v1",
+  "scientific_case_count": 0,
+  "scientific_outcomes_observed": 0,
+  "source_audit": {
+    "coding_persona_unconditionally_assembled": true,
+    "headless_no_tools_removes_coding_persona": false,
+    "model_config_system_prompt_replaces_coding_persona": false,
+    "open_source_rebuild_preserves_official_codingplan_signing": false,
+    "supported_cli_persona_override_found": false,
+    "supported_config_persona_override_found": false
+  },
+  "sq0_case_count": 0,
+  "status": "SIGNED_NO_TOOLS_JSON_ACTION_Q0_FAIL_CODING_PERSONA_CONTAMINATION",
+  "transport_audit_content_sha256": "d8097bcb7d4fa5d03d7f5f1750001c58df429efbaf7f7e4814eaa2bf0341af23",
+  "transport_id": "ATOMCODE_SIGNED_NO_TOOLS_JSON_ACTION_V1"
+}

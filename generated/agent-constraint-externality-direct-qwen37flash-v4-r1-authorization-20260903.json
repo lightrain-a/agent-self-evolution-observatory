@@ -1,0 +1,19 @@
+{
+  "authority": {
+    "direct_flash_capability_v4_r1": true,
+    "f0_r1": false,
+    "new_source_failure_qualification": false,
+    "p1": false,
+    "paper_claim": false
+  },
+  "authorization_source": "USER_CONTINUE_AFTER_CODINGPLAN_TRANSPORT_FAILURE",
+  "candidate_selection_boundary": "POST_CODINGPLAN_SCIENTIFIC_ACTOR_REJECTION_PRE_DIRECT_FLASH_V4_SCIENTIFIC_DISPATCH",
+  "content_sha256": "52a57a394229516e46bebd48a82c8c65056cb89a66fb9c55e14fc3dd3b881c80",
+  "forbidden_selection_reason": "EXPECTED_EXTERNALITY_EFFECT",
+  "model_id": "qwen3.7-flash",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-direct-qwen37flash-v4-r1-human-authorization-v1",
+  "scientific_outcomes_observed_by_this_authorization": 0,
+  "selection_reason": "SAME_GENERATION_LOWER_TIER_THAN_VALID_DIRECT_QWEN37PLUS_CEILING; HISTORICAL_FLASH_OUTCOMES_VOIDED_BY_SUBSTRATE_INVALIDITY",
+  "status": "USER_CONTINUE_AUTHORIZED_DIRECT_QWEN37FLASH_V4_REQUALIFICATION"
+}
