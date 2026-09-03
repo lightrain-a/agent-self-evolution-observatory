@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "provider-price-comparison-snapshot",
+  "snapshot_date": "2026-09-03",
+  "currency": "CNY",
+  "unit": "RMB per 1M tokens unless noted",
+  "sources": {
+    "ark": "https://www.volcengine.com/docs/82379/2366394?lang=zh",
+    "dianming": "https://www.aa.com.cn/pricing",
+    "chatanywhere_pricing": "https://chatanywhere.tech/pricing",
+    "chatanywhere_docs": "https://docs.chatanywhere.tech/doc-2694962",
+    "junliai": "https://openapi.junliai.org/model-plaza",
+    "junliai_public_settings": "https://openapi.junliai.org/api/v1/settings/public",
+    "junliai_public_snapshot": "https://mozhenzhen.com/providers/junliai-org-673"
+  },
+  "caveats": [
+    "ChatAnywhere official docs state CA coin is denominated in yuan, so 0.0012 CA/1K = ¥1.2/1M; no USD conversion is applied.",
+    "Junliai public settings report model_plaza_require_auth=true. No authenticated Junliai account is available in this workspace, so only exact-model prices visible in an independent public snapshot are shown; missing cells are not inferred from aliases.",
+    "Ark Agent Plan is AFP subscription accounting, not raw input/output token billing. Its cells are labeled full-use AFP-equivalent RMB per 1M tokens and should not be read as an input or output tariff.",
+    "Tiered providers use the lowest/default context band stated in the row; higher-context and peak-time bands are noted separately where material.",
+    "Exact model-name matching is required; similar versions are not merged into one row."
+  ],
+  "rows": [
+    {
+      "model": "DeepSeek V4 Flash",
+      "ark": {
+        "rmb_per_million_afp_equivalent": 0.1,
+        "basis": "Agent Plan full-use equivalent; no input/output split"
+      },
+      "dianming": {
+        "input_rmb_per_million": 1.5,
+        "output_rmb_per_million": 4.5,
+        "basis": "off-peak; peak 3/9"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 1.2,
+        "output_rmb_per_million": 3.6,
+        "basis": "CA币=元; 0.0012/0.0036 per 1K"
+      },
+      "junliai": {
+        "input_rmb_per_million": 0.7,
+        "output_rmb_per_million": 1.4,
+        "basis": "public third-party snapshot of provider-data:group_40; direct plaza requires login"
+      }
+    },
+    {
+      "model": "DeepSeek V4 Pro",
+      "ark": {
+        "rmb_per_million_afp_equivalent": 1.1,
+        "basis": "Agent Plan full-use equivalent; no input/output split"
+      },
+      "dianming": {
+        "input_rmb_per_million": 4.5,
+        "output_rmb_per_million": 13.5,
+        "basis": "off-peak; peak 9/27"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 4.5,
+        "output_rmb_per_million": 13.5,
+        "basis": "CA币=元; 0.0045/0.0135 per 1K"
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-397b-a17b",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 1.204,
+        "output_rmb_per_million": 7.224,
+        "basis": "<=128K"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 0.84,
+        "output_rmb_per_million": 5.04,
+        "basis": "<=128K; CA币=元"
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-235b-a22b",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 2.009,
+        "output_rmb_per_million": 20.076,
+        "basis": "default"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 1.4,
+        "output_rmb_per_million": 5.6,
+        "basis": "CA币=元"
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3.5-plus",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 0.805,
+        "output_rmb_per_million": 4.816,
+        "basis": "<=128K"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 0.56,
+        "output_rmb_per_million": 3.36,
+        "basis": "<=128K; CA币=元"
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-coder-plus",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 4.018,
+        "output_rmb_per_million": 16.058,
+        "basis": "<=32K"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 2.8,
+        "output_rmb_per_million": 11.2,
+        "basis": "CA币=元"
+      },
+      "junliai": null
+    },
+    {
+      "model": "qwen3-coder-next",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 1.00345,
+        "output_rmb_per_million": 4.01387,
+        "basis": "<=32K"
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "qwen3.7-plus",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 1.932,
+        "output_rmb_per_million": 7.707,
+        "basis": "<=256K"
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "Kimi K2.7 Code",
+      "ark": {
+        "rmb_per_million_afp_equivalent": 0.9,
+        "basis": "Agent Plan full-use equivalent"
+      },
+      "dianming": {
+        "input_rmb_per_million": 6.5,
+        "output_rmb_per_million": 27.0,
+        "basis": "default"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 5.2,
+        "output_rmb_per_million": 21.6,
+        "basis": "CA币=元"
+      },
+      "junliai": {
+        "input_rmb_per_million": 2.8,
+        "output_rmb_per_million": 11.2,
+        "basis": "public third-party snapshot of provider-data:group_40; direct plaza requires login"
+      }
+    },
+    {
+      "model": "Kimi K3",
+      "ark": {
+        "rmb_per_million_afp_equivalent": 2.0,
+        "basis": "Agent Plan full-use equivalent"
+      },
+      "dianming": {
+        "input_rmb_per_million": 20.0,
+        "output_rmb_per_million": 100.0,
+        "basis": "default"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 14.0,
+        "output_rmb_per_million": 70.0,
+        "basis": "CA币=元"
+      },
+      "junliai": null
+    },
+    {
+      "model": "GLM-5.2",
+      "ark": null,
+      "dianming": {
+        "input_rmb_per_million": 8.0,
+        "output_rmb_per_million": 28.0,
+        "basis": "default"
+      },
+      "chatanywhere": {
+        "input_rmb_per_million": 6.4,
+        "output_rmb_per_million": 22.4,
+        "basis": "CA币=元"
+      },
+      "junliai": {
+        "input_rmb_per_million": 5.0,
+        "output_rmb_per_million": 16.0,
+        "basis": "public third-party snapshot of provider-data:group_40; direct plaza requires login"
+      }
+    },
+    {
+      "model": "GLM-5.3",
+      "ark": {
+        "rmb_per_million_afp_equivalent": 0.9,
+        "basis": "Agent Plan full-use equivalent"
+      },
+      "dianming": {
+        "input_rmb_per_million": 8.0,
+        "output_rmb_per_million": 28.0,
+        "basis": "default"
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "GLM-5.3-Flash",
+      "ark": {
+        "rmb_per_million_afp_equivalent_promo": 0.05,
+        "rmb_per_million_afp_equivalent_normal": 0.1,
+        "basis": "Agent Plan full-use equivalent"
+      },
+      "dianming": {
+        "input_rmb_per_million": 0.8,
+        "output_rmb_per_million": 2.8,
+        "basis": "default"
+      },
+      "chatanywhere": null,
+      "junliai": null
+    },
+    {
+      "model": "MiniMax M3",
+      "ark": {
+        "rmb_per_million_afp_equivalent": 0.5,
+        "basis": "Agent Plan full-use equivalent"
+      },
+      "dianming": null,
+      "chatanywhere": {
+        "input_rmb_per_million": 1.68,
+        "output_rmb_per_million": 6.72,
+        "basis": "<=512K; CA币=元"
+      },
+      "junliai": null
+    },
+    {
+      "model": "Claude Sonnet 5",
+      "ark": null,
+      "dianming": null,
+      "chatanywhere": {
+        "input_rmb_per_million": 10.0,
+        "output_rmb_per_million": 50.0,
+        "basis": "CA币=元"
+      },
+      "junliai": {
+        "input_rmb_per_million": 0.03,
+        "output_rmb_per_million": 0.15,
+        "basis": "public third-party snapshot provider-data:group_37; very low price, no public verification report in snapshot; direct plaza requires login"
+      }
+    }
+  ]
+}

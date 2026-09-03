@@ -1,0 +1,44 @@
+{
+  "accounting": {
+    "account_level_unattributed_request_count": 0,
+    "appworld_tool_call_total": 114,
+    "codingplan_account_window_request_delta": 72,
+    "completion_tokens_total": 28257,
+    "prompt_tokens_total": 2597399,
+    "scientific_model_round_count": 72
+  },
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "5b39c595267dd23a83d8c8eb97a1f3e5ebd4e16a087b756ae1d1fda4787f7215",
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.875,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.625,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  },
+  "interpretation_boundary": "B0 fails the frozen capability gate because tool-loop completion is below 0.75. The 16-tool cap is not relaxed after observing this result.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "result_artifact": "generated/agent-constraint-externality-codingplan-deepseek-live-capability-b0-result-20260903.json",
+  "result_content_sha256": "e0ba74cd619f6469e854d5143d424a9008ba09b0d2bafcfe1fe897a1f10aec1c",
+  "result_file_sha256": "d10570c3316c7af791ad6a3fc91e4157902a5e7be28313cf85f248ccfbdd6d01",
+  "schema_version": "ace-codingplan-deepseek-live-capability-b0-closeout-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_DEEPSEEK_LIVE_B0_FLOOR_CLOSEOUT",
+  "tool_loop_completed_measurements": 5,
+  "tool_loop_incomplete_measurements": 3,
+  "verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+}

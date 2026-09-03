@@ -1,0 +1,20 @@
+{
+  "bridge_source_sha256": "712d44d5d7c3c7b9fdf0762b29cb167b7274347bdd5d2a2a24cc2ca98a30bec3",
+  "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+  "codingplan_model_requests": 0,
+  "codingplan_window_used_after": 149,
+  "codingplan_window_used_before": 149,
+  "content_sha256": "b8e137b4022741058ed6fb42b4bfabaa3d535f0dd1eacc1524daa6e082ffb89d",
+  "model_id": "mimo-v2.5",
+  "model_profile": "AtomGit-mimo-v2.5",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protocol": "DAEMON_BOOT_WITHOUT_MCP_THEN_ACTIVATE_APPWORLD_MCP_THEN_GET_LIVE_WAIT_TOOLS_LISTED_WITHOUT_LIVE_MESSAGE",
+  "runner_source_sha256": "24e759871396706f594bc86844f60f6c0eb23fbbef77183c5e0f125f152e5e1e",
+  "schema_version": "ace-codingplan-mimo25-live-mcp-q1-v1",
+  "scientific_dispatch_sent": false,
+  "scientific_outcomes_observed": 0,
+  "session_mcp_progress_status": "TOOLS_LISTED",
+  "session_mcp_tool_count": 84,
+  "status": "CODINGPLAN_MIMO25_LIVE_MCP_PREDISPATCH_PASS",
+  "transport_source_sha256": "6bfaf60f03c972a29973dddd5c48cead9e615749fba309325356bbf8758c88ee"
+}

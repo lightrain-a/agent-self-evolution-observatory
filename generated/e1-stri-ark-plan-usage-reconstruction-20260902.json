@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e1-stri-ark-plan-usage-reconstruction",
+  "created_at_local": "2026-09-02T23:57:00+08:00",
+  "scope": "Repository-reconstructable E1 ReasoningBank Ark Plan model-call receipts only; not an account-level Ark billing export.",
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "canonical_receipt_groups": [
+    {
+      "name": "full_p1",
+      "path": "generated/asset-first-stri-reasoningbank-full-p1-runs-20260831",
+      "run_files": 40,
+      "calls": 966,
+      "input_tokens": 14608626,
+      "output_tokens": 682261,
+      "total_tokens": 15290887,
+      "cached_input_tokens": 13625600
+    },
+    {
+      "name": "p1_development",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829",
+      "run_files": 12,
+      "calls": 299,
+      "input_tokens": 3824576,
+      "output_tokens": 316817,
+      "total_tokens": 4141393,
+      "cached_input_tokens": 3579392
+    }
+  ],
+  "reconstructed_lower_bound": {
+    "calls": 1265,
+    "input_tokens": 18433202,
+    "output_tokens": 999078,
+    "total_tokens": 19432280,
+    "cached_input_tokens": 17204992
+  },
+  "afp_equivalent_reference": {
+    "model_coefficient": 5.5,
+    "formula": "total_tokens / 10000 * coefficient",
+    "afp_equivalent": 10687.754,
+    "warning": "This is a mechanical AFP-equivalent reconstruction from repository token receipts and the displayed DeepSeek V4 Pro coefficient. It is not the official account-level AFP Used field returned by GetAFPUsage/GetUsageDetails and must not be presented as an exact billing receipt."
+  },
+  "account_level_boundary": {
+    "official_apis_exist": ["GetAFPUsage", "GetUsageDetails"],
+    "exact_historical_account_usage_available_in_repo": false,
+    "reason": "The repository has the Agent Plan model API key path used for inference, but no stored HMAC control-plane GetAFPUsage/GetUsageDetails export. Account-level historical AFP may include calls outside these E1 receipt directories.",
+    "display_rule": "Label repository reconstruction as a lower bound and AFP-equivalent, never as exact account AFP usage."
+  },
+  "scientific_authority": false,
+  "paper_claim_authority": false
+}

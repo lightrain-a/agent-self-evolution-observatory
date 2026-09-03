@@ -1,0 +1,70 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "capability_b2": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "backbone_search_state_sha256": "6ae57acaf62c3a74f09f6dd4f80e8b09936dabac3a7a1c8d88c96e5fb7a54445",
+  "content_sha256": "27558a31e51955799950ba48d6152520ccfee7b859d20b5c3b10d0e3db4e1f37",
+  "execution_id": "CODINGPLAN-MIMO25-CAPABILITY-B2",
+  "execution_policy": {
+    "durable_dispatch_before_model_request": true,
+    "partial_outcome_redesign": false,
+    "stop_on_first_failure": true,
+    "unknown_after_dispatch_replay": false
+  },
+  "gate": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "harness": {
+    "ai_session_naming": false,
+    "appworld_mcp_native": true,
+    "appworld_tool_call_cap": 16,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_episode": 20,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "subagents": false,
+    "transport_reused_from_frozen_qwen_a0": true
+  },
+  "model": {
+    "context_window": 1000000,
+    "id": "mimo-v2.5",
+    "max_output_tokens_control": "PROVIDER_MANAGED_UNSET_BY_OFFICIAL_CODINGPLAN_CATALOG",
+    "profile": "AtomGit-mimo-v2.5",
+    "retry_max_attempts": 1,
+    "sampling_control": "PROVIDER_MANAGED_NO_REASONING_EFFORT_CONTROL_ADVERTISED"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "arm": "LOW",
+    "episodes": 8,
+    "family_ids": [
+      "ACE-FG-05",
+      "ACE-FG-06",
+      "ACE-TNF-05",
+      "ACE-TNF-06"
+    ],
+    "repeats": [
+      1,
+      2
+    ],
+    "reuse_prior_mimo25_measurements": false
+  },
+  "q1_predispatch_sha256": "b8e137b4022741058ed6fb42b4bfabaa3d535f0dd1eacc1524daa6e082ffb89d",
+  "schema_version": "ace-codingplan-mimo25-capability-b2-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_MIMO25_CAPABILITY_B2_AUTHORIZED",
+  "substrate": {
+    "bundle": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+    "v4_qualification_sha256": "1220edddc6cbfa89538031109c19204fb5a2bb9a8ee68e318ca87eacb70d1f4e"
+  }
+}

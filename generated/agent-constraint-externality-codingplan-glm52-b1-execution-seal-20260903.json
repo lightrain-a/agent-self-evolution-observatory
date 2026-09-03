@@ -1,0 +1,27 @@
+{
+  "atomcode_binary_sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113",
+  "atomcode_version": "5.0.9",
+  "authority": {
+    "appworld_ul": false,
+    "capability_b1": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "backbone_search_state_sha256": "a96d8a4834c8680ce655af49eda8e946fc9bea7afc1168f9cea7b9248436d672",
+  "content_sha256": "c3c4ecdb57e3f0b5884d4c19ec452a21bbba63de2c3c4aa1cc3f21d01ca610d3",
+  "contract_content_sha256": "08918ad768208e101b1cb70c116918fc2a6cad2eb2980d4ab8d99a18520bb44a",
+  "git_commit": "53b837dc8669d3279d9aee5bf42096402935c688",
+  "ledger_absent_before_execution": true,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "q1_codingplan_model_requests": 0,
+  "q1_codingplan_window_used_after": 72,
+  "q1_content_sha256": "e917e8d6e30a1a104dbcd464ec9dc9e91433fb82c0a2b9aa1936b8d4c5e87c16",
+  "runner_source_sha256": "f09102cbf4499400029d8bfba97078de51e8d846c73731feec18f91ffa9593f8",
+  "runtime_root_absent_before_execution": true,
+  "schema_version": "ace-codingplan-glm52-b1-execution-seal-v1",
+  "scientific_dispatch_count_before_execution": 0,
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_GLM52_B1_EXECUTION_SEAL_PASS"
+}

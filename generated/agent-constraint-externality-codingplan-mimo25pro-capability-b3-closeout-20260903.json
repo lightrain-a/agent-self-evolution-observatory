@@ -1,0 +1,68 @@
+{
+  "accounting": {
+    "account_level_gaps": [
+      {
+        "after_previous_unit": 283,
+        "before_unit": 284,
+        "before_unit_id": "capability:mimo-v2.5-pro|ACE-TNF-06|2",
+        "gap": 1
+      }
+    ],
+    "account_level_unattributed_request_count": 1,
+    "accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
+    "appworld_tool_call_total": 102,
+    "codingplan_account_window_request_delta": 78,
+    "completion_tokens_total": 18706,
+    "prompt_tokens_total": 3074569,
+    "scientific_model_round_count": 77
+  },
+  "authority": {
+    "appworld_ul": false,
+    "backbone_selection": true,
+    "f0": false,
+    "f0_reason": "Capability PASS freezes the backbone but never self-authorizes F0.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "a6a886e04a84ff4c50f16154eed7ddfa026001b9d39e0787a891dacc2334ff62",
+  "contract_artifact": "generated/agent-constraint-externality-codingplan-mimo25pro-capability-b3-contract-20260903.json",
+  "contract_content_sha256": "cde63f99721309a85deb5fda9ab269dc08667f1218b05ad7bb5f924a777c9b51",
+  "execution_seal_artifact": "generated/agent-constraint-externality-codingplan-mimo25pro-b3-execution-seal-20260903.json",
+  "execution_seal_content_sha256": "b3012684933347d07675eb77ed16b8d9394d788dda8562a6cf074e168d8e5e51",
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.875,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.875,
+    "verdict": "CAPABILITY_CALIBRATION_PASS"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_artifact": "runtimes/agent-constraint-externality-codingplan-mimo25pro-capability-b3-20260903/ledger.jsonl",
+  "ledger_sha256": "b63fafefea8508378b8e914ce43f62aae66470d9b153074a6a370e60fb5b0c23",
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "result_artifact": "generated/agent-constraint-externality-codingplan-mimo25pro-capability-b3-result-20260903.json",
+  "result_content_sha256": "dadf907997be65b381a40fa42e615220c7138a40c7c0fd32a665f2925628660c",
+  "result_file_sha256": "6af38f2b43b6fe9ee0acb94dc63a98e2d582145443828eb55c103cfee9fb1935",
+  "schema_version": "ace-codingplan-mimo25pro-capability-b3-closeout-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_interpretation": "mimo-v2.5-pro is the first candidate in the predeclared backbone ladder to satisfy all frozen capability thresholds. Its target-success and tool-loop-completion rates are both 7/8, and target success is exactly at the frozen 0.875 ceiling rather than above it.",
+  "single_incomplete_unit_id": "capability:mimo-v2.5-pro|ACE-TNF-06|1",
+  "status": "CODINGPLAN_MIMO25PRO_B3_PASS_CLOSEOUT",
+  "target_failure_measurements": 1,
+  "target_success_measurements": 7,
+  "tool_loop_completed_measurements": 7,
+  "tool_loop_incomplete_measurements": 1,
+  "valid_capability_measurements": 8,
+  "verdict": "CAPABILITY_CALIBRATION_PASS"
+}

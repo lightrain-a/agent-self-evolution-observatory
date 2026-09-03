@@ -131,7 +131,115 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "STOP_AWAIT_HUMAN_F0_AUTHORIZATION",
+            )
+            self.assertTrue(readiness["eligible_backbone_selected"])
+            self.assertEqual(readiness["mimo25pro_capability_result_status"], "CAPABILITY_CALIBRATION_PASS")
+            self.assertEqual(readiness["mimo25pro_capability_closeout_status"], "CODINGPLAN_MIMO25PRO_B3_PASS_CLOSEOUT")
+            self.assertEqual(readiness["mimo25pro_scientific_model_round_count"], 77)
+            self.assertEqual(readiness["mimo25pro_account_window_request_delta"], 78)
+            self.assertEqual(readiness["mimo25pro_account_level_unattributed_request_count"], 1)
+            self.assertEqual(readiness["mimo25pro_tool_loop_completion_rate"], 0.875)
+            self.assertEqual(readiness["mimo25pro_target_success_rate"], 0.875)
+            self.assertEqual(readiness["selected_backbone_capability_result_status"], "CAPABILITY_CALIBRATION_PASS")
+            self.assertEqual(
+                readiness["selected_backbone"],
+                {
+                    "model_id": "mimo-v2.5-pro",
+                    "model_profile": "AtomGit-mimo-v2.5-pro",
+                    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+                    "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+                },
+            )
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "FREEZE_AND_RUN_CODINGPLAN_MIMO25PRO_CAPABILITY_B3",
+            )
+            self.assertEqual(readiness["mimo25_capability_result_status"], "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP")
+            self.assertEqual(readiness["mimo25_scientific_model_round_count"], 69)
+            self.assertEqual(readiness["mimo25_account_window_request_delta"], 69)
+            self.assertEqual(readiness["mimo25_tool_loop_completion_rate"], 1.0)
+            self.assertEqual(readiness["mimo25_target_success_rate"], 1.0)
+            self.assertEqual(readiness["backbone_search_b3_remaining_frozen_order"], ["mimo-v2.5-pro"])
+            self.assertEqual(
+                readiness["backbone_search_b3_next_candidate"],
+                {"model_id": "mimo-v2.5-pro", "profile": "AtomGit-mimo-v2.5-pro"},
+            )
+            self.assertFalse(readiness["eligible_backbone_selected"])
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "FREEZE_AND_RUN_CODINGPLAN_MIMO25_CAPABILITY_B2",
+            )
+            self.assertEqual(readiness["glm52_capability_result_status"], "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP")
+            self.assertEqual(readiness["glm52_scientific_model_round_count"], 77)
+            self.assertEqual(readiness["glm52_account_window_request_delta"], 77)
+            self.assertEqual(readiness["glm52_tool_loop_completion_rate"], 1.0)
+            self.assertEqual(readiness["glm52_target_success_rate"], 1.0)
+            self.assertEqual(
+                readiness["backbone_search_b2_remaining_frozen_order"],
+                ["mimo-v2.5", "mimo-v2.5-pro"],
+            )
+            self.assertEqual(
+                readiness["backbone_search_b2_next_candidate"],
+                {"model_id": "mimo-v2.5", "profile": "AtomGit-mimo-v2.5"},
+            )
+            self.assertFalse(readiness["eligible_backbone_selected"])
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "FREEZE_AND_RUN_CODINGPLAN_GLM52_CAPABILITY_B1",
+            )
+            self.assertEqual(
+                readiness["direct_api_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+            )
+            self.assertEqual(
+                readiness["codingplan_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+            )
+            self.assertEqual(
+                readiness["deepseek_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+            )
+            self.assertEqual(readiness["deepseek_scientific_model_round_count"], 72)
+            self.assertEqual(readiness["deepseek_account_window_request_delta"], 72)
+            self.assertEqual(readiness["deepseek_tool_loop_completion_rate"], 0.625)
+            self.assertEqual(readiness["deepseek_target_success_rate"], 0.875)
+            self.assertEqual(
+                readiness["backbone_search_remaining_frozen_order"],
+                ["GLM-5.2", "mimo-v2.5", "mimo-v2.5-pro"],
+            )
+            self.assertEqual(
+                readiness["backbone_search_next_candidate"],
+                {"model_id": "GLM-5.2", "profile": "AtomGit-GLM-5.2"},
+            )
+            self.assertFalse(readiness["eligible_backbone_selected"])
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING":
             self.assertEqual(
                 readiness["status"],
                 "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP",
@@ -248,6 +356,27 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
             self.data["readiness"]["codingplan_account_window_request_delta"],
         )
         self.assertIn("DO_NOT_SUM", manifest["codingplan_request_accounting_domain"])
+        self.assertEqual(
+            manifest["deepseek_codingplan_account_window_requests"],
+            self.data["readiness"]["deepseek_account_window_request_delta"],
+        )
+        self.assertIn(
+            "DO_NOT_SUM", manifest["deepseek_codingplan_request_accounting_domain"]
+        )
+        self.assertEqual(
+            manifest["glm52_codingplan_account_window_requests"],
+            self.data["readiness"]["glm52_account_window_request_delta"],
+        )
+        self.assertIn(
+            "DO_NOT_SUM", manifest["glm52_codingplan_request_accounting_domain"]
+        )
+        self.assertEqual(
+            manifest["mimo25_codingplan_account_window_requests"],
+            self.data["readiness"]["mimo25_account_window_request_delta"],
+        )
+        self.assertIn(
+            "DO_NOT_SUM", manifest["mimo25_codingplan_request_accounting_domain"]
+        )
         for relative, metadata in manifest["files"].items():
             path = ROOT / relative
             self.assertTrue(path.is_file(), relative)

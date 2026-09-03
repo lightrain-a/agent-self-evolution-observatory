@@ -144,6 +144,45 @@ CODINGPLAN_QWEN38_RESULT = (
 CODINGPLAN_QWEN38_CLOSEOUT = (
     GENERATED / "agent-constraint-externality-codingplan-qwen38-capability-a0-closeout-20260902.json"
 )
+CODINGPLAN_DEEPSEEK_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-deepseek-live-capability-b0-result-20260903.json"
+)
+CODINGPLAN_DEEPSEEK_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-deepseek-live-capability-b0-closeout-20260903.json"
+)
+CODINGPLAN_CATALOG_B1 = (
+    GENERATED / "agent-constraint-externality-codingplan-catalog-b1-20260903.json"
+)
+BACKBONE_SEARCH_STATE_B1 = (
+    GENERATED / "agent-constraint-externality-capability-backbone-search-state-b1-20260903.json"
+)
+CODINGPLAN_GLM52_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-glm52-capability-b1-result-20260903.json"
+)
+CODINGPLAN_GLM52_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-glm52-capability-b1-closeout-20260903.json"
+)
+BACKBONE_SEARCH_STATE_B2 = (
+    GENERATED / "agent-constraint-externality-capability-backbone-search-state-b2-20260903.json"
+)
+CODINGPLAN_MIMO25_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-mimo25-capability-b2-result-20260903.json"
+)
+CODINGPLAN_MIMO25_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-mimo25-capability-b2-closeout-20260903.json"
+)
+BACKBONE_SEARCH_STATE_B3 = (
+    GENERATED / "agent-constraint-externality-capability-backbone-search-state-b3-20260903.json"
+)
+CODINGPLAN_MIMO25PRO_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-mimo25pro-capability-b3-result-20260903.json"
+)
+CODINGPLAN_MIMO25PRO_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-mimo25pro-capability-b3-closeout-20260903.json"
+)
+FINAL_BACKBONE_SELECTION = (
+    GENERATED / "agent-constraint-externality-capability-backbone-selection-final-20260903.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -378,6 +417,200 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("CodingPlan closeout cannot authorize F0.")
         codingplan_closeout_valid = True
 
+    deepseek_result = (
+        read_json(CODINGPLAN_DEEPSEEK_RESULT)
+        if CODINGPLAN_DEEPSEEK_RESULT.is_file()
+        else {}
+    )
+    deepseek_status = validate_capability_result(deepseek_result)
+    deepseek_closeout = (
+        read_json(CODINGPLAN_DEEPSEEK_CLOSEOUT)
+        if CODINGPLAN_DEEPSEEK_CLOSEOUT.is_file()
+        else {}
+    )
+    backbone_search_state = (
+        read_json(BACKBONE_SEARCH_STATE_B1)
+        if BACKBONE_SEARCH_STATE_B1.is_file()
+        else {}
+    )
+    codingplan_catalog_b1 = (
+        read_json(CODINGPLAN_CATALOG_B1)
+        if CODINGPLAN_CATALOG_B1.is_file()
+        else {}
+    )
+    backbone_search_active = False
+    if backbone_search_state:
+        for label, payload in (
+            ("DeepSeek closeout", deepseek_closeout),
+            ("CodingPlan catalog B1", codingplan_catalog_b1),
+            ("backbone search state B1", backbone_search_state),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if deepseek_status != "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP":
+            raise PreflightError("DeepSeek B0 result is not at its frozen floor stop.")
+        if deepseek_closeout.get("status") != "CODINGPLAN_DEEPSEEK_LIVE_B0_FLOOR_CLOSEOUT":
+            raise PreflightError("DeepSeek B0 closeout status mismatch.")
+        if deepseek_closeout.get("verdict") != deepseek_status:
+            raise PreflightError("DeepSeek B0 result/closeout verdict mismatch.")
+        if codingplan_catalog_b1.get("status") != "CODINGPLAN_ACCOUNT_CATALOG_REFRESH_PASS_ZERO_MODEL_REQUESTS":
+            raise PreflightError("CodingPlan catalog B1 is not a zero-request refresh pass.")
+        if codingplan_catalog_b1.get("codingplan_model_request_delta") != 0:
+            raise PreflightError("CodingPlan catalog B1 consumed model requests.")
+        if backbone_search_state.get("status") != "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT":
+            raise PreflightError("Backbone search B1 state is not frozen to GLM-5.2 next.")
+        if backbone_search_state.get("remaining_frozen_order") != [
+            "GLM-5.2", "mimo-v2.5", "mimo-v2.5-pro"
+        ]:
+            raise PreflightError("Backbone search candidate order drifted.")
+        if backbone_search_state.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone search state cannot authorize F0.")
+        backbone_search_active = True
+
+    glm52_result = (
+        read_json(CODINGPLAN_GLM52_RESULT)
+        if CODINGPLAN_GLM52_RESULT.is_file()
+        else {}
+    )
+    glm52_status = validate_capability_result(glm52_result)
+    glm52_closeout = (
+        read_json(CODINGPLAN_GLM52_CLOSEOUT)
+        if CODINGPLAN_GLM52_CLOSEOUT.is_file()
+        else {}
+    )
+    backbone_search_state_b2 = (
+        read_json(BACKBONE_SEARCH_STATE_B2)
+        if BACKBONE_SEARCH_STATE_B2.is_file()
+        else {}
+    )
+    backbone_search_b2_active = False
+    if backbone_search_state_b2:
+        for label, payload in (
+            ("GLM-5.2 closeout", glm52_closeout),
+            ("backbone search state B2", backbone_search_state_b2),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if glm52_status != "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP":
+            raise PreflightError("GLM-5.2 B1 result is not at its frozen ceiling stop.")
+        if glm52_closeout.get("status") != "CODINGPLAN_GLM52_B1_CEILING_CLOSEOUT":
+            raise PreflightError("GLM-5.2 B1 closeout status mismatch.")
+        if glm52_closeout.get("verdict") != glm52_status:
+            raise PreflightError("GLM-5.2 result/closeout verdict mismatch.")
+        if backbone_search_state_b2.get("status") != "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT":
+            raise PreflightError("Backbone search B2 state is not frozen to mimo-v2.5 next.")
+        if backbone_search_state_b2.get("remaining_frozen_order") != [
+            "mimo-v2.5", "mimo-v2.5-pro"
+        ]:
+            raise PreflightError("Backbone search B2 candidate order drifted.")
+        if backbone_search_state_b2.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone search B2 state cannot authorize F0.")
+        backbone_search_b2_active = True
+
+    mimo25_result = (
+        read_json(CODINGPLAN_MIMO25_RESULT)
+        if CODINGPLAN_MIMO25_RESULT.is_file()
+        else {}
+    )
+    mimo25_status = validate_capability_result(mimo25_result)
+    mimo25_closeout = (
+        read_json(CODINGPLAN_MIMO25_CLOSEOUT)
+        if CODINGPLAN_MIMO25_CLOSEOUT.is_file()
+        else {}
+    )
+    backbone_search_state_b3 = (
+        read_json(BACKBONE_SEARCH_STATE_B3)
+        if BACKBONE_SEARCH_STATE_B3.is_file()
+        else {}
+    )
+    backbone_search_b3_active = False
+    if backbone_search_state_b3:
+        for label, payload in (
+            ("mimo-v2.5 closeout", mimo25_closeout),
+            ("backbone search state B3", backbone_search_state_b3),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if mimo25_status != "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP":
+            raise PreflightError("mimo-v2.5 B2 result is not at its frozen ceiling stop.")
+        if mimo25_closeout.get("status") != "CODINGPLAN_MIMO25_B2_CEILING_CLOSEOUT":
+            raise PreflightError("mimo-v2.5 B2 closeout status mismatch.")
+        if mimo25_closeout.get("verdict") != mimo25_status:
+            raise PreflightError("mimo-v2.5 result/closeout verdict mismatch.")
+        if backbone_search_state_b3.get("status") != "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT":
+            raise PreflightError("Backbone search B3 state is not frozen to mimo-v2.5-pro next.")
+        if backbone_search_state_b3.get("remaining_frozen_order") != ["mimo-v2.5-pro"]:
+            raise PreflightError("Backbone search B3 candidate order drifted.")
+        if backbone_search_state_b3.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone search B3 state cannot authorize F0.")
+        backbone_search_b3_active = True
+
+    mimo25pro_result = (
+        read_json(CODINGPLAN_MIMO25PRO_RESULT)
+        if CODINGPLAN_MIMO25PRO_RESULT.is_file()
+        else {}
+    )
+    mimo25pro_status = validate_capability_result(mimo25pro_result)
+    mimo25pro_closeout = (
+        read_json(CODINGPLAN_MIMO25PRO_CLOSEOUT)
+        if CODINGPLAN_MIMO25PRO_CLOSEOUT.is_file()
+        else {}
+    )
+    final_backbone_selection = (
+        read_json(FINAL_BACKBONE_SELECTION)
+        if FINAL_BACKBONE_SELECTION.is_file()
+        else {}
+    )
+    final_backbone_selected = False
+    if final_backbone_selection:
+        for label, payload in (
+            ("mimo-v2.5-pro closeout", mimo25pro_closeout),
+            ("final backbone selection", final_backbone_selection),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if mimo25pro_status != "CAPABILITY_CALIBRATION_PASS":
+            raise PreflightError("mimo-v2.5-pro B3 result is not a capability PASS.")
+        if mimo25pro_closeout.get("status") != "CODINGPLAN_MIMO25PRO_B3_PASS_CLOSEOUT":
+            raise PreflightError("mimo-v2.5-pro B3 closeout status mismatch.")
+        if mimo25pro_closeout.get("verdict") != mimo25pro_status:
+            raise PreflightError("mimo-v2.5-pro result/closeout verdict mismatch.")
+        if final_backbone_selection.get("status") != "CAPABILITY_BACKBONE_SELECTED_MIMO25PRO_PASS":
+            raise PreflightError("Final backbone selection status mismatch.")
+        selected = final_backbone_selection.get("selected_backbone", {})
+        if selected != {
+            "model_id": "mimo-v2.5-pro",
+            "model_profile": "AtomGit-mimo-v2.5-pro",
+            "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+            "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+        }:
+            raise PreflightError("Final selected backbone identity drifted.")
+        if final_backbone_selection.get("capability_closeout_content_sha256") != mimo25pro_closeout.get("content_sha256"):
+            raise PreflightError("Final selection/closeout lineage drifted.")
+        if final_backbone_selection.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone selection cannot self-authorize F0.")
+        final_backbone_selected = True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -479,6 +712,7 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     eligible_backbone_selected = (
         capability_status == "CAPABILITY_CALIBRATION_PASS"
         or codingplan_status == "CAPABILITY_CALIBRATION_PASS"
+        or final_backbone_selected
     )
 
     capability = {
@@ -677,6 +911,35 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif final_backbone_selected:
+        readiness_status = "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED"
+        blocker = (
+            "The predeclared backbone search selected AtomGit mimo-v2.5-pro after a valid 8-unit capability PASS. "
+            "Backbone selection is frozen, but capability selection never self-authorizes F0."
+        )
+        next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif backbone_search_b3_active:
+        readiness_status = backbone_search_state_b3["status"]
+        blocker = (
+            "No eligible backbone has been selected yet: Qwen3.7-Plus, CodingPlan Qwen3.8-27B, GLM-5.2, and mimo-v2.5 are ceiling candidates, "
+            "while CodingPlan DeepSeek-v4-flash is a floor candidate. The final predeclared candidate mimo-v2.5-pro remains."
+        )
+        next_action = "FREEZE_AND_RUN_CODINGPLAN_MIMO25PRO_CAPABILITY_B3"
+    elif backbone_search_b2_active:
+        readiness_status = backbone_search_state_b2["status"]
+        blocker = (
+            "No eligible backbone has been selected yet: Qwen3.7-Plus, CodingPlan Qwen3.8-27B, and GLM-5.2 are ceiling candidates, "
+            "while CodingPlan DeepSeek-v4-flash is a floor candidate. The remaining order was frozen before any mimo-v2.5 scientific dispatch."
+        )
+        next_action = "FREEZE_AND_RUN_CODINGPLAN_MIMO25_CAPABILITY_B2"
+    elif backbone_search_active:
+        readiness_status = backbone_search_state["status"]
+        blocker = (
+            "No eligible backbone has been selected yet: Qwen3.7-Plus and CodingPlan Qwen3.8-27B are ceiling candidates, "
+            "while CodingPlan DeepSeek-v4-flash is a floor candidate because frozen tool-loop completion is below threshold. "
+            "The remaining candidate order was frozen before any GLM-5.2 scientific dispatch."
+        )
+        next_action = "FREEZE_AND_RUN_CODINGPLAN_GLM52_CAPABILITY_B1"
     elif both_valid_candidates_ceiling:
         readiness_status = "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP"
         blocker = (
@@ -813,8 +1076,146 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             codingplan_accounting.get("completion_tokens_total", 0)
         ),
         "codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
+        "deepseek_capability_result_status": deepseek_status,
+        "deepseek_capability_result_artifact": (
+            str(CODINGPLAN_DEEPSEEK_RESULT.relative_to(ROOT))
+            if CODINGPLAN_DEEPSEEK_RESULT.is_file()
+            else None
+        ),
+        "deepseek_capability_closeout_status": deepseek_closeout.get("status"),
+        "deepseek_capability_closeout_artifact": (
+            str(CODINGPLAN_DEEPSEEK_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_DEEPSEEK_CLOSEOUT.is_file()
+            else None
+        ),
+        "deepseek_scientific_model_round_count": int(
+            deepseek_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "deepseek_account_window_request_delta": int(
+            deepseek_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "deepseek_tool_loop_completion_rate": (
+            deepseek_result.get("gate", {}).get("tool_loop_completion_rate")
+        ),
+        "deepseek_target_success_rate": deepseek_result.get("gate", {}).get("target_success_rate"),
+        "backbone_search_state_status": backbone_search_state.get("status"),
+        "backbone_search_state_artifact": (
+            str(BACKBONE_SEARCH_STATE_B1.relative_to(ROOT))
+            if BACKBONE_SEARCH_STATE_B1.is_file()
+            else None
+        ),
+        "backbone_search_remaining_frozen_order": backbone_search_state.get(
+            "remaining_frozen_order", []
+        ),
+        "backbone_search_next_candidate": backbone_search_state.get("next_candidate"),
+        "codingplan_catalog_b1_artifact": (
+            str(CODINGPLAN_CATALOG_B1.relative_to(ROOT))
+            if CODINGPLAN_CATALOG_B1.is_file()
+            else None
+        ),
+        "glm52_capability_result_status": glm52_status,
+        "glm52_capability_result_artifact": (
+            str(CODINGPLAN_GLM52_RESULT.relative_to(ROOT))
+            if CODINGPLAN_GLM52_RESULT.is_file()
+            else None
+        ),
+        "glm52_capability_closeout_status": glm52_closeout.get("status"),
+        "glm52_capability_closeout_artifact": (
+            str(CODINGPLAN_GLM52_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_GLM52_CLOSEOUT.is_file()
+            else None
+        ),
+        "glm52_scientific_model_round_count": int(
+            glm52_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "glm52_account_window_request_delta": int(
+            glm52_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "glm52_tool_loop_completion_rate": glm52_result.get("gate", {}).get("tool_loop_completion_rate"),
+        "glm52_target_success_rate": glm52_result.get("gate", {}).get("target_success_rate"),
+        "backbone_search_state_b2_status": backbone_search_state_b2.get("status"),
+        "backbone_search_state_b2_artifact": (
+            str(BACKBONE_SEARCH_STATE_B2.relative_to(ROOT))
+            if BACKBONE_SEARCH_STATE_B2.is_file()
+            else None
+        ),
+        "backbone_search_b2_remaining_frozen_order": backbone_search_state_b2.get(
+            "remaining_frozen_order", []
+        ),
+        "backbone_search_b2_next_candidate": backbone_search_state_b2.get("next_candidate"),
+        "mimo25_capability_result_status": mimo25_status,
+        "mimo25_capability_result_artifact": (
+            str(CODINGPLAN_MIMO25_RESULT.relative_to(ROOT))
+            if CODINGPLAN_MIMO25_RESULT.is_file()
+            else None
+        ),
+        "mimo25_capability_closeout_status": mimo25_closeout.get("status"),
+        "mimo25_capability_closeout_artifact": (
+            str(CODINGPLAN_MIMO25_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_MIMO25_CLOSEOUT.is_file()
+            else None
+        ),
+        "mimo25_scientific_model_round_count": int(
+            mimo25_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "mimo25_account_window_request_delta": int(
+            mimo25_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "mimo25_tool_loop_completion_rate": mimo25_result.get("gate", {}).get("tool_loop_completion_rate"),
+        "mimo25_target_success_rate": mimo25_result.get("gate", {}).get("target_success_rate"),
+        "backbone_search_state_b3_status": backbone_search_state_b3.get("status"),
+        "backbone_search_state_b3_artifact": (
+            str(BACKBONE_SEARCH_STATE_B3.relative_to(ROOT))
+            if BACKBONE_SEARCH_STATE_B3.is_file()
+            else None
+        ),
+        "backbone_search_b3_remaining_frozen_order": backbone_search_state_b3.get(
+            "remaining_frozen_order", []
+        ),
+        "backbone_search_b3_next_candidate": backbone_search_state_b3.get("next_candidate"),
+        "mimo25pro_capability_result_status": mimo25pro_status,
+        "mimo25pro_capability_result_artifact": (
+            str(CODINGPLAN_MIMO25PRO_RESULT.relative_to(ROOT))
+            if CODINGPLAN_MIMO25PRO_RESULT.is_file()
+            else None
+        ),
+        "mimo25pro_capability_closeout_status": mimo25pro_closeout.get("status"),
+        "mimo25pro_capability_closeout_artifact": (
+            str(CODINGPLAN_MIMO25PRO_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_MIMO25PRO_CLOSEOUT.is_file()
+            else None
+        ),
+        "mimo25pro_scientific_model_round_count": int(
+            mimo25pro_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "mimo25pro_account_window_request_delta": int(
+            mimo25pro_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "mimo25pro_account_level_unattributed_request_count": int(
+            mimo25pro_closeout.get("accounting", {}).get("account_level_unattributed_request_count", 0)
+        ),
+        "mimo25pro_tool_loop_completion_rate": mimo25pro_result.get("gate", {}).get("tool_loop_completion_rate"),
+        "mimo25pro_target_success_rate": mimo25pro_result.get("gate", {}).get("target_success_rate"),
+        "final_backbone_selection_status": final_backbone_selection.get("status"),
+        "final_backbone_selection_artifact": (
+            str(FINAL_BACKBONE_SELECTION.relative_to(ROOT))
+            if FINAL_BACKBONE_SELECTION.is_file()
+            else None
+        ),
+        "selected_backbone": final_backbone_selection.get("selected_backbone"),
+        "selected_backbone_capability_result_status": (
+            mimo25pro_status if final_backbone_selected else None
+        ),
         "capability_model_selection_state": (
-            "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING"
+            "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED"
+            if final_backbone_selected
+            else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT"
+            if backbone_search_b3_active
+            else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT"
+            if backbone_search_b2_active
+            else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT"
+            if backbone_search_active
+            else "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING"
             if both_valid_candidates_ceiling
             else "ELIGIBLE_BACKBONE_SELECTED"
             if eligible_backbone_selected
@@ -904,6 +1305,13 @@ def main() -> None:
         CAPABILITY_R5_PARTIAL_CONTRACT, CAPABILITY_R5_PARTIAL_RESULT,
         CODINGPLAN_QWEN38_Q0, CODINGPLAN_QWEN38_Q1, CODINGPLAN_QWEN38_CONTRACT,
         CODINGPLAN_QWEN38_MANIFEST, CODINGPLAN_QWEN38_RESULT, CODINGPLAN_QWEN38_CLOSEOUT,
+        CODINGPLAN_DEEPSEEK_RESULT, CODINGPLAN_DEEPSEEK_CLOSEOUT,
+        CODINGPLAN_CATALOG_B1, BACKBONE_SEARCH_STATE_B1,
+        CODINGPLAN_GLM52_RESULT, CODINGPLAN_GLM52_CLOSEOUT,
+        BACKBONE_SEARCH_STATE_B2,
+        CODINGPLAN_MIMO25_RESULT, CODINGPLAN_MIMO25_CLOSEOUT,
+        BACKBONE_SEARCH_STATE_B3, CODINGPLAN_MIMO25PRO_RESULT,
+        CODINGPLAN_MIMO25PRO_CLOSEOUT, FINAL_BACKBONE_SELECTION,
     ):
         if not path.is_file():
             continue
@@ -929,6 +1337,31 @@ def main() -> None:
         "codingplan_request_accounting_domain": readiness[
             "codingplan_request_accounting_domain"
         ],
+        "deepseek_codingplan_account_window_requests": readiness[
+            "deepseek_account_window_request_delta"
+        ],
+        "deepseek_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_DEEPSEEK_B0_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
+        "glm52_codingplan_account_window_requests": readiness[
+            "glm52_account_window_request_delta"
+        ],
+        "glm52_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_GLM52_B1_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
+        "mimo25_codingplan_account_window_requests": readiness[
+            "mimo25_account_window_request_delta"
+        ],
+        "mimo25_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_MIMO25_B2_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
+        "mimo25pro_codingplan_account_window_requests": readiness[
+            "mimo25pro_account_window_request_delta"
+        ],
+        "mimo25pro_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_MIMO25PRO_B3_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
+        "selected_backbone": readiness["selected_backbone"],
         "gpu_runs": 0,
         "authority": {
             "m1_mock_qualification": not readiness["m1_runner_qualification_pass"],

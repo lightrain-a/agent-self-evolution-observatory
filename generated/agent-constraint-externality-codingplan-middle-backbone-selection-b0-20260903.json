@@ -1,0 +1,81 @@
+{
+  "active_substrate": {
+    "bundle": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+    "tool_call_cap": 16
+  },
+  "authority": {
+    "appworld_ul": false,
+    "capability_b0": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "f8e5a5f4fc04d0f29b16751e6b1465f77d03b3cd97da275f69fd38e08f7cf50d",
+  "deepseek_prior_attempts": [
+    {
+      "artifact": "generated/agent-constraint-externality-codingplan-a2-provider-round-control-void-r1-20260902.json",
+      "sha256": "27bc88b1c6f6eb41dc75d20ce3b0b86dfe6e36d3d0afd9ac5122cf4fb9545878",
+      "status": "CODINGPLAN_A2_PROVIDER_ROUND_CONTROL_FAILURE_VOID"
+    },
+    {
+      "artifact": "generated/agent-constraint-externality-codingplan-a2-r1-native-tool-interception-void-20260902.json",
+      "sha256": "30e8e05cfba50f8cc9a6e1d573297285d8da8b7891ecade1edfb2dc2ad6ea1e0",
+      "status": "CODINGPLAN_A2_R1_NATIVE_TOOL_INTERCEPTION_FAILURE_VOID"
+    },
+    {
+      "artifact": "generated/agent-constraint-externality-codingplan-a2-r2-native-tool-protocol-void-20260902.json",
+      "sha256": "26bb2cd4ab41cdd6617c275660a755d7804f1819c60d8ab705d53a19e93d2e24",
+      "status": "CODINGPLAN_A2_R2_NATIVE_TOOL_PROTOCOL_FAILURE_VOID"
+    },
+    {
+      "artifact": "generated/agent-constraint-externality-codingplan-a2-r3-runner-wording-protocol-void-20260902.json",
+      "sha256": "139726a245f98d6e340dbcd10c96a34f924484304ff2fdcef3b365268360e6dd",
+      "status": "CODINGPLAN_A2_R3_GENERIC_RUNNER_TOOL_WORDING_PROTOCOL_FAILURE_VOID"
+    },
+    {
+      "artifact": "generated/agent-constraint-externality-codingplan-deepseek-a2-r4-schedule-wakeup-void-20260902.json",
+      "sha256": "e8ede6b5df2bedd897ef85bdb02d66c35977cd73fcb1b48eabb9433fb68a569c",
+      "status": "CODINGPLAN_DEEPSEEK_A2_R4_VOID_ATOMCODE_SCHEDULE_WAKEUP_LEAK"
+    }
+  ],
+  "deepseek_provider_qualification": {
+    "artifact": "generated/agent-constraint-externality-codingplan-provider-qualification-a2-20260902.json",
+    "content_sha256": "377dbbd2dd34af1d44616f5af78f230c56616103190c4756498c9bb7286a6d67",
+    "synthetic_probe_requests": 1
+  },
+  "deepseek_valid_scientific_measurements_before_b0": 0,
+  "frozen_gate": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "outcome_blindness": "No valid DeepSeek capability target-success or effect outcome exists before B0 selection; prior attempts are interface-only VOID evidence.",
+  "prior_valid_candidates": [
+    {
+      "harness": "DIRECT_APPWORLD_API",
+      "model_id": "qwen3.7-plus",
+      "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+    },
+    {
+      "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+      "model_id": "qwen3.8-27b",
+      "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+    }
+  ],
+  "schema_version": "ace-codingplan-middle-backbone-selection-b0-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_candidate": {
+    "context_window": 512000,
+    "max_output_tokens": 128000,
+    "model_id": "deepseek-v4-flash",
+    "model_profile": "AtomGit-deepseek-v4-flash"
+  },
+  "selection_boundary": "POST_TWO_VALID_CEILING_CANDIDATES_PRE_ANY_NEW_DEEPSEEK_LIVE_MCP_SCIENTIFIC_DISPATCH",
+  "selection_rule": "FIRST_EXISTING_SIGNED_CODINGPLAN_PROFILE_WITH_PROVIDER_QUALIFICATION_AND_ZERO_VALID_ACTIVE_V4_LIVE_MCP_CAPABILITY_MEASUREMENTS",
+  "status": "CODINGPLAN_MIDDLE_BACKBONE_DEEPSEEK_V4_FLASH_SELECTED_OUTCOME_BLIND"
+}

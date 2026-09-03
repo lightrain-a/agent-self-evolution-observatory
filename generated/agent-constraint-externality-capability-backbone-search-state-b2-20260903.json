@@ -1,0 +1,37 @@
+{
+  "advance_reason": "PREDECLARED_PRE_GLM_RULE_APPLIED_AFTER_GLM_CEILING",
+  "authority": {
+    "f0": false,
+    "next_capability_candidate": true,
+    "p1": false,
+    "paper_claim": false
+  },
+  "catalog_artifact": "generated/agent-constraint-externality-codingplan-catalog-b1-20260903.json",
+  "catalog_content_sha256": "4a843540a177d51b49c4040bfe8d29be19debd225da169cb1235ed751eceb619",
+  "content_sha256": "6ae57acaf62c3a74f09f6dd4f80e8b09936dabac3a7a1c8d88c96e5fb7a54445",
+  "gate_unchanged": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "glm_closeout_artifact": "generated/agent-constraint-externality-codingplan-glm52-capability-b1-closeout-20260903.json",
+  "glm_closeout_content_sha256": "990d316410471601a2b838d0fecc3fe371d541ab7d37d27b646566fe4655b238",
+  "next_candidate": {
+    "model_id": "mimo-v2.5",
+    "profile": "AtomGit-mimo-v2.5"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prior_search_state_artifact": "generated/agent-constraint-externality-capability-backbone-search-state-b1-20260903.json",
+  "prior_search_state_content_sha256": "a96d8a4834c8680ce655af49eda8e946fc9bea7afc1168f9cea7b9248436d672",
+  "remaining_frozen_order": [
+    "mimo-v2.5",
+    "mimo-v2.5-pro"
+  ],
+  "schema_version": "ace-capability-backbone-search-state-b2-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_policy": "FREEZE_CURRENT_ACCOUNT_CATALOG_ORDER_AFTER_EXCLUDING_ALREADY_VALIDLY_TESTED_MODELS; STOP_AT_FIRST_CAPABILITY_PASS",
+  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT",
+  "stop_rule": "STOP_BACKBONE_SEARCH_IMMEDIATELY_AT_FIRST_CAPABILITY_CALIBRATION_PASS; FLOOR_OR_CEILING_ADVANCES_ONLY_TO_NEXT_PREDECLARED_MODEL"
+}

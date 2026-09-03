@@ -1,0 +1,27 @@
+{
+  "atomcode_binary_sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113",
+  "atomcode_version": "5.0.9",
+  "authority": {
+    "appworld_ul": false,
+    "capability_b0": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "b380278562e9dca16772856ebeaaa8d9541bfd73bd2db50342611f35be8a27cc",
+  "contract_content_sha256": "b06b8e5105279defe2663e2acb4e4c128f75e6489c54a5b261bd78025c84f1d5",
+  "git_commit": "ec81f3491c2aa45aa53c64b37e1f4fb70cb6e454",
+  "ledger_absent_before_execution": true,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "q1_codingplan_model_requests": 0,
+  "q1_codingplan_window_used_after": 0,
+  "q1_content_sha256": "174d14351ba88910d5d27ccb16eb6fa3ce83eecceb177201a3cf8cc8531f533b",
+  "runner_source_sha256": "4b7d44272fbd8cb6062cacde69634fdc65eb10a278219abc425585304f69befe",
+  "runtime_root_absent_before_execution": true,
+  "schema_version": "ace-codingplan-deepseek-live-b0-execution-seal-v1",
+  "scientific_dispatch_count_before_execution": 0,
+  "scientific_outcomes_observed": 0,
+  "selection_content_sha256": "f8e5a5f4fc04d0f29b16751e6b1465f77d03b3cd97da275f69fd38e08f7cf50d",
+  "status": "CODINGPLAN_DEEPSEEK_LIVE_B0_EXECUTION_SEAL_PASS"
+}
