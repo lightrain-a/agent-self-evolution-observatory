@@ -1,0 +1,56 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-accum8x8-resource-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_GENUINE_GPU_RESOURCE_INFEASIBILITY",
+  "repair3_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-repair3-host67-result-20260903.json",
+    "sha256": "04cebb05ab6be62e34d81d708465b7d8e7c7ccf158a69df7b80300455b1ecc88",
+    "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR3_HOLD",
+    "train_state_ready": true,
+    "micro_gradients_completed": 1,
+    "accumulated_gradient_complete": false,
+    "error": "XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 15816065656 bytes."
+  },
+  "resource_interpretation": {
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "first_micro_gradient_completed": true,
+    "failure_point": "second micro-gradient while the first full FP32 scaled gradient accumulator remained resident",
+    "failed_additional_gpu_allocation_bytes": 15816065656,
+    "failed_additional_gpu_allocation_gib": 14.72985815256834,
+    "conclusion": "The preregistered microbatch-8 / accumulate-8 implementation cannot hold the full gradient accumulator and execute the next micro-gradient simultaneously on one A100-80GB under the frozen direct-device checkpoint realization."
+  },
+  "confounders_rejected": {
+    "checkpoint_transport_or_metadata_failure": false,
+    "checkpoint_hygiene_failure": false,
+    "user_session_exit": false,
+    "keepalive_loss": false,
+    "model_restore_failure": false,
+    "host_cgroup_memory_failure": false,
+    "reason": "Repair3 used a 20/20 checksum-sealed and hygiene-clean checkpoint, two live keepalive sessions, stable user manager, successful step-0 train-state restoration, and one completed micro-gradient before the CUDA allocator RESOURCE_EXHAUSTED failure."
+  },
+  "scientific_safety": {
+    "synthetic_only": true,
+    "behavior_dataset_accessed": false,
+    "policy_outcomes_read": false,
+    "loss_value_retained_or_reported": false,
+    "gradient_numerical_values_read": false,
+    "optimizer_update": false,
+    "parameter_or_ema_mutation": false,
+    "checkpoint_written": false,
+    "formal_training_started": false
+  },
+  "preregistered_ladder_decision": "ADVANCE_TO_CANDIDATE3_MICROBATCH4_ACCUM16",
+  "allowed_next_change": "Change only physical microbatch from 8 to 4 and accumulation count from 8 to 16, preserving effective batch 64 and every other scientific/runtime invariant already frozen for the accumulation child.",
+  "forbidden": [
+    "retry 8x8 again",
+    "inspect loss or policy outcomes to select the next candidate",
+    "change model, checkpoint, seed, optimizer, learning-rate schedule, EMA cadence, normalization, effective batch, action horizon, or GPU topology",
+    "start formal training before the candidate3 synthetic and real-data gates pass"
+  ],
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate": "QUALIFY_4X16_DATA_ORDER_THEN_NEW_EXACTLY_ONCE_SYNTHETIC_4X16_RESOURCE_GATE"
+}
