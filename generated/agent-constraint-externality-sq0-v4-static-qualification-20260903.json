@@ -1,0 +1,159 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v4_execution": false,
+    "toolsandbox": false
+  },
+  "case_count": 12,
+  "content_sha256": "2faf3c7f018c108168f85360163358b96075cf38b8ff23fea7c69ff3e06ac818",
+  "contract_content_sha256": "9cd1da1bee958e5dc1b4189b2c31d726e56ff6cecc0788ab31fc9eb1a9b06b4f",
+  "freshness_audit": {
+    "case_id_overlap_count": 0,
+    "case_ids_unique": true,
+    "fixture_hash_overlap_count": 0,
+    "instruction_hash_overlap_count": 0,
+    "prior_development_sets_checked": [
+      "SQ0_V1",
+      "SQ0_V2R1",
+      "SQ0_V3",
+      "OLD_F0"
+    ],
+    "target_local_resource_hash_overlap_count": 0
+  },
+  "max_public_tool_calls": 48,
+  "minimum_headroom": 32,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "private_fixture_ids_used": false,
+  "protected_bundle_sha256": "72ff627d2f37fcd43ccfb4864de10b19e811d1bdcca67c8315a22befa20ba10c",
+  "provider_requests": 0,
+  "public_oracles": [
+    {
+      "case_id": "SQ0V4-FG-01",
+      "headroom": 54,
+      "initial_snapshot_sha256": "8c69d281464aecf059f2633fda860d02b40cf765a376fe8b66a0292032427c08",
+      "kind": "FG_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-FG-02",
+      "headroom": 54,
+      "initial_snapshot_sha256": "9e7056fc716f37c0e3bbbd593dd66fbd1168726ee0b8d4ffd636db425b7cd4b0",
+      "kind": "FG_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-FG-03",
+      "headroom": 54,
+      "initial_snapshot_sha256": "6f5db2e948d99e4dc6595a33576299049011c128dd1e92c18a747e7754463641",
+      "kind": "FG_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-FG-04",
+      "headroom": 54,
+      "initial_snapshot_sha256": "c4084059a27e5388dd9d8592dc68f8455b7c2e7e59ed0f3873253877fe31780f",
+      "kind": "FG_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-FG-05",
+      "headroom": 54,
+      "initial_snapshot_sha256": "60a48c5cd051910bb71bbdb229b5af187246e6b131080f0c8bb73211c9b08b44",
+      "kind": "FG_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-FG-06",
+      "headroom": 54,
+      "initial_snapshot_sha256": "f6280cc7df4a43dc879e06d838d5ff108eb132ebb4bb620ceca99ccf99267e54",
+      "kind": "FG_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-TNF-01",
+      "headroom": 32,
+      "initial_snapshot_sha256": "3aab945be002fc315f40e993363dd9d5c6bc5b409bfa06897f9c59f557f62346",
+      "kind": "TNF_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-TNF-02",
+      "headroom": 32,
+      "initial_snapshot_sha256": "f37cb6b2253f3adb6687fbe815b26e790e763d33d9798662688736a73dc26efe",
+      "kind": "TNF_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-TNF-03",
+      "headroom": 32,
+      "initial_snapshot_sha256": "96a335a90deb0edd7a797d44c7193dd91a91e3bc558e14d694df8e8b0df7d001",
+      "kind": "TNF_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-TNF-04",
+      "headroom": 32,
+      "initial_snapshot_sha256": "de935af47523d9fdd9dc1984c53898e2556e149d89cdbaf90da7d04c0670c5f3",
+      "kind": "TNF_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-TNF-05",
+      "headroom": 32,
+      "initial_snapshot_sha256": "b9baa60c3ccb797d5c62541671808c8625b3d98b730946938b4175831a4dcbae",
+      "kind": "TNF_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "SQ0V4-TNF-06",
+      "headroom": 32,
+      "initial_snapshot_sha256": "80aa372b9357217ce422d649ab200b04e33ec78cdf6fa42dbc51ada11ef661a8",
+      "kind": "TNF_SEMANTIC_V4",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    }
+  ],
+  "schema_version": "ace-sq0-v4-static-qualification-v1",
+  "scientific_outcomes_observed": 0,
+  "sq0_id": "ACE-SQ0-V4-TNF-CALIBRATED-TARGET-CHALLENGE-20260903",
+  "status": "SQ0_V4_PUBLIC_REACHABILITY_AND_FRESHNESS_PASS"
+}
