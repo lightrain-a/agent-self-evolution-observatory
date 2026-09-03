@@ -1,0 +1,35 @@
+{
+  "artifact_type": "e2-r17-m3r2-independent-preexecution-review",
+  "schema_version": "1.0",
+  "review_date": "2026-09-03",
+  "reviewer": {
+    "route": "Oracle Browser / logged-in ChatGPT Agent project",
+    "server": "52",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High (4/5 verified from ChatGPT DOM)",
+    "session": "e2-r17-v4r1-m3r2-preexec",
+    "conversation_id": "6a999791-67c8-83e8-8b9a-8390f0ed20eb",
+    "prompt_submitted": true,
+    "completed": true
+  },
+  "reviewed_object": {
+    "commit": "f8fb39d2289fdc3af2baa7bec23fe9c12087c1d1",
+    "path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r2-proposal-20260903.md",
+    "sha256": "82f6139344d2c78678130a36a32278e4e9cb0d29a4c9200e45982f1a09d44673"
+  },
+  "verdict": "REVISE_M3R2_BEFORE_EXECUTION",
+  "verdict_changing_fixes": [
+    "The squared-propensity identity requires conditionally iid/independent stationary actor realizations rather than exchangeability alone.",
+    "Outcome-consumed historical A1/B1 must not enter the new localization gate in the outcome-selected development case.",
+    "Preserve the 72-unit budget by collecting two fully prospective actor realizations for FF_R1 and two for FF_R2 on all 18 tasks; keep FF_HIST and WIN_COMMON descriptive only.",
+    "Raw E_REAL>0 is insufficient for latent propensity language; freeze a one-sided uncertainty/randomization criterion using the same 72 observations or restrict the claim to observed excess disagreement."
+  ],
+  "budget_recommendation": {
+    "new_actor_units": 72,
+    "updater_calls": 0,
+    "new_states": 0,
+    "new_tasks": 0,
+    "new_models": 0
+  },
+  "authority": false
+}

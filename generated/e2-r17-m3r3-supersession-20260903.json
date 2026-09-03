@@ -1,0 +1,75 @@
+{
+  "artifact_type": "e2-r17-m3r3-supersession",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_M3R3_FULLY_PROSPECTIVE_ACTOR_LOCALIZATION_REPAIR_PROPOSAL_ONLY",
+  "base_m3r2_commit": "f8fb39d2289fdc3af2baa7bec23fe9c12087c1d1",
+  "branch": "research/e2-r17-m3r-metric-repair-20260903",
+  "independent_review": {
+    "path": "generated/e2-r17-m3r2-preexecution-oracle-review-20260903.json",
+    "sha256": "4c49fd9f3542f29163f49e91fe6eedc8048d55cbdc26ab85d631183828f94b5e",
+    "verdict": "REVISE_M3R2_BEFORE_EXECUTION"
+  },
+  "superseded": {
+    "proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r2-proposal-20260903.md",
+    "proposal_sha256": "82f6139344d2c78678130a36a32278e4e9cb0d29a4c9200e45982f1a09d44673",
+    "provider_calls": 0,
+    "actor_units": 0,
+    "scientific_outcomes": 0,
+    "execution_authority": false
+  },
+  "replacement": {
+    "proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r3-proposal-20260903.md",
+    "proposal_sha256": "16e1a9e6bfa46d54411ba23f4e31ceb962dd59b338d074cc9ea1267abf868b90",
+    "metric_path": "research_pipeline/e2_r17_regeneration_metrics_v3.py",
+    "metric_sha256": "2eb090a7ed4afdc6126283008ef852b0ce1199e06fe52ea14da0f4a8f6a79bc9",
+    "test_path": "research_pipeline/test_e2_r17_regeneration_metrics_v3.py",
+    "test_sha256": "9bd5e7ec99e17019e9b0f9570d02e32ff410e103464ff954d5cd9a008a72388e"
+  },
+  "design_repair": {
+    "scientific_states_in_gate": ["FF_R1", "FF_R2"],
+    "historical_ff_hist_new_calls": 0,
+    "win_common_new_calls": 0,
+    "historical_actor_observations_in_gate": false,
+    "fresh_actor_replicates_per_state_task": 2,
+    "tasks": 18,
+    "new_actor_units": 72,
+    "updater_calls": 0,
+    "new_states": 0,
+    "primary_observed_statistic": "E_REAL = D_X - D_A",
+    "randomization_test": "one-sided exact conditional state-label test",
+    "randomization_null": "p_A(q)=p_B(q) task-wise under conditionally iid/stationary Bernoulli actor draws",
+    "alpha": 0.05,
+    "pass_requires": ["E_REAL > 0", "p_exact <= 0.05"],
+    "selected_case_only": true
+  },
+  "unchanged": {
+    "task_panel": true,
+    "actor_requested_model": "deepseek-v4-pro",
+    "actor_required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled",
+    "provider_retry_limit": 0,
+    "total_new_actor_units_vs_m3r2": "72 -> 72",
+    "e3_opened": false
+  },
+  "tests": {
+    "m3r3_metric_tests": "9/9 PASS",
+    "combined_adjacent_regression": "88/88 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "authority": {
+    "provider_io": false,
+    "actor_measurement": false,
+    "updater": false,
+    "recovery_v3_modification": false,
+    "m4": false,
+    "semantic_transfer": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "interpretation_boundary": "M3R3 removes outcome-consumed actor observations from the localization gate and adds exact finite-sample conditional randomization at unchanged 72-unit cost. It remains a selected-case development proposal and grants no execution authority."
+}
