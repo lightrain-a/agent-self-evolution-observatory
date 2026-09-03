@@ -1,0 +1,119 @@
+\section{Evaluation Contract}
+\label{sec:evaluation}
+
+The remaining program is staged so that an unfavorable result cannot be rescued by changing the estimand, selecting a different updater realization, opening an untouched benchmark, or adding a new model after outcomes. Completed evidence, prospective method tests, and confirmatory transport are kept as separate authorities.
+
+\subsection{M2: deterministic state-semantic sufficiency}
+Before testing an automatic generator intervention, M2 asks whether the manually identified repair surfaces can causally alter downstream behavior at all. Four frozen persistent states share the same base spreadsheet skill:
+\begin{itemize}
+    \item G0: the exact initial skill;
+    \item G1: G0 plus output save/reload/target-cell verification;
+    \item G2: G0 plus a complete Inspect$\rightarrow$Read$\rightarrow$Compute$\rightarrow$Write$\rightarrow$Save$\rightarrow$Reload/Verify loop;
+    \item G3: G2 plus clean recovery from malformed or failed tool calls.
+\end{itemize}
+No updater is called. Each state is evaluated on the same 18 development held-out tasks with DeepSeek-V4-Pro, temperature zero, thinking disabled, $K=1$, ten turns, and the same deterministic verifier. The primary screen selects the simplest G1$<$G2$<$G3 whose utility exceeds G0 by at least $1/18$. Historical S1 outcomes are excluded from the gate. If the primary passes, a pre-frozen 17-task sensitivity excluding the one task split across provider quota eras must remain strictly positive; this sensitivity may veto but never rescue.
+
+M2 establishes at most \emph{semantic sufficiency}. G1--G3 were manually constructed after the selected historical state was inspected, so they do not show that an automatic learner can discover the useful repair.
+
+\subsection{M3: same-evidence frozen-state regeneration audit}
+The previous M3 plan remeasured G0 plus the M2-selected manual arm. We replace it with a higher-information actor-noise audit that directly targets the unresolved exact-evidence anomaly and requires no updater call.
+
+We freeze four already-existing persistent artifacts:
+\begin{itemize}
+    \item historical First-Fail state, SHA \texttt{97e28b4862...185252};
+    \item fresh exact-evidence First-Fail realization 1, SHA \texttt{596bd30b49...fdf04f};
+    \item fresh exact-evidence First-Fail realization 2, SHA \texttt{fb5454a27f...36615e};
+    \item one common WIN-C state, SHA \texttt{6df40f6170...c00649}.
+\end{itemize}
+The historical, replicate-1, and replicate-2 WIN-C updater artifacts are byte-identical at this SHA, so a single frozen comparator removes the earlier fresh-comparator-state instability.
+
+All four states are re-evaluated contemporaneously on the exact same 18-task development panel with the frozen actor/runtime/verifier configuration and hash-balanced state order. The M3 measurement contains no state synthesis. Its purpose is not to estimate a population variance component; it asks whether behavioral separation among already-generated same-evidence states persists when downstream execution and the comparator state are controlled more directly. M3 remains an outcome-selected development audit and cannot create fresh-stream confirmation.
+
+\subsection{M4: fresh Evidence$\times$Generator bridge}
+The automatic bridge uses a newly generated development suite disjoint from the selected S1 panel and from the untouched E3 confirmation lane. It contains 120 formal task artifacts: 96 update tasks arranged as 12 eight-task streams, 12 SCREEN held-out tasks, and 12 different VALIDATION held-out tasks. SCREEN and VALIDATION each contain one stream per controlled failure family, and their held-out panels are disjoint.
+
+For each stream we freeze the balanced $2\times2$:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Evidence package & Native free-form updater & Typed compiler \\
+\midrule
+Winner & W\_FREE & W\_COMP \\
+First-Fail-4 & FF4\_FREE\_A & FF4\_COMP \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Winner evidence.}
+All eight update pools expose the served winner trajectory+score package.
+
+\paragraph{First-Fail-4 evidence.}
+A pool is eligible only if it contains both success and failure. A stream is bridge-eligible only with at least four mixed pools. Exactly four eligible pools are selected by a pre-frozen content hash; those expose the deterministic first failed nonwinner, while the other four expose the same winner package as the Winner arm. FF4 therefore guarantees four forced failed replacements plus four unchanged winner scores. It equalizes the \emph{replacement count}, not trajectory length, action count, failure severity, semantic density, or information amount. The rejected-source contrast is therefore an evidence-package-policy effect, not a purified ``failure versus success'' causal effect.
+
+\paragraph{Information parity and stochasticity.}
+Within each evidence package, FREE and COMP receive the same selected trajectory bytes and binary score. The compiler cannot read hidden arm, family, task, rollout, golden-answer, or held-out labels. Corresponding learner-input hashes must match before provider execution. The updater and actor use temperature zero, thinking disabled, and provider retry zero, but the provider does not expose a reliable generation seed for every call. The first free-form state is therefore a prospectively deployed realization, not a deterministic artifact. No extra draw may replace an unfavorable primary state. On VALIDATION only, exactly one additional same-evidence state, FF4\_FREE\_B, is generated regardless of A's outcome; B is a prespecified sensitivity/mechanism realization and never replaces A.
+
+\paragraph{State identity.}
+Persistent state is the treatment. Before actor evaluation, states are partitioned by full skill SHA-256. Byte-identical deterministic arms share one actor observation schedule and have state-treatment contrast exactly zero. If FF4\_FREE\_A and FF4\_FREE\_B happen to be byte-identical, their state-realization contrast is defined as zero rather than allowing separate actor noise to manufacture a state difference. Calls removed by aliasing cannot be spent elsewhere.
+
+\subsection{Four orthogonal questions}
+The bridge deliberately separates four questions that earlier versions conflated.
+
+\paragraph{Q1: complete state-generation method effect (primary).}
+For stream $s$, define within-source generator contrasts
+\begin{align}
+G_W(s) &= J_s(\text{W\_COMP})-J_s(\text{W\_FREE}),\\
+G_{F,A}(s) &= J_s(\text{FF4\_COMP})-J_s(\text{FF4\_FREE\_A}).
+\end{align}
+The primary generator-factor estimand of the balanced $2\times2$ is
+\begin{equation}
+G_{\mathrm{MAIN},A}(s)=\tfrac{1}{2}\left[G_W(s)+G_{F,A}(s)\right].
+\end{equation}
+The equal weighting is frozen because the paper's primary question concerns the state-generation method averaged across the two predeclared evidence-source cells. $G_W$ and $G_{F,A}$ are reported separately, but neither alone gates the headline claim. Thus a state-generation result does not require rejected evidence to be superior or an Evidence$\times$Generator interaction to be positive.
+
+SCREEN passes Q1 only if mean $G_{\mathrm{MAIN},A}>0$, at least 4/6 SCREEN streams have $G_{\mathrm{MAIN},A}>0$, and there is no technical, evidence-parity, state-SHA, exactly-once, or frozen-protocol violation. Only this raw Q1 gate may open VALIDATION.
+
+VALIDATION uses the same frozen estimand and the same directional rule on six different streams and 12 disjoint held-out tasks. FF4\_FREE\_B does not enter either primary gate. Therefore SCREEN cannot choose one estimand and VALIDATION another.
+
+\paragraph{Q2: what part of the compiler matters?}
+Two trajectory-text-blind controls classify interpretation without deciding whether Q1 exists. \texttt{SCORE\_ONLY\_GENERIC\_MAX} receives the same ordered eight selected binary scores and no trajectory text; when any score is zero it emits the maximal nonredundant generic repair surface. \texttt{SCOPE\_MATCHED\_GENERIC\_MAX} receives the same scores plus only $k$, the number of nonredundant repair blocks that the typed compiler would render, and never receives trajectory text or primitive identity. The latter is therefore trajectory-text-blind but \emph{diagnosis-cardinality-informed}; passing it supports benefit beyond repair-block cardinality/scope, not a pure semantic-diagnosis effect independent of every diagnosis-derived variable.
+
+State-SHA-aware contrasts against these controls are interpreted separately. If the compiler beats both, trajectory-conditioned typed diagnosis remains plausible beyond the frozen generic controls. If it beats the score-only control but not the scope-matched control, the supported interpretation narrows to scope/sparsity canonicalization. If it beats neither, generic canonicalization is not rejected. These classifications cannot erase an independently passed Q1 complete-method effect; they change method substance and novelty, not the existence of the raw generator contrast.
+
+\paragraph{Q3: same-evidence state-realization localization.}
+On six pre-frozen VALIDATION tasks, ordinary validation supplies actor replicate 1 and exactly one additional replicate is pre-authorized for FF4\_FREE\_A, FF4\_FREE\_B, and FF4\_COMP. No third execution exists. For FREE outcomes $(A_1,A_2,B_1,B_2)$ define
+\begin{align}
+D_X(s) &= \tfrac{1}{4}\,\mathrm{mean}_q\left[|A_1-B_1|+|A_1-B_2|+|A_2-B_1|+|A_2-B_2|\right],\\
+D_A(s) &= \tfrac{1}{2}\,\mathrm{mean}_q\left[|A_1-A_2|+|B_1-B_2|\right],\\
+E_{\mathrm{REAL}}(s) &= D_X(s)-D_A(s).
+\end{align}
+For binary outcomes, under exchangeable conditional actor realizations with frozen-state success probabilities $p_A(q)$ and $p_B(q)$, $\mathbb{E}[E_{\mathrm{REAL}}]=\mathrm{mean}_q[p_A(q)-p_B(q)]^2$. If A and B have the same state SHA, $E_{\mathrm{REAL}}$ is defined as zero. A local realization result requires mean $E_{\mathrm{REAL}}>0$ and positive $E_{\mathrm{REAL}}$ on at least 4/6 VALIDATION streams. This supports only outcome-propensity variation between separately realized FREE states beyond within-frozen-state actor disagreement in this development design; it is not a population variance estimate and does not prove that variance reduction mediates compiler utility.
+
+\paragraph{Q4: rejected-source moderator.}
+Independently report
+\begin{align}
+S_C(s) &= J_s(\text{FF4\_COMP})-J_s(\text{W\_COMP}),\\
+I(s) &= G_{F,A}(s)-G_W(s).
+\end{align}
+These quantities test whether First-Fail-4 is better under the compiler and whether evidence source moderates generator effect. They are secondary and cannot veto Q1--Q3. Failure leaves the Search-Projection/Semantic-Transfer line parked.
+
+\subsection{Prespecified FREE-realization sensitivity}
+On VALIDATION only, report
+\begin{align}
+G_{F,AB}(s) &= J_s(\text{FF4\_COMP})-\tfrac{1}{2}[J_s(\text{FF4\_FREE\_A})+J_s(\text{FF4\_FREE\_B})],\\
+G_{\mathrm{MAIN},AB}(s) &= \tfrac{1}{2}[G_W(s)+G_{F,AB}(s)].
+\end{align}
+These two-realization quantities are sensitivity analyses only. They never replace $G_{\mathrm{MAIN},A}$, never gate Q1, and cannot rescue a failed primary result. If the first-deployment effect passes but the sensitivity weakens materially or changes sign, the manuscript must report realization sensitivity rather than switch estimands.
+
+\subsection{Decision table and STOP rule}
+The bridge adjudicates a tuple rather than one conjunctive PASS bit: complete-method effect, diagnosis/control class, realization localization, and rejected-source moderator.
+\begin{itemize}
+    \item If Q1 fails on SCREEN, VALIDATION remains sealed. If Q1 fails on VALIDATION, stop the automatic state-generation-method story. Do not rescue either failure with FF4\_FREE\_B, generic controls, the realization probe, E3, another backbone, or a public benchmark.
+    \item If Q1 passes but generic controls match the compiler, retain only the empirically supported complete-method effect and narrow interpretation to scope/generic canonicalization as appropriate. Do not claim trajectory-conditioned typed diagnosis.
+    \item If Q1 and the typed-diagnosis controls pass but Q3 fails, retain the complete typed-compiler result while dropping state-realization/variance-centered mechanism language.
+    \item If Q1--Q3 pass but Q4 fails, retain the state-generation paper and explicitly drop rejected-evidence superiority. This is a clean primary-paper outcome rather than a failure.
+    \item Only a frozen fresh result that survives the relevant claim-specific controls may motivate a separately reviewed untouched E3 proposal. Nothing in M4 itself grants E3 authority.
+\end{itemize}
+
+\subsection{Scientific unit}
+The independent scientific unit is the updated stream, not the 12 held-out task executions or provider calls nested within a stream. The controlled suite is a mechanism substrate rather than external-validity evidence. No outcome-conditioned additional stream, state synthesis, actor replicate, backbone, or benchmark is permitted to rescue a failed frozen gate.

@@ -1,0 +1,87 @@
+{
+  "artifact_type": "e2-r17-state-regeneration-manuscript-r3-checkpoint",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_R3_V4R1_ALIGNMENT_ZERO_PROVIDER_NO_CLAIM_EXPANSION",
+  "base_commit": "8ecd5245b104ecdad7aafdd09152462e12127bc4",
+  "branch": "research/e2-r17-manuscript-state-generation-20260903",
+  "working_title": "Same Evidence, Different Skill: State-Regeneration Instability in Self-Evolving Agents",
+  "manuscript_root": "paper_drafts/e2-state-regeneration-r3-20260903",
+  "manuscript": {
+    "main_tex_sha256": "d1f4782cc066ca69a5ee96f8afb8dfa8296fcf25aaaf2769ba209a665689269e",
+    "abstract_sha256": "f29fe49ea01bb085694d2b9cb08e5f9e59251e6caefb0c7b9ec21c8778cabb1f",
+    "intro_sha256": "8498abbf3c897ed0a1f62e211f5eea039a96e15fc78acb97540800046bf805f0",
+    "compiler_sha256": "cf772ee68951cd5bfcd1b621487f6c7d9a894c825805a3abbca3313175ba85ad",
+    "evaluation_contract_sha256": "035f51796687a7472e71acdfffcd65b2951215116762145789cae21052da91d2",
+    "current_results_sha256": "98171a6a3ef13b38ffc5ed82fb382be6f83b64518b995c13ea34091f1011a462",
+    "discussion_sha256": "ec894e15603433b3ce47892d675fd936cebea6ae12d59f355e25ce598fe36ee8",
+    "appendix_sha256": "31575507100ce655deefb748d850e26985956aeeb011fef46928c4d6571c997c",
+    "status_sha256": "b13bf6ce1bc01bf87f7cc7abb0ab9e77e313af9c491931d72f2d6a2d0d5418b9",
+    "pdf_sha256": "2462bdf33c26c2cf01e47e03d6774822ff86cd1efa157432d10e6c0ed7ef9392",
+    "pages": 15,
+    "compile_status": "PASS",
+    "overfull_boxes": 0,
+    "undefined_references_or_citations": 0
+  },
+  "v4_r1_alignment": {
+    "frozen_protocol_commit": "51edbda1bd18ed6585def50dc8e5c12143d8b0bd",
+    "frozen_protocol_path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r1-20260903.md",
+    "frozen_protocol_sha256": "6ee0768ce8ef9418250935de2153dde5837266753d63b64cf4d9e99eedf53697",
+    "primary_q1": "equal-weight generator-factor main effect across Winner and First-Fail-4 evidence",
+    "primary_estimand": "G_MAIN,A = 0.5 * [(W_COMP-W_FREE) + (FF4_COMP-FF4_FREE_A)]",
+    "generic_controls_gate_q1": false,
+    "free_b_primary": false,
+    "free_b_sensitivity_only": true,
+    "bridge_realization_metric": "E_REAL = D_X - D_A",
+    "state_sha_aliasing": true,
+    "rejected_source_is_parked_moderator": true
+  },
+  "completed_claim_boundary": {
+    "state_regeneration_instability_local_selected_case": true,
+    "population_variance_component_claimed": false,
+    "compiler_utility_claimed": false,
+    "first_fail_superiority_claimed": false,
+    "e3_generalization_claimed": false
+  },
+  "m3_boundary": {
+    "m3_metric_silently_changed": false,
+    "m3_remains_separate_frozen_development_object": true,
+    "m3_provider_execution": false
+  },
+  "independent_review": {
+    "manuscript_r1_review_counted": true,
+    "bridge_v3_review_counted": true,
+    "v4_r1_preexecution_review_complete": false,
+    "v4_r1_review_verdict": null,
+    "failed_or_no-answer_v4_r1_oracle_attempts_counted": false
+  },
+  "tests": {
+    "r3_alignment_test_path": "research_pipeline/test_e2_r17_manuscript_r3_v4r1_alignment.py",
+    "r3_alignment_test_sha256": "fff62e62550012a1c9ed297268587f64df9bb7f8f32db30fb87e1ef246cce8a7",
+    "r3_alignment_tests": "10/10 PASS",
+    "combined_adjacent_regression": "73/73 PASS"
+  },
+  "scientific_state": {
+    "recovery_v3_modified": false,
+    "partial_m2_outcome_read": false,
+    "m3_executed": false,
+    "m4_executed": false,
+    "semantic_transfer_stage_a_executed": false,
+    "e3_opened": false
+  },
+  "authority": {
+    "provider_io": false,
+    "recovery_v3_execution": false,
+    "m3_actor_measurement": false,
+    "m4_search_pool_acquisition": false,
+    "m4_updater_or_actor": false,
+    "repeated_free_synthesis": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "interpretation_boundary": "R3 synchronizes the manuscript's prospective M4 description with frozen V4-R1 while preserving all completed evidence and the separately frozen M3R object. It grants no scientific execution authority and does not imply a successful V4-R1 independent pre-execution review."
+}
