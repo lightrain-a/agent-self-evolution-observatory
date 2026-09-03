@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-FRESH4-Q08-TRANSPORT-STRESS-20260903",
+  "status": "FRESH4_Q08_REPEATED_TURN_FINALIZATION_STRESS_PASS",
+  "contract_sha256": "42c53ebe9b816011ba68dde427123f35604f33f30d4e8c2639d4cdd8f330fea3",
+  "stress_result_sha256": "09da6fe0dd7b9c9e07093522c23fa2c72446a3ed29e2e0725752542c642a7a07",
+  "attempted": 8,
+  "required": 8,
+  "nonfinal_passed": 7,
+  "final_json_pass": true,
+  "total_model_rounds": 8,
+  "total_prompt_tokens": 143054,
+  "total_completion_tokens": 3960,
+  "prohibited_tool_attempts": 0,
+  "scientific_source_tasks_used": 0,
+  "provider_envelope": {
+    "model_profile": "AtomGit-qwen3.8-27b",
+    "resolved_model": "qwen3.8-27b",
+    "allowed_tool": "mcp__c1output__submit_output",
+    "kind": "text",
+    "max_tokens": 32768,
+    "live_timeout_seconds": 900,
+    "model_rounds_per_logical_output": 1
+  },
+  "final_content": {"decision": "finish", "message": "FRESH4_TRANSPORT_FINAL_OK"},
+  "authority": {
+    "fresh4_scientific_source_acquisition": true,
+    "condition": "subject to existing fresh4 20/20 runtime, 10/10 prelaunch, synthetic multistep smoke, and exactly-once 10/10 source gate",
+    "writer": false,
+    "binder": false,
+    "probe": false,
+    "shadow": false,
+    "final": false,
+    "method_effect_claim": false
+  },
+  "successor_statistics": {
+    "q08_contract_sha256": "b523187e431ec952d0ba5d3a960ae878a5c8e421d5498c736ff557413184df6d",
+    "final_primary_metric": "unbiased exact-match-kernel MMD2/collision U-statistic",
+    "mean_D_select_threshold": 0.20,
+    "raw_empirical_TV": "descriptive secondary only"
+  },
+  "claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE"
+}
