@@ -226,6 +226,45 @@ _PRIMITIVE_BLOCKS: dict[RepairPrimitive, str] = {
 }
 
 
+def score_only_generic_diagnosis(selected_scores: Sequence[float]) -> TypedDiagnosis:
+    """Build the strongest trajectory-blind generic diagnosis from score pattern only.
+
+    This is a falsifier, not the proposed method.  It receives exactly the selected
+    verifier-score sequence but no trajectory text.  If any selected evidence unit
+    failed, it emits the maximal nonredundant generic repair bundle reachable by
+    compiler v1: COMPLETE_WORKFLOW + RECOVER_TOOL_ERROR.  VERIFY_OUTPUT is already
+    subsumed by COMPLETE_WORKFLOW at rendering time.
+    """
+
+    if len(selected_scores) != 8:
+        raise ValueError("score-only generic control requires exactly eight selected scores")
+    scores = tuple(float(x) for x in selected_scores)
+    if any(x not in (0.0, 1.0) for x in scores):
+        raise ValueError("selected scores must be binary")
+    score_sha = hashlib.sha256(
+        json.dumps(scores, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    if 0.0 not in scores:
+        repairs: tuple[RepairPrimitive, ...] = ()
+        failures: tuple[str, ...] = ()
+        stage = "NO_TYPED_REPAIR"
+    else:
+        repairs = (
+            RepairPrimitive.COMPLETE_WORKFLOW,
+            RepairPrimitive.RECOVER_TOOL_ERROR,
+        )
+        failures = ("failure_score_present_without_trajectory_content",)
+        stage = "SCORE_ONLY_GENERIC"
+    return TypedDiagnosis(
+        schema_version="E2-R17-TYPED-DIAGNOSIS-v1",
+        failure_stage=stage,
+        failed_invariants=failures,
+        observed_evidence=(f"failure_count={scores.count(0.0)}",),
+        required_repairs=repairs,
+        source_signal_sha256=score_sha,
+    )
+
+
 def compile_skill(*, base_skill_markdown: str, diagnoses: Sequence[TypedDiagnosis]) -> CompiledState:
     """Compile a canonical persistent skill from typed diagnoses.
 
@@ -275,5 +314,6 @@ __all__ = [
     "CompiledState",
     "extract_visible_signals",
     "diagnose",
+    "score_only_generic_diagnosis",
     "compile_skill",
 ]

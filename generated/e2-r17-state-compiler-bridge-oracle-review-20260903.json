@@ -1,0 +1,27 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-independent-review",
+  "schema_version": "1.0",
+  "review_date": "2026-09-03",
+  "reviewer": {
+    "route": "Oracle Browser",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High",
+    "conversation_id": "6a993128-13a0-83e8-8414-8db28a2a2e0f",
+    "session": "e2-r17-bridge-protocol-review-2"
+  },
+  "reviewed_object": {
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-20260903.md",
+    "sha256": "1e5b5d7caee8c165a920bacf3ece584c225f0c46a8390550d8a91a33cbbe62f7"
+  },
+  "verdict": "REVISE_BEFORE_STAGE_A",
+  "verdict_changing_fixes": [
+    "Make SCREEN and VALIDATION evaluation-independent with disjoint pre-frozen heldout panels.",
+    "Replace GENERIC_COMPLETE with a score-matched trajectory-blind strongest generic compiler control.",
+    "Freeze updater and actor stochasticity, retry, ordering, and runtime-reset semantics before execution.",
+    "Narrow causal language to selected trajectory+score evidence packages and complete state-generation methods; do not claim equal information dose or isolated determinism."
+  ],
+  "broad_extra_experiments_requested": false,
+  "provider_calls_caused_by_review_in_scientific_pipeline": 0,
+  "scientific_outcomes_read": false,
+  "interpretation_boundary": "Independent design review only. This artifact grants no experiment authority."
+}

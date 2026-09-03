@@ -6,6 +6,7 @@ from research_pipeline.e2_r17_state_compiler_bridge import (
     compile_skill,
     diagnose,
     extract_visible_signals,
+    score_only_generic_diagnosis,
 )
 
 
@@ -111,6 +112,23 @@ class StateCompilerBridgeTest(unittest.TestCase):
         )
         compiled = compile_skill(base_skill_markdown=base, diagnoses=[d])
         self.assertEqual(compiled.skill_markdown, G3.read_text(encoding="utf-8"))
+
+    def test_score_only_generic_max_matches_g3_when_any_failure_is_present(self) -> None:
+        base = BASE.read_text(encoding="utf-8")
+        d = score_only_generic_diagnosis([1, 0, 1, 0, 1, 0, 1, 0])
+        self.assertEqual(
+            d.required_repairs,
+            (RepairPrimitive.COMPLETE_WORKFLOW, RepairPrimitive.RECOVER_TOOL_ERROR),
+        )
+        compiled = compile_skill(base_skill_markdown=base, diagnoses=[d])
+        self.assertEqual(compiled.skill_markdown, G3.read_text(encoding="utf-8"))
+
+    def test_score_only_generic_is_base_when_all_selected_scores_succeed(self) -> None:
+        base = BASE.read_text(encoding="utf-8")
+        d = score_only_generic_diagnosis([1] * 8)
+        self.assertEqual(d.required_repairs, ())
+        compiled = compile_skill(base_skill_markdown=base, diagnoses=[d])
+        self.assertEqual(compiled.skill_markdown, base)
 
     def test_hidden_experiment_labels_are_not_inputs(self) -> None:
         # The public extraction API accepts only learner-visible text + score.

@@ -1,0 +1,83 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-v2-proposal-receipt",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_REVISED_ZERO_PROVIDER_BRIDGE_PROPOSAL_ONLY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V2-PROPOSAL-20260903",
+  "base_lineage": {
+    "commit": "191ffd4e676cd3c748c61d53275b48e7722fc003",
+    "active_recovery_v3_unchanged": true
+  },
+  "branch": "research/e2-r17-state-compiler-bridge-proposal-20260903",
+  "independent_review": {
+    "verdict": "REVISE_BEFORE_STAGE_A",
+    "review_receipt_path": "generated/e2-r17-state-compiler-bridge-oracle-review-20260903.json",
+    "all_verdict_changing_fixes_applied_in_v2": true
+  },
+  "objects": {
+    "compiler": {
+      "path": "research_pipeline/e2_r17_state_compiler_bridge.py",
+      "sha256": "aa7e57005eca5c99e81240c9e0dc4fba32f030f586c1ca0b1e008609817cc101"
+    },
+    "tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge.py",
+      "sha256": "303bad5a5edcce5892d32656e980ca849cf7bac291825e908bd908b611ea4b95"
+    },
+    "protocol_v2": {
+      "path": "generated/e2-r17-state-compiler-bridge-protocol-v2-20260903.md",
+      "sha256": "9e3c1938111e5bae56d3c3183b886ba8096f92948273da7e09917d557c9c3999"
+    }
+  },
+  "design": {
+    "factorial": "Winner_vs_First-Fail-4 x Native-Free-Form-vs-Constrained-Compiler",
+    "evidence_estimand": "selected trajectory+score evidence package",
+    "generator_estimand": "complete state-generation method",
+    "update_pools_per_stream": 8,
+    "first_fail_replacement_count": 4,
+    "equal_information_dose_claimed": false,
+    "fresh_suite_tasks": 120,
+    "update_tasks": 96,
+    "screen_heldout_tasks": 12,
+    "validation_heldout_tasks": 12,
+    "screen_validation_heldout_disjoint": true,
+    "screen_streams": 6,
+    "validation_streams": 6,
+    "score_only_generic_control": "SCORE_ONLY_GENERIC_MAX",
+    "generic_control_has_trajectory_text": false,
+    "generic_control_uses_same_score_pattern": true,
+    "e3_opened": false
+  },
+  "stochasticity": {
+    "actor_temperature": 0,
+    "actor_thinking": "disabled",
+    "actor_provider_retry_limit": 0,
+    "updater_temperature": 0,
+    "updater_thinking": "disabled",
+    "updater_provider_retry_limit": 0,
+    "provider_seed_claimed": false,
+    "one_draw_deployed_free_form_estimand": true,
+    "outcome_conditioned_rerun": false,
+    "fresh_runtime_per_state_task": true,
+    "hash_balanced_evaluation_order_required": true
+  },
+  "tests": {
+    "compiler_tests": "12/12 PASS",
+    "combined_adjacent_regression": "37/37 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "updater_execution": false,
+    "bridge_actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "e3_confirmation": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "interpretation_boundary": "V2 is a zero-provider prospective design object only. It supersedes unused V1 design authority and does not alter, supersede, or execute Recovery V3."
+}

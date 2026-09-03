@@ -1,0 +1,19 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-protocol-supersession",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "V1_SUPERSEDED_BEFORE_PROVIDER_EXECUTION",
+  "superseded": {
+    "protocol_path": "generated/e2-r17-state-compiler-bridge-protocol-20260903.md",
+    "protocol_sha256": "1e5b5d7caee8c165a920bacf3ece584c225f0c46a8390550d8a91a33cbbe62f7",
+    "proposal_receipt_path": "generated/e2-r17-state-compiler-bridge-proposal-receipt-20260903.json",
+    "provider_calls": 0,
+    "scientific_outcomes": 0
+  },
+  "replacement": {
+    "protocol_path": "generated/e2-r17-state-compiler-bridge-protocol-v2-20260903.md",
+    "protocol_sha256": "9e3c1938111e5bae56d3c3183b886ba8096f92948273da7e09917d557c9c3999"
+  },
+  "reason": "Independent Oracle/GPT-5.6 Extra High methodology review required disjoint SCREEN/VALIDATION heldout panels, a score-matched trajectory-blind generic control, frozen stochasticity semantics, and narrower causal language before Stage A.",
+  "authority": false
+}
