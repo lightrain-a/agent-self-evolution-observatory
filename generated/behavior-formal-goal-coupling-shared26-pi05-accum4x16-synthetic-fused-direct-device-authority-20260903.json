@@ -9,6 +9,10 @@
     "sha256": "baec6c2e364a25de94e276e8c781e6661237d2552e3a04a2989b4cbe43428969"
   },
   "runner_sha256": "baec6c2e364a25de94e276e8c781e6661237d2552e3a04a2989b4cbe43428969",
+  "launcher": {
+    "path": "scripts/run_behavior_formal_goal_pi05_accum4x16_synthetic_69.sh",
+    "sha256": "de4a703032bff170bd25bb10097a452579aaa82ebc8035155d94ee260d427e0f"
+  },
   "bound_evidence": {
     "accumulation_preregistration": {
       "path": "generated/behavior-formal-goal-coupling-shared26-pi05-single-gpu-accumulation-child-preregistration-20260902.json",
