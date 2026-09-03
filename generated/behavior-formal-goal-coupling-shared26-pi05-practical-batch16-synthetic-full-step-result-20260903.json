@@ -1,0 +1,127 @@
+{
+  "authority_sha256": "05b452e903b1e10f9acb685f66fb8c0c7369c1a526efef506a5900bc7dcbc851",
+  "behavior_dataset_accessed": false,
+  "checkpoint": {
+    "bytes": 12441721931,
+    "object_count": 20
+  },
+  "checkpoint_written": false,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "effective_optimizer_batch": 16,
+  "error": null,
+  "exhaustion_adjudication_sha256": "96fc40fa4f54f628bb64a021cd9c4e651f48621dc82f4bce99bfcc3a88cb7431",
+  "formal_training_authorized": false,
+  "generated_at": "2026-09-03T15:20:35.589386+00:00",
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73499,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_after_step_or_error": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73551,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 100
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gradient_accumulation": 1,
+  "gradient_numerical_values_inspected": false,
+  "host_memory_after_state": {
+    "MemAvailable_kib": 43842584,
+    "MemFree_kib": 16027160,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 691392,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 6139612
+  },
+  "host_memory_after_step_or_error": {
+    "MemAvailable_kib": 42491252,
+    "MemFree_kib": 14727444,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 695484,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 7942324
+  },
+  "host_memory_before": {
+    "MemAvailable_kib": 50496916,
+    "MemFree_kib": 17594340,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 690124,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 21476
+  },
+  "jax_memory_after_state": {
+    "bytes_in_use": 53654944256,
+    "bytes_limit": 76584397638,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 216,
+    "peak_bytes_in_use": 53654955264,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76584397568,
+    "pool_bytes": 76584397568
+  },
+  "jax_memory_after_step": {
+    "bytes_in_use": 53683930880,
+    "bytes_limit": 76584397638,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 18027725312,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 8747,
+    "peak_bytes_in_use": 71711657984,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76584397568,
+    "pool_bytes": 76584397568
+  },
+  "loss_value_retained_or_reported": false,
+  "next_gate": "FREEZE_PRACTICAL_BATCH16_REAL_DATA_TRAINING_IMPLEMENTATION",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "physical_batch": 16,
+  "policy_outcomes_read": false,
+  "portable_direct_device_result_sha256": "5f27f14cfce284f1a75acefafbf9c404556f527b5037007ee8f119df3ddc90df",
+  "portable_openpi": {
+    "changed_paths": [
+      "src/openpi/training/config.py"
+    ],
+    "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60"
+  },
+  "preregistration_sha256": "382449b4320bacd85f736c0df9342f9677b3c755f2daeedcd680212aed2a503a",
+  "real_scientific_optimizer_updates": 0,
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1003.slice/user@1003.service/app.slice/pi05-practical-batch16-synthetic-full-step-231-20260903.service",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 34359738368,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-synthetic-full-step-result-v1",
+  "scientific_training_started": false,
+  "status": "PI05_PRACTICAL_BATCH16_SYNTHETIC_FULL_STEP_PASS",
+  "synthetic_full_step_completed": true,
+  "synthetic_full_step_started": true,
+  "synthetic_optimizer_update_executed": true,
+  "synthetic_step_after": 1,
+  "train_state_ready": true
+}
