@@ -1,0 +1,56 @@
+{
+  "artifact_type": "e2-r17-paper-story-post-r2-gpt56-web-rereview",
+  "date": "2026-09-03",
+  "review_scope": "fresh_post_fix_paper_story_rereview",
+  "reviewer": {
+    "surface": "chatgpt_web",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High, 4 of 5",
+    "model_verified_pre_send": true,
+    "effort_verified_pre_send": true
+  },
+  "brief": {
+    "path": "oracle_briefs/E2_R17_PAPER_STORY_POST_R2_R2_REREVIEW_20260903.md",
+    "sha256": "77ec0248926b90fa2a487a026652ac46535c33e35b859a290eac7f4206c67a33",
+    "freeze_commit": "405af870f77dedd6c9a4fd824ae0f54a906031a6"
+  },
+  "reviewed_story": {
+    "path": "consultations/e2-r17-paper-story-post-r2-pass-iteration-20260903.md",
+    "sha256": "40880034542a7dd28e9eece2ac38036659c5be790dbd6977267cae31175015ab",
+    "commit": "773ac34691a81399581fa4728779b764c3ccfadc"
+  },
+  "prior_review": {
+    "verdict": "REVISE_PAPER_OBJECT_BEFORE_STAGE_A",
+    "raw_response_sha256": "cd75be4d7c88298a8a714a4a97243977016476703cc91d11b05f535f9886c845"
+  },
+  "conversation_url": "https://chatgpt.com/c/6a998c2f-5620-83ee-bfbf-f73c898c5f71",
+  "prompt_submissions": 1,
+  "prompt_resubmitted": false,
+  "raw_response": {
+    "oracle_host_path": "/root/e2_r17_paper_story_r2_review_full.md",
+    "sha256": "cb558b3e7a7c63597b8d4270541c1a727896ec2457d0d0c25392620e5dd59804",
+    "chars": 4368,
+    "lines": 115
+  },
+  "repo_response_capture": {
+    "path": "consultations/e2-r17-paper-story-post-r2-gpt56-web-rereview-20260903.md",
+    "sha256": "ef3aa451f58d1172689a725eb02d2fe7cb9932afa88b8c877cf264edfc54171e"
+  },
+  "audit": {
+    "A_fix1_thesis_estimand_alignment": "PASS",
+    "B_fix2_global_mrw_interpretation": "PASS",
+    "C_fix3_five_unit_claim_boundary": "PASS",
+    "D_contribution_hierarchy": "PASS",
+    "E_router_status": "PASS",
+    "F_future_controls_transport_placement": "PASS",
+    "G_remaining_verdict_changing_r2_identifiability_overclaims": [],
+    "H_immediate_gate": "ALLOW_EXISTING_FRESH_IDENTITY_TO_SEPARATELY_AUTHORIZED_STAGE_A_BOUNDARY_UNCHANGED"
+  },
+  "verdict": "PASS_PAPER_STORY_TO_EXISTING_STAGE_A_BOUNDARY",
+  "r2_experiment_redesign_required": false,
+  "additional_pre_stage_a_scientific_experiment_required": false,
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "stage_a_authority": false,
+  "stage_b_authority": false
+}
