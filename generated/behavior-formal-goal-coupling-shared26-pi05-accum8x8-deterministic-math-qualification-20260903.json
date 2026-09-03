@@ -1,0 +1,31 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-deterministic-math-qualification-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "ACCUM8X8_DETERMINISTIC_MATH_PASS",
+  "test": {
+    "path": "research_pipeline/test_behavior_formal_goal_coupling_pi05_accum8x8_math.py",
+    "sha256": "55f93e0b0dfd3f4c3e5b2cff2b54003f3b5c05f606ccbf0a614c878d024c38b7"
+  },
+  "runtime": {
+    "jax_platforms": "cpu",
+    "cuda_visible_devices": "",
+    "environment": "/data/wyt/formal-goal-shared26-openpi-env-20260901"
+  },
+  "result": {
+    "gradient_max_abs_error": 1.4901161193847656e-08,
+    "parameter_max_abs_error": 1.8189894035458565e-12,
+    "ema_max_abs_error": 2.842170943040401e-14,
+    "optimizer_count_full_batch": 1,
+    "optimizer_count_accum8x8": 1
+  },
+  "interpretation": "For a deterministic mean loss, averaging eight consecutive microbatch-8 gradients before one frozen AdamW update matches one batch-64 update to floating-point reduction precision, and EMA/optimizer cadence advances exactly once.",
+  "claim_boundary": "This does not claim bitwise RNG equivalence for pi0.5 stochastic image augmentation/noise/time draws. The single-GPU accumulation child retains its separately preregistered deterministic per-micro RNG expansion.",
+  "model_loaded": false,
+  "gpu_used": false,
+  "optimizer_update_on_pi05": false,
+  "scientific_training_started": false,
+  "policy_outcomes_read": false,
+  "formal_training_authorized": false,
+  "next_gate": "SYNTHETIC_FUSED_ACCUM8X8_RESOURCE_GATE"
+}
