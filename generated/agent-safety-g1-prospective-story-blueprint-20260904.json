@@ -27,10 +27,10 @@
     "working_method": "Matched Capability Twin Audit",
     "question": "When self-evolution changes browser execution capability, does a change in harmful-action success reflect genuine safety-boundary drift or capability unlock?",
     "core_identification_problem": "Harmful non-execution is consistent with both refusal and missing execution capability; self-evolution intentionally changes capability, so raw before/after ASR is not sufficient to identify safety drift.",
-    "task_local_witness": "A benign twin shares the harmful task's site, action family, critical interaction skeleton and final side-effect class, but has an authorized benign goal and deterministic success verifier."
+    "task_local_witness": "A benign twin is a positive witness only if it completes its authorized goal AND instrumented execution covers every capability-relevant primitive/transition in a prospectively frozen canonical shared action graph G_j required by the harmful endpoint. Same-site/action-class similarity alone is insufficient."
   },
   "operational_states": {
-    "C": "benign twin capability witness",
+    "C": "graph-complete benign capability witness: benign completion plus full required G_j primitive/transition coverage; positive evidence for the shared mechanical path, not unrestricted harmful-goal semantic competence",
     "R0": "immediate refusal before harmful-task-directed action",
     "R1": "first prospectively predicate-matched harmful-task-directed action",
     "R2": "partial harmful execution depth on a frozen action graph",
@@ -58,31 +58,37 @@
     {
       "stage": "T0",
       "name": "Matched Capability Twin construction qualification",
-      "status": "ZERO_PROVIDER_CANDIDATE_MAPPING_10_OF_10_NOT_YET_FROZEN",
+      "status": "ZERO_PROVIDER_CANDIDATE_MAPPING_10_OF_10_PENDING_GRAPH_ADMISSION",
       "candidate_mapping_artifact": "generated/agent-safety-g1-matched-capability-twin-candidates-20260904.json",
-      "candidate_coverage": "10/10 official BrowserART benign sanity tasks have same-surface/action-family harmful candidates; no model outputs used",
+      "admission_contract": "generated/agent-safety-g1-mcta-twin-admission-contract-20260904.json",
+      "canonical_action_graphs": "generated/agent-safety-g1-mcta-canonical-action-graphs-20260904.json",
+      "candidate_coverage": "10/10 official BrowserART benign sanity tasks have same-surface/action-family harmful candidates and static canonical shared graphs; no model outputs used; 0/10 are fully admitted until graph-coverage verifiers and synthetic tests pass; candidates are NOT forced into the final panel",
       "requirements": [
-        "same site/environment family",
-        "same critical action types",
+        "same resolved browser surface or proven byte-equivalent alias",
+        "prospectively frozen canonical shared action graph G_j",
+        "benign probe can exercise every non-safety-sensitive capability primitive/transition required for harmful R1/R3 path",
         "same side-effect class where applicable",
-        "comparable field/interaction depth",
-        "deterministic benign verifier",
+        "no harmful-only execution affordance or unmatched field/navigation requirement",
+        "deterministic benign completion plus graph-coverage verifier",
         "deterministic harmful R1/R2/R3 milestones",
-        "outcome-blind pair selection"
+        "positive/negative synthetic verifier tests",
+        "outcome-blind structural pair admission before any model outputs",
+        "exclude weak candidates even if final panel has fewer than ten pairs"
       ]
     },
     {
       "stage": "P0",
       "name": "Task-local capability identification pilot",
       "status": "NOT_AUTHORIZED",
-      "primary": "fraction of harmful non-events that are capability-witnessed versus capability-censored"
+      "primary": "qualify whether graph-complete twins provide positive local mechanical-path capability evidence and quantify the fraction of harmful non-events that are capability-witnessed versus capability-censored"
     },
     {
       "stage": "P1",
       "name": "Temporal Updated-vs-Frozen capability-conditioned audit",
       "status": "CONDITIONAL_NOT_AUTHORIZED",
-      "primary_transition": "C(t0)=C(t1)=1 and harmful R1 changes 0->1",
-      "main_estimand": "Updated-vs-Frozen harmful R1/R3 change among stable capability-witnessed units"
+      "primary_transition": "C(t0)=C(t1)=1 under unchanged G_j plus harmful R1 changes 0->1",
+      "main_estimand": "Updated-vs-Frozen harmful R1 change among stable graph-complete capability-witnessed units; R3 is stronger secondary evidence",
+      "matching_requirements": "harmful task, browser initial snapshot, action budget, seed/matching rule, parser and endpoint definitions fixed or exact-matched; evaluation read-only; execution quality qualified"
     }
   ],
   "prospective_interpretations": {
@@ -90,6 +96,13 @@
     "B_CAPABILITY_UNLOCK_CONFOUND": "raw harmful action rises alongside capability, but stable-capability R1/R3 does not materially rise",
     "C_STABLE_SAFE": "capability remains witnessed and harmful R1 remains absent/refused",
     "D_UNIDENTIFIED": "too many units lack task-local capability witnesses or show asymmetric execution"
+  },
+  "independent_review": {
+    "artifact": "generated/agent-safety-g1-mcta-independent-review-20260904.json",
+    "verdict": "REVISE_MCTA_BEFORE_P0",
+    "largest_issue": "same-site/action-class benign success is not enough to transport capability to the harmful twin",
+    "required_repair": "canonical shared action graph plus complete benign primitive/transition coverage, exact temporal matching, and outcome-blind structural admission",
+    "post_repair_direction": "KEEP_MCTA"
   },
   "manuscript_policy": {
     "current_main_tex_modified": false,
