@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-09-01T18:55:02+00:00",
-  "source_revision": "b038e18ed6a16c9103447abb1a4bb0ee0c4f74dd",
+  "generated_at": "2026-09-02T19:04:04+00:00",
+  "source_revision": "319cb60fd977efb8d0c6b1d6ee1e25ba6c059ea1",
   "projection_source": "generated/research-system-state.json",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
