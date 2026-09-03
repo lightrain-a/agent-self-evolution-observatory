@@ -1,0 +1,56 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-formal-training-implementation-staging-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "IMPLEMENTATION_STAGED_NOT_AUTHORIZED",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_formal_training.py",
+    "sha256": "4fc1c2caa842c0d6f94b784c5dcd0f10ec0026939cbc627637c5b21dedad6bd8"
+  },
+  "frozen_execution_semantics": {
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "effective_optimizer_updates": 50000,
+    "seed": 42,
+    "action_horizon": 32,
+    "episode_count": 5200,
+    "num_workers": 0,
+    "checkpoint_restore": "direct-device jax.Array",
+    "resource_lifetime": "state first, data loader second, streaming one microbatch at a time",
+    "rng": "effective-step fold_in followed by deterministic micro-index fold_in",
+    "optimizer": "frozen AdamW from shared26 child; exactly one tx.update/apply_updates per effective batch",
+    "ema": "exactly once per effective optimizer update",
+    "lr_schedule": "advances once per effective optimizer update through frozen optimizer state",
+    "checkpoint_labels": [10000, 20000, 30000, 40000, 49999],
+    "terminal_checkpoint_only": 49999,
+    "resume": false,
+    "automatic_retry": false,
+    "wandb": false,
+    "validation_during_training": false
+  },
+  "memory_implementation": {
+    "micros_1_to_7": "scaled micro-gradient accumulation with donated accumulator for micros after the first",
+    "micro_8": "last micro-gradient, accumulator addition, AdamW update and EMA update fused in one JIT with donated state and accumulator",
+    "purpose": "minimize simultaneous gradient/update-tree residency on one A100-80GB"
+  },
+  "exactly_once": {
+    "persistent_launch_claim_before_model_load": true,
+    "claim_created_with_O_EXCL": true,
+    "existing_progress_refuses_launch": true,
+    "existing_formal_checkpoint_dir_refuses_launch": true,
+    "crash_does_not_auto_remove_claim": true
+  },
+  "required_future_authority": {
+    "status": "AUTHORIZED_PI05_SINGLE_GPU_STREAMING_ACCUM8X8_FORMAL_TRAINING",
+    "must_bind_runner_sha256": true,
+    "must_bind_synthetic_gate_status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_PASS",
+    "must_bind_real_data_gate_status": "PI05_STREAMING_ACCUM8X8_DIRECT_DEVICE_NO_UPDATE_DRY_GRADIENT_PASS"
+  },
+  "formal_training_authorized": false,
+  "scientific_training_started": false,
+  "optimizer_updates_executed_by_this_staging": 0,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "next_gate": "SYNTHETIC_FUSED_ACCUM8X8_PASS_THEN_REAL_DATA_STREAMING_ACCUM8X8_PASS"
+}
