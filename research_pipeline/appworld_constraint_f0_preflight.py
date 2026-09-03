@@ -255,6 +255,8 @@ SQ0_V5_HUMAN_AUTHORIZATION = GENERATED / "agent-constraint-externality-sq0-v5-hu
 SQ0_V5_MIMO25PRO_Q1 = GENERATED / "agent-constraint-externality-sq0-v5-mimo25pro-mcp-q1-predispatch-20260903.json"
 SQ0_V5_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v5-mimo25pro-execution-contract-20260903.json"
 SQ0_V5_RESULT = GENERATED / "agent-constraint-externality-sq0-v5-mimo25pro-result-20260903.json"
+SQ0_V5_CLOSEOUT = GENERATED / "agent-constraint-externality-sq0-v5-final-closeout-20260903.json"
+SQ0_V5_ROOT_CAUSE = GENERATED / "agent-constraint-externality-sq0-v5-final-root-cause-20260903.json"
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -1163,6 +1165,36 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("SQ0-V5 execution authority boundary drifted.")
         sq0_v5_execution_authorized=True
 
+    sq0_v5_closed=False
+    sq0_v5_result=read_json(SQ0_V5_RESULT) if SQ0_V5_RESULT.is_file() else {}
+    sq0_v5_closeout=read_json(SQ0_V5_CLOSEOUT) if SQ0_V5_CLOSEOUT.is_file() else {}
+    sq0_v5_root_cause=read_json(SQ0_V5_ROOT_CAUSE) if SQ0_V5_ROOT_CAUSE.is_file() else {}
+    if any((sq0_v5_result,sq0_v5_closeout,sq0_v5_root_cause)):
+        if not all((sq0_v5_result,sq0_v5_closeout,sq0_v5_root_cause)):
+            raise PreflightError("SQ0-V5 final closeout artifact set is incomplete.")
+        for label,payload in (("SQ0-V5 result",sq0_v5_result),("SQ0-V5 closeout",sq0_v5_closeout),("SQ0-V5 root cause",sq0_v5_root_cause)):
+            if payload.get("object_id")!=OBJECT_ID: raise PreflightError(f"{label} object mismatch.")
+            c=payload.get("content_sha256");u=dict(payload);u.pop("content_sha256",None)
+            if c!=digest(u): raise PreflightError(f"{label} hash mismatch.")
+        if sq0_v5_result.get("status")!="SQ0_V5_QUALIFICATION_INVALID_NON_SEMANTIC_FAILURE_STOP" or sq0_v5_result.get("completed_case_count")!=6 or sq0_v5_result.get("usable_target_failure_count")!=6 or sq0_v5_result.get("target_success_count")!=0:
+            raise PreflightError("SQ0-V5 invalid result aggregate drifted.")
+        if sq0_v5_result.get("non_semantic_failure_units") != ["sq0v5:mimo-v2.5-pro|SQ0V5-TNF-01|1"]:
+            raise PreflightError("SQ0-V5 invalid unit drifted.")
+        if sq0_v5_closeout.get("status")!="SQ0_V5_FINAL_CALIBRATION_INVALID_STOP_NO_V6" or sq0_v5_closeout.get("verdict")!=sq0_v5_result.get("status"):
+            raise PreflightError("SQ0-V5 closeout/result mismatch.")
+        if sq0_v5_closeout.get("terminal_case_count")!=7 or sq0_v5_closeout.get("true_never_dispatched_case_count")!=5 or sq0_v5_closeout.get("failure_to_pass_disposition")!="STOP_SQ0_DEVELOPMENT_NO_V6":
+            raise PreflightError("SQ0-V5 final stop accounting drifted.")
+        if sq0_v5_root_cause.get("status")!="SQ0_V5_RECURRENT_ATOMCODE_NATIVE_READ_FILE_CONTAMINATION_FINAL_STOP" or sq0_v5_root_cause.get("attempted_native_tool")!="read_file":
+            raise PreflightError("SQ0-V5 recurrent transport root cause drifted.")
+        if sq0_v5_root_cause.get("historical_collision",{}).get("status")!="SQ0_V2_VOID_NATIVE_READ_FILE_SCHEMA_CONTAMINATION":
+            raise PreflightError("SQ0-V5 historical contamination lineage drifted.")
+        for payload in (sq0_v5_closeout,sq0_v5_root_cause):
+            auth=payload.get("authority",{})
+            if any(auth.get(k) for k in ("sq0","sq0_v6","f0_r1","probe","p1","toolsandbox","appworld_ul","paper_claim")):
+                raise PreflightError("SQ0-V5 final stop retained downstream authority.")
+        sq0_v5_closed=True
+        sq0_v5_execution_authorized=False
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -1463,6 +1495,13 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif sq0_v5_closed:
+        readiness_status = "SQ0_V5_FINAL_CALIBRATION_INVALID_STOP_NO_V6"
+        blocker = (
+            "The final SQ0 calibration is invalid because the first TNF case attempted AtomCode native read_file after dispatch. "
+            "This recurs the earlier SQ0-V2 native-tool contamination class. The frozen V5 disposition forbids V6; F0-R1 remains unauthorized."
+        )
+        next_action = "STOP_SQ0_DEVELOPMENT_REVIEW_TRANSPORT_ISOLATION_OR_RESEARCH_OBJECT"
     elif sq0_v5_execution_authorized:
         readiness_status = "SQ0_V5_FINAL_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
         blocker = None
@@ -1940,9 +1979,20 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "sq0_v5_execution_contract_status": sq0_v5_execution_contract.get("status"),
         "sq0_v5_execution_authorized": sq0_v5_execution_authorized,
         "sq0_v5_final_calibration": bool(sq0_v5_static_contract.get("final_sq0_calibration_iteration",False)),
+        "sq0_v5_result_status": sq0_v5_result.get("status"),
+        "sq0_v5_completed_case_count": int(sq0_v5_result.get("completed_case_count",0)),
+        "sq0_v5_usable_target_failure_count": int(sq0_v5_result.get("usable_target_failure_count",0)),
+        "sq0_v5_target_success_count": int(sq0_v5_result.get("target_success_count",0)),
+        "sq0_v5_non_semantic_failure_units": sq0_v5_result.get("non_semantic_failure_units",[]),
+        "sq0_v5_closeout_status": sq0_v5_closeout.get("status"),
+        "sq0_v5_root_cause_status": sq0_v5_root_cause.get("status"),
+        "sq0_v5_true_never_dispatched_case_count": int(sq0_v5_closeout.get("true_never_dispatched_case_count",0)),
+        "sq0_v5_attempted_native_tool": sq0_v5_root_cause.get("attempted_native_tool"),
+        "sq0_v5_closed": sq0_v5_closed,
+        "sq0_v6_execution_authorized": False,
         "sq0_v2_execution_authorized": sq0_v2_execution_authorized,
         "sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
-        "f0_r1_sq0_execution_authorized": sq0_v5_execution_authorized,
+        "f0_r1_sq0_execution_authorized": sq0_v5_execution_authorized and not sq0_v5_closed,
         "f0_r1_execution_authorized": False,
         "f0_source_target_success_count": int(f0_source_closeout.get("source_target_success_count", 0)),
         "f0_source_target_failure_count": int(f0_source_closeout.get("source_target_failure_count", 0)),
@@ -1951,7 +2001,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "f0_source_appworld_tool_call_total": int(f0_source_closeout.get("appworld_tool_call_total", 0)),
         "f0_probe_episode_count": int(f0_source_closeout.get("probe_episode_count", 0)),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_SQ0_V5_FINAL_CALIBRATION_AUTHORIZED_AFTER_V4_TOO_HARD"
+            "SELECTED_MIMO25PRO_SQ0_V5_FINAL_INVALID_STOP_NO_V6"
+            if sq0_v5_closed
+            else "SELECTED_MIMO25PRO_SQ0_V5_FINAL_CALIBRATION_AUTHORIZED_AFTER_V4_TOO_HARD"
             if sq0_v5_execution_authorized
             else "SELECTED_MIMO25PRO_SQ0_V4_TOO_HARD_CLOSED_V5_FINAL_CALIBRATION_REQUIRED"
             if sq0_v4_closed
@@ -2110,6 +2162,7 @@ def main() -> None:
         SQ0_V4_CLOSEOUT, SQ0_V4_ROOT_CAUSE,
         SQ0_V5_STATIC_CONTRACT, SQ0_V5_STATIC_QUALIFICATION, SQ0_V5_HUMAN_AUTHORIZATION,
         SQ0_V5_MIMO25PRO_Q1, SQ0_V5_EXECUTION_CONTRACT, SQ0_V5_RESULT,
+        SQ0_V5_CLOSEOUT, SQ0_V5_ROOT_CAUSE,
     ):
         if not path.is_file():
             continue

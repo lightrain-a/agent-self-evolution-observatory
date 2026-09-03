@@ -1,0 +1,41 @@
+{
+  "appworld_tool_calls_before_native_attempt": 3,
+  "attempted_native_tool": "read_file",
+  "authority": {
+    "appworld_ul": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0": false,
+    "sq0_v6": false,
+    "toolsandbox": false
+  },
+  "codingplan_account_window_requests_in_failed_unit": 3,
+  "content_sha256": "356f8b39e03ce115b2ed5731c17f6107d105e905fc79cd2a1b592009706aef49",
+  "development_iteration": 5,
+  "diagnosis": [
+    "The official AtomCode signed runtime again exposed or elicited the native read_file tool inside a long AppWorld-only task despite an MCP-only scientific instruction and a client permission guard.",
+    "The guard correctly prevented the native tool from becoming AppWorld scientific evidence, but the attempted tool invalidates the qualification by the prospectively frozen non-semantic-failure rule.",
+    "The zero-request MCP Q1 establishes that AppWorld tools were mounted before dispatch; it does not prove that native coding tools are absent from the model-visible tool schema during a long live turn.",
+    "This recurs the earlier SQ0-V2 native read_file contamination class, so another difficulty calibration iteration would conflate target-failure calibration with unresolved transport isolation."
+  ],
+  "failed_case_id": "SQ0V5-TNF-01",
+  "failed_unit_id": "sq0v5:mimo-v2.5-pro|SQ0V5-TNF-01|1",
+  "failure_class": "HARNESS_OR_PROVIDER_INTERFACE_STOP",
+  "final_calibration_iteration": true,
+  "future_transport_requirement_if_research_is_reopened": "Use a provider/runtime in which non-AppWorld native coding tools are absent from the model-visible tool schema, rather than merely denied after model selection; qualify that transport prospectively on fresh non-scientific cases before any new source-failure calibration.",
+  "historical_collision": {
+    "artifact": "generated/agent-constraint-externality-sq0-v2-harness-contamination-void-20260903.json",
+    "root_cause_classification": "ATOMCODE_NATIVE_TOOL_SCHEMA_CONTAMINATION",
+    "same_native_tool_family": true,
+    "status": "SQ0_V2_VOID_NATIVE_READ_FILE_SCHEMA_CONTAMINATION"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_requests_added": 0,
+  "retry_attempted": false,
+  "schema_version": "ace-sq0-v5-final-root-cause-v1",
+  "scientific_effects_observed": 0,
+  "scientific_interpretation_boundary": "The six completed fresh FG cases are retained as development observations and all six were usable semantic target failures, but the V5 qualification as a whole is invalid. No inference about the final 12-case failure rate or F0-R1 readiness is permitted.",
+  "status": "SQ0_V5_RECURRENT_ATOMCODE_NATIVE_READ_FILE_CONTAMINATION_FINAL_STOP"
+}
