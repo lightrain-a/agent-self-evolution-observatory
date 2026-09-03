@@ -4688,9 +4688,12 @@ function enhanceExperimentVendorMatrix(root) {
   const familyOrder = [...domesticFamilies, ...overseasFamilies];
   const familyRank = new Map(familyOrder.map((family, index) => [family, index]));
   const cheapestInput = row => {
-    const cells = [...row.children].slice(2); // exclude model + Ark AFP-equivalent column
+    const cells = [...row.children].slice(1); // include Ark AFP full-use equivalent as an available unit price
     const prices = cells.flatMap(cell => {
-      const match = cell.textContent.match(/(?:in|入)\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const text = cell.textContent || "";
+      const api = text.match(/(?:in|入)\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const ark = text.match(/AFP(?:\s+eq\.|\s+等效)?\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const match = api || ark;
       return match ? [Number(match[1])] : [];
     }).filter(Number.isFinite);
     return prices.length ? Math.min(...prices) : Number.POSITIVE_INFINITY;
@@ -4713,8 +4716,8 @@ function enhanceExperimentVendorMatrix(root) {
     tbody.appendChild(row);
   });
   if (summary) summary.innerHTML = language === "zh"
-    ? `<b>国内：</b>Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　｜　<b>国外：</b>OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>系列内按当前各普通 API 渠道的最低输入价（元 / 1M Token）从低到高；Ark AFP 等效价不参与这个排序。</small>`
-    : `<b>China:</b> Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　|　<b>International:</b> OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>Within each family, rows are sorted by the lowest currently listed ordinary-API input price (RMB / 1M tokens); Ark AFP equivalents are excluded from the sort key.</small>`;
+    ? `<b>国内：</b>Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　｜　<b>国外：</b>OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>系列内按当前可获得渠道的最低可比单价（元 / 1M Token）从低到高；Ark AFP 套餐吃满等效价也参与排序。</small>`
+    : `<b>China:</b> Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　|　<b>International:</b> OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>Within each family, rows are sorted by the lowest currently available comparable unit price (RMB / 1M tokens), including Ark's full-use AFP equivalent.</small>`;
 
   const apply = () => {
     const query = input.value.trim().toLowerCase();
