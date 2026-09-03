@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "4",
   "artifact_type": "provider-price-comparison-snapshot",
   "checked_at": "2026-09-03",
-  "scope": "all publicly listed text/reasoning/code model IDs from the compared provider pricing surfaces; image/video/audio-only products excluded from the token matrix",
+  "scope": "160 exact text/reasoning/code model IDs across Ark, Dianming, ChatAnywhere, Junliai, AIHubMix, SiliconFlow, PPIO and 302.AI; pure image/video/audio-only products excluded.",
   "unit": "CNY per 1M tokens",
   "row_count": 160,
   "family_counts": {
@@ -24,13 +24,50 @@
     "dianming": "https://www.aa.com.cn/pricing",
     "junliai_public_projection": "https://mozhenzhen.com/providers/junliai-org-673",
     "junliai_service": "https://openapi.junliai.org",
-    "ark_agent_plan": "https://www.volcengine.com/docs/82379/2366394?lang=zh"
+    "ark_agent_plan": "https://www.volcengine.com/docs/82379/2366394?lang=zh",
+    "aihubmix": {
+      "url": "https://aihubmix.com/models",
+      "checked_at": "2026-09-03",
+      "currency": "USD",
+      "converted_to_cny_at": 6.7807,
+      "coverage_rows": 35,
+      "note": "Exact model-page/list prices; promo aliases are not merged into regular exact model IDs."
+    },
+    "siliconflow": {
+      "url": "https://siliconflow.cn/pricing",
+      "checked_at": "2026-09-03",
+      "currency": "CNY",
+      "coverage_rows": 12,
+      "note": "Current public pricing; time-of-day DeepSeek V4 Flash price labeled."
+    },
+    "ppio": {
+      "url": "https://resource.ppio.com/pricing?tokenplan=1",
+      "checked_at": "2026-09-03",
+      "currency": "CNY",
+      "coverage_rows": 18,
+      "note": "Consumer token-plan pricing; enterprise-negotiated pricing excluded."
+    },
+    "302ai": {
+      "url": "https://price.302.ai/pricing/",
+      "checked_at": "2026-09-03",
+      "currency": "USD",
+      "converted_to_cny_at": 6.7807,
+      "coverage_rows": 14,
+      "note": "Public list/product pricing converted only for comparison."
+    },
+    "fx_20260903": {
+      "url": "https://www.xinhuanet.com/fortune/20260903/77f7f0b85c164c9b82c0770990c8e55b/c.html",
+      "checked_at": "2026-09-03",
+      "value": "100 USD = 678.07 CNY"
+    }
   },
   "conversion": {
     "chatanywhere": "CA coin is RMB; published /1K-token prices multiplied by 1000",
     "dianming": "published RMB /1000-token prices multiplied by 1000",
     "junliai": "public model-summary values are already CNY per 1M tokens; group/route prices may vary",
-    "ark": "AFP subscription full-use equivalent; no fabricated input/output tariff"
+    "ark": "AFP subscription full-use equivalent; no fabricated input/output tariff",
+    "usd_to_cny_20260903": 6.7807,
+    "usd_to_cny_basis": "China Foreign Exchange Trade System central parity published 2026-09-03: 100 USD = 678.07 CNY."
   },
   "excluded_from_matrix": [
     "gemini-2.5-flash-image-preview",
@@ -4483,5 +4520,21 @@
         }
       }
     }
-  ]
+  ],
+  "added_value_providers": {
+    "aihubmix": 35,
+    "siliconflow": 12,
+    "ppio": 18,
+    "302ai": 14
+  },
+  "considered_but_not_primary_columns": {
+    "openrouter": {
+      "url": "https://openrouter.ai/pricing",
+      "reason": "Pay-as-you-go pricing lists a 5.5% platform fee; useful benchmark but not a clean cheapest-CNY/M column."
+    },
+    "packyapi": {
+      "url": "https://docs.packyapi.com/docs/token/",
+      "reason": "Billing depends on route/group multipliers; no single route-independent CNY/M quote."
+    }
+  }
 }
