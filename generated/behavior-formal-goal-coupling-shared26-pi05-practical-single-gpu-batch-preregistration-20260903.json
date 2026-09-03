@@ -1,0 +1,60 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-single-gpu-batch-preregistration-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "status": "PREREGISTERED_PRACTICAL_SINGLE_GPU_BATCH_LADDER_NO_OUTCOME_ACCESS",
+  "parent_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accumulation-ladder-exhaustion-adjudication-20260903.json"
+  },
+  "scientific_scope": "Prospective practical single-A100 realization of the frozen shared26 pi0.5 training unit after effective-batch64 FP32 accumulation proved infeasible. This is a new execution child and must not be described as source-batch64 equivalent.",
+  "batch_resource_ladder": [
+    {"priority": 1, "physical_batch": 16, "effective_optimizer_batch": 16, "gradient_accumulation": 1},
+    {"priority": 2, "physical_batch": 8, "effective_optimizer_batch": 8, "gradient_accumulation": 1},
+    {"priority": 3, "physical_batch": 4, "effective_optimizer_batch": 4, "gradient_accumulation": 1}
+  ],
+  "selection_rule": "Test candidates strictly in listed order using exactly one synthetic full-train-step resource qualification per candidate. Advance only on a technical RESOURCE_EXHAUSTED/cgroup resource failure. Never inspect or use loss values, gradient numerical values, BEHAVIOR data, reward, Q, success, or policy outcomes for candidate selection. Stop at the first candidate that completes the full synthetic train step.",
+  "synthetic_full_step_qualification": {
+    "inputs": "config.model.fake_obs(batch_size=B) and config.model.fake_act(batch_size=B)",
+    "base_state": "content-addressed pi0.5 base restored directly to jax.Array leaves; step=0",
+    "operation": "execute exactly one source train_step including gradient computation, AdamW update, step increment, and EMA update; discard all returned state immediately",
+    "synthetic_optimizer_updates_authorized_per_candidate": 1,
+    "real_scientific_optimizer_updates_authorized": 0,
+    "must_end_at_step": 1,
+    "checkpoint_write": false,
+    "wandb": false,
+    "behavior_dataset_access": false,
+    "loss_value_retained_or_reported": false,
+    "gradient_numerical_values_inspected": false,
+    "policy_rollouts": 0,
+    "policy_outcomes_read": false
+  },
+  "formal_training_invariants_after_first_resource_pass": {
+    "model": "pi0.5 B1K R1Pro unchanged",
+    "base_checkpoint": "same 20-object content-addressed pi05_base params",
+    "dataset_episode_count": 5200,
+    "dataset_task_indices": [8,10,12,13,14,17,33,41,42,46,51,56,59,62,65,67,68,73,74,77,81,84,85,88,89,94],
+    "seed": 42,
+    "optimizer_updates": 50000,
+    "optimizer": "AdamW(b1=0.9,b2=0.95,eps=1e-8,weight_decay=1e-10,clip_gradient_norm=1.0)",
+    "lr_schedule": "CosineDecaySchedule(warmup_steps=1000,peak_lr=2.5e-05,decay_steps=30000,decay_lr=2.5e-06)",
+    "ema_decay": 0.99,
+    "action_horizon": 32,
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "num_workers": 0,
+    "terminal_checkpoint": "source-emitted optimizer-step label 49999 only",
+    "gpu_topology": "1x NVIDIA A100-SXM4-80GB"
+  },
+  "data_exposure_boundary": "With 50000 optimizer updates, batch16 consumes 800000 source-shuffled examples; batch8 consumes 400000; batch4 consumes 200000. Each remains within the first 50,852,705-frame source epoch. This differs from the original batch64 child and is part of the practical-child claim boundary.",
+  "claim_boundary": "If used in the paper, describe pi0.5 as a preregistered practical single-GPU shared26 fine-tune after the source-batch64 realization was resource-infeasible. Do not claim batch-equivalent replication; use it only as one frozen policy family for the matched-coupling association test.",
+  "forbidden": [
+    "learning-rate scaling or retuning in response to batch choice",
+    "changing optimizer, EMA, seed, dataset, model, normalization, action horizon, update count, or terminal-checkpoint selection",
+    "selecting batch using any scientific metric or real-data loss",
+    "changing the batch after formal training begins",
+    "checkpoint shopping"
+  ],
+  "formal_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate": "IMPLEMENT_SYNTHETIC_FULL_TRAIN_STEP_BATCH16_RESOURCE_QUALIFICATION"
+}

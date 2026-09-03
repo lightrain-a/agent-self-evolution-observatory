@@ -1,0 +1,53 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accumulation-ladder-exhaustion-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "PI05_SINGLE_A100_FP32_ACCUMULATION_LADDER_EXHAUSTED",
+  "scope": "Outcome-blind resource adjudication before any real optimizer update or policy outcome access.",
+  "candidate_results": [
+    {
+      "physical_micro_batch": 16,
+      "accumulation_steps": 4,
+      "effective_batch": 64,
+      "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-repair1-result-20260902.json",
+      "sha256": "1208e32c2df053023aaf38a9069a430b35ed51b2d26bcfe8a29bb95fa86fdc9d",
+      "micro_gradients_completed": 1,
+      "failure": "RESOURCE_EXHAUSTED allocating 17055690208 bytes during the next micro-gradient while the first full FP32 accumulator remained resident"
+    },
+    {
+      "physical_micro_batch": 8,
+      "accumulation_steps": 8,
+      "effective_batch": 64,
+      "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-repair3-host67-result-20260903.json",
+      "sha256": "04cebb05ab6be62e34d81d708465b7d8e7c7ccf158a69df7b80300455b1ecc88",
+      "micro_gradients_completed": 1,
+      "failure": "RESOURCE_EXHAUSTED allocating 15816065656 bytes during the next micro-gradient with the FP32 accumulator resident"
+    },
+    {
+      "physical_micro_batch": 4,
+      "accumulation_steps": 16,
+      "effective_batch": 64,
+      "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-fused-direct-device-repair2-host231-result-20260903.json",
+      "sha256": "85e13747a636a92c5c0614ca3a2af6ba57554b637fe4f99a48d2ee01e78af1e5",
+      "micro_gradients_completed": 1,
+      "failure": "RESOURCE_EXHAUSTED allocating 15207781752 bytes during the next micro-gradient with the FP32 accumulator resident"
+    }
+  ],
+  "mechanistic_conclusion": "Reducing physical microbatch 16 -> 8 -> 4 only modestly reduces the next-gradient allocation (about 17.06 GB -> 15.82 GB -> 15.21 GB). In all three cases one full FP32 gradient accumulator remains resident and the next full-parameter backward requires another roughly 15-17 GB allocation. Therefore the blocking term is full-gradient accumulator coexistence, not ordinary activation scaling with physical batch size.",
+  "scientific_safety": {
+    "real_optimizer_updates": 0,
+    "parameter_updates": 0,
+    "training_checkpoints_written": 0,
+    "policy_rollouts": 0,
+    "policy_outcomes_read": false,
+    "loss_or_gradient_values_used_for_selection": false
+  },
+  "decision": "CLOSE_EFFECTIVE_BATCH64_FP32_ACCUMULATION_CHILD_AND_OPEN_PRACTICAL_SINGLE_GPU_BATCH_CHILD",
+  "forbidden": [
+    "invent another microbatch size while retaining the same full-FP32 accumulator implementation",
+    "increase host memory after the durable 4x16 micro-gradient marker",
+    "select a fallback batch using loss/reward/Q/success/policy outcomes",
+    "claim the practical child is source-RNG or effective-batch equivalent to physical batch64"
+  ],
+  "next_gate": "PREREGISTER_PRACTICAL_SINGLE_GPU_BATCH_LADDER"
+}

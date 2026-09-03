@@ -1,0 +1,111 @@
+{
+  "accumulated_gradient_complete": false,
+  "accumulation_steps": 16,
+  "accumulator_bytes": null,
+  "accumulator_element_count": null,
+  "accumulator_leaf_count": null,
+  "attempt1_adjudication_sha256": "b05ae019ca0ab2ce8b697277f398a2720e6c36c922a7521a2c44fed9f5c1fa09",
+  "authority_sha256": "726cf539bb4b6bb98965ac0dd82ba00280e8470586b17861071387492eda0e3d",
+  "candidate_priority": 2,
+  "checkpoint_written": false,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "consumed_attempt_sha256": "9dd2f352c84dadbbea8725dc09ee5da28960f44169251dd95550265823c20f43",
+  "consumed_repair1_sha256": "2d128a77c340d9e822e0381f3f8bbc0c0cb7d4d682faf8153bfb0a1011730ab9",
+  "dataset_accessed": false,
+  "effective_batch": 64,
+  "error": "XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 15207781752 bytes.",
+  "formal_training_authorized": false,
+  "generated_at": "2026-09-03T15:10:53.826613+00:00",
+  "gpu_after_each_completed_micro": [
+    {
+      "gpus": [
+        {
+          "index": 0,
+          "memory_total_mib": 81920,
+          "memory_used_mib": 73531,
+          "name": "NVIDIA A100-SXM4-80GB",
+          "utilization_gpu_percent": 100
+        }
+      ]
+    }
+  ],
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73489,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gradient_numerical_values_read": false,
+  "host_memory_ladder_sha256": "6fb67f1e1131b8a08778f53ead8f59c635755432bf487e3b1c5ec2ebe7a752c4",
+  "jax_memory_after_each_completed_micro": [
+    {
+      "bytes_in_use": 67075927552,
+      "bytes_limit": 76584397638,
+      "bytes_reserved": 0,
+      "largest_alloc_size": 4831838208,
+      "largest_free_block_bytes": 0,
+      "num_allocs": 8866,
+      "peak_bytes_in_use": 70922139392,
+      "peak_bytes_reserved": 0,
+      "peak_pool_bytes": 76584397568,
+      "pool_bytes": 76584397568
+    }
+  ],
+  "jax_memory_after_state": {
+    "bytes_in_use": 53654944256,
+    "bytes_limit": 76584397638,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 216,
+    "peak_bytes_in_use": 53654955264,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76584397568,
+    "pool_bytes": 76584397568
+  },
+  "loss_value_retained_or_reported": false,
+  "micro_gradients_completed": 1,
+  "next_gate": "ACCUM4X16_REPAIR2_FAILURE_ADJUDICATION_PER_HOST_MEMORY_LADDER",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update": false,
+  "parameter_update": false,
+  "physical_micro_batch": 4,
+  "policy_outcomes_read": false,
+  "portable_direct_device_result_sha256": "5f27f14cfce284f1a75acefafbf9c404556f527b5037007ee8f119df3ddc90df",
+  "portable_openpi": {
+    "changed_paths": [
+      "src/openpi/training/config.py"
+    ],
+    "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60"
+  },
+  "repair1_adjudication_sha256": "9aa65c21014333fb277d8b7d063986bb58282e85ddcc0f4070c4f0e0a9f68281",
+  "repair_host_role": "host-memory ladder repair2 at 32GiB",
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1003.slice/user@1003.service/app.slice/pi05-synthetic-accum4x16-repair2-32g-host231-20260903.service",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 34359738368,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-accum4x16-direct-device-result-v1",
+  "scientific_training_started": false,
+  "status": "PI05_SYNTHETIC_FUSED_ACCUM4X16_DIRECT_DEVICE_REPAIR2_HOLD",
+  "synthetic_resource_gate": true,
+  "train_state_ready": true
+}
