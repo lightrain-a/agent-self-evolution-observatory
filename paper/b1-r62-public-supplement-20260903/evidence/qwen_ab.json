@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "role": "R56_FRESH_AB_COMPLETE_ONLY_ANALYSIS",
+  "status": "FRESH_AB_IDENTIFICATION_ESTIMATE_COMPLETE",
+  "units": 32,
+  "arm_runs": 64,
+  "estimand": "B_raw_provenance - A_content_only",
+  "effect": 0.03125,
+  "ci95_paired_cluster_bootstrap": [
+    0.0,
+    0.09375
+  ],
+  "bootstrap_repetitions": 100000,
+  "bootstrap_seed": 20260825,
+  "B_only_success": 1,
+  "A_only_success": 0,
+  "discordant_pairs": 1,
+  "exact_two_sided_signflip_p": 1.0,
+  "effect_relevance_floor_abs": 0.15,
+  "effect_relevance_floor_met": false,
+  "p_value_cannot_upgrade_rung_by_itself": true,
+  "unit_rows": [
+    {
+      "task_id": "150",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "327",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "98",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "335",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "161",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "366",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "125",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "260",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "176",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "136",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "3",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "236",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "28",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "235",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "202",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "40",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "467",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "470",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "79",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "275",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "290",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "15",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "414",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "411",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "463",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "135",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "71",
+      "A_terminal_success": false,
+      "B_terminal_success": false,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "325",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "282",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "193",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    },
+    {
+      "task_id": "252",
+      "A_terminal_success": false,
+      "B_terminal_success": true,
+      "paired_effect": 1
+    },
+    {
+      "task_id": "441",
+      "A_terminal_success": true,
+      "B_terminal_success": true,
+      "paired_effect": 0
+    }
+  ],
+  "C_D_status": "NOT_EXECUTED",
+  "PSMG_efficacy_status": "NOT_IDENTIFIED",
+  "historical_pooling": false,
+  "receipt_sha256": "738a807debc5dbc83cfa7bb573a07df2bdd6bd131e3b6a27a1fdd438d44fcdcc",
+  "plan_sha256": "8103868d5fbbc598df4752ccee9fa9719861528c44d69e3bdeadd9f3248e61c3",
+  "contract_receipt_sha256": "79f77f124e1ad66743952a3e461a3cf4cf368ef6d7e07b474d579ce5609b5ab1",
+  "authority_receipt_sha256": "9b9197256204c3154e48984f890fbd7aadc83e37cfd3598e7fe79d2c495ccb63",
+  "fresh_selection_receipt_sha256": "7d75b4d79a7b83ad8e3d452d4a232d66c1137acc91484e51356160a95a385776",
+  "utilization_receipt_sha256": "122c3cb1b3f1a16418a54e3b137e8aa75d91084c0cfe5fae17c7e2f1ce515d2e",
+  "external_provider_calls": 0
+}
