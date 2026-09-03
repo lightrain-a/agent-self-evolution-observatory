@@ -1,0 +1,223 @@
+{
+  "binder_calls": 0,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-PROBE-SPECS-20260903",
+  "final_calls": 0,
+  "fresh_pool_sha256": "1e52b3e00d7c8d82cf0846d66c87223c44bc137765cbd10e4ca139809134c3b1",
+  "future_task_executions": 0,
+  "payload_sha256": "14c86562d17b40995516b88102eb64b7b2987a2e4ec801dd47c9b9c09962fc6a",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e core.py -e ui.py -e get_writer -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "2a49dd662ca62f7e4cbe7432c3b6a6de7fcfd97d153c8680a04f8194603d0b82",
+      "future_base_commit": "a5917978be39d13cd90b517e1de4e7a539ffaa48",
+      "future_task_executions": 0,
+      "future_task_id": "astropy__astropy-14182",
+      "future_task_sha256": "2f743a72613ab0e8e063ff7b7f0a233015ad12ba14992625d9f84b315fa885fd",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "core.py",
+        "ui.py",
+        "get_writer"
+      ],
+      "unit_id": "astropy__astropy-14995=>astropy__astropy-14182"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e Adding -e OneToOneField -e crashes -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "19224f6448e24367b74b30d8c8d00f034942408383c5e29aab76bd2dcceb2c27",
+      "future_base_commit": "0ab58c120939093fea90822f376e1866fc714d1f",
+      "future_task_executions": 0,
+      "future_task_id": "django__django-15278",
+      "future_task_sha256": "1a089ebde40b260fa592330ff3bf56f5bfa3f06d96e50e5f17196fa2e6140d74",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "Adding",
+        "OneToOneField",
+        "crashes"
+      ],
+      "unit_id": "django__django-15503=>django__django-15278"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e text.usetex -e np.random.rand -e plt.subplots -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "c96b009798b3d0864cca3ee79ad1d245d8fff3ead25abc6494d460b494a8b70a",
+      "future_base_commit": "f0632c0fc7339f68e992ed63ae4cfac76cd41aad",
+      "future_task_executions": 0,
+      "future_task_id": "matplotlib__matplotlib-21568",
+      "future_task_sha256": "b8683c29c5989c50521624efa9b34be927922e08f51ff01a96dec8526e3eec91",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "text.usetex",
+        "np.random.rand",
+        "plt.subplots"
+      ],
+      "unit_id": "matplotlib__matplotlib-20488=>matplotlib__matplotlib-21568"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e sending -e ALWAYS -e length -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "a6c1683a4ed8ab9aa8ff3d2ad6604b8cef6862a3e57c58ded43bf57b4cd826b3",
+      "future_base_commit": "22623bd8c265b78b161542663ee980738441c307",
+      "future_task_executions": 0,
+      "future_task_id": "psf__requests-1142",
+      "future_task_sha256": "0192533ff2ef0c53a600b3ef02cb9dc20bf0998d56eeaee80ca1a76c46758eec",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "sending",
+        "ALWAYS",
+        "length"
+      ],
+      "unit_id": "psf__requests-5414=>psf__requests-1142"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e stacked.to_unstacked_dataset -e xr.DataArray -e data.to_stacked_array -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "cf8aba73b0a5b574c5a1948cf3698a661b6c943154a805e9432740a63b39c6b7",
+      "future_base_commit": "a64cf2d5476e7bbda099b34c40b7be1880dbd39a",
+      "future_task_executions": 0,
+      "future_task_id": "pydata__xarray-4094",
+      "future_task_sha256": "4c60cee2e4247fd72e76052ae5938216ea38eca360d5b87d2a006d71bf4a91bc",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "stacked.to_unstacked_dataset",
+        "xr.DataArray",
+        "data.to_stacked_array"
+      ],
+      "unit_id": "pydata__xarray-3677=>pydata__xarray-4094"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e ignore-paths -e foo.py -e ignore -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "3599c05dcf1be17e97487f58022eaf59da523769521a7bf6b6e7c51fd56a2f89",
+      "future_base_commit": "273a8b25620467c1e5686aa8d2a1dbb8c02c78d0",
+      "future_task_executions": 0,
+      "future_task_id": "pylint-dev__pylint-6528",
+      "future_task_sha256": "b11d702c9bf142c2d05d59049258cd45746f2328b7598d6fd4acfa49530e8b39",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "ignore-paths",
+        "foo.py",
+        "ignore"
+      ],
+      "unit_id": "pylint-dev__pylint-6903=>pylint-dev__pylint-6528"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e test_1 -e setUpClass -e unittest.py -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "f93d483d780458a2cb9f7db832953e9fa8bf43139ccff510fbe5e0dbe05492f3",
+      "future_base_commit": "6e7dc8bac831cd8cf7a53b08efa366bd84f0c0fe",
+      "future_task_executions": 0,
+      "future_task_id": "pytest-dev__pytest-8399",
+      "future_task_sha256": "2471cd247002e8cb4c9cff40999a0841dbfea96004fb15d6df9c23528395c011",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "test_1",
+        "setUpClass",
+        "unittest.py"
+      ],
+      "unit_id": "pytest-dev__pytest-7490=>pytest-dev__pytest-8399"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e probs.shape -e y_test -e new_probs_builtin -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "9002d9dd1388243d32102eeda380630e8450ee5871ff3dec6be3c27207893cb8",
+      "future_base_commit": "dd69361a0d9c6ccde0d2353b00b86e0e7541a3e3",
+      "future_task_executions": 0,
+      "future_task_id": "scikit-learn__scikit-learn-11578",
+      "future_task_sha256": "e4945959c7c914eff336d7a28037c018533b3473ef69f46f3bcf8c51560a211a",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "probs.shape",
+        "y_test",
+        "new_probs_builtin"
+      ],
+      "unit_id": "scikit-learn__scikit-learn-25931=>scikit-learn__scikit-learn-11578"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e epub -e make -e viewcode_enable_epub -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "fd84aac56ab21b01d5ccb3956a9e253cb8a219574d1ec4688c29ea7c486e7596",
+      "future_base_commit": "82ef497a8c88f0f6e50d84520e7276bfbf65025d",
+      "future_task_executions": 0,
+      "future_task_id": "sphinx-doc__sphinx-8721",
+      "future_task_sha256": "684041d7ab737dd04914a0017b92d238cd8dae72182457e3f3a21f494e7acb3e",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "epub",
+        "make",
+        "viewcode_enable_epub"
+      ],
+      "unit_id": "sphinx-doc__sphinx-11445=>sphinx-doc__sphinx-8721"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e len -e sympy.Array -e sympy.tensor.array.NDimArray.__len__ -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "3fcd6b07190363f59e32f7e12c2960841296d3a86e68d60579cc910490577f2e",
+      "future_base_commit": "6810dee426943c1a2fe85b5002dd0d4cf2246a05",
+      "future_task_executions": 0,
+      "future_task_id": "sympy__sympy-15017",
+      "future_task_sha256": "b106dd1aed96c16195e44e41b0d863086366cf9c597e31787a38816ae04efb2a",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "runtime_binding": "DEFERRED_UNTIL_FRESH2_20_RUNTIME_READY",
+      "tokens": [
+        "len",
+        "sympy.Array",
+        "sympy.tensor.array.NDimArray.__len__"
+      ],
+      "unit_id": "sympy__sympy-16450=>sympy__sympy-15017"
+    }
+  ],
+  "schema_version": 1,
+  "scientific_source_tasks_used": 0,
+  "selection_priority": [
+    "explicit_inline_or_codeish_block",
+    "issue_title",
+    "other_code_block",
+    "full_task_fallback"
+  ],
+  "shadow_calls": 0,
+  "status": "FRESH2_MSR_10_PROBE_COMMANDS_FROZEN_PRE_SOURCE_OUTCOME",
+  "token_salt": "C1-PACTA-MSR-FRESH2-PROBE-TOKEN-v1",
+  "writer_calls": 0
+}
