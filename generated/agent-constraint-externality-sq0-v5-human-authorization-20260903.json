@@ -1,0 +1,20 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v5_execution": true,
+    "toolsandbox": false
+  },
+  "authorization_basis": "USER_CONTINUATION_AFTER_SQ0_V4_TOO_HARD_CLOSEOUT_AND_SQ0_V5_STATIC_PASS",
+  "content_sha256": "e0736c5827278b863b49027ba8910e1e4a6e334317d64bbd74e8af7a8ebb3ee6",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-sq0-human-authorization-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "static_contract_content_sha256": "4f9aa6fb6fbb2a1d7009ad7458bede9afc15ae8323fb353a55ac8cc04f3ad059",
+  "static_qualification_content_sha256": "a9bfc2ce113a92efe290efb7c0337fc7d66e717397c1091a7fa614ae2df622cd",
+  "status": "USER_AUTHORIZED_SQ0_V5_AFTER_V4_TOO_HARD_CLOSEOUT_AND_STATIC_PASS"
+}

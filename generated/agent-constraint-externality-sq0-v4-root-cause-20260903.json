@@ -1,0 +1,105 @@
+{
+  "audits": {
+    "SQ0V4-TNF-01": {
+      "actual_content_sha256": "c3a55e6ad9968f2f6da1a3b401313c9115e3eb8d0251f73e4184fd1c50be2da7",
+      "actual_last_field": "635",
+      "actual_path_sha256": "0b37006abbeb731da34ad339a47453c069eb6c9c258fce023d25075e9b4e0fa9",
+      "content_exact_after_terminal_newline_normalization": false,
+      "expected_content_sha256": "1f10ac2471b5e046e8056bb95b86a19b7257d2a33e5fbd0d1058ebb713ae9f52",
+      "expected_path_sha256": "0b37006abbeb731da34ad339a47453c069eb6c9c258fce023d25075e9b4e0fa9",
+      "expected_total": "635",
+      "path_exact": true
+    },
+    "SQ0V4-TNF-02": {
+      "actual_content_sha256": "e94979c2c8083fd0bbb7ad6bf198a03f9618dcde31905d2c8c60be25b55883b2",
+      "actual_last_field": "404",
+      "actual_path_sha256": "276d323c4b3d980259c5a786600ad0d4a3f70d60f81ec44b49b6c2d164ab0279",
+      "content_exact_after_terminal_newline_normalization": false,
+      "expected_content_sha256": "b44fd2f379243ddfbace4e64fec66408241c12a77040594c043e0998d386cff7",
+      "expected_path_sha256": "276d323c4b3d980259c5a786600ad0d4a3f70d60f81ec44b49b6c2d164ab0279",
+      "expected_total": "404",
+      "path_exact": true
+    },
+    "SQ0V4-TNF-03": {
+      "actual_content_sha256": "48018de887727e9a4394f0b214b0007bc0f1343812d859ae1653dd4b11dd09c8",
+      "actual_last_field": "488",
+      "actual_path_sha256": "6e5be5f28ab3dca907651362b454e7b5e7a88db45b51295e717d5db0cdd30929",
+      "content_exact_after_terminal_newline_normalization": false,
+      "expected_content_sha256": "d910c71b5a374747cad391037564563b6d3df6806dd0310777076b12a249197b",
+      "expected_path_sha256": "6e5be5f28ab3dca907651362b454e7b5e7a88db45b51295e717d5db0cdd30929",
+      "expected_total": "488",
+      "path_exact": true
+    },
+    "SQ0V4-TNF-04": {
+      "actual_content_sha256": "a32a336193507f2641eda80354536fece9815d5ad447decd915cbaa71322cf14",
+      "actual_last_field": "659",
+      "actual_path_sha256": "40a2ea0f6f18fc5af6ab5a6c268650e5cb94f97c368829221a55b579d169052a",
+      "content_exact_after_terminal_newline_normalization": false,
+      "expected_content_sha256": "1f6243c847e47137f7d7c74e6e8a9dc25dec2f5ef962451b0be3822a5c847f70",
+      "expected_path_sha256": "8b38b22ceedbd9e178536827d497245dcac4f201468ebb488531fa276331bbde",
+      "expected_total": "661",
+      "path_exact": false
+    },
+    "SQ0V4-TNF-05": {
+      "actual_content_sha256": "595ef9d5ae1912ba24434c414ab37874b8adbdfd7483daa8abc22639fd0f6cd3",
+      "actual_last_field": "398",
+      "actual_path_sha256": "0c832fa83ba39d83052175cef7fca6873d15003bf78a3a518e4aec9088327b15",
+      "content_exact_after_terminal_newline_normalization": false,
+      "expected_content_sha256": "19c357ddb0e43b1155e8067c98e929282909e8ef8324a7880fafb84663917b8c",
+      "expected_path_sha256": "f0d215ac41dd593177bd6d67e6dbb196f35c0ce7e0c8531ea14845747c084f52",
+      "expected_total": "433",
+      "path_exact": false
+    },
+    "SQ0V4-TNF-06": {
+      "actual_content_sha256": "d7baeac910728d0bb0ee165bf2a8c0b56a522387fa29b7027fb8095e879fdcff",
+      "actual_last_field": "631",
+      "actual_path_sha256": "c78163cdd77a227558154603d2319a4ac581f0acd4fa381d22079e7eb4f115e8",
+      "content_exact_after_terminal_newline_normalization": false,
+      "expected_content_sha256": "1ecbfd624424f3d2303ca481e230d6a7f2b2a954a6584352950c3cdf4299dfd3",
+      "expected_path_sha256": "4345b406d757c43b7f2e28a7558a243366cffb9ccfb8f73a29ba344f3d03b32b",
+      "expected_total": "512",
+      "path_exact": false
+    }
+  },
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v5_design": true,
+    "sq0_v5_execution": false
+  },
+  "content_sha256": "068cd0c01b6a08b227051035bed1f43131b6016c382b2acd7408cd0650139865",
+  "development_iteration": 4,
+  "diagnosis": [
+    "TNF-01/02/03 reached the exact expected output path and exact expected total but serialized source resource identities instead of the required policy/token/value fields.",
+    "TNF-04/05/06 produced a different output path, proving at least one semantic task/content selection error independent of serialization.",
+    "V5 should remove serialization ambiguity prospectively while preserving the V4 semantic decision graph and using entirely fresh cases."
+  ],
+  "frozen_v4_verdict_unchanged": "SQ0_V4_TARGET_CHALLENGE_TOO_HARD_STOP",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prospective_v5_constraints": {
+    "fg_mechanism_change": "NONE; FRESH_PARAMETERIZATION_ONLY",
+    "fresh_cases_only": true,
+    "reuse_v4_case_bytes": false,
+    "terminal_newline_only_normalization_retained": true,
+    "tnf_semantic_decision_graph_change": "NONE",
+    "tnf_serialization_change": "EXPLICIT_FIELD_TO_SOURCE_ATTRIBUTE_MAPPING",
+    "tool_budget_not_used_as_difficulty_knob": true,
+    "v5_is_final_sq0_calibration_iteration": true
+  },
+  "provider_requests_added": 0,
+  "schema_version": "ace-sq0-v4-root-cause-v1",
+  "scientific_effects_observed": 0,
+  "status": "SQ0_V4_TOO_HARD_WITH_SERIALIZATION_AND_SEMANTIC_FAILURE_MIX",
+  "tnf_semantic_selection_failure_units": [
+    "SQ0V4-TNF-04",
+    "SQ0V4-TNF-05",
+    "SQ0V4-TNF-06"
+  ],
+  "tnf_serialization_schema_failure_units": [
+    "SQ0V4-TNF-01",
+    "SQ0V4-TNF-02",
+    "SQ0V4-TNF-03"
+  ]
+}
