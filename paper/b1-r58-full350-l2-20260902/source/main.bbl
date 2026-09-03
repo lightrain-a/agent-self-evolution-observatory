@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,10 +30,6 @@ Yuxuan Liu, Zhaochen Su, Yuhao Zhang, et~al.
 Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun Han, Long~T. Le, Samira Daruki, Xiangru Tang, Vishy Tirumalashetty, George Lee, Mahsan Rofouei, Hangfei Lin, Jiawei Han, Chen-Yu Lee, and Tomas Pfister.
 \newblock Reasoningbank: Scaling agent self-evolving with reasoning memory.
 \newblock In \emph{International Conference on Learning Representations}, 2026.
-
-\bibitem[Saidi(2026)]{saidi2026mutmem}
-Walid Saidi.
-\newblock Mutmem: Cryptographically authorized mutation in persistent agent memory, 2026.
 
 \bibitem[Shinn et~al.(2023)Shinn, Cassano, Berman, Gopinath, Narasimhan, and Yao]{shinn2023reflexion}
 Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao.

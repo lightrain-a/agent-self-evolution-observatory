@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R62-MANUSCRIPT-RELEASE-CLEAN",
+  "recorded_date": "2026-09-03",
+  "status": "R62_MANUSCRIPT_RELEASE_CONTENT_ADDRESSED_PASS",
+  "role": "ZERO_AUTHORITY_MANUSCRIPT_AND_PUBLIC_REPRODUCIBILITY_RELEASE",
+  "title": "Does Memory Provenance Matter? Exact-Information Swaps Show Low Terminal Value Beyond Content",
+  "scientific_binding": {
+    "r62_cross_backbone_file_sha256": "67c1848831c93839697262c0626ee0c107c4643f7f94d440ad34fa7f41b6c572",
+    "r62_cross_backbone_receipt_sha256": "8a9ea03a0fdead265a90573aa09240237020422394bac95890985bf4f5960956"
+  },
+  "release_artifacts": {
+    "pdf": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r62-20260903.pdf",
+      "bytes": 250281,
+      "sha256": "38aa3da17705c9164f19684102936b2e63c2ab50f5a03fb70c5730569ba491af"
+    },
+    "source_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r62-20260903-source.zip",
+      "bytes": 74542,
+      "sha256": "8ca9f78eee13102084108d03889652eafc56e2d70f31860b0ab2290d66d92105"
+    },
+    "supplement_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r62-20260903-supplement.zip",
+      "bytes": 10075,
+      "sha256": "a4f97b1325014ba7febbcc7b61a4bdf4133da3f3ade2b463b147187119114c07"
+    },
+    "stable_pdf": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
+      "bytes": 250281,
+      "sha256": "38aa3da17705c9164f19684102936b2e63c2ab50f5a03fb70c5730569ba491af"
+    },
+    "b1_pdf": {
+      "path": "downloads/B1-Failure-Memory.pdf",
+      "bytes": 250281,
+      "sha256": "38aa3da17705c9164f19684102936b2e63c2ab50f5a03fb70c5730569ba491af"
+    },
+    "stable_source_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
+      "bytes": 74542,
+      "sha256": "8ca9f78eee13102084108d03889652eafc56e2d70f31860b0ab2290d66d92105"
+    },
+    "stable_supplement_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip",
+      "bytes": 10075,
+      "sha256": "a4f97b1325014ba7febbcc7b61a4bdf4133da3f3ade2b463b147187119114c07"
+    }
+  },
+  "manuscript_qa": {
+    "pdf_pages": 14,
+    "main_text_last_page": 9,
+    "references_start_page": 10,
+    "appendix_start_page": 11,
+    "page_size": "612 x 792 pts (letter)",
+    "all_fonts_embedded": true,
+    "overfull_boxes": 0,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "nonblank_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "source_rebuild_qa": {
+    "rebuilt_pages": 14,
+    "rebuilt_main_text_last_page": 9,
+    "rebuilt_references_start_page": 10,
+    "rebuilt_appendix_start_page": 11,
+    "rendered_pages_byte_identical_to_release_pdf": true,
+    "pdf_binary_hash_expected_to_vary_with_build_metadata": true
+  },
+  "supplement_qa": {
+    "manifest_sha256": "ecb46ca383d070c383e6bd0071af55fab1b489c23edb840e74be2d2e3d690ab4",
+    "manifest_file_count": 7,
+    "recompute_script_pass": true,
+    "qwen_effect_recomputed": 0.03125,
+    "llama_effect_recomputed": 0.0,
+    "cross_model_pooling_performed": false,
+    "infrastructure_identity_scan_pass": true,
+    "public_minimization": "infrastructure-bound internal receipts excluded; exact outcome receipts and R62 adjudication packaged"
+  },
+  "claim_boundary": {
+    "two_backbone_low_terminal_value_supported_on_same_surface": true,
+    "universal_zero_effect_claim": false,
+    "PSMG_efficacy_identified": false,
+    "L3_source_faithful_transport_complete": false,
+    "submission_authority": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "9cdfbf76a48679e785fef5c67baaecbeed559952ebbcf986e1d95df4b4c4e0c4"
+}
