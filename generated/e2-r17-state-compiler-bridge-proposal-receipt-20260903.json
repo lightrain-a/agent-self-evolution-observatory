@@ -1,0 +1,78 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-proposal-receipt",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_ZERO_PROVIDER_BRIDGE_PROPOSAL_ONLY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-PROPOSAL-20260903",
+  "base_lineage": {
+    "commit": "191ffd4e676cd3c748c61d53275b48e7722fc003",
+    "active_recovery_v3_unchanged": true
+  },
+  "branch": "research/e2-r17-state-compiler-bridge-proposal-20260903",
+  "objects": {
+    "compiler": {
+      "path": "research_pipeline/e2_r17_state_compiler_bridge.py",
+      "sha256": "d02ab577bb1c9cde4056e4144bc5574c0bc67d64add058b7441f1306aa62c61a"
+    },
+    "tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge.py",
+      "sha256": "4313aa363a3fd6e485f58f3378086fb5e98970ebb03c06b6f9fa2a806b4b64ed"
+    },
+    "protocol": {
+      "path": "generated/e2-r17-state-compiler-bridge-protocol-20260903.md",
+      "sha256": "1e5b5d7caee8c165a920bacf3ece584c225f0c46a8390550d8a91a33cbbe62f7"
+    }
+  },
+  "compiler_v1": {
+    "diagnosis_schema": "E2-R17-TYPED-DIAGNOSIS-v1",
+    "repair_primitives": [
+      "VERIFY_OUTPUT",
+      "COMPLETE_WORKFLOW",
+      "RECOVER_TOOL_ERROR"
+    ],
+    "learner_visible_inputs_only": true,
+    "hidden_arm_family_projection_task_labels_available": false,
+    "deterministic_compilation": true,
+    "duplicate_evidence_cannot_expand_state": true,
+    "reproduces_frozen_g1_g2_g3_surfaces_for_corresponding_diagnoses": true
+  },
+  "bridge_design": {
+    "factorial": "Winner_vs_First-Fail-4 x Free-form_vs_Constrained-Compiler",
+    "update_pools_per_stream": 8,
+    "first_fail_dose": 4,
+    "failure_dose_equalized": true,
+    "target_fresh_suite_tasks": 108,
+    "target_streams": 12,
+    "screen_streams": 6,
+    "validation_streams": 6,
+    "fresh_update_tasks": 96,
+    "fresh_common_heldout_tasks": 12,
+    "generic_workflow_falsifier": "GENERIC_COMPLETE",
+    "e3_opened": false
+  },
+  "tests": {
+    "compiler_tests": "10/10 PASS",
+    "combined_adjacent_regression": "35/35 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "updater_execution": false,
+    "bridge_actor_evaluation": false,
+    "validation_opening": false,
+    "e3_confirmation": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "preconditions": [
+    "Recovery V3 must complete under its existing frozen contract",
+    "the original 18-task primary gate and frozen 17-task veto must be applied unchanged",
+    "the selected deterministic state must survive exactly two frozen-state stability replicates",
+    "compiler vocabulary and bridge split must be frozen before prospective bridge outcomes"
+  ],
+  "interpretation_boundary": "This receipt qualifies only a zero-provider prospective method-bridge design. It does not authorize execution and does not alter or supersede the active constrained-state Recovery V3 scientific object."
+}
