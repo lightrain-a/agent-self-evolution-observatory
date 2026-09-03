@@ -1,0 +1,213 @@
+{
+  "schema_version": "asset-first-stri-paper-revision-v1",
+  "paper_id": "STRI",
+  "revision_id": "stri-e1-paper-revision-20260904-skillzip-reframe",
+  "status": "READY_PAPER_REVISION",
+  "date": "2026-09-04",
+  "purpose": "manuscript architecture and delivery revision after SkillZip/SkillZip Pro methodology review; no scientific claim expansion",
+  "parent": {
+    "official_final_state": {
+      "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
+      "sha256": "f8493c71fb89062d7171f3ae7e01f7747fa36edb8f0f3829080434803139a890"
+    },
+    "paper_quality_v2": {
+      "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
+      "sha256": "6de99409316a31cce69e4b402f7a12ae86650962e43803494c7756d089d4d456"
+    },
+    "inherited_claims": {
+      "N1": "SUPPORTED",
+      "N2": "SUPPORTED",
+      "N3": "SUPPORTED"
+    }
+  },
+  "scope": {
+    "paper_architecture_only": true,
+    "scientific_execution": false,
+    "new_evidence": false,
+    "claim_expansion": false,
+    "claims_unchanged": true,
+    "future_iterative_agent_p0_required_for_current_claim": false,
+    "skillzip_methods_adopted": false,
+    "skillzip_methodology_and_writing_lessons_used": true
+  },
+  "revision_summary": {
+    "runtime_object": "A_theta(H_t,U_t,P_t^(r),B_t,xi_t)->E_t^(r); compare phi(E_t^(r))",
+    "experiment_story": "RQ1 local access -> RQ2 structural boundary -> RQ3 bounded downstream propagation + held-out STOP",
+    "claim_boundary": "behavioral propagation beyond P19 is not established",
+    "related_work_added": [
+      "SkillZip arXiv:2608.11079",
+      "SkillZip Pro arXiv:2608.30785"
+    ],
+    "supporting_analyses_demoted_to_supplement": [
+      "factor-2 witness visualization",
+      "structural robustness figure",
+      "external graph analogue rows"
+    ]
+  },
+  "source_artifacts": {
+    "paper_drafts/stri-20260816-iclr2027-main.tex": {
+      "sha256": "be4cd173dee8d04d8c4e5b14548258e175bf6cc5d4b1783d28dcf777818a83c0",
+      "bytes": 4608
+    },
+    "paper_drafts/stri-20260816-narrow-body.tex": {
+      "sha256": "f028494d4171c46cf21815da8128ac582d633206e62659ee79d1430b90afab54",
+      "bytes": 32875
+    },
+    "paper_drafts/stri-20260816-tables.tex": {
+      "sha256": "fd6a74ffa14345dd29c01dddc2bdc402bbf7704f88a02a1e676d45541fd0fac4",
+      "bytes": 2977
+    },
+    "paper_drafts/stri-20260816-references.bib": {
+      "sha256": "83e991842adfa86e5ec55634811002ba8b1f194b205e32aeb81dda4b44084fff",
+      "bytes": 7380
+    },
+    "paper_drafts/stri-20260816-sources.json": {
+      "sha256": "57d6e9125c8062babeb3af71c76be346da77a89ffcef433562c5544416115762",
+      "bytes": 13771
+    },
+    "paper_drafts/stri-20260816-outline.md": {
+      "sha256": "b88d9303856a2f6ba17522975e9034c874705905c7ed2cd302d0f5e5c83bf906",
+      "bytes": 12883
+    },
+    "paper_drafts/stri-20260816-paper-qa.py": {
+      "sha256": "4321062694c4eb729de0075c340103988fb82ff39404f3a4613e6e49b49a45b8",
+      "bytes": 10782
+    },
+    "paper_drafts/stri-20260816-iclr2027-qa.py": {
+      "sha256": "b5ff74557f832fd8b5de33c584e4299091be5ec714839173d50202bb52cbe521",
+      "bytes": 7163
+    }
+  },
+  "delivery": {
+    "tex": {
+      "path": "downloads/STRI-ICLR2027.tex",
+      "sha256": "be4cd173dee8d04d8c4e5b14548258e175bf6cc5d4b1783d28dcf777818a83c0",
+      "bytes": 4608
+    },
+    "pdf": {
+      "path": "downloads/STRI-ICLR2027.pdf",
+      "sha256": "cbe2e38baea8b7d90413c1b29cd51c8e20f268b14bb05797a67482349f36aadc",
+      "bytes": 325491
+    },
+    "source_zip": {
+      "path": "downloads/STRI-ICLR2027-source.zip",
+      "sha256": "3c20436d8821becd850dd8b13db0347da88e4325784b1430780d9cf397fbd136",
+      "bytes": 125963
+    },
+    "supplement_zip": {
+      "path": "downloads/STRI-ICLR2027-supplement.zip",
+      "sha256": "e710574e68b4443af92cb02c5797f7759958c35bd83308f27be63a651c8643c2",
+      "bytes": 777479
+    }
+  },
+  "qa": {
+    "scientific_paper": {
+      "schema_version": "1.0",
+      "paper_id": "STRI",
+      "status": "PASS",
+      "checks_passed": 99,
+      "checks_total": 99,
+      "errors": [],
+      "citation_keys": [
+        "bai2026skillzip",
+        "bai2026skillzippro",
+        "beck1981integer",
+        "biega2018equity",
+        "boyd2004convex",
+        "chen2026erskill",
+        "dong2026agentskills",
+        "gao2026compositional",
+        "huang2026skill",
+        "jiang2026demystifying",
+        "li2026agentskillos",
+        "liu2026skillsvote",
+        "lovasz1975fractional",
+        "mao2026practiceunsafe",
+        "radunovic2007fairness",
+        "singh2018fairness",
+        "sinkhorn1967nonnegative",
+        "wang2026shaper",
+        "xia2026skillrl",
+        "xu2026skillavailability",
+        "yang2026autoskill",
+        "zheng2026skillrouter",
+        "zhu2026skillclone"
+      ],
+      "figure_sha256": {
+        "stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
+        "stri-rstar-boundary.pdf": "b8740cbe01f3d9f536ee318284257eae546d35c5829d5db0b4b764deab5c3a8c",
+        "stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
+        "stri-ablation-robustness.pdf": "e15b04a862cf2aa6773569b7c8b81da3165a6fcbf4e3a172c00388db0d2079af"
+      },
+      "review_state": {
+        "final_premortem": "READY_NARROW_ICLR",
+        "narrow_collision": "SURVIVES_NARROWLY"
+      },
+      "scientific_authority": false
+    },
+    "iclr2027": {
+      "schema_version": "1.0",
+      "paper_id": "STRI",
+      "status": "PASS",
+      "checks_passed": 67,
+      "checks_total": 67,
+      "errors": [],
+      "main_text_pages": 9,
+      "main_text_page_limit": 9,
+      "post_main_page": 10,
+      "total_pdf_pages": 12,
+      "citation_count": 23,
+      "official_style_sha256": {
+        "iclr2027_conference.sty": "797deef41724e93761426ac0cbcca46279a91cc650dd1f0ce76a4f08d2098ea6",
+        "iclr2027_conference.bst": "2d67552db7ed38ccfccb5957b52f95656e25c249724761d3cf5f7922ad1844c5",
+        "math_commands.tex": "90473c4d0542070db244cea73ef962d6cddc5b2a746757e6a40ddf5fdfb90ba9",
+        "natbib.sty": "88bc70c0e48461934cab5b2accef06b74a8b3ac45ad03ccd3f2a6b7e0d6d530d",
+        "fancyhdr.sty": "b56ec4434b9f4607529a4b23dc68ad8d4b94f1f631c8cddaf7da78140d53a5ea",
+        "template-reference.tex": "03e556d6e5593e498fd39f262ec2d184ebfe8693cbf47fb7cea3402d8d5166ac"
+      },
+      "scientific_authority": false
+    },
+    "independent_source_compile": {
+      "status": "PASS",
+      "total_pdf_pages": 12,
+      "no_overfull_boxes": true,
+      "no_undefined_citations": true,
+      "no_undefined_references": true,
+      "pdf_sha256": "f48f9cc3d5a9aa010576f713a17119d76fe21ec66d3c71ba48b789d9093782c3",
+      "pdf_text_sha256": "72fb4e562b6cf2551478315a1e1a50826310fe37e39fab4a73494ff349947918"
+    },
+    "source_compile_matches_active_pdf_text_and_pages": true,
+    "source_zip_source_bindings": {
+      "paper_drafts/stri-20260816-iclr2027-main.tex": true,
+      "paper_drafts/stri-20260816-narrow-body.tex": true,
+      "paper_drafts/stri-20260816-tables.tex": true,
+      "paper_drafts/stri-20260816-references.bib": true
+    },
+    "active_tex_matches_main_source": true,
+    "visual_inspection": {
+      "status": "PENDING_MANUAL_VISUAL_REVIEW",
+      "pages": [],
+      "scope": "layout/cropping/overlap/legibility only; no scientific authority"
+    }
+  },
+  "independent_review": {
+    "model": "GPT-5.6 Sol + Extra High via Oracle Browser",
+    "verdicts": [
+      "READY_NARROW_NO_NEW_EXPERIMENT",
+      "KEEP_CURRENT_NARROW"
+    ],
+    "future_p0_is_claim_expansion_only": true
+  },
+  "scientific_authority": false,
+  "authority": {
+    "scientific_claims": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false,
+    "canonical_problem_gate": false,
+    "canonical_generator": false,
+    "canonical_queue": false,
+    "manuscript_delivery": true
+  }
+}

@@ -49,10 +49,10 @@ for regime, (covered, multi, rstar) in expected.items():
 # Required paper literals are intentionally exact for high-load-bearing results.
 for literal in [
     "314", "183", "47", "33", "52", "38", "34", "127/128", "R^*=2", "R^*=1",
-    "1,387", "366", "127/595", "R^*_{0.75}=4/3",
+    "1,387", "366", "R^*_{0.75}=4/3",
     "Proposition 1 (quotient-factorization characterization)", "Corollary 1 (identity-local normalization is clone-sensitive)",
     "Proposition 2 (semantic-first construction handles arbitrary overlap)",
-    "R^*(A;q)", "D^*(A;q)", "\\operatorname{cone}(A)", "2/15", "2/16=1/8", "7/120=0.0583", "restores prompt TV exactly to zero", "threshold 0.33", "all five observed specific--generic support-overlap pairs",
+    "R^*(A;q)", "D^*(A;q)", "\\operatorname{cone}(A)", "2/15", "2/16=1/8", "7/120=0.0583", "restores prompt TV exactly to zero", "threshold-0.33", "all five observed specific--generic support-overlap pairs",
     "200 degree-preserving bipartite rewirings", "22 pairwise-disjoint three-row witnesses", "21.0\\% of Level-1", "71 deletions",
     "6/6", "0/6", "3/3", "p=0.00108",
 ]:
@@ -72,7 +72,9 @@ required_boundaries = [
     "representation-independent semantic target",
     "not a claim that the induction path would admit a literal duplicate",
     "package ID is absent from the questioner message",
-    "neither supports population utility, safety, or regret",
+    "support neither population utility, safety, nor regret claims",
+    "behavioral propagation beyond P19 is not established",
+    "skill-access boundary",
     "not a new LP, cone theorem, or fairness objective",
     "not a population-level no-effect theorem",
 ]
@@ -97,7 +99,8 @@ ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_cites_in_ledger", cite_keys <= ledger_keys, str(sorted(cite_keys - ledger_keys)))
 check("bib_entries_have_ledger", bib_keys <= ledger_keys, str(sorted(bib_keys - ledger_keys)))
-check("all_current_entries_cited", len(cite_keys) == 21 and cite_keys == bib_keys == ledger_keys, f"cites={len(cite_keys)} bib={len(bib_keys)} ledger={len(ledger_keys)}")
+check("all_current_entries_cited", len(cite_keys) == 23 and cite_keys == bib_keys == ledger_keys, f"cites={len(cite_keys)} bib={len(bib_keys)} ledger={len(ledger_keys)}")
+check("skillzip_related_work", {"bai2026skillzip", "bai2026skillzippro"} <= cite_keys)
 check("ledger_zero_authority", sources.get("scientific_authority") is False)
 
 # Stanford-round experiment-enrichment checks: all are offline structural controls on frozen support.

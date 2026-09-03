@@ -90,6 +90,7 @@ check("natbib_citations_present", "\\citep{" in body)
 check("no_plain_cite_remaining", "\\cite{" not in body)
 check("all_citations_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_bib_entries_cited", cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
+check("skillzip_family_cited", {"bai2026skillzip", "bai2026skillzippro"} <= cite_keys)
 
 # Claim boundaries and the generalized target-conditioned audit remain locked while formatting changes.
 for phrase in [
@@ -103,14 +104,16 @@ for phrase in [
     "2/16=1/8",
     "package ID is absent from the questioner message",
     "7/120=0.0583",
-    "neither supports population utility, safety, or regret",
+    "support neither population utility, safety, nor regret claims",
     "not a new LP, cone theorem, or fairness objective",
-    "constructive, not a validated repair",
+    "constructive action-basis witness rather than a validated repair",
     "not a population-level no-effect theorem",
-    "Exact neutral-target MILPs require at least 22 added cells",
+    "exact neutral-target MILPs require at least 22 added cells",
     "71 deletions",
     "200 degree-preserving bipartite rewirings",
     "22 pairwise-disjoint three-row witnesses",
+    "skill-access boundary",
+    "behavioral propagation beyond P19 is not established",
 ]:
     check(f"claim_boundary_{phrase[:24]}", phrase in body)
 
