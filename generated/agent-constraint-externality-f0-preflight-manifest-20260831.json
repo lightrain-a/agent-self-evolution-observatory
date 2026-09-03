@@ -2,7 +2,7 @@
   "authority": {
     "appworld_ul": false,
     "capability_calibration": false,
-    "f0": false,
+    "f0": true,
     "m1_mock_qualification": false,
     "method": false,
     "p1": false,
@@ -162,9 +162,25 @@
       "bytes": 4894,
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
+    "generated/agent-constraint-externality-f0-human-authorization-20260903.json": {
+      "bytes": 774,
+      "sha256": "0f6ed1be413659939757928573c5739e36faf1603a2ab9461dda8cc03e79baff"
+    },
+    "generated/agent-constraint-externality-f0-mimo25pro-mcp-q1-predispatch-20260903.json": {
+      "bytes": 764,
+      "sha256": "7e0496fecbe50261c16b47a30dabb122795ebd8a8c15d93256c76cb03ccc46ec"
+    },
+    "generated/agent-constraint-externality-f0-mimo25pro-source-contract-20260903.json": {
+      "bytes": 5237,
+      "sha256": "8433fdef4ece0caa549b75084fdbbcd4f338cd0cccd3e0b1ce24e9ba16071586"
+    },
+    "generated/agent-constraint-externality-f0-mimo25pro-transport-addendum-20260903.json": {
+      "bytes": 1409,
+      "sha256": "60ce4125f3a91daadfae366ee5a7c05385ae8e97317f44b6d75dfdae460dd6dd"
+    },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 8991,
-      "sha256": "ee3ae7fb4346064ce6b668e988e2156cfa0fdfcafd7947b3bdae2fca69835647"
+      "bytes": 9289,
+      "sha256": "cea4d46ed3a0a09c70eb52170d2bbd40cc4eae79ec28f423a4c43904de5082f2"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -266,5 +282,5 @@
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED"
+  "status": "F0_SOURCE_AUTHORIZED_READY"
 }

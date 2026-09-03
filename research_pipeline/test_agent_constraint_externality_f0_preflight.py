@@ -131,7 +131,32 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED":
+            self.assertEqual(readiness["status"], "F0_SOURCE_AUTHORIZED_READY")
+            self.assertEqual(readiness["next_authorized_action"], "RUN_F0_SOURCE_MIMO25PRO")
+            self.assertTrue(readiness["eligible_backbone_selected"])
+            self.assertTrue(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+            self.assertFalse(readiness["tool_sandbox_authorized"])
+            self.assertFalse(readiness["appworld_ul_authorized"])
+            self.assertEqual(
+                readiness["f0_human_authorization_status"],
+                "USER_AUTHORIZED_F0_AFTER_MIMO25PRO_CAPABILITY_PASS",
+            )
+            self.assertEqual(
+                readiness["f0_transport_addendum_status"],
+                "F0_SELECTED_BACKBONE_TRANSPORT_COMPATIBILITY_ADDENDUM_PASS",
+            )
+            self.assertEqual(
+                readiness["f0_mcp_q1_status"],
+                "F0_CODINGPLAN_MIMO25PRO_MCP_PREDISPATCH_PASS",
+            )
+            self.assertEqual(readiness["f0_mcp_q1_model_requests"], 0)
+            self.assertEqual(
+                readiness["f0_source_contract_status"],
+                "F0_CODINGPLAN_MIMO25PRO_SOURCE_AUTHORIZED",
+            )
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED":
             self.assertEqual(
                 readiness["status"],
                 "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED",
