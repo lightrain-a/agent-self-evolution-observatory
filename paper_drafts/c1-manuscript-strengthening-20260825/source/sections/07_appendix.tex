@@ -100,6 +100,18 @@ If reward-label corruption selects the failure-conditioned memory with probabili
 \subsection{Native transport audit added after the forced-leverage study}
 The later frozen native-pipeline audit changes the interpretation of the forced matrix. In Shopping, the branch-conditioned source-memory item is retrieved in 125/172 held-out opportunities after bank expansion, but the mean absolute native terminal success difference is only 0.02083 with permutation $p=0.4289$; 34/36 terminal cells are zero. The corresponding first-action total-variation statistic is 0.06944 with $p=0.5801$, and no frozen state changes its modal first action between reward branches. A post-hoc working-memory branch-shift diagnostic is 0.00335 with $p=0.2052$.
 
+\paragraph{Replay-qualified first-action stochasticity diagnostic.}
+Historical B10 already contains four success-memory, four failure-memory, and four no-memory first-action draws for each of the 36 matched Shopping states. A zero-provider provenance qualification recovers all 432 stage records, content-addressed raw responses, and provider receipts; replaying each raw response through the frozen historical parser reproduces all 432 stored action signatures and exactly recovers the original mean TV $0.0694444444$, 100,000-draw state-stratified permutation $p=0.5800941991$, and 0/36 modal changes.
+
+To avoid interpreting sparse plug-in categorical TV as a stochasticity-adjusted distance, we reuse only the historical success/failure 4+4 draws and apply the exact-match kernel $k(a,b)=\mathbf{1}[a=b]$. For state $i$, the unbiased two-sample estimator is
+\[
+\widehat{\mathrm{MMD}}^2_{u,i}=
+\frac{1}{m(m-1)}\sum_{j\ne \ell}k(s_j,s_\ell)
++\frac{1}{n(n-1)}\sum_{j\ne \ell}k(f_j,f_\ell)
+-\frac{2}{mn}\sum_{j,\ell}k(s_j,f_\ell),
+\]
+with $m=n=4$. Finite-sample negative values are retained. The panel mean is numerically zero ($-6.17\times10^{-18}$); 33/36 state estimates are zero, one is $+1/3$, and two are $-1/6$ each. The pre-outcome-frozen 100,000-draw within-state branch-label randomization gives one-sided $p=0.5800941991$, and a fixed-state descriptive bootstrap gives a 95\% interval $[-0.018519,0.023148]$. This is a post-hoc diagnostic on prospectively collected historical draws, not an independent prospective replication. It supports the conservative statement that stable first-action branch separation is not established after accounting for within-condition stochastic concentration; it does not establish equality or a zero effect.
+
 The cross-domain Reddit audit contains four complete success/failure writes, all of which diverge. Its native terminal mean absolute difference is 0.125 with $p=0.2253$; 6/8 cells are zero and the two nonzero cells have opposite signs. These later measurements are why the main text separates forced capacity from native transport and treats first-action uptake as the first unsupported measured Shopping stage after write and source-item exposure, rather than as an identified latent attenuation onset or causal mediation result.
 
 For finite-cell sensitivity, we run a fixed-seed nonparametric bootstrap with 100,000 repetitions, resampling 16 source--future cells with replacement. The percentile 95\% interval for mean absolute effect is $[0.054688,0.273438]$. The corresponding interval for mean squared effect is $[0.010742,0.164062]$, which maps to $[0.002686,0.041016]$ for $V(0.5)$. This bootstrap is descriptive sensitivity to the observed cell composition. The preregistered within-cell permutation test on the 256 confirmatory rollouts supplies the primary significance result.
@@ -117,9 +129,9 @@ Explanation & Frozen evidence & Disposition \\
 No persistent state intervention & 20/20 Shopping and 4/4 Reddit writes diverge; same-mode excess $=0.105$, $p=0.0078$ & Inconsistent with the observed write-stage intervention. \\
 Downstream policy is globally insensitive to memory & Forced terminal $|\Delta|=0.15625$, $p=0.00074$ & Weakened: supplied branch-specific memory has measurable leverage. \\
 Native null is only retrieval absence & 125/172 native Shopping source-item retrieval hits & Weakened: substantial item exposure coexists with weak first-action contrast. \\
-Retrieval hit is a surrogate for policy use & first-action TV $=0.06944$, $p=0.5801$; 0/36 modal changes & Rejected as an evaluation equivalence: item availability is not policy uptake. \\
+Retrieval hit is a surrogate for policy use & first-action TV $=0.06944$, $p=0.5801$; replay-qualified post-hoc $\widehat{\mathrm{MMD}}^2_u\approx0$, $p=0.5801$ & Rejected as an evaluation equivalence: item availability is not policy uptake. \\
 Universal directional terminal transport & Shopping 34/36 zero; Reddit 6/8 zero, two nonzero signs opposite & Not supported by the frozen native cells. \\
-Causal mediation has been identified & no per-atom seed binding/noise-floor replication; forced/native surfaces differ & Unresolved and explicitly outside the claim set. \\
+Causal mediation has been identified & bundled writer intervention lacks per-atom seed binding; collision audit is post-hoc; forced/native surfaces differ & Unresolved and explicitly outside the claim set. \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,0 +1,333 @@
+{
+  "artifact_type": "c1-first-action-provenance-claim-audit-v1",
+  "audit_runner": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/run_claim_audit_first_action_v1_20260904.py",
+    "sha256": "3c81a44065a703db8f8a8b227819dc24128e051e064a7fc7e33db8eb43740159"
+  },
+  "authority": {
+    "claim_expansion": false,
+    "new_provider_execution": false,
+    "submission": false
+  },
+  "claims": [
+    {
+      "description": "Historical R7 claim audit remains immutable; the 2026-09-04 refinement is additive rather than a rewrite of historical evidence.",
+      "detail": {
+        "r7_registry_sha256": "4f9c7992437464c79d4c2ba71bfabe8f8e66638d72529c408eb8b11fbb3d8ebe",
+        "r7_runner_sha256": "7d5bea14b3ca0e7fe7738ec182c3afb6f73bdf644a932b2966ec9b21f3ac8ac3",
+        "r7_seal_sha256": "baad7e26fa297412c3959bb58d2df5bdd04d3de52d1175f6b0ea5e14d8caf4cf"
+      },
+      "id": "CFA01",
+      "pass": true
+    },
+    {
+      "description": "First-action raw provenance is first-class and content-addressed across stage records, raw provider text objects, provider receipts, and normalized action identity.",
+      "detail": {
+        "category_roots": {
+          "combined_private_evidence_sha256": "7426ecf9cc58f2f29f82b8c1a862a98aabdbe644aa5dcaf85435b941f4a7eced",
+          "normalized_record_index_sha256": "6aa80edd346c273b781756726b09f2486aea20edc42bd06ca12203e8dd0706af",
+          "provider_responses_sha256": "254590ea7465cb84ba274f717c4a492295fe639f15d7b4b553b0fe7027ea34c9",
+          "raw_texts_sha256": "0303b51e9ee7bd5329452d584620a1a07f6b728027d167c32aba5919248eb574",
+          "stage_records_sha256": "6496493b06cb769d1ed072c400b312d4e8e42681783a4c20ed080ac3ed10e74d"
+        },
+        "geometry": {
+          "conditions": [
+            "success_memory",
+            "failure_memory",
+            "no_memory"
+          ],
+          "draws_per_state_per_condition": 4,
+          "provider_records": 432,
+          "provider_response_receipts": 432,
+          "raw_text_objects": 432,
+          "scientific_units": 36,
+          "stage_records": 432
+        },
+        "manifest_records": 432
+      },
+      "id": "CFA02",
+      "pass": true
+    },
+    {
+      "description": "Historical B10 raw text replays through the frozen normalizer and exactly recovers the published first-action primary result.",
+      "detail": {
+        "raw_provenance_replay": {
+          "content_addressed_raw_texts_verified": 432,
+          "normalizer_branch_label_aware": false,
+          "normalizer_semantics": "Exact legacy F1D normalization: first structured action name; click_element additionally includes the interactive-element index.",
+          "provider_response_records_present": 432,
+          "raw_to_historical_action_signature_matches": 432,
+          "stage_records_verified": 432,
+          "strict_parser_fallback_recoveries": 25
+        },
+        "replayed_primary": {
+          "mean_success_failure_tv_full_precision": 0.06944444444444445,
+          "mean_success_failure_tv_reported": 0.069444,
+          "modal_success_failure_changes": "0/36",
+          "permutation_p_full_precision": 0.5800941990580094,
+          "permutation_p_reported": 0.580094,
+          "permutation_repetitions": 100000,
+          "permutation_seed": 20260824
+        }
+      },
+      "id": "CFA03",
+      "pass": true
+    },
+    {
+      "description": "The scientific unit is the frozen matched Shopping state (n=36); repeated provider draws are nested measurements, not independent scientific units.",
+      "detail": {
+        "plan_scientific_unit": {
+          "count": 36,
+          "name": "frozen matched Shopping branch-comparison state",
+          "provider_repeats_are_scientific_units": false
+        },
+        "replay_geometry": {
+          "conditions": [
+            "success_memory",
+            "failure_memory",
+            "no_memory"
+          ],
+          "draws_per_state_per_condition": 4,
+          "matched_branch_comparison_states": 36,
+          "scientific_unit": "matched frozen Shopping state; repeated calls are nested measurements",
+          "success_failure_draws_per_state": "4+4",
+          "total_provider_records_historical": 432
+        }
+      },
+      "id": "CFA04",
+      "pass": true
+    },
+    {
+      "description": "Collision/MMD2 statistic, alpha, randomization scheme, and bootstrap were sealed before the M2-Z outcome was opened.",
+      "detail": {
+        "implementation_checkpoint": "ccbcabe8ee4fe5727552fb9f9ae8cd47c79ce0dc",
+        "inference": {
+          "alpha": 0.05,
+          "bootstrap": {
+            "percentile_2_5": -0.018518518518518528,
+            "percentile_97_5": 0.02314814814814814,
+            "repetitions": 10000,
+            "seed": 20260904
+          },
+          "bootstrap_role": "descriptive fixed-state uncertainty only",
+          "permutation_repetitions": 100000,
+          "permutation_seed": 20260824,
+          "primary_statistic": "mean collision_mmd2_u over 36 states",
+          "support_rule": "observed mean U > 0 and one-sided p < 0.05"
+        },
+        "preoutcome_design_binding": {
+          "b10_result": {
+            "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-result.json",
+            "sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6"
+          },
+          "plan_json": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-20260904.json",
+            "sha256": "1ae5fd159dda44d06ee72ae052257d0dd694793e10297b944cd533e6e76e4d92"
+          },
+          "plan_md": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-20260904.md",
+            "sha256": "42e7ca7cc8d954a514308443915e0de81d649d5b1e8060d5da3be0536b02ade6"
+          },
+          "raw_replay_receipt": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-b10-first-action-raw-replay-qualification-20260904.json",
+            "sha256": "2bac711b6ebec8b77568bdca3cd0ea47d62d2dde52add8e34f44493703ff88d7"
+          },
+          "seal_commit": "dc3e5c4b297c4598b65669e5e68c7d7a2d9cff2d"
+        }
+      },
+      "id": "CFA05",
+      "pass": true
+    },
+    {
+      "description": "Replay-qualified post-hoc collision/MMD2 does not support aggregate success/failure first-action separation on the frozen 36-state panel.",
+      "detail": {
+        "decision": "D2_STOCHASTICITY_ADJUSTED_SEPARATION_NOT_SUPPORTED",
+        "execution": {
+          "historical_success_failure_draws_read": 288,
+          "new_gpu_runs": 0,
+          "new_provider_calls": 0
+        },
+        "summary": {
+          "alpha": 0.05,
+          "draws_per_branch_per_state": 4,
+          "fixed_state_bootstrap_95": [
+            -0.018518518518518528,
+            0.02314814814814814
+          ],
+          "mean_between_branch_collision": 0.9166666666666666,
+          "mean_collision_mmd2_u": -6.1679056923619804e-18,
+          "mean_within_failure_collision": 0.8981481481481483,
+          "mean_within_success_collision": 0.9351851851851851,
+          "median_collision_mmd2_u": 0.0,
+          "negative_u_states": 2,
+          "one_sided_randomization_p": 0.5800941990580094,
+          "positive_u_states": 1,
+          "randomization_ge_count": 58009,
+          "states": 36,
+          "support_rule_pass": false,
+          "zero_u_states": 33
+        }
+      },
+      "id": "CFA06",
+      "pass": true
+    },
+    {
+      "description": "Main-text baselines map each evaluation surface to a distinct alternative explanation rather than adding an unrelated memory-method leaderboard.",
+      "detail": {
+        "table_label": "tab:evaluation-surface-baselines"
+      },
+      "id": "CFA07",
+      "pass": true
+    },
+    {
+      "description": "Manuscript claim boundary remains conservative: non-support is not equivalence, the reanalysis is post-hoc, and causal mediation remains outside the claim set.",
+      "detail": {
+        "present": {
+          "432 stage records": true,
+          "Replay-qualified first-action stochasticity diagnostic": true,
+          "after exposure and before stable action uptake": true,
+          "does not establish equivalence": true,
+          "not a causal mediation coefficient": true,
+          "post-hoc rather than an independent prospective replication": true
+        },
+        "required_tokens": [
+          "after exposure and before stable action uptake",
+          "not a causal mediation coefficient",
+          "does not establish equivalence",
+          "post-hoc rather than an independent prospective replication",
+          "Replay-qualified first-action stochasticity diagnostic",
+          "432 stage records"
+        ]
+      },
+      "id": "CFA08",
+      "pass": true
+    },
+    {
+      "description": "Prospective first-action top-up is closed by default and may reopen only if independent submission review identifies post-hoc status as verdict-changing.",
+      "detail": {
+        "prospective_first_action_topup": {
+          "adaptive_topup_for_significance": false,
+          "default_authorized": false,
+          "reopen_only_if": "fresh independent submission review says post-hoc status is itself a verdict-changing blocker for the intended first-action claim and requires a prospective stochasticity-controlled replicate"
+        }
+      },
+      "id": "CFA09",
+      "pass": true
+    },
+    {
+      "description": "The compiled 15-page manuscript is bound to the audited source revision.",
+      "detail": {
+        "pdf": {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/main.pdf",
+          "sha256": "1d8623c66b79998c17b4b145aa31b485ef79ee980e75ac5e834557ce2b8e1b73"
+        },
+        "source_hashes": {
+          "appendix": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/07_appendix.tex",
+            "sha256": "5d8a3170b89743c3f3f193b15a99f1eca489d59423d727f56d4ca8c1ea02d268"
+          },
+          "intro": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+            "sha256": "613171ea671716665d769f6baf97e3a4b1cba8c8be98fb6cc984cee9dac66158"
+          },
+          "limits": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+            "sha256": "a5d5ed6bfa0ecbfdc383fd4d169e79714b3572e3cc6fed69f3fec5f4f2184dd9"
+          },
+          "results": {
+            "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+            "sha256": "8f1a3fc94d5baf8bc27c530ab92afdf5cf25479a8fae55258d9422480acc69b2"
+          }
+        }
+      },
+      "id": "CFA10",
+      "pass": true
+    }
+  ],
+  "date": "2026-09-04",
+  "evidence": {
+    "adjudication": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-m2z-adjudication-20260904.json",
+      "sha256": "daf30ce5242d7551e46ea8e15221a2ee340a9b295098819b655bb955a8a9ce11"
+    },
+    "appendix": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/07_appendix.tex",
+      "sha256": "5d8a3170b89743c3f3f193b15a99f1eca489d59423d727f56d4ca8c1ea02d268"
+    },
+    "intro": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+      "sha256": "613171ea671716665d769f6baf97e3a4b1cba8c8be98fb6cc984cee9dac66158"
+    },
+    "limits": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+      "sha256": "a5d5ed6bfa0ecbfdc383fd4d169e79714b3572e3cc6fed69f3fec5f4f2184dd9"
+    },
+    "m2z": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-b10-zero-provider-collision-mmd2-diagnostic-20260904.json",
+      "sha256": "65901eaf5188fd2ffb071f7f4359e78dc26b71b1f0a1439e4f7e81410c1e9c56"
+    },
+    "m2z_runner": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/analyze_b10_collision_mmd2_20260904.py",
+      "sha256": "eb36501300acaa2281039d6b6de7eeb33769275a5a9ed4b5facc9b7ada68d65f"
+    },
+    "manifest": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-b10-first-action-private-provenance-manifest-20260904.json",
+      "sha256": "49b5e62d0476e51c060bfc6ef280c43bd5fb0f809ab5394a2512342f0dd23dca"
+    },
+    "manifest_builder": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/build_b10_first_action_provenance_manifest_20260904.py",
+      "sha256": "7884ac5d5f3d6d97ed561d569f1dc27b6e2f976c8c1cde8e554250136b7c6f0e"
+    },
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/main.pdf",
+      "sha256": "1d8623c66b79998c17b4b145aa31b485ef79ee980e75ac5e834557ce2b8e1b73"
+    },
+    "plan_json": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-20260904.json",
+      "sha256": "1ae5fd159dda44d06ee72ae052257d0dd694793e10297b944cd533e6e76e4d92"
+    },
+    "plan_md": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-20260904.md",
+      "sha256": "42e7ca7cc8d954a514308443915e0de81d649d5b1e8060d5da3be0536b02ade6"
+    },
+    "r7_registry": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r7-registry-20260829.json",
+      "sha256": "4f9c7992437464c79d4c2ba71bfabe8f8e66638d72529c408eb8b11fbb3d8ebe"
+    },
+    "r7_runner": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/run_claim_audit_r7.py",
+      "sha256": "7d5bea14b3ca0e7fe7738ec182c3afb6f73bdf644a932b2966ec9b21f3ac8ac3"
+    },
+    "r7_seal": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r7-provenance-seal-20260829.json",
+      "sha256": "baad7e26fa297412c3959bb58d2df5bdd04d3de52d1175f6b0ea5e14d8caf4cf"
+    },
+    "replay": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-b10-first-action-raw-replay-qualification-20260904.json",
+      "sha256": "2bac711b6ebec8b77568bdca3cd0ea47d62d2dde52add8e34f44493703ff88d7"
+    },
+    "replay_runner": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/qualify_b10_first_action_raw_replay_20260904.py",
+      "sha256": "c3557a7429cf0ca4af15e5af34e4052b8a5bb1ea5a17854a2a8039400e4ce557"
+    },
+    "results": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+      "sha256": "8f1a3fc94d5baf8bc27c530ab92afdf5cf25479a8fae55258d9422480acc69b2"
+    }
+  },
+  "execution": {
+    "network_required": false,
+    "new_gpu_runs": 0,
+    "new_scientific_provider_calls": 0
+  },
+  "implementation_checkpoint": "ccbcabe8ee4fe5727552fb9f9ae8cd47c79ce0dc",
+  "preoutcome_design_seal": "dc3e5c4b297c4598b65669e5e68c7d7a2d9cff2d",
+  "private_provenance_root": "7426ecf9cc58f2f29f82b8c1a862a98aabdbe644aa5dcaf85435b941f4a7eced",
+  "schema_version": "1.0",
+  "status": "PASS",
+  "summary": {
+    "claims_failed": 0,
+    "claims_passed": 10,
+    "claims_total": 10
+  }
+}

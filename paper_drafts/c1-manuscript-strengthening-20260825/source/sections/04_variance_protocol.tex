@@ -1,6 +1,24 @@
 \section{Stage-Resolved Transport Evidence}
 \label{sec:variance}
-The write intervention becomes scientifically useful only once alternative explanations for weak downstream transport evidence are separated. We therefore use the frozen evidence in three roles: forced fixed-evidence exposure as a \emph{capacity control}, native retrieval as an \emph{availability measurement}, and first-action/terminal contrasts as \emph{native transport measurements}. This section shows that their joint pattern is more informative than any endpoint alone.
+The write intervention becomes scientifically useful only once alternative explanations for weak downstream transport evidence are separated. We therefore use the frozen evidence in three roles: forced fixed-evidence exposure as a \emph{capacity control}, native retrieval as an \emph{availability measurement}, and first-action/terminal contrasts as \emph{native transport measurements}. This section shows that their joint pattern is more informative than any endpoint alone; Table~\ref{tab:evaluation-surface-baselines} makes the corresponding coarsened evaluation baselines explicit.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Evaluation-surface baselines on the same frozen system. Each coarsened evaluator supports a plausible but incomplete reading; the stage-resolved view is the minimum baseline that preserves where evidence is gained or lost.}
+\label{tab:evaluation-surface-baselines}
+\begin{tabular}{@{}p{0.16\linewidth}p{0.15\linewidth}p{0.23\linewidth}p{0.32\linewidth}@{}}
+\toprule
+Evaluator & Surface & Coarse reading & Alternative left aliased \\
+\midrule
+Write-only & $W$ & update is strong & persistent change does not establish downstream use \\
+Retrieval-only & $E$ & reuse is active & item availability is not decision-level uptake \\
+Endpoint-only & $O$ & native effect is near-null & writer, retrieval, and uptake failures collapse together \\
+Forced-only & side $F$ & memory has leverage & native retrieval/context transport is bypassed \\
+\textbf{Stage-resolved} & $W,E,U,O$ + side $F$ & first unsupported measured native stage is localized & preserves stage identity instead of choosing one coarse projection \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Forced injection establishes downstream capacity, not native transport}
 We first bypass native retrieval and directly inject each paired memory into a fixed future-task packet. This asks whether the downstream system can respond to the paired persistent states when the experimenter supplies them.
@@ -10,11 +28,11 @@ The original fixed-state probe contains 12 aligned success-memory versus failure
 This result weakens the explanation that the downstream system is simply incapable of responding to memory content. It does \emph{not} estimate native transport because exposure is mechanically supplied. The cell effects are also heterogeneous: eight cells are zero, six have positive failure-minus-success effects, and two have negative effects; the two largest cells account for 78.2\% of squared-effect mass. Even under forced exposure, a universal harmful direction is unsupported.
 
 \subsection{Native source-item exposure remains common while action uptake is unsupported}
-We next restore the native memory-bank pathway. After expanding the frozen Shopping memory bank, the branch-conditioned source-memory item is retrieved on 125 of 172 held-out retrieval opportunities, a rate of 0.727. This item-level availability measurement does not identify exposure to the treatment-specific residual within the item, but it is sufficient to reject ``the source memory item was never retrieved'' as the sole description of the weak native downstream evidence.
+We next restore the native memory-bank pathway. After expanding the frozen Shopping memory bank, the branch-conditioned source-memory item is retrieved on 125 of 172 held-out retrieval opportunities, a rate of 0.727. This item-level availability measurement does not identify exposure to the treatment-specific residual within the item, but it is sufficient to reject ``the source memory item was never retrieved'' as the sole description of the weak native downstream evidence. It also lets us test, rather than assume, the stronger evaluation shortcut ``Retrieval hit is a surrogate for policy use.''
 
-Despite that exposure, the first measured decision boundary is weak. Across the frozen 36 Shopping branch-comparison states, mean first-action total-variation distance is $0.06944$ with $p=0.5801$, and 0/36 states change their modal first action. A post-hoc working-memory diagnostic yields branch shift 0.00335 with $p=0.2052$. Native terminal transport is also small: mean absolute success difference is $0.02083$ with permutation $p=0.4289$, and 34/36 cells are exactly zero.
+Despite that exposure, the first measured decision boundary is weak. Across the frozen 36 Shopping branch-comparison states, the original B10 probe used four repeated first-action decodes per success-memory branch and four per failure-memory branch. Its frozen primary mean total-variation distance is $0.06944$ with $p=0.5801$, and 0/36 states change their modal first action. A zero-provider provenance replay re-parses all 432 historical B10 raw responses under the frozen action normalizer and exactly reproduces the historical statistic. Because plug-in TV is upward-biased in sparse categorical samples, we additionally apply the exact-match-kernel unbiased collision MMD$^2$ statistic to the already-collected 4+4 branch draws. The post-hoc state-mean estimate is numerically zero ($-6.2\times10^{-18}$), with one-sided state-stratified randomization $p=0.5801$; 33/36 state estimates are zero, one is positive, and two are negative. A fixed-state descriptive bootstrap gives $[-0.0185,0.0231]$. This reanalysis does not establish equivalence, but it shows that the original weak TV contrast is not strengthened after correcting for within-condition stochastic concentration. A separate post-hoc working-memory diagnostic yields branch shift 0.00335 with $p=0.2052$. Native terminal transport is also small: mean absolute success difference is $0.02083$ with permutation $p=0.4289$, and 34/36 cells are exactly zero.
 
-The conjunction is the stage-resolved evidence result. Applying the ordinal rule from Section~\ref{sec:evidence-ladder}, write is \textsc{Supported}, native source-item exposure is \textsc{Observed}, and first-action uptake is the first measured native stage whose frozen primary test does not support a stable branch contrast. Thus $b^*=\text{first-action uptake}$ is an \emph{evidence-localization boundary}. Terminal sparsity is downstream corroboration rather than the quantity used to choose the boundary. Because the stage tests differ in units and statistical sensitivity, this does not identify where a latent causal effect physically attenuates; nor is it a mediation effect.
+The conjunction is the stage-resolved evidence result. Applying the ordinal rule from Section~\ref{sec:evidence-ladder}, write is \textsc{Supported}, native source-item exposure is \textsc{Observed}, and first-action uptake is the first measured native stage whose frozen primary test does not support a stable branch contrast. Thus $b^*=\text{first-action uptake}$ is an \emph{evidence-localization boundary}---operationally, a boundary after exposure and before stable action uptake. Terminal sparsity is downstream corroboration rather than the quantity used to choose the boundary. Because the stage tests differ in units and statistical sensitivity, this does not identify where a latent causal effect physically attenuates; in particular, it is not a causal mediation coefficient.
 
 A structural sensitivity audit clarifies what is load-bearing in this localization. Removing terminal outcome evidence, removing the Reddit terminal tranche, or removing the forced-capacity side control leaves the first unsupported measured native stage at first-action uptake. In contrast, merging native exposure with first-action uptake removes the diagnostic resolution needed to distinguish availability from behavioral use. The contribution is therefore not simply to report more stage metrics: for this frozen system, the \emph{separation of exposure from uptake} is the load-bearing measurement that prevents these two explanations from becoming observationally aliased.
 
@@ -30,7 +48,7 @@ Stage & Evidence state & Frozen observation / interpretation \\
 Persistent write & Supported & 20/20 Shopping pairs diverge; stronger same-mode control leaves excess $0.105$, exact $p=0.0078$. \\
 Forced capacity (side control) & Supported & $|\Delta|=0.15625$, $p=0.00074$; supplied memory has downstream leverage but native retrieval is bypassed. \\
 Native source-item exposure & Directly observed & 125/172 held-out opportunities retrieve the branch-conditioned source-memory item; this is item availability, not treatment-residual exposure or policy use. \\
-First-action uptake & Not supported & TV $=0.06944$, $p=0.5801$, 0/36 modal changes; this is the first unsupported native stage after observed prerequisites. \\
+First-action uptake & Not supported & Primary TV $=0.06944$, $p=0.5801$, 0/36 modal changes; replay-qualified post-hoc collision $\widehat{\mathrm{MMD}}^2_u\approx0$, $p=0.5801$. \\
 Native outcome & Sparse / heterogeneous & Shopping 34/36 zero; Reddit 6/8 zero and the two nonzero signs are opposite. \\
 \bottomrule
 \end{tabular}
