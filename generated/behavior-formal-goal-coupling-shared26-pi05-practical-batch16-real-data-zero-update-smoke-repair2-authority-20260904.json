@@ -1,0 +1,69 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair2-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "status": "AUTHORIZED_PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_SMOKE_REPAIR2_FINAL_ACTION_DIM",
+  "scope": "Exactly-once repair of the consumed real-data batch16 zero-update smoke repair1. The only change is correcting the final training-batch state/action shape assertion to the pinned OpenPI model-space action_dim=32 contract.",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_practical_batch16_real_data_zero_update_smoke_repair2.py",
+  "runner_sha256": "0a342ea2623415dcde13da11df65d3f92e24e6c8a06d707693471b7a711aad12",
+  "consumed_repair1": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair1-result-20260904.json",
+    "sha256": "c5f8e01aa0a657af5111f062fe39f8dd210126c5dec67b17f111ff2ad7fc49a0"
+  },
+  "consumed_repair1_authority": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair1-authority-20260904.json",
+    "sha256": "570a374a9f3e65ab9734bc7563d2937ac1a3555cd19236d767a07faa6391da93"
+  },
+  "stale_assertion_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-real-data-smoke-repair1-stale-action-shape-adjudication-20260904.json",
+    "sha256": "47b126649f574cf7b8d399a99d39f628944e9b6fc49ddf646797847301c803f0"
+  },
+  "ffmpeg_runtime_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-ffmpeg6-runtime-qualification-231-20260904.json",
+    "sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+    "library_dir": "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu"
+  },
+  "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "openpi_data_home": "/data/wyt/formal-goal-openpi-cache-v1",
+  "batch_size": 16,
+  "seed": 42,
+  "episode_count": 5200,
+  "action_horizon": 32,
+  "model_action_dim": 32,
+  "expected_final_action_shape": [16, 32, 32],
+  "expected_final_state_shape": [16, 32],
+  "source_shape_contract": {
+    "data_loader_test_sha256": "a0cf1bc293e8b0eb9bc5516bc05d30d9940da06c94fcfa1addca7267f8358815",
+    "transforms_sha256": "c59480647d70e2721fb7b864934a57546ae966bdefa8c89d210a2f9b99da11cd"
+  },
+  "resource_scope": {
+    "host": "222.20.126.231",
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "cpu_affinity": "0-63",
+    "num_workers": 0,
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "authorized_operations": [
+    "restore frozen pi0.5 base checkpoint directly to one A100",
+    "construct exactly one real frozen batch of size 16 using the qualified FFmpeg runtime",
+    "validate final model-space state/action shapes and structural metadata only"
+  ],
+  "forbidden_operations": [
+    "forward pass",
+    "loss computation or retention",
+    "backward pass",
+    "optimizer or parameter update",
+    "checkpoint write",
+    "policy rollout or outcome read",
+    "automatic retry of repair2"
+  ],
+  "formal_training_authorized": false,
+  "scientific_training_started": false,
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "FREEZE_PRACTICAL_BATCH16_FORMAL_TRAINING_AUTHORITY",
+  "next_gate_if_fail": "REAL_DATA_BATCH16_REPAIR2_PRETRAINING_REVIEW"
+}
