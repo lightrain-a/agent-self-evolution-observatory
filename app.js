@@ -3542,7 +3542,8 @@ function renderIdeaPortfolio(config) {
   const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
   const inventory=canonicalInventorySummary(groups,parents,independent);
   const currentAccounting=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false,ideasPage:true,inventory,hideBriefingHero:true}):"";
-  return `${renderPortfolioDecisionConsole(config,inventory)}${renderCanonicalIdeaLedger(groups,parents,independent,inventory,currentAccounting)}`;
+  const e2r17=window.renderE2R17PortfolioAddendum?window.renderE2R17PortfolioAddendum():"";
+  return `${renderPortfolioDecisionConsole(config,inventory)}${e2r17}${renderCanonicalIdeaLedger(groups,parents,independent,inventory,currentAccounting)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

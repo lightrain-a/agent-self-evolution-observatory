@@ -770,6 +770,7 @@
     const archiveChapters = architecture.archiveChapters || [];
     const historical = archiveChapters.map((chapter,index) => renderPageChapter(chapter,index + 1,config)).join("");
     const archive = historical ? `<details class="panel historical-paper-archive-fold" id="historical-paper-archive"><summary><div><div class="eyebrow">${pick("非当前 PaperState · 历史归档", "NOT CURRENT PAPERSTATE · HISTORICAL ARCHIVE")}</div><b>${pick("旧 Regression-Gated Self-Evolution 工作区","Former Regression-Gated Self-Evolution workspace")}</b><span>${pick("默认折叠；仅用于追溯旧 formulation、实验计划与停止原因，不参与当前 5 篇 canonical PaperState。","Collapsed by default; provenance for the former formulation, experiment plan, and stop reasons only. It does not participate in the five current canonical PaperStates.")}</span></div><strong>${pick("历史","HISTORY")}</strong></summary><div class="historical-paper-archive-body">${historical}</div></details>` : "";
-    return `${pageHeader(config)}${registryOverview}${noveltyPortfolio}${externalReviewPortfolio}${objectionMatrixPortfolio}${striSection}${safetySection}${d2Sections}${archive}`;
+    const e2r17=window.renderE2R17PaperAddendum?window.renderE2R17PaperAddendum():"";
+    return `${pageHeader(config)}${registryOverview}${e2r17}${noveltyPortfolio}${externalReviewPortfolio}${objectionMatrixPortfolio}${striSection}${safetySection}${d2Sections}${archive}`;
   };
 })();
