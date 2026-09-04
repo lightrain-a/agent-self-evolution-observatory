@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "AGENT-SAFETY-G1-MCTA-FRESH-STATE-SOURCE-MANIFEST-20260904",
+  "algorithm_id": "G1-MCTA-STATE-SOURCE-HASH-V1",
+  "experiment_namespace": "G1-MCTA-v1",
+  "status": "ZERO_PROVIDER_FRESH_STATE_AND_UPDATE_SOURCE_FREEZE_NO_EXECUTION_AUTHORITY",
+  "date": "2026-09-04",
+  "source": {
+    "awm_commit": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+    "source_root_on_52": "substrate-assets-r9/agent-workflow-memory/webarena/workflow",
+    "source_file_sha256": {
+      "gitlab": "f7272009f18075ddaccad2e9a5bb05db2e06f19975ae077b95e487118b460e3c",
+      "map": "102d0bf7fab50fcdf1ed02c6046c23f68b5e9f1e09e7e0e279b9c6e0d31aebc5",
+      "reddit": "b90efe0dec29b8b067c186ae106084b818ada57313c7193018d184f610f24929",
+      "shopping": "c694c8ef27c5035f03e2dcb059bc37903fd297309e2f0f42adf887f653329240",
+      "shopping_admin": "416790d571b4ceff37e79a83cfe22fd50bc7c6dd235e878898a499f83cecfb2e"
+    },
+    "historical_exact_state_hash_count": 11,
+    "historical_exact_state_hash_set_sha256": "8d628f232a8e200fd405e8f6c8cf0731c9c61b09d62eec45607260270c3a3631",
+    "provider_calls": 0,
+    "agent_model_calls": 0,
+    "harmful_trajectories": 0
+  },
+  "state_family_rank": [
+    {"family": "shopping_admin", "rank_key": "138ea304300a4ddad053421c45ab99c35c4b1eda6a3e9a016fb897a49ccfbb8e"},
+    {"family": "gitlab", "rank_key": "70533a240f507e1f5a265d272c3bed25543b6fd860eb11110f91488762941235"},
+    {"family": "reddit", "rank_key": "8d3b8849f1d4f3ab06de5e91d6dc63c49a80689deaed0ab211b3f88bf3e9415f"},
+    {"family": "shopping", "rank_key": "cc4967239cfc283bc9decb20120ce7144c207f4c8975dc64d2810d65c45b8f04"},
+    {"family": "map", "rank_key": "f2d22240ca2cc6cb18c7554e7375469cefa6bb4779a5d6f347017cb426a15ea2"}
+  ],
+  "state_families": ["shopping_admin", "gitlab", "reddit"],
+  "update_families": ["shopping", "map"],
+  "source_unit_counts": {
+    "gitlab": 6,
+    "map": 7,
+    "reddit": 6,
+    "shopping": 6,
+    "shopping_admin": 7
+  },
+  "p0_states": [
+    {
+      "state_id": "P0-01-shopping_admin",
+      "rank_key": "05e1508c04827a6630448dc44ff07daf652570b24e0879671a876d17376fecec",
+      "family": "shopping_admin",
+      "unit_indices": [0, 1, 3],
+      "unit_sha256": [
+        "b992c8e7ee17e79a694da33e135075174bbca776b9a6d35c8073767a32da3002",
+        "99390d8c9f076bcc658d31c5432ff6384ca707eac1dc940a8798207df9f07c59",
+        "64c69c0462417c326efc7ceb3ba634433907f5b2b1c2ae455b03b98806e7738e"
+      ],
+      "workflow_sha256": "708b87d7bb8244587116c682f4bb549595efbed6671dc6e1c502d07d4cbec5a2",
+      "bytes": 4416
+    },
+    {
+      "state_id": "P0-02-gitlab",
+      "rank_key": "086bc5ce6705fd43c2a72d17ea76e878b3904f01bdb7ad9aaa4faebe479e5bda",
+      "family": "gitlab",
+      "unit_indices": [0, 2, 4],
+      "unit_sha256": [
+        "b1c83c5dd2bb66b5bd82a885096efb6781c2c6340e211d8c2df75a9b5e7641c0",
+        "689f90ec724e689e5a9ce18030c9edc9074e4dff892aa63ef3d5fb4961836a1d",
+        "b261ba303240986141ea1b80575317a2e12660509675e3d9d121250597bcd4b7"
+      ],
+      "workflow_sha256": "bd4e6059a99780f0b4124fe664df6b9405013c4a9966df624ebd511ef21ab12f",
+      "bytes": 2702
+    }
+  ],
+  "p1_states": [
+    {
+      "state_id": "P1-01-shopping_admin",
+      "rank_key": "0954b9700389ea9105a1e96beca85c8f405f24da9732a91cee85a54921ea78e3",
+      "family": "shopping_admin",
+      "unit_indices": [0, 2, 4],
+      "unit_sha256": [
+        "b992c8e7ee17e79a694da33e135075174bbca776b9a6d35c8073767a32da3002",
+        "4c8f4ba8587e6aa5336b2179da96d57cd29e9e1ee8e35870eda8104e67bc8d98",
+        "4fe9a4fe4d991283698c3f6060a34b7960149922e831cc6ad8e2da3dac2062e0"
+      ],
+      "workflow_sha256": "e58684410d8fb1218e8449f6c6264eba46e93aac1e1db9f325dd2ea57eb0346b",
+      "bytes": 3876
+    },
+    {
+      "state_id": "P1-02-shopping_admin",
+      "rank_key": "0dfc87d88e7254cef1348a17d4759053c48f618a8743878ac99d8841335170fa",
+      "family": "shopping_admin",
+      "unit_indices": [4, 5, 6],
+      "unit_sha256": [
+        "4fe9a4fe4d991283698c3f6060a34b7960149922e831cc6ad8e2da3dac2062e0",
+        "72798c23e47cb95bbb6d81137c891bd3c225b8efa7c66ca702f7944fd9f4b035",
+        "cc4568a5f430792cf00fc614543b99687bdc1d4f76451b4c3e9bb85d0b1b42e5"
+      ],
+      "workflow_sha256": "706b669d028144b968486172251f7a9e07bd72a76d993236b505f204b45259da",
+      "bytes": 4249
+    },
+    {
+      "state_id": "P1-03-shopping_admin",
+      "rank_key": "1dcb07fcc99565857a3749842425e413c54835f10e76b0812c26aeec57809b64",
+      "family": "shopping_admin",
+      "unit_indices": [2, 3, 5],
+      "unit_sha256": [
+        "4c8f4ba8587e6aa5336b2179da96d57cd29e9e1ee8e35870eda8104e67bc8d98",
+        "64c69c0462417c326efc7ceb3ba634433907f5b2b1c2ae455b03b98806e7738e",
+        "72798c23e47cb95bbb6d81137c891bd3c225b8efa7c66ca702f7944fd9f4b035"
+      ],
+      "workflow_sha256": "254fb33e51c7f1618e67aa0b2543f0d7c5b9be14e3b59214e361c10e7c6a70dd",
+      "bytes": 4402
+    },
+    {
+      "state_id": "P1-04-gitlab",
+      "rank_key": "0ed385d95f7a2bf53f1027cd095836b02d0f68caa0e193768d9a648018ecc0bb",
+      "family": "gitlab",
+      "unit_indices": [0, 1, 2],
+      "unit_sha256": [
+        "b1c83c5dd2bb66b5bd82a885096efb6781c2c6340e211d8c2df75a9b5e7641c0",
+        "cf7a3f9dcf159cddba19e84e5ab9ca33b77b4dee283b293713c17d9ecfe64363",
+        "689f90ec724e689e5a9ce18030c9edc9074e4dff892aa63ef3d5fb4961836a1d"
+      ],
+      "workflow_sha256": "cc0d4f3ffba8f1cbc61046a564eeff90d3dce538af5180fe91831d180716006e",
+      "bytes": 2197
+    },
+    {
+      "state_id": "P1-05-gitlab",
+      "rank_key": "3efe54807a7eee9730274ede2bd954b405e2fc203d6a142c5a5cb0a5946fdc6b",
+      "family": "gitlab",
+      "unit_indices": [0, 2, 5],
+      "unit_sha256": [
+        "b1c83c5dd2bb66b5bd82a885096efb6781c2c6340e211d8c2df75a9b5e7641c0",
+        "689f90ec724e689e5a9ce18030c9edc9074e4dff892aa63ef3d5fb4961836a1d",
+        "74f2b32802158390459a30976ebdabd7eddc05aaa772cad548eed3c31634ebe9"
+      ],
+      "workflow_sha256": "fb538dcc839d84e2a758320c7ea4a13d19a1a0fd08abf5a3019247f68ca55885",
+      "bytes": 4257
+    },
+    {
+      "state_id": "P1-06-gitlab",
+      "rank_key": "4736cbb6be1cd8f095439f4ccb5292b07760ee64a795eb29be856ab3fd80472c",
+      "family": "gitlab",
+      "unit_indices": [0, 1, 3],
+      "unit_sha256": [
+        "b1c83c5dd2bb66b5bd82a885096efb6781c2c6340e211d8c2df75a9b5e7641c0",
+        "cf7a3f9dcf159cddba19e84e5ab9ca33b77b4dee283b293713c17d9ecfe64363",
+        "8af82cf981bfb0bc56acfb4d071db767929e574ad5db17d22e8d964fe2696b97"
+      ],
+      "workflow_sha256": "fb5a7834d9390782c6ba7133d4cb552b709ddd77f6b51ec06e2ed0b94f74f189",
+      "bytes": 2796
+    },
+    {
+      "state_id": "P1-07-reddit",
+      "rank_key": "038f74dcef17f5e987dc4175c804fda121dc3db55c0c22fe2bc8e86acc84c491",
+      "family": "reddit",
+      "unit_indices": [1, 3, 5],
+      "unit_sha256": [
+        "dc88453b0496182373f304ee661d973a28c301b3f526d27212d541a008a15ef2",
+        "5246f5cc48fa73a4c81ae0bdb444b88e52ad230639267ee6f982692e5c4d21ae",
+        "095d19bf035cb872f9fe08af4cd6348fe4ae21bf4b683d8a276dfd01d032fbe7"
+      ],
+      "workflow_sha256": "f93fc883c3b02e8630be041a6229dba63f1655c812bcd60cb696b9a315324061",
+      "bytes": 4380
+    },
+    {
+      "state_id": "P1-08-reddit",
+      "rank_key": "0cb4b552c77a2d8e7d2c19b7d2e56d66b0031e75d9a2ad968e8052ac9bc8433d",
+      "family": "reddit",
+      "unit_indices": [1, 2, 3],
+      "unit_sha256": [
+        "dc88453b0496182373f304ee661d973a28c301b3f526d27212d541a008a15ef2",
+        "a662703e80a7589443c1138bc771a4f5980bfd6d38c56c521d1ae03622a5582f",
+        "5246f5cc48fa73a4c81ae0bdb444b88e52ad230639267ee6f982692e5c4d21ae"
+      ],
+      "workflow_sha256": "16f0b1bfea73e2b5e6ee67e9bcf6b0bf2760bd3f53412f0c059caecf6e788b6b",
+      "bytes": 5349
+    }
+  ],
+  "update_sequences": [
+    {
+      "sequence_id": "UPD-01-shopping",
+      "family": "shopping",
+      "steps": [
+        {"step": 1, "unit_index": 1, "unit_sha256": "fff87a2ee9343790e40bfa4215c54585b672dee1c34f6e21a4d444c706f3c7fb"},
+        {"step": 2, "unit_index": 4, "unit_sha256": "e3f743d44d4ef132326c66196e50f19037f1151a1a64808536f2c51bef4ec5fd"},
+        {"step": 3, "unit_index": 2, "unit_sha256": "08ca9ce03a93b6aa80bd0b9b9fa5d78df3589c662bd7fc88e10032e1d5e08422"}
+      ]
+    },
+    {
+      "sequence_id": "UPD-02-map",
+      "family": "map",
+      "steps": [
+        {"step": 1, "unit_index": 0, "unit_sha256": "fd6cce3396f678b596bd99a5c11f5271d208ed0bf3cdd63affbaa15093cdc6ef"},
+        {"step": 2, "unit_index": 2, "unit_sha256": "df109a86e8cdea79d69191f8ec808c77eda360f3bbbf003a60afa895a5a0f798"},
+        {"step": 3, "unit_index": 3, "unit_sha256": "f565365484c661816cbfdd534d5399e0347a619f964e6cfe9ab8b93c0fbc7e44"}
+      ]
+    }
+  ],
+  "selection_policy": {
+    "family_role_split": "Rank all five frozen AWM source filenames by sha256(G1-MCTA-v1|STATE_FAMILY_RANK|family). First three families provide states; the remaining two provide update sequences.",
+    "state_candidate_ranking": "Within each state family enumerate all source-order three-unit combinations, exclude exact historical state hashes, and rank by sha256(G1-MCTA-v1|STATE_CANDIDATE|family|unit_hashes).",
+    "p0_selection": "First remaining state candidate from each of the first two state families.",
+    "p1_selection": "After removing exact P0 state hashes, select quotas 3/3/2 from the three state families by candidate rank.",
+    "update_selection": "Within each update family select three units by sha256(G1-MCTA-v1|UPDATE_SELECT|family|unit_hash), then order selected units by sha256(G1-MCTA-v1|UPDATE_ORDER|family|unit_hash).",
+    "state_units_per_state": 3,
+    "serialization": "strip leading/trailing newlines from each exact AWM unit, join three units with two newlines, terminate state file with one newline",
+    "safety_outcomes_used": false,
+    "semantic_evaluator_labels_used": false,
+    "historical_exact_state_bytes_excluded": true,
+    "p0_exact_states_disjoint_from_p1_exact_states": true,
+    "replacement_after_future_outcome": false
+  },
+  "scope_boundary": "Fresh means new content-addressed state bytes disjoint from all exact historical R9 state files. Individual benign AWM source units may have appeared in prior historical states or updates; their role here is assigned by a new outcome-blind byte/hash algorithm rather than historical safety outcomes.",
+  "authority": {
+    "provider_calls": false,
+    "p0_execution": false,
+    "p1_execution": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  }
+}
