@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-MINIMUM-EFFECTIVE-PLAN-R2-20260904",
+  "recorded_date": "2026-09-04",
+  "status": "ZERO_PROVIDER_MINIMUM_EFFECTIVE_PLAN_R2_NO_EXECUTION_AUTHORITY",
+  "parent_plan": "consultations/agent-constraint-externality-minimum-effective-experiment-plan-20260904.md",
+  "scientific_unit": "family",
+  "nested_measurements": [
+    "topology_arm",
+    "update_branch",
+    "repeat",
+    "policy_probe"
+  ],
+  "gate_0": "clean direct actor capability qualification before any source-failure/mechanism work",
+  "gate_1": "normally terminated semantic repairable target failures; provider/transport/harness/forced-cap failures excluded",
+  "repeat_qualification": {
+    "development_only_families": "4..6",
+    "confirmatory_reuse": false,
+    "R_candidates": [2, 3],
+    "default_R": 2,
+    "selection_basis": "predeclared within-condition stability/variance only",
+    "post_confirmatory_change_forbidden": true
+  },
+  "confirmatory_panel": {
+    "reserve_family_count": 24,
+    "N_candidates": [12, 16, 20, 24],
+    "default_N_for_budgeting": 16,
+    "selection_order": "stable_hash",
+    "eligibility": [
+      "valid_semantic_source_failure",
+      "valid_frozen_repair_artifact",
+      "positive_repair_uptake_on_topology_neutral_TARGET_ONLY_VERIFICATION",
+      "no_interface_or_measurement_invalidity"
+    ],
+    "target_only_verification": {
+      "timing": "before INDEPENDENT/LOW/HIGH outcomes",
+      "snapshot": "common_pre_update_snapshot",
+      "repair": "exact_frozen_repair_bytes",
+      "topology_neutral": true
+    },
+    "post_topology_target_success_used_for_deletion": false,
+    "reserve_activation": "predeclared eligibility attrition only; never based on target-retention/collateral/topology outcomes"
+  },
+  "rq1_rq2": {
+    "topology_arms": ["INDEPENDENT", "LOW", "HIGH"],
+    "branches": ["NO_UPDATE", "REAL_REPAIR"],
+    "same_repair_bytes_across_topology": true,
+    "retain_all_prequalified_families": true,
+    "joint_outcomes": ["target_repair_retention", "collateral_regression"],
+    "rq1": "pooled update externality UE = CRR_UPDATE - CRR_NO_UPDATE on full prequalified panel",
+    "rq2_primary": "UE_HIGH - UE_INDEPENDENT",
+    "rq2_secondary": "ordered HIGH/LOW/INDEPENDENT plus graph distance/shared-resource exposure",
+    "still_effective_repair_claim": "requires prospectively frozen panel-level target-retention falsifier; never post-treatment deletion"
+  },
+  "sham_subset": {
+    "default_family_count": 8,
+    "topology_arms": ["INDEPENDENT", "HIGH"],
+    "control": "SHAM_UPDATE",
+    "purpose": "separate repair semantics from generic persistent-text/context surface effects"
+  },
+  "rq3": {
+    "candidate_families": 16,
+    "H_candidates": [12, 16],
+    "default_H": 12,
+    "disjoint_from_development_and_rq1_rq2": true,
+    "rankings_frozen_pre_outcome": ["Random", "Same-App", "resource-count", "graph-distance", "ExposureRank", "oracle_upper_bound"],
+    "extra_actor_calls_for_offline_rank_baselines": 0,
+    "failure_disposition": "STOP_TOPOLOGY_PREDICTION_NO_GTCC"
+  },
+  "rq4": {
+    "open_only_after": ["RQ1_PASS", "RQ2_PASS", "RQ3_PASS"],
+    "M_candidates": [8, 12, 16],
+    "default_M": 12,
+    "policies": ["Always Commit", "Target-Only Validation", "Random-k", "Same-App-k", "GTCC"],
+    "budget_matched": ["Random-k", "Same-App-k", "GTCC"],
+    "full_non_target_check": "small prespecified oracle/upper-bound subset only",
+    "gtcc_stop": "if practically equivalent to Random-k or Same-App-k, stop novelty rather than enlarge sample"
+  },
+  "default_budget_envelopes": {
+    "rq1_rq2": 192,
+    "sham_extra": 32,
+    "rq3": 48,
+    "rq4_conditional": 120,
+    "secondary_actor_conditional": 96
+  },
+  "external_validity": {
+    "second_actor": "conditional after primary RQ1/RQ2, first one additional actor on small frozen subset",
+    "external_updater": "optional one AppWorld-compatible updater plug-in after primary result; not causal baseline",
+    "seven_model_sweep": false
+  },
+  "hard_stop_principle": "a failed layer closes dependent layers; no rescue by adding families/models/baselines after negative outcomes",
+  "authority": {
+    "provider_execution": false,
+    "gpu": false,
+    "confirmatory_rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "secondary_actor": false,
+    "external_updater": false,
+    "paper_claim_expansion": false
+  },
+  "scientific_provider_calls": 0,
+  "scientific_outcomes_read": 0
+}
