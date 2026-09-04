@@ -12,7 +12,10 @@ CHILD_ID = "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH"
 PRACTICAL_PREREG_SHA = "382449b4320bacd85f736c0df9342f9677b3c755f2daeedcd680212aed2a503a"
 SYNTHETIC_RESULT_SHA = "3914b1f2a3fd5e7964524eac7f625b64b4f089c0048a12dc5ebe9b79ba9bd86e"
 SELECTION_SHA = "1f63415a2e9d6af60d67ec995ba4f0b803054ee7a96f202178d060bda2bfbdbb"
-TRAINER_SHA = "ab211ff675de941f678e10b10b46f04fd6e8b1de684ef7b9a319f4c7526e816a"
+TRAINER_SHA = "fc19dfcd5b90a50498c9d3c6f7a880faa4f0bf18427ccf7a165ba90d3b0d718f"
+FFMPEG_QUAL_SHA = "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca"
+FFMPEG_LIBRARY_DIR = "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu"
+REAL_DATA_SMOKE_REQUIRED_STATUS = "PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_REPAIR2_PASS"
 EXPECTED_FILES = 1380
 EXPECTED_BYTES = 236480375583
 
@@ -31,8 +34,9 @@ def main() -> int:
     ap.add_argument("--real-data-smoke", type=Path, required=True)
     ap.add_argument("--trainer", type=Path, required=True)
     ap.add_argument("--launcher", type=Path, required=True)
+    ap.add_argument("--ffmpeg-runtime-qualification", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
-    a = ap.parse_args(); seal_path = a.dataset_seal.resolve(); smoke_path = a.real_data_smoke.resolve(); trainer = a.trainer.resolve(); launcher = a.launcher.resolve(); output = a.output.resolve()
+    a = ap.parse_args(); seal_path = a.dataset_seal.resolve(); smoke_path = a.real_data_smoke.resolve(); trainer = a.trainer.resolve(); launcher = a.launcher.resolve(); ffmpeg_qual_path = a.ffmpeg_runtime_qualification.resolve(); output = a.output.resolve()
     if output.exists():
         raise RuntimeError(f"formal training authority already exists: {output}")
     repo = output.parent.parent
@@ -49,8 +53,13 @@ def main() -> int:
     if seal.get("status") != "WHOLE_MANIFEST_FINAL_SEAL_PASS" or seal.get("verified_file_count") != EXPECTED_FILES or seal.get("verified_bytes") != EXPECTED_BYTES:
         raise RuntimeError("dataset seal not PASS")
     smoke = json.loads(smoke_path.read_text())
-    if smoke.get("status") != "PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_PASS" or not smoke.get("batch_ready") or smoke.get("optimizer_update") or smoke.get("forward_pass"):
-        raise RuntimeError("real-data batch16 smoke not PASS")
+    if smoke.get("status") != REAL_DATA_SMOKE_REQUIRED_STATUS or not smoke.get("batch_ready") or smoke.get("optimizer_update") or smoke.get("forward_pass") or smoke.get("backward_pass"):
+        raise RuntimeError("real-data batch16 smoke repair2 not PASS")
+    if sha(ffmpeg_qual_path) != FFMPEG_QUAL_SHA:
+        raise RuntimeError("FFmpeg6 runtime qualification SHA drift")
+    ffmpeg_qual = json.loads(ffmpeg_qual_path.read_text())
+    if ffmpeg_qual.get("status") != "PI05_FFMPEG6_USER_RUNTIME_QUALIFICATION_PASS" or ffmpeg_qual.get("library_dir") != FFMPEG_LIBRARY_DIR:
+        raise RuntimeError("FFmpeg6 runtime qualification not PASS")
     if sha(trainer) != TRAINER_SHA:
         raise RuntimeError("formal trainer SHA drift")
     payload = {
@@ -63,6 +72,8 @@ def main() -> int:
         "synthetic_batch16_result_sha256": SYNTHETIC_RESULT_SHA,
         "practical_batch_selection_sha256": SELECTION_SHA,
         "real_data_smoke_path": str(smoke_path), "real_data_smoke_sha256": sha(smoke_path),
+        "ffmpeg_runtime_qualification_path": str(ffmpeg_qual_path), "ffmpeg_runtime_qualification_sha256": FFMPEG_QUAL_SHA,
+        "ffmpeg_library_dir": FFMPEG_LIBRARY_DIR,
         "dataset_seal_path": str(seal_path), "dataset_seal_sha256": sha(seal_path),
         "openpi_data_home": "/data/wyt/formal-goal-openpi-cache-v1",
         "formal_run": {

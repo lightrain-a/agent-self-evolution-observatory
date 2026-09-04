@@ -1,0 +1,94 @@
+{
+  "authority_sha256": "570a374a9f3e65ab9734bc7563d2937ac1a3555cd19236d767a07faa6391da93",
+  "backward_pass": false,
+  "batch_ready": false,
+  "batch_size": 16,
+  "batch_tree_metadata": null,
+  "behavior_dataset_accessed": false,
+  "checkpoint_written": false,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "consumed_smoke_authority_sha256": "769131998d297ab04c7e2cc3a1d107a7ba9c31a9655802048ad4eaafb6ce5e22",
+  "consumed_smoke_sha256": "ac5a84f884c4619d508179a74ea597a3de6553b1b853cf5a7c17068e9329b938",
+  "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "error": "RuntimeError: action shape drift: (16, 32, 32)",
+  "ffmpeg_library_dir": "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu",
+  "ffmpeg_runtime_qualification_sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+  "formal_training_authorized": false,
+  "forward_pass": false,
+  "generated_at": "2026-09-04T01:15:12.783383+00:00",
+  "gpu_after_batch": null,
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73499,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 16
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host_after_batch": null,
+  "host_after_state": {
+    "MemAvailable_kib": 42852116,
+    "MemFree_kib": 13087892,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 2110440,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 5866116
+  },
+  "host_before": {
+    "MemAvailable_kib": 48815384,
+    "MemFree_kib": 13172936,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 2106932,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 24944
+  },
+  "jax_after_batch": null,
+  "jax_after_state": {
+    "bytes_in_use": 53654944256,
+    "bytes_limit": 76584397638,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 216,
+    "peak_bytes_in_use": 53654955264,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76584397568,
+    "pool_bytes": 76584397568
+  },
+  "loss_value_read": false,
+  "next_gate": "REAL_DATA_BATCH16_REPAIR1_PRETRAINING_REVIEW",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "portable_openpi": {
+    "changed_paths": [
+      "src/openpi/training/config.py"
+    ],
+    "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60"
+  },
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1003.slice/user@1003.service/app.slice/pi05-practical-batch16-real-data-smoke-repair1b-231-20260904.service",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 42949672960,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair1-v1",
+  "scientific_training_started": false,
+  "state_ready": true,
+  "status": "PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_REPAIR1_HOLD"
+}

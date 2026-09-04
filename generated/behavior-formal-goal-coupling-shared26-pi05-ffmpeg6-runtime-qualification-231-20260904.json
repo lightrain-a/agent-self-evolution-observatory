@@ -1,0 +1,403 @@
+{
+  "files": [
+    {
+      "kind": "symlink",
+      "name": "libSDL2-2.0.so.0",
+      "target": "libSDL2-2.0.so.0.real"
+    },
+    {
+      "bytes": 1926368,
+      "kind": "file",
+      "name": "libSDL2-2.0.so.0.real",
+      "sha256": "2507acbbe40afe7d3e2e775dd8af00a1dba93579b9e837563032f3d751a9a45b"
+    },
+    {
+      "kind": "symlink",
+      "name": "libass.so.9",
+      "target": "libass.so.9.real"
+    },
+    {
+      "bytes": 227328,
+      "kind": "file",
+      "name": "libass.so.9.real",
+      "sha256": "64f3d967f24112a29183c5e7727992180262d8f45032d5aeb64288f5521323a0"
+    },
+    {
+      "bytes": 211096,
+      "kind": "file",
+      "name": "libavdevice.so.60",
+      "sha256": "d4df19849bf3805bf76d0563366e7cbcb28bc2674a3bfa3e2465e8994f53fc6d"
+    },
+    {
+      "bytes": 211096,
+      "kind": "file",
+      "name": "libavdevice.so.60.3.100",
+      "sha256": "d4df19849bf3805bf76d0563366e7cbcb28bc2674a3bfa3e2465e8994f53fc6d"
+    },
+    {
+      "bytes": 13549208,
+      "kind": "file",
+      "name": "libavfilter.so.9",
+      "sha256": "863ec5f6b0d32cbc64a10048e987a2bba79e3852abc73dfcb9a435158fc75f24"
+    },
+    {
+      "bytes": 13549208,
+      "kind": "file",
+      "name": "libavfilter.so.9.12.100",
+      "sha256": "863ec5f6b0d32cbc64a10048e987a2bba79e3852abc73dfcb9a435158fc75f24"
+    },
+    {
+      "kind": "symlink",
+      "name": "libbs2b.so.0",
+      "target": "libbs2b.so.0.real"
+    },
+    {
+      "bytes": 22608,
+      "kind": "file",
+      "name": "libbs2b.so.0.real",
+      "sha256": "1a6748a955f5573a5e12915aa30cd1f2532d8018e5e57db5add0bdfed8235691"
+    },
+    {
+      "kind": "symlink",
+      "name": "libdc1394.so.25",
+      "target": "libdc1394.so.25.real"
+    },
+    {
+      "bytes": 229416,
+      "kind": "file",
+      "name": "libdc1394.so.25.real",
+      "sha256": "a7316eaf55eacd8bb413f9cf449df70bb1ded9b0eb82418fba83e6a115f46a13"
+    },
+    {
+      "kind": "symlink",
+      "name": "libfftw3.so.3",
+      "target": "libfftw3.so.3.real"
+    },
+    {
+      "bytes": 2234448,
+      "kind": "file",
+      "name": "libfftw3.so.3.real",
+      "sha256": "b5cc02c4d360b5b20111cb0a251f8368af8c9ce3145357f5ba54c51ac4ca9b35"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite.so.1",
+      "target": "libflite.so.1.real"
+    },
+    {
+      "bytes": 231592,
+      "kind": "file",
+      "name": "libflite.so.1.real",
+      "sha256": "d456d49a5e39689cf2012df85fb8e5c37c7c85f2de9df061fee0450231c348da"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_cmu_us_awb.so.1",
+      "target": "libflite_cmu_us_awb.so.1.real"
+    },
+    {
+      "bytes": 4147336,
+      "kind": "file",
+      "name": "libflite_cmu_us_awb.so.1.real",
+      "sha256": "507a9d48ef3fc3162e682932e0dd85e415c0a65ee879f1bb7a126101cc3a6155"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_cmu_us_kal.so.1",
+      "target": "libflite_cmu_us_kal.so.1.real"
+    },
+    {
+      "bytes": 1460400,
+      "kind": "file",
+      "name": "libflite_cmu_us_kal.so.1.real",
+      "sha256": "38bfa0eadb0a2e5af6f6947b16b9bf7ed8118d9c6eee308c23e92cba05956761"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_cmu_us_kal16.so.1",
+      "target": "libflite_cmu_us_kal16.so.1.real"
+    },
+    {
+      "bytes": 4032688,
+      "kind": "file",
+      "name": "libflite_cmu_us_kal16.so.1.real",
+      "sha256": "275478a93c9b3b739a3457c4b75ae2ab643ac4fcd3915e56865ca2168369ec88"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_cmu_us_rms.so.1",
+      "target": "libflite_cmu_us_rms.so.1.real"
+    },
+    {
+      "bytes": 4819080,
+      "kind": "file",
+      "name": "libflite_cmu_us_rms.so.1.real",
+      "sha256": "f78b65b0955caf40131f2228133268b53b0bdc6a5aeada22b29599561c69bbaa"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_cmu_us_slt.so.1",
+      "target": "libflite_cmu_us_slt.so.1.real"
+    },
+    {
+      "bytes": 4155528,
+      "kind": "file",
+      "name": "libflite_cmu_us_slt.so.1.real",
+      "sha256": "03ccfdbdd4df4135e0a825f9810fce1fe051cc739c36ccc75a9947a114cdd55f"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_cmulex.so.1",
+      "target": "libflite_cmulex.so.1.real"
+    },
+    {
+      "bytes": 612584,
+      "kind": "file",
+      "name": "libflite_cmulex.so.1.real",
+      "sha256": "1be5a03bdad437aa7d4cc35aa2861c34df75a3a10ad855334829a42ce9c93015"
+    },
+    {
+      "kind": "symlink",
+      "name": "libflite_usenglish.so.1",
+      "target": "libflite_usenglish.so.1.real"
+    },
+    {
+      "bytes": 170216,
+      "kind": "file",
+      "name": "libflite_usenglish.so.1.real",
+      "sha256": "eb6047508420953bb913dc289f4da0eab8c19ef2ea20c4a59b01ab263dcf3737"
+    },
+    {
+      "kind": "symlink",
+      "name": "libjack.so.0",
+      "target": "libjack.so.0.real"
+    },
+    {
+      "bytes": 334288,
+      "kind": "file",
+      "name": "libjack.so.0.real",
+      "sha256": "7fb2c6394e6d6ce1fec715e6ba8d24c6555ff045f8ccaead10bc6efbed4ad7e6"
+    },
+    {
+      "kind": "symlink",
+      "name": "liblilv-0.so.0",
+      "target": "liblilv-0.so.0.real"
+    },
+    {
+      "bytes": 96248,
+      "kind": "file",
+      "name": "liblilv-0.so.0.real",
+      "sha256": "be488ddc8b92267b80517b46a6c31699d8f1695d6ae26c728d9b83ee3ee74093"
+    },
+    {
+      "kind": "symlink",
+      "name": "libmysofa.so.1",
+      "target": "libmysofa.so.1.real"
+    },
+    {
+      "bytes": 63480,
+      "kind": "file",
+      "name": "libmysofa.so.1.real",
+      "sha256": "4b7c6642dcfa3a8d318e6fd3cc73d01ea2391d85839c08eede7090787bf8111e"
+    },
+    {
+      "kind": "symlink",
+      "name": "libopenal.so.1",
+      "target": "libopenal.so.1.real"
+    },
+    {
+      "bytes": 1162472,
+      "kind": "file",
+      "name": "libopenal.so.1.real",
+      "sha256": "89bf02dc4e8f13680b3aae45770f9436627841b427693a565c15d4895f4c7331"
+    },
+    {
+      "kind": "symlink",
+      "name": "libplacebo.so.338",
+      "target": "libplacebo.so.338.real"
+    },
+    {
+      "bytes": 8827616,
+      "kind": "file",
+      "name": "libplacebo.so.338.real",
+      "sha256": "c796e73dc5ae2f3989083cb3366fa8d8c0989e9f305ba3c0d109b295fac44c5b"
+    },
+    {
+      "kind": "symlink",
+      "name": "libpocketsphinx.so.3",
+      "target": "libpocketsphinx.so.3.real"
+    },
+    {
+      "bytes": 293728,
+      "kind": "file",
+      "name": "libpocketsphinx.so.3.real",
+      "sha256": "9df7cf49d5dcf285284a23b0a9c9feb1db1fba82225bca05c77fdfd47c269a8f"
+    },
+    {
+      "bytes": 84120,
+      "kind": "file",
+      "name": "libpostproc.so.57",
+      "sha256": "f282fc8370aad3d9246de333c0e6c356834cf16077a7fed3437da75ab29a99ed"
+    },
+    {
+      "bytes": 84120,
+      "kind": "file",
+      "name": "libpostproc.so.57.3.100",
+      "sha256": "f282fc8370aad3d9246de333c0e6c356834cf16077a7fed3437da75ab29a99ed"
+    },
+    {
+      "kind": "symlink",
+      "name": "librubberband.so.2",
+      "target": "librubberband.so.2.real"
+    },
+    {
+      "bytes": 321704,
+      "kind": "file",
+      "name": "librubberband.so.2.real",
+      "sha256": "97c10ec8328a9d5dab1b2e4c562f0a43402a30dacf9bdb20287691331e751670"
+    },
+    {
+      "kind": "symlink",
+      "name": "libserd-0.so.0",
+      "target": "libserd-0.so.0.real"
+    },
+    {
+      "bytes": 92152,
+      "kind": "file",
+      "name": "libserd-0.so.0.real",
+      "sha256": "604ff236c92ce0ee75f0508d326e4dae5fe2dddaa9440cc876ce688a79bc284e"
+    },
+    {
+      "kind": "symlink",
+      "name": "libsndio.so.7",
+      "target": "libsndio.so.7.real"
+    },
+    {
+      "bytes": 68064,
+      "kind": "file",
+      "name": "libsndio.so.7.real",
+      "sha256": "e7ce0d18eb8dd47edd102d5d08da6032257db0f2c1fbbb56125eb7c5e03db10a"
+    },
+    {
+      "kind": "symlink",
+      "name": "libsord-0.so.0",
+      "target": "libsord-0.so.0.real"
+    },
+    {
+      "bytes": 34808,
+      "kind": "file",
+      "name": "libsord-0.so.0.real",
+      "sha256": "d2c3a37c1c18738963e73a66527da829e66382174ffde98c3f6c40f5e3230189"
+    },
+    {
+      "kind": "symlink",
+      "name": "libsphinxbase.so.3",
+      "target": "libsphinxbase.so.3.real"
+    },
+    {
+      "bytes": 260432,
+      "kind": "file",
+      "name": "libsphinxbase.so.3.real",
+      "sha256": "a810b1db08b2aca7ccddc6059ae99203242aa9b61072c98799497c7388123a8d"
+    },
+    {
+      "kind": "symlink",
+      "name": "libsratom-0.so.0",
+      "target": "libsratom-0.so.0.real"
+    },
+    {
+      "bytes": 43000,
+      "kind": "file",
+      "name": "libsratom-0.so.0.real",
+      "sha256": "80cd34a4b2073aaf0155070e8871fd94a1e9597de44db972d63f17d624c5c98d"
+    },
+    {
+      "kind": "symlink",
+      "name": "libunibreak.so.5",
+      "target": "libunibreak.so.5.real"
+    },
+    {
+      "bytes": 133304,
+      "kind": "file",
+      "name": "libunibreak.so.5.real",
+      "sha256": "5360900dd22ab64c59c44c7c1855dbfec81c75ade565406cd5d9e10ac19c61e6"
+    },
+    {
+      "kind": "symlink",
+      "name": "libvidstab.so.1.1",
+      "target": "libvidstab.so.1.1.real"
+    },
+    {
+      "bytes": 80352,
+      "kind": "file",
+      "name": "libvidstab.so.1.1.real",
+      "sha256": "7032d796074267dc4568504ce1f4a17bb39a41299d3b81f2e7e41527cea955de"
+    },
+    {
+      "kind": "symlink",
+      "name": "libzimg.so.2",
+      "target": "libzimg.so.2.real"
+    },
+    {
+      "bytes": 830320,
+      "kind": "file",
+      "name": "libzimg.so.2.real",
+      "sha256": "03bb2f18c31b2e0cef185a67672a5014cc43d01be7706ae1706320d235a7617c"
+    },
+    {
+      "kind": "symlink",
+      "name": "libzix-0.so.0",
+      "target": "libzix-0.so.0.real"
+    },
+    {
+      "bytes": 51832,
+      "kind": "file",
+      "name": "libzix-0.so.0.real",
+      "sha256": "13c860feb5cde6dda0f7810ed5a09e0d73a6e2090a7630a19620688754e2347b"
+    }
+  ],
+  "host": "222.20.126.231",
+  "ldd_closure": {
+    "libavdevice.so.60": {
+      "missing": [],
+      "missing_count": 0
+    },
+    "libavfilter.so.9": {
+      "missing": [],
+      "missing_count": 0
+    },
+    "libpostproc.so.57": {
+      "missing": [],
+      "missing_count": 0
+    }
+  },
+  "library_dir": "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu",
+  "next_gate": "REAL_DATA_BATCH16_ZERO_UPDATE_SMOKE_REPAIR1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "python_environment": {
+    "python": "3.11.16",
+    "torch": "2.7.1+cu128",
+    "torchcodec": "0.4.0"
+  },
+  "runtime_root": "/data/wyt/formal-goal-ffmpeg6-runtime-v1",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-ffmpeg6-runtime-qualification-v1",
+  "scientific_training_started": false,
+  "source_ffmpeg_package_version": "7:6.1.1-3ubuntu5",
+  "source_host": "222.20.126.69",
+  "source_ubuntu": "24.04",
+  "status": "PI05_FFMPEG6_USER_RUNTIME_QUALIFICATION_PASS",
+  "torchcodec_decode": {
+    "frame_dtype": "torch.uint8",
+    "frame_index": 0,
+    "frame_shape": [
+      3,
+      480,
+      480
+    ],
+    "video_frame_count": 154867,
+    "video_path": "/data/wyt/behavior-2026-shared26-v3.0/videos/observation.rgb.right_realsense_link_camera_0/chunk-068/file-004.mp4",
+    "video_sha256": "e45e73f79bf9ff58f536b8ec987bc4601bf5a30c21d7c3f13a3800c80202c2ae"
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "authority_sha256": "cc2883c4995e8604180ade71d68e28a97378bc85ebfd3ea8a583dbbbb2017b14",
+  "backward_pass": false,
+  "batch_ready": true,
+  "batch_size": 16,
+  "batch_tree_metadata": [
+    {
+      "dtype": "float32",
+      "path": "[0].images['base_0_rgb']",
+      "shape": [
+        16,
+        224,
+        224,
+        3
+      ]
+    },
+    {
+      "dtype": "float32",
+      "path": "[0].images['left_wrist_0_rgb']",
+      "shape": [
+        16,
+        224,
+        224,
+        3
+      ]
+    },
+    {
+      "dtype": "float32",
+      "path": "[0].images['right_wrist_0_rgb']",
+      "shape": [
+        16,
+        224,
+        224,
+        3
+      ]
+    },
+    {
+      "dtype": "bool",
+      "path": "[0].image_masks['base_0_rgb']",
+      "shape": [
+        16
+      ]
+    },
+    {
+      "dtype": "bool",
+      "path": "[0].image_masks['left_wrist_0_rgb']",
+      "shape": [
+        16
+      ]
+    },
+    {
+      "dtype": "bool",
+      "path": "[0].image_masks['right_wrist_0_rgb']",
+      "shape": [
+        16
+      ]
+    },
+    {
+      "dtype": "float32",
+      "path": "[0].state",
+      "shape": [
+        16,
+        32
+      ]
+    },
+    {
+      "dtype": "int32",
+      "path": "[0].tokenized_prompt",
+      "shape": [
+        16,
+        200
+      ]
+    },
+    {
+      "dtype": "bool",
+      "path": "[0].tokenized_prompt_mask",
+      "shape": [
+        16,
+        200
+      ]
+    },
+    {
+      "dtype": "float32",
+      "path": "[1]",
+      "shape": [
+        16,
+        32,
+        32
+      ]
+    }
+  ],
+  "behavior_dataset_accessed": true,
+  "checkpoint_written": false,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "consumed_repair1_authority_sha256": "570a374a9f3e65ab9734bc7563d2937ac1a3555cd19236d767a07faa6391da93",
+  "consumed_repair1_sha256": "c5f8e01aa0a657af5111f062fe39f8dd210126c5dec67b17f111ff2ad7fc49a0",
+  "consumed_smoke_authority_sha256": "769131998d297ab04c7e2cc3a1d107a7ba9c31a9655802048ad4eaafb6ce5e22",
+  "consumed_smoke_sha256": "ac5a84f884c4619d508179a74ea597a3de6553b1b853cf5a7c17068e9329b938",
+  "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "error": null,
+  "ffmpeg_library_dir": "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu",
+  "ffmpeg_runtime_qualification_sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+  "formal_training_authorized": false,
+  "forward_pass": false,
+  "generated_at": "2026-09-04T01:23:37.195391+00:00",
+  "gpu_after_batch": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73499,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73499,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 16
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host_after_batch": {
+    "MemAvailable_kib": 35633760,
+    "MemFree_kib": 2469608,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 2134656,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 17497132
+  },
+  "host_after_state": {
+    "MemAvailable_kib": 43068960,
+    "MemFree_kib": 14518104,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 2129312,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 5865236
+  },
+  "host_before": {
+    "MemAvailable_kib": 48792288,
+    "MemFree_kib": 15281788,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 2126056,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 24944
+  },
+  "jax_after_batch": {
+    "bytes_in_use": 53683930112,
+    "bytes_limit": 76584397638,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 247,
+    "peak_bytes_in_use": 53695972608,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76584397568,
+    "pool_bytes": 76584397568
+  },
+  "jax_after_state": {
+    "bytes_in_use": 53654944256,
+    "bytes_limit": 76584397638,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 216,
+    "peak_bytes_in_use": 53654955264,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76584397568,
+    "pool_bytes": 76584397568
+  },
+  "loss_value_read": false,
+  "next_gate": "FREEZE_PRACTICAL_BATCH16_FORMAL_TRAINING_AUTHORITY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "portable_openpi": {
+    "changed_paths": [
+      "src/openpi/training/config.py"
+    ],
+    "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60"
+  },
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1003.slice/user@1003.service/app.slice/pi05-practical-batch16-real-data-smoke-repair2-231-20260904.service",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 42949672960,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair2-v1",
+  "scientific_training_started": false,
+  "source_shape_contract": {
+    "data_loader_test_sha256": "a0cf1bc293e8b0eb9bc5516bc05d30d9940da06c94fcfa1addca7267f8358815",
+    "model_action_dim": 32,
+    "transforms_sha256": "c59480647d70e2721fb7b864934a57546ae966bdefa8c89d210a2f9b99da11cd"
+  },
+  "state_ready": true,
+  "status": "PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_REPAIR2_PASS"
+}

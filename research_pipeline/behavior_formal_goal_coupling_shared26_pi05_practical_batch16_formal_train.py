@@ -25,6 +25,9 @@ BASE_RECEIPT_SHA = "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104
 NORM_SHA = "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce"
 TOKEN_SHA = "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6"
 PROJECTION_INFO_SHA = "9955a58511fdba468ca10b6929c9051f6d693e3915cdc58d66c1cd1ce04a45e1"
+FFMPEG_QUAL_SHA = "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca"
+FFMPEG_LIBRARY_DIR = "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu"
+REAL_DATA_SMOKE_REQUIRED_STATUS = "PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_REPAIR2_PASS"
 BATCH = 16
 SEED = 42
 ACTION_HORIZON = 32
@@ -139,7 +142,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     for name in [
         "authority", "preregistration", "synthetic_batch16_result", "real_data_smoke", "dataset_seal", "base_receipt",
-        "openpi_child_root", "params_root", "projection_root", "norm_stats", "tokenizer", "progress", "result",
+        "ffmpeg_runtime_qualification", "openpi_child_root", "params_root", "projection_root", "norm_stats", "tokenizer", "progress", "result",
     ]:
         ap.add_argument("--" + name.replace("_", "-"), type=Path, required=True)
     a = ap.parse_args(); p = {k: getattr(a, k).resolve() for k in vars(a)}
@@ -160,8 +163,12 @@ def main() -> int:
     if smoke_sha != auth.get("real_data_smoke_sha256"):
         raise RuntimeError("real-data smoke SHA binding drift")
     smoke = json.loads(p["real_data_smoke"].read_text())
-    if smoke.get("status") != "PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_PASS" or smoke.get("optimizer_update"):
-        raise RuntimeError("real-data smoke not PASS")
+    if smoke.get("status") != REAL_DATA_SMOKE_REQUIRED_STATUS or not smoke.get("batch_ready") or smoke.get("optimizer_update") or smoke.get("forward_pass") or smoke.get("backward_pass"):
+        raise RuntimeError("real-data smoke repair2 not PASS")
+    require(p["ffmpeg_runtime_qualification"], FFMPEG_QUAL_SHA, "FFmpeg6 runtime qualification")
+    ffmpeg_qual = json.loads(p["ffmpeg_runtime_qualification"].read_text())
+    if ffmpeg_qual.get("status") != "PI05_FFMPEG6_USER_RUNTIME_QUALIFICATION_PASS" or ffmpeg_qual.get("library_dir") != FFMPEG_LIBRARY_DIR:
+        raise RuntimeError("FFmpeg6 runtime qualification drift")
     seal_sha = sha(p["dataset_seal"])
     if seal_sha != auth.get("dataset_seal_sha256"):
         raise RuntimeError("dataset seal SHA binding drift")
@@ -175,6 +182,9 @@ def main() -> int:
     for key, value in REQUIRED_ENV.items():
         if os.environ.get(key) != value:
             raise RuntimeError(f"environment drift {key}={os.environ.get(key)!r}/{value!r}")
+    ld_library_path = [str(Path(x).resolve()) for x in os.environ.get("LD_LIBRARY_PATH", "").split(":") if x]
+    if str(Path(FFMPEG_LIBRARY_DIR).resolve()) not in ld_library_path:
+        raise RuntimeError(f"FFmpeg6 runtime missing from LD_LIBRARY_PATH: {ld_library_path}")
     if Path(os.environ.get("OPENPI_DATA_HOME", "")).resolve() != Path(auth["openpi_data_home"]).resolve():
         raise RuntimeError("OPENPI_DATA_HOME drift")
     scope = scope_snapshot(); child = portable_child(p["openpi_child_root"])
@@ -195,6 +205,7 @@ def main() -> int:
             "completed_optimizer_updates": 0, "last_completed_loop_label": None,
             "terminal_checkpoint_label_for_scientific_evaluation": TERMINAL_LABEL,
             "authority_sha256": sha(p["authority"]), "real_data_smoke_sha256": smoke_sha,
+            "ffmpeg_runtime_qualification_sha256": FFMPEG_QUAL_SHA,
             "dataset_seal_sha256": seal_sha, "portable_openpi": child, "resource_scope": scope,
             "gpu_before": before_gpu, "host_before": before_host,
             "loss_values_read_or_reported": False, "policy_outcomes_read": False,
