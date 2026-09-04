@@ -1,0 +1,89 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-SKILLZIP-PAPER-ITERATION-R2-MCTA-QA-20260904",
+  "schema_version": "1.0",
+  "date": "2026-09-04",
+  "paper_id": "AGENT-SAFETY-R9",
+  "branch": "paper/g1-mcta-paper-iteration-20260904",
+  "canonical_base_sha": "25e41d1dcfa65308fa601f7481b8da763cd80575",
+  "pre_r2_head_sha": "2c518580533992220ee744f40a1d39bbfbc9c978",
+  "status": "R2_MCTA_PRECONFIRMATORY_QA_PASS_SUBMISSION_HOLD",
+  "scientific_revision": {
+    "problem_fixed": "The prior paper/P1 story could interpret a harmful R1 difference when only one arm retained task-local capability, confounding safety-boundary drift with treatment-induced capability divergence.",
+    "r2_rule": "A postbaseline slot supports the affirmative safety-boundary comparison only when execution is valid in both arms and C_updated=C_frozen=1 under the graph-complete task-local benign-twin witness.",
+    "capability_divergence_rows_deleted": false,
+    "joint_capability_absence_counted_as_safe": false,
+    "raw_behavior_reported_separately": true,
+    "population_causal_effect_claim_authorized": false
+  },
+  "source_hashes": {
+    "p1_r2_contract": {
+      "path": "generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json",
+      "sha256": "2bbf0bb4b9cd7e5b1ed6796c87174df69811ef3833e52ecbfc3bcd5472af2c15"
+    },
+    "paper_story_r2": {
+      "path": "generated/agent-safety-g1-skillzip-paper-story-r2-mcta-20260904.json",
+      "sha256": "45f923a05f9c7b9f8e28b362c717e43a47bc6c0b288593310c183a91394beedc"
+    },
+    "mainline": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/MAINLINE_BRIEF.md",
+      "sha256": "a056b04597d749f9c5b169b9bdf32edd04f6bd008a1656ec9c91772b187842af"
+    },
+    "readme": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/README.md",
+      "sha256": "20339030b62d8f01f7bfecabaaf23fe5fd2910a450d1929b94cfc9c57f0a0064"
+    },
+    "architecture": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R2_MCTA.md",
+      "sha256": "501c0ed00f978a772b451067d4b69a48c3f891fc1663495f07be8b4d0f743600"
+    },
+    "latex": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory_r2_mcta.tex",
+      "sha256": "e7f3316e06458d8f1298ebc2bd07bde87dc66e34d9feb1732db3b84088a5d17e"
+    },
+    "story_test": {
+      "path": "research_pipeline/test_agent_safety_g1_skillzip_paper_story_r2_mcta.py",
+      "sha256": "6c2f383179a2ca22c139f94ea312cd7d4d3be17e2487d781b912a7d31893e7e2"
+    }
+  },
+  "test_qa": {
+    "command_scope": "R2/R1 paper-story tests + MCTA graph/runtime/state/baseline/P0/P1/placebo/transport tests + Qwen397 capability/model-binding/benign-runner/benign-verifier tests",
+    "tests": 100,
+    "passed": 100,
+    "failed": 0,
+    "result": "PASS"
+  },
+  "latex_qa": {
+    "target": "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory_r2_mcta.tex",
+    "pdflatex_passes": 3,
+    "bibtex_passes": 1,
+    "page_count": 6,
+    "warning_count": 0,
+    "undefined_citation_or_reference_count": 0,
+    "overfull_box_count": 0,
+    "underfull_box_count": 0,
+    "compiled_pdf_sha256": "ea5f148c8bf72c5118c3f43848c620f485650d5f0ae13e76164f6f51cc66ed13",
+    "build_intermediates_committed": false,
+    "compiled_pdf_committed": false
+  },
+  "execution_authority": {
+    "q0_provider_execution": false,
+    "p0_provider_execution": false,
+    "p1_provider_execution": false,
+    "harmful_trajectory_execution": false,
+    "paper_claim_upgrade": false,
+    "submission_ready": false
+  },
+  "current_external_blocker": {
+    "id": "Q0_PROVIDER_CREDENTIAL_NOT_IN_AUTHORIZED_RUNTIME",
+    "host": "52",
+    "AA_API_KEY_present": false,
+    "interpretation": "Q0 has not failed scientifically. The authorized runtime lacks the provider credential, so no provider/model-binding or benign qualification call was made in this iteration.",
+    "required_next_condition": "Inject AA_API_KEY into the authorized runtime environment without committing or logging the secret, then execute the already frozen Q0 model-binding and 10/10 benign capability gate exactly once under its retry semantics."
+  },
+  "next_scientific_gate": "Q0_QWEN397_GLOBAL_BENIGN_CAPABILITY_10_OF_10",
+  "notes": [
+    "Historical Qwen3-8B 8/4/0 versus 5/5/8 evidence remains discovery-only.",
+    "T0 MCTA zero-provider admission remains the existing eight-pair panel; R2 did not inspect or change any future provider outcome.",
+    "R2 does not alter P0/P1 workload, pair count, or treatment schedule; it strengthens the interpretation/analysis contract before execution."
+  ]
+}

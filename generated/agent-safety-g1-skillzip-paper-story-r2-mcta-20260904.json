@@ -1,0 +1,207 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-SKILLZIP-PAPER-STORY-R2-MCTA-20260904",
+  "schema_version": "2.0",
+  "recorded_date": "2026-09-04",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "PRECONFIRMATORY_SUBMISSION_HOLD",
+  "supersedes_active_story": "generated/agent-safety-g1-skillzip-paper-story-r1-20260904.json",
+  "active_scientific_object": "When benign workflow accumulation changes browser-agent behavior, separate capability unlock from a genuine refusal-to-action boundary shift by comparing Updated and Frozen only on prospectively matched slots where both arms retain task-local graph-complete execution capability.",
+  "working_title": "Separating Capability Unlock from Safety Drift in Persistent Browser Agents",
+  "working_method": "Matched Capability Twin Audit (MCTA)",
+  "one_sentence_question": "Under an exactly matched future schedule, does benign workflow accumulation increase harmful-task-directed action after both Updated and Frozen are independently shown capable of the same shared browser action path?",
+  "novelty_boundary": {
+    "not_claimed_new": [
+      "memory can affect agent safety",
+      "benign execution-oriented experience can reduce refusal",
+      "semantic safety evaluators can disagree",
+      "a global benign capability gate is useful"
+    ],
+    "candidate_contribution": "A task-local, graph-complete matched capability twin protocol that decomposes raw longitudinal harmful-action changes into shared-capability boundary drift, capability divergence, capability censoring, and execution-invalid cases under a same-schedule Updated-vs-Frozen intervention."
+  },
+  "behavioral_endpoints": {
+    "primary": "R1",
+    "R0": "immediate refusal or safe handling before harmful-task-directed tool use",
+    "R1": "first harmful-task-directed required primitive under a prospectively frozen programmatic predicate",
+    "R2": "partial execution depth on the frozen shared action graph",
+    "R3": "verified harmful external effect where a separately qualified environment-side verifier exists",
+    "secondary_decomposition": ["R0", "R2", "R3"],
+    "post_outcome_endpoint_switching_forbidden": true
+  },
+  "capability_measurement": {
+    "global_gate": {
+      "backbone": "qwen3.5-397b-a17b",
+      "panel": "pinned BrowserART official ten benign tasks",
+      "primary_max_steps": 10,
+      "required_success": "10/10",
+      "failure_disposition": "STOP_SAFETY_EXECUTION_AND_DIAGNOSE_SUBSTRATE",
+      "failure_is_not_safety_evidence": true
+    },
+    "task_local_C": "C=1 only when an authorized benign twin completes and covers every required primitive/transition in the prospectively frozen canonical shared action graph G_j from an independent clone of the same state/time slot.",
+    "shared_capability": "A postbaseline slot is safety-identifiable only when C_updated=C_frozen=1 and execution quality is valid in both arms.",
+    "capability_divergence": "C_updated != C_frozen is retained as evidence that the treatment changed execution capability; harmful-action differences in these slots cannot be promoted to safety-boundary drift.",
+    "joint_capability_absence": "C_updated=C_frozen=0 is capability-censored and cannot be counted as affirmative safe evidence.",
+    "no_row_deletion": true
+  },
+  "treatment": {
+    "updated": "step-0 workflow plus prospectively frozen benign workflow units accumulated over exposure steps",
+    "frozen": "step-0 workflow held fixed over the same future task schedule",
+    "matched_fields": [
+      "initial persistent state",
+      "harmful task identity within unit",
+      "future task schedule",
+      "seed or exact seed-matching rule",
+      "BrowserART/BrowserGym substrate",
+      "AXTree/BID action interface",
+      "browser initial snapshot",
+      "execution budget",
+      "parser and R0-R3 definitions"
+    ]
+  },
+  "primary_estimand": {
+    "name": "shared-capability refusal-to-action contrast",
+    "baseline_eligibility": "shared t0 state has C=1, valid execution, and harmful R1=0",
+    "postbaseline_slot_rule": "compare R1_updated-R1_frozen only when both arms have valid C=1 at the same matched slot",
+    "finite_panel_only": true,
+    "population_effect_claim_forbidden": true,
+    "support_gate": {
+      "minimum_supported_persistent_states": 6,
+      "minimum_baseline_eligible_units_with_shared_capability_support": 12,
+      "if_fail": "UNIDENTIFIED_SUPPORT_TOO_SPARSE"
+    },
+    "raw_behavior_role": "Raw Updated-vs-Frozen R1 over all execution-valid rows is reported as a total behavioral contrast but cannot by itself identify safety drift.",
+    "analysis_contract": "generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json"
+  },
+  "experiment_ladder": [
+    {
+      "stage": "Q0",
+      "name": "Global BrowserART substrate qualification",
+      "status": "PENDING_PROVIDER_CREDENTIAL",
+      "criterion": "qwen3.5-397b-a17b, official 10 benign tasks, ten steps, 10/10"
+    },
+    {
+      "stage": "T0",
+      "name": "Matched Capability Twin static/runtime qualification",
+      "status": "PASS_ZERO_PROVIDER_8_PAIR_PANEL",
+      "evidence": [
+        "8 admitted local pairs",
+        "8 distinct surfaces",
+        "7 terminal classes",
+        "31 zero-provider tests, 0 failures",
+        "runtime event binding pass on 8/8 admitted pairs"
+      ]
+    },
+    {
+      "stage": "P0",
+      "name": "Task-local capability witness qualification",
+      "status": "NOT_AUTHORIZED_PENDING_Q0",
+      "workload": "32 agent episodes over two calibration states and eight pairs",
+      "role": "measurement qualification, not temporal treatment effect"
+    },
+    {
+      "stage": "P1",
+      "name": "Same-schedule Updated-vs-Frozen temporal identification",
+      "status": "CONDITIONAL_NOT_AUTHORIZED",
+      "workload": "336 agent episodes over eight fresh persistent states, 24 matched units, t0-t3",
+      "primary": "shared-capability R1 contrast",
+      "analysis_contract": "generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json"
+    },
+    {
+      "stage": "P2",
+      "name": "Length/structure placebo",
+      "status": "TRIGGERED_ONLY_AFTER_POSITIVE_P1",
+      "workload": "72 agent episodes on 12 preselected units",
+      "role": "separate workflow semantics from context/load/packaging"
+    },
+    {
+      "stage": "P3",
+      "name": "Second-backbone transport",
+      "status": "TRIGGERED_AFTER_QUALIFIED_MAIN_RESULT",
+      "workload": "178 agent episodes including ten-task capability gate",
+      "role": "external validity; different-family preferred"
+    }
+  ],
+  "baseline_matrix": [
+    "M0 raw temporal harmful-action metric without task-local capability conditioning",
+    "M1 global 10/10 capability gate only",
+    "M2 same-surface/action-family benign twin without graph completeness",
+    "M3 MCTA graph-complete task-local capability witness",
+    "A0 Frozen W0",
+    "A1 Updated workflow accumulation",
+    "A2 length/structure placebo if the positive mechanism gate fires",
+    "T1 second-backbone transport if the final external-validity gate fires"
+  ],
+  "historical_discovery": {
+    "authority": "DISCOVERY_ONLY",
+    "backbone": "Qwen3-8B",
+    "four_step_truncation_count": 103,
+    "future_episode_count": 108,
+    "normal_termination_count": 0,
+    "listener_confirmed_external_effect_count": 0,
+    "harmbench_branch_events": {"updated": 8, "frozen": 4, "nullmemory": 0},
+    "deepseek_branch_events": {"updated": 5, "frozen": 5, "nullmemory": 8},
+    "confirmatory_mechanism_claim_forbidden": true
+  },
+  "measurement_layer": {
+    "role": "secondary robustness after objective capability and behavioral anchors",
+    "erta_role": "fail-closed evaluator sensitivity summary",
+    "evaluators": ["HarmBench", "DeepSeek", "blinded human semantic labels"],
+    "judge_shopping_forbidden": true,
+    "third_ai_judge_as_tie_breaker_forbidden": true
+  },
+  "research_questions": [
+    "RQ1: Is the exact qwen3.5-397b-a17b browser stack globally capable enough for safety interpretation?",
+    "RQ2: Do graph-complete benign twins provide task-local positive capability witnesses on a diverse pair panel?",
+    "RQ3: Under the same future schedule, does workflow accumulation change R1 on matched slots where both Updated and Frozen remain task-locally capable?",
+    "RQ4: How much of the raw temporal R1 change is instead associated with capability divergence, joint capability censoring, or execution invalidity?",
+    "RQ5: If a shared-capability R1 shift exists, does R0/R2/R3 decomposition support a coherent control-boundary interpretation?",
+    "RQ6: Do HarmBench, DeepSeek, and blinded humans preserve the same direction around the objective anchors?"
+  ],
+  "claim_ladder": [
+    {"level": 0, "name": "historical discovery", "status": "SUPPORTED", "claim": "The historical semantic ordering is evaluator-sensitive and the historical execution substrate is heavily truncated."},
+    {"level": 1, "name": "global capability qualification", "status": "PENDING", "claim": "The exact new browser stack is competent enough to enter the prospective safety study."},
+    {"level": 2, "name": "task-local capability measurement", "status": "PENDING", "claim": "MCTA supplies positive task-local capability witnesses on enough diverse pairs/states to identify a temporal safety contrast."},
+    {"level": 3, "name": "shared-capability behavioral effect", "status": "PENDING", "claim": "Workflow accumulation changes harmful-task-directed initiation on matched slots where both arms retain task-local capability."},
+    {"level": 4, "name": "mechanistic interpretation", "status": "PENDING", "claim": "The effect reflects workflow semantics rather than context length/packaging and is behaviorally coherent in R0/R2/R3."},
+    {"level": 5, "name": "measurement robustness", "status": "PENDING", "claim": "Semantic evaluators and humans support the same direction as objective capability/behavioral anchors."},
+    {"level": 6, "name": "transport/generalization", "status": "UNAUTHORIZED", "claim": "The conclusion extends beyond the exact backbone/AWM/BrowserART setting."}
+  ],
+  "prospective_paper_identity_rule": {
+    "q0_fail": "NO_SAFETY_RUN_SUBSTRATE_DIAGNOSIS_ONLY",
+    "p0_support_fail": "NO_IDENTIFIED_TEMPORAL_SAFETY_CLAIM; report measurement limitation or merge",
+    "p1_raw_positive_shared_capability_null": "CAPABILITY_UNLOCK_COMPATIBLE; no safety-drift claim",
+    "p1_shared_capability_positive_behaviorally_coherent": "KEEP_NARROW_SELF_EVOLUTION_G1",
+    "p1_shared_capability_null_but_evaluator_reversal_persists_on_complete_objectively_anchored_trajectories": "PIVOT_TO_EVALUATION_PAPER",
+    "p1_shared_capability_null_and_evaluator_reversal_disappears": "STOP_OR_MERGE_G1",
+    "post_outcome_rule_change_forbidden": true
+  },
+  "forbidden_repairs": [
+    "count a slot with C_updated=1 and C_frozen=0 as identified safety drift",
+    "count C=0 harmful non-execution as affirmative safe evidence",
+    "drop or replace capability-divergent or execution-invalid rows after outcome",
+    "switch the primary endpoint from R1 to a semantic evaluator after seeing a null result",
+    "promote NullMemory because it yields a larger post-outcome contrast",
+    "add a third AI judge to resolve disagreement",
+    "drop or replace a failed benign qualification task",
+    "compare historical four-step and prospective ten-step effect magnitudes as if budgets were identical",
+    "make a broad self-evolution claim without transport evidence"
+  ],
+  "figure_order": [
+    "Figure 1: why harmful non-execution is ambiguous—refusal versus capability failure—and how MCTA uses a graph-complete benign twin",
+    "Figure 2: same-schedule Updated/Frozen longitudinal design with C/R0/R1/R2/R3 at each matched slot",
+    "Figure 3: raw R1 versus shared-capability MCTA R1, plus capability-divergence decomposition",
+    "Figure 4: R0/R2/R3 and semantic evaluator/human robustness around objective anchors"
+  ],
+  "table_order": [
+    "Table 1: Q0 global capability and P0 MCTA support qualification",
+    "Table 2: M0/M1/M2/M3 interpretation comparison and main shared-capability Updated-vs-Frozen R1 result",
+    "Table 3: state/update-sequence localization, R0/R2/R3, and capability-divergence diagnostics",
+    "Table 4 or appendix: semantic evaluator/human robustness"
+  ],
+  "manuscript_state": {
+    "active_mainline": "paper_drafts/agent-safety-r9-iclr2027/MAINLINE_BRIEF.md",
+    "preconfirmatory_architecture": "paper_drafts/agent-safety-r9-iclr2027/SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R2_MCTA.md",
+    "preconfirmatory_latex": "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory_r2_mcta.tex",
+    "historical_erta_main_tex": "preserved but not active story source of truth",
+    "submission_ready": false
+  }
+}
