@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "AGENT-SAFETY-G1-MCTA-STATE-SOURCE-MATERIALIZATION-20260904",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "ZERO_PROVIDER_STATE_AND_UPDATE_MATERIALIZATION_PASS",
+  "date": "2026-09-04",
+  "manifest": "generated/agent-safety-g1-mcta-fresh-state-source-manifest-20260904.json",
+  "host_52": {
+    "root": "/data/wyt/agent-safety-discovery-20260818/runtime-r9/g1-mcta-state-source-20260904",
+    "receipt": "materialization-receipt.json",
+    "receipt_sha256": "eb9e2f62903478ae90c8886721498e4ab185b53c1521e802dc1bb9deb5e1a727",
+    "state_file_count": 10,
+    "update_file_count": 6,
+    "all_content_hashes_match_manifest": true
+  },
+  "execution": {
+    "provider_calls": 0,
+    "agent_model_calls": 0,
+    "harmful_trajectories": 0
+  },
+  "interpretation_boundary": "This receipt proves only that the frozen state/update source manifest can be materialized exactly from the pinned AWM workflow bytes. It does not qualify the 397B model, set C=1, or authorize P0/P1.",
+  "authority": {
+    "provider_calls": false,
+    "p0_execution": false,
+    "p1_execution": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  }
+}
