@@ -1,0 +1,77 @@
+{
+  "artifact_type": "e2-r17-existing-work-experiment-and-baseline-gap-audit",
+  "date": "2026-09-04",
+  "status": "CONTROLLED_WORKLOAD_SUFFICIENT_BUT_PUBLIC_METHOD_BASELINE_LANE_REQUIRED",
+  "paper_identity": "CAUSAL_SYSTEMS_INTERFACE_PAPER",
+  "current_assessment": {
+    "controlled_compute_volume": "SUFFICIENT",
+    "measurement_replication": "SUFFICIENT",
+    "independent_mechanism_units": "MINIMAL_BUT_DEFENSIBLE_AT_FIVE",
+    "public_natural_transport": "MISSING",
+    "internal_causal_controls": "STRONG",
+    "external_method_baselines": "INSUFFICIENT_AS_COMPLETED_RESULTS"
+  },
+  "existing_work_pattern": {
+    "ReasoningBank_MaTTS": "3 public benchmark families, multiple backbones, No-Memory/Synapse/AWM baselines, scaling controls, efficiency/generalization/ablations",
+    "SkillCAT": "SpreadsheetBench-Verified plus full SpreadsheetBench, WikiTQ OOD, DocVQA transfer, matched and cross-model users, No-Skill/Human/Parametric/Trace2Skill baselines, component ablations",
+    "SkillOpt": "6 benchmarks, 7 target models, 3 harnesses, 52 cells, human/one-shot/Trace2Skill/TextGrad/GEPA/EvoSkill baselines and transfer",
+    "RethinkSkill": "5 benchmarks, 3 primary models, 42 matched feedback runs over 14 settings, Parent/Normal/Fail-only/Success-only plus TTS, repeated evaluation, robustness and transfer",
+    "Branch2Skill": "6 benchmarks, several target models, SkillOpt comparison, token-efficiency accounting and tree ablations",
+    "SkillZip": "3 procedural benchmarks x 3 backbones, uncompressed/SkillReducer comparisons, compression/fidelity/cost/transfer/continual axes",
+    "SkillZip_Pro": "narrower production setting but deep systems accounting across bundle/per-run/routing and unsafe variants"
+  },
+  "recommended_public_anchor": {
+    "benchmark": "SpreadsheetBench Verified-400",
+    "reason": "public realistic substrate shared by SkillCAT, SkillOpt and RethinkSkill, already locally pinned, enables closest-method common-harness reruns",
+    "merge_transport_and_baseline_lane": true,
+    "primary_model": "DeepSeek V4-Pro",
+    "primary_model_reason": "already used by E2 and a primary RethinkSkill model; maximizes model-level comparability",
+    "split_policy": "freeze outcome-blind before any public result; if no E2 public split is already content-addressed, prefer an externally released reproducible split such as SkillOpt's 80/40/280 Verified-400 train/validation/test split"
+  },
+  "main_common_harness_rows": [
+    "No Skill",
+    "Initial / Parent Skill",
+    "WIN-C",
+    "Universal MRW4",
+    "RethinkSkill Success-only",
+    "RethinkSkill Fail-only",
+    "RethinkSkill Normal",
+    "SkillOpt",
+    "Trace2Skill official if pinned, otherwise clearly labelled SkillCAT-style contrast",
+    "E2-R17 frozen projection policy only after prospectively earned policy authority"
+  ],
+  "evaluation_policy": {
+    "main_table": "one unified E2 public split/harness/model/evaluator/accounting contract for direct ranking",
+    "source_faithful_appendix": "released method split/protocol where official code exists; implementation validation only, no cross-split direct ranking",
+    "final_state_repeats": "prefer 3 fixed-panel reevaluations of selected artifacts rather than multiplying every full evolution lineage",
+    "published_scores_in_main_table": false,
+    "reconstructions_must_be_labelled": true
+  },
+  "optional_not_mandatory": [
+    "ReasoningBank-style same-pool aggregation comparator",
+    "Parallel Sampling / Sequential Refinement acting-compute controls",
+    "full SkillCAT pipeline if stable first-party code is pinned",
+    "Branch2Skill-style reconstruction",
+    "second model family robustness after positive controlled/public gates"
+  ],
+  "not_recommended": [
+    "more synthetic skeletons before V3 outcome",
+    "benchmark zoo",
+    "4x4 actor/updater model grid",
+    "many additional V3 replicates",
+    "baseline spending to rescue a failed V3 mechanism"
+  ],
+  "minimum_strong_package": [
+    "existing controlled support/censoring evidence",
+    "completed global same-pool causal study",
+    "V3 five-skeleton primary interaction",
+    "secondary controlled-divergence gate",
+    "one public SpreadsheetBench Verified natural transport",
+    "one common-harness public method-baseline table",
+    "optional second model family robustness"
+  ],
+  "frozen_r2_changed": false,
+  "provider_calls_authorized": false,
+  "stage_a_authority": false,
+  "stage_b_authority": false
+}

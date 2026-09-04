@@ -266,6 +266,44 @@ Only after RQ3 PASS:
 
 This is not allowed to rescue mechanism failure.
 
+## 6.x Public method-baseline table — only after controlled GO
+
+Use one common public substrate rather than a benchmark zoo: **SpreadsheetBench Verified-400**.
+
+Keep two evaluation lanes separate.
+
+### Unified common-harness lane — main quantitative table
+
+Freeze one public split, actor/updater roles, tool harness, turn budget, evaluator, and accounting policy, then rerun:
+
+- No Skill;
+- Initial / Parent Skill;
+- WIN-C;
+- universal MRW4;
+- RethinkSkill Success-only;
+- RethinkSkill Fail-only;
+- RethinkSkill Normal (success + failure);
+- SkillOpt;
+- Trace2Skill if a pinned official implementation is usable, otherwise a clearly labelled SkillCAT-style same-task success/failure contrast reconstruction;
+- E2-R17 frozen projection policy only if its method/policy authority has been prospectively earned.
+
+Only this common-harness lane supports direct row-to-row ranking.
+
+### Source-faithful lane — appendix / fidelity check
+
+Where first-party code exists, also rerun the released protocol/split. These results verify implementation fidelity but must not be directly ranked against common-harness rows evaluated on a different split.
+
+Never copy published scores into the main table. Never call a paper-spec reconstruction an exact reproduction.
+
+### Optional baseline controls
+
+- ReasoningBank-style same-pool aggregation: projection-level comparator, explicitly labelled as an adaptation rather than official ReasoningBank;
+- Parallel Sampling / Sequential Refinement: acting-compute controls;
+- full SkillCAT pipeline only if a stable first-party implementation can be pinned;
+- Branch2Skill-style reconstruction only as optional extended comparison if no official code exists.
+
+The baseline budget must not be opened to rescue a failed V3 mechanism result.
+
 ---
 
 # 7 Theory and Predictions
