@@ -1,0 +1,80 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-MCTA-EXPERIMENT-PLAN-R3-QA-20260904",
+  "schema_version": "1.0",
+  "date": "2026-09-04",
+  "paper_id": "AGENT-SAFETY-R9",
+  "branch": "paper/g1-mcta-paper-iteration-20260904",
+  "canonical_base_sha": "5ae74a6b22ba7c2e16e826d1a608eb5f39952503",
+  "pre_qa_head_sha": "bff16a8e14c0be113d4104c13683cb880a82cec6",
+  "status": "EXPERIMENT_PLAN_R3_QA_PASS_NO_EXECUTION_AUTHORITY",
+  "scientific_changes": {
+    "mandatory_core_agent_episodes": 378,
+    "positive_effect_plus_semantic_mechanism_placebo": 450,
+    "positive_effect_plus_placebo_plus_transport": 628,
+    "default_run_all_628": false,
+    "interpretation_flip_matrix_required": true,
+    "m2_graph_overadmission_required": true,
+    "p2_required_only_for_workflow_semantics_claim_after_positive_p1": true,
+    "p3_required_only_for_claim_beyond_exact_primary_substrate": true,
+    "nullmemory_required_for_primary_estimand": false,
+    "third_ai_judge_allowed_as_tiebreaker": false,
+    "extra_budget_priority": "independent states/source families > task-local pair/surface breadth > different-family transport > repeated decoding seeds"
+  },
+  "source_hashes": {
+    "experiment_plan": {
+      "path": "generated/agent-safety-g1-mcta-experiment-plan-r3-20260904.json",
+      "sha256": "2166b5a3711a6e0d3b4dc365e0b3ac507cc0345b3af9ec41c25fbabe1d30d402"
+    },
+    "mainline": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/MAINLINE_BRIEF.md",
+      "sha256": "1bba22a31696180cd674507a7aba5132bfb0fd691ad58a0908235934f0aac572"
+    },
+    "readme": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/README.md",
+      "sha256": "814044351d8943bdcc775d9a272761c7375f33316800e1cdcab1c3b4d1b1c878"
+    },
+    "manuscript_architecture": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R2_MCTA.md",
+      "sha256": "fad9ddb8c8c0a3a01960ad6905cbc25ba4c233181dc9649b155251744d239d49"
+    },
+    "latex": {
+      "path": "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory_r2_mcta.tex",
+      "sha256": "a97a82f95e15c5a5531e5fd9df12573fbb264fdc5b50ef910eab2dded7b0383f"
+    },
+    "test": {
+      "path": "research_pipeline/test_agent_safety_g1_mcta_experiment_plan_r3.py",
+      "sha256": "8e75f31984a73fff8064329f722fd71aaeed21e13ff2414d5073cfc2f2444a19"
+    }
+  },
+  "test_qa": {
+    "scope": "R3 experiment plan + R2/R1 paper story + MCTA graph/runtime/state/baseline/P0/P1/placebo/transport + Qwen397 capability/model-binding/benign-runner/benign-verifier",
+    "tests": 109,
+    "passed": 109,
+    "failed": 0,
+    "result": "PASS"
+  },
+  "latex_qa": {
+    "target": "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory_r2_mcta.tex",
+    "page_count": 6,
+    "warning_count": 0,
+    "undefined_citation_or_reference_count": 0,
+    "overfull_box_count": 0,
+    "underfull_box_count": 0,
+    "compiled_pdf_sha256": "67a777a0bf74c5727efe67c6acdb57791d03deadf576b6356f648a4303d1834c",
+    "compiled_pdf_committed": false,
+    "build_intermediates_committed": false
+  },
+  "execution_authority": {
+    "provider_calls": false,
+    "q0_execution": false,
+    "p0_execution": false,
+    "p1_execution": false,
+    "p2_execution": false,
+    "p3_execution": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false,
+    "submission_ready": false
+  },
+  "next_gate": "Q0_QWEN397_GLOBAL_BENIGN_CAPABILITY_10_OF_10",
+  "interpretation": "The plan revision changes evidence allocation and reporting requirements, not the frozen treatment schedule or the current lack of provider execution authority. It makes the core workload sufficient by claim coverage and prevents optional mechanism/transport work from becoming automatic episode inflation."
+}
