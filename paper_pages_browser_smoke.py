@@ -56,7 +56,7 @@ def main():
         collection=execute(sid,"""return {cards:document.querySelectorAll('.cpp-collection-card').length,formal:document.querySelectorAll('#formal-paper-collection .cpp-collection-card').length,working:document.querySelectorAll('#working-paper-collection .cpp-collection-card').length,labels:[...document.querySelectorAll('.cpp-collection-card header>span')].map(x=>x.textContent.trim()),states:[...document.querySelectorAll('.cpp-collection-card header>em')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||'',detail:document.querySelectorAll('.paper-detail-section,.cpp-origin,.cpp-resource-columns,.cpp-proof-grid').length,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
         require(collection["cards"]==9 and collection["formal"]==5 and collection["working"]==4 and collection["detail"]==0 and not collection["overflow"],f"collection contract failed: {collection}")
         require(collection["labels"][7]=="⑧ Constraint Externality",f"paper 8 label too long: {collection['labels'][7]}")
-        require(collection["states"][7]=="PRE-F0.5",f"paper 8 status chip must stay compact: {collection['states'][7]}")
+        require(collection["states"][7]=="SFQ BLOCKED",f"paper 8 status chip must stay compact/current: {collection['states'][7]}")
         require("搜索" in collection["placeholder"],f"collection search placeholder is not Chinese: {collection['placeholder']}")
         collection_text=text_contract(sid,forbidden=("速览版","Stanford","Current Research · Paper Collection","Formal PaperRegistry portfolio","Working papers and independent scientific objects"))
         require(collection_text["fffd"]==0,f"collection DOM contains replacement characters: {collection_text}")
@@ -69,7 +69,7 @@ def main():
           ("paper-b1.html",True,["350 / 350","+3.125 pp","0.0 pp"]),
           ("paper-a.html",False,["MemoryVLA","LIBERO-Plus","0.5541"]),
           ("paper-b.html",False,["MemoryVLA","24","future re-exposure"]),
-          ("paper-agent-constraint.html",False,["AppWorld","PRE-F0.5","0 calls · 0 outcomes"]),
+          ("paper-agent-constraint.html",False,["AppWorld","Direct-SFQ-A0","8/8 SUCCESS → STOP"]),
           ("paper-3d.html",False,["InstructScene","3D-FRONT / 3D-FUTURE","SceneNAT"]),
         ]
         evolution_shapes=[]
@@ -119,7 +119,9 @@ def main():
                 layers=execute(sid,"""return {oneMinute:document.querySelectorAll('.cpp-e1-one-minute').length,oneMinuteRows:document.querySelectorAll('.cpp-e1-one-minute article').length,terms:document.querySelectorAll('.cpp-e1-term-fold').length,termsOpen:!!document.querySelector('.cpp-e1-term-fold')?.open,related:document.querySelectorAll('.cpp-e1-related-fold').length,relatedOpen:!!document.querySelector('.cpp-e1-related-fold')?.open,paperCase:document.querySelectorAll('.cpp-e1-paper-case-fold').length,paperCaseOpen:!!document.querySelector('.cpp-e1-paper-case-fold')?.open,designAudit:document.querySelectorAll('.cpp-e1-generic-audit-fold').length,designAuditOpen:[...document.querySelectorAll('.cpp-e1-generic-audit-fold')].some(x=>x.open),taskRaw:document.querySelectorAll('.cpp-e1-task-raw').length,taskRawOpen:!!document.querySelector('.cpp-e1-task-raw')?.open,successor:document.querySelectorAll('.cpp-e1-successor-fold').length,successorOpen:!!document.querySelector('.cpp-e1-successor-fold')?.open,registry:document.querySelectorAll('.cpp-e1-registry-fold').length,registryOpen:!!document.querySelector('.cpp-e1-registry-fold')?.open,project:document.querySelectorAll('.cpp-e1-project-fold').length,projectOpen:!!document.querySelector('.cpp-e1-project-fold')?.open};""")
                 require(layers=={"oneMinute":1,"oneMinuteRows":4,"terms":1,"termsOpen":False,"related":1,"relatedOpen":False,"paperCase":1,"paperCaseOpen":False,"designAudit":2,"designAuditOpen":False,"taskRaw":1,"taskRawOpen":False,"successor":1,"successorOpen":False,"registry":1,"registryOpen":False,"project":1,"projectOpen":False},f"E1 beginner folds drifted: {layers}")
             else:
-                require(v["goldenScenario"]==1 and v["goldenScenarioReasons"]==4 and v["goldenWorked"]==1 and v["goldenWorkedSteps"]==4 and v["goldenEvidence"]>=3 and v["goldenSpotlight"]==1 and v["goldenArchitecture"]==4 and v["goldenArc"]==4 and v["goldenClaimRows"]==3 and v["goldenReview"]==1 and not v["goldenReviewHistoryOpen"] and v["goldenBudget"]==1,f"golden-template contract failed {page}: {v}")
+                expected_architecture=5 if page=="paper-agent-constraint.html" else 4
+                expected_arc=7 if page=="paper-agent-constraint.html" else 4
+                require(v["goldenScenario"]==1 and v["goldenScenarioReasons"]==4 and v["goldenWorked"]==1 and v["goldenWorkedSteps"]==4 and v["goldenEvidence"]>=3 and v["goldenSpotlight"]==1 and v["goldenArchitecture"]==expected_architecture and v["goldenArc"]==expected_arc and v["goldenClaimRows"]==3 and v["goldenReview"]==1 and not v["goldenReviewHistoryOpen"] and v["goldenBudget"]==1,f"golden-template contract failed {page}: {v}")
                 if formal: require("尚未正式外审" not in v["goldenReviewScore"] and "NOT REVIEWED" not in v["goldenReviewScore"],f"formal page lost external review {page}: {v['goldenReviewScore']}")
                 else: require("尚未正式外审" in v["goldenReviewScore"] or "NOT REVIEWED" in v["goldenReviewScore"],f"working page fabricated an external score {page}: {v['goldenReviewScore']}")
                 if page=="paper-e2.html": require("6.0" in v["goldenReviewScore"] and "Accept" in v["goldenReviewScore"],f"E2 latest post-repair review not surfaced: {v['goldenReviewScore']}")

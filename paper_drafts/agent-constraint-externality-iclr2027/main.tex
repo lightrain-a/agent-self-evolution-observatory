@@ -1,0 +1,247 @@
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage{graphicx,booktabs,array,multirow}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype,xcolor,url,hyperref}
+
+\title{Do Local Repairs Stay Local? Constraint-Coupled Externalities in Self-Evolving Agents}
+\author{Anonymous authors\\Paper under double-blind review}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Self-evolving agents increasingly respond to local failures by writing persistent memories, skills, workflow patches, or procedural repair notes. Existing evaluations usually ask whether the repaired target improves. We study a different question: can a repair that is local in intent be non-local in effect, breaking constraints that were previously satisfied elsewhere? Generic memory degradation is already known, while a collateral failure after an update can also be explained by task difficulty, update wording, or ordinary stochastic regression. We therefore define a narrower object: \emph{update-attributable collateral regression} under an exact target-local repair whose bytes are frozen, then replayed from the same snapshot across matched worlds that differ only in outcome-blind shared-state and prerequisite coupling. Our evidence program is deliberately layered. A capability gate asks whether the actor can solve the tasks; a separate source-failure gate asks whether fresh cases yield normal, semantic, repairable failures; only then do we test (i) the collateral phenomenon, (ii) same-update topology causality, and (iii) prospective structural prediction on untouched families. A minimal graph-targeted collateral check is considered only if all three layers succeed. Current execution has not yet produced a collateral-externality outcome. Instead, it exposed a qualification mismatch: a capability-qualified actor solved all eight original source cases, leaving zero repair families and therefore zero mechanism probes. We use this failure to redesign the experiment around fresh source-failure qualification rather than treating capability as mechanism readiness.
+\end{abstract}
+
+\section{Introduction}
+Persistent self-improvement is becoming a standard design pattern for agents. After a failed episode, an agent may append a memory, revise a skill, or write a compact procedural rule intended to prevent the same mistake later. This changes behavior without parameter training and can be applied immediately after interaction. But evaluation is usually target-centric: did the next attempt fix the original failure?
+
+That question is incomplete whenever tasks share mutable state, APIs, or prerequisites. A repair can be \emph{target-local in intent} while changing how the agent manipulates a resource used by other constraints. For example, a rule that normalizes a report filename before sending email can improve the email task while invalidating a later upload step that depends on the original path. A target-only score calls the update successful; a system-level view sees a repair-induced externality.
+
+Prior work already shows that persistent agent memory can propagate errors, replay misaligned experience, or become less useful under repeated consolidation~\citep{xiong2026memory,zhang2026faultymemory}. We therefore do \emph{not} claim that memory updates can have side effects. The scientific residual is narrower: when the \emph{same} successful local repair is held fixed, does structural coupling between the target and previously satisfied non-target constraints causally change the probability of collateral regression?
+
+This distinction changes the experimental object. A useful unit is not a flat task or a memory string in isolation, but a matched repair family containing (i) a target failure, (ii) a persistent repair generated only from that failure, (iii) non-target constraints that were satisfied before the update, and (iv) an outcome-blind resource/prerequisite graph that can be manipulated while all other task properties remain matched. Recent skill-compression work offers a useful methodological analogy: execution-relevant contracts and boundaries should be modeled explicitly rather than flattened into generic text~\citep{bai2026skillzip,bai2026skillzippro}.
+
+A second lesson came from our own failed execution. We initially treated capability qualification as sufficient preparation for the mechanism experiment. A selected actor passed a disjoint capability panel, yet it solved all eight target-only source cases in the original F0 stage. With zero target failures there were zero repair artifacts, so no update/no-update probe could legally run. Capability and \emph{repair-opportunity availability} are therefore different identification conditions.
+
+We consequently organize the paper as a claim ladder rather than a method-first story:
+\begin{enumerate}
+ \item \textbf{Valid source failure:} fresh cases must yield normal, semantic target failures rather than provider, harness, malformed-tool, or budget failures.
+ \item \textbf{Repair uptake and collateral phenomenon:} the repair must improve its target; UPDATE versus NO\_UPDATE then tests whether previously satisfied non-target constraints newly regress.
+ \item \textbf{Topology mechanism:} only if the pooled collateral phenomenon exists do we reuse exact repair bytes across matched INDEPENDENT, LOW, and HIGH coupling worlds.
+ \item \textbf{Prospective prediction:} an outcome-blind structural ranking is frozen and tested on untouched families.
+ \item \textbf{Minimum mitigation:} only after prospective prediction succeeds do we evaluate graph-targeted checking against same-budget random checking and simpler baselines.
+\end{enumerate}
+
+Our current contribution is therefore partly methodological and partly prospective. We define the treatment-level object, report the qualification failures that motivated the layered design, and freeze the decisive evidence path without promoting those failures into a topology finding. The mechanism and mitigation claims remain contingent on future confirmatory outcomes.
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.94\linewidth}{\small
+\textbf{Evidence flow.} A fresh semantic \textbf{source failure} yields one target-only repair $u$, whose bytes are content-addressed and frozen. From the same pre-update snapshot we compare \textbf{NO\_UPDATE} and \textbf{UPDATE($u$)} to establish the collateral phenomenon. Only then is the exact same $u$ replayed in matched \textbf{INDEPENDENT / LOW / HIGH} coupling worlds. If topology predicts held-out regressions prospectively, the same frozen structural ranking induces the conditional GTCC safeguard. Capability qualification and source-failure qualification are separate gates before this chain.}}
+\caption{Paper object and claim order. The design separates prerequisite qualification from the scientific phenomenon, then separates phenomenon identification from mechanism, prediction, and mitigation.}
+\label{fig:object}
+\end{figure}
+
+\section{Problem formulation}
+\label{sec:problem}
+\subsection{Persistent local repair}
+Let a stateful agent operate in environment state $s$ under persistent agent state $m$. A source episode exposes target constraint $c_t$ and produces a target failure. A repair writer observes only the target-relevant failure slice and produces persistent repair bytes $u$. The writer cannot observe non-target outcomes, topology labels, or future probe effects.
+
+A valid repair family contains target $c_t$ and non-target constraints $\mathcal{C}_{-t}$. Before the update, the relevant non-target constraints must be satisfied. For topology $z\in\{I,L,H\}$ and update branch $b\in\{0,1\}$, let $Y_j^{b,z}=1$ indicate that non-target constraint $j$ remains satisfied at the end of the matched replay. Both branches begin from the same frozen pre-update snapshot; $b=1$ injects exact repair bytes $u$ while $b=0$ does not.
+
+Define
+\begin{equation}
+\mathrm{CRR}_{b,z}=\frac{1}{|\mathcal{C}_{-t}|}\sum_{j\in\mathcal{C}_{-t}}\mathbb{I}[Y_j^{b,z}=0],
+\end{equation}
+and update externality
+\begin{equation}
+\mathrm{UE}_z=\mathrm{CRR}_{1,z}-\mathrm{CRR}_{0,z}.
+\end{equation}
+The first scientific question is whether pooled $\mathrm{UE}$ is positive when target repair itself has positive uptake. The topology question is secondary:
+\begin{equation}
+\Delta_{\mathrm{topo}}=\mathrm{UE}_H-\mathrm{UE}_I.
+\end{equation}
+Using $\Delta_{\mathrm{topo}}$ without first establishing the underlying collateral phenomenon would confuse a mechanism contrast with the existence of the phenomenon itself.
+
+\subsection{Outcome-blind coupling graph}
+The graph is frozen before outcomes. Edges may come only from declared mutable-resource sharing, state-changing API overlap, temporal prerequisites, or read-after-write dependencies. Outcome correlation, co-failure, embedding similarity, or any statistic computed from probe labels is forbidden as a graph-construction signal.
+
+Within a matched family, topology arms hold fixed the target obligation, constraint count, actor, tool surface, instruction budget, initial snapshot, difficulty recipe, repair bytes, and seed policy. The intended treatment is structural coupling rather than update magnitude or task content.
+
+\section{Experimental object and qualification gates}
+\label{sec:gates}
+\subsection{AppWorld substrate}
+We use AppWorld~\citep{trivedi2024appworld}, a controllable environment with stateful everyday applications and programmatic state-based evaluation. Its multi-app state and explicit snapshots are useful because collateral changes can be measured independently of the agent's verbal completion message. AppWorld itself checks unexpected state changes; our object differs by attributing new non-target regressions to a persistent repair through matched UPDATE/NO\_UPDATE replay.
+
+Our matched families use File/Gmail and Todo/Note/File workflows. Each family is compiled into INDEPENDENT, LOW, and HIGH coupling variants while preserving the target task and non-topological difficulty controls.
+
+\subsection{Gate 0: capability is necessary but insufficient}
+A disjoint capability panel asks whether the actor can complete representative multi-app tasks without malformed calls or unrelated-state damage. On the historical CodingPlan harness, MiMo 2.5 Pro passed its frozen gate: target success $7/8$, tool-loop completion $7/8$, and non-target preservation $8/8$. Because that transport was later retired after native-tool/persona contamination was identified in subsequent qualification work, this PASS is retained as historical design evidence and is not inherited by the clean direct actor.
+
+Even on that same historical harness, capability did not imply mechanism readiness. In the original F0 source stage the experimental program observed target success on all eight source families. Thus
+\begin{equation}
+8/8\ \text{source successes}\Rightarrow 0\ \text{target failures}\Rightarrow 0\ \text{repairs}\Rightarrow 0\ \text{mechanism probes}.
+\end{equation}
+We classify this as a \emph{source-substrate stop}, not a negative result for constraint coupling.
+
+\subsection{Gate 1: source-failure qualification}
+A valid source failure must satisfy four requirements: (i) normal scientific termination; (ii) target evaluator false; (iii) no provider, transport, harness, malformed-tool, or forced-cap failure; and (iv) a complete target-relevant trajectory for the repair writer.
+
+Development iterations demonstrated why this distinction matters. One qualification run produced six usable semantic File/Gmail failures before a Todo/Note/File case selected an AtomCode-native \texttt{read\_file} tool outside the scientific AppWorld tool surface. The frozen non-semantic-failure rule invalidated the qualification. Those six failures remain development observations only.
+
+We therefore rebuilt a clean direct-provider development set, Direct-SFQ-A0, containing 12 fresh cases (six File/Gmail and six Todo/Note/File). Static qualification currently establishes:
+\begin{itemize}
+ \item 12/12 public-oracle reachability;
+ \item maximum public-oracle path length 48 under an 80-call development cap, leaving at least 32 calls of headroom;
+ \item zero overlap in case IDs, instruction hashes, fixture hashes, and target-resource hashes against SQ0 V1--V5 and the old F0 source set.
+\end{itemize}
+Model execution of this fresh set remains blocked by direct-provider credit availability. No Direct-SFQ model outcome is claimed.
+
+\begin{table}[t]
+\centering
+\caption{Evidence ladder and current status. Qualification evidence is separated from mechanism evidence.}
+\label{tab:ladder}
+\small
+\begin{tabular}{p{0.18\linewidth}p{0.43\linewidth}p{0.30\linewidth}}
+\toprule
+Layer & Question & Current status \\
+\midrule
+Capability & Can the actor perform representative tasks? & Historical PASS; not inherited as clean-direct evidence \\
+Source failure & Do fresh cases yield semantic repairable failures? & Fresh set static-qualified; execution pending \\
+RQ1 phenomenon & Does a successful local repair create collateral regression? & Not executed \\
+RQ2 mechanism & Does coupling topology moderate the externality? & Not executed \\
+RQ3 prediction & Does outcome-blind topology rank future risk? & Prospective design only \\
+RQ4 mitigation & Can targeted checks reduce harm at fixed budget? & Conditional; closed \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{RQ1: Does a successful local repair create collateral regression?}
+\label{sec:rq1}
+The first confirmatory endpoint is not a topology contrast. For each eligible repair family, we first require positive target repair uptake. We then compare UPDATE and NO\_UPDATE from the same pre-update snapshot and report pooled $\mathrm{UE}$ across topology arms. Negative values are retained rather than truncated.
+
+The main reporting unit is the repair family. Episode-level executions are technical repeats, not independent scientific samples. Results will jointly show target gain and collateral regression so that an overall task-success metric cannot hide ``fix one, break another'' behavior.
+
+A null RQ1 result stops the externality story even if a later arm-level difference could be manufactured. In that case topology may still affect ordinary task difficulty, but the paper cannot claim a local-repair externality mechanism.
+
+\section{RQ2: Does constraint coupling cause the externality?}
+\label{sec:rq2}
+RQ2 opens only after RQ1 establishes the phenomenon. Each eligible family reuses exact repair bytes $u$ across INDEPENDENT, LOW, and HIGH worlds. The primary contrast is $\Delta_{\mathrm{topo}}=\mathrm{UE}_{H}-\mathrm{UE}_{I}$. LOW is retained for the ordered secondary prediction $H\ge L\ge I$.
+
+Mechanism localization further decomposes collateral regressions by graph distance to the target and by shared mutable-resource exposure. These analyses are meaningful only because graph structure is frozen outcome-blind. If ordinary controls for count, instruction length, task difficulty, or update size absorb the contrast, the topology claim is stopped rather than rescued by changing families or actors.
+
+\section{RQ3: Prospective structural prediction}
+\label{sec:rq3}
+A causal mechanism becomes substantially more useful if it predicts risk before the non-target failure is observed. We therefore avoid a flexible learned graph-risk model and freeze a parameter-free ranking rule, \emph{ExposureRank}:
+\begin{enumerate}
+ \item direct prerequisite or target-write$\rightarrow$non-target-read/write edges first;
+ \item larger shared mutable-resource count first;
+ \item shorter prerequisite/resource path distance first;
+ \item stable constraint hash only as a deterministic tie break.
+\end{enumerate}
+The value of $k$ is determined from the allowed future probe budget before held-out outcomes. On families never used for challenge construction or calibration, the preregistered test asks whether update-attributable regressions are enriched in ExposureRank top-$k$ relative to same-$k$ random ranking.
+
+Failure of this prospective enrichment stops the prediction claim and prevents the mitigation stage from opening. We do not fit a new risk model after seeing held-out labels.
+
+\section{Conditional minimum mitigation}
+\label{sec:gtcc}
+If RQ1--RQ3 all pass, the same frozen ExposureRank induces a minimum safeguard: \textbf{Graph-Targeted Collateral Check (GTCC)}. Before committing a target-local repair, the system evaluates the target and the top-$k$ exposed non-target constraints from a matched pre-update snapshot. The repair is committed only when target validation is positive and the selected collateral checks reveal no new update-attributable regression.
+
+GTCC is intentionally simple. It is compared against:
+\begin{itemize}
+ \item \textbf{Always Commit};
+ \item \textbf{Target-Only Validation};
+ \item \textbf{Random-$k$ Collateral Check}, using the same probe budget;
+ \item \textbf{Full Non-target Check}, reported as an oracle/upper bound rather than a same-cost baseline.
+\end{itemize}
+If Random-$k$ matches GTCC, we do not claim a topology-aware mitigation advantage. If a simple nearest/exposure rule is sufficient, we do not introduce a learned controller.
+
+\section{Current evidence and what it does not show}
+\label{sec:current}
+The current project history contains useful evidence, but most of it concerns experimental validity rather than the target mechanism.
+
+\paragraph{What is supported.}
+The AppWorld matched-topology construct, agent-visible treatment, state reset, programmatic evaluator, and exactly-once execution machinery are implementable. The old F0 source execution directly demonstrates that capability qualification does not guarantee the availability of repairable failures. Fresh Direct-SFQ-A0 cases are publicly reachable under their frozen development budget and are content-disjoint from prior development/source sets.
+
+\paragraph{What is not supported.}
+There is currently no scientific evidence that a successful local repair increases collateral regression, no evidence that HIGH coupling is more dangerous than INDEPENDENT coupling, no held-out topology-prediction result, and no GTCC method gain. Provider-credit failures and AtomCode transport contamination are execution-layer failures, not scientific negatives.
+
+\section{Experimental plan after the source gate}
+\label{sec:plan}
+Following the source-failure gate, the confirmatory experiment will freeze all remaining degrees of freedom before any collateral outcome is read. The main table is designed to answer claims rather than enumerate implementation variants.
+
+\begin{table}[t]
+\centering
+\caption{Planned claim-aligned experimental matrix. Rows open sequentially; a failed row closes all dependent claims.}
+\label{tab:matrix}
+\small
+\begin{tabular}{p{0.13\linewidth}p{0.25\linewidth}p{0.27\linewidth}p{0.21\linewidth}}
+\toprule
+Stage & Main comparison & Primary readout & Stop condition \\
+\midrule
+RQ1 & UPDATE vs NO\_UPDATE & Target gain + pooled UE & No collateral phenomenon \\
+RQ2 & HIGH vs INDEPENDENT; LOW ordered & $\Delta_{\mathrm{topo}}$ + exposure profile & Topology absorbed by ordinary controls \\
+RQ3 & ExposureRank top-$k$ vs random-$k$ & Held-out regression enrichment & No prospective enrichment \\
+RQ4 & GTCC vs Random-$k$/Target-only/Always & Collateral rate at matched budget & Random-$k$ equivalent to GTCC \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A public-benchmark and multi-model expansion is deliberately downstream. Once the mechanism-facing RQs survive, the main result table should compare multiple capability tiers and include both target utility and collateral harm. A multi-round extension is justified only if the paper expands its claim from a single persistent repair to accumulated self-evolution.
+
+\section{Related work}
+\label{sec:related}
+\paragraph{Persistent agent memory and error propagation.}
+\citet{xiong2026memory} show that LLM agents follow retrieved experience and can propagate errors or replay misaligned experiences. \citet{zhang2026faultymemory} further show that continuously consolidated memories can become faulty even when useful underlying experiences are available. These results motivate auditing persistent updates, but they do not isolate the same successful repair under manipulated constraint-coupling topology. Our intended contribution is treatment-level attribution of previously satisfied non-target regression.
+
+\paragraph{Structured skills and faithful evolution.}
+SkillZip treats a skill as a typed behavioral object whose triggers, workflow edges, tool requirements, obligations, and output fields must survive compression~\citep{bai2026skillzip}. SkillZip Pro extends this view to progressively loaded directory bundles and preserves routing/loading boundaries~\citep{bai2026skillzippro}. We borrow the methodological lesson rather than the compression objective: scientific objects should preserve execution-relevant contracts and boundary conditions. Here that means treating capability, source-failure availability, repair uptake, collateral outcomes, and topology as separate objects instead of collapsing them into one success score.
+
+\paragraph{AppWorld and collateral state changes.}
+AppWorld provides stateful multi-app tasks and programmatic evaluation that can detect unexpected state changes~\citep{trivedi2024appworld}. Our study turns that general capability into a matched counterfactual design: the same pre-update snapshot and same repair are replayed with and without the update, then across outcome-blind topology arms.
+
+\begin{table}[t]
+\centering
+\caption{Positioning by scientific object rather than by the broad topic ``agent memory.''}
+\label{tab:related-position}
+\small
+\begin{tabular}{p{0.17\linewidth}p{0.26\linewidth}p{0.22\linewidth}p{0.20\linewidth}}
+\toprule
+Work & Primary object & Update-attributable non-target endpoint & Same-update structural test \\
+\midrule
+Xiong et al.~\citep{xiong2026memory} & Memory add/delete and experience following & Error propagation, but not matched collateral attribution & No \\
+Zhang et al.~\citep{zhang2026faultymemory} & Continuous memory consolidation & Memory utility degradation & No \\
+SkillZip / Pro~\citep{bai2026skillzip,bai2026skillzippro} & Skill contract / bundle compression & Contract and route preservation & No \\
+Ours & Persistent target-local repair family & Previously satisfied non-target regression & Exact repair bytes + matched topology + held-out prediction \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+\paragraph{Why the qualification failures matter scientifically.}
+A capability PASS followed by 8/8 source successes might look like an inconvenient pilot failure. Instead, it reveals an identifiability condition: a learning experiment requires failures that are both semantic and repairable. Selecting an actor only for competence can eliminate the treatment; selecting an actor only for frequent failure can create a capability floor. The source-failure gate is therefore part of the scientific design, not engineering cleanup.
+
+\paragraph{Why this is not a method-first paper.}
+GTCC is deliberately conditional. If local repair does not create update-attributable collateral regression, there is nothing for a topology-aware safeguard to solve. If topology does not prospectively rank risk, a targeted check has no structural justification. This keeps the method proportional to the supported mechanism.
+
+\paragraph{Why current development outcomes stay out of the main claim.}
+Six semantic failures observed before a transport-contaminated SQ0 stop are useful for designing fresh challenges but cannot qualify the final experiment. Likewise, an insufficient-credit provider response cannot be interpreted as model incapability. We preserve these artifacts for reproducibility while keeping them outside the mechanism estimand.
+
+\section{Limitations}
+The decisive mechanism experiment is not yet executed, so the present manuscript is a working scientific object rather than a submission-ready empirical paper. The matched AppWorld families are controlled extensions rather than a random sample of all agent tasks. The outcome-blind graph captures declared mutable-resource and prerequisite relationships but may miss latent dependencies. A successful AppWorld result would still require cross-model and broader-task validation before making general claims about self-evolving agents. Finally, GTCC introduces extra probes and therefore trades runtime cost against collateral-risk coverage; that trade-off must be measured rather than assumed.
+
+\section{Conclusion}
+A local repair should not be judged only by whether its target improves. The stronger reliability question is whether previously satisfied constraints remain intact, and whether any new regression can be attributed to the repair rather than to ordinary task difficulty or stochasticity. We formulate that question as update-attributable collateral regression and isolate constraint coupling with an exact-same-update matched-topology design. Our execution history shows why capability, repairable-failure availability, mechanism evidence, prospective prediction, and mitigation must be separated. The next valid scientific result must begin with a clean source-failure qualification; only then can the paper test whether local repairs truly stay local.
+
+\section*{Reproducibility Statement}
+All experimental gates are content-addressed. Provider, transport, measurement, source-substrate, and scientific failures are stored as distinct artifacts. Exactly-once execution forbids automatic replay after durable dispatch; retries and replacements require separately frozen authority. Development source-failure cases are excluded from future confirmatory families, and topology/ranking objects are frozen before the outcomes they are intended to explain or predict.
+
+\section*{AI Use Statement}
+Generative AI tools were used to refine hypotheses and experimental methodology, assist with research software, inspect experiment artifacts, search related literature, draft manuscript text, and generate adversarial review feedback. Quantitative statements are checked against persisted source-bound artifacts. The authors take responsibility for the final claims, citations, and experimental decisions.
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+\end{document}
