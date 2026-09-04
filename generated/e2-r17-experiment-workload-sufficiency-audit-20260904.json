@@ -1,0 +1,62 @@
+{
+  "artifact_type": "e2-r17-experiment-workload-sufficiency-audit",
+  "date": "2026-09-04",
+  "status": "EXPERIMENT_QUANTITY_SUFFICIENT_EVIDENCE_TYPE_CONDITIONAL",
+  "completed_evidence": {
+    "historical_support": {
+      "k8_pools": 96,
+      "actor_rollout_refs": 768,
+      "mixed_pools": 78,
+      "exposed_streams": 12,
+      "failure_families": 6
+    },
+    "global_causal_study": {
+      "streams": 12,
+      "paired_replicate_units": 48,
+      "learned_states": 96,
+      "heldout_rollout_units": 1728,
+      "fresh_continuation_provider_claims_at_least": 4457,
+      "verdict": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+    }
+  },
+  "v3_r2_planned": {
+    "stage_a": {
+      "independent_skeletons": 5,
+      "semantic_cells_per_skeleton": 2,
+      "streams_total": 20,
+      "update_tasks_total": 160,
+      "k": 8,
+      "actor_rollouts": 1280,
+      "max_provider_calls": 12800,
+      "frozen_pools": 160,
+      "heldout_access": false
+    },
+    "stage_b_no_current_authority": {
+      "paired_stream_replicate_units": 80,
+      "learned_states": 160,
+      "common_heldout_tasks_per_state": 20,
+      "heldout_evaluations": 3200,
+      "primary_independent_mechanism_units": 5
+    }
+  },
+  "assessment": {
+    "compute_call_volume": "SUFFICIENT",
+    "measurement_replication": "SUFFICIENT",
+    "controlled_causal_coverage": "SUFFICIENT_IF_V3_EXECUTES_AND_PASSES",
+    "independent_mechanism_units": "MINIMAL_BUT_DEFENSIBLE_FOR_BOUNDED_CLAIM",
+    "natural_external_validity": "ABSENT_CONDITIONAL_ONE_TRANSPORT_TEST_RECOMMENDED",
+    "broad_benchmark_expansion_needed": false,
+    "more_synthetic_skeletons_needed_before_stage_a": false,
+    "second_backbone_required_before_central_claim": false
+  },
+  "decision_tree": {
+    "v3_interaction_fail": "STOP_STANDALONE_RESCUE_DO_NOT_EXPAND",
+    "v3_interaction_pass_secondary_pass": "CONTROLLED_CAUSAL_PAPER_CREDIBLE_ONE_NATURAL_TRANSPORT_OPTIONAL_HIGHEST_VALUE",
+    "v3_interaction_pass_secondary_fail": "INTERACTION_ONLY_TOO_WEAK_FOR_STRONG_STANDALONE_USE_ONE_NATURAL_TRANSPORT_AS_CLAIM_EXPANSION_IF_CONTINUING"
+  },
+  "next_gate": "EXISTING_FRESH_DEEPSEEK_IDENTITY_THEN_SEPARATELY_AUTHORIZED_STAGE_A",
+  "scientific_r2_unchanged": true,
+  "provider_calls_added_by_this_audit": 0,
+  "stage_a_authority": false,
+  "stage_b_authority": false
+}
