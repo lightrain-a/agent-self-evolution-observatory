@@ -65,41 +65,50 @@ If RQ1–RQ3 pass, does GTCC reduce collateral regression at matched probe budge
 
 ## Minimum sufficient experiment workload (proposal only; no execution authority)
 
+Canonical detailed plan: `consultations/agent-constraint-externality-minimum-effective-experiment-plan-20260904.md`.
+
 The objective is **identification per episode**, not a target episode count. All family counts below are planning caps/defaults, not quotas that must be exhausted. Before confirmatory execution, freeze: (i) the family-level estimand, (ii) the smallest scientifically meaningful effect for each claim, (iii) the paired analysis, and (iv) stop/continue rules. Never enlarge the sample because an interim effect looks promising or just misses a threshold.
 
 ### Must-have A — Primary controlled mechanism panel
-- Family is the scientific unit; episodes are technical repeats and must never be counted as independent `n`.
-- Use fresh balanced FG/TNF confirmatory families under the same `3 topology × 2 UPDATE/NO_UPDATE` matched design.
-- `24` families and `3` repeats are a **maximum planning envelope**, not a required workload.
-- Start from the smallest prespecified family cohort that can test the frozen smallest-relevant RQ1 effect with adequate precision. If more families are needed, expand only by a preregistered rule based on nuisance/precision quantities that do not use the observed treatment direction (e.g. usable-family rate, within-family variance, missingness), never by chasing the point estimate.
-- Repeats are used only to stabilize within-family stochastic execution. If two repeats already make the family-level outcome stable under a frozen agreement criterion, a third repeat should not be run merely to increase the row count.
-- RQ1 and RQ2 share this one panel; do not create duplicate datasets for the two claims.
-- Maximum envelope if fully needed: `24 families × 3 topology arms × 2 branches × 3 repeats = 432` probe episodes, plus one source episode and one frozen repair generation per family.
+- **Family is the scientific unit.** Episode/repeat counts are execution budget only and must never be reported as independent `n`.
+- Prospectively generate a **24-family reserve pool** balanced across FG/TNF before any confirmatory collateral outcome. The reserve pool is not a quota to exhaust.
+- A family becomes eligible only through preregistered pre-collateral gates: valid semantic source failure, valid frozen repair artifact, and positive target-only repair uptake. These gates may determine eligibility; non-target/collateral outcomes may not.
+- After an independent development-only stability/variance pilot, freeze both the required eligible-family count `N* ∈ {12,16,20,24}` and repeat count `R* ∈ {2,3}` **before** opening any confirmatory collateral outcome. Select the first `N*` eligible families by a frozen stable-hash order; reserve families are activated only for predeclared eligibility attrition, never because the effect looks weak or almost significant.
+- The default efficiency target is `N*=16, R*=2`, but this is **not** an execution commitment. If the development-only precision analysis requires a different frozen value, use that value prospectively.
+- Each eligible family uses the same `3 topology × 2 UPDATE/NO_UPDATE` matched design. RQ1 and RQ2 share this one panel; no duplicate mechanism dataset is created.
+- Default efficient envelope if `N*=16, R*=2`: `16 × 3 × 2 × 2 = 192` probe episodes. Absolute reserve envelope if `N*=24, R*=3`: `432` probes.
 
-The reason to allow more than the old 8 families is independent family-level support after source-failure/repair-uptake exclusions, not cosmetic breadth. If a smaller cohort already yields a narrow confidence interval around a scientifically meaningful null or positive effect, stop there.
+#### Semantic sham control — high-information mandatory subset
+- Before outcomes, predesignate a balanced subset (default `8` families by stable hash) for a `SHAM_UPDATE` control.
+- SHAM uses the **same persistent update surface** and matches the real repair's format/length budget as closely as possible, but contains no target-specific action rule and is frozen before any collateral outcome.
+- Run SHAM only on topology extremes `INDEPENDENT` and `HIGH`; compare `REAL_REPAIR vs SHAM_UPDATE vs NO_UPDATE` from the same snapshot.
+- This control answers the reviewer attack that any observed harm is merely a generic extra-context/persistent-text effect rather than repair semantics. It is more informative than adding another arbitrary model.
+- With `8` families and `R*=2`, the sham subset adds only `8 × 2 topology × 2 repeats = 32` episodes; with `R*=3`, 48.
+
+The mechanism panel therefore grows only when a pre-outcome precision requirement says it must, not because a numerical result needs rescuing.
 
 ### Must-have B — Prospective prediction panel
-- Use untouched families disjoint from source-development and RQ1/RQ2; `16` (`8 FG + 8 TNF`) is a planning cap/default, not a quota.
-- Freeze ExposureRank, all ablation rankings, tie-breaks, and `k` before outcomes.
+- Pre-generate `16` untouched held-out candidate families, disjoint from source-development and RQ1/RQ2. Freeze an eligible target count `H* ∈ {12,16}` before held-out outcomes using only coverage/eligibility criteria.
+- Freeze ExposureRank, every ablation ranking, tie-break, and `k` before outcomes.
 - Execute only the UPDATE/NO_UPDATE evidence needed to label update-attributable regression; do not repeat the full three-arm matrix unless the prediction estimand actually needs it.
-- Reuse the same held-out outcomes for Random rank, Same-App rank, shared-resource-count-only, distance-only, full ExposureRank, and an outcome-aware oracle upper bound. These ranking ablations should cost **zero additional actor episodes**.
-- Add held-out families only if a preregistered precision/coverage criterion is not met; never add them because ExposureRank is close to significance.
-- Maximum envelope if fully needed: `16 × 2 branches × 3 repeats = 96` probe episodes.
+- Reuse the **same held-out outcomes** for Random rank, Same-App rank, shared-resource-count-only, distance-only, full ExposureRank, and an outcome-aware oracle upper bound. These ranking ablations cost zero extra actor episodes.
+- Default efficient envelope: `H*=12 × 2 branches × R*=2 = 48` probes. Maximum planned envelope: `16 × 2 × 3 = 96`.
+- Never add held-out families because ExposureRank is close to significance.
 
 ### Must-have C — Mitigation panel
-- Open only after RQ1–RQ3 pass. If any upstream gate fails, this entire panel is unnecessary.
-- `16` fresh families and `3` repeats are planning caps/defaults.
+- Open only after RQ1–RQ3 pass. If any upstream gate fails, this panel is not run.
+- Pre-generate `16` fresh policy-evaluation candidates, but target `M* ∈ {8,12,16}` is frozen before policy outcomes. Default efficient target is `M*=12`.
 - Compare only policies that answer distinct reviewer alternatives: Always Commit, Target-Only Validation, Random-k, Same-App-k, and GTCC.
 - `k` and total probe budget are exactly matched for Random-k / Same-App-k / GTCC.
-- Full Non-target Check is an oracle/upper bound on a small prespecified subset, not a same-cost baseline and not something to run over the whole panel.
-- Prefer paired policy evaluation on the same family/snapshot so each additional episode reduces uncertainty in a direct contrast.
-- Maximum envelope if fully needed: `16 × 5 policies × 3 repeats = 240` policy episodes.
-- Report target success/repair gain, collateral regression rate, commit rate, paired gain/CI, LLM requests, tool calls, and wall-clock cost. If GTCC and Random-k are practically equivalent within the frozen meaningful-effect margin, stop the method claim instead of adding more families until a difference appears.
+- Full Non-target Check is an oracle/upper bound on a small prespecified subset (default 6 families), not a same-cost baseline and not a full-panel workload.
+- Prefer paired policy evaluation on the same family/snapshot.
+- Default efficient envelope: `M*=12 × 5 policies × R*=2 = 120` policy episodes. Maximum planned envelope: `16 × 5 × 3 = 240`.
+- Report target success/repair gain, collateral regression rate, commit rate, paired gain/CI, LLM requests, tool calls, and wall-clock cost. If GTCC and Random-k are practically equivalent within the frozen meaningful-effect margin, stop the method claim instead of adding families until a difference appears.
 
 ### Conditional external-validity check — not a mandatory workload quota
 - Do **not** repeat the entire paper across seven models.
-- Only after RQ1/RQ2 are established on the primary actor, use one additional capability-qualified actor first on a pre-frozen stratified subset. Add a second actor only if the first replication leaves a material model-dependence ambiguity.
-- A `12`-family subset and `2` repeats are an upper planning default, not a fixed obligation.
+- Only after RQ1/RQ2 are established on the primary actor, use **one** additional capability-qualified actor first on a pre-frozen stratified subset.
+- Default: `8` primary families × `3 topology × 2 branches × R*=2 = 96` episodes. Add a second actor only if this first replication leaves a material model-dependence ambiguity that changes claim scope.
 - Model cells are supporting external validity and are never pooled as extra scientific `n` for the primary family-level causal claim.
 
 ### High-value optional expansion — external updater compatibility
@@ -112,8 +121,9 @@ Only if the paper claims persistent multi-update self-evolution rather than sing
 
 ### Causal baselines (mandatory for RQ1/RQ2)
 1. `NO_UPDATE` from the same snapshot — identifies update-attributable harm.
-2. `INDEPENDENT` topology with exact same repair bytes — identifies the structural topology contrast.
-3. `LOW` topology — ordered secondary dose-response arm, not a replacement for the independent control.
+2. `SHAM_UPDATE` on a predesignated subset — rules out generic persistent-text/context effects while preserving update surface and approximate format/length budget.
+3. `INDEPENDENT` topology with exact same real repair bytes — identifies the structural topology contrast.
+4. `LOW` topology — ordered secondary dose-response arm, not a replacement for the independent control.
 
 ### Mitigation baselines (mandatory for RQ4)
 1. `Always Commit` — naive persistent local repair.

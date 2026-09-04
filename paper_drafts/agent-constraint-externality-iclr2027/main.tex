@@ -171,7 +171,7 @@ There is currently no scientific evidence that a successful local repair increas
 
 \section{Experimental plan after the source gate}
 \label{sec:plan}
-Following the source-failure gate, the confirmatory experiment will freeze all remaining degrees of freedom before any collateral outcome is read. The main table is designed to answer claims rather than enumerate implementation variants. Planned family counts and repeats are treated as maximum envelopes, not workload targets: the protocol will freeze the smallest scientifically meaningful effect and family-level precision criterion, use paired within-family contrasts to maximize information per episode, and permit any sample-size expansion only through outcome-direction-blind nuisance/precision rules. We do not add families or repeats because a treatment effect is close to a desired threshold.
+Following the source-failure gate, the confirmatory experiment will freeze all remaining degrees of freedom before any collateral outcome is read. Candidate families are generated prospectively as a reserve pool; the final eligible-family count and repeat count are frozen from development-only precision/stability information, not from confirmatory effect direction. A predesignated subset also receives a length/format-matched sham update to separate repair semantics from generic persistent-context effects. The main table is designed to answer claims rather than enumerate implementation variants. Planned family counts and repeats are treated as maximum envelopes, not workload targets: the protocol will freeze the smallest scientifically meaningful effect and family-level precision criterion, use paired within-family contrasts to maximize information per episode, and permit any sample-size expansion only through outcome-direction-blind nuisance/precision rules. We do not add families or repeats because a treatment effect is close to a desired threshold.
 
 \begin{table}[t]
 \centering
@@ -182,7 +182,7 @@ Following the source-failure gate, the confirmatory experiment will freeze all r
 \toprule
 Stage & Main comparison & Primary readout & Stop condition \\
 \midrule
-RQ1 & UPDATE vs NO\_UPDATE & Target gain + pooled UE & No collateral phenomenon \\
+RQ1 & REAL vs NO\_UPDATE; sham subset & Target gain + pooled UE + sham exclusion & No collateral phenomenon / real=sham \\
 RQ2 & HIGH vs INDEPENDENT; LOW ordered & $\Delta_{\mathrm{topo}}$ + exposure profile & Topology absorbed by ordinary controls \\
 RQ3 & ExposureRank top-$k$ vs random-$k$ & Held-out regression enrichment & No prospective enrichment \\
 RQ4 & GTCC vs Random-$k$/Same-App-$k$/Target-only/Always & Collateral rate at matched budget & Budget-matched heuristics equivalent to GTCC \\
