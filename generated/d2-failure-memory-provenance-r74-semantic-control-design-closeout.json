@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R74-SEMANTIC-CONTROL-DESIGN-CLOSEOUT",
+  "recorded_date": "2026-09-04",
+  "status": "R74_R72_R73_DESIGN_PASS_EXECUTION_STILL_USER_GATED",
+  "role": "POST_R3_ZERO_PROVIDER_DESIGN_CLOSEOUT",
+  "bindings": {
+    "r72_protocol_file_sha256": "73612d4cf6d364d20c4daec90b79f8c385e6679f10d9c9b56999192f888d07f3",
+    "r72_protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
+    "r72_hold_file_sha256": "16ed4a326b283c04e218e077cc5bd5308f6332a553eb070df79bc975af70e2d3",
+    "r72_hold_receipt_sha256": "13032b5572809e63b834b0bd849c70fb0ff29cbcec405337f64dc779c27f7594",
+    "r74_r3_review_file_sha256": "2b20c892fef97189155cfc6f262a2a7f77720d3bebec96e377e55c9125e75017",
+    "r74_r3_review_receipt_sha256": "7aaabc3c854098615ba7aacb11012d4b6feafa503d7c6ae5bf36f9e750aa6b38"
+  },
+  "scientific_design": {
+    "verdict": "PASS_R72_ZERO_PROVIDER_DESIGN",
+    "planned_trajectories": 321,
+    "Qwen": 189,
+    "Llama": 132,
+    "new_baseline_required": false,
+    "new_task_required": false,
+    "new_model_required": false,
+    "new_substrate_required_for_current_claim": false
+  },
+  "next_gate": "EXPLICIT_USER_EXECUTION_START_REQUIRED_BEFORE_GENERATING_EXECUTION_AUTHORITY",
+  "authority": {
+    "qwen_execution": false,
+    "llama_execution": false,
+    "analysis": false,
+    "gpu": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false
+  },
+  "new_model_trajectories": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "bca2052dbdd6b5c8416490c2c7dd65a7c01ebb1eec9b241b667eb048afc2067a"
+}

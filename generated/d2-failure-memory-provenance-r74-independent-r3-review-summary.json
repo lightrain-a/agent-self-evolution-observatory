@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R74-INDEPENDENT-R3-REVIEW-SUMMARY",
+  "recorded_date": "2026-09-04",
+  "status": "INDEPENDENT_GPT_WEB_R3_PASS_R72_ZERO_PROVIDER_DESIGN",
+  "role": "FRESH_INDEPENDENT_BLOCKER_ONLY_R3_PREEXECUTION_REVIEW",
+  "review_surface": {
+    "project_conversation_url": "https://chatgpt.com/g/g-p-6a6ad664d6508191bff6ecf4fde868f0-agent/c/6a9a39a7-8058-83e8-bbd1-34356bc6f03d",
+    "browser_host": "10.42.8.52",
+    "assistant_message_id": "40051472-437f-4255-bed2-e2ca6be51c22",
+    "assistant_message_status": "finished_successfully",
+    "assistant_end_turn": true,
+    "assistant_text_chars": 5393,
+    "assistant_text_sha256": "1849a04fe40f39350a1b14706f8abbfd84f9e831c93cef3e5ae9ce97a2835f5f",
+    "resolved_model_slug": "gpt-5-6-thinking",
+    "live_ui_model": "GPT-5.6 Sol",
+    "live_ui_thinking_effort": "Extra High, 4 of 5",
+    "backend_thinking_effort": "max",
+    "request_id": "wfr_01a06a7136bd72ee963c323c6ec17e78",
+    "faster_model_retry_used": false,
+    "body_recovered_from_existing_react_message_state": true
+  },
+  "verdict": "PASS_R72_ZERO_PROVIDER_DESIGN",
+  "verdict_changing_required_fixes": [],
+  "findings": {
+    "missingness_counterexample_closed": true,
+    "completion_space_valid_and_conservative": true,
+    "exact_S_treatment_freeze_closed": true,
+    "retry_treatment_identity_closed": true,
+    "new_verdict_changing_defect": false,
+    "design_level_execution_authorizable": true,
+    "additional_trajectories_required": 0,
+    "additional_baselines_tasks_models_required": false,
+    "frozen_Qwen_trajectories": 189,
+    "frozen_Llama_trajectories": 132,
+    "frozen_total_trajectories": 321
+  },
+  "scope": {
+    "no_cross_model_pooling": true,
+    "no_equivalence_upgrade": true,
+    "no_semantic_reasoning_claim_from_local_diagnostics": true,
+    "independent_writer_retriever_substrate_not_required_for_current_narrow_claim": true
+  },
+  "new_model_trajectories_observed": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "7aaabc3c854098615ba7aacb11012d4b6feafa503d7c6ae5bf36f9e750aa6b38"
+}

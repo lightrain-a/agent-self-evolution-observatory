@@ -102,12 +102,18 @@ Diagnostics:
 
 `NO_EFFECT_DETECTED` remains an inconclusive/no-resolved-increment state, not equivalence, practical smallness, prompt-format-only proof, or provenance irrelevance.
 
+## R3 closeout
+
+A fresh independent GPT-5.6 Sol + Extra High blocker-only R3 review completed successfully and returned:
+
+`PASS_R72_ZERO_PROVIDER_DESIGN`
+
+It found no verdict-changing required fixes. In particular, it accepted the worst-case exact-sign-test completion space, the full-planned-N RD sensitivity bound, the exact 57-unit S treatment freeze, and identical retry treatment realization. It also confirmed that no additional baselines, tasks, models, or trajectories are required for the frozen narrow claim.
+
 ## Current gate
 
 Execution remains CLOSED:
 
 `generated/d2-failure-memory-provenance-r72-semantic-control-r3-execution-hold.json`
 
-All execution/analysis/GPU/PSMG/L3/paper-claim authorities remain false.
-
-The next and only gate before any provider execution is a fresh independent R3 pre-execution review of the two R2 repairs. No experiment should run before R3 PASS and a separate content-addressed execution authority is generated.
+All execution/analysis/GPU/PSMG/L3/paper-claim authorities remain false. R3 PASS makes the design scientifically executable, but this closeout intentionally keeps execution user-gated. The next step, if explicitly authorized, is to generate a separate content-addressed execution authority for the already frozen Qwen 189 + Llama 132 schedule; no provider execution should begin before that authority exists.
