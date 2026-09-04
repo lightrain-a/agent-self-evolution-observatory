@@ -333,33 +333,108 @@ Do not claim:
 
 ---
 
-## 9. Optional future claim-expansion protocol — not required for current paper
+## 9. Optional future claim-expansion protocol V2.1 — independently reviewed PASS, not required for current paper
 
-Only if we later broaden the empirical claim:
+V2.1 is a **prospective design only**. Execution authority remains CLOSED. Independent GPT-5.6 Sol + Extra High review first returned `REVISE_BEFORE_EXECUTION`; after four verdict-changing repairs, the same reviewer returned `PASS_MINIMUM_CLAIM_EXPANSION_DESIGN` and explicitly required no extra models, benchmarks, checkpoints, trajectories, or MMR-style main baselines.
 
-### P0 — non-clone Local STRI on a genuinely repeated-access agent
+### Source checkpoint acquisition
 
-- outcome-blind natural access checkpoints;
-- canonical primitive bytes/hashes/provenance;
-- O Original / R non-clone Repacked / I ID-placebo;
-- native physical-package ranker retained;
-- representation-neutral semantic capacity rather than physical package Top-k;
-- primary endpoint = programmatic primitive-set divergence `phi(E)`;
-- minimum mechanistic gate suggested by independent review: 8 checkpoints from >=4 natural trajectories, max 2/trajectory, >=2 workflow instances.
+Freeze one route before execution:
 
-If P0 has no stable non-clone local divergence, stop architecture-general expansion.
+- `FROZEN_POOL`: pre-existing untouched Original-only natural trajectories fixed before P0 treatment outcomes; or
+- `FINITE_NEW_POOL`: exactly 8 Original-only natural source trajectories under a finite preregistered task×seed schedule, covering >=2 task/workflow instances.
 
-### P1 — only after qualified P0 divergence
+No adaptive extension. If the frozen pool/block cannot yield 8 eligible checkpoints from >=4 independent trajectories and >=2 workflows, return `STOP_INSUFFICIENT_ELIGIBLE` before O/R/I replay.
 
-Fork from the same natural checkpoint:
+### P0 — non-clone Local STRI
 
-1. Original throughout;
-2. one-shot repack, then canonical representation;
-3. persistent repack.
+Freeze exactly 8 outcome-blind natural access checkpoints, max 2 per source trajectory.
 
-Measure semantic primitive reacquisition, reacquisition fraction/time, persistence, optional programmatic functional compensation, and frozen task outcome.
+Required arms:
 
-This is future work, not missing confirmation for the current narrow submission.
+1. `O` Original;
+2. `R` non-clone Repacked, e.g. canonical `A+B` macro versus separate `A` / `B` packages with identical primitive bytes/hashes and multiplicity one;
+3. `I` ID-placebo preserving package boundaries while regenerating IDs and representation-derived state through the same pipeline.
+
+Identification contract:
+
+- retain the native physical-package ranker;
+- do not use physical-package Top-k;
+- admit the longest native-ranked prefix under frozen canonical semantic capacity `C_sem`;
+- certify actor-visible `C_vis` is non-binding;
+- rebuild representation-derived embeddings/indexes/router/search/load/package-conditioned cache state per arm;
+- primary `D_sem = 1 - Jaccard(Phi(O), Phi(R))`;
+- required placebo `D_ID = 1 - Jaccard(Phi(O), Phi(I))`.
+
+Workload:
+
+```text
+P0 = 8 checkpoints × 3 arms = 24 access replays
+source acquisition = 0 or exactly 8 separately reported Original trajectories
+```
+
+Any `D_ID>0` stops package-partition attribution. P0 may report valid access divergence even if it is gain-only, but P1 requires a loss-bearing deficit.
+
+### P0 → P1 loss-bearing gate
+
+P1 opens only if at least four checkpoints have:
+
+- `L0 = Phi(O) \ Phi(R) != empty`;
+- corresponding `D_ID=0`;
+- all contracts valid;
+- the four span >=2 independent source trajectories.
+
+If fewer than four qualify: `STOP_DYNAMIC_INSUFFICIENT_LOSS`.
+If more than four qualify: choose exactly four by a frozen deterministic hash, never by effect size or behavior.
+
+### P1 — exactly four checkpoints / 12 full trajectories
+
+Required arms:
+
+1. `O`: Original throughout;
+2. `S`: one-shot Repacked at t0, then before the next access purge/rebuild all representation-controlled package/index/embedding/router/search/load/cache state to Original;
+3. `P`: persistent Repacked representation-controlled state at t0 and later accesses.
+
+The one-shot reset **does not erase endogenous historical consequences** of t0: task/environment state, observations/actions, planner/actor history, and model-visible conversation including the t0 skill exposure remain.
+
+At later accesses all arms keep the same ranker/model, reconstruction config, `C_sem`, non-binding `C_vis`, access budget, and tie-break policy.
+
+Primary dynamic readouts:
+
+- primitive reacquisition `tau_v` / complete `tau_all`;
+- reacquisition fraction;
+- persistence in subsequent access opportunities.
+
+Programmatic final task outcome and machine-checkable functional compensation are secondary.
+
+Workload:
+
+```text
+P1 = exactly 4 qualified checkpoints × 3 arms = 12 full trajectories
+```
+
+No adaptive expansion to 5–8 checkpoints. Heterogeneity/no interpretable dynamic separation weakens or stops the claim rather than triggering more trajectories.
+
+### P2 — optional second access architecture only
+
+P2 is **not** required for P0 or P1 and is not automatically triggered by P1. Run it only if the paper explicitly pursues an additional claim that P0 access sensitivity reproduces under a meaningfully different access schedule, e.g. per-turn retrieval versus progressive disclosure / actor-triggered `load_skill`.
+
+```text
+P2 = 8 checkpoints × O/R/I = 24 access replays
+```
+
+No P2 full trajectories by default. A second backbone with the same access schedule is lower-value than a genuinely different access architecture.
+
+### Maximum base workload
+
+```text
+existing frozen source pool: 24 P0 + 12 P1 + optional 24 P2 = max 60
+new finite source pool:      8 source + 24 P0 + 12 P1 + optional 24 P2 = max 68
+```
+
+Fail early at every gate. This workload is intentionally smaller than SkillZip Pro-style broad evaluations because every execution maps to a specific STRI claim/objection.
+
+This remains future claim expansion, not missing confirmation for the current narrow submission.
 
 ---
 

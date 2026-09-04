@@ -1,0 +1,1497 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R72-RENDERER-AUDIT",
+  "status": "R72_EXACT_SHUFFLE_FROZEN_REPRESENTATION_MATCHED_RENDERER_PASS",
+  "recorded_at": "2026-09-04T03:19:22+00:00",
+  "bindings": {
+    "r68_panel_receipt_sha256": "bdfb80d67e353a755f8df6a43fe4889e81f8ff2b7ea902a2e07934a31b99be20",
+    "tokenizer_audit_receipt_sha256": "cf436fe3fb5465a39ea9060adc6184ccb1c19878586b5cde8422020fa78792ad"
+  },
+  "field": "source_outcome_status",
+  "codes": {
+    "success": "S",
+    "failure": "F",
+    "unknown": "U"
+  },
+  "value_type": "string",
+  "units": 66,
+  "mixed_units": 57,
+  "checks": {
+    "P_T_same_schema_and_content_all_66": true,
+    "P_T_S_same_schema_and_content_all_57_mixed": true,
+    "S_is_nonidentity_count_preserving_within_retrieval_shuffle": true,
+    "exact_per_unit_S_sequence_content_addressed": true,
+    "preexposure_retries_must_reuse_exact_S_sequence": true,
+    "P_T_token_footprint_equal_under_both_executors_all_66": true,
+    "P_T_S_token_footprint_equal_under_both_executors_all_57_mixed": true,
+    "memory_order_and_membership_hash_bound_to_R68_panel": true,
+    "runtime_must_rebind_original_R54_content_before_rendering": true,
+    "no_task_outcome_observed": true
+  },
+  "rows": [
+    {
+      "task_id": "377",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "selected_content_sequence_sha256": "a336f4b6983497c16aa61d6e9657e768d12287ed6282430a9d986662f9ce09b9",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "492",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "ca0f54daea2efd6be0622b4d4160366db13487cebd0911f413fc56f7f10f5a25",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf",
+      "selected_content_sequence_sha256": "64ae747ff1f3a695d4aae48f5113fd02173e4b901f302892fe92f2cf1f4dd682",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "316",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "bac77c045007bb4b925e56b793b77297e0947c230866b64f607e4e0d2c97b431",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "be7aa5da9d471bff1aa99d470aa9ee70189eb4be48fb2f6da811c2b7e31d4abc",
+      "selected_content_sequence_sha256": "76909c70ed33940d825e992f8492ccde0846bb3ba307dced2ae222ce683dc7d6",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "63",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "1491825de051633b32d3d4f358271c36333d94567115975b140c901ee13fafd9",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "373",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "1f48cfdccb7ed446cd30f811948b352b42ad86e3f8607f81f9a176e44c27d683",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "selected_content_sequence_sha256": "731b2fed6f60a33cc1fe210bb5c70d3d9402716a1143ca1e0e5a9ef355950abf",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "57",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "34a9f3b2ffe2106b41d944da3af26a20a5a07341ac2a3f04106fc2c1f0fd2f59",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "331",
+      "retrieved_memory_count": 3,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "1f7afa5ba832c13f6d103b4b99431f655c6ea2bd7eda688f99f69b40982c3009",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "49fc8e8cbdf6a343450fef59f87582e26eda723a39cecec2386acaab316db0e6",
+      "selected_content_sequence_sha256": "1509889faabc3af5684bfa9963e40f72ecd8a18aa6dbc4caa45fa754887a2d2c",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "44",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "e24cf240c09f38fc0853863e5d2e923e635e80b2c37ff7df0df7f97370f85e18",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+      "selected_content_sequence_sha256": "46414d3e0bf16fa6466ef04555653b8b536a48f7814b447c1835f2a3a5ca7822",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "185",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "selected_content_sequence_sha256": "5e8e842a9740834cd33baf76cd45ae115798511a09e713877734d9a31926e018",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "454",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+      "selected_content_sequence_sha256": "bab7e58cfa9e4308e6b2d8ed518ff8341893e6821e6d6f8b7617e8ca9767326c",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "116",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "selected_content_sequence_sha256": "7f62e56108548255e4416f9a6ee6380eb98bb268592fd34171b8abcbeab93d1e",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "357",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995",
+      "selected_content_sequence_sha256": "e504a003ddad4b9af6dab4428b4f57e6003cf67ce505553653d6e5c92956ec3f",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "142",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "b7cea824ffa766223d5fcd978dab3429acf67107ee54402814988185e0831991",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540",
+      "selected_content_sequence_sha256": "29852b8c51ad5ff6ee5eac6ed00c59c756ba38c61642ab413b5d9325f564b417",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "285",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "d5c9d57d3eeda578e7a797a17be51c3568185bd61a2641ff6fa7b597d9ead932",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "338",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "selected_content_sequence_sha256": "a7ea8e3dbf8540586dbcbe70bd15e4579f347c4cee20dcb972ec9ff97504dd51",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "234",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "0a8b5e69aaecb58af9cc5f05a5c669b08793c1942e010d5a8c2c2e709b76d559",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+      "selected_content_sequence_sha256": "73c185563892797013a3bb85102ad0058cf83ab300eef5bef6e92cd24cf62403",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "36",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995",
+      "selected_content_sequence_sha256": "79fadb5dbcdfdd0c87e44a60d428cccb50e85e3652a665e1b426b5cfc7be4acb",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "474",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289",
+      "selected_content_sequence_sha256": "83488981c9e8e87f04a7be0279506edecafc5f21f5395975c56e60ae63bda7bd",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "301",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "selected_content_sequence_sha256": "47e5cb7e25503ce0bec48843d6a13f58e7b31e5a2e47a5c3c376e4f1ef2a3cda",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "329",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "fe062dd148e3b14b7b1721e04eb431c1881e17ed5cd1b5eab6f086cc1f8630c2",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5",
+      "selected_content_sequence_sha256": "10c5958a1c8871238a6021466f89623be1c57d70183fc49ddf8db5f495cd1a07",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "112",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "b1d4a11bbb18573211a6f07376a0e6101bd4ab3e64f4f5769bf525f7f34836d6",
+      "selected_content_sequence_sha256": "5eacda704e7ac5832e84cce7e02e76486e1a261a0b8c33c86288626c1848f08f",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "302",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "e3f6acf5f00605a3e949f8472067fcda2224c3e350e21c86ed62c9512017fb0d",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "39b487f48f2a869aa01391b997df3dec92d245ae2152c8f5f59c636d320088cd",
+      "selected_content_sequence_sha256": "948dd71b4a91bdee5eaed602bf4150fd1d0af8648f7b2f72a1a582224ad75267",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "496",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "b8f384625031064ef7f65851e65356d332ccec70e901c739d5daa5095fd48722",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "274",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "selected_content_sequence_sha256": "99584637b7f64146e7abcba56924dce4c8041ff2fcd96a4ccf327710ecff7ada",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "101",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5",
+      "selected_content_sequence_sha256": "ace6520697ee9925957afa3160bb351422f3814adcdeefc7f6e47afaa4168050",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "486",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "a1316012ce5c50011760a20eacff8207a65aaebe5125a0824799bf20bef55a18",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "412",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "2ddd53e9a16d1463ef864d262835254662e87ad7f7f4ffed923e87fd2363ed18",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "219",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540",
+      "selected_content_sequence_sha256": "691a9e50544f5c88036545b97cf6d8ec90a69524eabf7bb150eb8d0f1c647e16",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "108",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "ca0f54daea2efd6be0622b4d4160366db13487cebd0911f413fc56f7f10f5a25",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "023cfe27d63871a3eb79a4d36608156fec78198abc0e7cd594b4c634842e5097",
+      "selected_content_sequence_sha256": "0a60c120d02c8b79cb406540340a8b5ac856ba92ced0ea73ce58ecf78b82d90f",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "216",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540",
+      "selected_content_sequence_sha256": "91c9260869a3ad4e8bad6b8415df853cc2373d66c25e9d01f4226f82fed99c40",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "114",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "selected_content_sequence_sha256": "fb5f27ad9db150d0a8b2146b5af7184fb88a3eddf3268afda0c0690a5bd040e2",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "13",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "00ca209bba18a84af947fcbebf5a2211d9101b8ce25d9d44250c9e7cf4af0f5a",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "0eedd301bf100aac8003ebba7976707402df47a3d6306c201cd434af09d355bc",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "494",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "68a4fbe8b5d35d7526ea628f573322cb85ea9bc3fc619c9105805507e3d90ea5",
+      "selected_content_sequence_sha256": "474d102dbb88456cd40ba1c0ef89d470ec3d9a19a5d870c54ebf00cbf031bfca",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "232",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289",
+      "selected_content_sequence_sha256": "2ac0492869f72a0870045ac8240cecdf403d3a5859cc62f1ce008c6f83ca66e4",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "287",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "selected_content_sequence_sha256": "abc2a314b3e903b3449f3bb1da4126097cd00e9930deed2cb4479b05063d4c40",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "189",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289",
+      "selected_content_sequence_sha256": "6514983722c88736316aba07eaf62749135a759b5db93dd0511513b6bbbd7026",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "12",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "selected_content_sequence_sha256": "0632a0459cb517a292c90150258f07ae8fd48e07e34a655e71aee9a94da9fd62",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "424",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "bac77c045007bb4b925e56b793b77297e0947c230866b64f607e4e0d2c97b431",
+      "selected_content_sequence_sha256": "754ac47dc9edbc0841888df7bedd064eb26fdb36f29341b156ccd3b23a2c5dd1",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "490",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289",
+      "selected_content_sequence_sha256": "e2d10f9c769e9036894addcc3044c855df8357b2703a20cc96df2d1256a1c288",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "321",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "39b487f48f2a869aa01391b997df3dec92d245ae2152c8f5f59c636d320088cd",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "be7aa5da9d471bff1aa99d470aa9ee70189eb4be48fb2f6da811c2b7e31d4abc",
+      "selected_content_sequence_sha256": "c4b0cf07d732c2a3ee51bd4b9fd8636fa335f684dbbbdf205c34466da50e0f71",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "52",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "54170d3c36da1c47ae420a40f66578678f623ffe503179641421823d2397e3d4",
+      "selected_content_sequence_sha256": "79720c0811fc32717cc09d6aed669ab688814af9124e10cbadb69d51126a39d6",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "409",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "1f48cfdccb7ed446cd30f811948b352b42ad86e3f8607f81f9a176e44c27d683",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995",
+      "selected_content_sequence_sha256": "efd4d029502f011eabaf0c793e6e0dc5bfea8cfa9228a42efc895437bea17a22",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "433",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "1f48cfdccb7ed446cd30f811948b352b42ad86e3f8607f81f9a176e44c27d683",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "selected_content_sequence_sha256": "fc76038e023869484f1d5855cdbc899bf10f3343e70699adfe3f6adb0f684759",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "308",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "selected_content_sequence_sha256": "a1e0d06d272b28455653981bf6059f2729b2eb6bb73613afaed176f1cf50166d",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "343",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+      "selected_content_sequence_sha256": "382bbfee7b281ab42148f4773e26941ba8ab7a4e4d010e74f0afe31af99d61cd",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "445",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "selected_content_sequence_sha256": "ad5fd96437403578bdc61d59e70be275790f72535bc1193f86e759018dd44b8e",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "295",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5",
+      "selected_content_sequence_sha256": "b54c3221c967ee596f4a78b8c1ce9b13595b5db6b1fafe9c458c279cf1937fd1",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "444",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "ed73268da65476dbd3d7f9b0c15ff217ceaad8d1bbb551353f6d7a8df16b2627",
+      "selected_content_sequence_sha256": "08235bc90f8f59d50d6f248e06d2bb998e15a69b587ab58096721a08b4b68bc3",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "111",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "selected_content_sequence_sha256": "abab2207c49fbbed696ef4fa350d83a86a238cb193c2d4e57a8c2254dd06fd52",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "87",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "b7cea824ffa766223d5fcd978dab3429acf67107ee54402814988185e0831991",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "e24cf240c09f38fc0853863e5d2e923e635e80b2c37ff7df0df7f97370f85e18",
+      "selected_content_sequence_sha256": "c7686700e0f87af0c39254929ee3af7a8e6b4235112ad69e9435c2f4b84349c5",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "298",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "68a4fbe8b5d35d7526ea628f573322cb85ea9bc3fc619c9105805507e3d90ea5",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5",
+      "selected_content_sequence_sha256": "53a43dc4e1be00af5b5067a23d4c81ae679b5114dc704f5d4df6d609c81239a8",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "346",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "5dc16e3a593479f8d6d6666e5b58fc14d44216bf6e0ae7af147d2d563e1674f9",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "b1d4a11bbb18573211a6f07376a0e6101bd4ab3e64f4f5769bf525f7f34836d6",
+      "selected_content_sequence_sha256": "7483f1a7fb94179f95d4249efa65cad6bf048976d3206f24ebb519a701ad213b",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "137",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "00ca209bba18a84af947fcbebf5a2211d9101b8ce25d9d44250c9e7cf4af0f5a",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "46da1120152d0067545370350d88cd74e803a6ae54bbf32da68bec30f2bfd1d3",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "359",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "e24cf240c09f38fc0853863e5d2e923e635e80b2c37ff7df0df7f97370f85e18",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540",
+      "selected_content_sequence_sha256": "19c43d0de3c98096cdb5522d28a9178c26ad47162c71a24ac919ee1c30b33fc8",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "148",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "b1d4a11bbb18573211a6f07376a0e6101bd4ab3e64f4f5769bf525f7f34836d6",
+      "selected_content_sequence_sha256": "bff7e601d5eb6d8dcbba195b846842b3c73878fcf8c55b9c7d63af86cd9bff6b",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "376",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5",
+      "selected_content_sequence_sha256": "2b9981756fe0e67f15055fd7a178a0d2080249a04e042983bdea4681e859dfb2",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "33",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "79149c5ab859386f9243bf18c4fe6eff0ce3f7827eda7963b96fdca9d5a70a21",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf",
+      "selected_content_sequence_sha256": "5c9d723a91d4426c087a8980372e1b53cc075660e8d2e8fed81e3544ea3da1ca",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "447",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "selected_content_sequence_sha256": "52741fde12bb6db958577c56fa36c0114204b1e8d32ae5c6fb8238f2d1170e7b",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "126",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "S",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "79149c5ab859386f9243bf18c4fe6eff0ce3f7827eda7963b96fdca9d5a70a21",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "bac77c045007bb4b925e56b793b77297e0947c230866b64f607e4e0d2c97b431",
+      "selected_content_sequence_sha256": "745e98e089d5a345be39890a0d8dab06793cac0f19ad1e171b5a068eafe7687a",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "464",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "0a8b5e69aaecb58af9cc5f05a5c669b08793c1942e010d5a8c2c2e709b76d559",
+      "selected_content_sequence_sha256": "d0b065c9b2de88b2eb837919655a4d313a5f5292b89f34e79f54d82254afced9",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "390",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "5dc16e3a593479f8d6d6666e5b58fc14d44216bf6e0ae7af147d2d563e1674f9",
+      "shuffled_code_sequence": [
+        "S",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "0a8b5e69aaecb58af9cc5f05a5c669b08793c1942e010d5a8c2c2e709b76d559",
+      "selected_content_sequence_sha256": "dc5f997a9a231b6ac52c36b3c7b62cd94d6b3197af2cc3ee449c1be194862bd3",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "166",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": false,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "cba3219203c25e978ce0e914afc35fdff4810f7e84022f4016ffa254b7efdf70",
+      "shuffled_code_sequence": null,
+      "shuffled_code_sequence_sha256": null,
+      "selected_content_sequence_sha256": "d5c9d57d3eeda578e7a797a17be51c3568185bd61a2641ff6fa7b597d9ead932",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "255",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "F",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+      "selected_content_sequence_sha256": "9d2b70dceca8fa3427c0f8b7cadb578763a921f40605ef3f17f22b2c2397978c",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "51",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "F",
+        "S"
+      ],
+      "truthful_code_sequence_sha256": "7b761024b9681349763e7eb6566902f0521f86e892d9a0116cd5cc7a7c97f12c",
+      "shuffled_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "be7aa5da9d471bff1aa99d470aa9ee70189eb4be48fb2f6da811c2b7e31d4abc",
+      "selected_content_sequence_sha256": "e4ceae77c0b1ab142e95add133efe914f80e03202df6eac529d4fef73f9c1f4a",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "23",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "S",
+        "S",
+        "S",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "54170d3c36da1c47ae420a40f66578678f623ffe503179641421823d2397e3d4",
+      "shuffled_code_sequence": [
+        "F",
+        "S",
+        "S",
+        "S",
+        "S"
+      ],
+      "shuffled_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+      "selected_content_sequence_sha256": "427cb875a0b1a450bd592bdedd1d7f6019740ef9cc3e54e79fd590f8e3d82a9d",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    },
+    {
+      "task_id": "299",
+      "retrieved_memory_count": 5,
+      "mixed_provenance": true,
+      "truthful_code_sequence": [
+        "F",
+        "F",
+        "F",
+        "S",
+        "F"
+      ],
+      "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+      "shuffled_code_sequence": [
+        "F",
+        "F",
+        "S",
+        "F",
+        "F"
+      ],
+      "shuffled_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+      "selected_content_sequence_sha256": "af1a52c7b080359e9dfc866532a09efa3c82b81d992bbbeea14d068b8ce03bc3",
+      "runtime_context_hash_bound_only_after_rebinding_original_R54": true
+    }
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "receipt_sha256": "464031d0d4074040dacfd8b5037ed7664ec2fc218770d3540acffa2efd63d3e6"
+}

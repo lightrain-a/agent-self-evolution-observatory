@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R72-INDEPENDENT-R2-REVIEW-SUMMARY",
+  "recorded_date": "2026-09-04",
+  "status": "INDEPENDENT_GPT_WEB_R2_REVIEW_REVISE_R70_BEFORE_EXECUTION",
+  "role": "ZERO_PROVIDER_FRESH_INDEPENDENT_R2_PREEXECUTION_METHOD_REVIEW",
+  "review_surface": {
+    "project_conversation_url": "https://chatgpt.com/g/g-p-6a6ad664d6508191bff6ecf4fde868f0-agent/c/6a9a34c0-9e88-83e9-b1c4-8c349d387185",
+    "browser_host": "10.42.8.52",
+    "assistant_message_id": "ba7f77fd-d240-4ee9-ac2a-6cfd079c4d56",
+    "assistant_message_status": "finished_successfully",
+    "assistant_end_turn": true,
+    "assistant_text_chars": 11821,
+    "assistant_text_sha256": "a135d5d8033c12d721ef73f11411528645d34c9afb7be645245be4fdef9438b5",
+    "resolved_model_slug": "gpt-5-6-thinking",
+    "live_ui_model": "GPT-5.6 Sol",
+    "live_ui_model_checked": true,
+    "live_ui_thinking_effort": "Extra High, 4 of 5",
+    "backend_thinking_effort": "max",
+    "request_id": "wfr_01a06a5e10c371eea6d702673945e67d",
+    "rate_limit_overlay_seen": true,
+    "faster_model_retry_used": false,
+    "body_recovered_from_existing_react_message_state_after_ui_render_loss": true
+  },
+  "verdict": "REVISE_R70_BEFORE_EXECUTION",
+  "review_findings": {
+    "T_minus_P_identification": "PASS",
+    "count_preserving_S_control": "PASS_WITH_EXACT_REALIZATION_FREEZE_REQUIRED",
+    "remove_no_memory_and_masked": "PASS",
+    "llama_P_T_only": "PASS",
+    "confirmatory_hierarchy": "PASS_SUBJECT_TO_MISSINGNESS_TEST_FIX",
+    "n_66_justified": true,
+    "run_matrix_321_minimal_for_declared_targets": true,
+    "broad_SOTA_memory_baselines_required": false,
+    "independent_writer_retriever_substrate_required_before_current_claim": false,
+    "three_preexposure_attempts_acceptable": true
+  },
+  "required_fixes": [
+    "For every confirmatory detection gate, require the exact paired sign test itself to survive worst-case completion of all technical-missing pairs in the adverse direction, not only the paired-risk-difference bound.",
+    "Before execution authority opens, freeze and content-address the exact per-unit S_shuffled assignments (or an immutable deterministic algorithm plus seed) and ensure every pre-exposure retry reproduces the identical shuffled treatment."
+  ],
+  "reviewer_counterexample": {
+    "observed_T_only": 6,
+    "observed_P_only": 0,
+    "technical_missing_pairs": 1,
+    "complete_case_exact_two_sided_p": 0.03125,
+    "worst_case_RD_lower_bound_positive": true,
+    "adverse_completion_T_only": 6,
+    "adverse_completion_P_only": 1,
+    "adverse_completion_exact_two_sided_p": 0.125,
+    "implication": "R70 could declare EFFECT_DETECTED even though an admissible technical-missing completion destroys exact-test significance."
+  },
+  "recommended_action": "Implement the two zero-provider fixes only; do not reopen removed baselines, panel size, Llama S, writer/retriever replication, or substrate replication.",
+  "new_model_trajectories_observed": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "e568d4e5657b0e079544ed184577f2f4d2cbb83fa708822b54fd7398be69b117"
+}
