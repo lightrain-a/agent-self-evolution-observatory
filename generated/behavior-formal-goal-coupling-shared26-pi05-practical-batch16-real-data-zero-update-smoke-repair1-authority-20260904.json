@@ -1,0 +1,66 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair1-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "status": "AUTHORIZED_PI05_PRACTICAL_BATCH16_REAL_DATA_ZERO_UPDATE_SMOKE_REPAIR1_FFMPEG6",
+  "scope": "Exactly-once repair of the consumed real-data batch16 zero-update smoke. The only execution change is LD_LIBRARY_PATH injection of the qualified FFmpeg 6 user runtime on host 231.",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_practical_batch16_real_data_zero_update_smoke_repair1.py",
+  "runner_sha256": "92e37ecd1b0e954b11b462ce2447cecc87c1e1ecd621ba2e77381496ad65ab6f",
+  "consumed_smoke": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-result-20260903.json",
+    "sha256": "ac5a84f884c4619d508179a74ea597a3de6553b1b853cf5a7c17068e9329b938"
+  },
+  "consumed_smoke_authority": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-authority-20260903.json",
+    "sha256": "769131998d297ab04c7e2cc3a1d107a7ba9c31a9655802048ad4eaafb6ce5e22"
+  },
+  "ffmpeg_hold_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-real-data-smoke-ffmpeg-hold-adjudication-20260904.json",
+    "sha256": "83fafe51caa0318c068fabfea8156349077ef8cc39d15575172e6d363310bf6c"
+  },
+  "ffmpeg_runtime_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-ffmpeg6-runtime-qualification-231-20260904.json",
+    "sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+    "library_dir": "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu"
+  },
+  "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "batch_size": 16,
+  "seed": 42,
+  "episode_count": 5200,
+  "action_horizon": 32,
+  "resource_scope": {
+    "host": "222.20.126.231",
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "cpu_affinity": "0-63",
+    "num_workers": 0,
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "environment_change": {
+    "only_added": "LD_LIBRARY_PATH=/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu[:existing]",
+    "python_lock_unchanged": true,
+    "model_and_data_unchanged": true
+  },
+  "authorized_operations": [
+    "restore frozen pi0.5 base checkpoint directly to one A100",
+    "construct exactly one real frozen batch of size 16 through the source B1K data path using num_workers=0",
+    "record only structural batch metadata and resource counters"
+  ],
+  "forbidden_operations": [
+    "forward pass",
+    "loss computation or retention",
+    "backward pass",
+    "optimizer or parameter update",
+    "checkpoint write",
+    "policy rollout or outcome read",
+    "automatic retry of repair1"
+  ],
+  "formal_training_authorized": false,
+  "scientific_training_started": false,
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "FREEZE_PRACTICAL_BATCH16_FORMAL_TRAINING_AUTHORITY",
+  "next_gate_if_fail": "REAL_DATA_BATCH16_REPAIR1_PRETRAINING_REVIEW"
+}
