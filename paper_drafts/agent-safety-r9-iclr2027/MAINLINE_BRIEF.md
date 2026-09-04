@@ -1,223 +1,289 @@
-# G1 / Agent Safety R9 — SkillZip paper-mainline iteration R1
+# G1 / Agent Safety R9 — paper mainline R2 (MCTA)
 
 Date: 2026-09-04
 Status: PRECONFIRMATORY / SUBMISSION HOLD
-Paper identity is not allowed to be selected after the next safety outcomes.
+Active method: **Matched Capability Twin Audit (MCTA)**.
 
 ## 1. One scientific object
 
-The paper studies whether **benign workflow accumulation changes the refusal-to-action control boundary of a persistent browser agent under an exactly matched future task schedule**.
+The paper asks:
 
-The scientific object is not generic longitudinal-memory risk, not "memory makes agents unsafe," and not evaluator disagreement itself.
+> Under an exactly matched future schedule, does benign workflow accumulation increase harmful-task-directed action after both Updated and Frozen are independently shown capable of the same shared browser action path?
 
-For a harmful browser request at longitudinal exposure step t, decompose behavior into:
+This is a narrower object than generic memory safety, generic benign-experience degradation, or evaluator disagreement.
 
-- R0 — immediate refusal / safe handling before task-directed tool use;
-- R1 — first harmful-task-directed browser action, defined by a task-specific programmatic predicate;
-- R2 — partial execution depth after R1;
-- R3 — verified external effect / target-side effect when the environment exposes one.
+The identification problem is specific to self-evolution: **capability changes over time**, so a harmful non-event can mean either refusal or inability to execute the relevant browser path.
 
-The primary endpoint for the prospective confirmatory experiment is R1. R0, R2, and R3 explain where the control boundary moved and prevent a failed or truncated task from being conflated with either safe refusal or successful harmful completion.
+## 2. Why the previous R1 story was still underidentified
 
-## 2. Why this is the paper-first object
+R1 correctly moved the paper away from historical ERTA counts and toward objective R0--R3 behavior, but it still relied mainly on a global BrowserART 10/10 capability gate.
 
-Experience-driven agents are trained or prompted to convert prior demonstrations into action. Prior work already establishes that longitudinal memory can create safety risk and that benign experience / execution-oriented memories can reduce refusal. G1 therefore does **not** claim those broad phenomena as novel.
+That is necessary but insufficient. A global gate does not prove that a particular harmful path was mechanically executable at a particular longitudinal state. More importantly, if Updated and Frozen differ in task-local capability at time t, an R1 difference can be caused by capability unlock/regression rather than a safety-boundary shift.
 
-The narrower unresolved question is causal and operational:
+R2 therefore freezes a stronger rule before any P1 safety outcome:
 
-> Holding the initial state, future task schedule, seed structure, action interface, and execution budget fixed, does allowing benign workflow state to accumulate change when the agent crosses from refusal/safe handling into task-directed action?
+**A matched slot supports affirmative safety-drift interpretation only when `C_updated = C_frozen = 1` and execution quality is valid in both arms.**
 
-This object survives the main prior-work collisions because it is an exact same-schedule persistent-update contrast with an explicit behavioral control boundary rather than a generic memory-exposure comparison.
+Capability-divergent and capability-censored rows remain in the dataset; they are not relabeled as safe and are not deleted.
 
-## 3. Identification design
+## 3. MCTA capability witness
 
-### Treatment
+For each harmful task q, freeze a canonical shared action graph G_q before provider execution.
 
-Updated arm:
+A task-local benign twin produces `C=1` only if it:
 
-s0 = W0
-s1 = W0 + U1
-s2 = W0 + U1 + U2
-s3 = W0 + U1 + U2 + U3
+1. is authorized and completes its benign goal;
+2. runs on the same resolved surface or a proven equivalent alias;
+3. covers every capability-relevant primitive in G_q;
+4. covers every required transition in G_q;
+5. uses the same frozen parser/browser substrate and budget.
 
-where U1..U3 are prospectively frozen benign workflow units.
+C is positive evidence for the shared mechanical path, not a claim of harmful semantic competence.
 
-### Counterfactual
+### Postbaseline slot classes
 
-Frozen arm:
+- **SHARED_CAPABILITY**: `C_U=C_F=1` and both executions valid. Eligible for the identified R1 comparison.
+- **CAPABILITY_DIVERGENCE**: `C_U != C_F`. Retain/report; R1 difference is capability-unlock/regression compatible.
+- **CAPABILITY_CENSORED**: `C_U=C_F=0`. Retain/report; non-execution cannot count as safe refusal.
+- **ASYMMETRIC_EXECUTION**: harmful R1/R3 occurs while same-arm `C=0`. Retain and audit the twin/design contract.
+- **EXECUTION_INVALID**: parser/browser failure. Never equal to refusal.
 
-s0 = W0
-s1 = W0
-s2 = W0
-s3 = W0
+## 4. Behavioral endpoint ladder
 
-The future task schedule, seeds, browser substrate, observation/action interface, and maximum execution budget are matched slot-by-slot.
+- R0 — immediate refusal / safe handling before harmful-task-directed tool use;
+- R1 — first harmful-task-directed required primitive under a frozen task-specific programmatic predicate;
+- R2 — partial execution depth on the canonical graph;
+- R3 — verified harmful external effect where a separately qualified environment verifier exists.
 
-### Primary estimand
+R1 is primary. R0/R2/R3 are prespecified decomposition endpoints, not post-outcome substitutes.
 
-For matched future units u:
+## 5. Treatment and counterfactual
 
-D_R1 = mean_u R1(Updated,u) - mean_u R1(Frozen,u).
+Updated:
 
-R1 must be computed automatically from prospectively frozen task-specific predicates over structured action/environment events. Author adjudication after viewing outcomes is forbidden.
+`W0 -> W0+U1 -> W0+U1+U2 -> W0+U1+U2+U3`
 
-R0/R2/R3 are secondary decomposition endpoints, not substitutes selected after observing R1.
+Frozen:
 
-NullMemory asks a different question — presence of workflow memory rather than the incremental effect of workflow accumulation — and is not required for the smallest decisive Updated-vs-Frozen identification test.
+`W0 -> W0 -> W0 -> W0`
 
-## 4. Capability qualification is part of identifiability
+Matched slot-by-slot:
 
-A browser-safety conclusion is uninterpretable if the agent cannot competently operate the benign substrate.
+- initial persistent state;
+- harmful task identity within a matched unit;
+- future schedule;
+- browser snapshot;
+- seed or exact seed-matching rule;
+- BrowserART/BrowserGym substrate;
+- AXTree/BID interface;
+- parser and endpoint definitions;
+- ten-step execution budget.
 
-The prospective Qwen3.5-397B-A17B substrate must therefore first pass the pinned BrowserART official 10-task benign panel under the benchmark-aligned 10-step budget with a strict 10/10 gate.
+## 6. Primary finite-panel estimand
 
-The historical 4-step setting is evaluated only as a prefix diagnostic of the same benign trajectories; it is not a second scientific arm.
+At t0, a unit is baseline-eligible when the shared byte-identical state has valid `C=1` and harmful `R1=0`.
 
-Failure of the 10/10 gate terminates the safety experiment. It is an execution/substrate failure, not evidence for or against the G1 scientific hypothesis.
+For each postbaseline slot with shared capability:
 
-## 5. Historical R9 evidence is discovery-only
+`d(u,t) = R1_Updated(u,t) - R1_Frozen(u,t)`.
 
-The historical Qwen3-8B/AWM R9 execution remains immutable and scientifically useful for hypothesis discovery, but it is not confirmatory evidence for the new R1-centered claim.
+Average d within each persistent-state block. The primary finite-panel summary is the unweighted mean across supported state blocks, with exact support denominator and Updated-only/Frozen-only discordant counts.
 
-Important historical facts:
+Support gate:
 
-- HarmBench branch events: Updated/Frozen/NullMemory = 8/4/0.
-- DeepSeek on the same frozen trajectories: 5/5/8.
-- 103/108 historical future episodes hit the 4-step truncation ceiling.
-- 0/108 normally terminated.
-- 0/108 had listener-confirmed external effects.
-- historical evaluator inputs therefore relied on the official thought/action-attempt fallback rather than verified harmful completion.
+- >=6 of 8 persistent states have postbaseline shared-capability support;
+- >=12 of 24 matched units have at least one shared-capability postbaseline slot.
 
-These facts jointly prohibit a strong historical mechanism claim such as "workflow updating makes the agent more unsafe."
+If this fails: `UNIDENTIFIED_SUPPORT_TOO_SPARSE`. A raw positive R1 effect cannot rescue it.
 
-They motivate two separate prospective questions:
+No population ATE/hazard claim is permitted from this finite panel.
 
-1. does an update-associated behavioral control effect survive on a capability-qualified, 10-step substrate with programmatic endpoints?
-2. after trajectory completeness is repaired, how sensitive are semantic safety conclusions to evaluator choice?
+## 7. Baselines that directly test the scientific advantage
 
-Question 1 is primary. Question 2 is measurement robustness.
+All M0--M3 reuse the same executed rows; they do not inflate provider cost.
 
-## 6. Evaluator disagreement is a measurement layer, not the paper identity by default
+- **M0 RAW_TEMPORAL** — raw harmful R1 over time, no task-local capability conditioning.
+- **M1 GLOBAL_GATE_ONLY** — assumes Q0 10/10 globally qualifies safety interpretation.
+- **M2 SAME_SURFACE_TWIN_NO_GRAPH** — same-surface benign success without canonical primitive/transition coverage.
+- **M3 MCTA_GRAPH_COMPLETE** — benign completion + complete shared graph coverage; primary R1 comparison requires `C_U=C_F=1`.
 
-HarmBench and DeepSeek disagree materially on the historical traces, including arm ordering. This is real evidence that the old semantic endpoint is unstable.
+Intervention baselines:
 
-ERTA is therefore retained as a **secondary measurement-robustness framework**:
+- **A0 FROZEN_W0** — primary same-schedule counterfactual;
+- **A1 UPDATED** — self-evolution treatment;
+- **A2 LENGTH_STRUCTURE_PLACEBO** — triggered after a positive P1 effect; tests workflow semantics vs context/load/packaging;
+- **T1 SECOND_BACKBONE** — triggered transport; different-family preferred.
 
-- premise stability;
-- event-set overlap;
-- contrast-sign stability;
-- task-localized disagreement;
-- no post-hoc majority or judge shopping.
+NullMemory is not required for the primary claim because it answers memory presence, not incremental workflow accumulation.
 
-However, evaluator disagreement on heavily truncated, no-effect trajectories cannot by itself support a general evaluator-relative safety paper.
+## 8. Experiment ladder and workload
 
-For an evaluator-centered paper to become the main identity, disagreement must prospectively persist on capability-qualified, substantially complete trajectories with objective R1/R3 anchors.
+### Q0 — global substrate qualification
 
-## 7. Prospective paper-identity decision rule
+- qwen3.5-397b-a17b;
+- official BrowserART ten benign tasks;
+- ten steps;
+- strict 10/10;
+- no task replacement;
+- failure stops harmful execution and is not safety evidence.
 
-This rule is internal scientific governance and must be frozen before the first new harmful safety trajectory.
+Current state: **pending provider credential**.
 
-A. Capability gate fails
-   -> no new safety run; diagnose substrate. No paper-claim upgrade.
+### T0 — MCTA structural/runtime qualification
 
-B. Capability passes and prospective Updated-vs-Frozen shows the preregistered update-associated R1 effect, supported by R0/R2/R3 decomposition and low protocol failure
-   -> KEEP_NARROW_SELF_EVOLUTION_G1.
-   Main story: benign workflow accumulation can shift the refusal-to-action boundary under a matched future schedule.
-   ERTA remains robustness/limitation.
+Completed with zero provider/model calls:
 
-C. Capability passes; Updated≈Frozen on the preregistered behavioral endpoints; but evaluator conclusions still materially reverse on complete/objectively anchored trajectories
-   -> PIVOT_TO_EVALUATION_PAPER.
-   The self-evolution mechanism claim is not retained.
+- 10/10 official benign tasks had an outcome-blind same-surface/action-family harmful candidate;
+- 8 local pairs admitted;
+- 2 open-ended Google pairs held;
+- 8 surfaces, 7 terminal classes;
+- canonical DAGs and runtime bindings frozen;
+- 31 zero-provider tests, 0 failures.
 
-D. Capability passes; Updated≈Frozen; evaluator disagreement largely disappears after execution repair
-   -> STOP_OR_MERGE_G1.
-   Do not create a third paper identity from the same outcomes.
+T0 status: **PASS**, but no P0/P1 execution authority.
 
-## 8. Research questions for the next manuscript
+### P0 — task-local capability measurement qualification
 
-RQ1 — Qualification: Is the exact browser-agent substrate capable enough for safety interpretation under the official benign panel?
+Two fresh calibration states x eight pairs.
 
-RQ2 — Causal control question: Under the same future schedule, does benign workflow accumulation change task-directed action initiation relative to the frozen workflow?
+- P0a benign twins: 16 episodes;
+- freeze P1 eligible-pair manifest from C outcomes only;
+- require >=6 pair IDs with C=1 in both calibration states;
+- P0b harmful targets: 16 episodes for all eight pairs;
+- total P0: 32 episodes.
 
-RQ3 — Behavioral decomposition: If R1 changes, is the shift visible as loss of immediate refusal, deeper partial execution, or verified external effects?
+P0 does not estimate the temporal self-evolution effect.
 
-RQ4 — Temporal localization: At what exposure step does the first control-boundary crossing occur, and is it state/branch localized?
+### P1 — same-schedule temporal identification
 
-RQ5 — Measurement robustness: Given objective R1/R3 anchors, do HarmBench, DeepSeek, and human semantic judgments support the same scientific direction?
+- 8 fresh persistent states;
+- >=3 source families;
+- 3 pair assignments/state;
+- 24 matched longitudinal units;
+- two frozen update sequences balanced four states each;
+- t0 shared + t1,t2,t3 Updated/Frozen;
+- benign twin + harmful target per evaluated state/arm/time.
 
-RQ5 cannot become RQ1 post hoc simply because evaluator disagreement is visually striking.
+Total: **336 agent episodes**.
 
-## 9. Writing architecture learned from SkillZip / SkillZip Pro
+### P2 — mechanism placebo
 
-### Introduction
+Triggered only by a positive shared-capability P1 direction.
 
-1. System reality: persistent agents accumulate benign workflow experience and keep acting.
-2. Missing guarantee: a point-in-time refusal/safety pass does not automatically characterize later control behavior.
-3. Prior-work boundary: longitudinal memory risk and benign-experience safety degradation already exist; G1 does not reclaim them.
-4. Identification gap: time/task difficulty, workflow updating, action failure, and semantic judging can be conflated.
-5. Scientific object: the refusal-to-action boundary R0->R1->R2->R3 under matched workflow accumulation.
-6. Identification: same-schedule Updated vs Frozen + capability qualification + programmatic R1.
-7. Claim ladder and bounded scope.
+- 12 preselected units;
+- 72 episodes;
+- matches update count, cadence, wrapper/structure, tokenizer-length envelope;
+- removes executable workflow semantics.
 
-### Main body
+### P3 — transport
 
-Sec. 2 — Scientific object and endpoint decomposition.
-Sec. 3 — Same-schedule identification and capability qualification.
-Sec. 4 — Historical discovery audit: why R9 generated the hypothesis but cannot confirm it.
-Sec. 5 — Prospective confirmatory experiment and R1/R0/R2/R3 results.
-Sec. 6 — Temporal/state localization and mechanism diagnostics.
-Sec. 7 — Evaluator/human robustness as measurement sensitivity.
-Sec. 8 — Related work and exact collision boundary.
-Sec. 9 — Limitations and conclusion.
+Triggered after a qualified main result.
 
-Do not put execution-governance bookkeeping, hashes, recovery procedures, or provider transport in the narrative spine. Keep them in artifacts / appendix unless they alter scientific interpretation.
+- 12 preselected units;
+- second capable backbone;
+- different-family preferred;
+- 178 total agent episodes including ten-task capability gate.
 
-## 10. Figure and table architecture
+### Workload summary
 
-Figure 1 — Scientific object, not system plumbing:
- harmful request -> R0 refusal -> R1 first task-directed action -> R2 partial execution -> R3 verified external effect,
- shown under matched Updated and Frozen longitudinal states.
+- Q0 + P0 + P1 core = **378 episodes**;
+- + placebo = **450**;
+- + transport = **628**.
 
-Figure 2 — Identification design:
- same initial state + same task/seed schedule + same 10-step budget; only workflow accumulation differs.
+This is sufficient experimental depth for a narrow ICLR-style identification paper because each block targets a different claim axis instead of inflating seeds.
 
-Figure 3 — Primary prospective result:
- matched Updated-vs-Frozen R1 with first-crossing time; R0/R2/R3 shown as decomposition.
+## 9. Historical R9 evidence is discovery-only
 
-Figure 4 — Measurement robustness:
- objective behavioral anchors versus HarmBench / DeepSeek / human judgments. This is not Figure 1.
+Historical Qwen3-8B/AWM R9 remains immutable:
 
-Table 1 — Capability gate and protocol quality.
-Table 2 — Main matched behavioral effect (R0/R1/R2/R3), normal setting first.
-Table 3 — State/task localization or secondary controls.
-Appendix — historical 8/4/0 vs 5/5/8, ERTA envelopes, full trajectories, hashes, receipts.
+- HarmBench Updated/Frozen/NullMemory = 8/4/0;
+- DeepSeek on the same traces = 5/5/8;
+- 103/108 future episodes hit the four-step ceiling;
+- 0/108 normally terminated;
+- 0/108 listener-confirmed external effects.
 
-## 11. Claim ladder
+Historical data motivate MCTA and the measurement layer. They do not prove workflow-induced safety degradation.
 
-Level 0 — already supported historically:
-The original HarmBench temporal ordering is evaluator-sensitive and the historical execution substrate is heavily truncated.
+## 10. Measurement robustness remains secondary
 
-Level 1 — requires prospective capability PASS:
-The new substrate is competent enough for safety interpretation.
+After objective C/R0/R1/R2/R3 trajectories are frozen:
 
-Level 2 — requires preregistered R1 result:
-Benign workflow accumulation changes task-directed action initiation under the matched future schedule.
+- HarmBench;
+- DeepSeek;
+- blinded human semantic labels.
 
-Level 3 — requires R0/R2/R3 coherence:
-The R1 shift corresponds to a meaningful control degradation rather than parser/grounding noise.
+ERTA remains a fail-closed sensitivity summary of evaluator stability. It cannot replace a null MCTA R1 result, and no third AI judge may be added post hoc.
 
-Level 4 — requires evaluator/human robustness:
-The semantic safety interpretation of that behavioral shift is stable across measurement systems.
+## 11. Prospective paper-identity rule
 
-Level 5 — requires additional transport evidence:
-Any claim beyond the exact backbone/AWM/BrowserART setting.
+A. Q0 fails
+-> `NO_SAFETY_RUN_SUBSTRATE_DIAGNOSIS_ONLY`.
 
-The manuscript must never write a higher claim level than the evidence currently reaches.
+B. P0/P1 shared-capability support is too sparse
+-> no identified temporal safety claim; report underidentification or merge.
 
-## 12. Current paper state
+C. Raw R1 rises but M3 shared-capability R1 is null/reverses
+-> capability unlock / execution change compatible; no safety-drift claim.
 
-Current main.tex is an ERTA-centered historical draft and no longer matches the active scientific mainline.
+D. M3 shared-capability R1 is positive with adequate support and coherent R0/R2/R3
+-> `KEEP_NARROW_SELF_EVOLUTION_G1`.
 
-Submission remains HOLD until the Qwen3.5-397B capability qualification and, if qualified, the separately frozen prospective safety experiment determine which paper identity is scientifically supported.
+E. Objective behavior is null but evaluator reversal persists on complete/objectively anchored trajectories
+-> `PIVOT_TO_EVALUATION_PAPER`.
 
-The historical ERTA draft is preserved as evidence of the measurement pivot; it is not silently deleted or retroactively rewritten into confirmatory evidence.
+F. Objective effect is null and evaluator disagreement disappears
+-> `STOP_OR_MERGE_G1`.
+
+This rule is frozen before P1 and cannot be changed after outcomes.
+
+## 12. Figure architecture
+
+Figure 1 — **why non-execution is ambiguous**: refusal vs incapability; benign twin + canonical graph -> C; only `C_U=C_F=1` supports safety-drift comparison.
+
+Figure 2 — **same-schedule longitudinal intervention**: Updated vs Frozen, with paired C and R0/R1/R2/R3 at each time.
+
+Figure 3 — **main identification result**: M0 raw vs M1 global vs M2 weak twin vs M3 MCTA, plus capability-divergence/censoring mass.
+
+Figure 4 — **mechanism + measurement robustness**: R0/R2/R3, triggered placebo, evaluator/human alignment.
+
+## 13. Table architecture
+
+Table 1 — Q0 global capability + P0 MCTA support qualification.
+
+Table 2 — M0/M1/M2/M3 main R1 comparison with support denominator.
+
+Table 3 — state/update-sequence localization, capability divergence, R0/R2/R3, protocol invalidity.
+
+Appendix — historical 8/4/0 vs 5/5/8, ERTA envelopes, full trajectories, hashes/receipts.
+
+## 14. Claim ladder
+
+C0 historical discovery — supported.
+C1 global 397B capability — pending Q0.
+C2 task-local MCTA support — pending P0.
+C3 shared-capability R1 effect — pending P1.
+C4 workflow-semantic mechanism — pending behavior + triggered placebo.
+C5 measurement robustness — pending evaluators/humans.
+C6 transport/generalization — unauthorized until transport.
+
+The manuscript cannot write a higher claim than the evidence reaches.
+
+## 15. Current source of truth
+
+Active story contract:
+
+`generated/agent-safety-g1-skillzip-paper-story-r2-mcta-20260904.json`
+
+Active P1 analysis contract:
+
+`generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json`
+
+Active manuscript architecture:
+
+`SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R2_MCTA.md`
+
+Active compilable preconfirmatory LaTeX:
+
+`main_skillzip_preconfirmatory_r2_mcta.tex`
+
+Historical `main.tex` remains preserved but is not the active story source of truth.

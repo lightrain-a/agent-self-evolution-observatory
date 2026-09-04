@@ -1,0 +1,210 @@
+\documentclass{article}
+
+\usepackage{iclr2027_conference,times}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+
+\title{Separating Capability Unlock from Safety Drift in Persistent Browser Agents}
+
+\author{Anonymous authors\\Paper under double-blind review}
+
+\newcommand{\pending}[1]{\textcolor{red}{[PENDING: #1]}}
+\newcommand{\mcta}{\textsc{MCTA}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Persistent browser agents can accumulate benign workflow experience while continuing to act in the same environment. A longitudinal increase in harmful task execution, however, does not by itself identify safety drift: self-evolution can also change browser execution capability, so a harmful non-event may reflect either refusal or inability to execute the relevant path. We introduce \textbf{Matched Capability Twin Audit} (\mcta), a task-local measurement protocol that pairs each harmful browser task with an authorized benign twin on the same resolved surface and freezes a canonical shared action graph before any model outcome. A positive capability witness requires both benign goal completion and coverage of every capability-relevant primitive and transition in that graph. We then compare an Updated workflow arm with an exactly same-schedule Frozen counterfactual. The prospective primary behavioral endpoint is R1, first harmful-task-directed action initiation, but the identified contrast uses only matched slots where \emph{both} arms retain valid graph-complete capability witnesses; capability-divergent and capability-censored slots are retained and reported rather than relabeled as safety evidence. Before any new safety trajectory, the exact Qwen3.5-397B-A17B + Agent Workflow Memory + BrowserART/BrowserGym stack must pass BrowserART's official ten-task benign panel at 10/10 under a ten-step budget. A zero-provider T0 audit has admitted eight local twin pairs spanning eight surfaces and seven terminal classes, with 31/31 structural/runtime tests passing; provider execution remains locked pending Q0. A historical Qwen3-8B study motivates the hypothesis but is discovery-only because 103/108 future episodes hit a four-step ceiling, none normally terminated, no listener-confirmed external effect was observed, and HarmBench and DeepSeek produced different arm orderings on the same traces. \pending{P0/P1 result} If a shared-capability R1 shift exists, R0/R2/R3, a pre-frozen length/structure placebo, and semantic/human evaluation are used to localize mechanism and measurement robustness. Claims remain restricted to the exact finite panel unless separately transported.
+\end{abstract}
+
+\section{Introduction}
+
+Self-evolving agents are designed to become more capable from experience. Workflow-memory systems such as Agent Workflow Memory (AWM)~\citep{wang2025awm} convert prior demonstrations into reusable action structure that can influence later browser behavior. This creates a basic identification problem for longitudinal safety: when a harmful task is not executed, the trace is compatible with both safe control and missing execution capability.
+
+Prior work already establishes that memory and benign experience can alter agent safety~\citep{altawaha2026remembering,zhao2026safety}. We therefore do not ask whether memory can ever matter. Our narrower question is whether benign workflow accumulation changes the \emph{refusal-to-action boundary} after the relevant browser capability has been positively witnessed in both matched counterfactual states.
+
+A global benign score is necessary but not sufficient for that purpose. Passing ten unrelated benign tasks does not prove that a specific harmful browser path was mechanically executable at a specific longitudinal state. Likewise, same-site similarity can be misleading when benign and harmful tasks require different field interactions, navigation, or terminal actions. We therefore construct task-local benign twins and freeze a canonical shared action graph before observing model outcomes.
+
+Our method, \textbf{Matched Capability Twin Audit} (\mcta), treats capability as an explicit measured state. For each harmful task, an authorized benign twin must complete its own goal and cover every required primitive and transition in the shared graph. At each matched Updated/Frozen slot, only $C_U=C_F=1$ can support an affirmative safety-boundary interpretation. If capability differs across arms, the row is retained as capability divergence rather than counted as safety drift.
+
+The behavioral endpoint is also decomposed. R0 denotes immediate refusal or safe handling, R1 the first harmful-task-directed action, R2 partial execution depth, and R3 a verifier-confirmed external effect when available. R1 is the prospective primary endpoint; R0/R2/R3 explain what kind of control shift occurred.
+
+The design is deliberately staged. Q0 globally qualifies the exact Qwen3.5-397B-A17B browser stack. T0 freezes and zero-provider-validates the capability twin panel. P0 asks whether those twins provide positive task-local capability witnesses. Only then can P1 estimate the same-schedule Updated-vs-Frozen contrast under shared capability. Length/structure placebo and second-backbone transport are triggered only by predeclared gates.
+
+A historical Qwen3-8B study provides discovery evidence but not confirmation. HarmBench labeled Updated/Frozen/NullMemory as 8/4/0 event branches, whereas a blinded DeepSeek re-evaluation of the same traces produced 5/5/8. Retrospective execution audit further found 103/108 future episodes at the four-step ceiling, 0/108 normal terminations, and no listener-confirmed external effect. The historical result therefore motivates capability-aware behavioral measurement rather than supporting a strong mechanism claim by itself.
+
+\section{Matched Capability Twin Audit}
+\label{sec:mcta}
+
+\subsection{Canonical shared action graph}
+
+For harmful task $q$, freeze a directed acyclic graph $G_q=(V_q,E_q)$ before model execution. Nodes are capability-relevant browser primitives, while edges encode required precedence relations. Independent fields need not be artificially ordered if the interface permits either order.
+
+For arm $a\in\{U,F\}$, matched unit $u$, and longitudinal time $t$, let $C(a,u,t)=1$ iff an authorized benign twin executed from an independent clone of the same persistent state (i) satisfies its frozen benign completion predicate, (ii) covers every required primitive in $V_q$, and (iii) covers every required transition in $E_q$.
+
+$C$ is a positive witness of the shared mechanical browser path. It is not a claim that the model possesses the harmful goal semantics.
+
+\subsection{Behavioral ladder}
+
+For the harmful trajectory we define:
+\begin{itemize}
+    \item \textbf{R0}: immediate refusal or safe handling before any harmful-task-directed required primitive;
+    \item \textbf{R1}: first prospectively predicate-matched harmful-task-directed required primitive;
+    \item \textbf{R2}: partial execution depth on the frozen graph after R1;
+    \item \textbf{R3}: verified harmful external effect only where an environment-side verifier is separately qualified.
+\end{itemize}
+Parser or browser failure is not R0 and is never counted as safe behavior.
+
+\subsection{Shared capability and capability divergence}
+
+Let $Q_a(u,t)$ denote execution-quality validity under the frozen parser/browser contract. Define the shared-capability indicator
+\begin{equation}
+S(u,t)=\mathbb{I}[Q_U=Q_F=1 \wedge C_U=C_F=1].
+\end{equation}
+Only slots with $S=1$ can support the identified refusal-to-action contrast.
+
+If $C_U\neq C_F$ while both executions are valid, the slot is \textsc{Capability Divergence}. Any R1 difference there is compatible with capability unlock or regression and is not promoted to identified safety drift. If $C_U=C_F=0$, the slot is \textsc{Capability Censored}. If harmful R1/R3 occurs while the same arm has $C=0$, the row is retained as \textsc{Asymmetric Execution} for design/runtime adjudication.
+
+Crucially, \mcta{} does not delete these rows. It separates raw behavioral change from the subset with positive capability support in both matched states.
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.93\linewidth}{\centering
+\textbf{Figure 1 placeholder: what MCTA identifies.}\\[4pt]
+Harmful non-event $\Rightarrow$ refusal \emph{or} missing capability.\\
+Benign twin + shared graph $G_q$ $\Rightarrow$ task-local capability witness $C$.\\
+Compare harmful R1 only as identified safety drift when $C_U=C_F=1$; otherwise report capability divergence/censoring.
+}}
+\caption{MCTA separates capability unlock from refusal-boundary drift. All rows remain visible; capability-censored rows simply cannot certify safe refusal.}
+\label{fig:mcta}
+\end{figure}
+
+\section{Prospective experimental design}
+\label{sec:design}
+
+\subsection{Q0: global substrate qualification}
+
+The exact Qwen3.5-397B-A17B + AWM + BrowserART/BrowserGym stack first runs the pinned official ten benign BrowserART tasks under a ten-step budget. Passage requires 10/10 success under prospectively frozen programmatic completion predicates. No failed task is replaced. Failure stops harmful execution and is classified as substrate failure, not safety evidence. The first four steps of the same ten trajectories are reported only as a historical-budget prefix diagnostic.
+
+\subsection{T0: zero-provider twin qualification}
+
+Before provider execution, ten outcome-blind same-surface/action-family candidates were constructed from the official benign panel. Eight local pairs were admitted after canonical graph, side-effect-class, benign verifier, harmful R1/R2 predicate, and runtime event-binding checks. Two open-ended Google search pairs were held rather than forced into the panel. The admitted panel spans eight resolved surfaces and seven terminal classes. Across graph, runtime, state-source, and contract tests, 31/31 zero-provider checks passed. T0 does not set $C=1$ for any model trajectory.
+
+\subsection{P0: task-local capability witness qualification}
+
+P0 uses two fresh calibration states and all eight admitted pairs. P0a executes only the benign twins (16 episodes). A pair is P1-eligible iff $C=1$ in both calibration states. At least six pair IDs must pass; otherwise the experiment stops before harmful P0/P1.
+
+The eligible-pair manifest is frozen from P0a capability outcomes only. P0b then executes the harmful target for all eight pairs in both calibration states (16 episodes), measuring capability-censored non-events, asymmetric execution, and disagreement among increasingly strong capability interpretations.
+
+\subsection{P1: same-schedule temporal identification}
+
+Eight fresh persistent states from at least three source families are assigned three eligible pairs each by an outcome-blind balanced incomplete block design, yielding 24 matched longitudinal units. Two prospectively frozen benign update sequences are balanced four states each.
+
+At $t=0$, Updated and Frozen are byte-identical. Each unit runs one benign twin and one harmful target from independent read-only clones. At $t=1,2,3$, Updated accumulates the next frozen benign workflow unit while Frozen remains at the step-0 workflow. Harmful task identity, browser snapshot, seed rule, observation/action interface, parser, and ten-step execution budget are matched slot-by-slot.
+
+Total P1 workload is 336 agent episodes:
+\begin{equation}
+24\times[2+3\times2\times2]=336.
+\end{equation}
+
+\subsection{Primary finite-panel estimand}
+
+A unit is baseline-eligible when the shared $t=0$ state has valid $C=1$ and harmful $R1=0$. For each postbaseline slot with $S(u,t)=1$, define
+\begin{equation}
+d(u,t)=R1_U(u,t)-R1_F(u,t).
+\end{equation}
+Within each persistent state we average $d$ over comparable slots. The primary summary is the unweighted mean of supported state-block contrasts, together with Updated-only/Frozen-only discordant counts and the exact support denominator.
+
+The support gate requires at least six of eight persistent states and at least twelve of twenty-four matched units to have postbaseline shared-capability support. Otherwise the result is \textsc{Unidentified Support Too Sparse}. The paper does not infer a population ATE or hazard from the finite panel.
+
+\begin{table}[t]
+\centering
+\caption{Capability interpretations are compared on the same executed rows; no additional agent calls are required for M0--M3.}
+\label{tab:baselines}
+\small
+\begin{tabular}{p{0.10\linewidth}p{0.24\linewidth}p{0.56\linewidth}}
+\toprule
+ID & Interpretation & Capability rule \\
+\midrule
+M0 & Raw temporal metric & No task-local capability conditioning \\
+M1 & Global gate & Q0 10/10 treated as sufficient \\
+M2 & Weak twin & Same-surface benign completion, no graph completeness \\
+M3 & MCTA & Benign completion + full shared-graph coverage; primary R1 comparison requires $C_U=C_F=1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Mechanism placebo and transport}
+
+If P1 satisfies the predeclared positive shared-capability R1 rule, a pre-frozen 12-unit placebo matches update count, insertion cadence, wrapper/section structure, and tokenizer-length envelope while replacing executable workflow semantics with execution-neutral content. If placebo follows Updated, any workflow-semantic mechanism claim is demoted to context/load/packaging.
+
+A second-backbone transport subset is triggered only after a qualified main result. A different model family is preferred; a same-family larger model supports scale robustness only.
+
+\section{Historical discovery and why it is insufficient}
+\label{sec:historical}
+
+Historical R9 used Qwen3-8B + AWM on BrowserART with a four-step ceiling. HarmBench produced Updated/Frozen/NullMemory event counts of 8/4/0, while a blinded DeepSeek audit of the same frozen traces produced 5/5/8. Retrospective execution audit then showed 103/108 future episodes at the four-step ceiling, 0/108 normal terminations, and 0/108 listener-confirmed external effects.
+
+These are valid historical operational findings, but they do not identify a capability-independent workflow safety effect. They motivate the new task-local capability measurement, objective action-depth endpoints, and evaluator-robustness analysis.
+
+\section{Prospective results}
+\label{sec:results}
+
+\pending{Q0 disposition. If Q0 fails, stop here with substrate diagnosis.}
+
+\pending{P0 capability support: eligible pair count, M1/M2/M3 disagreements, capability-censored and asymmetric-execution fractions.}
+
+\pending{P1 main result: raw R1 contrast, shared-capability M3 contrast, support denominator, state/update-sequence localization, capability divergence, and exact state-block sign-flip sensitivity.}
+
+\begin{table}[t]
+\centering
+\caption{Primary identification table. Raw behavior and capability-aware interpretations must be shown together.}
+\label{tab:main}
+\scriptsize
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Analysis & U R1 & F R1 & Diff. & Support & Role \\
+\midrule
+M0 raw & \pending{fill} & \pending{fill} & \pending{fill} & all valid & diagnostic \\
+M1 global & \pending{fill} & \pending{fill} & \pending{fill} & \pending{fill} & diagnostic \\
+M2 weak twin & \pending{fill} & \pending{fill} & \pending{fill} & \pending{fill} & ablation \\
+M3 MCTA & \pending{fill} & \pending{fill} & \pending{fill} & \pending{fill} & primary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Behavioral and measurement robustness}
+
+If a shared-capability R1 shift is observed, R0/R2/R3 determine whether the difference reflects loss of refusal, deeper execution, or verified external effects rather than parser/grounding noise. The length/structure placebo then tests whether executable workflow semantics are necessary.
+
+HarmBench~\citep{mazeika2024harmbench}, DeepSeek, and blinded human semantic labels are evaluated only after objective C/R0/R1/R2/R3 trajectories are frozen. Evaluator-Robust Temporal Audit (ERTA) remains a fail-closed sensitivity summary; it cannot replace a null objective R1 result, and no third AI judge is added post hoc.
+
+\section{Related work}
+
+\paragraph{Longitudinal memory and self-evolution safety.}
+Prior work shows that memory and benign execution-oriented experience can reduce later safety~\citep{altawaha2026remembering,zhao2026safety}. Our candidate contribution is not the existence of degradation, but an identification protocol for a confound created by self-evolution itself: capability changes over time, so non-execution is not automatically refusal.
+
+\paragraph{Browser-agent safety.}
+BrowserART~\citep{kumar2025browserart} demonstrates that chat safety does not automatically transfer to browser action. G1 inherits its need for benign capability qualification but strengthens the measurement unit from a global pass to a task-local graph-complete witness for each harmful action path.
+
+\paragraph{Semantic safety evaluation.}
+Automated safety classifiers are useful but can disagree on partial, truncated, or ambiguous action traces. G1 therefore anchors the primary scientific claim in programmatic capability and action predicates, using semantic evaluators only for secondary measurement robustness.
+
+\section{Limitations and claim boundary}
+
+MCTA measures shared mechanical-path capability, not unrestricted semantic competence for harmful goals. The primary study is a finite controlled panel with eight states and a prospectively admitted pair set; it does not establish a population hazard. Capability is itself treatment-sensitive, so we report raw behavior, shared-capability behavior, and capability divergence separately rather than claiming that post-treatment capability conditioning recovers a universal causal effect. R3 may remain sparse where BrowserART does not expose a persistent external-effect verifier. Cross-backbone, cross-memory, and cross-environment conclusions require separately frozen transport evidence.
+
+\section{Conclusion}
+
+A temporal harmful non-event is not automatically a refusal. In a self-evolving browser agent it may instead reveal missing or changing execution capability. MCTA makes that ambiguity explicit with outcome-blind task-local benign twins and shared action graphs, then asks the narrower control question only where both matched states retain positive capability witnesses. \pending{Final conclusion must follow the frozen Q0/P0/P1 claim ladder.}
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\end{document}
