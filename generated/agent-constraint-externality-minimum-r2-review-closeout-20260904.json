@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-MINIMUM-R2-REVIEW-CLOSEOUT-20260904",
+  "recorded_date": "2026-09-04",
+  "reviewed_commit": "ca71dc659e60102a55f2ca634411cff0cce9dbd1",
+  "reviewed_plan": "consultations/agent-constraint-externality-minimum-effective-experiment-plan-20260904.md",
+  "reviewed_plan_sha256": "c79e290b3098a64ebe2929f1c3506a35f83605fdcf31ac5255964f1fc360ffa0",
+  "reviewed_receipt": "generated/agent-constraint-externality-minimum-effective-plan-r2-20260904.json",
+  "reviewed_receipt_sha256": "c62e68285f84b133b85271da3e94f6174b370843d98f6151b214c26d6d419ab1",
+  "independent_review": {
+    "surface": "Oracle Browser / ChatGPT web",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High (4/5)",
+    "session": "agent-constraint-minimum-r2-review-2",
+    "conversation_id": "6a9a4908-1dfc-83ee-ade0-e543e9f930c0",
+    "transcript_sha256": "8b7a2be2203cfe35aaa82cd617b5077e41f994c7235d09c2d80d7c5d161c970d",
+    "verdict": "PASS_MINIMUM_AGENT_CONSTRAINT_DESIGN",
+    "verdict_changing_fixes": []
+  },
+  "scientific_unit": "family",
+  "key_passed_design_properties": [
+    "pre-topology TARGET_ONLY_VERIFICATION determines repair-uptake eligibility",
+    "all admitted families remain in all topology arms regardless of post-treatment target success",
+    "target-retention is a joint outcome/falsifier rather than a deletion rule",
+    "same frozen REAL_REPAIR bytes across INDEPENDENT/LOW/HIGH",
+    "development-only repeat qualification is disjoint from confirmatory families",
+    "stable-hash reserve selection and no outcome-conditioned backfill",
+    "SHAM subset is sufficient for generic persistent-context falsification",
+    "RQ3 uses untouched families and zero-extra-call offline ranking baselines",
+    "RQ4 opens only after RQ1-RQ3 and is budget-matched",
+    "external models/updaters cannot rescue a failed primary ladder"
+  ],
+  "next_gate": "SEPARATE_CONFIRMATORY_EXECUTION_AUTHORITY_REQUIRED",
+  "authority": {
+    "provider_execution": false,
+    "gpu": false,
+    "confirmatory_rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "secondary_actor": false,
+    "external_updater": false,
+    "paper_claim_expansion": false
+  },
+  "scientific_provider_calls_created": 0,
+  "scientific_outcomes_created": 0
+}
