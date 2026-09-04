@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R75-FUTURE-PAIRED-ID-REPORTING-CONTRACT",
+  "status": "R75_PAIRED_TASK_ID_REPORTING_REQUIRED_AFTER_R72_EXECUTION",
+  "role": "DESCRIPTIVE_REPORTING_EXTENSION_WITHOUT_INFERENTIAL_CHANGE",
+  "required_contrasts": {
+    "Qwen_primary": {"left": "P_neutral", "right": "T_truthful", "planned_n": 66},
+    "Qwen_correctness": {"left": "S_shuffled", "right": "T_truthful", "planned_n": 57, "inferential_gate": "existing R72 gate remains unchanged"},
+    "Llama_replication": {"left": "P_neutral", "right": "T_truthful", "planned_n": 66}
+  },
+  "required_fields_per_contrast": [
+    "left_success_task_ids",
+    "right_success_task_ids",
+    "both_success_task_ids",
+    "left_only_success_task_ids",
+    "right_only_success_task_ids",
+    "both_fail_task_ids",
+    "discordant_task_ids",
+    "success_set_intersection_count",
+    "success_set_union_count",
+    "success_set_jaccard",
+    "outcome_agreement_fraction",
+    "outcome_discordance_fraction",
+    "same_success_task_set",
+    "success_set_subset_relation"
+  ],
+  "main_table_minimum_fields": [
+    "left_success_count",
+    "right_success_count",
+    "both_success_count",
+    "left_only_success_count",
+    "right_only_success_count",
+    "both_fail_count",
+    "net_success_count_difference_right_minus_left"
+  ],
+  "appendix_requirement": "List every discordant task ID and its arm-specific binary outcome; do not report only aggregate success totals.",
+  "interpretation_rule": "Equal aggregate success counts do not imply equal task-level effects. Net effect and success-set substitution must be reported separately.",
+  "cross_executor_success_set_overlap": "descriptive_only_no_pooling",
+  "changes_R72_R73_inferential_gate": false,
+  "changes_R72_R73_execution_schedule": false,
+  "new_trajectories_required": 0,
+  "execution_authority": false,
+  "scientific_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "9e85be533992c830ce08fd59287a8a936077a06c8ea0ac1ab775007c75cb8a67"
+}
