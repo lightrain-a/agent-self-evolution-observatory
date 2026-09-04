@@ -1,0 +1,159 @@
+{
+  "authority": {
+    "direct_sfq_a0_execution": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false
+  },
+  "case_count": 12,
+  "content_sha256": "1cd7d81c225a62803a49928b102f356bd9cda876be547c370e9310fe82576df6",
+  "contract_content_sha256": "67dab0637fe39c20cfd810cea65c465af80ef3359a669c9c6db536b541725a07",
+  "execution_blocker": "DIRECT_PROVIDER_INSUFFICIENT_CREDIT_AND_FLASH_V4_CAPABILITY_NOT_YET_VALIDLY_MEASURED",
+  "freshness_audit": {
+    "case_id_overlap_count": 0,
+    "case_ids_unique": true,
+    "fixture_hash_overlap_count": 0,
+    "instruction_hash_overlap_count": 0,
+    "old_f0_checked": true,
+    "prior_development_sets_checked": [
+      "SQ0_V1",
+      "SQ0_V2R1",
+      "SQ0_V3",
+      "SQ0_V4",
+      "SQ0_V5"
+    ],
+    "target_local_resource_hash_overlap_count": 0
+  },
+  "max_public_tool_calls": 48,
+  "minimum_tool_headroom": 32,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "private_fixture_ids_used": false,
+  "protected_bundle_sha256": "48603d972d80046ab5c6ca84483e52893ee52580a43325c6dbe6f0773de6bc59",
+  "provider_requests": 0,
+  "public_oracles": [
+    {
+      "case_id": "DIRECT-SFQ-A0-FG-01",
+      "headroom": 54,
+      "initial_snapshot_sha256": "6e6e8ae63d73907307d7faeb160bc21c4ef2971a4a3216d4f87b2a7c546a53b5",
+      "kind": "FG_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-FG-02",
+      "headroom": 54,
+      "initial_snapshot_sha256": "8ecea067b25173714b96e00ac5cdb72b25d5b7304ce1cfe124c98b0a47277bc1",
+      "kind": "FG_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-FG-03",
+      "headroom": 54,
+      "initial_snapshot_sha256": "7bf9d84dc9e242e6d9930462561af5aa03909e6313aefb2efa9a68420229e3a2",
+      "kind": "FG_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-FG-04",
+      "headroom": 54,
+      "initial_snapshot_sha256": "b5c4a6d2bc5009524e165ef10ad5a9c9e7a3b77a57b485e165968c583fe11b3d",
+      "kind": "FG_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-FG-05",
+      "headroom": 54,
+      "initial_snapshot_sha256": "6d9e0b9efb425656ccbf230c7e2c3c3bfe9528e04716f381727f94895c788a91",
+      "kind": "FG_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-FG-06",
+      "headroom": 54,
+      "initial_snapshot_sha256": "f579e2b8491c9d8858d3cfc3483a6861f46d3ac8928d3123bfcc60ffdbd3e808",
+      "kind": "FG_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-TNF-01",
+      "headroom": 32,
+      "initial_snapshot_sha256": "0bc8f141f6e307ffde9ba4044480d3d299670570fc84629d55437ac37e57706d",
+      "kind": "TNF_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-TNF-02",
+      "headroom": 32,
+      "initial_snapshot_sha256": "0cee23c1420f9d880cc557a5e4958e86c1b3a3eaa048e840017518348660fe6e",
+      "kind": "TNF_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-TNF-03",
+      "headroom": 32,
+      "initial_snapshot_sha256": "885c630dcc5d2aca13182ccc878a71ef9345a3217e5dc3737c2b2fc9dc1855c8",
+      "kind": "TNF_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-TNF-04",
+      "headroom": 32,
+      "initial_snapshot_sha256": "16fe15289f7787eef17b37600280cb4242f7820bd7990c46965ff535b8f50ac4",
+      "kind": "TNF_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-TNF-05",
+      "headroom": 32,
+      "initial_snapshot_sha256": "8f6a9025c417b3739e5d54db82d5a55f41bce16cd57a72a256e04bc1e9ac4fb2",
+      "kind": "TNF_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "DIRECT-SFQ-A0-TNF-06",
+      "headroom": 32,
+      "initial_snapshot_sha256": "e995e6c39be4a75c0c284e7a81f4c3259a978921fa6a5acd46dbde92e93e147d",
+      "kind": "TNF_DIRECT_SEMANTIC_A0",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    }
+  ],
+  "schema_version": "ace-direct-sfq-a0-static-qualification-v1",
+  "scientific_outcomes_observed": 0,
+  "sfq_id": "ACE-DIRECT-SFQ-A0-20260903",
+  "status": "DIRECT_SFQ_A0_PUBLIC_REACHABILITY_AND_FRESHNESS_PASS_EXECUTION_BLOCKED"
+}

@@ -730,7 +730,7 @@ def main() -> None:
           ("/paper-b1.html", True, ("350 / 350","+3.125 pp","0.0 pp")),
           ("/paper-a.html", False, ("MemoryVLA","LIBERO-Plus","0.5541")),
           ("/paper-b.html", False, ("MemoryVLA","24 scopes","longitudinal")),
-          ("/paper-agent-constraint.html", False, ("AppWorld-derived matched families","PRE-F0.5","ARK_API_KEY")),
+          ("/paper-agent-constraint.html", False, ("AppWorld-derived matched families","Direct-SFQ-A0","8/8 SUCCESS → STOP")),
           ("/paper-3d.html", False, ("InstructScene","3D-FRONT / 3D-FUTURE","SceneNAT")),
         ]
         for page, formal_story, markers in paper_pages:
