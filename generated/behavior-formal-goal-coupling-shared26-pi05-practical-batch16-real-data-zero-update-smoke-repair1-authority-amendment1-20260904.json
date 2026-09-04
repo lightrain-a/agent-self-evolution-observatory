@@ -1,0 +1,26 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair1-authority-amendment1-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "status": "PRE_ATTEMPT_AUTHORITY_SCHEMA_REPAIR_APPLIED",
+  "parent_authority_path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-real-data-zero-update-smoke-repair1-authority-20260904.json",
+  "parent_authority_pre_amendment_sha256": "62a4afa1fe83d200564ed722704b333882fe5ecffa5c362876c873220d8492db",
+  "parent_authority_post_amendment_sha256": "570a374a9f3e65ab9734bc7563d2937ac1a3555cd19236d767a07faa6391da93",
+  "observed_pre_attempt_failure": "KeyError: openpi_data_home",
+  "evidence_attempt_not_consumed": {
+    "repair1_result_receipt_absent": true,
+    "gpu_memory_used_mib": 14,
+    "optimizer_update": false,
+    "scientific_training_started": false
+  },
+  "amendment": {
+    "only_added_field": "openpi_data_home",
+    "value": "/data/wyt/formal-goal-openpi-cache-v1",
+    "reason": "The repair1 runner inherited the original zero-update smoke invariant check for OPENPI_DATA_HOME. The repair authority omitted the field although the original authority already bound the same cache path. This is a schema-only repair before receipt creation."
+  },
+  "scientific_treatment_changed": false,
+  "runner_changed": false,
+  "ffmpeg_runtime_changed": false,
+  "batch_or_model_changed": false,
+  "next_gate": "REEXECUTE_UNCONSUMED_REPAIR1_AUTHORITY"
+}

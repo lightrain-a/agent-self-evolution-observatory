@@ -24,6 +24,7 @@
     "library_dir": "/data/wyt/formal-goal-ffmpeg6-runtime-v1/usr/lib/x86_64-linux-gnu"
   },
   "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "openpi_data_home": "/data/wyt/formal-goal-openpi-cache-v1",
   "batch_size": 16,
   "seed": 42,
   "episode_count": 5200,
