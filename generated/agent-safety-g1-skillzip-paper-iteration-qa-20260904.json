@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "AGENT-SAFETY-G1-SKILLZIP-PAPER-ITERATION-QA-20260904",
+  "paper_id": "AGENT-SAFETY-R9",
+  "recorded_date": "2026-09-04",
+  "canonical_parent_sha": "44337dfad7baeeaee902127988d2f7ab1c1a30bf",
+  "branch": "paper/g1-skillzip-iteration-20260904",
+  "active_story_contract": "generated/agent-safety-g1-skillzip-paper-story-r1-20260904.json",
+  "manuscript_sources": [
+    "paper_drafts/agent-safety-r9-iclr2027/MAINLINE_BRIEF.md",
+    "paper_drafts/agent-safety-r9-iclr2027/SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R1.md",
+    "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory.tex"
+  ],
+  "latex_qa": {
+    "target": "main_skillzip_preconfirmatory.tex",
+    "pdflatex_passes": 3,
+    "bibtex_passes": 1,
+    "compiled": true,
+    "page_count": 5,
+    "final_log_warning_count": 0,
+    "undefined_citation_count": 0,
+    "overfull_box_count": 0,
+    "underfull_box_count": 0,
+    "build_intermediates_committed": false
+  },
+  "story_validator": {
+    "test_module": "research_pipeline.test_agent_safety_g1_skillzip_paper_story",
+    "tests": 8,
+    "passed": 8,
+    "failed": 0
+  },
+  "reference_repair": {
+    "zhao2026safety": "updated from arXiv-only metadata to Findings of ACL 2026, pages 42145-42169, DOI 10.18653/v1/2026.findings-acl.2091",
+    "altawaha2026remembering": "retained as 2026 preprint"
+  },
+  "scientific_checks": {
+    "single_primary_object": true,
+    "R1_primary_endpoint_frozen_in_story": true,
+    "historical_r9_discovery_only": true,
+    "capability_gate_10_of_10": true,
+    "measurement_layer_secondary": true,
+    "prospective_paper_identity_rule_present": true,
+    "submission_ready": false
+  },
+  "status": "PAPER_STORY_ITERATION_R1_QA_PASS_PRECONFIRMATORY"
+}
