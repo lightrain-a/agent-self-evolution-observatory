@@ -1,0 +1,70 @@
+{
+  "artifact_type": "c1-b10-first-action-raw-replay-qualification",
+  "authority": {
+    "claim_expansion": false,
+    "new_scientific_execution": false,
+    "submission": false
+  },
+  "date": "2026-09-04",
+  "design_consequence": {
+    "existing_draws_enable_zero_provider_collision_mmd2_diagnostic": true,
+    "historical_same_condition_repeated_decodes_exist": true,
+    "new_provider_calls_are_not_automatically_required_for_stochasticity_diagnosis": true,
+    "prospective_topup_requires_separate_precision_and_verdict_changing_gate": true
+  },
+  "execution": {
+    "historical_records_read": 432,
+    "new_gpu_runs": 0,
+    "new_provider_calls": 0
+  },
+  "experiment_id": "D2-PROXY-B10-NATIVE-FIRST-ACTION-TRANSPORT",
+  "geometry": {
+    "conditions": [
+      "success_memory",
+      "failure_memory",
+      "no_memory"
+    ],
+    "draws_per_state_per_condition": 4,
+    "matched_branch_comparison_states": 36,
+    "scientific_unit": "matched frozen Shopping state; repeated calls are nested measurements",
+    "success_failure_draws_per_state": "4+4",
+    "total_provider_records_historical": 432
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "raw_provenance_replay": {
+    "content_addressed_raw_texts_verified": 432,
+    "normalizer_branch_label_aware": false,
+    "normalizer_semantics": "Exact legacy F1D normalization: first structured action name; click_element additionally includes the interactive-element index.",
+    "provider_response_records_present": 432,
+    "raw_to_historical_action_signature_matches": 432,
+    "stage_records_verified": 432,
+    "strict_parser_fallback_recoveries": 25
+  },
+  "replayed_historical_primary": {
+    "mean_success_failure_tv_full_precision": 0.06944444444444445,
+    "mean_success_failure_tv_reported": 0.069444,
+    "modal_success_failure_changes": "0/36",
+    "permutation_p_full_precision": 0.5800941990580094,
+    "permutation_p_reported": 0.580094,
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260824
+  },
+  "schema_version": "1.0",
+  "source_bindings": {
+    "b10_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-contract.json",
+      "payload_sha256": "a6983c0fe46c649a187bc60954614dfc489b2de903928a452cf0494034b0b3c5",
+      "sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436"
+    },
+    "b10_result": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-result.json",
+      "sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6"
+    },
+    "legacy_runner": {
+      "commit": "f400a9e218c869a447110f3e3e00de6449550985",
+      "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/run_b10_native_first_action_transport.py",
+      "sha256": "87214f92c2a11ea9ff139535ca6d7d272680ec5ed7da8b86880475bbb66cb98a"
+    }
+  },
+  "status": "PASS_B10_FIRST_ACTION_RAW_REPLAY"
+}

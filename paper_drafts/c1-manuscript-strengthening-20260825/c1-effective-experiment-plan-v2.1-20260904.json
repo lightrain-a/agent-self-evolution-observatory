@@ -1,0 +1,159 @@
+{
+  "schema_version": "2.1",
+  "date": "2026-09-04",
+  "object": "C1-EFFECTIVE-EXPERIMENT-PLAN-V2.1",
+  "status": "FROZEN_BEFORE_COLLISION_MMD2_OUTCOME_OPENING",
+  "parent_design": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2-20260904.md",
+    "sha256": "fb43c9d0f1cb552bcf41970b351c2e4ff121d06385eefd0f64828677cae4c43d",
+    "machine_path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2-20260904.json",
+    "machine_sha256": "8c015d275ad01e39cdfbfff21bf955a230108a536d1a3d002aa86e581f92017f",
+    "important_preoutcome_choice": "exact-match-kernel unbiased MMD2/collision U-statistic was frozen by V2 before V2.1 opens its outcome"
+  },
+  "paper_archetype": "MEASUREMENT_IDENTIFICATION",
+  "design_principle": "reuse valid frozen evidence before rerun; every additional experiment must buy a reviewer-verdict-changing identification or precision distinction",
+  "scientific_unit": {
+    "name": "frozen matched Shopping branch-comparison state",
+    "count": 36,
+    "provider_repeats_are_scientific_units": false
+  },
+  "m0_raw_replay": {
+    "status": "PASS_B10_FIRST_ACTION_RAW_REPLAY",
+    "receipt": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-b10-first-action-raw-replay-qualification-20260904.json",
+      "sha256": "2bac711b6ebec8b77568bdca3cd0ea47d62d2dde52add8e34f44493703ff88d7"
+    },
+    "b10_contract_sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436",
+    "b10_contract_payload_sha256": "a6983c0fe46c649a187bc60954614dfc489b2de903928a452cf0494034b0b3c5",
+    "b10_result_sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6",
+    "historical_runner": {
+      "commit": "f400a9e218c869a447110f3e3e00de6449550985",
+      "sha256": "87214f92c2a11ea9ff139535ca6d7d272680ec5ed7da8b86880475bbb66cb98a"
+    },
+    "geometry": {
+      "states": 36,
+      "conditions": ["success_memory", "failure_memory", "no_memory"],
+      "draws_per_state_per_condition": 4,
+      "total_historical_provider_records": 432,
+      "primary_success_failure_draws_per_state": "4+4"
+    },
+    "raw_integrity": {
+      "stage_records": "432/432",
+      "raw_provider_texts": "432/432",
+      "raw_to_normalized_action_signatures": "432/432"
+    },
+    "replayed_historical_primary": {
+      "mean_tv_full_precision": 0.06944444444444445,
+      "permutation_p_full_precision": 0.5800941990580094,
+      "modal_changes": "0/36",
+      "permutation_repetitions": 100000,
+      "permutation_seed": 20260824
+    },
+    "new_provider_calls": 0
+  },
+  "m1_baselines": {
+    "provider_calls": 0,
+    "primary_evaluation_surfaces": [
+      "WRITE_ONLY_W",
+      "RETRIEVAL_ONLY_E",
+      "NATIVE_ENDPOINT_ONLY_O",
+      "FORCED_ONLY_SIDE_F",
+      "STAGE_RESOLVED_W_E_U_O_PLUS_SIDE_F"
+    ],
+    "matched_existing_controls": [
+      "same-mode wording control at W",
+      "forced fixed-evidence capacity control",
+      "outcome-blind structured-memory control",
+      "structural stage-ablation audit"
+    ],
+    "method_zoo_required": false
+  },
+  "m2_zero_provider_collision_diagnostic": {
+    "status": "FROZEN_NOT_YET_OPENED",
+    "provider_calls": 0,
+    "source": "historical replay-qualified B10 success_memory/failure_memory first-action draws",
+    "states": 36,
+    "draws_per_branch_per_state": 4,
+    "no_memory_in_primary_statistic": false,
+    "action_identity": "first structured action name; click_element additionally includes interactive-element index",
+    "kernel": "k(a,b)=1[a==b]",
+    "per_state_statistic": "unbiased two-sample exact-match-kernel MMD2/collision U-statistic",
+    "formula": "U_i = sum_{j!=l}k(s_j,s_l)/(m(m-1)) + sum_{j!=l}k(f_j,f_l)/(n(n-1)) - 2*sum_{j,l}k(s_j,f_l)/(mn)",
+    "negative_values_allowed": true,
+    "clip_at_zero": false,
+    "global_statistic": "mean U_i over the 36 fixed states",
+    "randomization_test": {
+      "scheme": "within each state pool the 8 S/F signatures, shuffle, assign 4/4 pseudo-branches, recompute mean U",
+      "repetitions": 100000,
+      "rng": "Python random.Random",
+      "seed": 20260824,
+      "tail": "randomized mean U >= observed mean U",
+      "p_value": "(ge+1)/(R+1)"
+    },
+    "report": [
+      "36 U_i values",
+      "mean and median U_i",
+      "within-success collision per state",
+      "within-failure collision per state",
+      "between-branch collision per state",
+      "positive/zero/negative U_i counts",
+      "fixed-state bootstrap interval as descriptive uncertainty",
+      "randomization p-value",
+      "normalized action frequency tables"
+    ],
+    "authority": "POSTHOC_ZERO_PROVIDER_DIAGNOSTIC_NOT_INDEPENDENT_PROSPECTIVE_REPLICATION",
+    "decision_rules": {
+      "D1_supported_separation": "revise strict pre-action wording; keep post-hoc status; fresh prospective replicate only if primary stochasticity-controlled divergence claim is verdict-changing",
+      "D2_not_supported": "retain first-action as first unsupported measured stage; allow only non-equivalence wording; do not chase significance",
+      "D3_precision_inconclusive": "run zero-provider calibration before any prospective fresh block"
+    }
+  },
+  "m2_prospective_fresh_block": {
+    "default_execute": false,
+    "authorization_requires": [
+      "current 4+4 support is insufficient for a reviewer-verdict-changing distinction",
+      "fresh independent stochasticity-controlled evidence is required for the intended manuscript claim"
+    ],
+    "candidate_draws_per_branch": [2, 4, 6, 8],
+    "call_envelopes": {"2": 144, "4": 288, "6": 432, "8": 576},
+    "sample_size_selection": "smallest n meeting predeclared false-positive and sensitivity targets under replay-qualified concentration structure plus synthetic null/alternative stress family",
+    "conditions": ["success_memory", "failure_memory"],
+    "stop_after": "first normalized structured action",
+    "terminal_rollout": false,
+    "combine_old_and_new_as_one_confirmatory_sample": false,
+    "outcome_adaptive_topup": false
+  },
+  "conditional_extensions": {
+    "reddit_E_U": {
+      "default_execute": false,
+      "priority": "use existing Reddit before any third domain",
+      "trigger": "post-M2 independent submission review says cross-domain stage-boundary replication is verdict-changing"
+    },
+    "second_executor": {
+      "default_execute": false,
+      "trigger": "post-M2 independent review says model/configuration specificity is verdict-changing",
+      "change_only": "executor"
+    },
+    "PACTA_MSR": {
+      "required_for_current_paper": false,
+      "role": "independent optional method-expansion successor"
+    }
+  },
+  "explicit_rejections": [
+    "rerun B10 merely because historical primary metric was TV",
+    "treat 288 S/F repeated decodes as independent scientific units",
+    "default multi-model breadth",
+    "default third benchmark",
+    "mismatched memory-method leaderboard",
+    "terminal rollouts for first-action-only question",
+    "adaptive sample-size top-up after inspecting significance",
+    "post-hoc positive-state subgroup rescue",
+    "PACTA-MSR as rescue for the current measurement paper"
+  ],
+  "next_authorized_sequence": [
+    "M1_ZERO_CALL_BASELINE_COMPILE",
+    "M2Z_ZERO_PROVIDER_COLLISION_MMD2_DIAGNOSTIC",
+    "M3_ZERO_CALL_CLAIM_FIGURE_SUBMISSION_REVIEW"
+  ],
+  "new_provider_execution_authorized_by_this_plan": false
+}
