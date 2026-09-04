@@ -554,6 +554,23 @@ The controlled experiment already has enough raw workload. Do not expand V3 for 
 3. strongest closest-method baselines in that lane;
 4. only then one optional robustness model.
 
+### SkillZip Pro workload cross-check
+
+A targeted audit of SkillZip Pro reinforces this resource allocation. That paper earns systems-level empirical depth primarily through one production content-moderation harness plus a multi-entry bundle, while testing orthogonal dimensions such as protected vs unprotected compression, routing preservation, public-entry independence, One-Shot vs Continual updates, and Persistent vs Transient deployment. Its strength does not come from a large benchmark/model matrix.
+
+The analogous E2-R17 requirement is therefore **evidence-type depth rather than benchmark breadth**:
+
+- availability/censoring;
+- exact-same-pool causal consequence;
+- prospective structural effect modification;
+- positive controlled divergence as a separate gate;
+- one realistic public transport/baseline lane;
+- explicit negative/failure boundary.
+
+Current V3 already supplies more than enough controlled execution volume. The missing analogue of SkillZip Pro's industrial production evidence is the planned SpreadsheetBench Verified P1 lane. Do not substitute additional synthetic skeletons or extra models for that realistic evidence.
+
+See `consultations/e2-r17-skillzip-pro-workload-comparison-20260904.md`.
+
 ---
 
 # 13. Complete execution decision tree
