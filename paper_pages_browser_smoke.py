@@ -52,7 +52,7 @@ def main():
           ("paper-e1.html",True,["R*(A;q)","AutoSkill P19","ReasoningBank"]),
           ("paper-g1.html",True,["HarmBench","DeepSeek","PV1"]),
           ("paper-c1.html",True,["Shopping","125/172","0.700"]),
-          ("paper-e2.html",True,["WIN-C","MRW","17 / 48"]),
+          ("paper-e2.html",True,["M3R4","Bridge V4-R2","SkillRevise"]),
           ("paper-b1.html",True,["AgentDojo","5/10","provenance"]),
           ("paper-a.html",False,["MemoryVLA","LIBERO-Plus","0.5541"]),
           ("paper-b.html",False,["MemoryVLA","24","future re-exposure"]),

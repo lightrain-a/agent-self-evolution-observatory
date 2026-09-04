@@ -1,5 +1,5 @@
 window.CURRENT_PAPER_PAGES={
- schema_version:"2.0",generated_at:"2026-09-01T12:16:00+08:00",
+ schema_version:"2.0",generated_at:"2026-09-04T11:25:57+08:00",
  policy:{reader_facing_projection_only:true,cannot_grant_scientific_authority:true,cannot_grant_experiment_authority:true,cannot_grant_gpu_authority:true,cannot_grant_submission_authority:true,formal_registry_codes_are_never_invented:true,working_papers_are_explicitly_separated_from_paper_registry:true},
  order:["paper-e1","paper-g1","paper-c1","paper-e2","paper-b1","paper-a","paper-b","paper-agent-constraint","paper-3d"],
  papers:{
@@ -36,10 +36,10 @@ window.CURRENT_PAPER_PAGES={
   {n:"01",zh:"Freeze evidence",en:"Freeze evidence",dzh:"trajectory bytes、score、task 与 learner-visible package 固定。",den:"Hold trajectory bytes, scores, tasks, and learner-visible packages fixed."},
   {n:"02",zh:"Generate persistent state",en:"Generate persistent state",dzh:"比较 native FREE 与 typed canonical compiler。",den:"Compare native FREE synthesis with a typed canonical compiler."},
   {n:"03",zh:"Hash the realized state",en:"Hash realized state",dzh:"persistent skill SHA 才是 downstream treatment；byte-identical states 强制同一 treatment。",den:"The persistent-skill SHA is the downstream treatment; byte-identical states are the same treatment."},
-  {n:"04",zh:"Measure future behavior",en:"Measure future behavior",dzh:"在冻结 held-out 上测 utility，并把 actor disagreement 与 state-realization disagreement 分开。",den:"Measure held-out utility while separating actor disagreement from state-realization disagreement."}
+  {n:"04",zh:"Measure future behavior",en:"Measure future behavior",dzh:"在冻结留出测试上测 utility，并把 actor disagreement 与 state-realization disagreement 分开。",den:"Measure held-out utility while separating actor disagreement from state-realization disagreement."}
  ],
  experiment:{headline:{zh:"R5 正文已同步到 M3R4 + Bridge V4-R2：两个设计都经 GPT-5.6 Sol / Extra High 独立 pre-execution review PASS，但都尚未产生新科学 outcome。M2 Recovery V3 仍优先等待 Ark quota 恢复；M3R4 执行路径已 zero-provider 打通到 provider-I/O 边界，当前硬门是 fresh model-identity requalification。",en:"R5 is aligned to M3R4 and Bridge V4-R2. Both designs independently passed GPT-5.6 Sol / Extra High pre-execution review, but neither has produced new scientific outcomes. M2 Recovery V3 retains resource priority until Ark quota resets; the M3R4 real actor path is qualified zero-provider up to the provider-I/O boundary, with fresh model-identity requalification as the current hard gate."},metrics:[
-  {k:{zh:"已完成 V2",en:"Completed V2"},v:"48 pairs · 96 states · 1,728 heldout"},
+  {k:{zh:"已完成 V2",en:"Completed V2"},v:"48 pairs · 96 states · 1,728 留出测试"},
   {k:{zh:"M3R4",en:"M3R4"},v:"72 actor units · 0 updater · DESIGN PASS"},
   {k:{zh:"Bridge V4-R2",en:"Bridge V4-R2"},v:"120 fresh tasks · 12 streams · DESIGN PASS"},
   {k:{zh:"Publication gap",en:"Publication gap"},v:"literature baseline + 2 domains × 2 backbones"}

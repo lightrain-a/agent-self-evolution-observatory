@@ -6,12 +6,12 @@ Object.assign(window.CURRENT_PAPER_DETAILS.papers["paper-e2"],{
   status:{zh:"R5 · M3R4 / Bridge V4-R2 pre-execution PASS",en:"R5 · M3R4 / Bridge V4-R2 pre-execution PASS"},
   method:{zh:"same-evidence regeneration audit + balanced Evidence×Generator bridge",en:"Same-evidence regeneration audit + balanced Evidence×Generator bridge"},
   model:{zh:"DeepSeek-V4-Pro primary；第二 backbone 仅在 Q1 通过后进入 publication transport",en:"DeepSeek-V4-Pro primary; a second backbone is publication transport only after Q1 passes"},
-  data:{zh:"V2 48 pairs / 1,728 heldout；M3R4 72 actor units；Bridge 120 fresh tasks",en:"V2 48 pairs / 1,728 heldout; M3R4 72 actor units; Bridge 120 fresh tasks"},
+  data:{zh:"V2 48 pairs / 1,728 留出测试；M3R4 72 actor units；Bridge 120 fresh tasks",en:"V2 48 pairs / 1,728 heldout; M3R4 72 actor units; Bridge 120 fresh tasks"},
   takeaway:{zh:"当前最强发现是 same evidence 不能稳定再生同一有用 persistent skill；接下来直接把 state generator 当实验变量。",en:"The strongest current finding is that the same evidence does not reliably regenerate the same useful persistent skill; the next test treats the state generator as an experimental variable."}
  },
  snapshot:[
   {k:{zh:"R5 标题",en:"R5 title"},v:{zh:"Same Evidence, Different Skill",en:"Same Evidence, Different Skill"}},
-  {k:{zh:"已完成大样本",en:"Completed large study"},v:{zh:"48 pairs / 96 states / 1,728 held-out",en:"48 pairs / 96 states / 1,728 held-out"}},
+  {k:{zh:"已完成大样本",en:"Completed large study"},v:{zh:"48 pairs / 96 states / 1,728 留出测试",en:"48 pairs / 96 states / 1,728 held-out"}},
   {k:{zh:"当前完成结论",en:"Completed claim"},v:{zh:"selected-case state-regeneration instability",en:"Selected-case state-regeneration instability"}},
   {k:{zh:"M2",en:"M2"},v:{zh:"Recovery V3 · 45 inherited + 27 remaining · outcome sealed",en:"Recovery V3 · 45 inherited + 27 remaining · outcome sealed"}},
   {k:{zh:"M3R4",en:"M3R4"},v:{zh:"72 fresh actor units · 0 updater · pre-execution PASS",en:"72 fresh actor units · 0 updater · pre-execution PASS"}},

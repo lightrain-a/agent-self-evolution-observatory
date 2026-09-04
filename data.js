@@ -17,7 +17,7 @@ window.NAV_GROUPS = [
     ["paper-e1.html",{en:"① E1 · STRI",zh:"① E1 · STRI"}],
     ["paper-g1.html",{en:"② G1 · Temporal Safety",zh:"② G1 · 时间安全"}],
     ["paper-c1.html",{en:"③ C1 · Memory Transport",zh:"③ C1 · 记忆传输"}],
-    ["paper-e2.html",{en:"④ E2 · Search-Projection",zh:"④ E2 · 搜索投影"}],
+    ["paper-e2.html",{en:"④ E2 · State Regeneration",zh:"④ E2 · 状态再生成"}],
     ["paper-b1.html",{en:"⑤ B1 · Memory Provenance",zh:"⑤ B1 · 记忆来源"}],
     ["paper-a.html",{en:"⑥ Paper A · Influence–Fidelity",zh:"⑥ Paper A · Influence–Fidelity"}],
     ["paper-b.html",{en:"⑦ Paper B · Embodied Memory",zh:"⑦ Paper B · 具身持久记忆"}],
