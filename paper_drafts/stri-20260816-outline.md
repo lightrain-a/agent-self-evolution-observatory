@@ -1,140 +1,372 @@
 # Self-Evolution Should Not Depend on How Skills Are Split
 
-**STRI — ICLR paper-first outline**
-Status: C1/C2 supported. C3/C4 locked behind frozen P0-A/P0-B.
+**STRI — current ICLR paper-first outline**
 
-## Thesis
-Self-evolving skill systems often use package IDs as curriculum, retrieval, credit, and refinement units. If the content-addressed primitive executable basis is unchanged, duplicating package identities or grouping/ungrouping those same primitives should not change the induced semantic evolution process merely because the package representation changed. We call this Skill-Taxonomy Representation Invariance (STRI).
+Status: **narrow scientific object is submission-ready; no new experiment is required for the current claim.**
+Future iterative-agent P0/P1 is claim expansion only.
 
-## Evidence already established
+## 1. One-sentence thesis
 
-### Skill Self-Play
-- 530 released API-Bank Level-1/3 rows; 348 are covered by released validators.
-- 183/348 covered rows have multiple released skill memberships.
-- Released text/name Jaccard dedup misses all observed specific–generic overlap pairs used in the audit.
-- Minimum-cardinality whole-package pruning preserving exact support still leaves 71/348 overlap rows.
-- Arbitrary nonnegative global package weighting cannot equalize semantic-context exposure: optimal max/min ratio = 2.0.
+A skill-using agent should not receive different **semantic capability at a skill-access boundary** merely because the same underlying capability is physically packaged with different IDs, counts, partitions, or wrappers.
 
-### SkillRL
-- Exact-content fresh-ID clones accepted for 12/12 released general skills.
-- Across 223 released ALFWorld task descriptions, 11/12 clone targets change the unique semantic retrieval set at fixed top-k=6.
-- 5/12 reduce the number of unique general-skill contents returned.
+STRI turns this into an auditable representation-invariance object and separates three levels that must not be conflated:
 
-## Formal setup
-Let X be semantic contexts. Let U be a frozen **content-addressed primitive semantic basis**, not a set of package IDs. A primitive fingerprint hashes immutable implementation/contract material (skill content, rules, validator and validator specification) and excludes mutable sampling statistics. Each primitive u has a frozen first-party support predicate V_u(x) and applicability A_u={x:V_u(x)=1}.
+1. **Runtime Local STRI** — does equivalent repackaging change semantic access?
+2. **Structural realizability** — can package-only control realize the same semantic target in principle?
+3. **Downstream propagation** — if local access changes, does it alter later behavior?
 
-A taxonomy T consists of package identities S_T plus a grouping map M_T(s) subseteq U. A claimed semantics-preserving transformation may duplicate a package identity that points to the same primitive, or group/ungroup unchanged primitives into macro packages. It may not modify primitive content/support predicates, invent a semantic subskill, or add capability.
+Current evidence supports (1), gives an exact certificate for the package-only specialization in (2), and provides only one bounded positive witness for (3).
 
-Package selection p_T(s|z) is mapped to primitive mass through an explicit within-package responsibility rho_T(u|s,z), supported on M_T(s) and summing to one. Thus
+---
 
-m_T(u|z)=sum_s p_T(s|z) rho_T(u|s,z).
+## 2. Correct runtime object
 
-This is necessary for macro packages: selecting one macro does not give its full probability independently to every constituent primitive.
+At skill-access opportunity t:
 
-The semantic quotient is defined on context space, independently of package grouping:
+```text
+E_t^(r) = A_theta(H_t, U_t, P_t^(r), B_t, xi_t)
+```
 
-x ~_U x' iff V_u(x)=V_u(x') for every frozen primitive u.
+Compare the preregistered semantic projection:
 
-The quotient C_U=X/~_U consists of support-signature cells sigma_U(c)={u:V_u(x)=1}. Because U and V_u are frozen/content-addressed, these cells are unchanged by the claimed package duplication/grouping transformations.
+```text
+phi(E_t^(r))
+```
 
-For a support cell c, additive **eligibility exposure** is
+Where:
 
-E_T(c|z)=sum_{u in sigma_U(c)} m_T(u|z).
+- `H_t`: complete pre-access agent/controller state;
+- `U_t`: optional access request/control signal — query, planned subtask, `load_skill`, router signal, or null;
+- `P_t^(r)`: physical package realization under representation r;
+- `B_t`: frozen resource budget;
+- `xi_t`: paired stochastic state;
+- `E_t^(r)`: information/callable capability crossing into the actor interface.
 
-E is a control-opportunity measure, not a probability distribution and not task utility. Separately, Q_T(c|z) denotes the actual qualified task distribution emitted by the proposer/realization pipeline. Static theory concerns E; P0-A tests whether representation changes propagate to Q; longitudinal utility is C4 and remains empirical.
+A semantics-preserving intervention freezes the **semantic candidate support and semantic payload**, but physical package identity/count/partition/multiplicity may change because they are the treatment.
 
-## Theorem 1 — Mandatory-overlap lower bound
-Suppose frozen primitives u_a,u_b each have a globally singleton support cell, with support signatures exactly {u_a} and {u_b} over the full frozen primitive universe, and share an overlap cell containing both. Let m be the minimum positive additive eligibility exposure. The globally singleton cells have exposures exactly m(u_a) and m(u_b), so m(u_a) >= m and m(u_b) >= m; therefore the overlap cell has exposure at least m(u_a)+m(u_b) >= 2m. Hence every nonnegative primitive-mass vector induced by a pre-context single-package controller obeys
+Representation-derived access state is a mediator, not a pretreatment covariate. Embeddings, BM25/IDF state, ANN indexes, package metadata, router records, manifests, tokenized records, and representation-conditioned caches are rebuilt independently per arm using the same frozen construction procedure/configuration/randomness.
 
-max_x E(x) / min_x E(x) >= 2.
+### Why this abstraction matters
 
-The released Skill-SP graph has two independent witnesses: (skill_003, skill_015) and (skill_004, skill_015). The LP optimum is exactly 2, so the lower bound is tight.
+Do not universalize any single schedule:
 
-## Theorem 2 — Frozen-state decision-time controller-class reduction
-Released Skill-SP executes `sample_skill()` before `build_questioner_messages(skill)` and before the proposer task exists. At a **frozen pre-task state z**, the action is exactly one package identity. Therefore every randomized same-information controller over that unchanged action space is characterized pointwise by one categorical p_T(s|z); combined with the fixed responsibility channel rho_T it induces one nonnegative primitive-mass vector m_T(.|z), which lies in the additive exposure class constrained by Theorem 1.
+- task-level prefetch;
+- per-turn retrieval;
+- planner → subtask → retrieval;
+- actor-triggered `load_skill`;
+- progressive disclosure.
 
-This closes the generic learned pre-context single-package reduction **at a frozen state**. It does not say that a longitudinal adaptive bandit/neural controller is globally equivalent to one fixed categorical vector, nor does it prove long-run utility harm. State evolution and propagation are exactly why C4/P0 remain empirical. Contextual routers remain valid for post-context retrieval/credit surfaces.
+Explicit `q_t` and whole-task Top-k are special cases, not the definition.
 
-## Method hypothesis — Support-Quotient Control
-SQC changes the control object rather than claiming a new proposer or validator. Its quotient is the actual equivalence relation on context space induced by the frozen content-addressed primitive support signatures.
+---
 
-1. Freeze U and V_u independently of method outcomes; mutable package statistics are not part of primitive identity.
-2. Construct C_U=X/~_U from equal primitive-support signatures.
-3. Allocate curriculum/control mass mu(c) on support cells under a frozen calibration prior, not on current package identities.
-4. Choose primitive implementation responsibility alpha(u|c) only for u in sigma_U(c), with total responsibility one.
-5. Map the chosen unchanged primitive through the current taxonomy representation. Use validator-gated rejection only as a **shared non-novel realization backend**; rejected candidates consume budget.
-6. Write verified feedback once to the semantic cell/primitive responsibility and conserve total credit before package-specific bookkeeping.
+## 3. Structural specialization: package-only exposure
 
-Exact clone identities therefore do not create new primitive dimensions; macro grouping changes only the representation channel. C3 is not established until dynamic/heldout experiments show realized invariance without utility, coverage, or cost loss.
+For released systems with independent support truth, freeze support matrix A. Package mass `w >= 0` induces structural semantic exposure:
 
-## Current-source boundary
-Concede:
-- SkillClone: clone prevalence/detection/dedup.
-- SkillsVote: redundant/environment-sensitive skill governance.
-- Skill-SP / ERSkill: dynamic skill controllers and co-evolution.
-- SkillMisevo / Agent Skills Can Be Harmful: unsafe/harmful skill content and reuse.
-- SkillZip: internal skill compression.
-- fixed-arm contextual-bandit/overlapping-expert theory: similarity-aware control for fixed action sets.
+```text
+e = A w
+```
 
-Residual: representation invariance of an **endogenously evolving taxonomy whose package identities themselves define upstream control units**, especially mandatory partial overlap that cannot be removed by package pruning/global weighting.
+This is an **offline structural specialization**, not every agent's runtime algorithm.
 
-## Decisive P0
+For representation-independent target `q > 0`:
 
-### P0-A — faithful dynamic propagation
-- Author Skill-SP commit bb693c89...
-- Single author-published backbone: Qwen3-8B.
-- Exact vLLM/runtime/model/prompt/validator preflight PASS on host 231.
-- Generate 24 source-conditioned tasks each for skill_003, skill_004, skill_015 exactly once.
-- Reuse the same 72-output banks for split and two merge counterfactuals; no arm-specific generation.
-- Qualification: >=16 contract-valid samples per source; failure is INVALID, never scientific STOP.
-- Both real mandatory-overlap merges must pass frozen TV/lower95/max-shift gates for GO.
+```text
+R*(A;q) = min t
+s.t. q <= A w <= t q,  w >= 0
+```
 
-### P0-B — zero-extra-GPU quotient feasibility
-Only after P0-A GO. Reuse exact P0-A raw SHA; no new model calls. Online/no-lookahead validator rejection must realize all five semantic cells 3 times each within the original 72 total / 24-per-source calls. GO is local feasibility only, not utility evidence.
+Key boundary:
 
-### P0-C — optional frozen-solver one-step consequence
-Only after P0-A GO and on the exact same raw bank. Every contract-valid generated task is solved by the frozen author-style Qwen3-8B base solver with n=3 samples/task and independent reference tool-call grading. Split/merge expected p_hat values reuse the same task/solver outcomes; there are no arm-specific solver calls. A clear consequence requires a bootstrap interval entirely outside +/-5 percentage points. This is intentionally a coarse one-step curriculum-difficulty screen and does not replace the stricter 2pp full heldout utility gate or establish end-of-evolution C4.
+- `R*=1` iff `q` lies in the package support cone;
+- `R*>1` is the tight package-only residual for that target/control class.
 
-## Leakage-safe full experiment
-Frozen tool-disjoint Level-1 split:
+Exact clone duplication does not change the support cone. Partial-overlap geometry can still make a target unrealizable even after arbitrary global package reweighting.
 
-Calibration tools: AppointmentRegistration, ModifyRegistration, QueryHealthData, RecordHealthData.
-Heldout tools: CancelRegistration, EmergencyKnowledge, QueryRegistration, SymptomSearch.
+### Human-readable witness
 
-Both partitions contain all five semantic cells and both theorem witnesses; tool and row identities are disjoint.
+Global singleton supports for two packages plus a shared support cell force a factor-2 lower bound. The released Skill-SP Level-1 optimum is exactly 2.
 
-Calibration empirical semantic prior is frozen before heldout outcomes:
-[0.1702, 0.0638, 0.0638, 0.3617, 0.3404].
-Heldout atom frequencies cannot change this prior or the quotient structure.
+### Negative regimes
 
-Primary matched factorial after P0:
-- controller: optimal-global package allocation vs SQC;
-- taxonomy: split vs merge(003,015) vs merge(004,015).
+- Skill-SP Level-3: `R*=1`;
+- logical compiler: 127/128 multi-membership yet `R*=1`.
 
-Both controllers share the identical validator-rejection backend, proposer/validator/solver/update budgets, and seeds. Author-native Skill-SP is a separate deployment reference because its realization differs.
+Therefore overlap prevalence is not the structural explanation.
 
-Frozen confirmatory gates:
-- native meaningful sensitivity: TV >=0.05, bootstrap lower95 >=0.025, max pattern shift >=0.04 for both merges;
-- SQC invariance: bootstrap upper95 TV <=0.025 and max pattern shift <=0.02 for both merges;
-- heldout utility: SQC non-inferior within 2 absolute percentage points in every taxonomy cell;
-- semantic coverage: 5/5 cells, no atom loss;
-- no extra primary proposer/validator/solver budget.
+---
 
-## Paper figures/tables
-1. Figure: same primitive support, different package taxonomy; package mass changes, semantic quotient does not.
-2. Figure: real Skill-SP support graph with two tight factor-2 witnesses.
-3. Figure: decision-time timeline showing task context unavailable at upstream sampling.
-4. Table: two-system control-plane replication.
-5. Table: reduction tournament (dedup, pruning, global weights, theorem).
-6. Table: P0-A/P0-B.
-7. Table/Figure: heldout controller x taxonomy utility/invariance/resource frontier — only after results exist.
+## 4. Three research questions and evidence
 
-## Failure-first interpretation
-- P0-A qualified negative -> keep C1/C2, drop C4 and do not rescue with another backbone.
-- P0-B STOP -> current SQC realization insufficient; no adaptive P0 repair.
-- SQC fails either merge equivalence -> stop C3.
-- SQC loses heldout utility/coverage or needs more primary resource -> stop C3.
-- Any heldout leakage into prior/atoms/thresholds -> invalidate confirmatory run.
+### RQ1 — Can equivalent packaging change local semantic access?
 
-## Current execution state
-All pre-outcome scientific design is frozen in Git. The faithful Qwen3-8B P0-A remains scientifically unexecuted: zero task generations have been admitted into the P0 bank, so no technical attempt has updated scientific belief. Host 52 now has an independently cleared author-runtime operationalization, the exact Skill-SP commit and Qwen3-8B weights, 29/29 preflight checks, and prompt token-ID equality with the reviewed host-231 substrate. The current blocker is only uncontested GPU memory: active LLMPrint and other project jobs occupy all eight RTX 3090 cards on host 52, while hosts 60/69/231 are also busy. No external job will be preempted, and no backbone, scientific threshold, 72-generation budget, or outcome definition may change to rescue execution. When one uncontested GPU is available, P0-A should run once from the already-materialized host-52 runtime; P0-B and P0-C remain locked until P0-A GO.
+**Main evidence**
+
+1. **Skill-SP**: same-state package identity reparameterization changes package-class mass / prompt mixture; quotient conservation restores it.
+2. **SkillRL**: fresh-ID exact clones change semantic retrieval for 11/12 targets under finite package budget; placebo/quotient controls are invariant; the effect disappears when capacity is sufficient.
+3. **AutoSkill held-out qualification**: representation-sensitive retrieval appears in 9/9 outcome-blind held-out units.
+
+**Interpretation**
+
+Local representation-sensitive access is supported. Do not call this task-success or utility harm.
+
+### RQ2 — Is the structural residual really support geometry rather than duplicate count, overlap, or bad tuning?
+
+**Main evidence**
+
+- Skill-SP Level-1: neutral `R*=2` on full, calibration, and tool-disjoint heldout support matrices;
+- calibration-fitted exact weights transfer to heldout without refitting;
+- uniform already reaches the exact worst-case optimum;
+- inverse-support / NNLS can improve some average-fit quantities while worsening worst-case ratio;
+- Level-3 and logical compiler are equalizable negative controls.
+
+**Supporting evidence — supplement, not separate paper claims**
+
+- target-ray sensitivity;
+- exact edit radii;
+- witness peeling;
+- degree-preserving rewirings;
+- concentration constraints;
+- solver runtime.
+
+These exist to harden RQ2, not create an E4/E5/E6 laundry list.
+
+### RQ3 — Does local access divergence propagate downstream?
+
+**P19 bounded positive witness**
+
+Frozen AutoSkill prefetch substrate:
+
+```text
+Original: 6/6 behavior-signature positive
+Split-4:  0/6
+ID placebo: 3/3
+Quotient:   3/3
+```
+
+Mediator isolation under Split-4:
+
+```text
+specific post-checkout add-back: 3/3
+matched cleanup add-back:        0/3
+```
+
+Thus P19 supports:
+
+```text
+representation
+→ local semantic access
+→ model-visible mediator
+→ one mechanically defined executed behavior
+```
+
+**Held-out negative boundary**
+
+A preregistered 2-unit / 8-valid-run behavior pilot did not meet the split-specific gate and stopped.
+
+Correct statement:
+
+> **Behavioral propagation beyond P19 is not established.**
+
+Do not rewrite the STOP as “propagation is conditional,” because no propagation condition has been identified.
+
+---
+
+## 5. Relation to SkillZip / SkillZip Pro — what we learn and what we do NOT claim
+
+### Research-method lesson
+
+SkillZip treats a skill as a structured behavioral contract rather than a paragraph. SkillZip Pro further treats production skills as progressively loaded bundles with routing/entrypoint structure.
+
+STRI adopts the same **object-first discipline**:
+
+> define the real runtime object before proposing an experiment.
+
+For STRI that object is the skill-access boundary, not a universal whole-task Top-k.
+
+### Experimental-design lesson
+
+Do not present many ablations as peer-level findings. Organize evidence around the paper's load-bearing RQs:
+
+```text
+RQ1 Local phenomenon
+→ RQ2 mechanism / exact boundary
+→ RQ3 downstream propagation + negative boundary
+```
+
+Robustness, cost, edit radii, null ensembles, and solver timing are supporting analyses.
+
+### Writing lesson
+
+The paper should read:
+
+```text
+real runtime mismatch
+→ missing invariant
+→ exact object/formulation
+→ structural certificate
+→ local system evidence
+→ bounded behavior witness
+→ failed generalization / claim boundary
+```
+
+Do not read:
+
+```text
+E1 / E2 / E3 / E4 / E5 / E6 evidence inventory
+```
+
+### Scientific distinction
+
+SkillZip/Pro asks how to **rewrite/compress skill artifacts faithfully**.
+
+STRI asks whether a **fixed access mechanism remains semantically invariant under equivalent physical package realization**.
+
+STRI is not a compression method, MMR/diversity selector, or deduplication algorithm.
+
+---
+
+## 6. Main paper architecture
+
+### Abstract
+
+1. Real agents have heterogeneous skill-access schedules.
+2. Define representation-invariance at the common access interface.
+3. Introduce runtime Local STRI and separate structural `R*` specialization.
+4. Give Skill-SP / SkillRL local evidence.
+5. Give P19 bounded propagation witness.
+6. Give 9/9 held-out Local qualification + stopped held-out behavior pilot.
+7. End with exact boundary: P19-beyond behavior propagation not established.
+
+### Introduction
+
+1. Skills are structured persistent artifacts; production systems may progressively load them.
+2. Package realization can nevertheless enter control.
+3. State the missing invariant.
+4. State three RQs.
+5. Give compact released evidence / boundary.
+6. Three contributions only.
+
+### Related Work
+
+Group by scientific object, not chronology:
+
+- representation/routing/composition;
+- SkillZip/SkillZip Pro contract-preserving compression;
+- self-evolving controllers;
+- exposure/convex optimization boundary.
+
+### Problem Formulation
+
+1. Runtime skill-access boundary `A_theta(H,U,P,B,xi)->E` and `phi(E)`.
+2. Representation-derived access state is rebuilt per arm.
+3. Local STRI vs downstream propagation.
+4. Structural package-only specialization `e=Aw`.
+5. Quotient / exact-refinement result.
+6. `R*(A;q)` primal/dual and human-readable factor-2 witness.
+
+### Experimental Setup
+
+Only three load-bearing RQs.
+
+### Results
+
+- RQ1/RQ2 Skill-SP;
+- RQ2 negative regimes;
+- RQ1 SkillRL budget boundary;
+- RQ1/RQ3 AutoSkill P19 + held-out STOP;
+- compact supporting robustness paragraph.
+
+### Discussion
+
+- Runtime and structural layers are complementary but neither predicts the other.
+- P19 is the only bounded behavioral propagation witness.
+- No population utility/safety/regret claim.
+- Future non-clone repeated-access P0 is claim expansion, not required for current narrow paper.
+
+---
+
+## 7. Main figures and tables
+
+### Main text
+
+1. **Figure 1 — STRI overview**: same semantic capability, different physical taxonomy, access/control may change.
+2. **Figure 2 — R* boundary**: residual vs equalizable geometries + SkillRL finite-budget identity sensitivity.
+3. **Table 1 — released-system identity sensitivity / audit role**.
+4. **Table 2 — practical package-weight baselines / no-refit transfer**.
+5. **Table 3 — first-party support-regime boundary**.
+
+### Supplement
+
+- factor-2 witness visualization;
+- structural robustness figure;
+- external SkillRouter / AgentSkillOS analogue tables;
+- target rays / edit radii / witness peeling / null ensemble;
+- conditional solver runtime;
+- full P19 and held-out receipts.
+
+Every main-text visual must answer one of RQ1--RQ3. Supporting stress tests do not get equal visual prominence.
+
+---
+
+## 8. Current claim boundaries
+
+Do claim:
+
+- package representation can change identity-indexed/local semantic access;
+- exact clone invariance has a quotient characterization;
+- package-only target realizability has an exact `R*(A;q)` boundary;
+- P19 demonstrates one bounded representation→access→behavior chain;
+- held-out retrieval sensitivity is observed in 9/9 qualified units.
+
+Do not claim:
+
+- all skill systems violate STRI;
+- arbitrary realistic partial-overlap decompositions have been empirically tested;
+- `R*(A)>1` causes AutoSkill crowd-out;
+- Local STRI implies general behavioral propagation;
+- STRI improves task utility/safety;
+- semantic-first control is a validated repair;
+- a new LP/cone theorem;
+- a new compression/dedup/MMR method.
+
+---
+
+## 9. Optional future claim-expansion protocol — not required for current paper
+
+Only if we later broaden the empirical claim:
+
+### P0 — non-clone Local STRI on a genuinely repeated-access agent
+
+- outcome-blind natural access checkpoints;
+- canonical primitive bytes/hashes/provenance;
+- O Original / R non-clone Repacked / I ID-placebo;
+- native physical-package ranker retained;
+- representation-neutral semantic capacity rather than physical package Top-k;
+- primary endpoint = programmatic primitive-set divergence `phi(E)`;
+- minimum mechanistic gate suggested by independent review: 8 checkpoints from >=4 natural trajectories, max 2/trajectory, >=2 workflow instances.
+
+If P0 has no stable non-clone local divergence, stop architecture-general expansion.
+
+### P1 — only after qualified P0 divergence
+
+Fork from the same natural checkpoint:
+
+1. Original throughout;
+2. one-shot repack, then canonical representation;
+3. persistent repack.
+
+Measure semantic primitive reacquisition, reacquisition fraction/time, persistence, optional programmatic functional compensation, and frozen task outcome.
+
+This is future work, not missing confirmation for the current narrow submission.
+
+---
+
+## 10. Current submission state
+
+- Current narrow paper: **scientifically submission-ready** under the existing claim scope.
+- Independent Oracle GPT-5.6 Sol + Extra High review: `READY_NARROW_NO_NEW_EXPERIMENT` / `KEEP_CURRENT_NARROW`.
+- Main text architecture has been rewritten around runtime object → structural certificate → RQ-driven evidence → negative propagation boundary.
+- SkillZip / SkillZip Pro are now cited as the closest structured-artifact / progressive-loading representation neighbors, with the distinction stated explicitly.
+- ICLR main-text page budget remains a hard gate; supporting robustness belongs in supplement rather than expanding the main story.

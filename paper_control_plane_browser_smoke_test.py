@@ -83,9 +83,9 @@ def main() -> None:
             require(not any(authority.get(k) for k in ("scientific", "experiment", "gpu", "submission")), f"PaperRegistry must never grant authority: {paper_id} {authority}")
 
         b1 = browser_rows["D2-PAPER-FAILURE-MEMORY-PROVENANCE"]
-        require(b1.get("title") == "Does Memory Provenance Matter? Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content", f"B1 canonical title drifted: {b1.get('title')}")
+        require(b1.get("title") == "Does Memory Provenance Matter? Explicit Source-Outcome Cues Shift Agent Actions but Rarely Change Terminal Outcomes", f"B1 canonical title drifted: {b1.get('title')}")
         require(b1.get("paper_stage") == "SUBMISSION_READY" and b1.get("gate_clean_submission_ready") is True, f"B1 readiness drifted: {b1}")
-        require(b1.get("supported_claims") == 6 and b1.get("active_unrefuted_claims") == 0, f"B1 R64 claim closure drifted: {b1}")
+        require(b1.get("supported_claims") == 6 and b1.get("active_unrefuted_claims") == 0, f"B1 R67 claim closure drifted: {b1}")
         require((b1.get("primary_next_action") or {}).get("action_class") == "NO_INTERNAL_ACTION", f"B1 must remain internally closed: {b1}")
 
         g1 = browser_rows["AGENT-SAFETY-R9"]
@@ -109,7 +109,7 @@ def main() -> None:
         navigate(session_id, "/paper-b1.html")
         set_zh(session_id)
         b1_view = execute(session_id, """const t=document.body.textContent||'';return {title:document.title,h1:(document.querySelector('h1')?.textContent||'').trim(),full350:t.includes('350 / 350')||t.includes('350/350'),qwen:t.includes('+3.125 pp')||t.includes('+3.125pp'),llama:t.includes('0.0 pp')||t.includes('0pp'),old:t.includes('causal sign unresolved')||t.includes('因果方向未识别'),fffd:(t.match(/\uFFFD/g)||[]).length};""")
-        require(b1_view["full350"] and b1_view["qwen"] and b1_view["llama"] and not b1_view["old"] and b1_view["fffd"] == 0, f"B1 R65 public projection drifted: {b1_view}")
+        require(b1_view["full350"] and b1_view["qwen"] and b1_view["llama"] and not b1_view["old"] and b1_view["fffd"] == 0, f"B1 R67 public projection drifted: {b1_view}")
         require(b1_view["h1"] in b1_view["title"], f"B1 browser title and H1 diverged: {b1_view}")
 
         for path in ("/paper-a.html", "/paper-b.html", "/paper-agent-constraint.html", "/paper-3d.html"):
@@ -117,7 +117,7 @@ def main() -> None:
             view = execute(session_id, "return {registry:document.querySelectorAll('#paper-state').length,download:document.querySelectorAll('.cpp-hero .cpp-download-primary').length};")
             require(view == {"registry": 0, "download": 0}, f"working/scientific-object page fabricated formal PaperState or download: {path} {view}")
 
-        print("PASS current PaperRegistry control plane: 5 formal PaperStates + 9-paper collection + B1 R65 reader binding")
+        print("PASS current PaperRegistry control plane: 5 formal PaperStates + 9-paper collection + B1 R67 reader binding")
     finally:
         if session_id:
             try:
