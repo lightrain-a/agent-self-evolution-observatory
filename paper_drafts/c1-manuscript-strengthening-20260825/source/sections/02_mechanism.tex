@@ -70,26 +70,10 @@ In our frozen evidence, write is \textsc{Supported}, native source-item exposure
 
 This is still not an identified mediator coefficient. A causal mediation statement would additionally require compatible intervention surfaces and a noise/seed design that isolates each branch-specific atom. We do not have that evidence and do not make that claim.
 
-\subsection{From state relevance to behavioral authority}
-The attenuation boundary suggests a different control unit from ordinary state-conditioned binding. Let $R_t(m)\in\{0,1\}$ denote whether memory $m$ is relevant to the current state/query, and let $A_t(m)\in\{0,1\}$ denote whether its branch-specific information is authorized to influence the policy. A state-aware binder can implement a mapping such as
-\[
-  b_t=P(m,x_t,q_t)
-\]
-when $R_t(m)=1$. This is useful for relevance and utilization, but the C1 evidence rules out the shortcut $R_t(m)=1\Rightarrow A_t(m)=1$: native source-item exposure is common while stable first-action uptake is not supported.
+\subsection{Prospective implication: test selective post-exposure authorization}
+The completed experiment does not directly observe latent state relevance or latent ``behavioral authority.'' It establishes an operational boundary: source-item exposure can be frequent while a stable branch-conditioned first-action distribution shift remains unsupported by the frozen test. This leaves several explanations open, including content redundancy, policy priors, prompt/context attenuation, later-action effects, action-serialization ambiguity, and stochastic heterogeneity.
 
-This separation motivates a prospective selective-authority repair rather than a stronger retrieval rule. In PACTA-MSR, the same frozen source trajectory yields paired success/failure writer states $(m^S,m^F)$. A deterministic, branch-blind Matched State Reveal constructs the same current-state evidence for both branches before any binding decision, so state acquisition is not part of the treatment. A developmental shadow statistic then compares between-branch action variation against within-condition stochasticity,
-\[
-  \gamma_i=\min(B_{1i},B_{2i})-\max(W_{Si},W_{Fi}),
-  \qquad G_i=\mathbf{1}[\gamma_i>0],
-\]
-where this gate is retained only for mechanism qualification/localization, not as the population effect estimator. In the conditional final stage, $A_3$ grants binding only to $G_i=1$ units; $A_2$ grants the same number of bindings using an outcome-blind frozen random ranking. Thus the contrast between $A_3$ and $A_2$ asks whether selective authority is better than merely authorizing fewer memories.
-
-For the successor protocol, the final per-arm branch sensitivity is frozen outcome-blind as the unbiased exact-match-kernel MMD$^2$ / collision U-statistic,
-\[
-  U_a=\widehat{\mathrm{MMD}}^2_u(\mathcal{A}^{S}_a,\mathcal{A}^{F}_a),
-  \qquad D_{\mathrm{select}}=U_{A_3}-U_{A_2}.
-\]
-The pre-outcome primary gate requires mean $D_{\mathrm{select}}\ge 0.20$, more positive than negative unit-level contrasts, mean $(A_3-A_0)>0$, and mean $(A_3-A_1)\ge 0$ on the same MMD$^2$ scale. Raw empirical TV is descriptive secondary only. These definitions specify the repair hypothesis; they do \emph{not} constitute a method-effect result. Writer, binder, shadow, and final outcome authority remain conditional on the prospectively frozen execution gates.
+We therefore treat selective post-exposure authorization as a \emph{prospective falsifiable hypothesis}, not as the mechanism already identified by C1. The clean future comparison asks whether a selector based on reproducible matched-state branch sensitivity outperforms an equally sparse outcome-blind random authorization rule. A stable branch contrast is not assumed to be correct, useful, or reward-improving; any future controller result must establish those properties separately. The full frozen PACTA-MSR protocol, including its matched-state reveal, developmental shadow gate, rate-matched random control, and unbiased exact-match-kernel MMD$^2$ endpoint, is retained in Appendix/Future Work so that a successor cannot move its goalposts. No PACTA-MSR method-effect result is reported in this paper.
 
 \subsection{Interpretation discipline}
 Three non-implications are load-bearing throughout the paper:
