@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "paper_id": "STRI",
   "purpose": "Submission bibliography/source ledger. Metadata is provenance-separated from scientific evidence; no entry author list is guessed from memory.",
-  "retrieved_at": "2026-08-19",
+  "retrieved_at": "2026-09-04",
   "entries": [
     {
       "key": "huang2026skill",
@@ -93,6 +93,26 @@
       "url": "https://arxiv.org/abs/2608.11350",
       "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
       "paper_role": "direct collision: skill+harness optimization and candidate selection"
+    },
+    {
+      "key": "bai2026skillzip",
+      "title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents by Discovering Reusable Structure",
+      "authors": ["Xiaofan Bai", "Hongqiang Lin", "Chao Liu", "Yantao Zhang", "Xuan Jin", "Xipeng Cao", "Yuhong Li"],
+      "year": 2026,
+      "arxiv_id": "2608.11079",
+      "url": "https://arxiv.org/abs/2608.11079",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-09-04"],
+      "paper_role": "adjacent representation work: evaluation-free contract-preserving compression inside evolved skill artifacts"
+    },
+    {
+      "key": "bai2026skillzippro",
+      "title": "SkillZip Pro: Execution-Aware Dynamic Compression of Progressively Loaded Skills for Self-Evolving Agents",
+      "authors": ["Xiaofan Bai", "Chao Liu", "Hongqiang Lin", "Di Wu", "Mingli Song", "Xuan Jin", "Xipeng Cao", "Yuhong Li"],
+      "year": 2026,
+      "arxiv_id": "2608.30785",
+      "url": "https://arxiv.org/abs/2608.30785",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-09-04"],
+      "paper_role": "closest representation/runtime neighbor: progressively loaded skill bundles, routing preservation, and execution-aware structural compression"
     },
     {
       "key": "jiang2026demystifying",
