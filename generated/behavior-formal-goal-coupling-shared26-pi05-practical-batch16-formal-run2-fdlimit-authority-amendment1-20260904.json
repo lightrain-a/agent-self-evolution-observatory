@@ -1,0 +1,38 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-fdlimit-authority-amendment1-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-04T10:34:56+08:00",
+  "status": "RUN2_PREATTEMPT_AUTHORITY_SCHEMA_AMENDMENT_PASS",
+  "run2_id": "shared26-seed42-practical-b16-run2-fdlimit",
+  "parent_authority_sha256": "8974fa2a502400abd7e0ef2577ef0a9aac3becdf72d0a42cdb4263699ea504b7",
+  "amended_authority_sha256": "9628130eecba6456595ef4dfc8d7b1cfbe822baca8d4b4f94b09fefa4cd2cf18",
+  "pre_attempt_failure": {
+    "host": "222.20.126.231",
+    "service": "pi05-practical-batch16-formal-run2-fdlimit-231-20260904.service",
+    "error": "RuntimeError: real-data smoke SHA binding drift",
+    "progress_receipt_created": false,
+    "result_receipt_created": false,
+    "checkpoint_directory_created": false,
+    "gpu_memory_used_mib_observed": 14,
+    "scientific_optimizer_updates": 0,
+    "scientific_attempt_consumed": false
+  },
+  "runner_authority_keys_audited": [
+    "status",
+    "runner_sha256",
+    "real_data_smoke_sha256",
+    "dataset_seal_sha256",
+    "openpi_data_home"
+  ],
+  "fields_added": {
+    "real_data_smoke_sha256": "57d92cbf081237fd21d3ec8775c4113132b150edc13dc8096300780c59e57cc4",
+    "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+    "openpi_data_home": "/data/wyt/formal-goal-openpi-cache-v1"
+  },
+  "scientific_treatment_changed": false,
+  "runner_changed": false,
+  "launcher_changed": false,
+  "fd_limit_changed": false,
+  "next_gate": "RETRY_UNCONSUMED_RUN2_PREATTEMPT_WITH_AMENDED_AUTHORITY"
+}

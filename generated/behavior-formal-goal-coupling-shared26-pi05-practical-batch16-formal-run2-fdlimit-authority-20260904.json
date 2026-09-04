@@ -11,6 +11,9 @@
     "sha256": "2ee4f9cef1731136fdaa9f34240843287a74d903b9039b40b37a73e0c7f030bb"
   },
   "runner_sha256": "2ee4f9cef1731136fdaa9f34240843287a74d903b9039b40b37a73e0c7f030bb",
+  "real_data_smoke_sha256": "57d92cbf081237fd21d3ec8775c4113132b150edc13dc8096300780c59e57cc4",
+  "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "openpi_data_home": "/data/wyt/formal-goal-openpi-cache-v1",
   "launcher": {
     "path": "scripts/run_behavior_formal_goal_pi05_practical_batch16_formal_train_run2_231.sh",
     "sha256": "f09ecca8fb440d4f1316f591ea6f63c1dfc2e56acb8da28e246acccaebf1fc9d"
