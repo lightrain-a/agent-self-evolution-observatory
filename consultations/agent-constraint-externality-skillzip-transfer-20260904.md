@@ -170,6 +170,46 @@ GTCC 不再训练第二个 risk controller，也不根据 RQ3 outcome 重拟 ran
 
 这会形成和 SkillZip 类似的清晰分工：**机制实验回答 why，public main table 回答 how much，cross-model 回答 breadth，longitudinal 回答 persistence，efficiency 回答 cost**。
 
+### 2.7 对照 SkillZip Pro / SkillOpt / SkillRevise 后的工作量裁定
+
+不能简单以“模型×benchmark cell 数”判断论文是否够大。三个近邻工作的实验规模对应不同 claim：
+
+- **SkillZip Pro** 是窄而深的 production-object/system paper：核心围绕 production content-moderation skill、industrial multi-round harness、multi-entry bundle、routing fidelity、protected-vs-unprotected failure、Persistent/Transient 与 One-Shot/Continual 生命周期，以及 end-to-end token/cost accounting。它不是靠大量 benchmark cells 证明价值，而是让每个实验直接验证一个 execution contract。
+- **SkillRevise** 的 claim 是可泛化 skill revision，所以铺 `3 benchmarks × 5 LLMs`，并做 cross-model transfer。
+- **SkillOpt** 的 claim 更宽，是通用 text-space skill optimizer，因此覆盖 `6 benchmarks × 7 target models × 3 harnesses`、共 52 evaluation cells，并与 Human / one-shot / Trace2Skill / TextGrad / GEPA / EvoSkill 等比较。
+
+本项目更接近“机制识别 + system safeguard”，不应照 SkillOpt 堆 52 cells；但目前也不能只靠原来的 8-family F0。当前大量历史执行是 qualification / transport archaeology，不等于 submission-level scientific evidence。
+
+建议的 **minimum sufficient** 主证据：
+
+1. **Primary mechanism**：24 fresh matched repair families（12 FG + 12 TNF），3 topology × UPDATE/NO_UPDATE × 3 fixed repeats，最多 432 probe episodes；同一 panel 同时回答 RQ1 phenomenon 和 RQ2 mechanism。
+2. **Prospective prediction**：16 untouched families，只执行产生 update-attributable labels 所需的 UPDATE/NO_UPDATE；约 96 probe episodes。所有 ranking variants 在 outcome 前冻结，离线做 Random / Same-App / resource-only / distance-only / ExposureRank ablation，不额外烧 actor calls。
+3. **Mitigation**：16 new families；Always Commit / Target-only / Random-k / Same-App-k / GTCC，三次固定 repeat，共约 240 policy episodes；Full Check 只在预冻结小子集作 upper bound。
+4. **Cross-model**：2 个额外 capability-qualified actor，只在 12-family stratified subset 上复核 RQ1/RQ2，不重跑整篇；约 288 episodes。
+5. **Existing-method external validity（高价值可选）**：与其再加第四第五个模型，更值得把一个 AppWorld-compatible 现有 updater（首选 ACE）输出 freeze 后，做小规模 same-update collateral audit。它是 plug-in/generalization，不进入主 causal baseline 表。
+6. **Longitudinal（条件性）**：只有要把 claim 扩成 repeated self-evolution 时，才加 8 families × 5 update rounds × 3 policies（Always/Target-only/GTCC）；否则不跑。
+
+因此当前结论是：**实验逻辑已经够，但 submission-ready 工作量还不够；缺的是有效主科学数据，而不是更多 debug/qualification。** 最优补法不是横向堆 benchmark，而是把每个 claim 的最小充分证据补齐。
+
+### 2.8 Baseline 不能混淆“因果对照”和“现有方法”
+
+RQ1/RQ2 的最重要 baseline 不是某个 fancy memory algorithm，而是：
+
+- same-snapshot `NO_UPDATE`：证明 regression 可归因于 update；
+- exact-same-repair `INDEPENDENT` topology：证明 HIGH-vs-I 是 topology effect；
+- LOW：检验 ordered dose-response。
+
+RQ4 才进入方法 baseline：
+
+- Always Commit
+- Target-Only Validation
+- Random-k Collateral Check（同 probe budget）
+- Same-App-k（粗粒度 locality heuristic）
+- GTCC
+- Full Non-target Check（oracle / upper bound，不算同成本 baseline）
+
+ACE / SkillOpt / SkillRevise / Memory-R1 等会改变 update writer、acceptance policy 或 memory semantics，因此直接放进 RQ2 主表会破坏 exact-same-update identification。最合理的用法是选一个兼容 updater 做 supporting plug-in test，而不是把“不公平方法大乱斗”当 baseline 丰富度。
+
 ## 3. 写作架构学习
 
 ### 3.1 Working title / 核心矛盾

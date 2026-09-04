@@ -154,6 +154,7 @@ GTCC is intentionally simple. It is compared against:
  \item \textbf{Always Commit};
  \item \textbf{Target-Only Validation};
  \item \textbf{Random-$k$ Collateral Check}, using the same probe budget;
+ \item \textbf{Same-App-$k$ Check}, a coarse locality heuristic using the same probe budget;
  \item \textbf{Full Non-target Check}, reported as an oracle/upper bound rather than a same-cost baseline.
 \end{itemize}
 If Random-$k$ matches GTCC, we do not claim a topology-aware mitigation advantage. If a simple nearest/exposure rule is sufficient, we do not introduce a learned controller.
@@ -184,7 +185,7 @@ Stage & Main comparison & Primary readout & Stop condition \\
 RQ1 & UPDATE vs NO\_UPDATE & Target gain + pooled UE & No collateral phenomenon \\
 RQ2 & HIGH vs INDEPENDENT; LOW ordered & $\Delta_{\mathrm{topo}}$ + exposure profile & Topology absorbed by ordinary controls \\
 RQ3 & ExposureRank top-$k$ vs random-$k$ & Held-out regression enrichment & No prospective enrichment \\
-RQ4 & GTCC vs Random-$k$/Target-only/Always & Collateral rate at matched budget & Random-$k$ equivalent to GTCC \\
+RQ4 & GTCC vs Random-$k$/Same-App-$k$/Target-only/Always & Collateral rate at matched budget & Budget-matched heuristics equivalent to GTCC \\
 \bottomrule
 \end{tabular}
 \end{table}

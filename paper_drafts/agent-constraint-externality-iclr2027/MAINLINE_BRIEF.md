@@ -61,7 +61,65 @@ Primary contrast: `UE_HIGH - UE_INDEPENDENT`; LOW is an ordered secondary arm.
 Can an outcome-blind, parameter-free ExposureRank enrich future collateral regressions in top-k on untouched held-out families versus same-k random ranking?
 
 ### RQ4 — Minimum mitigation
-If RQ1–RQ3 pass, does GTCC reduce collateral regression at matched probe budget versus Always Commit, Target-Only Validation, and Random-k?
+If RQ1–RQ3 pass, does GTCC reduce collateral regression at matched probe budget versus Always Commit, Target-Only Validation, Random-k, and a coarse Same-App-k heuristic? Full Non-target Check is an oracle/upper bound, not a same-cost baseline.
+
+## Minimum sufficient experiment workload (proposal only; no execution authority)
+
+The current engineering/qualification history is large, but it does **not** count as submission-ready scientific breadth. The minimum useful workload should be claim-aligned rather than a benchmark/model grid for its own sake.
+
+### Must-have A — Primary controlled mechanism panel
+- `24` fresh confirmatory repair families, balanced `12 FG + 12 TNF`.
+- Family is the scientific unit; episodes are technical repeats.
+- Each eligible family: `3 topology arms × 2 UPDATE/NO_UPDATE branches × 3 fixed repeats = 18` probe episodes.
+- Maximum primary probe envelope: `24 × 18 = 432` episodes, plus one source episode and one frozen repair generation per family.
+- This single panel answers RQ1 and RQ2; do not create separate mechanism datasets unless the protocol itself changes.
+
+Why 24 rather than the old 8: the old design leaves too little independent family-level support after source-failure and repair-uptake exclusions. Twenty-four gives balanced family types and room for invalid/ineligible families without treating repeated episodes as independent `n`.
+
+### Must-have B — Prospective prediction panel
+- `16` untouched families, balanced `8 FG + 8 TNF`, disjoint from source-development and RQ1/RQ2 families.
+- ExposureRank, all ablation rankings, tie-breaks, and `k` are frozen before outcomes.
+- Only the UPDATE/NO_UPDATE evidence needed to label update-attributable regression is executed; the full three-arm causal matrix is not repeated unless required by the prediction estimand.
+- Recommended envelope: `16 families × 2 branches × 3 repeats = 96` probe episodes.
+- Offline baselines/ablations on the same outcomes: Random rank, Same-App rank, shared-resource-count-only, distance-only, full ExposureRank, plus a post-hoc oracle ranking reported only as an upper bound.
+
+### Must-have C — Mitigation panel
+- `16` additional fresh families, disjoint from RQ3 held-out families.
+- Same frozen repair opportunity and snapshot are evaluated under five fair policies: Always Commit, Target-Only Validation, Random-k, Same-App-k, GTCC.
+- `k` and total probe budget are identical for Random-k / Same-App-k / GTCC.
+- `3` fixed repeats per policy: `16 × 5 × 3 = 240` policy episodes.
+- Full Non-target Check is run on a prespecified smaller subset (e.g. `8` families) as an oracle/upper bound rather than inflating the main budget.
+- Report target success/repair gain, collateral regression rate, commit rate, paired utility/gain with CI, LLM requests, tool calls, and wall-clock cost.
+
+### Must-have D — One clean cross-model robustness check
+- Do **not** repeat the entire paper across seven models.
+- Use `2` additional capability-qualified actors on a pre-frozen stratified subset of `12` primary mechanism families.
+- Reduced robust check: `12 families × 3 topology arms × 2 branches × 2 repeats × 2 secondary actors = 288` episodes.
+- This is supporting external validity; the primary causal unit remains the family, and model cells are not pooled as extra `n`.
+
+### High-value optional expansion — external updater compatibility
+Instead of adding many more models, prefer one established self-evolution updater that is close to the deployment story. ACE is especially suitable because it already supports AppWorld-style evolving playbooks. Freeze the external updater output first, then audit the same UPDATE/NO_UPDATE and topology logic on a small balanced panel (e.g. `8` fresh families). Treat this as compatibility/generalization evidence, not a baseline that changes the repair bytes in the main causal comparison.
+
+### Conditional longitudinal expansion
+Only if the paper claims persistent multi-update self-evolution rather than single-update externality: use a small pre-frozen panel (e.g. `8` families, `5` update rounds) and compare only Always Commit / Target-Only / GTCC. The purpose is accumulated collateral risk, not another full baseline table.
+
+## Baseline hierarchy
+
+### Causal baselines (mandatory for RQ1/RQ2)
+1. `NO_UPDATE` from the same snapshot — identifies update-attributable harm.
+2. `INDEPENDENT` topology with exact same repair bytes — identifies the structural topology contrast.
+3. `LOW` topology — ordered secondary dose-response arm, not a replacement for the independent control.
+
+### Mitigation baselines (mandatory for RQ4)
+1. `Always Commit` — naive persistent local repair.
+2. `Target-Only Validation` — common default that checks only whether the repaired target improves.
+3. `Random-k Collateral Check` — strongest budget-matched control for “checking something helps.”
+4. `Same-App-k` — coarse locality heuristic; tests whether the full graph adds value beyond app identity.
+5. `GTCC` — proposed topology-aware policy.
+6. `Full Non-target Check` — oracle/upper bound, explicitly excluded from same-cost ranking.
+
+### Existing self-evolution methods
+ACE, SkillOpt, SkillRevise, Memory-R1, etc. should **not** be forced into the main causal baseline table if they change update generation, edit acceptance, or memory semantics: doing so destroys the exact-same-update treatment. Use at most one compatible existing updater as a secondary plug-in/generalization experiment. The main baselines must preserve the causal object.
 
 ## Paper architecture
 
