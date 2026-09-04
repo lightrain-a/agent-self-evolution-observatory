@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "paper": "C1 stage-resolved memory transport",
+  "review_date": "2026-09-04",
+  "role": "FRESH_INDEPENDENT_ADVERSARIAL_PAPER_STORY_REVIEW",
+  "review_runtime": {
+    "oracle_version": "0.18.0",
+    "engine": "browser",
+    "server": "root@10.42.8.52",
+    "remote_chrome": "127.0.0.1:9222",
+    "model": "GPT-5.6 Sol",
+    "model_dom_verified": true,
+    "thinking_effort": "Extra High, 4 of 5 verified in ChatGPT DOM",
+    "session": "c1-skillzip-diagnosis-repair-review",
+    "conversation_id": "6a9a1dc5-b728-83e8-8852-2f7692a5bbd6",
+    "prompt_submitted": true,
+    "browser_transcript_sha256": "cc08ce0415e728b69dc788084335dfd7050845b9c952cbe3d9f8743a95c01783",
+    "browser_transcript_bytes": 48614
+  },
+  "paper_input": {
+    "commit": "c8c3c8803e2826187a3c214d2f09565d1473d05a",
+    "intro_sha256": "07d2d9e54e757460729c0a56888ce75282b0d025b38cd809965c7711fe53c654",
+    "mechanism_sha256": "f66f866fccf299175b9bb7a4f052ff3c8ae8a8972ed010c2a646445fb5d2b518",
+    "q08_successor_contract_sha256": "b523187e431ec952d0ba5d3a960ae878a5c8e421d5498c736ff557413184df6d",
+    "blind_review_brief_sha256": "d9049bb020db7d477aa9283950751545842f5331ae84c3c572fdf30ac3fc0d1d",
+    "fresh4_source_support_audit_sha256": "6461f8e1c3d50ce55b1334a214d06ea90deb3168ad85c1790272c15eab24dd49"
+  },
+  "verdict": "KEEP_MEASUREMENT_MOVE_REPAIR_DISCUSSION",
+  "paper_archetype": "MEASUREMENT_IDENTIFICATION_ONLY_CURRENTLY_STRONGEST",
+  "pivot_required": false,
+  "pacta_msr_method_effect_evidence": false,
+  "main_recommendation": "Keep completed stage-resolved C1 measurement as the paper core. Move PACTA-MSR from main mechanistic contribution to Discussion/Future Work, with frozen executable protocol optionally in Appendix.",
+  "verdict_changing_problems": [
+    "Latent-variable overreach: exposure E is not direct state relevance R_t, and unsupported first-action U does not identify missing authority A_t.",
+    "Repair underidentification: selective authority is one plausible successor test, not the mechanism logically identified by completed C1 evidence.",
+    "Stability is not correctness: gamma_i selects reproducible branch contrast, not utility-improving or correct control.",
+    "Main-text evidence imbalance: elaborate zero-effect-evidence PACTA-MSR method material makes the completed measurement paper look contingent on an unexecuted second contribution.",
+    "Future method inference requires canonical action identity, independent shadow/final sampling, nondegenerate opening count, and scientific-unit uncertainty."
+  ],
+  "highest_value_figure_change": "Use one evidence-status stage diagram: shared trajectory forks at writer; write/exposure/first-action/terminal stages show frozen C1 evidence; forced arm is a side capacity control; a dashed post-uptake-boundary box labels PACTA-MSR as untested prospective hypothesis.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}
