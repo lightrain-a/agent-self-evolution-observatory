@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "object": "C1-POST-ORACLE-EXPERIMENT-PLAN-20260904",
+  "status": "FROZEN_PLAN_NO_NEW_SCIENTIFIC_OUTCOME",
+  "paper_archetype": "MEASUREMENT_IDENTIFICATION",
+  "oracle_review": {
+    "verdict": "KEEP_MEASUREMENT_MOVE_REPAIR_DISCUSSION",
+    "conversation_id": "6a9a1dc5-b728-83e8-8852-2f7692a5bbd6",
+    "transcript_sha256": "cc08ce0415e728b69dc788084335dfd7050845b9c952cbe3d9f8743a95c01783"
+  },
+  "program_decision": {
+    "current_paper_depends_on_pacta_msr_effect": false,
+    "pacta_msr_role": "OPTIONAL_PROSPECTIVE_SUCCESSOR_HYPOTHESIS",
+    "fresh2_fresh3_fresh4_are_method_effect_results": false,
+    "current_effect_authority": "NO_PACTA_MSR_METHOD_EFFECT_EVIDENCE"
+  },
+  "current_measurement_claim": "Durable branch-conditioned state divergence plus frequent native source-item exposure is insufficient to establish a stable branch-conditioned first-action distribution shift in the frozen C1 system.",
+  "forbidden_current_claims": [
+    "E directly measures latent state relevance R_t",
+    "unsupported U proves latent behavioral authority A_t is absent",
+    "selective authority is the uniquely identified missing mechanism",
+    "PACTA-MSR improves correctness, reward, or task performance",
+    "fresh2/fresh3/fresh4 are negative PACTA-MSR results"
+  ],
+  "track_a_current_paper": {
+    "required": true,
+    "new_scientific_provider_calls": 0,
+    "steps": [
+      {
+        "id": "A0",
+        "name": "freeze_completed_evidence",
+        "rerun": false,
+        "reclassify": false
+      },
+      {
+        "id": "A1",
+        "name": "evaluation_surface_baseline_table",
+        "surfaces": ["W_ONLY", "E_ONLY", "O_NATIVE_ONLY", "F_FORCED_ONLY", "W_E_U_O_PLUS_F_STAGE_RESOLVED"],
+        "kind": "EXISTING_EVIDENCE_OBSERVATION_ABLATION"
+      },
+      {
+        "id": "A2",
+        "name": "evidence_status_figure1",
+        "forced_arm_role": "SIDE_CAPACITY_CONTROL_NOT_NATIVE_STAGE",
+        "pacta_msr_visual_role": "DASHED_UNTESTED_PROSPECTIVE_HYPOTHESIS"
+      },
+      {
+        "id": "A3",
+        "name": "claim_evidence_audit",
+        "must_preserve_exposure_vs_relevance_boundary": true,
+        "must_preserve_unsupported_u_vs_zero_authority_boundary": true,
+        "must_preserve_no_method_effect_authority": true
+      },
+      {
+        "id": "A4",
+        "name": "fresh_submission_level_review",
+        "failure_action": "REPAIR_MANUSCRIPT_OR_CLAIMS_BEFORE_REQUESTING_NEW_EXPERIMENTS"
+      }
+    ]
+  },
+  "track_b_successor_p0": {
+    "required_for_current_paper": false,
+    "scientific_question": "Does stable matched-state branch-sensitivity selection yield stronger decision-level branch transport than equally sparse outcome-blind random authorization on a frozen scientific-unit panel?",
+    "utility_or_correctness_claim": false,
+    "arms": {
+      "A0": "native raw branch memory at matched revealed state",
+      "A1": "SCB always enabled",
+      "A2": "rate-matched random authorization frozen before shadow outcomes",
+      "A3": "PACTA-MSR selective authorization"
+    },
+    "selector": {
+      "gamma": "min(B1,B2)-max(WS,WF)",
+      "G": "1[gamma>0]",
+      "role": "DEVELOPMENTAL_QUALIFICATION_LOCALIZATION_ONLY",
+      "correctness_interpretation": false
+    },
+    "prerequisites": {
+      "canonical_action_compiler": {
+        "required": true,
+        "freeze_before_shadow": true,
+        "primary_readout": "canonical structured action IDs",
+        "raw_string_readout": "secondary sensitivity",
+        "zero_provider_deterministic_replay_required": true
+      },
+      "shadow_final_sample_independence": {
+        "required": true,
+        "disjoint_logical_calls": true,
+        "disjoint_request_sample_ids": true,
+        "shadow_reuse_in_final": false,
+        "freeze_G_K_A2_before_final": true
+      },
+      "nondegenerate_K": {
+        "pilot_units": 8,
+        "min": 2,
+        "max": 6,
+        "failure_action": "STOP_BEFORE_FINAL_NO_RESCUE"
+      },
+      "scientific_unit_inference": {
+        "unit": "source/future unit",
+        "provider_calls_are_scientific_units": false,
+        "claim_scope": "FROZEN_PANEL_ONLY",
+        "test": "one-sided exact paired sign-flip over D_select_i",
+        "population_generalization_from_p0": false
+      }
+    },
+    "final_metric": {
+      "kernel": "exact-match indicator over canonical action IDs",
+      "estimator": "unbiased MMD2 / collision U-statistic",
+      "negative_finite_sample_values_allowed": true,
+      "clip_at_zero": false,
+      "raw_empirical_TV": "descriptive_secondary_only",
+      "primary": "D_select_i = U_A3_i - U_A2_i"
+    },
+    "preexecution_calibration": {
+      "required": true,
+      "reason": "combined gate changed after adding scientific-unit sign-flip inference",
+      "scientific_outcomes_used": 0
+    },
+    "pass_gate": {
+      "all_final_calls_complete": true,
+      "K_min": 2,
+      "K_max": 6,
+      "mean_D_select_ge": 0.2,
+      "positive_count_gt_negative": true,
+      "one_sided_exact_signflip_p_le": 0.05,
+      "mean_A3_A0_gt": 0.0,
+      "mean_A3_A1_ge": 0.0,
+      "post_outcome_tuning": false
+    }
+  },
+  "provider_qualification": {
+    "fresh4_state": "PERMANENTLY_RETIRED_CONSUMED_INCOMPLETE_SOURCE_EPOCH",
+    "fresh4_continue": false,
+    "fresh4_replace": false,
+    "fresh4_top_up": false,
+    "observed_stop": {
+      "attempted_scientific_source_units": 1,
+      "valid_source_units": 0,
+      "codingplan_requests": 27,
+      "failure": "controlled_output_live_timeout",
+      "model_content_observed": true,
+      "writer_calls": 0,
+      "binder_calls": 0,
+      "probe_calls": 0,
+      "shadow_calls": 0,
+      "final_calls": 0
+    },
+    "q09": {
+      "role": "NON_SCIENTIFIC_LONG_HORIZON_CONTROLLED_OUTPUT_QUALIFICATION",
+      "scientific_swebench_task_use": false,
+      "independent_synthetic_episodes": 2,
+      "logical_outputs_per_episode": 64,
+      "growing_serialized_conversation": true,
+      "same_provider_bridge_envelope": true,
+      "provider_wrapper_retries": 0,
+      "turns_1_to_63": "source-like action format plus deterministic synthetic observations",
+      "turn_64": "frozen ordinary-JSON finalization object",
+      "pass": "both episodes complete without timeout truncation retry or prohibited tool use",
+      "failure_action": "HOLD_PROVIDER_LANE_DO_NOT_CONSUME_NEW_SCIENTIFIC_POOL"
+    }
+  },
+  "track_b_execution_order_after_all_prerequisites": [
+    "freeze wholly disjoint source/future pool and exact runtime support",
+    "acquire all source trajectories under all-or-stop gate",
+    "run deterministic matched-state reveal/probe on frozen Pilot8",
+    "run writer twins",
+    "run binder contexts",
+    "run disjoint developmental shadow samples",
+    "freeze G K and A2 membership",
+    "stop if selector qualification fails",
+    "run disjoint A0-A3 final samples",
+    "compute canonical-action MMD2 unit contrasts exact sign-flip and frozen-panel adjudication",
+    "leave sealed units untouched"
+  ],
+  "track_b_p0_forbidden_expansion": [
+    "terminal task-utility claim",
+    "second model",
+    "broad benchmark expansion",
+    "sealed-unit rescue",
+    "post-outcome threshold tuning"
+  ],
+  "optional_p1": {
+    "authorized": false,
+    "precondition": "GENUINE_P0_PASS_ONLY",
+    "purpose": "claim expansion not rescue",
+    "candidate_additions_if_later_frozen": [
+      "fresh disjoint confirmatory scientific-unit panel",
+      "population-oriented uncertainty/inference",
+      "one fairly matched reproducible decision-time arbitration baseline",
+      "separate utility/correctness endpoint only if a practical-repair claim is desired",
+      "at most one additional backbone/executor initially"
+    ]
+  },
+  "resource_priority": [
+    "finish Track A with zero new scientific provider calls",
+    "if method expansion is desired implement B3 and Q0.9 first",
+    "consume a new scientific source pool only after every zero-provider/non-scientific gate passes"
+  ],
+  "authority": {
+    "current_paper_measurement_claim": "RETAIN_EXISTING_FROZEN_AUTHORITY_ONLY",
+    "new_scientific_provider_execution": false,
+    "pacta_msr_method_effect": false,
+    "p1": false,
+    "submission": false
+  }
+}
