@@ -376,6 +376,25 @@ Five skeleton effects; no hidden averaging.
 
 ---
 
+# 10 Execution roadmap and baseline plan
+
+The current paper-level roadmap is frozen in:
+
+- `consultations/e2-r17-experiment-plan-v4-20260904.md`;
+- `generated/e2-r17-experiment-plan-v4-20260904.json`.
+
+Key sequencing:
+
+1. execute the already-reviewed V3 controlled causal core without redesign;
+2. evaluate the primary five-skeleton interaction gate;
+3. separately evaluate the frozen secondary 5/5 procedural controlled-divergence claim gate;
+4. only after primary V3 PASS, freeze and independently review one SpreadsheetBench Verified-400 public lane;
+5. use that same public lane simultaneously for natural transport and a unified closest-method baseline table;
+6. primary unified rerun baselines: No Skill, Parent Skill, WIN-C, Universal MRW4, RethinkSkill Normal/Success-only/Fail-only, SkillOpt, Trace2Skill, SkillCAT-style contrast, plus the E2 policy only if its public policy gate passes;
+7. use one common qualified primary model/harness first; a second model is robustness only after the main public table is frozen.
+
+The public lane must use one frozen split and common evaluator/harness for direct ranking. Source-faithful baseline reproductions with different original splits/models belong in an appendix fidelity lane and are not directly ranked against unified-rerun results.
+
 # Appendix priorities
 
 - exact Stage-A/Stage-B governance and SHA-bound execution receipts;

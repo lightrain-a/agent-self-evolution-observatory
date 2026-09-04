@@ -1,0 +1,87 @@
+{
+  "artifact_type": "e2-r17-experiment-plan-v4",
+  "date": "2026-09-04",
+  "status": "ZERO_PROVIDER_OUTCOME_BLIND_ROADMAP_ONLY",
+  "paper_identity": "CAUSAL_SYSTEMS_INTERFACE_PAPER",
+  "scientific_r2": {
+    "commit": "29799c83c662887694db52acba4bb19e83131bb0",
+    "contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+    "preflight_sha256": "e257438bd482d4f2209a8321d4a222bd97acf2c03bff46a1d5513b55a42ca766",
+    "unchanged": true
+  },
+  "controlled_v3": {
+    "stage_a": {
+      "streams": 20,
+      "update_tasks": 160,
+      "k": 8,
+      "actor_rollouts": 1280,
+      "updater_calls": 0,
+      "heldout_access": false,
+      "support_gate": "all 20 streams have >=4 mixed pools"
+    },
+    "stage_b_if_separately_authorized": {
+      "paired_stream_replicate_units": 80,
+      "learned_states": 160,
+      "heldout_tasks_per_state": 20,
+      "heldout_evaluations": 3200,
+      "independent_mechanism_units": 5,
+      "measurement_replicates_per_stream": 4
+    },
+    "primary_gate": "all five frozen skeleton interactions I_h > 0 under the existing R2 rule",
+    "secondary_claim_gate": "primary PASS AND D_h,PROCEDURAL > 0 for all five frozen skeletons"
+  },
+  "public_p1": {
+    "entry_condition": "V3 primary interaction PASS only",
+    "benchmark": "SpreadsheetBench Verified-400",
+    "unified_split_plan": {
+      "evolution_train": 80,
+      "validation": 40,
+      "heldout_test": 280,
+      "exact_ids_must_be_frozen_before_first_public_outcome": true
+    },
+    "primary_model_plan": "one common qualified DeepSeek V4-Pro executor/updater family first",
+    "optional_robustness_model": "one qualified Qwen sparse 35B-class model or Kimi K3 chosen outcome-blind",
+    "measurement_replication": "one evolution/selection run per baseline plus 3 repeated heldout evaluation panels of the same frozen final artifact when stochasticity requires it",
+    "unified_main_table_baselines": [
+      "No Skill",
+      "Initial/Parent Skill",
+      "WIN-C",
+      "Universal MRW4 or nearest public-compatible rejected-witness projection",
+      "RethinkSkill Normal",
+      "RethinkSkill Success-only",
+      "RethinkSkill Fail-only",
+      "SkillOpt",
+      "Trace2Skill",
+      "SkillCAT-style contrast",
+      "E2 frozen observable projection policy only if its public policy gate passes"
+    ],
+    "transport_primary_endpoint": "positive future-skill contrast of the preregistered E2 alternative projection versus WIN-C on prospectively eligible public units",
+    "hard_stop": "no eligibility tuning, benchmark swap, subgroup mining, or second-model rescue if transport is unsupported"
+  },
+  "source_faithful_appendix": {
+    "purpose": "adapter fidelity only, not direct cross-method ranking when split/model/harness differs",
+    "candidate_methods": [
+      "SkillOpt official protocol",
+      "RethinkSkill official feedback protocol",
+      "Trace2Skill official settings",
+      "SkillCAT paper-spec settings if exact official implementation remains unavailable"
+    ]
+  },
+  "do_not_expand_for_appearance": [
+    "more synthetic skeletons",
+    "R=8",
+    "larger controlled heldout panel merely for scale",
+    "4x4 actor/updater cross-product",
+    "multiple public benchmarks",
+    "second backbone before public P1",
+    "failure-specificity arm before public P1"
+  ],
+  "authority": {
+    "fresh_identity_call": false,
+    "stage_a": false,
+    "stage_b": false,
+    "public_p1": false,
+    "baseline_scientific_execution": false
+  },
+  "next_executable_gate": "EXACTLY_ONE_FRESH_DEEPSEEK_IDENTITY_QUALIFICATION_THEN_LOCAL_ADJUDICATION_THEN_SEPARATE_SINGLE_USE_STAGE_A_AUTHORIZATION_IF_PASS"
+}
