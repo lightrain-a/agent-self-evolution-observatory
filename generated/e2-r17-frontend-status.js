@@ -7,8 +7,8 @@ window.E2_R17_FRONTEND_STATUS = {
     en: "Decoupling Serving and Persistent Learning over Test-Time Search"
   },
   subtitle: {
-    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · 当前为零执行权限",
-    en: "Exact-same-pool causal identification · Search-Projection Censoring · zero execution authority"
+    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · identity qualification 为下一条可执行资格门；Stage A/B/Public P1 科学权限仍关闭",
+    en: "Exact-same-pool causal identification · Search-Projection Censoring · identity qualification is the next executable qualification gate; Stage A/B/Public P1 scientific authority remains closed"
   },
   paper_identity: "CAUSAL_SYSTEMS_INTERFACE_PAPER",
   scientific_object: {
@@ -22,6 +22,7 @@ window.E2_R17_FRONTEND_STATUS = {
     changed_by_frontend: false
   },
   authority: {
+    fresh_identity_qualification_permitted: true,
     fresh_identity_called: false,
     stage_a: false,
     stage_b: false,
@@ -31,8 +32,8 @@ window.E2_R17_FRONTEND_STATUS = {
   },
   next_gate: {
     code: "ONE_FRESH_DEEPSEEK_IDENTITY_THEN_LOCAL_ADJUDICATION_THEN_SEPARATE_STAGE_A_AUTH",
-    zh: "恰好 1 次 fresh DeepSeek identity qualification → 本地 adjudication → PASS 后另行签发一次性 Stage-A authorization。",
-    en: "Exactly one fresh DeepSeek identity qualification → local adjudication → if PASS, separately mint single-use Stage-A authorization."
+    zh: "当前已允许的下一边界：恰好 1 次 fresh DeepSeek identity qualification → 本地 adjudication → PASS 后另行签发一次性 Stage-A authorization。",
+    en: "Current permitted next boundary: exactly one fresh DeepSeek identity qualification → local adjudication → if PASS, separately mint single-use Stage-A authorization."
   },
   completed_evidence: [
     {
@@ -61,7 +62,7 @@ window.E2_R17_FRONTEND_STATUS = {
       id: "B0",
       title_zh: "Fresh model identity gate",
       title_en: "Fresh model identity gate",
-      status: "NEXT_NOT_AUTHORIZED",
+      status: "NEXT_EXECUTABLE",
       scale_zh: "1 次 provider identity call；无科学 outcome",
       scale_en: "1 provider identity call; no scientific outcome",
       gate_zh: "identity PASS 才能另行 mint Stage-A authorization。",

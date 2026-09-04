@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-latest-plan-frontend-gpt56-r2-rereview",
+  "date": "2026-09-04",
+  "review_scope": "fresh_zero_provider_rereview_of_latest_plan_frontend_repair",
+  "reviewer": {
+    "surface": "chatgpt_web_oracle_browser",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High, 4 of 5",
+    "model_verified_pre_send": true,
+    "thinking_verified_pre_send": true
+  },
+  "conversation": {
+    "url": "https://chatgpt.com/c/6a9a5273-d1d8-83e8-9dda-fc5dfeb07b9c",
+    "url_observed_via": "direct_cdp_after_single_submission",
+    "prompt_submissions": 1,
+    "prompt_resubmitted": false
+  },
+  "packet": {
+    "commit": "4df1f592cfc89e45dc76344a50fae462d858e24d",
+    "brief_path": "oracle_briefs/E2_R17_LATEST_PLAN_FRONTEND_R2_REREVIEW_20260904.md",
+    "brief_sha256": "52dde0875c317de306abc68d44160c177103aae703845bb9c32a1a10c6a8165f",
+    "inline_packet_path": "oracle_briefs/E2_R17_LATEST_PLAN_FRONTEND_R2_INLINE_PACKET_20260904.md",
+    "inline_packet_sha256": "6a6e46e6dbaad9e7a185a3485f56c35dd926bc361eb8f777984a720fdbd954fe"
+  },
+  "raw_response": {
+    "oracle_host_path": "/root/e2_r17_latest_plan_r2_rereview_answer.md",
+    "sha256": "7e11f85518c519a19426714c18ba74c3ae3d9aab58f8c8749cfdcd4198b2deda",
+    "chars": 7213,
+    "lines": 149,
+    "oracle_transcript_sha256": "71f4370b42a1c30530ae3fd8a58317488e40fcc960347edf62f2d8bfe964b197"
+  },
+  "repo_response_capture": {
+    "path": "consultations/e2-r17-latest-plan-frontend-gpt56-r2-rereview-20260904.md"
+  },
+  "audit": {
+    "A_transport_repair": "PASS",
+    "B_unified_lane_separation": "PASS",
+    "C_replication_repair": "PASS",
+    "D_claim_semantics": "PASS",
+    "E_frontend_fidelity": "REVISE",
+    "r2_redesign_required": false,
+    "additional_pre_stage_a_experiment_required": false,
+    "remaining_verdict_changing_fix_count": 1,
+    "remaining_fix": "Make identity qualification explicitly NEXT_EXECUTABLE/PERMITTED while Stage-A, Stage-B, and Public-P1 scientific authorities remain false."
+  },
+  "verdict": "REVISE_REPAIR_BEFORE_IDENTITY",
+  "provider_scientific_calls": 0,
+  "scientific_execution": false,
+  "stage_a_authority": false,
+  "stage_b_authority": false,
+  "public_p1_authority": false
+}
