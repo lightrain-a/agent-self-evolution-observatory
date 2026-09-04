@@ -69,7 +69,7 @@ def main():
           ("paper-b1.html",True,["350 / 350","+3.125 pp","0.0 pp"]),
           ("paper-a.html",False,["MemoryVLA","LIBERO-Plus","0.5541"]),
           ("paper-b.html",False,["MemoryVLA","24","future re-exposure"]),
-          ("paper-agent-constraint.html",False,["AppWorld","Direct-SFQ-A0","24 → N*","SHAM_UPDATE","Same-App-k"]),
+          ("paper-agent-constraint.html",False,["AppWorld","Direct-SFQ-A0","24 → TO-V → N*","TARGET_ONLY_VERIFICATION","SHAM_UPDATE","Same-App-k"]),
           ("paper-3d.html",False,["InstructScene","3D-FRONT / 3D-FUTURE","SceneNAT"]),
         ]
         evolution_shapes=[]
