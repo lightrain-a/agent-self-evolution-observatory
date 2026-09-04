@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-CONFIRMATORY-EXECUTION-PROPOSAL-20260904",
+  "recorded_date": "2026-09-04",
+  "status": "READY_FOR_SEPARATE_EXECUTION_AUTHORITY_GATE",
+  "design_closeout": {
+    "plan_commit": "ca71dc659e60102a55f2ca634411cff0cce9dbd1",
+    "review_closeout_commit": "a05fe26075964035a728424a30a5c04bd7059526",
+    "oracle_verdict": "PASS_MINIMUM_AGENT_CONSTRAINT_DESIGN",
+    "oracle_conversation": "6a9a4908-1dfc-83ee-ade0-e543e9f930c0",
+    "oracle_transcript_sha256": "8b7a2be2203cfe35aaa82cd617b5077e41f994c7235d09c2d80d7c5d161c970d",
+    "verdict_changing_fixes_remaining": 0
+  },
+  "execution_sequence": [
+    {
+      "stage": "GATE0_DIRECT_ACTOR_CAPABILITY",
+      "scientific_claim": false,
+      "purpose": "confirm the exact direct actor/runtime satisfies the frozen capability floor/ceiling/interface contract",
+      "failure_action": "STOP_BEFORE_SOURCE_FAILURE_OR_MECHANISM_EXECUTION"
+    },
+    {
+      "stage": "GATE1_REPAIR_OPPORTUNITY_QUALIFICATION",
+      "scientific_claim": false,
+      "purpose": "obtain normally terminated semantic target failures under the already frozen source-failure qualification contract",
+      "failure_action": "STOP_SUBSTRATE;_NO_CHALLENGE_VERSION_FISHING"
+    },
+    {
+      "stage": "DEVELOPMENT_REPEAT_QUALIFICATION",
+      "scientific_claim": false,
+      "purpose": "on 4-6 permanently excluded development families freeze R* in {2,3} using only within-condition stability",
+      "failure_action": "STOP_IF_ENDPOINT_NOT_STABLE_ENOUGH_FOR_FROZEN_REPEAT_RULE"
+    },
+    {
+      "stage": "RQ1_RQ2_CONFIRMATORY",
+      "scientific_claim": true,
+      "scientific_unit": "family",
+      "reserve_pool": 24,
+      "N_candidates": [12,16,20,24],
+      "default_budget_N": 16,
+      "R_candidates": [2,3],
+      "default_budget_R": 2,
+      "arms": ["INDEPENDENT","LOW","HIGH"],
+      "branches": ["NO_UPDATE","REAL_REPAIR"],
+      "primary_rq1": "pooled update externality UE = CRR_UPDATE - CRR_NO_UPDATE on the full prequalified family panel",
+      "primary_rq2": "UE_HIGH - UE_INDEPENDENT",
+      "opens_rq2_only_after_rq1": true,
+      "post_topology_target_success_used_for_family_deletion": false
+    },
+    {
+      "stage": "SHAM_FALSIFIER",
+      "scientific_claim": "mechanism falsifier",
+      "default_family_subset": 8,
+      "topology_arms": ["INDEPENDENT","HIGH"],
+      "branch": "SHAM_UPDATE",
+      "purpose": "separate repair semantics from generic persistent-context insertion"
+    },
+    {
+      "stage": "RQ3_HELDOUT_PREDICTION",
+      "scientific_claim": true,
+      "open_only_after": ["RQ1_PASS","RQ2_PASS"],
+      "candidate_families": 16,
+      "H_candidates": [12,16],
+      "default_H": 12,
+      "prediction_claim": "prospective top-k enrichment of update-attributable collateral regressions",
+      "failure_action": "STOP_TOPOLOGY_PREDICTION_AND_DO_NOT_OPEN_GTCC"
+    },
+    {
+      "stage": "RQ4_GTCC",
+      "scientific_claim": true,
+      "open_only_after": ["RQ1_PASS","RQ2_PASS","RQ3_PASS"],
+      "M_candidates": [8,12,16],
+      "default_M": 12,
+      "policies": ["Always Commit","Target-Only Validation","Random-k","Same-App-k","GTCC"],
+      "failure_action": "STOP_GTCC_NOVELTY_IF_PRACTICALLY_EQUIVALENT_TO_RANDOM_K_OR_SAME_APP_K"
+    }
+  ],
+  "default_episode_budget_if_all_conditional_stages_open": {
+    "rq1_rq2": 192,
+    "sham_extra": 32,
+    "rq3": 48,
+    "rq4": 120,
+    "subtotal_before_optional_external_validity": 392,
+    "optional_secondary_actor_if_later_authorized": 96
+  },
+  "scientific_n_rule": "family; branches, topology arms, repeats and policy probes are nested measurements",
+  "pre_topology_eligibility": [
+    "valid semantic source failure",
+    "valid frozen repair artifact",
+    "positive repair uptake on topology-neutral TARGET_ONLY_VERIFICATION",
+    "no interface or measurement invalidity"
+  ],
+  "forbidden_after_authority": [
+    "change N or R because a confirmatory effect is near threshold",
+    "drop a family because target repair fails in a topology arm",
+    "backfill from collateral or topology outcomes",
+    "change repair bytes across topology arms",
+    "open RQ3 after RQ1/RQ2 failure",
+    "open RQ4 after held-out prediction failure",
+    "add models, families, baselines or seeds to rescue a failed frozen primary claim",
+    "count nested repeats/model calls as independent family n"
+  ],
+  "next_required_action": "EXPLICIT_SEPARATE_CONFIRMATORY_EXECUTION_AUTHORITY",
+  "authority": {
+    "provider_execution": false,
+    "gpu": false,
+    "gate0": false,
+    "gate1": false,
+    "development_repeat_qualification": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "secondary_actor": false,
+    "external_updater": false,
+    "paper_claim_expansion": false
+  },
+  "scientific_provider_calls_created": 0,
+  "scientific_outcomes_created": 0
+}
