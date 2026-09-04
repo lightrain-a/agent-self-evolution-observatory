@@ -1,10 +1,10 @@
-# STRI Claim-Expansion Experiment Plan V2.1
+# STRI Claim-Expansion Experiment Plan V2.2
 
 Date: 2026-09-04
-Status: REVISED PRE-EXECUTION DESIGN AFTER INDEPENDENT GPT-5.6 REVIEW
+Status: PRE-EXECUTION DESIGN — ZERO-PROVIDER SPECIFICATION TIGHTENING
 Execution authority: CLOSED
 Scientific role: optional claim expansion beyond the current submission-ready narrow paper
-Review provenance: V2 commit `2de8168f55f93078a4fbbe33d3a247b75bcd8022` received `REVISE_BEFORE_EXECUTION`; V2.1 applies only its verdict-changing fixes.
+Review provenance: V2 commit `2de8168f55f93078a4fbbe33d3a247b75bcd8022` received `REVISE_BEFORE_EXECUTION`; V2.1 commit `b13354f6b572d798afe3ee323d0c87d40e00a1f0` closed those four verdict-changing defects and received `PASS_MINIMUM_CLAIM_EXPANSION_DESIGN`. V2.2 changes no scientific workload and only tightens equivalence, fork, gate, and dynamic-estimand definitions before any execution authority is opened.
 
 ## 0. Design principle
 
@@ -50,11 +50,13 @@ X_i = (H_ti, U_ti, S_ti, B_ti, xi_ti)
 
 where:
 
-- `H_ti`: complete pre-access state;
+- `H_ti`: complete **representation-independent** pre-access agent/environment/history state;
 - `U_ti`: optional access request/control signal;
 - `S_ti`: canonical primitive support available before representation-dependent ranking;
 - `B_ti`: frozen representation-neutral resource contract;
-- `xi_ti`: paired stochastic state/policy.
+- `xi_ti`: paired stochastic state, including every frozen seed/tie-break stream used by reconstruction, access, ranking, routing, loading, and actor sampling through `t0`.
+
+Each O/R/I arm is forked from the same complete qualified `X_i` through the instant immediately before physical representation realization at `t0`. No arm may regenerate, resample, or reconstruct any representation-independent component of `X_i`. Representation-derived objects are then purged/rebuilt arm-specifically under Section 7. After the `t0` intervention, only descendants of that intervention may diverge.
 
 Technical repeats are nested inside `X_i`; they are not independent scientific units.
 
@@ -128,25 +130,36 @@ P_A -> [hash_A]
 P_B -> [hash_B]
 ```
 
+Package boundaries are required to be semantically inert. In addition to the primitive table, freeze a canonical semantic relation object:
+
+```text
+G_sem = (V, E_order, E_dependency, E_composition)
+```
+
+where `V` is the primitive-hash set and the edge sets encode every ordering, dependency, and composition relation needed to interpret the primitive program. Physical package membership is **not** part of `G_sem`.
+
 Required programmatic equality:
 
 ```text
 multiset_union(manifests_original)
 ==
 multiset_union(manifests_repacked)
+
+G_sem_original == G_sem_repacked
 ```
 
-with multiplicity exactly one for every canonical primitive.
+with multiplicity exactly one for every canonical primitive. Any canonical primitive sequence rendered inside a physical package must be derived from the same frozen canonical ordering/dependency relations, never from arm-specific package insertion order. Splitting `A+B` into `A / B` may change only the physical container boundary; it may not create, delete, reverse, weaken, or strengthen any semantic relation.
 
 Forbidden:
 
 - primitive rewriting;
 - summarization/compression differences;
 - added or deleted primitive bytes;
+- changed primitive order/dependency/composition semantics;
 - LLM-generated per-arm package descriptions;
 - arm-specific semantic metadata.
 
-Package descriptions/metadata, when required by the native ranker, must be produced by one frozen deterministic composition function over primitive-level frozen descriptions/metadata.
+Package descriptions/metadata, when required by the native ranker, must be produced by one frozen deterministic composition function over primitive-level frozen descriptions/metadata and `G_sem`. The function is identical across arms; only the physical grouping supplied to it differs.
 
 ## 7. Representation-derived state
 
@@ -269,13 +282,21 @@ Any primitive/hash/metadata mismatch, partial primitive truncation, arm-specific
 
 If ID-placebo changes semantic exposure at any primary scientific checkpoint (`D_ID_i > 0`), stop package-partition attribution and repair the reconstruction pipeline before any new scientific run.
 
-### STOP_NO_NONCLONE_LOCAL_EFFECT
+### PASS_P0_LOCAL / STOP_NO_NONCLONE_LOCAL_EFFECT
 
-If the non-clone treatment has no stable semantic divergence, stop architecture-general claim expansion.
+P0 supports its local access-level claim only if all contract checks pass, every corresponding ID-placebo has `D_ID_i = 0`, and valid non-clone semantic divergence (`D_sem_i > 0`) occurs at checkpoints from at least **2 independent natural trajectories**. Multiple divergent checkpoints from one source trajectory do not satisfy this reproducibility gate.
+
+If fewer than 2 independent natural trajectories contain a valid `D_sem_i > 0` checkpoint, return:
+
+```text
+STOP_NO_NONCLONE_LOCAL_EFFECT
+```
+
+and do not open P1 or P2. This is the P0 claim gate. It is distinct from the stricter loss-bearing P1 entry gate below.
 
 ### STOP_DYNAMIC_INSUFFICIENT_LOSS
 
-P0 can support its access-level claim with any valid non-clone semantic divergence, including gain-only cases. P1, however, studies reacquisition of **lost** primitives and therefore requires `L0 != ∅`.
+A passing P0 local claim may contain gain-only divergences. P1, however, studies reacquisition of **lost** primitives and therefore requires `L0 != ∅`.
 
 If fewer than **4 checkpoints** satisfy all of:
 
@@ -286,9 +307,9 @@ If fewer than **4 checkpoints** satisfy all of:
 
 then stop dynamic expansion and do not run P1.
 
-### GO_P1
+### OPEN_P1
 
-P1 opens only with exactly **4 P1-qualified loss-bearing checkpoints** satisfying the conditions above.
+P1 opens only after `PASS_P0_LOCAL` and with exactly **4 P1-qualified loss-bearing checkpoints** satisfying the conditions above.
 
 If more than 4 checkpoints qualify, select exactly 4 by a preregistered deterministic hash over frozen checkpoint IDs. Do not choose by effect size, task outcome, downstream behavior, recovery prospects, or manual preference.
 
@@ -317,15 +338,15 @@ If the native access mechanism is stochastic, technical repeats may be added onl
 
 ## 13. Entry condition
 
-P1 is locked until P0 GO.
+P1 is locked until `PASS_P0_LOCAL` and `OPEN_P1` both hold.
 
-Use exactly the **4 P1-qualified loss-bearing checkpoints** selected by the frozen P0→P1 gate. They must span at least two independent source trajectories.
+Use exactly the **4 P1-qualified loss-bearing checkpoints** selected by the frozen P0→P1 gate. They must span at least two independent source trajectories. P1 therefore estimates dynamic recovery/persistence **conditional on checkpoints already known prospectively to exhibit a valid P0 local loss divergence**; it is not an estimate of population prevalence, unconditional dynamic harm, or the probability that an arbitrary access checkpoint is representation-sensitive.
 
 No additional P1 checkpoints may be accumulated adaptively. Heterogeneity across these four weakens or stops the dynamic claim rather than triggering sample expansion.
 
 ## 14. P1 arms
 
-From the identical natural checkpoint `H_t0`:
+From the identical complete qualified checkpoint `X_i = (H_t0, U_t0, S_t0, B_t0, xi_t0)` forked through `t0^-` exactly as specified in Section 3:
 
 ### O — Original throughout
 
@@ -390,29 +411,48 @@ P1 eligibility requires a nonempty preregistered local semantic divergence, not 
 
 ## 16. P1 primary recovery endpoints
 
-For each lost primitive `v in L0`:
+Because O/S/P trajectories may diverge after `t0`, every recovery quantity is **arm-indexed**. Let `a in {O,S,P}` and let `j=1,2,...` index that arm's own later skill-access events. For each lost primitive `v in L0`, record before representation-dependent ranking whether `v` is in the arm-local canonical candidate support `S_{a,j}`, and after access whether it is exposed in `Phi(E_{a,j})`.
+
+Each primitive/access observation receives exactly one programmatic state:
 
 ```text
-tau_v = first later skill-access event where v is re-exposed
+ELIGIBLE_EXPOSED:      v in S_{a,j} and v in Phi(E_{a,j})
+ELIGIBLE_NOT_EXPOSED:  v in S_{a,j} and v not in Phi(E_{a,j})
+NOT_ELIGIBLE:           v not in S_{a,j}
 ```
 
-Right-censor at episode termination if never reacquired.
+Only `ELIGIBLE_NOT_EXPOSED` is evidence that an available primitive was suppressed at that opportunity. `NOT_ELIGIBLE` is an endogenous support change and must not be called representation suppression.
 
-Complete reacquisition time:
+For each arm and primitive:
 
 ```text
-tau_all = max_v tau_v
+tau_{a,v} = first later arm-local skill-access event j where v is re-exposed
 ```
 
-Report in number of subsequent skill-access opportunities; environment/decision steps are secondary.
-
-Reacquisition fraction after j later access events:
+If no re-exposure occurs, retain the arm-specific censor reason rather than collapsing mechanisms:
 
 ```text
-R_j = |L0 ∩ union_{i=1..j} Phi(E_ti)| / |L0|
+TERMINATION:      the arm reaches terminal episode state before re-exposure
+NO_LATER_ACCESS:  no later skill-access event occurs before the frozen evaluation boundary
 ```
 
-Persistence is the number of later access opportunities before complete reacquisition, right-censored at termination.
+If later accesses occur but `v` is repeatedly `NOT_ELIGIBLE`, report that separately from repeated eligible non-exposure. Do not impute those events as suppression.
+
+Complete reacquisition time is arm-indexed:
+
+```text
+tau_{a,all} = max_v tau_{a,v}
+```
+
+Report in number of that arm's subsequent skill-access opportunities; environment/decision steps are secondary.
+
+Reacquisition fraction after the first `j` later arm-local access events is:
+
+```text
+R_{a,j} = |L0 ∩ union_{i=1..j} Phi(E_{a,i})| / |L0|
+```
+
+Also report, for each `v`, the count of **eligible-but-not-exposed** opportunities before exposure/censoring. Persistence claims are based on this eligible-opportunity record plus `tau_{a,v}`/`R_{a,j}`, with censor reasons shown explicitly.
 
 ## 17. P1 secondary endpoints
 
@@ -422,9 +462,9 @@ Persistence is the number of later access opportunities before complete reacquis
 
 ## 18. P1 decision rule
 
-P1 is mechanistic/descriptive at this scale, not a population theorem.
+P1 is mechanistic/descriptive at this scale, not a population theorem, and every conclusion is conditional on the four prospectively P0-qualified local loss divergences selected by the frozen gate.
 
-- If one-shot repack is rapidly reacquired while persistent repack repeatedly suppresses the same primitives, report recovery-vs-persistent-exposure separation.
+- If one-shot repack is rapidly reacquired while persistent repack has **repeated eligible opportunities** where the same `v in S_{P,j}` nevertheless remains absent from `Phi(E_{P,j})`, report recovery-vs-persistent-exposure separation.
 - If both treated arms rapidly recover and frozen final outcomes do not show stable downstream consequences, retain Local STRI and stop selling dynamic harm.
 - If the four-checkpoint block is heterogeneous or yields no interpretable dynamic separation across at least two independent trajectories, STOP further dynamic claim expansion. Do not add checkpoints to rescue the claim.
 
@@ -444,7 +484,7 @@ There is no automatic expansion to 5–8 checkpoints. Nested technical seeds are
 
 ## 20. Entry condition
 
-P2 is a separate optional access-level generalization branch. It opens only if P0 demonstrates a clean non-clone local effect **and** the authors explicitly choose to pursue the additional claim that the P0 effect reproduces under a meaningfully different access schedule.
+P2 is a separate optional access-level generalization branch. It opens only after `PASS_P0_LOCAL` **and** the authors explicitly choose to pursue the additional claim that the P0 effect reproduces under a meaningfully different access schedule.
 
 P2 is not required for the P0 or P1 claims and is not automatically triggered by P1. If no second-architecture claim is desired, do not execute P2.
 
@@ -526,7 +566,7 @@ checkpoint source acquisition:
   or FINITE_NEW_POOL = exactly 8 Original-only natural trajectories
 
 P0: 24 access replays
-P1: exactly 12 full trajectories, only after GO_P1
+P1: exactly 12 full trajectories, only after PASS_P0_LOCAL + OPEN_P1
 P2: 24 access replays, optional only for an explicit second-architecture claim
 ```
 
@@ -541,8 +581,8 @@ With a pre-existing frozen source pool, the corresponding maximum is 60.
 Stop logic:
 
 - insufficient finite source pool -> stop after the 8 source trajectories and do not run P0 replay;
-- P0 non-clone null -> stop after P0 (maximum 32 new executions when source acquisition was required, otherwise 24);
-- fewer than 4 loss-bearing P1-qualified checkpoints -> do not run P1;
+- fewer than 2 independent source trajectories with valid `D_sem>0` -> `STOP_NO_NONCLONE_LOCAL_EFFECT` after P0 (maximum 32 new executions when source acquisition was required, otherwise 24);
+- `PASS_P0_LOCAL` but fewer than 4 loss-bearing P1-qualified checkpoints -> retain the local P0 claim and return `STOP_DYNAMIC_INSUFFICIENT_LOSS`; do not run P1;
 - P1 heterogeneity/no interpretable dynamic distinction -> stop dynamic claim expansion; do not add checkpoints;
 - P2 runs only under a separately authorized second-architecture access claim, regardless of whether more workload would look stronger.
 
@@ -556,14 +596,14 @@ An independent reviewer should decide whether this is the smallest scientificall
 
 1. native-ranker + semantic-capacity prefix identification;
 2. O/R/I placebo adequacy;
-3. canonical primitive equivalence contract;
-4. finite checkpoint-source acquisition, sampling, and independence;
-5. 8-checkpoint P0 mechanistic scale;
-6. loss-bearing P0→P1 gate and exactly-four-checkpoint P1 scale;
-7. P1 O/S/P treatment-state reset/persistence boundary and recovery estimand;
-8. P2 second-architecture value versus unnecessary breadth;
-9. baseline sufficiency versus MMR/RAG-redundancy reduction;
-10. stop rules and interpretation boundaries.
+3. canonical primitive equivalence, including invariant ordering/dependency/composition relations rather than hash multiset alone;
+4. complete `X_i` fork through `t0^-`, including reconstruction/access stochastic state;
+5. finite checkpoint-source acquisition, sampling, and independence;
+6. 8-checkpoint P0 mechanistic scale and the >=2-independent-trajectory `PASS_P0_LOCAL` gate;
+7. distinct loss-bearing `OPEN_P1` gate and exactly-four-checkpoint P1 scale;
+8. P1 O/S/P treatment-state reset/persistence boundary plus arm-indexed recovery/eligibility/censoring estimand;
+9. P2 second-architecture value versus unnecessary breadth;
+10. baseline sufficiency, stop rules, and conditional interpretation boundaries.
 
 Allowed review verdicts:
 
