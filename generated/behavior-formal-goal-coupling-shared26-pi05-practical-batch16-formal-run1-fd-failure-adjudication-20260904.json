@@ -1,0 +1,74 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run1-fd-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "failed_run_id": "shared26-seed42-practical-b16-run1",
+  "status": "PI05_PRACTICAL_BATCH16_FORMAL_RUN1_PRETERMINAL_INFRASTRUCTURE_FAILURE_EMFILE",
+  "failure_class": "PRETERMINAL_INFRASTRUCTURE_FILE_DESCRIPTOR_EXHAUSTION",
+  "formal_run1_authority_sha256": "6aea20a8cd06c3b58fc80668534e16e2416818478e62d64ea884daae8d43fd86",
+  "durable_progress": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run1-progress-20260904.json",
+    "sha256": "5b09c74f7227326d8fa2ddf4c964922470de3ecda4bee5f159751902813e2379",
+    "last_durable_completed_optimizer_updates": 1,
+    "last_durable_loop_label": 0,
+    "exact_final_optimizer_update_count": null,
+    "reason_exact_count_unknown": "Progress is durably written at label 0 and then every 100 labels. The process failed before the next durable progress write, so the durable lower bound is 1 while the exact terminal in-memory update count is not recoverable."
+  },
+  "failure_evidence": {
+    "remote_log_path": "/data/wyt/formal-goal-pi05-practical-batch16-formal-train-20260904.log",
+    "remote_log_sha256": "3c5fe730aacb9d93d68fd37edf8f0bc3b884fc96366cf4bdc641ed64353dad55",
+    "terminal_exception": "OSError: [Errno 24] Too many open files",
+    "systemd_exit": "code=exited,status=1/FAILURE",
+    "memory_peak_gib": 24.6,
+    "swap_peak_bytes": 0,
+    "gpu_oom_observed": false
+  },
+  "checkpoint_state": {
+    "checkpoint_directory": "/data/wyt/formal-goal-portable-openpi-child-231-20260903/outputs/checkpoints/pi05_b1k_shared26_frozen/shared26-seed42-practical-b16-run1",
+    "directory_exists": true,
+    "checkpoint_children": [],
+    "checkpoint_labels_present": [],
+    "exact_state_recovery_possible": false,
+    "formal_result_receipt_exists": false
+  },
+  "mechanism_evidence": {
+    "lerobot_version": "0.5.2",
+    "video_decoder_cache_behavior": "VideoDecoderCache stores one persistent (VideoDecoder, file_handle) tuple per distinct video_path until clear() or process exit; the default cache has no capacity bound.",
+    "frozen_unique_rgb_video_files": 1146,
+    "equivalent_systemd_scope_python_rlimit_nofile": {
+      "soft": 1024,
+      "hard": 1048576
+    },
+    "fd_growth_qualification": {
+      "source_receipt_path": "/data/wyt/formal-goal-pi05-video-decoder-fd-cache-qualification-20260904.json",
+      "source_receipt_sha256": "fa2cd4d9c94c3c82d93b40905aa7a5efe8eb4ad762f12c03951177efb7d174a5",
+      "canonical_semantic_copy_path": "generated/behavior-formal-goal-coupling-shared26-pi05-video-decoder-fd-cache-qualification-20260904.json",
+      "canonical_semantic_copy_sha256": "d24b7076a90a4d3c5e6dbc34403accb332f46a00ff7bf508d615bd4996a66dfd",
+      "status": "VIDEO_DECODER_FD_CACHE_QUALIFICATION_PASS",
+      "qualified_soft_limit": 65536,
+      "decoder_cache_size_at_end": 1146,
+      "open_fds_at_end": 1150,
+      "open_fds_at_1024_cached_decoders": 1028,
+      "crossed_1024_without_error_under_65536": true
+    }
+  },
+  "scientific_boundary": {
+    "policy_outcomes_read": false,
+    "loss_values_read_or_reported": false,
+    "validation_run": false,
+    "intermediate_checkpoint_evaluated": false,
+    "failure_trigger_depended_on_scientific_outcome": false,
+    "run1_is_eligible_for_scientific_evaluation": false,
+    "run1_must_remain_preserved_as_failed_evidence": true
+  },
+  "adjudication": {
+    "run1_disposition": "CLOSED_FAILED_INFRASTRUCTURE_NO_SCIENTIFIC_EVALUATION",
+    "automatic_restart_permitted": false,
+    "exact_state_resume_permitted": false,
+    "new_prospective_run2_permitted": true,
+    "run2_semantics": "A distinct prospective run from step 0 under a new authority and fresh checkpoint directory. It is not a retry or exact-state continuation of run1.",
+    "only_authorized_implementation_change_for_run2": "Before Python starts, set RLIMIT_NOFILE soft to exactly 65536 while keeping the existing hard limit >=65536. Do not change model, data, seed, batch, optimizer, LR schedule, EMA, normalization, action horizon, update count, checkpoint evaluation rule, or policy-outcome embargo.",
+    "run2_scientific_dataset": "Only run2 terminal checkpoint 49999 may enter the confirmatory evaluation pipeline. Run1 contributes no model/checkpoint/outcome to the paper result."
+  },
+  "next_gate": "FREEZE_DISTINCT_PI05_PRACTICAL_BATCH16_FORMAL_RUN2_FDLIMIT_AUTHORITY"
+}
