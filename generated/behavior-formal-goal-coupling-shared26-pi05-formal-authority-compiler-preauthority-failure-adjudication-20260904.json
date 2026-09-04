@@ -1,0 +1,24 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-formal-authority-compiler-preauthority-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "status": "PRE_AUTHORITY_COMPILER_LITERAL_REPAIR_APPLIED",
+  "failed_compiler_sha256": "626b79df7ada5a746a257fd993fee0ddfda4a880b41978c0b9490194ef4c9f44",
+  "observed_error": "NameError: name 'false' is not defined",
+  "authority_output_created": false,
+  "formal_training_progress_created": false,
+  "formal_training_result_created": false,
+  "scientific_training_started": false,
+  "optimizer_update": false,
+  "repair": {
+    "only_changes": [
+      "replace JSON-style false/true identifiers with Python False/True literals",
+      "record compiler_path and compiler_sha256 inside the generated authority"
+    ],
+    "scientific_treatment_changed": false,
+    "trainer_changed_by_this_repair": false,
+    "launcher_changed_by_this_repair": false,
+    "new_compiler_sha256": "bdce8f9737982b5f7a159079a161b2d1ba3e1f782593fbc42fd66307088393b4"
+  },
+  "next_gate": "COMMIT_REPAIRED_COMPILER_THEN_GENERATE_FORMAL_AUTHORITY"
+}

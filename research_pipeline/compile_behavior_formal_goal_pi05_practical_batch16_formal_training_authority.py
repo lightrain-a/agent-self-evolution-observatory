@@ -86,13 +86,13 @@ def main() -> int:
             "save_labels": [10000, 20000, 30000, 40000, 49999],
             "terminal_checkpoint_label_for_scientific_evaluation": 49999,
             "intermediate_checkpoints_role": "exact-state recovery only; forbidden for evaluation or selection",
-            "validation": false, "wandb": false, "loss_logging_or_reading": false,
+            "validation": False, "wandb": False, "loss_logging_or_reading": False,
         },
         "resource_scope": {"gpu": "1x NVIDIA A100-SXM4-80GB", "memory_max_gib": 40, "memory_swap_max_gib": 0, "tasks_max": 512, "cpu_affinity": "0-63", "jax_platforms": "cuda", "xla_python_client_mem_fraction": 0.9},
         "exactly_once": {
             "fresh_checkpoint_directory_required": true,
-            "automatic_retry": false,
-            "automatic_restart_after_optimizer_updates": false,
+            "automatic_retry": False,
+            "automatic_restart_after_optimizer_updates": False,
             "future_recovery_allowed_only_by_separate_exact_state_adjudication": true
         },
         "forbidden": [
@@ -100,7 +100,9 @@ def main() -> int:
             "changing batch, seed, optimizer, LR, EMA, dataset, normalization, action horizon, update count, or checkpoint rule after launch",
             "policy rollout or Q/reward/success read before terminal checkpoint content-address and serving qualification"
         ],
-        "scientific_training_authorized": true, "policy_rollouts_authorized": false, "policy_outcomes_read": false,
+        "compiler_path": str(Path(__file__).resolve().relative_to(repo)),
+        "compiler_sha256": sha(Path(__file__).resolve()),
+        "scientific_training_authorized": True, "policy_rollouts_authorized": False, "policy_outcomes_read": False,
         "next_gate_if_complete": "PI05_TERMINAL_CHECKPOINT_49999_CONTENT_ADDRESS_AND_SERVING_QUALIFICATION",
         "next_gate_if_failure": "FORMAL_TRAINING_FAILURE_EXACT_STATE_ADJUDICATION"
     }
