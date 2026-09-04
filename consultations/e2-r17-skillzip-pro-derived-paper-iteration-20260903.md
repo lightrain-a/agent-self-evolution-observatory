@@ -226,9 +226,7 @@ Before positive simple-effect evidence:
 
 Subtitle: *Exact-Same-Pool Causal Tests of Search-Projection Censoring in Self-Evolving Agents*
 
-Only after the controlled-divergence gate passes:
-
-**The Best Trajectory to Act On Is Not Always the Best to Learn From**
+Even after the controlled-divergence gate passes, do not use a global “best to act vs best to learn” title: the experiment compares WIN-C against one prospectively defined alternative rather than optimizing over all learner projections. A stronger post-outcome title may only state the bounded **served-winner versus tested alternative learner-projection** result on the supported regime.
 
 The paper should never be titled around Selective-MRW.
 

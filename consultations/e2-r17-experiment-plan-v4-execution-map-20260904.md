@@ -265,35 +265,48 @@ Required reporting:
 - evolution/update cost;
 - learner evidence/update token accounting.
 
-Measurement replication:
+Evolution versus measurement replication:
 
-- one frozen evolution/selection run per method by default;
-- if execution/evaluation remains stochastic, run 3 repeated heldout panels on the same frozen artifact;
-- these repeats quantify measurement noise and are not independent evolution units.
+- if the full evolution procedure is deterministic after all randomness is pinned, one frozen evolution/selection realization is sufficient;
+- if evolution itself remains stochastic, use the same preregistered **3 paired full-evolution seeds** for every affected unified-rerun method;
+- after each final artifact is frozen, use up to 3 repeated heldout panels only for residual executor/evaluator stochasticity;
+- full-evolution seeds estimate evolution variance; heldout repeats estimate measurement noise. They are reported separately.
 
-## C4 — Natural transport endpoint
+## C4 — Paired natural-unit causal transport endpoint
 
-Claim served: test whether the controlled projection effect has a prospectively identifiable positive counterpart on natural/out-of-family tasks.
+Claim served: test whether the **exact-same-pool, acting-fixed learner-projection effect** has a prospectively identifiable positive counterpart on natural/out-of-family tasks.
+
+C4 is a separate causal estimand inside the same Public-P1 lane; it is not the end-to-end method ranking from C1–C3.
+
+Before outcomes, freeze eligibility using only pre-treatment observables. For every eligible natural unit, freeze:
+
+- the same starting persistent state;
+- one common realized/content-addressed search-evidence object `T_K_public`;
+- the same verifier/served action;
+- the same updater/configuration, evidence budget, update order, and downstream evaluation panel.
+
+Construct WIN-C and the prospectively frozen public-compatible alternative projection from that **same `T_K_public`**. Only learner-visible `g(T_K_public)` may differ.
 
 Primary endpoint:
 
-`Delta_transport = U_future(E2 alternative projection) - U_future(WIN-C)`
+`Delta_transport = U_future(g_ALT(T_K_public)) - U_future(g_WIN(T_K_public))`
 
-on the frozen eligible public units.
+paired over the frozen eligible public units.
 
 PASS:
 
-- unlock bounded natural transport claim.
+- unlock only the bounded causal natural-transport claim.
 
 FAIL:
 
 - preserve controlled V3 result only;
+- do not reacquire alternate pools;
 - no benchmark swap;
 - no subgroup mining;
 - no second model as rescue;
 - no eligibility redesign after outcomes.
 
-Note: method-table success and transport PASS are distinct. A competitive E2 policy does not automatically establish the exact transport causal claim, and vice versa.
+Note: method-table success and C4 transport PASS are distinct. A competitive E2 policy does not automatically establish causal transport, and a causal transport witness does not automatically imply end-to-end superiority over every baseline.
 
 ---
 

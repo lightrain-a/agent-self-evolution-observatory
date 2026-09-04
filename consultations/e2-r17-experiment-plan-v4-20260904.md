@@ -402,47 +402,73 @@ Report:
 - paired bootstrap confidence interval across the 280 frozen test tasks;
 - per-category/task-type breakdown only if categories are defined independently of model outcomes.
 
-## 7.4 Measurement replication
+## 7.4 Evolution replication versus measurement replication
 
-Do **not** multiply full evolution runs by R=4 for every public baseline.
+Do **not** multiply full evolution runs by R=4 for every public baseline, but also do not treat repeated heldout evaluation of one selected artifact as evidence about optimizer/evolution variance.
 
-Cost-efficient design:
+Freeze the replication rule before public execution:
 
-- one frozen evolution/selection run per baseline under the unified split;
-- final selected artifact frozen/content-addressed;
-- 3 repeated heldout evaluation panels of the same frozen artifact if the executor/evaluator remains stochastic.
+- if a method's **entire evolution procedure is deterministic** after model identity, decoding, seeds, candidate generation, validation selection, update order, and other randomness are pinned, one frozen evolution/selection realization is sufficient;
+- if **evolution itself remains stochastic**, use the same small preregistered set of **3 paired full-evolution seeds** for every affected unified-rerun method, and treat those full runs as evolution replicates;
+- after each final selected artifact is frozen/content-addressed, repeat the common heldout evaluation panel up to 3 times only when executor/evaluator stochasticity remains.
 
-These repeats quantify measurement variance; they are not independent evolution units.
+Full-evolution replicates estimate optimizer/evolution variance. Repeated heldout panels estimate measurement/execution variance. They are distinct and must be reported separately.
 
-If a baseline's source method intrinsically requires multiple evolution seeds, those seeds must be declared before execution and reported separately, not added selectively after a poor result.
+No extra evolution seed may be added selectively after a favorable or unfavorable result. If a source method intrinsically requires a different fixed seed structure, freeze that requirement before execution and separate source-faithful appendix results from the unified-rerun estimand.
 
 ---
 
 # 8. Natural transport endpoint inside P1
 
-P1 simultaneously serves as the natural/out-of-family transport test.
+P1 serves two distinct scientific purposes on one public substrate:
 
-The E2 transport claim is not “our router beats every baseline.” It is narrower:
+1. the **unified end-to-end method table** in Section 6, which compares complete methods under a common public harness;
+2. a separate **paired causal transport sub-experiment**, which asks whether the exact-same-pool, acting-fixed projection effect identified in controlled V3 appears on natural public units.
 
-> under ordinary pre-update observables on public out-of-family tasks, changing the learner-visible projection while keeping current acting/search conditions appropriately matched can produce a positive future-skill effect in a prospectively identified region.
+These two estimands must not be conflated.
 
-### Transport-specific primary endpoint
+### 8.1 Pre-treatment eligibility
 
-For the predeclared E2-eligible public units:
+Before any paired transport outcome is visible, freeze the public eligibility rule using only ordinary **pre-treatment / pre-update observables**. Eligibility may not use future utility, heldout outcomes, hidden controlled-suite family/template labels, or post-update artifacts.
 
-`Delta_transport = U_future(E2 alternative projection) - U_future(WIN-C)`.
+### 8.2 Paired natural-unit transport construction
 
-Required for strong transport claim:
+For each eligible public natural unit, create one frozen causal object before comparing learner projections:
 
-`Delta_transport > 0` under the preregistered public analysis rule.
+- common starting persistent state `S0_public`;
+- one common realized search/evidence object `T_K_public` acquired once and content-addressed;
+- one common verifier/selection result and common served action `a(T_K_public)`;
+- one common updater implementation/configuration, evidence budget, update order, and downstream evaluation panel;
+- two learner-visible projections constructed from the **same frozen `T_K_public`**: WIN-C and the prospectively frozen public-compatible alternative projection.
 
-Hard STOP if not supported:
+Only `g(T_K_public)` may differ between the paired transport arms. No second search acquisition, different served action, different starting state, or method-history-specific pool is permitted inside this causal transport contrast.
+
+### 8.3 Transport-specific primary endpoint
+
+For the predeclared eligible public natural units:
+
+`Delta_transport = U_future(g_ALT(T_K_public)) - U_future(g_WIN(T_K_public))`.
+
+The primary analysis is paired over the frozen natural units under the preregistered public rule.
+
+Required for a causal transport claim:
+
+`Delta_transport > 0` under that frozen paired analysis.
+
+Interpretation if supported:
+
+> the same serving-to-learning projection interface effect observed under controlled exact-same-pool intervention has a positive witness on prospectively selected natural public units.
+
+This does **not** by itself establish that the E2 end-to-end policy beats every baseline; that is a separate method-table question.
+
+Hard STOP if causal transport is not supported:
 
 - do not change eligibility after viewing outcomes;
+- do not reacquire a different search pool for the same unit;
 - do not swap to a different public benchmark;
 - do not mine task categories for a positive subgroup;
 - do not add a second model as rescue;
-- keep only the controlled V3 claim.
+- keep only the controlled V3 claim plus whatever end-to-end public method result was independently obtained.
 
 ---
 
@@ -510,7 +536,7 @@ Rows:
 - No Skill;
 - Parent Skill;
 - WIN-C;
-- Universal MRW4;
+- Universal MRW4 **or the prospectively frozen public-compatible alternative projection** if exact MRW4 semantics are infeasible on the public harness;
 - RethinkSkill Normal;
 - RethinkSkill Success-only;
 - RethinkSkill Fail-only;

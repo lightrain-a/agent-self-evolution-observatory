@@ -9,7 +9,7 @@ Status: `OUTCOME_NEUTRAL_DRAFT_STRUCTURE`
 
 Subtitle: *Exact-Same-Pool Causal Tests of Search-Projection Censoring in Self-Evolving Agents*
 
-The stronger title “The Best Trajectory to Act On Is Not Always the Best to Learn From” remains locked until the frozen secondary controlled-divergence gate passes.
+Do not use a global “best to act vs best to learn” title: even a secondary-gate PASS compares WIN-C with one prospectively defined alternative and does not optimize over the full learner-projection class. Any stronger post-outcome title must remain bounded to **served-winner versus the tested alternative learner projection** on the supported controlled regime.
 
 ---
 
@@ -390,7 +390,7 @@ Key sequencing:
 3. separately evaluate the frozen secondary 5/5 procedural controlled-divergence claim gate;
 4. only after primary V3 PASS, freeze and independently review one SpreadsheetBench Verified-400 public lane;
 5. use that same public lane simultaneously for natural transport and a unified closest-method baseline table;
-6. primary unified rerun baselines: No Skill, Parent Skill, WIN-C, Universal MRW4, RethinkSkill Normal/Success-only/Fail-only, SkillOpt, Trace2Skill, SkillCAT-style contrast, plus the E2 policy only if its public policy gate passes;
+6. primary unified rerun baselines: No Skill, Parent Skill, WIN-C, Universal MRW4 or a prospectively frozen public-compatible alternative, RethinkSkill Normal/Success-only/Fail-only, SkillOpt, and at least one credible trajectory-to-skill/contrastive baseline; include the E2 policy only if its public policy gate passes;
 7. use one common qualified primary model/harness first; a second model is robustness only after the main public table is frozen.
 
 The public lane must use one frozen split and common evaluator/harness for direct ranking. Source-faithful baseline reproductions with different original splits/models belong in an appendix fidelity lane and are not directly ranked against unified-rerun results.

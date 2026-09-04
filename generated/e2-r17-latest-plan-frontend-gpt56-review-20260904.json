@@ -1,0 +1,51 @@
+{
+  "artifact_type": "e2-r17-latest-plan-frontend-gpt56-review",
+  "date": "2026-09-04",
+  "scope": "latest_zero_provider_experiment_plan_execution_map_and_frontend_projection",
+  "reviewer": {
+    "surface": "chatgpt_web_oracle_browser",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High, 4 of 5",
+    "model_verified": true,
+    "prompt_submitted": true
+  },
+  "conversation_url": "https://chatgpt.com/g/g-p-6a6ad664d6508191bff6ecf4fde868f0-agent/c/6a9a38aa-7a10-83e8-b0c5-7d11683385db",
+  "brief": {
+    "path": "oracle_briefs/E2_R17_LATEST_PLAN_FRONTEND_INDEPENDENT_REVIEW_20260904.md",
+    "sha256": "2e9f7597019faf5b717e16fd954bedc34ca5b023e2f6a3ad43e63bb93662c96b",
+    "freeze_commit": "13916d55c1523f01fdc6815ebe6abc3f1986a66d"
+  },
+  "reviewed_objects": {
+    "plan_sha256": "cf3300b0ccf5d0a608b35f586a41c867ed45c962e614a5cde675bbd074385aea",
+    "execution_map_sha256": "79888661586fea484dcad54902ead80b3275e8279710b66276adddf87f579218",
+    "frontend_status_sha256": "9e02c537b3242e0f2733e6b37fe30da178595d0ce02c6c75b0226cc6f5d3b21d",
+    "frontend_view_sha256": "c8c8f7959c81285d76a68e4a3f2409cc7ed628bb924e035dca5decc2db827557",
+    "inline_packet_sha256": "661932dd12ddca0ccd69391893de3dcbf4008aa388b6e1114aecc214fe9f030e"
+  },
+  "response": {
+    "path": "consultations/e2-r17-latest-plan-frontend-gpt56-review-20260904.md",
+    "raw_response_sha256": "48c85ef472b65db09863df6051cb2a84ec4c185916e6e0f2f89dc5a99979c6e5",
+    "oracle_transcript_sha256": "dda2b18f10138a418d43e02f21893262eef57b162d388f10ee274999054c2298"
+  },
+  "audit": {
+    "controlled_workload": "SUFFICIENT",
+    "five_skeleton_bounded_claim": "DEFENSIBLE",
+    "secondary_5_of_5_gate": "PASS_CONSERVATIVE_VALID",
+    "public_baseline_surface": "NEEDS_ONE_FIX",
+    "frontend_fidelity": "REVISE",
+    "r2_redesign_required": false,
+    "additional_pre_stage_a_experiment_required": false,
+    "immediate_action": "ONE_ZERO_PROVIDER_FIX_BEFORE_IDENTITY",
+    "required_fixes": [
+      "Repair Public-P1 causal transport so eligible natural units use common starting state, exact realized search/evidence object and served action; only learner projection differs; keep end-to-end method ranking separate.",
+      "Make public evolution replication conditional on stochasticity: deterministic evolution may use one realization; stochastic evolution must use a small preregistered common set of full-evolution replicates, distinct from heldout measurement repeats.",
+      "Repair frontend semantics: remove best-to-act != best-to-learn wording, rename aggregate authority counter to execution/gate status, and qualify public MRW4 as MRW4 or a prospectively frozen public-compatible alternative."
+    ]
+  },
+  "verdict": "REVISE_ZERO_PROVIDER_PLAN_OR_FRONTEND",
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "stage_a_authority": false,
+  "stage_b_authority": false,
+  "public_p1_authority": false
+}

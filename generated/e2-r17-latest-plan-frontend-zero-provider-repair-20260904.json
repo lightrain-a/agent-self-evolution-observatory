@@ -1,0 +1,53 @@
+{
+  "artifact_type": "e2-r17-latest-plan-frontend-zero-provider-repair",
+  "date": "2026-09-04",
+  "status": "ZERO_PROVIDER_REPAIR_COMPLETE_PENDING_REREVIEW",
+  "trigger_review": {
+    "verdict": "REVISE_ZERO_PROVIDER_PLAN_OR_FRONTEND",
+    "review_path": "consultations/e2-r17-latest-plan-frontend-gpt56-review-20260904.md",
+    "review_capture_sha256": "0d282364936165d315fd3093ab9f6de344c015775362e929733f2359aebe987a",
+    "review_receipt_path": "generated/e2-r17-latest-plan-frontend-gpt56-review-20260904.json",
+    "review_receipt_sha256": "51e44e94db41251e2f50c004891d5343360533e06bffd035269d61e65a4365c2"
+  },
+  "fixes": {
+    "public_causal_transport": {
+      "status": "REPAIRED",
+      "plan_sha256": "69f1d9d599eaca1ff0fcbf31a6a2d4a27c6432a302e2d25b2dc7b399fda60a91",
+      "execution_map_sha256": "1e327f8736cb60e0d7ad8ed23b5f4cce837497709ee7d8146077f0edb44dc8bc",
+      "rule": "End-to-end method comparison and causal transport remain in one public lane but are separate estimands. Causal transport freezes pre-treatment eligibility, common starting state, one common realized/content-addressed T_K_public, common verifier/served action, common updater/config/budget/order/evaluation, and changes only g(T_K_public)."
+    },
+    "public_replication": {
+      "status": "REPAIRED",
+      "rule": "Deterministic full evolution may use one realization. If evolution remains stochastic, use the same preregistered 3 paired full-evolution seeds for affected unified-rerun methods. Heldout repeats are separate measurement-noise replicates."
+    },
+    "claim_and_frontend_semantics": {
+      "status": "REPAIRED",
+      "paper_story_sha256": "e77ccc28e5ea7955523025e2de3f767f1414d9cb868f663a6cba8a65e4279ea5",
+      "skillzip_iteration_sha256": "839c912bc18d010a4b391f1c1f5d958eedb5ac8ea555cf27fdbb84f5c8ee7f0c",
+      "paper_outline_sha256": "d637a7d4775ff94e936b3c875a459e3caefe45561f5575aa1f889f094adc05ff",
+      "frontend_status_sha256": "b35958a99f3fece35396027ce8cc9d0b0487822afc5284ef51d3a4e20687e9bb",
+      "frontend_view_sha256": "94c5a679af79bb6e3303052f718bfc7b395c76d0ee47902052224d9ced6a9f30",
+      "rules": [
+        "Do not claim or title the result as globally best-to-act versus best-to-learn.",
+        "B2+B3 may only establish the tested alternative learner projection outperforming WIN-C on the five preregistered procedural skeletons while serving is fixed.",
+        "Frontend aggregate 0/5 is labeled execution gates/status flags, not scientific execution authority.",
+        "Public anchor is Universal MRW4 or a prospectively frozen public-compatible alternative."
+      ]
+    }
+  },
+  "scientific_r2": {
+    "commit": "29799c83c662887694db52acba4bb19e83131bb0",
+    "contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+    "preflight_sha256": "e257438bd482d4f2209a8321d4a222bd97acf2c03bff46a1d5513b55a42ca766",
+    "changed": false
+  },
+  "authority": {
+    "fresh_identity_called": false,
+    "stage_a": false,
+    "stage_b": false,
+    "public_p1": false,
+    "baseline_execution": false,
+    "scientific_execution": false
+  },
+  "next_step": "FRESH_INDEPENDENT_ZERO_PROVIDER_REREVIEW_OF_THE_REPAIRED_PLAN_AND_FRONTEND"
+}

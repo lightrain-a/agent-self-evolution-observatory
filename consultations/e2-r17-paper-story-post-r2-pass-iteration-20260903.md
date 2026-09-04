@@ -113,7 +113,7 @@ That is substantially more defensible and more novel than another global success
 
 > **Test-time search creates a shared experience object whose serving and persistent-learning projections are distinct causal interfaces; exact-same-pool interventions can isolate the learning consequence of that projection and prospectively test whether it is modified by task structure.**
 
-The memorable statement “the best trajectory to act on is not always the best to learn from” is **locked pre-outcome**. A positive moderator interaction alone does not establish it: MRW4 could be worse than WIN-C in both semantic cells while still producing a positive interaction. That stronger existential statement may be unlocked only if a prespecified simple effect actually shows an alternative projection improving future skill over the served-winner projection.
+Do **not** use the global slogan “the best trajectory to act on is not always the best to learn from.” Even if the secondary procedural gate passes, the experiment does not optimize over all possible learner projections and therefore does not identify a globally “best to learn” object. A positive moderator interaction alone is weaker still: MRW4 could be worse than WIN-C in both semantic cells while producing a positive interaction. The strongest bounded statement that may be unlocked by the secondary gate is that, on the five preregistered procedural skeletons with serving fixed, the tested alternative learner projection outperforms winner-coupled learning.
 
 ### 4.2 Formal object
 
@@ -389,7 +389,7 @@ Possible subtitle:
 
 *Exact-Same-Pool Causal Tests of Search-Projection Censoring in Self-Evolving Agents*
 
-The stronger title **“The Best Trajectory to Act On Is Not Always the Best to Learn From”** is locked until an appropriate prespecified simple effect actually shows that an alternative learning projection improves future skill over the served-winner projection. Avoid a title centered on `Selective-MRW`, because that overstates the current policy/router as the contribution.
+Do not promote the paper to a “best to act vs best to learn” title even after the secondary gate passes, because the experiment compares WIN-C with one prospectively defined alternative rather than optimizing over the full learner-projection class. If a stronger post-outcome title is warranted, phrase it as a bounded **served-winner vs tested alternative learning projection** result. Avoid a title centered on `Selective-MRW`, because that overstates the current policy/router as the contribution.
 
 ## 13. Main figure recommendation
 
