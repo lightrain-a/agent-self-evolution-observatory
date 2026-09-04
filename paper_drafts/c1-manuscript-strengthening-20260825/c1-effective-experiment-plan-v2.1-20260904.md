@@ -153,9 +153,10 @@ Randomization test:
 - RNG semantics: Python `random.Random`;
 - seed: `20260824`;
 - one-sided tail: randomized mean `U >= observed mean U`;
-- p-value: `(ge + 1)/(R + 1)`.
+- p-value: `(ge + 1)/(R + 1)`;
+- inferential support rule: observed mean `U > 0` **and** one-sided `p < 0.05`.
 
-The repetitions, seed, and state-stratified permutation scheme deliberately reuse historical B10 choices to avoid adding outcome-dependent analytical degrees of freedom.
+The repetitions, seed, state-stratified permutation scheme, and `alpha=0.05` support rule are frozen before the collision/MMD2 outcome is opened. They deliberately reuse the historical B10 inferential scale where possible to avoid adding outcome-dependent analytical degrees of freedom.
 
 Report, without population-generalization language:
 
@@ -163,7 +164,7 @@ Report, without population-generalization language:
 - mean and median `U_i`;
 - within-success collision, within-failure collision, and between-branch collision per state;
 - counts of positive / zero / negative `U_i`;
-- fixed-state bootstrap interval for the mean as descriptive uncertainty only;
+- fixed-state percentile bootstrap interval for the mean as descriptive uncertainty only, using `10000` resamples and seed `20260904`;
 - the frozen randomization-test p-value;
 - normalized action-frequency tables.
 

@@ -88,7 +88,15 @@
       "rng": "Python random.Random",
       "seed": 20260824,
       "tail": "randomized mean U >= observed mean U",
-      "p_value": "(ge+1)/(R+1)"
+      "p_value": "(ge+1)/(R+1)",
+      "alpha": 0.05,
+      "support_rule": "observed mean U > 0 AND one-sided p < 0.05"
+    },
+    "descriptive_bootstrap": {
+      "type": "fixed-state percentile bootstrap of mean U",
+      "repetitions": 10000,
+      "seed": 20260904,
+      "inferential_authority": false
     },
     "report": [
       "36 U_i values",
