@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-CONFIRMATORY-PREEXEC-FREEZE-20260904",
+  "recorded_date": "2026-09-04",
+  "status": "ZERO_PROVIDER_PREEXEC_FREEZE_COMPLETE_EXECUTION_AUTHORITY_CLOSED",
+  "parents": {
+    "minimum_effective_plan_canonical_content_sha256": "1bdabdb5c63d49c10fa776d2c70fd9e2349ea8a2195f40e02476f7085d07ed5a",
+    "minimum_effective_plan_file_sha256": "c62e68285f84b133b85271da3e94f6174b370843d98f6151b214c26d6d419ab1",
+    "review_closeout_file_sha256": "705b001b260f950a7a9fccda9151621968e16fe50f916b77e9206b8971265846",
+    "execution_proposal_file_sha256": "918cdbc2f166a9b3e863d34e1e75197a5913a78e268da13c48abb022551b536a"
+  },
+  "target_only_verification": {
+    "surface_id": "TARGET_ONLY_VERIFICATION_V1",
+    "construction": "same common pre-update snapshot; target instruction and TARGET constraints only; no non-target instruction, topology label, coupling context, or non-target evaluator readout",
+    "branches": [
+      "NO_UPDATE",
+      "REAL_REPAIR"
+    ],
+    "repeats": "use already-frozen R_star",
+    "snapshot_rule": "NO_UPDATE and REAL_REPAIR reset to identical common_pre_update_snapshot_sha256 for every repeat",
+    "repair_rule": "REAL_REPAIR uses exact frozen repair bytes; one repair_sha256 across all TO-V and later topology arms",
+    "evaluator": "existing AppWorld semantic target evaluator only",
+    "eligibility_uptake_delta_min": 0.5,
+    "all_units_normal_and_measurement_valid_required": true,
+    "timing": "strictly before INDEPENDENT/LOW/HIGH exposure",
+    "post_topology_target_outcomes_may_change_eligibility": false
+  },
+  "repeat_qualification": {
+    "development_family_count": 6,
+    "permanently_excluded_from_confirmatory": true,
+    "initial_repeats": 2,
+    "condition_cells_per_family": 6,
+    "R2_rule": "target disagreement rate <= 0.10 AND mean absolute CRR repeat difference <= 0.10",
+    "R3_trigger": "R2 fails but both metrics <= 0.20",
+    "R3_rule": "after one additional development repeat, target non-unanimous rate <= 0.20 AND mean CRR three-repeat range <= 0.20",
+    "hard_stop": "if any metric exceeds 0.20, any technical unit is invalid, or R3 remains unstable; R>3 forbidden",
+    "selection_uses_treatment_direction": false
+  },
+  "precision_freeze": {
+    "N_candidates": [
+      12,
+      16,
+      20,
+      24
+    ],
+    "planning_meaningful_effect": 0.2,
+    "planning_se_max": 0.1,
+    "development_dispersion": "max(full-sample SD, every leave-one-family-out SD) for family-level pooled UE and family-level HIGH-minus-INDEPENDENT UE contrast",
+    "selection": "smallest N candidate whose RQ1 and RQ2 planning SE are both <= 0.10",
+    "development_means_or_signs_in_decision_artifact": false,
+    "if_N24_fails": "STOP_PRECISION_QUALIFICATION; do not add families beyond reserve"
+  },
+  "panel_selection": {
+    "reserve_family_count": 24,
+    "stable_hash_salt": "ACE-CONFIRMATORY-PANEL-ORDER-20260904-V1",
+    "eligibility_inputs": [
+      "valid semantic source failure",
+      "valid frozen repair artifact",
+      "TO-V uptake delta >= 0.50",
+      "no interface or measurement invalidity"
+    ],
+    "selection": "first N_star eligible family ids under frozen stable hash order",
+    "reserve_activation": "pre-topology eligibility attrition only",
+    "post_topology_backfill_allowed": false
+  },
+  "post_treatment_guard": {
+    "retain_every_frozen_family_in_every_I_L_H_arm": true,
+    "topology_specific_target_success_used_for_deletion": false,
+    "target_retention": "jointly report with collateral outcomes",
+    "still_effective_repair_claim": "requires a prospectively specified panel-level target-gain inference; never family deletion"
+  },
+  "implementation": {
+    "freeze_module": "research_pipeline/agent_constraint_externality_confirmatory_preexec.py",
+    "freeze_module_sha256": "3670927325479d63be612dc2a1aa5fbc554aaf837ffae9947ce465e568cf5546"
+  },
+  "authority": {
+    "provider_execution": false,
+    "gate0": false,
+    "gate1": false,
+    "development_repeat_qualification": false,
+    "target_only_verification": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "paper_claim": false
+  },
+  "scientific_provider_calls_created": 0,
+  "scientific_outcomes_created": 0,
+  "next_required_action": "NARROW_PREEXEC_CONSISTENCY_REVIEW_THEN_SEPARATE_HUMAN_EXECUTION_AUTHORITY",
+  "content_sha256": "66fd8b27ca125c1a55609e72357ba62772d423fc1ba2174b67887990117c91f3"
+}

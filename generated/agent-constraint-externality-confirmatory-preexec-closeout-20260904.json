@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-CONFIRMATORY-PREEXEC-CLOSEOUT-20260904",
+  "recorded_date": "2026-09-04",
+  "status": "PREEXEC_DESIGN_DETAILS_FROZEN_PROVIDER_AND_EXECUTION_AUTHORITY_CLOSED",
+  "scientific_object": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "closed_questions": [
+    "exact topology-neutral TARGET_ONLY_VERIFICATION eligibility surface",
+    "exact pre-topology target-uptake threshold (+0.50)",
+    "exact development repeat-stability rule for R*=2 versus R*=3",
+    "hard stochasticity stop with R>3 forbidden",
+    "effect-direction-blind N* precision selection over {12,16,20,24}",
+    "stable-hash reserve selection with no post-topology backfill",
+    "post-treatment target outcomes retained rather than used for family deletion"
+  ],
+  "still_closed": [
+    "provider credit/readiness execution check",
+    "Gate 0 direct actor execution",
+    "Gate 1 Direct-SFQ-A0 execution",
+    "development repeat qualification execution",
+    "TARGET_ONLY_VERIFICATION execution",
+    "RQ1/RQ2 confirmatory execution",
+    "RQ3 held-out execution",
+    "RQ4 GTCC execution",
+    "secondary actor/external updater",
+    "paper claim expansion"
+  ],
+  "provenance": {
+    "freeze_file_sha256": "d6e12ac2b98b8bb343b43fe5e3b1cd6055ea34b44c798b2c355919b41ad46511",
+    "freeze_content_sha256": "66fd8b27ca125c1a55609e72357ba62772d423fc1ba2174b67887990117c91f3",
+    "audit_file_sha256": "957f749d6321b4279c5a4ddf8100901c8a590cada5a177fa7ef0f614dc51aefe",
+    "audit_content_sha256": "079cb3058c1d5e71dbde5067081ede71b7b66e8987838486b2c463640a99be85",
+    "execution_proposal_file_sha256": "918cdbc2f166a9b3e863d34e1e75197a5913a78e268da13c48abb022551b536a"
+  },
+  "authority": {
+    "provider_execution": false,
+    "gate0": false,
+    "gate1": false,
+    "development_repeat_qualification": false,
+    "target_only_verification": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "secondary_actor": false,
+    "external_updater": false,
+    "paper_claim": false
+  },
+  "scientific_provider_calls_created": 0,
+  "scientific_outcomes_created": 0,
+  "next_legal_action": "PROVIDER_READINESS_CHECK_THEN_SEPARATE_HUMAN_EXECUTION_AUTHORITY; DO_NOT DISPATCH SCIENTIFIC UNITS YET",
+  "content_sha256": "595a0b1dcd3eeb13f588a2dc8ce09dd1ddb05ccfab5455e3e3f90cd686cfbf7a"
+}
