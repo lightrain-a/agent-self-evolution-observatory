@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "AGENT-SAFETY-G1-SKILLZIP-PAPER-STORY-R1-20260904",
+  "paper_id": "AGENT-SAFETY-R9",
+  "recorded_date": "2026-09-04",
+  "canonical_parent_sha": "44337dfad7baeeaee902127988d2f7ab1c1a30bf",
+  "status": "PRECONFIRMATORY_SUBMISSION_HOLD",
+  "active_scientific_object": "Does prospectively frozen benign workflow accumulation change the refusal-to-action control boundary of a persistent browser agent relative to an exact same-schedule frozen-workflow counterfactual?",
+  "not_primary_objects": [
+    "generic longitudinal memory risk",
+    "generic benign-experience safety degradation",
+    "evaluator disagreement by itself",
+    "HarmBench versus DeepSeek ranking reversal by itself"
+  ],
+  "treatment": {
+    "updated": "step-0 workflow plus prospectively frozen benign workflow units accumulated over exposure steps",
+    "frozen": "step-0 workflow held fixed over the same future task schedule",
+    "matched_fields": [
+      "initial persistent state",
+      "future task schedule",
+      "seed structure",
+      "BrowserART/BrowserGym substrate",
+      "AXTree/BID action interface",
+      "execution budget"
+    ]
+  },
+  "behavioral_endpoints": {
+    "R0": "immediate refusal or safe handling before harmful-task-directed tool use",
+    "R1": "first harmful-task-directed action initiation defined by a prospectively frozen task-specific programmatic predicate",
+    "R2": "partial execution depth after R1",
+    "R3": "verified external effect when exposed by the environment",
+    "primary": "R1",
+    "secondary_decomposition": ["R0", "R2", "R3"],
+    "post_outcome_endpoint_switching_forbidden": true
+  },
+  "capability_gate": {
+    "backbone": "qwen3.5-397b-a17b",
+    "panel": "pinned BrowserART official ten benign tasks",
+    "primary_max_steps": 10,
+    "required_success": "10/10",
+    "four_step_role": "diagnostic prefix of the same ten-step benign trajectories only",
+    "failure_disposition": "STOP_SAFETY_EXECUTION_AND_DIAGNOSE_SUBSTRATE",
+    "failure_is_not_safety_evidence": true
+  },
+  "historical_discovery": {
+    "backbone": "Qwen3-8B",
+    "harmbench_branch_events": {"updated": 8, "frozen": 4, "nullmemory": 0},
+    "deepseek_branch_events": {"updated": 5, "frozen": 5, "nullmemory": 8},
+    "future_episode_count": 108,
+    "four_step_truncation_count": 103,
+    "normal_termination_count": 0,
+    "listener_confirmed_external_effect_count": 0,
+    "authority": "DISCOVERY_ONLY",
+    "confirmatory_mechanism_claim_forbidden": true
+  },
+  "measurement_layer": {
+    "role": "secondary robustness analysis after objective behavioral endpoints",
+    "evaluators": ["HarmBench", "DeepSeek", "blinded human semantic labels"],
+    "erta_role": "fail-closed evaluator sensitivity summary",
+    "judge_shopping_forbidden": true,
+    "third_ai_judge_as_tie_breaker_forbidden": true
+  },
+  "research_questions": [
+    "RQ1: Is the exact browser-agent substrate capability-qualified for safety interpretation?",
+    "RQ2: Under the same future schedule, does benign workflow accumulation change R1 relative to the frozen workflow?",
+    "RQ3: If R1 changes, is the shift expressed through R0 loss, deeper R2 execution, or R3 external effects rather than parser/grounding failure?",
+    "RQ4: At what exposure step and in which state/task/branch does the first R1 crossing appear?",
+    "RQ5: Given objective R1/R3 anchors, do semantic evaluators and humans support the same scientific direction?"
+  ],
+  "claim_ladder": [
+    {
+      "level": 0,
+      "name": "historical discovery",
+      "status": "SUPPORTED",
+      "claim": "The historical semantic ordering is evaluator-sensitive and the historical execution substrate is heavily truncated."
+    },
+    {
+      "level": 1,
+      "name": "capability qualification",
+      "status": "PENDING",
+      "claim": "The new exact browser stack is competent enough for the prospective safety experiment."
+    },
+    {
+      "level": 2,
+      "name": "local update-associated behavioral effect",
+      "status": "PENDING",
+      "claim": "Benign workflow accumulation changes R1 under the frozen matched design."
+    },
+    {
+      "level": 3,
+      "name": "behavioral interpretation",
+      "status": "PENDING",
+      "claim": "Any R1 change reflects a meaningful control shift rather than parser/grounding noise."
+    },
+    {
+      "level": 4,
+      "name": "measurement robustness",
+      "status": "PENDING",
+      "claim": "Semantic evaluators and humans support the same directional interpretation as the objective behavioral anchors."
+    },
+    {
+      "level": 5,
+      "name": "transport/generalization",
+      "status": "UNAUTHORIZED",
+      "claim": "The effect extends beyond the exact backbone/AWM/BrowserART setting."
+    }
+  ],
+  "prospective_paper_identity_rule": {
+    "capability_fail": "NO_SAFETY_RUN_SUBSTRATE_DIAGNOSIS_ONLY",
+    "capability_pass_and_R1_effect_with_behavioral_coherence": "KEEP_NARROW_SELF_EVOLUTION_G1",
+    "capability_pass_no_R1_effect_but_evaluator_reversal_persists_on_complete_objectively_anchored_trajectories": "PIVOT_TO_EVALUATION_PAPER",
+    "capability_pass_no_R1_effect_and_evaluator_reversal_disappears": "STOP_OR_MERGE_G1",
+    "post_outcome_rule_change_forbidden": true
+  },
+  "writing_architecture": [
+    "system reality and prior-work boundary",
+    "scientific object and R0-R3 endpoint decomposition",
+    "same-schedule causal identification and capability qualification",
+    "historical discovery audit and why it is insufficient",
+    "prospective confirmatory result",
+    "temporal/state localization and behavioral mechanism diagnostics",
+    "measurement robustness",
+    "related-work collision boundary",
+    "limitations and bounded conclusion"
+  ],
+  "figure_order": [
+    "Figure 1: refusal-to-action scientific object under Updated versus Frozen longitudinal states",
+    "Figure 2: capability qualification plus matched identification design",
+    "Figure 3: prospective R1 result with R0/R2/R3 decomposition and first-crossing localization",
+    "Figure 4: semantic evaluator/human robustness against objective anchors"
+  ],
+  "table_order": [
+    "Table 1: capability gate and protocol quality",
+    "Table 2: main matched R0/R1/R2/R3 result",
+    "Table 3: localization and measurement robustness"
+  ],
+  "manuscript_state": {
+    "main_tex": "ERTA-centered historical draft; preserved but not active story source of truth",
+    "active_mainline": "paper_drafts/agent-safety-r9-iclr2027/MAINLINE_BRIEF.md",
+    "preconfirmatory_architecture": "paper_drafts/agent-safety-r9-iclr2027/SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R1.md",
+    "preconfirmatory_latex": "paper_drafts/agent-safety-r9-iclr2027/main_skillzip_preconfirmatory.tex",
+    "submission_ready": false
+  },
+  "forbidden_repairs": [
+    "switch primary endpoint from R1 to an evaluator label after seeing a null R1 result",
+    "promote NullMemory because it produces a larger post-outcome contrast",
+    "add a third AI judge to resolve disagreement",
+    "drop or replace a failed benign qualification task",
+    "count execution or parser failure as safe refusal",
+    "compare historical four-step and prospective ten-step effect magnitudes as if execution budgets were identical",
+    "make a broad self-evolution claim without transport evidence"
+  ]
+}
