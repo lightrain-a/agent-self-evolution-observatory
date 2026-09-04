@@ -1,0 +1,4157 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "role": "R68_SEMANTIC_CONTROL_PROTOCOL_FROZEN_ZERO_PROVIDER",
+  "status": "R68_SEMANTIC_CONTROL_READY_FOR_INDEPENDENT_PREEXECUTION_REVIEW",
+  "recorded_at": "2026-09-04T01:35:50+00:00",
+  "scientific_question": "Does truthful source-outcome information add local-policy or terminal value beyond a format-matched UNKNOWN field when memory content is identical?",
+  "bindings": {
+    "r54_frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "r54_old_selection_file_sha256": "39957119208258bd0bbd7a9a613cfa3403e9693229cb9452714c655774ad071c",
+    "panel_receipt_sha256": "bdfb80d67e353a755f8df6a43fe4889e81f8ff2b7ea902a2e07934a31b99be20",
+    "renderer_static_audit_receipt_sha256": "c6d5603a088c4b21b874a2204a98641b08aab787d1622251f0882eaf31215b71",
+    "r68_freeze_runner_sha256": "a44350656a143a2ae8c8b1a11d7d54c7a212af1b9515e5ada55937d0c53f234e",
+    "r69_execute_runner_sha256": "f0e5db88adb610626521e05f1db5ceea33043c080c44e472c10b1996cb893365",
+    "qwen_parent_manifest_file_sha256": "8217d7fab3a27687560d143f1671769f004a3f1f12018c87f0b5ed31b34d2a67",
+    "llama_parent_manifest_file_sha256": "2add9259f78d5d8a63aad10fc15c9d7cfaf7a14f58b670e61279930b79c81340",
+    "panel_file_sha256": "5e0a3cb743a608896b7192a73207bc0240fe1a1b9d30f23f062c9abfc2ee491d",
+    "renderer_static_audit_file_sha256": "c2896e5cdc0937bb97eacb0137fd4537b4f90467205c035d689ac83e7efc8169"
+  },
+  "units": {
+    "benchmark": "MemRL/LifelongAgentBench OSInteraction validation",
+    "statistical_unit": "fresh exact sorted skill_list-signature cluster representative",
+    "count_per_executor": 66,
+    "representative_ids": [
+      "377",
+      "492",
+      "316",
+      "63",
+      "373",
+      "57",
+      "331",
+      "44",
+      "185",
+      "454",
+      "116",
+      "357",
+      "142",
+      "285",
+      "338",
+      "234",
+      "36",
+      "474",
+      "301",
+      "329",
+      "112",
+      "302",
+      "496",
+      "274",
+      "101",
+      "486",
+      "412",
+      "219",
+      "108",
+      "216",
+      "114",
+      "13",
+      "494",
+      "232",
+      "287",
+      "189",
+      "12",
+      "424",
+      "490",
+      "321",
+      "52",
+      "409",
+      "433",
+      "308",
+      "343",
+      "445",
+      "295",
+      "444",
+      "111",
+      "87",
+      "298",
+      "346",
+      "137",
+      "359",
+      "148",
+      "376",
+      "33",
+      "447",
+      "126",
+      "464",
+      "390",
+      "166",
+      "255",
+      "51",
+      "23",
+      "299"
+    ],
+    "representative_ids_sha256": "7c2b84aee347faba6d369abb403eb3a25afb164b8f5c6800ba867c25d1017187",
+    "historical_R56_R61_primary_or_utilization_overlap_count": 0,
+    "selection_rule": "all R54 outcome-blind eligible rows after the exact historical 32-primary + 8-utilization prefix; no new ranking, cutoff tuning, replacement, or outcome filtering"
+  },
+  "executors": {
+    "primary": "Qwen2.5-7B-Instruct",
+    "replication": "Meta-Llama-3.1-8B-Instruct",
+    "shared_source_bank_retriever_task_renderer": true,
+    "cross_model_pooling": false
+  },
+  "arms": {
+    "N0_no_memory": "no retrieved-memory context; contextual baseline only",
+    "M1_masked": "same frozen content/order; explicit outcome field omitted",
+    "P2_unknown": "same content/order and field key; constant UNKNOWN value",
+    "T3_truthful": "same content/order and field key; truthful boolean source outcome",
+    "R4_reversed": "same content/order and field key; complemented boolean source outcome"
+  },
+  "baseline_logic": {
+    "memory_content_value": "M1_masked - N0_no_memory",
+    "field_presence_prompt_surface": "P2_unknown - M1_masked",
+    "primary_semantic_information": "T3_truthful - P2_unknown",
+    "correctness_sensitivity": "T3_truthful - R4_reversed",
+    "legacy_total_explicit_field_effect": "T3_truthful - M1_masked"
+  },
+  "renderer": {
+    "prefix": "[Retrieved Memory Context]\n",
+    "serialization": "canonical JSON sort_keys + compact separators",
+    "field": "source_outcome_success",
+    "unknown_sentinel": "UNKNOWN",
+    "P_T_R_identical_key_and_row_structure": true,
+    "T_R_boolean_type_matched": true,
+    "M_P_T_R_content_order_fixed": true
+  },
+  "execution": {
+    "arms_per_unit": 5,
+    "models": 2,
+    "planned_arm_runs": 660,
+    "temperature": 0.0,
+    "fresh_OSInteraction_container_per_arm": true,
+    "no_retrieval_rerun": true,
+    "no_retry_after_STARTED": true,
+    "resume_only_never_started_schedule_suffix": true,
+    "analysis_sealed_until_all_660_terminal": true,
+    "external_provider_calls": 0
+  },
+  "randomization": {
+    "seed": 20260904,
+    "algorithm": "SHA256(seed|model|task)-seeded five-arm shuffle",
+    "outcome_adaptive_randomization": false,
+    "schedule": [
+      {
+        "ordinal": 0,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "377",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 1,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "377",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 2,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "377",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 3,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "377",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 4,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "377",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 5,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "492",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 6,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "492",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 7,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "492",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 8,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "492",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 9,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "492",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 10,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "316",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 11,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "316",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 12,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "316",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 13,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "316",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 14,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "316",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 15,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "63",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 16,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "63",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 17,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "63",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 18,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "63",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 19,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "63",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 20,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "373",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 21,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "373",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 22,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "373",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 23,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "373",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 24,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "373",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 25,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "57",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 26,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "57",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 27,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "57",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 28,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "57",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 29,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "57",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 30,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "331",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 31,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "331",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 32,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "331",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 33,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "331",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 34,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "331",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 35,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "44",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 36,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "44",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 37,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "44",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 38,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "44",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 39,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "44",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 40,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "185",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 41,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "185",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 42,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "185",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 43,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "185",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 44,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "185",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 45,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "454",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 46,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "454",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 47,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "454",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 48,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "454",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 49,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "454",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 50,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "116",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 51,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "116",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 52,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "116",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 53,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "116",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 54,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "116",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 55,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "357",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 56,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "357",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 57,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "357",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 58,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "357",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 59,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "357",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 60,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "142",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 61,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "142",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 62,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "142",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 63,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "142",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 64,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "142",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 65,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "285",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 66,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "285",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 67,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "285",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 68,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "285",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 69,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "285",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 70,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "338",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 71,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "338",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 72,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "338",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 73,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "338",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 74,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "338",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 75,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "234",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 76,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "234",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 77,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "234",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 78,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "234",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 79,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "234",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 80,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "36",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 81,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "36",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 82,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "36",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 83,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "36",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 84,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "36",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 85,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "474",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 86,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "474",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 87,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "474",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 88,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "474",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 89,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "474",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 90,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "301",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 91,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "301",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 92,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "301",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 93,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "301",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 94,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "301",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 95,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "329",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 96,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "329",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 97,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "329",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 98,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "329",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 99,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "329",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 100,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "112",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 101,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "112",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 102,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "112",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 103,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "112",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 104,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "112",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 105,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "302",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 106,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "302",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 107,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "302",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 108,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "302",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 109,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "302",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 110,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "496",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 111,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "496",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 112,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "496",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 113,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "496",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 114,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "496",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 115,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "274",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 116,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "274",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 117,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "274",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 118,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "274",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 119,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "274",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 120,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "101",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 121,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "101",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 122,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "101",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 123,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "101",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 124,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "101",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 125,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "486",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 126,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "486",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 127,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "486",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 128,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "486",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 129,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "486",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 130,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "412",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 131,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "412",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 132,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "412",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 133,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "412",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 134,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "412",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 135,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "219",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 136,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "219",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 137,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "219",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 138,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "219",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 139,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "219",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 140,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "108",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 141,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "108",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 142,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "108",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 143,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "108",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 144,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "108",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 145,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "216",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 146,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "216",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 147,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "216",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 148,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "216",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 149,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "216",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 150,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "114",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 151,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "114",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 152,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "114",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 153,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "114",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 154,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "114",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 155,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "13",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 156,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "13",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 157,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "13",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 158,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "13",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 159,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "13",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 160,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "494",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 161,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "494",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 162,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "494",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 163,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "494",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 164,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "494",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 165,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "232",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 166,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "232",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 167,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "232",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 168,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "232",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 169,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "232",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 170,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "287",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 171,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "287",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 172,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "287",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 173,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "287",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 174,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "287",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 175,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "189",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 176,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "189",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 177,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "189",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 178,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "189",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 179,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "189",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 180,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "12",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 181,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "12",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 182,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "12",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 183,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "12",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 184,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "12",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 185,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "424",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 186,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "424",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 187,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "424",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 188,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "424",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 189,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "424",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 190,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "490",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 191,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "490",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 192,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "490",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 193,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "490",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 194,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "490",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 195,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "321",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 196,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "321",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 197,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "321",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 198,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "321",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 199,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "321",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 200,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "52",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 201,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "52",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 202,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "52",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 203,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "52",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 204,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "52",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 205,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "409",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 206,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "409",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 207,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "409",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 208,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "409",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 209,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "409",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 210,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "433",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 211,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "433",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 212,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "433",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 213,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "433",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 214,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "433",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 215,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "308",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 216,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "308",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 217,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "308",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 218,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "308",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 219,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "308",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 220,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "343",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 221,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "343",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 222,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "343",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 223,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "343",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 224,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "343",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 225,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "445",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 226,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "445",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 227,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "445",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 228,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "445",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 229,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "445",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 230,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "295",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 231,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "295",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 232,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "295",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 233,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "295",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 234,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "295",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 235,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "444",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 236,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "444",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 237,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "444",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 238,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "444",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 239,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "444",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 240,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "111",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 241,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "111",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 242,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "111",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 243,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "111",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 244,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "111",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 245,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "87",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 246,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "87",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 247,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "87",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 248,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "87",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 249,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "87",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 250,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "298",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 251,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "298",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 252,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "298",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 253,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "298",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 254,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "298",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 255,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "346",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 256,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "346",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 257,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "346",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 258,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "346",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 259,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "346",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 260,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "137",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 261,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "137",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 262,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "137",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 263,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "137",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 264,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "137",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 265,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "359",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 266,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "359",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 267,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "359",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 268,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "359",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 269,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "359",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 270,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "148",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 271,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "148",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 272,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "148",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 273,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "148",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 274,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "148",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 275,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "376",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 276,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "376",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 277,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "376",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 278,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "376",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 279,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "376",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 280,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "33",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 281,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "33",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 282,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "33",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 283,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "33",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 284,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "33",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 285,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "447",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 286,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "447",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 287,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "447",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 288,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "447",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 289,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "447",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 290,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "126",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 291,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "126",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 292,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "126",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 293,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "126",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 294,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "126",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 295,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "464",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 296,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "464",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 297,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "464",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 298,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "464",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 299,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "464",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 300,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "390",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 301,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "390",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 302,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "390",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 303,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "390",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 304,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "390",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 305,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "166",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 306,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "166",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 307,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "166",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 308,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "166",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 309,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "166",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 310,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "255",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 311,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "255",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 312,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "255",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 313,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "255",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 314,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "255",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 315,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "51",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 316,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "51",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 317,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "51",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 318,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "51",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 319,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "51",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 320,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "23",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 321,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "23",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 322,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "23",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 323,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "23",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 324,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "23",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 325,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "299",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 326,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "299",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 327,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "299",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 328,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "299",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 329,
+        "model": "Qwen2.5-7B-Instruct",
+        "task_id": "299",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 330,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "377",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 331,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "377",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 332,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "377",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 333,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "377",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 334,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "377",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 335,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "492",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 336,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "492",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 337,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "492",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 338,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "492",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 339,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "492",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 340,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "316",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 341,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "316",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 342,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "316",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 343,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "316",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 344,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "316",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 345,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "63",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 346,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "63",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 347,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "63",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 348,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "63",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 349,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "63",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 350,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "373",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 351,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "373",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 352,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "373",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 353,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "373",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 354,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "373",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 355,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "57",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 356,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "57",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 357,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "57",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 358,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "57",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 359,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "57",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 360,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "331",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 361,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "331",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 362,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "331",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 363,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "331",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 364,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "331",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 365,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "44",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 366,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "44",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 367,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "44",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 368,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "44",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 369,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "44",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 370,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "185",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 371,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "185",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 372,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "185",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 373,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "185",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 374,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "185",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 375,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "454",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 376,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "454",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 377,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "454",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 378,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "454",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 379,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "454",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 380,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "116",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 381,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "116",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 382,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "116",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 383,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "116",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 384,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "116",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 385,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "357",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 386,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "357",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 387,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "357",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 388,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "357",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 389,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "357",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 390,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "142",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 391,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "142",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 392,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "142",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 393,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "142",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 394,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "142",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 395,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "285",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 396,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "285",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 397,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "285",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 398,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "285",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 399,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "285",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 400,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "338",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 401,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "338",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 402,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "338",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 403,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "338",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 404,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "338",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 405,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "234",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 406,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "234",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 407,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "234",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 408,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "234",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 409,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "234",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 410,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "36",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 411,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "36",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 412,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "36",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 413,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "36",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 414,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "36",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 415,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "474",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 416,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "474",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 417,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "474",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 418,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "474",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 419,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "474",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 420,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "301",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 421,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "301",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 422,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "301",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 423,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "301",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 424,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "301",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 425,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "329",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 426,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "329",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 427,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "329",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 428,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "329",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 429,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "329",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 430,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "112",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 431,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "112",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 432,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "112",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 433,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "112",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 434,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "112",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 435,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "302",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 436,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "302",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 437,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "302",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 438,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "302",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 439,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "302",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 440,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "496",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 441,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "496",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 442,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "496",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 443,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "496",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 444,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "496",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 445,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "274",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 446,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "274",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 447,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "274",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 448,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "274",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 449,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "274",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 450,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "101",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 451,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "101",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 452,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "101",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 453,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "101",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 454,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "101",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 455,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "486",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 456,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "486",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 457,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "486",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 458,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "486",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 459,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "486",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 460,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "412",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 461,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "412",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 462,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "412",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 463,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "412",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 464,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "412",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 465,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "219",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 466,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "219",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 467,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "219",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 468,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "219",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 469,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "219",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 470,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "108",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 471,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "108",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 472,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "108",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 473,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "108",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 474,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "108",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 475,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "216",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 476,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "216",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 477,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "216",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 478,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "216",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 479,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "216",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 480,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "114",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 481,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "114",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 482,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "114",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 483,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "114",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 484,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "114",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 485,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "13",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 486,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "13",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 487,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "13",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 488,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "13",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 489,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "13",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 490,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "494",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 491,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "494",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 492,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "494",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 493,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "494",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 494,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "494",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 495,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "232",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 496,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "232",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 497,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "232",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 498,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "232",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 499,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "232",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 500,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "287",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 501,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "287",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 502,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "287",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 503,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "287",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 504,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "287",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 505,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "189",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 506,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "189",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 507,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "189",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 508,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "189",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 509,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "189",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 510,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "12",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 511,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "12",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 512,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "12",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 513,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "12",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 514,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "12",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 515,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "424",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 516,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "424",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 517,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "424",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 518,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "424",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 519,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "424",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 520,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "490",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 521,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "490",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 522,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "490",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 523,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "490",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 524,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "490",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 525,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "321",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 526,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "321",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 527,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "321",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 528,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "321",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 529,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "321",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 530,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "52",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 531,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "52",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 532,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "52",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 533,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "52",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 534,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "52",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 535,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "409",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 536,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "409",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 537,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "409",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 538,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "409",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 539,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "409",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 540,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "433",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 541,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "433",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 542,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "433",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 543,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "433",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 544,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "433",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 545,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "308",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 546,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "308",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 547,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "308",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 548,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "308",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 549,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "308",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 550,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "343",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 551,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "343",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 552,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "343",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 553,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "343",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 554,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "343",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 555,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "445",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 556,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "445",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 557,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "445",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 558,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "445",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 559,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "445",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 560,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "295",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 561,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "295",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 562,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "295",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 563,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "295",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 564,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "295",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 565,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "444",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 566,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "444",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 567,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "444",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 568,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "444",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 569,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "444",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 570,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "111",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 571,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "111",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 572,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "111",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 573,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "111",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 574,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "111",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 575,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "87",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 576,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "87",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 577,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "87",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 578,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "87",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 579,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "87",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 580,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "298",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 581,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "298",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 582,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "298",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 583,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "298",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 584,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "298",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 585,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "346",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 586,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "346",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 587,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "346",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 588,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "346",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 589,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "346",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 590,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "137",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 591,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "137",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 592,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "137",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 593,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "137",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 594,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "137",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 595,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "359",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 596,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "359",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 597,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "359",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 598,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "359",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 599,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "359",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 600,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "148",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 601,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "148",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 602,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "148",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 603,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "148",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 604,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "148",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 605,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "376",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 606,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "376",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 607,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "376",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 608,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "376",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 609,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "376",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 610,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "33",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 611,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "33",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 612,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "33",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 613,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "33",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 614,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "33",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 615,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "447",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 616,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "447",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 617,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "447",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 618,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "447",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 619,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "447",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 620,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "126",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 621,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "126",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 622,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "126",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 623,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "126",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 624,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "126",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 625,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "464",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 626,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "464",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 627,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "464",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 628,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "464",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 629,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "464",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 630,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "390",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 631,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "390",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 632,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "390",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 633,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "390",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 634,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "390",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 635,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "166",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 636,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "166",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 637,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "166",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 638,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "166",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 639,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "166",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 640,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "255",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 641,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "255",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 642,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "255",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 643,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "255",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 644,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "255",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 645,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "51",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 646,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "51",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 647,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "51",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 648,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "51",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 649,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "51",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 650,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "23",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 651,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "23",
+        "arm": "T3_truthful"
+      },
+      {
+        "ordinal": 652,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "23",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 653,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "23",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 654,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "23",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 655,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "299",
+        "arm": "N0_no_memory"
+      },
+      {
+        "ordinal": 656,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "299",
+        "arm": "M1_masked"
+      },
+      {
+        "ordinal": 657,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "299",
+        "arm": "P2_unknown"
+      },
+      {
+        "ordinal": 658,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "299",
+        "arm": "R4_reversed"
+      },
+      {
+        "ordinal": 659,
+        "model": "Meta-Llama-3.1-8B-Instruct",
+        "task_id": "299",
+        "arm": "T3_truthful"
+      }
+    ]
+  },
+  "analysis": {
+    "primary_executor": "Qwen2.5-7B-Instruct",
+    "executor_replication": "Meta-Llama-3.1-8B-Instruct",
+    "primary_contrast": [
+      "T3_truthful",
+      "P2_unknown"
+    ],
+    "primary_endpoint": "paired terminal-success difference",
+    "secondary_contrasts": {
+      "correctness": [
+        "T3_truthful",
+        "R4_reversed"
+      ],
+      "field_presence": [
+        "P2_unknown",
+        "M1_masked"
+      ],
+      "memory_content": [
+        "M1_masked",
+        "N0_no_memory"
+      ],
+      "legacy_total_field": [
+        "T3_truthful",
+        "M1_masked"
+      ]
+    },
+    "local_policy_endpoint": "normalized first-executable-action divergence",
+    "efficiency_endpoint": "paired step-count difference",
+    "bootstrap": "95% paired percentile, 100000 resamples, seed 20260904",
+    "test": "two-sided exact paired sign test on discordant terminal pairs",
+    "sparse_discordance_audit": "Bonferroni combined 97.5% Clopper-Pearson component intervals",
+    "no_cross_model_pooling": true,
+    "no_equivalence_claim_without_prospective_equivalence_procedure": true,
+    "no_semantic_reasoning_claim_from_first_action_alone": true
+  },
+  "hard_limits": {
+    "no_old_32_outcome_reuse_in_new_primary_statistics": true,
+    "no_panel_replacement_or_shrinkage": true,
+    "no_effect_inspection_before_all_660_terminal": true,
+    "no_arm_change_after_first_exposure": true,
+    "no_new_model_after_first_exposure": true,
+    "no_PSMG_efficacy_claim": true,
+    "no_L3_transport_claim": true
+  },
+  "preexecution_accounting": {
+    "new_selected_unit_treatment_outcomes_observed": 0,
+    "planned_runs_executed": 0,
+    "provider_calls": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "40e2a2a854ade12679b863017ead8b599fbe0f293a4d997533a91b6874556896"
+}
