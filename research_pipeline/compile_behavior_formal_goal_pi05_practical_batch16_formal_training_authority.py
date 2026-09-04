@@ -90,10 +90,10 @@ def main() -> int:
         },
         "resource_scope": {"gpu": "1x NVIDIA A100-SXM4-80GB", "memory_max_gib": 40, "memory_swap_max_gib": 0, "tasks_max": 512, "cpu_affinity": "0-63", "jax_platforms": "cuda", "xla_python_client_mem_fraction": 0.9},
         "exactly_once": {
-            "fresh_checkpoint_directory_required": true,
+            "fresh_checkpoint_directory_required": True,
             "automatic_retry": False,
             "automatic_restart_after_optimizer_updates": False,
-            "future_recovery_allowed_only_by_separate_exact_state_adjudication": true
+            "future_recovery_allowed_only_by_separate_exact_state_adjudication": True
         },
         "forbidden": [
             "loss/grad-norm/param-norm reading or reporting", "validation", "W&B", "checkpoint shopping", "evaluating intermediate checkpoints",
