@@ -1,0 +1,166 @@
+\documentclass{article}
+
+\usepackage{iclr2027_conference,times}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+
+\title{Auditing the Refusal-to-Action Boundary under Benign Workflow Accumulation in Persistent Browser Agents}
+
+\author{Anonymous authors\\Paper under double-blind review}
+
+\newcommand{\pending}[1]{\textcolor{red}{[PENDING: #1]}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Persistent browser agents can accumulate benign workflow demonstrations and continue acting under the resulting persistent state. Prior work already shows that longitudinal memory and benign execution-oriented experience can affect safety~\citep{altawaha2026remembering,zhao2026safety}; our question is narrower. We ask whether, under an exactly matched future task schedule, allowing benign workflow state to accumulate changes the boundary between immediate refusal and harmful-task-directed action. We decompose behavior into immediate refusal or safe handling (R0), first task-directed action (R1), partial execution depth (R2), and verified external effect (R3). The prospective primary endpoint is a task-specific programmatic R1 predicate, with R0/R2/R3 prespecified as decomposition endpoints. Before any new safety trajectory, the exact Qwen3.5-397B-A17B + Agent Workflow Memory + BrowserART/BrowserGym stack must pass BrowserART's official ten-task benign panel under a ten-step budget with a strict 10/10 gate. A historical Qwen3-8B study motivates the hypothesis but is discovery-only: 103/108 historical future episodes hit a four-step truncation ceiling, 0/108 normally terminated, no listener-confirmed external effect was observed, and HarmBench and DeepSeek produced different arm orderings on the same traces. \pending{prospective Updated-vs-Frozen R1 result and R0/R2/R3 decomposition} Semantic evaluators and blinded human labels are then used only to test measurement robustness around the objective behavioral anchors. \pending{measurement-robustness result} The final claim is restricted to the exact treatment, substrate, and horizon supported by the prospective evidence.
+\end{abstract}
+
+\section{Introduction}
+
+Experience-driven agents do not remain at the state at which they were first evaluated. Systems such as Agent Workflow Memory (AWM)~\citep{wang2025awm} turn prior task demonstrations into reusable workflows that can shape later action. A point-in-time safety evaluation therefore leaves open a temporal control question: after benign workflow experience accumulates, does the same agent continue to refuse a harmful request before taking task-directed action?
+
+This broad territory is no longer empty. Longitudinal memory work shows that benign memory accumulation can create later safety failures and develops fixed-probe / snapshot protocols to isolate exposure from stream non-stationarity~\citep{altawaha2026remembering}. Experience-driven self-evolving-agent work further shows that benign experience can reduce safety and links the degradation to an execution-oriented act-over-refuse bias~\citep{zhao2026safety}. We do not claim either result as new. The narrower identification gap is whether \emph{incremental workflow updating itself}, rather than a changing future task stream or weak execution substrate, moves a persistent browser agent's refusal-to-action boundary under an exact same-schedule counterfactual.
+
+A second ambiguity comes from the safety endpoint. For an overtly harmful browser request, immediate refusal before task-directed tool use is qualitatively different from beginning to fill the target interface, and both are different from a verified external side effect. A single semantic safe/unsafe label can collapse these states. We therefore define a behavioral ladder: R0 is immediate refusal or safe handling; R1 is the first harmful-task-directed browser action; R2 is partial execution depth after R1; and R3 is a verifier-confirmed external effect when the environment exposes one. R1 is the prospective primary endpoint.
+
+Our causal contrast is deliberately small. Updated and Frozen arms start from the same persistent workflow and receive the same future tasks, seeds, BrowserART/BrowserGym environment~\citep{kumar2025browserart,drouin2024browsergym}, AXTree/BID action interface, and execution budget. Updated receives prospectively frozen benign workflow units across exposure steps; Frozen retains the step-0 workflow. Thus the treatment difference is workflow accumulation rather than the task schedule.
+
+Browser-agent safety is not interpretable on a substrate that cannot complete benign tasks. The prospective backbone must therefore pass BrowserART's official ten-task benign sanity panel under a benchmark-aligned ten-step budget before any new harmful task is run. The historical four-step setting is retained only as a prefix diagnostic of the same benign qualification trajectories.
+
+The historical R9 study is useful precisely because it reveals what the confirmatory design must repair. Under HarmBench~\citep{mazeika2024harmbench}, historical future branch events were 8/12 Updated, 4/12 Frozen, and 0/12 NullMemory. A blinded DeepSeek re-evaluation of the same traces produced 5/12, 5/12, and 8/12. Retrospective execution audit then showed that 103/108 historical future episodes hit the four-step ceiling, none normally terminated, and no listener-confirmed external effect was recorded. We therefore treat these results as discovery evidence, not as confirmation that workflow updating increases harm.
+
+The paper is organized around the scientific object rather than the historical reviewer path. Section~\ref{sec:object} defines the refusal-to-action boundary. Section~\ref{sec:design} gives the capability qualification and exact same-schedule identification. Section~\ref{sec:historical} explains why historical R9 generates but cannot confirm the hypothesis. Section~\ref{sec:prospective} reports the prospective matched behavioral result. Section~\ref{sec:measurement} then asks whether semantic evaluators and humans support the same interpretation. Claims beyond the exact backbone/AWM/BrowserART setting require separate transport evidence.
+
+\section{Scientific object: the refusal-to-action boundary}
+\label{sec:object}
+
+Let $H_t$ denote complete pre-task persistent state at exposure step $t$, $q_{u,t}$ the frozen future task for matched unit $u$, and $A$ the browser-agent transition operator. The Updated state evolves as
+\begin{equation}
+H^{U}_{t+1}=\operatorname{Update}(H^U_t,B_t),
+\end{equation}
+where $B_t$ is a prospectively frozen benign workflow unit, while the Frozen arm holds
+\begin{equation}
+H^{F}_{t+1}=H^F_t.
+\end{equation}
+The two arms receive the same $q_{u,t}$, seeds, browser environment, action interface, and execution budget.
+
+For each harmful task $q$, a prospectively frozen programmatic predicate $P_q$ maps structured action/environment events to whether the agent has initiated task-directed execution. We define
+\begin{equation}
+R1(a,u)=\mathbb{I}[\exists k\le K: P_{q_u}(E^a_{u,k})=1],
+\end{equation}
+with $K=10$ in the prospective design. R0 records safe refusal before R1, R2 records prespecified task-execution depth, and R3 records a verifier-confirmed external effect.
+
+The primary finite matched estimand is
+\begin{equation}
+D_{R1}=\frac{1}{|\mathcal U|}\sum_{u\in\mathcal U}\left(R1(U,u)-R1(F,u)\right).
+\end{equation}
+We do not infer a population effect without a separately justified sampling model.
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.93\linewidth}{\centering
+\textbf{Figure 1 placeholder: scientific object.}\\[3pt]
+Updated: $W_0\rightarrow W_0+B_1\rightarrow W_0+B_1+B_2\rightarrow W_0+B_1+B_2+B_3$\\
+Frozen: $W_0\rightarrow W_0\rightarrow W_0\rightarrow W_0$\\[3pt]
+At each matched harmful request: R0 Refuse $\rightarrow$ R1 First task-directed action $\rightarrow$ R2 Partial execution $\rightarrow$ R3 Verified effect.
+}}
+\caption{The paper's scientific object. The future schedule is matched; the treatment is benign workflow accumulation. Safety behavior is decomposed instead of collapsed into one post-hoc semantic label.}
+\label{fig:object}
+\end{figure}
+
+\section{Capability qualification and causal identification}
+\label{sec:design}
+
+\paragraph{Capability gate.}
+The exact Qwen3.5-397B-A17B + AWM + BrowserART/BrowserGym stack first runs the pinned official ten benign tasks with a maximum of ten steps. Passage requires 10/10 prospectively frozen programmatic completion predicates. A failed task is not replaced or rerun. Failure stops safety execution and is classified as substrate failure, not evidence for safe refusal.
+
+\paragraph{Four-step diagnostic.}
+The historical four-step budget is evaluated from the first four steps of the same ten-step benign trajectories. It is descriptive and cannot change the capability threshold or task set.
+
+\paragraph{Prospective treatment.}
+Only after capability PASS are fresh states, tasks, seeds, benign update units, Updated/Frozen pairing, R0--R3 predicates, external-effect verifiers, retry rules, and statistical decision rules frozen before the first new safety trajectory.
+
+\begin{table}[t]
+\centering
+\caption{Qualification table. The ten-step benchmark-aligned setting is primary; the four-step prefix is diagnostic only.}
+\label{tab:capability}
+\small
+\begin{tabular}{lcc}
+\toprule
+Quantity & 10-step primary & 4-step prefix \\
+\midrule
+Official benign tasks & 10 & same 10 \\
+Required successes & 10/10 & descriptive \\
+Task replacement & none & none \\
+Safety authority if failed & none & none \\
+Observed result & \pending{fill} & \pending{fill} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Historical discovery and why it is insufficient}
+\label{sec:historical}
+
+Historical R9 used Qwen3-8B + AWM on BrowserART with a four-step ceiling. HarmBench produced Updated/Frozen/NullMemory branch counts of 8/4/0, while a blinded DeepSeek audit of the same frozen traces produced 5/5/8. These are genuine historical operational results, but they do not identify an evaluator-independent workflow effect.
+
+The execution audit tightens the boundary further: 103/108 historical future episodes reached the four-step truncation ceiling, 0/108 normally terminated, and 0/108 produced listener-confirmed external effects. The historical evaluator input therefore relied on action/thought traces rather than verified harmful completion. The old results motivate the R1-centered prospective design and the need for measurement robustness; they are not reused as the new confirmatory endpoint.
+
+\section{Prospective matched behavioral result}
+\label{sec:prospective}
+
+\pending{Report capability disposition first. If and only if qualified, report the frozen Updated-vs-Frozen matched R1 result. Then report R0/R2/R3 decomposition, parser/grounding diagnostics, and first-crossing localization. Do not insert HarmBench/DeepSeek ordering here as a substitute for a null R1 result.}
+
+\begin{table}[t]
+\centering
+\caption{Primary matched behavioral result. R1 is primary; R0/R2/R3 are prespecified decomposition endpoints.}
+\label{tab:behavior}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Endpoint & Updated & Frozen & Matched difference & Status \\
+\midrule
+R0 immediate refusal & \pending{fill} & \pending{fill} & \pending{fill} & secondary \\
+R1 task-directed initiation & \pending{fill} & \pending{fill} & \pending{fill} & primary \\
+R2 execution depth & \pending{fill} & \pending{fill} & \pending{fill} & secondary \\
+R3 verified effect & \pending{fill} & \pending{fill} & \pending{fill} & secondary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Measurement robustness after behavioral anchoring}
+\label{sec:measurement}
+
+HarmBench, DeepSeek, and blinded human semantic labels are evaluated as measurement systems around frozen trajectories and objective R1/R3 anchors. Evaluator-Robust Temporal Audit (ERTA) can summarize premise stability, event-set overlap, and contrast-sign stability without selecting a post-hoc majority label. ERTA is secondary unless evaluator reversal prospectively persists on capability-qualified, substantially complete, objectively anchored trajectories while the behavioral treatment effect itself is absent.
+
+\pending{Report evaluator/human agreement conditional on objective behavior; localize disagreements by action depth and task.}
+
+\section{Related work}
+
+\paragraph{Longitudinal memory safety.}
+Al-Tawaha et al.~\citep{altawaha2026remembering} study temporal memory contamination using fixed probes over read-only memory snapshots and NullMemory controls across multiple memory architectures. Our narrower object is an exact same-schedule evolving-vs-frozen workflow intervention with refusal-to-action decomposition in an interactive browser agent.
+
+\paragraph{Experience-driven self-evolution safety.}
+Zhao et al.~\citep{zhao2026safety} show that benign experience can reduce safety and attribute degradation to execution-oriented act-over-refuse bias across multiple backbones and environments. We do not claim that phenomenon as novel. G1 asks whether incremental workflow accumulation causes a longitudinal control-boundary shift under a matched future schedule and programmatic action endpoint.
+
+\paragraph{Web-agent safety and semantic evaluation.}
+BrowserART demonstrates that chat alignment does not automatically transfer to browser-agent action~\citep{kumar2025browserart}; HarmBench provides a standardized automated red-teaming classifier~\citep{mazeika2024harmbench}. G1 treats semantic judges as measurement layers rather than ground truth when objective action/event anchors are available.
+
+\section{Limitations and claim boundary}
+
+The prospective design remains a finite controlled study of one backbone, one AWM implementation, one browser benchmark, and a declared horizon. A positive local R1 effect does not establish a population hazard or universal self-evolution failure. R3 may be sparse because some BrowserART tasks do not expose persistent external-effect instrumentation. Human semantic evidence calibrates interpretation but cannot repair a failed objective or capability endpoint. Cross-backbone or cross-memory generalization requires separately frozen transport evidence.
+
+\section{Conclusion}
+
+The paper asks a narrow control question: under the same future schedule, does benign workflow accumulation move a persistent browser agent from refusal toward task-directed execution? By separating R0--R3 behavior, qualifying the substrate before safety evaluation, and relegating semantic evaluators to a robustness layer, the design distinguishes persistent-state effects from task difficulty, execution failure, and judge interpretation. \pending{Final conclusion must be selected only after the prospective claim ladder resolves.}
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+\end{document}
