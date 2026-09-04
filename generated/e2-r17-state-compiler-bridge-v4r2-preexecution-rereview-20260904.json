@@ -1,0 +1,50 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-v4r2-independent-preexecution-rereview",
+  "schema_version": "1.0",
+  "review_date": "2026-09-04",
+  "status": "PASS_V4R2_INDEPENDENT_PREEXECUTION_DESIGN",
+  "reviewed_object": {
+    "commit": "8970cf01df3a9b7bd9224ccbb66085b8acd8c53b",
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r2-20260903.md",
+    "sha256": "1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7"
+  },
+  "reviewer": {
+    "route": "Oracle Browser / logged-in ChatGPT",
+    "server": "52",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High (4/5; DOM showed GPT-5.6 Sol selected and Extra High 4/5 in the parent rereview conversation)",
+    "conversation_id": "6a9a187e-91d8-83ee-b21b-5dfbf3d1a63d",
+    "final_session": "e2-r17-v4r2-m3r3-rereview-3",
+    "prompt_submitted": true,
+    "completed": true,
+    "output_log_sha256": "1a47615fe8579ae66b3e50cc8609428dd7c85066608aba181ca9625373b82191",
+    "meta_sha256": "c2cb533f6827b41ebf4cab3fe171e48b46cbd58d3f1a1208403ac7fec13b7ecd"
+  },
+  "review_history_note": "The first long rereview turn in the same conversation completed reasoning but rendered an empty final assistant node. It is not counted as a verdict. A short follow-up in the same conversation requested only the missing final verdict/fixes and returned a complete answer.",
+  "verdict": "PASS_PREEXECUTION_DESIGN",
+  "verdict_changing_fixes_remaining": [],
+  "review_findings": {
+    "balanced_generator_factor_estimand_valid": true,
+    "q1_q4_authority_orthogonal": true,
+    "free_b_sensitivity_only_for_q1": true,
+    "universal_state_sha_aliasing_sufficient": true,
+    "q2_ff4_only_scope_correct": true,
+    "q3_observed_disagreement_bound_correct": true,
+    "q3_propensity_interpretation_requires_iid_stationarity_model": true,
+    "screen_validation_preserve_estimand": true
+  },
+  "scientific_execution": false,
+  "provider_calls_in_scientific_pipeline": 0,
+  "scientific_outcomes_read": false,
+  "authority": {
+    "bridge_stage_a": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "next_gate": "SEPARATE_STAGE_A_CONTRACT_PREFLIGHT_AND_EXPLICIT_EXECUTION_AUTHORIZATION_ONLY_AFTER_EXISTING_UPSTREAM_ELIGIBILITY_GATES",
+  "interpretation_boundary": "This receipt records that the frozen V4-R2 protocol passed independent pre-execution methodology review. It does not itself grant scientific provider execution authority, open SCREEN/VALIDATION, or override Recovery V3 / other upstream eligibility gates."
+}
