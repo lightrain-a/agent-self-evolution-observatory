@@ -114,6 +114,12 @@ The central result table must therefore report, side by side:
 
 A raw positive effect that disappears under M3 is interpreted as capability-unlock / execution-change compatible, not as a failed MCTA result to be repaired post hoc.
 
+The paper must also report an **Interpretation Flip Matrix** using the same executed rows. For each matched pair-state-time slot, show how M0/M1/M2 interpretation changes under M3 across shared-capability comparable, capability-divergent, capability-censored, asymmetric-execution, execution-invalid, and baseline-ineligible states. The primary method-necessity statistic is the M2 graph-overadmission rate:
+
+`count(M2 capability-positive and M3 C=0) / count(M2 capability-positive)`.
+
+Report its numerator/denominator and state stratification. This is the direct empirical test of whether canonical graph completeness prevents real interpretation errors rather than merely adding formal machinery.
+
 ## 6. Prospective experiment ladder
 
 ### Q0 — Global substrate qualification
@@ -169,19 +175,19 @@ At t1,t2,t3:
 
 Total P1 workload: 336 agent episodes.
 
-### P2 — Length/structure placebo, only if needed
+### P2 — Length/structure placebo, claim-triggered
 
 If P1 finds the predeclared positive shared-capability R1 direction, run a pre-frozen 12-unit placebo that matches update count, insertion cadence, wrapper/section structure, and tokenizer-length envelope while replacing executable workflow semantics with execution-neutral content.
 
 72 episodes.
 
-If placebo follows Updated, demote any workflow-semantic mechanism claim to a context/load/packaging effect.
+P2 is mandatory if the final paper attributes a positive effect to executable workflow semantics/content. If placebo follows Updated, demote the mechanism to context/load/packaging-compatible. P2 may be skipped only if the final claim is explicitly limited to the workflow-accumulation condition rather than workflow semantics.
 
-### P3 — Transport
+### P3 — Transport, scope-triggered
 
-After a qualified main result, run a preselected 12-unit transport subset on a second capable backbone. Prefer a different model family; same-family transport supports only scale robustness.
+After a qualified main result and any P2 boundary required by the wording, run a preselected 12-unit transport subset on a second capable backbone when the paper seeks a claim beyond the exact primary substrate. Prefer a different model family; same-family transport supports only scale robustness.
 
-178 episodes including its ten-task capability gate.
+178 episodes including its ten-task capability gate. If P3 is not run, the title/abstract/conclusion must explicitly scope positive claims to the tested qwen3.5-397b-a17b + AWM + BrowserART/BrowserGym substrate.
 
 ## 7. Experimental workload and baselines
 
@@ -194,17 +200,21 @@ Core workload if the eight-pair panel survives P0:
 
 Triggered extensions:
 
-- +72 placebo = 450 total;
-- +178 transport = 628 total.
+- positive P1 + workflow-semantics claim -> +72 placebo = 450 total;
+- positive qualified main result + cross-backbone claim -> +178 transport = 628 total.
 
-This is enough experimental depth for a narrow identification paper because the extra work is allocated across distinct scientific axes rather than seed inflation:
+The experiment does **not** default to 628 episodes. The 378 core is the mandatory narrow identification experiment; each extension is spent only when it removes an alternative explanation required by the final claim.
+
+This is enough experimental depth because the work is allocated across distinct evidence axes rather than seed inflation:
 
 - qualification;
 - task-local measurement identification;
 - same-schedule causal intervention;
-- strongest capability baselines;
-- mechanism placebo;
-- transport.
+- M0/M1/M2/M3 interpretation flips;
+- mechanism placebo when semantics are claimed;
+- transport when generalization is claimed.
+
+If later budget is available, prioritize independent persistent states/state-source families, then structurally admitted task-local pairs, then different-family transport. Repeated decoding seeds are a last-priority separately frozen stochasticity diagnostic, not the default way to enlarge N.
 
 NullMemory is not a required primary baseline because it answers memory presence, not incremental workflow accumulation. It may be added only if the final claim explicitly concerns memory presence.
 
