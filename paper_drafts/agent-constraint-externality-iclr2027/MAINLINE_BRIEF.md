@@ -65,37 +65,42 @@ If RQ1–RQ3 pass, does GTCC reduce collateral regression at matched probe budge
 
 ## Minimum sufficient experiment workload (proposal only; no execution authority)
 
-The current engineering/qualification history is large, but it does **not** count as submission-ready scientific breadth. The minimum useful workload should be claim-aligned rather than a benchmark/model grid for its own sake.
+The objective is **identification per episode**, not a target episode count. All family counts below are planning caps/defaults, not quotas that must be exhausted. Before confirmatory execution, freeze: (i) the family-level estimand, (ii) the smallest scientifically meaningful effect for each claim, (iii) the paired analysis, and (iv) stop/continue rules. Never enlarge the sample because an interim effect looks promising or just misses a threshold.
 
 ### Must-have A — Primary controlled mechanism panel
-- `24` fresh confirmatory repair families, balanced `12 FG + 12 TNF`.
-- Family is the scientific unit; episodes are technical repeats.
-- Each eligible family: `3 topology arms × 2 UPDATE/NO_UPDATE branches × 3 fixed repeats = 18` probe episodes.
-- Maximum primary probe envelope: `24 × 18 = 432` episodes, plus one source episode and one frozen repair generation per family.
-- This single panel answers RQ1 and RQ2; do not create separate mechanism datasets unless the protocol itself changes.
+- Family is the scientific unit; episodes are technical repeats and must never be counted as independent `n`.
+- Use fresh balanced FG/TNF confirmatory families under the same `3 topology × 2 UPDATE/NO_UPDATE` matched design.
+- `24` families and `3` repeats are a **maximum planning envelope**, not a required workload.
+- Start from the smallest prespecified family cohort that can test the frozen smallest-relevant RQ1 effect with adequate precision. If more families are needed, expand only by a preregistered rule based on nuisance/precision quantities that do not use the observed treatment direction (e.g. usable-family rate, within-family variance, missingness), never by chasing the point estimate.
+- Repeats are used only to stabilize within-family stochastic execution. If two repeats already make the family-level outcome stable under a frozen agreement criterion, a third repeat should not be run merely to increase the row count.
+- RQ1 and RQ2 share this one panel; do not create duplicate datasets for the two claims.
+- Maximum envelope if fully needed: `24 families × 3 topology arms × 2 branches × 3 repeats = 432` probe episodes, plus one source episode and one frozen repair generation per family.
 
-Why 24 rather than the old 8: the old design leaves too little independent family-level support after source-failure and repair-uptake exclusions. Twenty-four gives balanced family types and room for invalid/ineligible families without treating repeated episodes as independent `n`.
+The reason to allow more than the old 8 families is independent family-level support after source-failure/repair-uptake exclusions, not cosmetic breadth. If a smaller cohort already yields a narrow confidence interval around a scientifically meaningful null or positive effect, stop there.
 
 ### Must-have B — Prospective prediction panel
-- `16` untouched families, balanced `8 FG + 8 TNF`, disjoint from source-development and RQ1/RQ2 families.
-- ExposureRank, all ablation rankings, tie-breaks, and `k` are frozen before outcomes.
-- Only the UPDATE/NO_UPDATE evidence needed to label update-attributable regression is executed; the full three-arm causal matrix is not repeated unless required by the prediction estimand.
-- Recommended envelope: `16 families × 2 branches × 3 repeats = 96` probe episodes.
-- Offline baselines/ablations on the same outcomes: Random rank, Same-App rank, shared-resource-count-only, distance-only, full ExposureRank, plus a post-hoc oracle ranking reported only as an upper bound.
+- Use untouched families disjoint from source-development and RQ1/RQ2; `16` (`8 FG + 8 TNF`) is a planning cap/default, not a quota.
+- Freeze ExposureRank, all ablation rankings, tie-breaks, and `k` before outcomes.
+- Execute only the UPDATE/NO_UPDATE evidence needed to label update-attributable regression; do not repeat the full three-arm matrix unless the prediction estimand actually needs it.
+- Reuse the same held-out outcomes for Random rank, Same-App rank, shared-resource-count-only, distance-only, full ExposureRank, and an outcome-aware oracle upper bound. These ranking ablations should cost **zero additional actor episodes**.
+- Add held-out families only if a preregistered precision/coverage criterion is not met; never add them because ExposureRank is close to significance.
+- Maximum envelope if fully needed: `16 × 2 branches × 3 repeats = 96` probe episodes.
 
 ### Must-have C — Mitigation panel
-- `16` additional fresh families, disjoint from RQ3 held-out families.
-- Same frozen repair opportunity and snapshot are evaluated under five fair policies: Always Commit, Target-Only Validation, Random-k, Same-App-k, GTCC.
-- `k` and total probe budget are identical for Random-k / Same-App-k / GTCC.
-- `3` fixed repeats per policy: `16 × 5 × 3 = 240` policy episodes.
-- Full Non-target Check is run on a prespecified smaller subset (e.g. `8` families) as an oracle/upper bound rather than inflating the main budget.
-- Report target success/repair gain, collateral regression rate, commit rate, paired utility/gain with CI, LLM requests, tool calls, and wall-clock cost.
+- Open only after RQ1–RQ3 pass. If any upstream gate fails, this entire panel is unnecessary.
+- `16` fresh families and `3` repeats are planning caps/defaults.
+- Compare only policies that answer distinct reviewer alternatives: Always Commit, Target-Only Validation, Random-k, Same-App-k, and GTCC.
+- `k` and total probe budget are exactly matched for Random-k / Same-App-k / GTCC.
+- Full Non-target Check is an oracle/upper bound on a small prespecified subset, not a same-cost baseline and not something to run over the whole panel.
+- Prefer paired policy evaluation on the same family/snapshot so each additional episode reduces uncertainty in a direct contrast.
+- Maximum envelope if fully needed: `16 × 5 policies × 3 repeats = 240` policy episodes.
+- Report target success/repair gain, collateral regression rate, commit rate, paired gain/CI, LLM requests, tool calls, and wall-clock cost. If GTCC and Random-k are practically equivalent within the frozen meaningful-effect margin, stop the method claim instead of adding more families until a difference appears.
 
-### Must-have D — One clean cross-model robustness check
+### Conditional external-validity check — not a mandatory workload quota
 - Do **not** repeat the entire paper across seven models.
-- Use `2` additional capability-qualified actors on a pre-frozen stratified subset of `12` primary mechanism families.
-- Reduced robust check: `12 families × 3 topology arms × 2 branches × 2 repeats × 2 secondary actors = 288` episodes.
-- This is supporting external validity; the primary causal unit remains the family, and model cells are not pooled as extra `n`.
+- Only after RQ1/RQ2 are established on the primary actor, use one additional capability-qualified actor first on a pre-frozen stratified subset. Add a second actor only if the first replication leaves a material model-dependence ambiguity.
+- A `12`-family subset and `2` repeats are an upper planning default, not a fixed obligation.
+- Model cells are supporting external validity and are never pooled as extra scientific `n` for the primary family-level causal claim.
 
 ### High-value optional expansion — external updater compatibility
 Instead of adding many more models, prefer one established self-evolution updater that is close to the deployment story. ACE is especially suitable because it already supports AppWorld-style evolving playbooks. Freeze the external updater output first, then audit the same UPDATE/NO_UPDATE and topology logic on a small balanced panel (e.g. `8` fresh families). Treat this as compatibility/generalization evidence, not a baseline that changes the repair bytes in the main causal comparison.

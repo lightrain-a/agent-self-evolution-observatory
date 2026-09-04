@@ -180,16 +180,18 @@ GTCC 不再训练第二个 risk controller，也不根据 RQ3 outcome 重拟 ran
 
 本项目更接近“机制识别 + system safeguard”，不应照 SkillOpt 堆 52 cells；但目前也不能只靠原来的 8-family F0。当前大量历史执行是 qualification / transport archaeology，不等于 submission-level scientific evidence。
 
-建议的 **minimum sufficient** 主证据：
+建议的 **minimum sufficient** 主证据不能理解成“必须跑满多少条”，而应理解成**逐层证据上限**：
 
-1. **Primary mechanism**：24 fresh matched repair families（12 FG + 12 TNF），3 topology × UPDATE/NO_UPDATE × 3 fixed repeats，最多 432 probe episodes；同一 panel 同时回答 RQ1 phenomenon 和 RQ2 mechanism。
-2. **Prospective prediction**：16 untouched families，只执行产生 update-attributable labels 所需的 UPDATE/NO_UPDATE；约 96 probe episodes。所有 ranking variants 在 outcome 前冻结，离线做 Random / Same-App / resource-only / distance-only / ExposureRank ablation，不额外烧 actor calls。
-3. **Mitigation**：16 new families；Always Commit / Target-only / Random-k / Same-App-k / GTCC，三次固定 repeat，共约 240 policy episodes；Full Check 只在预冻结小子集作 upper bound。
-4. **Cross-model**：2 个额外 capability-qualified actor，只在 12-family stratified subset 上复核 RQ1/RQ2，不重跑整篇；约 288 episodes。
+1. **Primary mechanism**：以 fresh matched repair families 为科学单位；`24 families / 3 repeats / 432 probes` 只是最大规划 envelope。先冻结 family-level estimand 与最小科学有意义效应，再从能检验该效应的最小 cohort 开始；只有 usable-family rate、within-family variance、缺失率等与 treatment 方向无关的 nuisance/precision 条件不足时，才按预注册规则扩 family。RQ1/RQ2 共用一个 panel。
+2. **Prospective prediction**：`16 untouched families / 96 probes` 是上限默认值。只运行产生 UPDATE/NO_UPDATE label 必需的 episode；Random / Same-App / resource-only / distance-only / ExposureRank 都在同一 held-out outcome 上离线比较，不能为每个 ranking 重新跑 Agent。
+3. **Mitigation**：只有 RQ1–RQ3 通过才打开。`16 families × 5 policies × 3 repeats = 240` 同样只是上限。Always / Target-only / Random-k / Same-App-k / GTCC 每个 baseline 必须回答一个不同替代解释；Full Check 只在小子集作 upper bound。若 GTCC 与 Random-k 在事前定义的 practical margin 内等价，应停止方法 claim，而不是继续加 family 追显著性。
+4. **Cross-model**：不再预设“必须 2 个额外模型”。主机制成立后先用 **1 个**额外 capability-qualified actor 在小型 stratified subset 复核；只有第一次 replication 留下实质 model-dependence 不确定性时，才打开第二个 actor。不能把 model cells 当作 family-level `n`。
 5. **Existing-method external validity（高价值可选）**：与其再加第四第五个模型，更值得把一个 AppWorld-compatible 现有 updater（首选 ACE）输出 freeze 后，做小规模 same-update collateral audit。它是 plug-in/generalization，不进入主 causal baseline 表。
-6. **Longitudinal（条件性）**：只有要把 claim 扩成 repeated self-evolution 时，才加 8 families × 5 update rounds × 3 policies（Always/Target-only/GTCC）；否则不跑。
+6. **Longitudinal（条件性）**：只有要把 claim 扩成 repeated self-evolution 时才增加；它回答 accumulated externality，不是为了让实验表更长。
 
-因此当前结论是：**实验逻辑已经够，但 submission-ready 工作量还不够；缺的是有效主科学数据，而不是更多 debug/qualification。** 最优补法不是横向堆 benchmark，而是把每个 claim 的最小充分证据补齐。
+这里还要新增一个硬规则：**重复次数也不能机械固定为 3。** Repeat 只用于稳定 family 内随机执行；如果事前冻结的稳定性判据显示 2 次 repeat 已足够，就不跑第 3 次。相反，如果某类任务的 within-family variance 很高，需要更多 repeat，也必须根据 outcome 方向无关的稳定性/方差规则扩，而不是因为 effect 接近阈值才扩。
+
+因此当前结论应写成：**实验逻辑已经够，但 submission-ready 有效主科学证据还不够；下一步缺的是高信息密度的 confirmatory outcomes，而不是目标 episode 数。** 每跑一条实验都必须能回答一个预先写清楚的 claim、confound 或 robustness question；否则不跑。
 
 ### 2.8 Baseline 不能混淆“因果对照”和“现有方法”
 
