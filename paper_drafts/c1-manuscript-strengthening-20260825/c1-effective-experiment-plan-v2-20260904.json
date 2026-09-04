@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "date": "2026-09-04",
+  "object": "C1-EFFECTIVE-EXPERIMENT-PLAN-V2",
+  "status": "FROZEN_DESIGN_PROGRAM_NO_NEW_SCIENTIFIC_OUTCOME",
+  "supersedes": "c1-post-oracle-experiment-plan-20260904.md",
+  "parent_plan_sha256": "f541a21a5421d4858d1bb1a77c954d092350f1de0ddc949a77417f0357a9a684",
+  "oracle_review_summary_sha256": "7c650f1167bf4a4be0beeec5c30a82d2efca5f73936fb3d80bed1e7424672053",
+  "paper_archetype": "MEASUREMENT_IDENTIFICATION",
+  "design_principle": "minimum sufficient evidence; every new experiment must map to a claim/objection, be falsification-capable, use a matched estimand, and use the minimum sufficient prospectively calibrated cost",
+  "admission_gates": [
+    "CLAIM_LINK",
+    "DECISION_DIFFERENTIAL",
+    "MATCHED_ESTIMAND",
+    "MINIMUM_SUFFICIENT_COST"
+  ],
+  "completed_evidence_frozen": {
+    "shopping_write_pairs_diverged": "20/20",
+    "shopping_reddit_write_lineage_diverged": "24/24",
+    "same_mode_between_minus_within": 0.104978,
+    "same_mode_exact_one_sided_p": 0.007812,
+    "forced_terminal_abs_delta": 0.15625,
+    "forced_permutation_p": 0.00074,
+    "native_shopping_retrieval": "125/172",
+    "native_shopping_first_action_tv": 0.06944,
+    "native_shopping_first_action_p": 0.5801,
+    "native_shopping_modal_changes": "0/36",
+    "native_shopping_terminal_abs_delta": 0.02083,
+    "native_shopping_terminal_p": 0.4289,
+    "native_shopping_terminal_zero_cells": "34/36",
+    "reddit_write_diverged": "4/4",
+    "reddit_terminal_abs_delta": 0.125,
+    "reddit_terminal_p": 0.2253,
+    "reddit_terminal_zero_cells": "6/8",
+    "reddit_nonzero_signs": "opposite"
+  },
+  "track_a_current_paper": {
+    "mandatory": [
+      {
+        "id": "M0",
+        "name": "historical first-action provenance replay",
+        "provider_calls": 0,
+        "scientific_calls": 0,
+        "objection": "the first-action result is currently bound at claim-audit level to a summary artifact; same-condition replication must not be built on unreplayable provenance",
+        "required_inputs": [
+          "exact 36 matched Shopping state IDs",
+          "branch-specific rendered policy contexts",
+          "policy model/snapshot and sampling config",
+          "historical raw first-action responses",
+          "deterministic normalized first-structured-action parser",
+          "analysis/permutation implementation and seed"
+        ],
+        "pass": [
+          "reproduce mean TV 0.06944",
+          "reproduce p 0.5801",
+          "reproduce 0/36 modal changes"
+        ],
+        "failure_action": "STOP_NEW_FIRST_ACTION_EXECUTION_AND_REPAIR_PROVENANCE"
+      },
+      {
+        "id": "M1",
+        "name": "evaluation-surface baseline package",
+        "provider_calls": 0,
+        "scientific_calls": 0,
+        "baselines": [
+          "WRITE_ONLY_W",
+          "RETRIEVAL_ONLY_E",
+          "NATIVE_ENDPOINT_ONLY_O",
+          "FORCED_ONLY_F",
+          "STAGE_RESOLVED_W_E_U_O_PLUS_SIDE_F"
+        ],
+        "existing_controls": [
+          "same-mode wording control at W",
+          "forced capacity control",
+          "outcome-blind structured-memory control",
+          "structural stage-ablation audit"
+        ],
+        "purpose": "directly test observational aliasing/evaluation coarsening rather than rank unrelated memory algorithms"
+      },
+      {
+        "id": "M2",
+        "name": "first-action same-condition stochasticity audit",
+        "new_scientific_experiment": true,
+        "unit": "frozen Shopping matched branch-comparison state",
+        "unit_count": 36,
+        "endpoint": "unbiased exact-match-kernel MMD2/collision U-statistic on replay-qualified normalized first structured actions",
+        "kernel": "k(a,b)=1[a==b]",
+        "negative_values_allowed": true,
+        "clip_at_zero": false,
+        "historical_tv_role": "frozen original result reported alongside new audit; not retroactively replaced",
+        "sample_size": {
+          "status": "MUST_BE_FROZEN_BY_ZERO_PROVIDER_CALIBRATION_BEFORE_NEW_OUTCOMES",
+          "candidate_draws_per_branch": [2, 4, 6, 8],
+          "call_envelopes": [144, 288, 432, 576],
+          "selection": "smallest n with prospectively declared acceptable false-positive control and useful sensitivity under replay-qualified historical-support plus synthetic stress calibration",
+          "no_outcome_adaptive_topup": true
+        },
+        "execution": {
+          "branches": ["SUCCESS_WRITER", "FAILURE_WRITER"],
+          "stop_after": "first normalized structured action",
+          "terminal_rollout": false,
+          "repeated_calls_are_scientific_units": false
+        },
+        "inference": {
+          "primary_null": "within each frozen state, branch labels do not change the normalized first-action distribution beyond same-condition stochasticity",
+          "test": "prospectively frozen state-stratified branch-label randomization/permutation test on mean per-state unbiased MMD2",
+          "descriptive": [
+            "36 per-state U_i",
+            "mean/median U_i",
+            "positive/negative finite-sample counts",
+            "fixed-state bootstrap interval",
+            "normalized action frequency tables"
+          ],
+          "population_generalization": false
+        },
+        "decision_rules": {
+          "supported_positive_branch_sensitivity": "revise stage signature; do not retain strict pre-action attenuation wording; move remaining attenuation question downstream",
+          "not_supported_beyond_same_condition_variation": "retain first-action uptake as first unsupported measured stage, without zero/equivalence claim",
+          "heterogeneous": "report preregistered heterogeneity descriptively; no post-hoc positive-subgroup rescue"
+        }
+      },
+      {
+        "id": "M3",
+        "name": "figure claim audit and independent submission review",
+        "provider_calls": 0,
+        "scientific_calls": 0,
+        "purpose": "decide whether any remaining experiment is actually verdict-changing before broader execution"
+      }
+    ],
+    "conditional": [
+      {
+        "id": "C1",
+        "name": "complete Reddit E/U full-chain instrumentation",
+        "default_execute": false,
+        "precondition": "zero-provider feasibility on existing Reddit substrate",
+        "trigger": "post-M2 independent submission review identifies cross-domain stage-boundary replication as verdict-changing",
+        "priority": "extend existing Reddit before creating a third domain",
+        "forbidden": "force a third benchmark only to increase workload"
+      },
+      {
+        "id": "C2",
+        "name": "one additional frozen executor/backbone",
+        "default_execute": false,
+        "trigger": "post-M2 independent review identifies model/configuration specificity as verdict-changing",
+        "changed_factor": "executor only",
+        "purpose": "portability of measurement signature, not leaderboard breadth"
+      }
+    ],
+    "algorithmic_method_zoo_required": false
+  },
+  "baseline_policy": {
+    "current_paper_primary_baselines": "evaluation surfaces and matched controls",
+    "not_required_now": ["SAMem ranking", "MemArbiter ranking", "AWM ranking", "ExpeL ranking"],
+    "reason": "their primary estimand is method performance/retrieval/arbitration, not identification of where a fixed branch-conditioned state contrast loses measured support"
+  },
+  "track_b_pacta_successor": {
+    "required_for_current_paper": false,
+    "open_only_for_deliberate_method_expansion": true,
+    "internal_causal_baselines_if_opened": [
+      "A0_NATIVE_RAW_MEMORY",
+      "A1_SCB_ALWAYS",
+      "A2_RATE_MATCHED_RANDOM",
+      "A3_PACTA_MSR"
+    ],
+    "external_baselines_after_genuine_p0_pass_only": [
+      "one fair decision-time memory arbitration baseline such as MemArbiter-like",
+      "optional distinct state-aware relevance/retrieval baseline such as SAMem-like"
+    ],
+    "preserve_prerequisites": [
+      "outcome-blind canonical action identity",
+      "shadow/final sample independence",
+      "2<=K<=6",
+      "scientific-unit inference",
+      "recalibrated MMD2/sign-flip gate",
+      "Q0.9 long-horizon provider qualification"
+    ],
+    "fresh4": "PERMANENTLY_RETIRED_PROVIDER_REALIZATION_FAILURE_NOT_METHOD_EFFECT"
+  },
+  "explicitly_rejected_workload_inflation": [
+    "add 3+ models because SkillZip Pro used multiple models",
+    "add 3+ benchmarks because a systems paper used multiple workloads",
+    "run unrelated memory algorithms with mismatched estimands",
+    "run terminal trajectories for a first-action-only question",
+    "create a third domain before evaluating whether existing Reddit can close E/U",
+    "top up sample size after inspecting M2 effects",
+    "select positive state subgroups post hoc",
+    "use PACTA execution as rescue for the measurement paper"
+  ],
+  "current_execution_authority": {
+    "M0_zero_provider_replay": false,
+    "M1_zero_provider_baseline_compile": false,
+    "M2_scientific_first_action_calls": false,
+    "C1_reddit_extension": false,
+    "C2_second_executor": false,
+    "PACTA_successor": false
+  }
+}
