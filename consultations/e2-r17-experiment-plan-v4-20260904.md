@@ -537,6 +537,20 @@ This table prevents readers from confusing current pass@K with persistent learni
 
 The controlled experiment already has enough raw workload. Do not expand V3 for appearance.
 
+### Effective-workload rule
+
+Experiment volume is counted only when it buys identifiable scientific information. A new tranche is justified only if it does at least one of the following:
+
+1. tests a paper-level claim that is not already identified by an existing tranche;
+2. removes a material alternative explanation or confound;
+3. establishes transport/external validity that controlled data cannot provide;
+4. supplies a fair closest-method comparison required to interpret the contribution;
+5. reduces measurement uncertainty enough to change a predeclared decision boundary.
+
+GPU hours, provider calls, rollout counts, learned-state counts, heldout evaluations, models, and benchmarks are **not** independent measures of scientific workload by themselves. Replicates that only shrink already-adequate measurement noise do not substitute for new independent scientific units or a missing evidence type.
+
+Every future experiment proposal must therefore state, before execution: `claim_served`, `alternative_explanation_removed`, `independent_scientific_unit`, `primary_endpoint`, `decision_changed_if_pass`, `decision_changed_if_fail`, and `stop_rule`. If these fields cannot be answered prospectively, the experiment is not admitted into the main paper plan.
+
 ### Do not add before public P1
 
 - more synthetic skeletons;
