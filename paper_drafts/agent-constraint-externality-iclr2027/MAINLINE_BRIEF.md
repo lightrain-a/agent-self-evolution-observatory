@@ -72,10 +72,10 @@ The objective is **identification per episode**, not a target episode count. All
 ### Must-have A — Primary controlled mechanism panel
 - **Family is the scientific unit.** Episode/repeat counts are execution budget only and must never be reported as independent `n`.
 - Prospectively generate a **24-family reserve pool** balanced across FG/TNF before any confirmatory collateral outcome. The reserve pool is not a quota to exhaust.
-- A family becomes eligible only through preregistered pre-collateral gates: valid semantic source failure, valid frozen repair artifact, and positive target-only repair uptake. These gates may determine eligibility; non-target/collateral outcomes may not.
+- A family becomes eligible only through preregistered **pre-topology / pre-collateral** gates: valid semantic source failure, valid frozen repair artifact, and positive repair uptake on a topology-neutral `TARGET_ONLY_VERIFICATION` surface built from the common pre-update snapshot with the exact frozen repair bytes. These gates may determine eligibility; target retention inside INDEPENDENT/LOW/HIGH and all non-target/collateral outcomes may not.
 - After an independent development-only stability/variance pilot, freeze both the required eligible-family count `N* ∈ {12,16,20,24}` and repeat count `R* ∈ {2,3}` **before** opening any confirmatory collateral outcome. Select the first `N*` eligible families by a frozen stable-hash order; reserve families are activated only for predeclared eligibility attrition, never because the effect looks weak or almost significant.
 - The default efficiency target is `N*=16, R*=2`, but this is **not** an execution commitment. If the development-only precision analysis requires a different frozen value, use that value prospectively.
-- Each eligible family uses the same `3 topology × 2 UPDATE/NO_UPDATE` matched design. RQ1 and RQ2 share this one panel; no duplicate mechanism dataset is created.
+- Each eligible family uses the same `3 topology × 2 UPDATE/NO_UPDATE` matched design. Once admitted, every family remains in all frozen topology arms regardless of later target success; target-repair retention is reported jointly with collateral outcomes and never used for post-treatment family deletion. RQ1 and RQ2 share this one panel; no duplicate mechanism dataset is created.
 - Default efficient envelope if `N*=16, R*=2`: `16 × 3 × 2 × 2 = 192` probe episodes. Absolute reserve envelope if `N*=24, R*=3`: `432` probes.
 
 #### Semantic sham control — high-information mandatory subset

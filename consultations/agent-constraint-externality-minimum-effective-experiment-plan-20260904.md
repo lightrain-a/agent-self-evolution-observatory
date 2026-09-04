@@ -77,12 +77,14 @@ The exact stability threshold must be frozen in a pre-execution review. Repeat c
 
 Prospectively generate a 24-family reserve pool, balanced across FG/TNF, before any confirmatory collateral result.
 
-Family eligibility is determined only by pre-collateral facts:
+Family eligibility is determined only by pre-topology / pre-collateral facts:
 
 1. valid semantic source failure;
 2. valid frozen repair artifact;
-3. positive target-only repair uptake;
+3. positive repair uptake on one topology-neutral `TARGET_ONLY_VERIFICATION` surface instantiated from the common pre-update snapshot with the exact frozen repair bytes;
 4. no interface/measurement invalidity.
+
+The target-only verification is completed before INDEPENDENT/LOW/HIGH assignment is evaluated. Its outcome may determine family eligibility because it is pre-treatment for the topology question. Once a family enters the confirmatory topology panel, later target success/failure inside INDEPENDENT/LOW/HIGH is a treatment-responsive outcome and never a reason to drop that family.
 
 After development-only precision analysis, freeze:
 
@@ -100,8 +102,11 @@ For every eligible family:
 - same pre-update snapshot;
 - `NO_UPDATE`;
 - `REAL_REPAIR` with exact frozen bytes;
-- target repair must remain positive;
-- report family-level pooled update externality `UE = CRR_UPDATE - CRR_NO_UPDATE`.
+- retain the family in every frozen topology arm regardless of post-treatment target success;
+- report target-repair retention jointly with collateral outcomes;
+- report family-level pooled update externality `UE = CRR_UPDATE - CRR_NO_UPDATE` over the full prequalified panel.
+
+A stronger claim specifically about collateral regressions from a *still-effective* local repair requires a prospectively frozen panel-level target-retention falsifier; it must not be obtained by deleting topology arms/families whose target repair later fails. If HIGH or another topology materially destroys target efficacy, report that as part of the topology treatment and narrow the externality interpretation rather than conditioning it away.
 
 Default budget at `N*=16,R*=2`:
 
@@ -281,10 +286,10 @@ Before confirmatory execution, freeze:
 - `N*`, `R*`, `H*`, `M*` selection rules;
 - reserve-family ordering.
 
-Expansion is allowed only from **confirmatory-effect-independent** quantities. Pre-collateral eligibility may be used, but non-target/topology effect direction may not. Allowed inputs include:
+Expansion is allowed only from **confirmatory-effect-independent** quantities. Pre-topology target-only eligibility may be used, but target retention inside topology arms and all non-target/topology effect directions may not. Allowed inputs include:
 
 - development-only variance/stability;
-- preregistered source-failure / repair-uptake eligibility attrition;
+- preregistered source-failure / topology-neutral target-only repair-uptake eligibility attrition;
 - missingness/interface invalidity;
 - preregistered precision calculation performed before confirmatory collateral outcome access.
 
@@ -299,8 +304,9 @@ Forbidden reasons to expand:
 
 `clean capability`
 → `valid semantic source failure`
-→ `positive repair uptake`
-→ `RQ1 collateral phenomenon`
+→ `positive topology-neutral target-only repair uptake`
+→ `freeze confirmatory family panel`
+→ `RQ1 collateral phenomenon + joint target-retention readout`
 → `RQ2 topology mechanism`
 → `RQ3 held-out prediction`
 → `RQ4 GTCC`
