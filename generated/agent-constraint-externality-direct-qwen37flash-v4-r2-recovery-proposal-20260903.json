@@ -1,0 +1,59 @@
+{
+  "authority": {
+    "credit_readiness_check": false,
+    "design_only": true,
+    "direct_flash_v4_r2_execution": false,
+    "direct_sfq_a0_execution": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false
+  },
+  "candidate": {
+    "base_url": "https://api.aa.com.cn/api/v1",
+    "harness": "APPWORLD_DIRECT_FUNCTION_CALLING_V4",
+    "model_id": "qwen3.7-flash",
+    "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API"
+  },
+  "content_sha256": "4ea8ed76fedaf0c3379fc70759c83c4c5b293b1b00276cc07ca028202d7a0369",
+  "credit_readiness_gate": {
+    "credit_check_outcome_must_be_frozen_before_R2_SCIENTIFIC_DISPATCH": true,
+    "fail_condition": "ANY_HTTP_OR_PROVIDER_ERROR",
+    "max_retries": 0,
+    "model": "qwen3.7-flash",
+    "pass_condition": "HTTP_2XX_WITH_COMPLETED_MODEL_RESPONSE",
+    "required_before_execution_contract": true,
+    "test_type": "NON_SCIENTIFIC_SYNTHETIC_RESPONSES_REQUEST",
+    "tools": 0
+  },
+  "downstream_static_design": {
+    "direct_sfq_a0_contract_content_sha256": "67dab0637fe39c20cfd810cea65c465af80ef3359a669c9c6db536b541725a07",
+    "direct_sfq_a0_execution_requires_R2_capability_pass": true,
+    "direct_sfq_a0_qualification_content_sha256": "1cd7d81c225a62803a49928b102f356bd9cda876be547c370e9310fe82576df6"
+  },
+  "next_authorized_action": "WAIT_FOR_OR_RESTORE_DIRECT_PROVIDER_CREDIT_THEN_RUN_SEPARATELY_AUTHORIZED_NON_SCIENTIFIC_CREDIT_READINESS_CHECK",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prior_appworld_actions_after_dispatch": 0,
+  "prior_execution_id": "DIRECT-QWEN37FLASH-CAPABILITY-V4-R1",
+  "prior_failure_class": "ACCOUNT_LEVEL_INSUFFICIENT_CREDIT_BEFORE_MODEL_RESPONSE",
+  "prior_scientific_model_responses": 0,
+  "prior_stop_content_sha256": "c716ae0a035aac3b52368ee751dfa4297d7cc1b281d412a6e0dd6da45f88a09c",
+  "prior_valid_capability_measurements": 0,
+  "recovery_execution": {
+    "application_retry": false,
+    "clean_snapshot_each_unit": true,
+    "execution_id": "DIRECT-QWEN37FLASH-CAPABILITY-V4-R2-CREDIT-RECOVERY",
+    "historical_invalid_flash_measurements_reused": false,
+    "new_ledger_required": true,
+    "old_r1_ledger_is_read_only_failure_evidence": true,
+    "provider_max_retries": 0,
+    "r1_credit_failure_used_as_model_selection_evidence": false,
+    "reexecute_r1_failed_logical_unit": "ONLY_UNDER_FUTURE_EXPLICIT_R2_EXECUTION_AUTHORITY_BECAUSE_R1_RECEIVED_NO_MODEL_RESPONSE_AND_EXECUTED_NO_APPWORLD_ACTION",
+    "replacement": false,
+    "same_eight_capability_units": true,
+    "temperature": 0,
+    "tool_call_cap": 16
+  },
+  "schema_version": "ace-direct-qwen37flash-v4-r2-recovery-proposal-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "DIRECT_QWEN37FLASH_V4_R2_RECOVERY_PROPOSAL_WAIT_PROVIDER_CREDIT"
+}
