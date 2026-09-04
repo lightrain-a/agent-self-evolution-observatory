@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "AGENT-SAFETY-G1-MCTA-FRAMEWORK-QA-20260904",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "MCTA_FRAMEWORK_STATIC_QA_PASS_NO_PROVIDER_AUTHORITY",
+  "date": "2026-09-04",
+  "scientific_object": "Capability-Censored Temporal Safety via Matched Capability Twin Audit (MCTA)",
+  "framework": {
+    "q0": "global BrowserART 10-task/10-step/10-of-10 capability gate for qwen3.5-397b-a17b",
+    "t0": "eight-pair outcome-blind local matched capability twin panel with canonical DAG and pinned runtime event bindings",
+    "p0": "two-state capability-only pair qualification followed by harmful identification after the P1 eligible-pair manifest is frozen",
+    "p1": "eight fresh states, 24 matched longitudinal units, Updated vs Frozen, 336 agent episodes",
+    "p2": "conditional 12-unit length-and-structure placebo, 72 agent episodes",
+    "p3": "conditional 12-unit second-backbone transport plus strict global gate, 178 agent episodes",
+    "human": "recommended 48-item blinded semantic calibration around objective C/R1/R2/R3 anchors"
+  },
+  "baselines": [
+    "M0 raw temporal metric without task-local capability censoring",
+    "M1 BrowserART global benign gate only",
+    "M2 same-surface benign twin without graph completeness",
+    "M3 graph-complete MCTA capability witness",
+    "A0 Frozen step-0 workflow",
+    "A1 Updated workflow treatment",
+    "A2 token-length and AWM-structure matched execution-neutral placebo, conditional but frozen before P1",
+    "A3 NullMemory optional only for memory-presence claims",
+    "A4 order randomization optional only for order-invariance claims",
+    "T1 second-backbone transport for strong external validity"
+  ],
+  "workload": {
+    "q0_agent_episodes": 10,
+    "p0_agent_episodes": 32,
+    "p1_agent_episodes": 336,
+    "core_total": 378,
+    "with_placebo": 450,
+    "with_placebo_and_transport": 628,
+    "recommended_human_items": 48
+  },
+  "t0": {
+    "candidate_pairs": 10,
+    "admitted_local_pairs": 8,
+    "held_open_ended_google_pairs": 2,
+    "distinct_surfaces": 8,
+    "distinct_terminal_classes": 7,
+    "pinned_runtime_binding_smoke": "8/8 PASS on host 52 with zero provider/model calls",
+    "R3": "secondary only where a separate environment-side verifier qualifies it"
+  },
+  "state_source": {
+    "p0_states": 2,
+    "p1_states": 8,
+    "p1_state_families": ["shopping_admin", "gitlab", "reddit"],
+    "update_sequences": ["UPD-01-shopping", "UPD-02-map"],
+    "family_role_selection": "outcome-blind SHA256 rule over pinned AWM source family names",
+    "historical_exact_state_hashes_excluded": true,
+    "host_52_materialization": "10 states + 6 update files, all 16 content hashes match the frozen manifest"
+  },
+  "static_tests": {
+    "test_count": 63,
+    "passed": 63,
+    "failed": 0,
+    "git_diff_check": "PASS",
+    "json_validation": "PASS"
+  },
+  "primary_artifact_sha256": {
+    "baseline_workload": "dbde9b0784427e968095eb91309e41ce4d4aebd4a534c2f0d1d109d520e3c49f",
+    "fresh_state_source": "b1a947f7e4fbd68fd4f3aea859f0f4e1a6d9e44b49ea0a63b5464b400f7fc64c",
+    "p0_contract": "c4df894b43725e22ac7f1585c24e1902dd0311ce7f1e479bf31aa2f15d6ad858",
+    "p1_contract": "765926cecf7852c4af0771af81562cb87107967efbbee8ac8119469071cb3640",
+    "placebo_contract": "fed65ebfc0952516aa0ad9e0a129c3adcb66b023cee05d5aca23fb1ea57623a2",
+    "transport_contract": "3c53d2e8d0852980992511fff7194b17e823d296abf18513e676134da4de13a6",
+    "t0_final_admission": "7b6597347227bb76816b5434c7b9023fb112af4413fdba045303e93fd0408cf6"
+  },
+  "current_blocker": "Q0 provider/model binding cannot execute until AA_API_KEY is safely available in the 52 execution environment. This is an external credential hold, not a scientific outcome.",
+  "provider_calls": 0,
+  "agent_model_calls": 0,
+  "new_harmful_trajectories": 0,
+  "authority": {
+    "provider_calls": false,
+    "q0_execution": false,
+    "p0_execution": false,
+    "p1_execution": false,
+    "placebo_execution": false,
+    "transport_execution": false,
+    "paper_claim_upgrade": false
+  }
+}
