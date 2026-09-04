@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R70-INDEPENDENT-PREEXEC-REVIEW-SUMMARY",
+  "recorded_date": "2026-09-04",
+  "status": "INDEPENDENT_GPT_WEB_REVIEW_REDUCE_OR_REDIRECT",
+  "role": "ZERO_PROVIDER_INDEPENDENT_PREEXECUTION_METHOD_REVIEW",
+  "review_surface": {
+    "project_url": "https://chatgpt.com/g/g-p-6a6ad664d6508191bff6ecf4fde868f0-agent/project",
+    "browser_host": "10.42.8.52",
+    "model": "GPT-5.6 Sol",
+    "model_checked_in_live_dom": true,
+    "thinking_effort": "Extra High, 4 of 5",
+    "thinking_effort_checked_in_live_dom": true,
+    "blinded_dossier": "/root/oracle_briefs/B1_R68_SEMANTIC_CONTROL_PREEXEC_REVIEW_20260904.md",
+    "failed_pre_prompt_attempt_count": 1,
+    "failed_pre_prompt_attempt_reason": "DOM label mismatch before submission; no reviewer opinion created",
+    "rate_limit_overlay_seen_during_valid_run": true,
+    "faster_model_retry_used": false,
+    "valid_assistant_response_chars": 17651
+  },
+  "verdict": "REDUCE_OR_REDIRECT",
+  "required_fixes": [
+    "Repair neutral P before execution: P/T/S must use the same field schema, value type, and statically verified token footprint under both executor tokenizers.",
+    "Replace exact reversed labels with one frozen count-preserving within-retrieval shuffled-label control on the 57 mixed-provenance units; do not run both reversed and shuffled.",
+    "Remove fresh no-memory and fresh masked execution; run Qwen P/T on all 66 plus S on 57 mixed units, and run Llama P/T only on all 66.",
+    "Freeze hierarchy: Qwen T-P sole primary; Qwen T-S gate-kept correctness adjudication; local action/step diagnostics descriptive; nonsignificant T-P is not equivalence or proof that only prompt format matters.",
+    "Use treatment exposure, not durable STARTED, as retry boundary; allow bounded logged retries only for objectively pre-exposure infrastructure failures and handle post-exposure technical missingness prospectively."
+  ],
+  "recommended_matrix": {
+    "Qwen2.5-7B-Instruct": {
+      "P_neutral": 66,
+      "T_truthful": 66,
+      "S_shuffled_mixed_only": 57,
+      "total": 189
+    },
+    "Meta-Llama-3.1-8B-Instruct": {
+      "P_neutral": 66,
+      "T_truthful": 66,
+      "total": 132
+    },
+    "total_new_trajectories": 321,
+    "optional_llama_correctness_expansion": 57
+  },
+  "scope": {
+    "independent_writer_retriever_substrate_required_for_current_claim": false,
+    "llama_is_executor_only_replication": true,
+    "no_cross_model_pooling": true,
+    "no_new_scientific_outcome_observed": true,
+    "execution_authority": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "e7fd2f2aba0ca4d5b433b5549f1a1576cba1a3dc17f50738f22ba7dd7dfae294"
+}
