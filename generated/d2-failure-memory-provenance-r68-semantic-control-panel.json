@@ -1,0 +1,4374 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "role": "R68_FRESH_UNEXPOSED_SEMANTIC_CONTROL_PANEL",
+  "recorded_at": "2026-09-04T01:35:50+00:00",
+  "selection_basis": "all R54 outcome-blind eligible rows after the exact historical 32-primary + 8-utilization prefix; no new ranking, cutoff tuning, replacement, or outcome filtering",
+  "r54_eligible_count": 106,
+  "historical_exposed_prefix_count": 40,
+  "fresh_unexposed_panel_count": 66,
+  "representative_ids": [
+    "377",
+    "492",
+    "316",
+    "63",
+    "373",
+    "57",
+    "331",
+    "44",
+    "185",
+    "454",
+    "116",
+    "357",
+    "142",
+    "285",
+    "338",
+    "234",
+    "36",
+    "474",
+    "301",
+    "329",
+    "112",
+    "302",
+    "496",
+    "274",
+    "101",
+    "486",
+    "412",
+    "219",
+    "108",
+    "216",
+    "114",
+    "13",
+    "494",
+    "232",
+    "287",
+    "189",
+    "12",
+    "424",
+    "490",
+    "321",
+    "52",
+    "409",
+    "433",
+    "308",
+    "343",
+    "445",
+    "295",
+    "444",
+    "111",
+    "87",
+    "298",
+    "346",
+    "137",
+    "359",
+    "148",
+    "376",
+    "33",
+    "447",
+    "126",
+    "464",
+    "390",
+    "166",
+    "255",
+    "51",
+    "23",
+    "299"
+  ],
+  "representative_ids_sha256": "7c2b84aee347faba6d369abb403eb3a25afb164b8f5c6800ba867c25d1017187",
+  "records": [
+    {
+      "r54_eligible_order_index": 40,
+      "validation_task_id": "377",
+      "cluster_signature": [
+        "addgroup",
+        "cd",
+        "chmod",
+        "chown",
+        "cp",
+        "echo",
+        "grep",
+        "ln",
+        "mkdir",
+        "touch",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a secure configuration file at /etc/secure/config.cfg with content including 'ALLOW=yes', owned by root:admin (group), permissions 640. Create a backup file config_backup.cfg with permissions 644 and a symbolic link /etc/config_link pointing to the config file. Use vi for editing.",
+      "task_instruction_utf8_sha256": "795abef41bfc60a09bfab3f8ea568c1586c1626e449b9567b9681f523f23ea76",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "c6c628e3-56b1-4cdd-9768-ecc172bf7630",
+          "memory_id_sha256": "59820e87ddd20cdf4bad58c69f76b858110069b7f464f48e2242a5559a303641",
+          "source_task_id": "286",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "64f9e0fe4517528d08fc9a8c8fa0e732d274d47bdb1abfc7a9057d390c5abec3"
+        },
+        {
+          "rank": 1,
+          "memory_id": "73e6e216-7885-4cab-ae38-9e3e82187439",
+          "memory_id_sha256": "b09619632dea4a69de984ed01cb509e2311a55333c5605abebed244efa547fdb",
+          "source_task_id": "361",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ec68d7874026e982b05ff8a20ef231b2e197d4416d5333380344662855a3963d"
+        },
+        {
+          "rank": 2,
+          "memory_id": "2430d2cd-2ac0-479b-bf4b-f3cf7007cf63",
+          "memory_id_sha256": "c8700e07195145c7d733775dfd40fab6d160e7a4548fc487c13803227316501a",
+          "source_task_id": "405",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "629a8c3039cd5b70a590457fac453438112c11f6d5a5d480fdb9b16d42e82def"
+        },
+        {
+          "rank": 3,
+          "memory_id": "404daf3f-da79-4b31-8261-d2f470f5f6ca",
+          "memory_id_sha256": "c0d2eb95c261c4c769c04e0e755a32794891158280424dd5fe1eb3ee331c21d7",
+          "source_task_id": "38",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "12c32e294f965ab553a5e0264514efc97d308068f29b2ff10f4bbf5095e5590f"
+        },
+        {
+          "rank": 4,
+          "memory_id": "65aae7bb-9e59-4604-914a-3546d0c8f468",
+          "memory_id_sha256": "3f4bf531d81cb9e5f8ca7c71bfd5b48a7040fa66627248ca7afe806862542abc",
+          "source_task_id": "118",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ee54d3b6fffbbb42f0c453fba0c161994d8c73c90cdf073dc8c753289cc4f2e8"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "a336f4b6983497c16aa61d6e9657e768d12287ed6282430a9d986662f9ce09b9",
+      "selected_source_outcome_sequence_sha256": "df67e93a0fafad9a1fcff61114c15cfaff9e54579706a2aaee73cd0f8f85faac"
+    },
+    {
+      "r54_eligible_order_index": 41,
+      "validation_task_id": "492",
+      "cluster_signature": [
+        "awk",
+        "cat",
+        "chgrp",
+        "chmod",
+        "cp",
+        "echo",
+        "grep",
+        "mkdir",
+        "mv",
+        "tee",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Concatenate logs from /var/log/service1.log and service2.log into /reports/combined.log, prepend a timestamp, extract errors to /reports/errors.log, count errors into error_count.txt, create a backup, append 'End of report', set permissions to 644, and group ownership to 'adm'.",
+      "task_instruction_utf8_sha256": "11fcbf061702005923708239aae0e02a33178ee1370ecc5ab36ae3fb8ee2ee1f",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "c3707e99-3664-4cc9-920f-ff79152806a6",
+          "memory_id_sha256": "1d68cb38df38ca95a53d49ca7e0cd20ac74e87b3abfe033c002fdcf4fef28a32",
+          "source_task_id": "330",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e6323b0494f07f979774b2aed97cc08602b7ebc5176b12155733870f001414c6"
+        },
+        {
+          "rank": 1,
+          "memory_id": "68619c49-3afc-4e65-a67f-e82c4176da6e",
+          "memory_id_sha256": "97b58078123eee672dab72aa8defe8772bb418216ae3d6613f90f45e773a666b",
+          "source_task_id": "354",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "51e761678941b610c880da8e08edbe207ad1fb5f74b0bc1ecc2342fc2c91fff7"
+        },
+        {
+          "rank": 2,
+          "memory_id": "359b5200-0b3a-4ac8-b601-54802a654ef1",
+          "memory_id_sha256": "2891e65b6fb287a51fd9829d8adfe5fb092cd75bbc58a7ea82bf57de70845797",
+          "source_task_id": "484",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "2af843aaa26de14015ff069b09cdf482c961545e8ffc13f2e9200b73fe4adc07"
+        },
+        {
+          "rank": 3,
+          "memory_id": "5e4fb59d-eefb-4ce3-8157-263b546cfc97",
+          "memory_id_sha256": "e0dcb037ff2a9db2145f87978e9a33356cf667b83b31f7d9cf12b25701a3c7eb",
+          "source_task_id": "272",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "a70d7a19a6c99e889c54a14c171190dfc0eb3447e76f8150506a3356c34f6cd3"
+        },
+        {
+          "rank": 4,
+          "memory_id": "6ea507a3-8018-4947-8cbf-e21da5b060e2",
+          "memory_id_sha256": "d5bc675ea5a9d002a1fdb060ee9df3998db64024793f966d1146f90fe13696cd",
+          "source_task_id": "276",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "0443a021be772ba30406e5fa1a2355652b194282e2ce4c3a46643a019c785590"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "64ae747ff1f3a695d4aae48f5113fd02173e4b901f302892fe92f2cf1f4dd682",
+      "selected_source_outcome_sequence_sha256": "a581e4553e81d5b6bf535db0782ea64a47019d8452be5fc61f832a378708ec45"
+    },
+    {
+      "r54_eligible_order_index": 42,
+      "validation_task_id": "316",
+      "cluster_signature": [
+        "cd",
+        "cp",
+        "grep",
+        "mkdir",
+        "sed"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Modify the file '/etc/config/settings.conf' to set 'debug=false', comment out the 'port=' line, and change 'timeout=30' to 'timeout=60', while creating a backup file.",
+      "task_instruction_utf8_sha256": "c4e0817f13c9085cabad82e3b8a0a19065eb83cf59c6d6e0e176249daca1801f",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "5c23490a-8c3d-47ca-97c6-ba5a76b16ef2",
+          "memory_id_sha256": "0b7c671ca398114fe30f2fe45bf7b0494de60908f29c8b7af190b2081ab2464b",
+          "source_task_id": "74",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "3ee46f198c8ba918dff7248ad03f09c0652c87bf6d7a31767618f0b2dc404b6b"
+        },
+        {
+          "rank": 1,
+          "memory_id": "b468bb40-15b3-433e-bf38-fb61a34f49a9",
+          "memory_id_sha256": "277d4d90c8d49fa2ab7fb958d40db0aab52d50eb232ed96cf60040ed2cfd7254",
+          "source_task_id": "420",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "68a0beb9402f44a6d995c69a39dca25309288de5186b4129ac8d48a8e6fd23d0"
+        },
+        {
+          "rank": 2,
+          "memory_id": "4d929afc-9955-4cfb-9c13-284f8c08288e",
+          "memory_id_sha256": "f215c6861ea6d6429ba29b6e97c4662bed2abf531326885bb36438d144464c69",
+          "source_task_id": "347",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7862ead6570cbb0066009eabcacfa34f8052032f47b3a8292bff12cac204c59f"
+        },
+        {
+          "rank": 3,
+          "memory_id": "404daf3f-da79-4b31-8261-d2f470f5f6ca",
+          "memory_id_sha256": "c0d2eb95c261c4c769c04e0e755a32794891158280424dd5fe1eb3ee331c21d7",
+          "source_task_id": "38",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "12c32e294f965ab553a5e0264514efc97d308068f29b2ff10f4bbf5095e5590f"
+        },
+        {
+          "rank": 4,
+          "memory_id": "86a883c1-9ccc-42a7-b21f-4f25b405d55d",
+          "memory_id_sha256": "a357453498d184d8f68f98ac9432c9a464fe231b18253d6803297325c9d3b38d",
+          "source_task_id": "278",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "22edaec9bae4fa4da0d5184e73cf19b2dde6c853da5bcfd829e2434ba85894ac"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "76909c70ed33940d825e992f8492ccde0846bb3ba307dced2ae222ce683dc7d6",
+      "selected_source_outcome_sequence_sha256": "e4f055209a57feee9306d19d96dff13e9528888e7c2ad021b35e9516369ac699"
+    },
+    {
+      "r54_eligible_order_index": 43,
+      "validation_task_id": "63",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "gpasswd",
+        "grep",
+        "ls",
+        "mkdir",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'securegroup', add users 'alice' and 'bob' as members, set 'bob' as group administrator, create a directory '/secure' with group-only access, and a file '/secure/note.txt' owned by the group.",
+      "task_instruction_utf8_sha256": "dcc178c6f8463997476a7db49d0401821530492a7ce5fe8cdc5aa69c9cebeac0",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "acefa215-5d57-40f3-b45f-5cae09fc21fa",
+          "memory_id_sha256": "bd57aad3767a846e7cb21f267ecaedb965b4e9cbff9c9ee3ff9cce17e9934770",
+          "source_task_id": "284",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "d299093448dcd6b82342d32c006129ad75fcd08e92dab7e543a8521b7a84b356"
+        },
+        {
+          "rank": 1,
+          "memory_id": "a0adfb31-da9c-48af-b563-f48b2f3b3cba",
+          "memory_id_sha256": "a1206f851277be1754dfcd20918c4a870e5aa0f1a3255c8bce2c76e9e094130c",
+          "source_task_id": "254",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "28711966c14be1aff1fdcf4a32037d89974d5d4f455ad043945e5facff390385"
+        },
+        {
+          "rank": 2,
+          "memory_id": "32cd2f07-e2d4-4e41-b900-5cfdad2588b3",
+          "memory_id_sha256": "30cfd17d4ac30770919b51131f38f3fd5a37eab54e53b088664222b679c1bd30",
+          "source_task_id": "184",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "85454aa24a4239da5de691bd07a1251bbf790fa16e0eeecd04fc357fc685cdca"
+        },
+        {
+          "rank": 3,
+          "memory_id": "017a3400-7816-403b-adfe-cb22bc227372",
+          "memory_id_sha256": "1ac4203aae7161e607cb7d04fbc61d08e9bc79c638b06e05e8f0865923b2625f",
+          "source_task_id": "292",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "015375492615d93439bd9fbed16d9bfcdff56d3015b01aaa5c6adc97fee22970"
+        },
+        {
+          "rank": 4,
+          "memory_id": "274ea910-c070-4839-88f6-f07f67030f6a",
+          "memory_id_sha256": "794d04db3a76c1e52214243776bcf846c7ccdbbbae9040e4fba18ce5d5ec83bd",
+          "source_task_id": "473",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "4bcfe2bbb140ef30d7005b400cfbff17d4f8f3e24bb0ed8d25568de7783e8d0e"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "1491825de051633b32d3d4f358271c36333d94567115975b140c901ee13fafd9",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 44,
+      "validation_task_id": "373",
+      "cluster_signature": [
+        "cd",
+        "chmod",
+        "echo",
+        "grep",
+        "mkdir",
+        "mv",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create the directory '/var/log/app_logs' if it does not exist, generate a log file 'app.log' with sample entries (including two lines containing 'ERROR'), count the number of lines containing 'ERROR' in the file, and save the result to '/var/log/app_logs/error_count'.",
+      "task_instruction_utf8_sha256": "4d5e0396074fdc06459370df900bb6667644f753d53931a30b2400f1beadecaa",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "26b20e68-9973-469e-bb59-f06b1248fcf4",
+          "memory_id_sha256": "a9b2e42881024ec1730d2e476dee95e7c96be47ebea748424da292fff8b44e96",
+          "source_task_id": "465",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "dc1ef4bbc144abab6f4275a4c459cb64b0acb0b02e7aa3d21f852b29de4a41a4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "3d678e72-1fa5-4fcc-9e4c-c14f83eaa3e2",
+          "memory_id_sha256": "adbc18136840dffc5ddac7910f5dc90d839571cca2a50bd813f473bdb0bde4cb",
+          "source_task_id": "187",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2b76d43214e59eefb22a59fb074cb19b451b59ca6f5cb3433f15638f99a31d31"
+        },
+        {
+          "rank": 2,
+          "memory_id": "c0348117-0a6e-46a4-b112-6307318fb90e",
+          "memory_id_sha256": "3a85051fe8645d40a311b48541c325e4fd7e1208b5467d6b8073ac097f9269d4",
+          "source_task_id": "297",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "715f227239ef099640613afa51d5182832a67be74c7ef398a92614e0fbdadbc9"
+        },
+        {
+          "rank": 3,
+          "memory_id": "27f836d2-b686-4a26-9fda-4da046dc9f2f",
+          "memory_id_sha256": "a5fb8b27f0eb3e4b66329df2e0df352f7e19eb1bb6a9e2b151b60a64ea597b6a",
+          "source_task_id": "333",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "36e486b9cde1fb131cd00155d6fe306fa223cb83fc1271ac7c26b7d5386ae070"
+        },
+        {
+          "rank": 4,
+          "memory_id": "cd804f58-ae30-4044-84f6-ef2ba2375d03",
+          "memory_id_sha256": "571d753265f688233159f980e711ac34ef4feca0a8df3f3174fd5f0fb011c67f",
+          "source_task_id": "53",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8eb61a23440b037e5afd6cd5cb5f3f2d60ce926b9e15dbf42c9ea7a64cb10538"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "731b2fed6f60a33cc1fe210bb5c70d3d9402716a1143ca1e0e5a9ef355950abf",
+      "selected_source_outcome_sequence_sha256": "262b5e72f009bf13fe0578bb41e287548fe3588f3e648f59f19596a155f29770"
+    },
+    {
+      "r54_eligible_order_index": 45,
+      "validation_task_id": "57",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "echo",
+        "mkdir",
+        "tee",
+        "touch",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', add users 'user1', 'user2', and 'user3' to it, create a directory '/var/devteam_projects' accessible only to the group, and generate a log file with group details.",
+      "task_instruction_utf8_sha256": "8bafd3fca5def4e046b0725c649e8f94d83024d7789e0608a17a3e4d24a7efe9",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "55f6f982-2cf6-4252-91c4-4f4bf7381a23",
+          "memory_id_sha256": "95364ea9cb2d5c032309929f57996d473f339ab822579aed09fe2709c9d26eb0",
+          "source_task_id": "6",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "c1eecf4da171c6f874aac2d8cfdab2fe5640ac92014a5ca5b2b324f542ce39e0"
+        },
+        {
+          "rank": 1,
+          "memory_id": "2bb35108-2bd2-443f-aa61-13b12d24051a",
+          "memory_id_sha256": "ec2ac10a196ff3668dcfcc36dabe66e2b68bfcb6501047994ed25d6f9e263b0d",
+          "source_task_id": "207",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7ce0610e72cfdfaafa22c3f71a5c6f56a8b8c8ba2a3b8af206b9690590e8d1ee"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ccd3ebfa-278b-43dc-8b6f-4e22a475578b",
+          "memory_id_sha256": "7c4e6e561977c9798d9d5e75ba729dca2717188edb67166036228c4b62bf2128",
+          "source_task_id": "66",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e8287c502c85bbff46fc7b957690841ce02e8e6b6a05ab145d167d23e9a1500c"
+        },
+        {
+          "rank": 3,
+          "memory_id": "692d7747-957e-4bc9-80be-3f40aeafe875",
+          "memory_id_sha256": "59f96987b010a3b84529bab3781225b538a408196237047622688a7223375637",
+          "source_task_id": "385",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3b29f590839a43b4ce3a998306428cf36cf328cae3deddff3b94b4bec55b198d"
+        },
+        {
+          "rank": 4,
+          "memory_id": "56eaf30e-af06-4c9f-8100-b89b0ad1d691",
+          "memory_id_sha256": "04226b51693d781ae895df18ef85b709727dd89f13a59c45e3bdd47dd3debde1",
+          "source_task_id": "14",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bb93d5e551b9843d2285aa428e9d6fcf837c7934915addf2d8e95e675f6d6ea1"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "34a9f3b2ffe2106b41d944da3af26a20a5a07341ac2a3f04106fc2c1f0fd2f59",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 46,
+      "validation_task_id": "331",
+      "cluster_signature": [
+        "cd",
+        "echo",
+        "find",
+        "grep",
+        "ls",
+        "mkdir",
+        "rm"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Delete all files ending with .cache in the home directory of user 'testuser' and its subdirectories, ensuring no .cache files remain.",
+      "task_instruction_utf8_sha256": "a3468c91f14623afbac7d59aeadab9052ba253c5fe5ed209fadad8726df82d40",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "db23869c-cbad-42ea-aaf8-da93bb19307f",
+          "memory_id_sha256": "71303e2d31d39cfd663c5f79daf11798f56fa5d1c02db6f2dd014bfd965dbdf7",
+          "source_task_id": "64",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "bd55e876fdd2fc5985041c125e7375959db95689f92897010b04c15fb09fe138"
+        },
+        {
+          "rank": 1,
+          "memory_id": "5943c447-8138-4d77-92fd-03cac2472f7d",
+          "memory_id_sha256": "ab9e5d4bfb7347c6424b6c70e0136bace0c14c41ab7a45b372115a936e1d4d2b",
+          "source_task_id": "469",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "935e802c63e54ca96cff4202ce784572c45dd553c6e01a30dc3a38517217048f"
+        },
+        {
+          "rank": 2,
+          "memory_id": "c3e38fed-117c-4121-8a5f-110af4e8e2b4",
+          "memory_id_sha256": "a833bf8a20f6985a12f9846ec902842c5c3a8897e2228dd2f856aa1a5a391c90",
+          "source_task_id": "67",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "6fb464bf1bcf91ec5056fe85413f34248be4da506bf5615a1f9a2cc78e66c6b0"
+        }
+      ],
+      "selected_count": 3,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "1509889faabc3af5684bfa9963e40f72ecd8a18aa6dbc4caa45fa754887a2d2c",
+      "selected_source_outcome_sequence_sha256": "e5b9a37d4601777b92e68e2f556d3ca1cb67f8085802a7022b1c179541a33658"
+    },
+    {
+      "r54_eligible_order_index": 47,
+      "validation_task_id": "44",
+      "cluster_signature": [
+        "chmod",
+        "sleep",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create three files '/tmp/file1', '/tmp/file2', and '/tmp/file3', setting each file's permissions to 600 with a 1-second delay after creating each file. Use the 'sleep' command between file operations.",
+      "task_instruction_utf8_sha256": "37747b2638c3113e127c63b9281589d71249c2a77a69021540a165e1a999b85d",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "e6e492f0-e9eb-4f93-9e34-d7c933084a0b",
+          "memory_id_sha256": "7c2af34c52f3b9d8f8fc42083db2c5a636986cf3204ce1cfdb3bb88cadc16d64",
+          "source_task_id": "29",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "144bff0f805567261a75427c33c7333d1d5d97009e8c8ba71595e2bbae434d8b"
+        },
+        {
+          "rank": 1,
+          "memory_id": "94bcb28f-14dd-48ee-9b57-ebc0ac7a75d3",
+          "memory_id_sha256": "d1deb25adde95c1724d1882fd65f5307b4cc0b5bed286bfe37619b1f090e59ed",
+          "source_task_id": "237",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "5155bd3e5a0487fe52e3616ec66a7f051b70e978b1b14b0cdd432d9bf149e334"
+        },
+        {
+          "rank": 2,
+          "memory_id": "a0adfb31-da9c-48af-b563-f48b2f3b3cba",
+          "memory_id_sha256": "a1206f851277be1754dfcd20918c4a870e5aa0f1a3255c8bce2c76e9e094130c",
+          "source_task_id": "254",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "28711966c14be1aff1fdcf4a32037d89974d5d4f455ad043945e5facff390385"
+        },
+        {
+          "rank": 3,
+          "memory_id": "cb045e7f-02aa-4f29-874d-c49f587c4ba9",
+          "memory_id_sha256": "16b5a4dee55299734358a7023d4caf4d6ab8183bbf2b6b01cd9a5b0bc7bed288",
+          "source_task_id": "220",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "f5f51dff4cf1ab96f97c0f4a47c5ca49c9f0151ee5a436a0c13318db21248842"
+        },
+        {
+          "rank": 4,
+          "memory_id": "587558b7-6885-40db-90fb-3f7af88f940c",
+          "memory_id_sha256": "057c8b6e6d27f8f757a58f90faa970aa8becda81f6fb06f83073fa0980d184e1",
+          "source_task_id": "152",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "d4d357d72bd2af4ed612853d18eba2ed871148d0438462d8a0c826f85edde210"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "46414d3e0bf16fa6466ef04555653b8b536a48f7814b447c1835f2a3a5ca7822",
+      "selected_source_outcome_sequence_sha256": "1925395280712493b21f0d84182915e495780898409ac7262f3caa27dffc4a28"
+    },
+    {
+      "r54_eligible_order_index": 48,
+      "validation_task_id": "185",
+      "cluster_signature": [
+        "awk",
+        "cat",
+        "cd",
+        "chmod",
+        "chown",
+        "echo",
+        "find",
+        "grep",
+        "ls",
+        "rm",
+        "touch",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Concatenate all .log files within the '/var/logs' directory and its subdirectories into a single file named 'combined.log' in the home directory. Additionally, create a file 'line_count.txt' containing the total number of lines in 'combined.log'. Use the 'cat' command explicitly for file concatenation.",
+      "task_instruction_utf8_sha256": "6875299d81b1ee5ca6bef6a6201c5cd6d3e4e7101d72cd588b786cf561aa193f",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "0eb841b3-13d2-4d4f-a312-6c7b9f55abfa",
+          "memory_id_sha256": "795517701d6a316c36916931f6158594c575147869106cb1b1328ad95385678f",
+          "source_task_id": "315",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5606a5a0b07759cd60fc2f9a7a3c81260676230a159a10081ad50f8154b6afce"
+        },
+        {
+          "rank": 1,
+          "memory_id": "b281c3d0-b251-4994-a346-86a83f56867c",
+          "memory_id_sha256": "6cc1efa8e112c644eeac999ab27707c216d336d8b738cc30768e89126f644469",
+          "source_task_id": "94",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1fe1a79a77fd130e89718e3f879c9ecbae29b6c104e7e469fd181fcd2647ba27"
+        },
+        {
+          "rank": 2,
+          "memory_id": "e806180b-0d12-4c84-93ff-fc3e88239f53",
+          "memory_id_sha256": "e9f862aae4eef0d76fbc186f6add4a1ea437e14c49dd243cf35ecb5711e3c005",
+          "source_task_id": "34",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3a7213df2677560d4be2ddc2fb9b470fe7a08c9cd93a310d7bd3478ffc5ce65e"
+        },
+        {
+          "rank": 3,
+          "memory_id": "a1ac3efb-5dab-4e39-a062-46cc7b146cfd",
+          "memory_id_sha256": "35ae2d0baaf7ba22807f2e57d475895a3565b3026eb607a350853d5dcdffbaf9",
+          "source_task_id": "224",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3c632e48c54c4bdc442c5e6130432f12580f73aebd207f2dfc426ed27ff58516"
+        },
+        {
+          "rank": 4,
+          "memory_id": "6fa09161-bff7-4b06-ad6f-2756688f1e60",
+          "memory_id_sha256": "6c5989506bdb8d4a6a72c0dfa111ead5d72775c116aed62ed51e8580af53b6e5",
+          "source_task_id": "334",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "cd3409d4e2fbc7b7a34e498f273b812d69c17a245430d8b458b5dbb6cbc3b767"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "5e8e842a9740834cd33baf76cd45ae115798511a09e713877734d9a31926e018",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 49,
+      "validation_task_id": "454",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "chown",
+        "echo",
+        "gpasswd",
+        "tee",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', add users 'user1' and 'user2' to it, assign 'adminuser' as the group administrator using gpasswd, set the group ownership of '/project' directory to 'devteam' with read, write, and execute permissions for the group, and create a file '/project/shared.txt' with group ownership and read-write permissions.",
+      "task_instruction_utf8_sha256": "a3ff75a286ee54671e056de15e9fb8514dbc28f12a2f309b63b07d7caf08fe5f",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "04a3334b-f900-4806-84a9-ceb5197ef2e6",
+          "memory_id_sha256": "2b172e7406b9d74f0666dba6f2754664d0629e7a6bfa3e5f94e9f68dfd87f3ba",
+          "source_task_id": "121",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bec980f938ce6ff75ad512f57c05dd50cf03b6194abc7592f64a5540681bd922"
+        },
+        {
+          "rank": 1,
+          "memory_id": "d949be36-703b-46b9-b93d-082689d13f60",
+          "memory_id_sha256": "2f02e957f5696dd551383b096c973a68c8b07d879018d70855489f245ba3861e",
+          "source_task_id": "340",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "4ff48929de71d2ce3c93462f532368fc9751da9e43be781a466bc407bb95ea89"
+        },
+        {
+          "rank": 2,
+          "memory_id": "e87e7e5a-b124-44b1-a382-12a59fd0cbd7",
+          "memory_id_sha256": "682e9a2815088b3cd652d339a3040ea02aa3d910ff16bd9163b3e9c865cdbc38",
+          "source_task_id": "200",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "17b9ac413eff1569061fc62f629d693d9e27e43e2b753ec6e07323e9f24b2629"
+        },
+        {
+          "rank": 3,
+          "memory_id": "6107b765-5853-4020-b108-58c8dbea9f37",
+          "memory_id_sha256": "afbc364fe40d12b4dfd1a78ae18f794a5f86d9461147e4ad4a8a404a12b0c595",
+          "source_task_id": "105",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "75c1dc257bf37d435f7a6541a5c0519300af59bcd2fe011a17315e2799c29e06"
+        },
+        {
+          "rank": 4,
+          "memory_id": "e5a58318-898c-409e-b7aa-aba73c498550",
+          "memory_id_sha256": "3febc2f7a49e065ea5664369e9afec1d67c18a4ef9287027670c26077b6905d5",
+          "source_task_id": "106",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "63cfa8fd94d99b44081f8a6265121f04d42e7ea589da2582e279b5a3c8213976"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "bab7e58cfa9e4308e6b2d8ed518ff8341893e6821e6d6f8b7617e8ca9767326c",
+      "selected_source_outcome_sequence_sha256": "eb0082b1254d34c716b698f7422f45fadd0f61a581cf828f1c8d8da9ce5c652f"
+    },
+    {
+      "r54_eligible_order_index": 50,
+      "validation_task_id": "116",
+      "cluster_signature": [
+        "awk",
+        "chmod",
+        "chown",
+        "cp",
+        "echo",
+        "mkdir",
+        "tee",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create an audit report in '/var/log/audit/report.log' containing the header 'Audit Report', current date in YYYY-MM-DD format, list of users, user count, and create a timestamped backup in '/var/log/audit/backup'. Set the report's ownership to root:root and permissions to 644.",
+      "task_instruction_utf8_sha256": "ed7f1803349036a469429c2948112c2e02d90645a86e399a8ceabaaec0de2f0d",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "d30ed112-0f2e-4e95-b545-ef41e58c13b8",
+          "memory_id_sha256": "92bb38ab9f19d1d6102510dd0de1b6cd2f9f986951c23d0af4447a72e0581b1f",
+          "source_task_id": "495",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "863de0833ffe832a7a19b430f1f8d3a666e760d1e73e6060f80d1c851f629400"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fafe7329-fea3-43c6-bff7-424b352cd76a",
+          "memory_id_sha256": "adf4cef6160634e9061d78816c9d5e7e873a9ecc901b2e3a3baf86030bf28324",
+          "source_task_id": "48",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "d268ee0013a00647f667b119bb2976fbb0ceee343f46d395f59848846aa9450a"
+        },
+        {
+          "rank": 2,
+          "memory_id": "898f75d2-67f0-4451-bfde-73239146c1b1",
+          "memory_id_sha256": "e15dc364fece97323e5e17a512450a632903efa26cc67df5662b1151716c6e99",
+          "source_task_id": "167",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6fe6d826c7274ff4c3ae69150a7eac9f4ee7c3b912d22041641c450b569d2814"
+        },
+        {
+          "rank": 3,
+          "memory_id": "f57193da-bdad-4110-b70f-21ab6d651681",
+          "memory_id_sha256": "4373e3a9c10e6c36b5e3ec8af89b6e97d399490e299dc4dec77c446e6e65f439",
+          "source_task_id": "144",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "35d4ac1781f9ccce66f3f797959ea6fe102698e86c0bc307b5a1feffa05c7cd9"
+        },
+        {
+          "rank": 4,
+          "memory_id": "b8701e0b-c2cf-4799-ba88-2e1da748ac42",
+          "memory_id_sha256": "7da86ebb19c1038a17146c4e552570ead4a51b29d666b39030bbc76c1abb895b",
+          "source_task_id": "76",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "72be90f73660415d7d6921ca60f6ea686d9da39fe73154d8df8f233789d8980f"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "7f62e56108548255e4416f9a6ee6380eb98bb268592fd34171b8abcbeab93d1e",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 51,
+      "validation_task_id": "357",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "find",
+        "mkdir",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'dev_team', set up directories '/app/config' and '/app/logs', create files 'settings.conf' and 'debug.log' in config, and 'error.log' in logs. Change group ownership of all directories and files under '/app' to 'dev_team'. Set permissions: '/app' to 775, all files to 660.",
+      "task_instruction_utf8_sha256": "a050502756a468ca7f842e4134a6ee495097b7a8d947ea34bd0e55d3d63c3c5e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "43834ca8-9a91-43cc-a5c1-eb43b5bcdfda",
+          "memory_id_sha256": "0f410638a1feb530921072ef145eb20c539849e86acdbad67a862c81cf0c895c",
+          "source_task_id": "397",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "954d221d1e70e2aed7137cc7179b029b003ba86e9e97faf47405a8796f0f4a76"
+        },
+        {
+          "rank": 1,
+          "memory_id": "7d129aa9-886e-4ea1-aa32-c114790a7eb1",
+          "memory_id_sha256": "18016fedbb28cbc0f79899657300c7403ed57a5bb5897d71adb1b284a7004b5d",
+          "source_task_id": "269",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "f785a8fc51a7d3769f0752b2e9a896cd2e9268cbaa1048c25c377a69060f33e9"
+        },
+        {
+          "rank": 2,
+          "memory_id": "d1011d3a-fbd9-421e-bcf1-f2ab73e9017e",
+          "memory_id_sha256": "c559848f683f56a80ddd67a9b65a75064b8b1dbb19e3a372ba9f32d85c1970dc",
+          "source_task_id": "212",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "450973751b64ef924f34e72b40bed6b4fca3e1dd518b2144c484ec0d56cd0794"
+        },
+        {
+          "rank": 3,
+          "memory_id": "a66a74d2-e1c3-476b-beb7-cb93ef05e173",
+          "memory_id_sha256": "342096dbc607d5786f3a54f1044b6d153f62c32add7e8ea95674af9d45ad7d56",
+          "source_task_id": "362",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6797d8e99b35d40f61418675b3a90cfc5a7fa4a146d41b37ed6650dd86fe6544"
+        },
+        {
+          "rank": 4,
+          "memory_id": "e86ef1c8-c424-4256-9116-f7cd9ccf1dd1",
+          "memory_id_sha256": "a2ced018edb7a46a819a7dc624a668c050e1a40557798e68bb04d54a5effe653",
+          "source_task_id": "37",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "3e9c2486053d479440bb50d61b002b24d78a9575fcaf524cdb92a0b0232c080a"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "e504a003ddad4b9af6dab4428b4f57e6003cf67ce505553653d6e5c92956ec3f",
+      "selected_source_outcome_sequence_sha256": "174d26d2d6f1395e5133df9f83e0aba052faf0fc1b67251166115fb824104354"
+    },
+    {
+      "r54_eligible_order_index": 52,
+      "validation_task_id": "142",
+      "cluster_signature": [
+        "cd",
+        "chmod",
+        "chown",
+        "echo",
+        "grep",
+        "ls",
+        "mkdir",
+        "touch",
+        "useradd",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a user 'appuser', create the file '/etc/app_config/app_config.conf' using vi containing the lines 'Line 1' and 'Line 2', set the owner to 'appuser', and set file permissions to 600.",
+      "task_instruction_utf8_sha256": "e153274f04c6723520f03fb2653f4c62d482dde8e47c750a1dcd2b175e8d1237",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "ddfa8e7e-81c2-4d2c-aad0-3d60839ced8c",
+          "memory_id_sha256": "a846d4eed2fca723c34bde494c4bda892a07a20dcc1777459a1bd8623c3586ea",
+          "source_task_id": "210",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "32eca2d25f74bddc3da3f2951a41fcbbb4b088e44e1b6e7227e17a18d7fe6e07"
+        },
+        {
+          "rank": 1,
+          "memory_id": "73e6e216-7885-4cab-ae38-9e3e82187439",
+          "memory_id_sha256": "b09619632dea4a69de984ed01cb509e2311a55333c5605abebed244efa547fdb",
+          "source_task_id": "361",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ec68d7874026e982b05ff8a20ef231b2e197d4416d5333380344662855a3963d"
+        },
+        {
+          "rank": 2,
+          "memory_id": "9d2bdd43-98a0-4f78-9e22-6572c067cd07",
+          "memory_id_sha256": "7e64a11f5ef14f3461137e78e235a1b7a6a6c70b6fa193df781e2a1c781ad282",
+          "source_task_id": "175",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "323c97a88d7273d4c968c579cc4001ab6a6190e0906ed8f01f481e19cd3d0e17"
+        },
+        {
+          "rank": 3,
+          "memory_id": "c6c628e3-56b1-4cdd-9768-ecc172bf7630",
+          "memory_id_sha256": "59820e87ddd20cdf4bad58c69f76b858110069b7f464f48e2242a5559a303641",
+          "source_task_id": "286",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "64f9e0fe4517528d08fc9a8c8fa0e732d274d47bdb1abfc7a9057d390c5abec3"
+        },
+        {
+          "rank": 4,
+          "memory_id": "43834ca8-9a91-43cc-a5c1-eb43b5bcdfda",
+          "memory_id_sha256": "0f410638a1feb530921072ef145eb20c539849e86acdbad67a862c81cf0c895c",
+          "source_task_id": "397",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "954d221d1e70e2aed7137cc7179b029b003ba86e9e97faf47405a8796f0f4a76"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "29852b8c51ad5ff6ee5eac6ed00c59c756ba38c61642ab413b5d9325f564b417",
+      "selected_source_outcome_sequence_sha256": "7ac9f7771b4c3e4f0c45906c5a494916e244e90656cac5bf3339eb96df19e2cc"
+    },
+    {
+      "r54_eligible_order_index": 53,
+      "validation_task_id": "285",
+      "cluster_signature": [
+        "addgroup",
+        "chage",
+        "chmod",
+        "echo",
+        "mkdir",
+        "tee",
+        "useradd",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Configure password aging policies for user 'testuser' with minimum 7 days, maximum 90 days between changes, 14-day warning period, and account expiration on January 1, 2025. Create a group 'audit', add 'testuser' to it, and log the changes to '/var/log/security_changes.log'.",
+      "task_instruction_utf8_sha256": "d2e7391244d1054eb0ece74e327fa43bb782e4716dbd5c09d2c87001b4767b8e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "43eea2be-68ed-46f6-add8-b899e27a2f66",
+          "memory_id_sha256": "b6192e0661658ca084d61e7948300ad2a556ede1c4be0790dafa41174e853ddc",
+          "source_task_id": "231",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a473fe2caec9410458314d46517c3680066a7282eb1b0805802922abfb27da3f"
+        },
+        {
+          "rank": 1,
+          "memory_id": "36c653d0-11f7-4331-852d-d80cd1e5abe7",
+          "memory_id_sha256": "8aa9759f82558ac5e8936b3510755e78d43c04d045e8f14f7da6c3a11db1dc93",
+          "source_task_id": "322",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5968151740c9e449e7cf478924d5d103a884ffdf03ee77d4c78dd45c172f1776"
+        },
+        {
+          "rank": 2,
+          "memory_id": "2259de87-67e5-4471-b124-cbd3e776b7a3",
+          "memory_id_sha256": "ce6d8c4cbd8f20abdb17d0cfcf7c34851e607d2210323ddb370dd43b77e20fc1",
+          "source_task_id": "339",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "1d968002780431f03dc870754f8fbc20b2fc4b763aa938f467320374947b5c24"
+        },
+        {
+          "rank": 3,
+          "memory_id": "ace0f888-e3fb-41a1-8291-99fa4ec37063",
+          "memory_id_sha256": "6e3762c2117673300619447cd1cc46b1146ada6115492edb25c0fa85b01f436d",
+          "source_task_id": "356",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "72f8367c75eaf37fe094b7c15408d845221fb1d3ab72f3feeffd58a295b3dccb"
+        },
+        {
+          "rank": 4,
+          "memory_id": "9fed93a4-ba18-4269-a193-0d9f407962ae",
+          "memory_id_sha256": "0be0d5f73e3ee3d6ff52d9be8f6230f7866f9db57d22b93f047e5f5c8c2e98ec",
+          "source_task_id": "4",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bbc221bc011c26a62a68a7f6415c7fb8237b42c9e58486718d8374cca3cc402d"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "d5c9d57d3eeda578e7a797a17be51c3568185bd61a2641ff6fa7b597d9ead932",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 54,
+      "validation_task_id": "338",
+      "cluster_signature": [
+        "awk",
+        "cat",
+        "chmod",
+        "echo",
+        "exit",
+        "find",
+        "grep",
+        "rm",
+        "touch",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Find all .txt files in /testdir and its subdirectories, change their permissions to 600, delete any .log files older than 1 day, and ensure exactly 3 .txt files remain with correct permissions.",
+      "task_instruction_utf8_sha256": "0e486cf8ad36baf08c8cfe27165f5f6a08c374f9e6922fdab31b67aa85c0c50b",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "4bca03d0-de48-4c4d-8c28-471d72e81729",
+          "memory_id_sha256": "ae413e767837061ecdffc109d149243deda14c3a0656a253e3fc7cc19034e09f",
+          "source_task_id": "459",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e13f452ac2a88e17f6b415f03b7aff2f342d2b079a3f2e5d02f790e2826dacd0"
+        },
+        {
+          "rank": 1,
+          "memory_id": "4377a5db-0a8f-4b31-b524-f84c227275b6",
+          "memory_id_sha256": "cda50da8fe585a13b7223d8a91d25d5e23d0b1d214ac2ddf54977eea2c7477e9",
+          "source_task_id": "102",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bb6434672d313d42ca9c3f369c1a92528e68d8b709025d8b072ec198bee29590"
+        },
+        {
+          "rank": 2,
+          "memory_id": "003dac6c-a286-4838-bfe3-1ed5d1b252bc",
+          "memory_id_sha256": "796cb2440aaea2c082a1191c1d7cc6bff33468802080f236ce8b9b1ad2e72884",
+          "source_task_id": "155",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bab8082f30d45606ab1c387de269c561833d6545c69f1004f7df5ce730c16a37"
+        },
+        {
+          "rank": 3,
+          "memory_id": "f946059e-3cfa-4796-a44d-99a538351d51",
+          "memory_id_sha256": "ea974ad01277bfa4c3cd2502140de1d868ff8ba696631bb7f8cd47dba561cc2c",
+          "source_task_id": "317",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e3c8cc584221dd7069b9fa10706777d299e97e11166b2c8dd1dc54e864e5e289"
+        },
+        {
+          "rank": 4,
+          "memory_id": "c3e38fed-117c-4121-8a5f-110af4e8e2b4",
+          "memory_id_sha256": "a833bf8a20f6985a12f9846ec902842c5c3a8897e2228dd2f856aa1a5a391c90",
+          "source_task_id": "67",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "6fb464bf1bcf91ec5056fe85413f34248be4da506bf5615a1f9a2cc78e66c6b0"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "a7ea8e3dbf8540586dbcbe70bd15e4579f347c4cee20dcb972ec9ff97504dd51",
+      "selected_source_outcome_sequence_sha256": "571b5338c5cfb47b05d4388d50253be39b5798e2541ce2cffd049808734e46e4"
+    },
+    {
+      "r54_eligible_order_index": 55,
+      "validation_task_id": "234",
+      "cluster_signature": [
+        "chmod",
+        "chown",
+        "echo",
+        "grep",
+        "mkdir",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Append the following log entries to '/var/log/applogs/app.log' using 'tee': 'Log initialized', the current date, and 'Backup created'. Create a backup of this log file at '/backup/app_backup.log', set its permissions to 644, and ensure ownership is root:root. Verify the backup matches the original log content.",
+      "task_instruction_utf8_sha256": "f6a43133aef66d916920b196f488f3dd8cfb21609f83229aac907b8c7d4d7413",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "20edc5a7-7e13-467c-8f43-6ca666b35db2",
+          "memory_id_sha256": "ec16ccbebcde403fec4c867b6bac0531a13f5315b2261fca0061d9bfac95f4b0",
+          "source_task_id": "391",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e0b52ea2d9f5200af388ab01c2b4b0d04a0fd76a5c5b107ced6c7d72730b445c"
+        },
+        {
+          "rank": 1,
+          "memory_id": "0eb841b3-13d2-4d4f-a312-6c7b9f55abfa",
+          "memory_id_sha256": "795517701d6a316c36916931f6158594c575147869106cb1b1328ad95385678f",
+          "source_task_id": "315",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5606a5a0b07759cd60fc2f9a7a3c81260676230a159a10081ad50f8154b6afce"
+        },
+        {
+          "rank": 2,
+          "memory_id": "d89ef442-4603-4854-8aeb-3d45482ed2a8",
+          "memory_id_sha256": "55f8e5d66dbef31d3900df393ecdd73bf3e9bf90279c4a1d54ba0b0d6bc8ce6a",
+          "source_task_id": "203",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a4ed64a2e1aa6f6241664ddfed64ffab5f5af45b7f9efbc6ca7559596dd3b1f4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "e56e4bbc-430e-47d7-a2a3-f63b63ad679a",
+          "memory_id_sha256": "246f0f1a91134446995a2b4fa11150b7b2c71abe9024b86b71977635b376b052",
+          "source_task_id": "17",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "57aada9226e68e13823d574015496dd88e45e4614ae729daedea5b0112c9366f"
+        },
+        {
+          "rank": 4,
+          "memory_id": "f57193da-bdad-4110-b70f-21ab6d651681",
+          "memory_id_sha256": "4373e3a9c10e6c36b5e3ec8af89b6e97d399490e299dc4dec77c446e6e65f439",
+          "source_task_id": "144",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "35d4ac1781f9ccce66f3f797959ea6fe102698e86c0bc307b5a1feffa05c7cd9"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "73c185563892797013a3bb85102ad0058cf83ab300eef5bef6e92cd24cf62403",
+      "selected_source_outcome_sequence_sha256": "75bd429cc2ea7b63c751fa27018f3d3fe8d0d16d752b1263fe419eb5329786fb"
+    },
+    {
+      "r54_eligible_order_index": 56,
+      "validation_task_id": "36",
+      "cluster_signature": [
+        "addgroup",
+        "cd",
+        "chgrp",
+        "chmod",
+        "chown",
+        "echo",
+        "mkdir",
+        "rm",
+        "touch",
+        "usermod",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'editors', add user 'appuser' to it, create '/app/config.txt' containing exactly 'CONFIG_VERSION=1' using non-interactive commands, ensure the file is owned by group 'editors', and set permissions to 664 (rw-rw-r--).",
+      "task_instruction_utf8_sha256": "d8e8124525a136146ea517ad0b5be54a7effe23e0a532725075351ce78d5b47f",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "a30e315a-352b-407d-ab4c-64e82fb31e9b",
+          "memory_id_sha256": "76791220555f9110f3e92c986b4c8c38902197f8ad4f9f6c30e2725fb7f977a0",
+          "source_task_id": "403",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "d8e119d1400cbc868a0eff7fe0f52817ecfb81f874b75e43011657e61e1b0c1e"
+        },
+        {
+          "rank": 1,
+          "memory_id": "01abbf2f-9fb9-44ba-822c-8f06976f674f",
+          "memory_id_sha256": "4bea58319c9b7870fa666e0df08e1ae7d5503c191ca4e691130ba30f26489a41",
+          "source_task_id": "345",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ae5723f0ee5a0b1d32ecca4b7b400b3e66727578741e96ca4dda2d46c4cf45f1"
+        },
+        {
+          "rank": 2,
+          "memory_id": "44379cfd-7ae7-490a-b652-b0d713483302",
+          "memory_id_sha256": "054f063cb8dee7c875f26f909f0a87693017adfc064d43dab3d6110f3c7eed08",
+          "source_task_id": "130",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bb230e005847923b46366671adb27c22fdcf698f88aa968ac8ea0b73b7a9eb53"
+        },
+        {
+          "rank": 3,
+          "memory_id": "8dda73aa-42ff-41ad-b490-bce85876bc5f",
+          "memory_id_sha256": "75669c0adba87a5c2debf5da74d8387e3fbee077c0e57704ea45bd78a80087e0",
+          "source_task_id": "430",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "8f272ef65c63ba15d8fd74770c2163fff715357cf3f47a15a6142054a8d49ae1"
+        },
+        {
+          "rank": 4,
+          "memory_id": "ddfa8e7e-81c2-4d2c-aad0-3d60839ced8c",
+          "memory_id_sha256": "a846d4eed2fca723c34bde494c4bda892a07a20dcc1777459a1bd8623c3586ea",
+          "source_task_id": "210",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "32eca2d25f74bddc3da3f2951a41fcbbb4b088e44e1b6e7227e17a18d7fe6e07"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "79fadb5dbcdfdd0c87e44a60d428cccb50e85e3652a665e1b426b5cfc7be4acb",
+      "selected_source_outcome_sequence_sha256": "174d26d2d6f1395e5133df9f83e0aba052faf0fc1b67251166115fb824104354"
+    },
+    {
+      "r54_eligible_order_index": 57,
+      "validation_task_id": "474",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "chmod",
+        "echo",
+        "grep",
+        "rm",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a summary report at /var/log/app/report.txt by concatenating all ERROR entries from log files in /var/log/app, counting unique occurrences with timestamps, and appending a generation timestamp. Set report permissions to 644.",
+      "task_instruction_utf8_sha256": "90134ed4f517a97dbca0c68f9404a22bb95b0ce989593ca234b97d05d4a9a260",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "26b20e68-9973-469e-bb59-f06b1248fcf4",
+          "memory_id_sha256": "a9b2e42881024ec1730d2e476dee95e7c96be47ebea748424da292fff8b44e96",
+          "source_task_id": "465",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "dc1ef4bbc144abab6f4275a4c459cb64b0acb0b02e7aa3d21f852b29de4a41a4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fe9f975b-0f8d-4cbf-9f1e-247a4c23bd26",
+          "memory_id_sha256": "602a1065cb1f6c78f69577e2dd32b041554f33d46159511fe4767c771ccc5943",
+          "source_task_id": "488",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6e5550a13db60411666be8748102d94b6d4ce508c007b6eb2eaf4d3ba65e1247"
+        },
+        {
+          "rank": 2,
+          "memory_id": "3d678e72-1fa5-4fcc-9e4c-c14f83eaa3e2",
+          "memory_id_sha256": "adbc18136840dffc5ddac7910f5dc90d839571cca2a50bd813f473bdb0bde4cb",
+          "source_task_id": "187",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2b76d43214e59eefb22a59fb074cb19b451b59ca6f5cb3433f15638f99a31d31"
+        },
+        {
+          "rank": 3,
+          "memory_id": "051c3ea5-7fd6-48ef-bf3f-d0af1848a605",
+          "memory_id_sha256": "92dd1960dc30a0922012603ccc12b2b2cfc9a9aba5335d2971dc2f4b7f2dfb95",
+          "source_task_id": "266",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "a13f19520d458485038c2992cd07fd64f87ef1ed897770ebdf6b8e0641e2c2cc"
+        },
+        {
+          "rank": 4,
+          "memory_id": "69976a7f-f81a-4526-a8d9-a6a499509170",
+          "memory_id_sha256": "9a3bdf9a589a41a45bc0b272eb7b8c1dace891a8de828e8ca411b5dc375b59bc",
+          "source_task_id": "305",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2e87dcc16d07968644d6516230afb19e6241639d391f2bdb00a24d593545a0e3"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "83488981c9e8e87f04a7be0279506edecafc5f21f5395975c56e60ae63bda7bd",
+      "selected_source_outcome_sequence_sha256": "eb0082b1254d34c716b698f7422f45fadd0f61a581cf828f1c8d8da9ce5c652f"
+    },
+    {
+      "r54_eligible_order_index": 58,
+      "validation_task_id": "301",
+      "cluster_signature": [
+        "awk",
+        "echo",
+        "grep",
+        "ls",
+        "mkdir"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Process the log file at /var/log/app.log to count the number of ERROR entries each hour and save the result to /var/report/hourly_errors.txt using awk.",
+      "task_instruction_utf8_sha256": "d9affabe28a55907b72be912019cf25f6d6400fe6189e05a47028b3eadac2960",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "0b4a6730-c4b5-4af7-8b93-d4b99ef212e0",
+          "memory_id_sha256": "8e8313662983bfb3e5060f1187ed72b12955c5d77b16745299f5185ea04c2d40",
+          "source_task_id": "169",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6842cde4bf1177303c0fab3be0cb096eea82542341a30b90b42363457c1d2e09"
+        },
+        {
+          "rank": 1,
+          "memory_id": "3d678e72-1fa5-4fcc-9e4c-c14f83eaa3e2",
+          "memory_id_sha256": "adbc18136840dffc5ddac7910f5dc90d839571cca2a50bd813f473bdb0bde4cb",
+          "source_task_id": "187",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2b76d43214e59eefb22a59fb074cb19b451b59ca6f5cb3433f15638f99a31d31"
+        },
+        {
+          "rank": 2,
+          "memory_id": "fe9f975b-0f8d-4cbf-9f1e-247a4c23bd26",
+          "memory_id_sha256": "602a1065cb1f6c78f69577e2dd32b041554f33d46159511fe4767c771ccc5943",
+          "source_task_id": "488",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6e5550a13db60411666be8748102d94b6d4ce508c007b6eb2eaf4d3ba65e1247"
+        },
+        {
+          "rank": 3,
+          "memory_id": "c584e624-c969-4111-8fb7-d33fad1ad53e",
+          "memory_id_sha256": "f26dc3648421b76be4d6829999716bbf9824390967285d64c658b4e2cfb42f68",
+          "source_task_id": "416",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "b567da88223b99a1a23924c9b0cd839e184939b60eac02b202f6d69ede9442c2"
+        },
+        {
+          "rank": 4,
+          "memory_id": "c0348117-0a6e-46a4-b112-6307318fb90e",
+          "memory_id_sha256": "3a85051fe8645d40a311b48541c325e4fd7e1208b5467d6b8073ac097f9269d4",
+          "source_task_id": "297",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "715f227239ef099640613afa51d5182832a67be74c7ef398a92614e0fbdadbc9"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "47e5cb7e25503ce0bec48843d6a13f58e7b31e5a2e47a5c3c376e4f1ef2a3cda",
+      "selected_source_outcome_sequence_sha256": "eb0082b1254d34c716b698f7422f45fadd0f61a581cf828f1c8d8da9ce5c652f"
+    },
+    {
+      "r54_eligible_order_index": 59,
+      "validation_task_id": "329",
+      "cluster_signature": [
+        "cd",
+        "chmod",
+        "cp",
+        "echo",
+        "find",
+        "mkdir",
+        "rm"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Copy all .log files from /data/source to /data/backup preserving directory structure, ensure exactly 2 logs are copied, and set their permissions to 755.",
+      "task_instruction_utf8_sha256": "a06372cc1716a0284370f56707c41134e753abe8849e2c0042d4408ff617aca8",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "4bca03d0-de48-4c4d-8c28-471d72e81729",
+          "memory_id_sha256": "ae413e767837061ecdffc109d149243deda14c3a0656a253e3fc7cc19034e09f",
+          "source_task_id": "459",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e13f452ac2a88e17f6b415f03b7aff2f342d2b079a3f2e5d02f790e2826dacd0"
+        },
+        {
+          "rank": 1,
+          "memory_id": "b6eb6a3f-44c8-42ab-86b7-753afb87393e",
+          "memory_id_sha256": "d4ff636422403cdf92747420313ae51eb8c2c77b65c199801d5495b216e950dd",
+          "source_task_id": "419",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "f01093e48bce38a903839e3d2a758fbbc0439d8c762a87963ebd3c1a517b3540"
+        },
+        {
+          "rank": 2,
+          "memory_id": "d89ef442-4603-4854-8aeb-3d45482ed2a8",
+          "memory_id_sha256": "55f8e5d66dbef31d3900df393ecdd73bf3e9bf90279c4a1d54ba0b0d6bc8ce6a",
+          "source_task_id": "203",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a4ed64a2e1aa6f6241664ddfed64ffab5f5af45b7f9efbc6ca7559596dd3b1f4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "003dac6c-a286-4838-bfe3-1ed5d1b252bc",
+          "memory_id_sha256": "796cb2440aaea2c082a1191c1d7cc6bff33468802080f236ce8b9b1ad2e72884",
+          "source_task_id": "155",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bab8082f30d45606ab1c387de269c561833d6545c69f1004f7df5ce730c16a37"
+        },
+        {
+          "rank": 4,
+          "memory_id": "1a245273-4678-4e2d-a0eb-470afde20666",
+          "memory_id_sha256": "3bfc141efb120ed5a3e33fb7755f70a168b17b21c5915a010ee010692ac7e10d",
+          "source_task_id": "92",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "bb64240c2b7de8f414811adaed92149dcdef2b79f669cb7a98e2e07718fc9090"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "10c5958a1c8871238a6021466f89623be1c57d70183fc49ddf8db5f495cd1a07",
+      "selected_source_outcome_sequence_sha256": "33c495c83eb24b29a8f141aba06bde5db8c14b2299a252a2b545c33b4f9b2c41"
+    },
+    {
+      "r54_eligible_order_index": 60,
+      "validation_task_id": "112",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "cp",
+        "echo",
+        "find",
+        "mkdir",
+        "rm",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Remove all files with the .tmp extension from the /task_dir directory and its subdirectories. Create a backup of /task_dir first, log all deleted files to /deleted_files.log, count the number of deletions, and clean up the backup after completion.",
+      "task_instruction_utf8_sha256": "861f9026d236a8bf47d728800225227571a928aed514f6bf3392dfe70a3bfabf",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "d61f8d71-c697-4f5f-be10-8c5a8d02c57a",
+          "memory_id_sha256": "70bb0355d9de9535243575ad7c356d0c0cb6314b260565b237e8ddb650bd56e8",
+          "source_task_id": "201",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2d27e58aa868ee6964049b0a27c741e4ba131960a343d266cb9309911ff8dbf5"
+        },
+        {
+          "rank": 1,
+          "memory_id": "ad2e0be3-d0c4-48eb-9625-4b4aba3e2f37",
+          "memory_id_sha256": "f0baa12835491438349219eccb0a71867ab50d360c881903b3c3ae7551790897",
+          "source_task_id": "43",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "48b8c066154534d4d2524d572fafc7ab75a5f9ce6acc81176386d8e4fd174188"
+        },
+        {
+          "rank": 2,
+          "memory_id": "4bca03d0-de48-4c4d-8c28-471d72e81729",
+          "memory_id_sha256": "ae413e767837061ecdffc109d149243deda14c3a0656a253e3fc7cc19034e09f",
+          "source_task_id": "459",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e13f452ac2a88e17f6b415f03b7aff2f342d2b079a3f2e5d02f790e2826dacd0"
+        },
+        {
+          "rank": 3,
+          "memory_id": "328743d5-1b95-435d-a288-38ad4d98bd63",
+          "memory_id_sha256": "c30bb4ffa35d4234b891ba7a9b2f5296d0d0c7ffa3e6061627676d560ba3525e",
+          "source_task_id": "382",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ea3c04b9d8b55ded91441a8065be0d54662ba84ae27c5f287cc730a78166666d"
+        },
+        {
+          "rank": 4,
+          "memory_id": "5943c447-8138-4d77-92fd-03cac2472f7d",
+          "memory_id_sha256": "ab9e5d4bfb7347c6424b6c70e0136bace0c14c41ab7a45b372115a936e1d4d2b",
+          "source_task_id": "469",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "935e802c63e54ca96cff4202ce784572c45dd553c6e01a30dc3a38517217048f"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "5eacda704e7ac5832e84cce7e02e76486e1a261a0b8c33c86288626c1848f08f",
+      "selected_source_outcome_sequence_sha256": "b5f49fb6f377c2af7f5daa9ab65a22d9d9bf72e27affd3ea3c2c5f2037209709"
+    },
+    {
+      "r54_eligible_order_index": 61,
+      "validation_task_id": "302",
+      "cluster_signature": [
+        "awk",
+        "chsh",
+        "echo",
+        "grep",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the login shell of 'testuser' to /usr/bin/myshell by adding it to /etc/shells and using chsh.",
+      "task_instruction_utf8_sha256": "a66e5c207acacee4a86bbc3508289a5e6c90efd930917f2b40c01af9882d4446",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "d8f9923c-9e65-44a3-99ba-a9dc68d805f3",
+          "memory_id_sha256": "a198215362b77c251cdb80babb9abd982843daefaa548a7559ec008abb714caf",
+          "source_task_id": "307",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8d94c42edb9724ff338fa52b812fd3f53ee79b28954c72c9af09c6e08b951a77"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fafc138c-b13c-403b-b2ed-5c8e5db7e94a",
+          "memory_id_sha256": "1fc6d92c4b07c96a6a52c05d1eb6c7de8009bfb41705ac4f9f2a9354b66767bd",
+          "source_task_id": "472",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e06c6d70e70c73363d8499c3c9b73ffecf6dd047e3423bec2dce93996d68d1c9"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ec72f5a6-df02-46ae-aaee-cad724846367",
+          "memory_id_sha256": "e3a7ea597852fde1c4242e0349fda524b19f96168a51e7e63e020f3f67552557",
+          "source_task_id": "85",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ea6be6d3fc228efae2444af59a92132dcf436795ac474684ded8f5d36cc0c1b7"
+        },
+        {
+          "rank": 3,
+          "memory_id": "0c61df74-a289-4741-8253-aadb3ef87e86",
+          "memory_id_sha256": "25bc062385bf4987a3dbd45c5de55255c56b14e2fc71c59c6fb77e3c838e1d59",
+          "source_task_id": "304",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "c2a748bef083084e1d2252c1c3e8dd53f73350a2e343bc0c7c66a37c51608ed0"
+        },
+        {
+          "rank": 4,
+          "memory_id": "4f9927ff-1a8a-49ca-a0fd-7e61db724283",
+          "memory_id_sha256": "46a0a44401eb0154e280ba07d54b2744753f5f73bb2e725e8d91f11466698207",
+          "source_task_id": "159",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ade9535f81f8f72fdbe1504cfc552adf29ccc742ed8201000e496087c5431aef"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "948dd71b4a91bdee5eaed602bf4150fd1d0af8648f7b2f72a1a582224ad75267",
+      "selected_source_outcome_sequence_sha256": "ad85bc3819fe6968db4db163745fc61910df08ef838761923aae2509410ff9bf"
+    },
+    {
+      "r54_eligible_order_index": 62,
+      "validation_task_id": "496",
+      "cluster_signature": [
+        "chage",
+        "echo",
+        "tee",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Configure password expiration policies for user 'testuser' to require password change every 30 days, 5-day warning period, 7-day account inactivity lock, and set last password change date to 2023-10-01.",
+      "task_instruction_utf8_sha256": "a4f8cc8436296c79ac731e7552b0f4f109a9bc7fdf6d92fa28206cadb1fea64f",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "43eea2be-68ed-46f6-add8-b899e27a2f66",
+          "memory_id_sha256": "b6192e0661658ca084d61e7948300ad2a556ede1c4be0790dafa41174e853ddc",
+          "source_task_id": "231",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a473fe2caec9410458314d46517c3680066a7282eb1b0805802922abfb27da3f"
+        },
+        {
+          "rank": 1,
+          "memory_id": "36c653d0-11f7-4331-852d-d80cd1e5abe7",
+          "memory_id_sha256": "8aa9759f82558ac5e8936b3510755e78d43c04d045e8f14f7da6c3a11db1dc93",
+          "source_task_id": "322",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5968151740c9e449e7cf478924d5d103a884ffdf03ee77d4c78dd45c172f1776"
+        },
+        {
+          "rank": 2,
+          "memory_id": "2259de87-67e5-4471-b124-cbd3e776b7a3",
+          "memory_id_sha256": "ce6d8c4cbd8f20abdb17d0cfcf7c34851e607d2210323ddb370dd43b77e20fc1",
+          "source_task_id": "339",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "1d968002780431f03dc870754f8fbc20b2fc4b763aa938f467320374947b5c24"
+        },
+        {
+          "rank": 3,
+          "memory_id": "badd0f12-ff08-4445-a072-639f4c0531cc",
+          "memory_id_sha256": "502d9694b7b2f5c2067f25196ad186e67c741181bad7a93ff4b90ede63d43382",
+          "source_task_id": "223",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5b183d53fb75280d2d7f9ea838f5860b6209c45f967a372717363109c7fa797a"
+        },
+        {
+          "rank": 4,
+          "memory_id": "672db132-1efa-4179-a18e-da50493ccea1",
+          "memory_id_sha256": "2743b17423671a7d437b314c9a18d9fff255909c375093dab7aa303530cfb8ad",
+          "source_task_id": "443",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "96e042a1387e0b6083cf913a6596be947b82011ae097856d36d4fac40e841265"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "b8f384625031064ef7f65851e65356d332ccec70e901c739d5daa5095fd48722",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 63,
+      "validation_task_id": "274",
+      "cluster_signature": [
+        "chmod",
+        "chown",
+        "cp",
+        "ln",
+        "mkdir",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create directory '/var/log/app' containing log files 'access.log' and 'error.log'. Create symbolic links named 'access_symlink' and 'error_symlink' in '/home/testuser/logs' pointing to these logs. Create a copy 'access_backup.log' in '/backup' and create a hard link 'access_hardlink' to it. Set ownership of '/home/testuser/logs' and its symlinks to testuser:testuser with 755 permissions. Set ownership of '/backup/access_hardlink' to testuser:testuser with 644 permissions.",
+      "task_instruction_utf8_sha256": "8496e48948621a8ca09a2e3e29b7fc5dd0423d57b339cdec97b6e8d2da180a9c",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "dcc05caf-0c3e-4bfc-aa0d-8b0853bfc94b",
+          "memory_id_sha256": "c525f9e33c375f21ae143fea9443e2c07833f3e522aadefe2d30f6b5f95a266d",
+          "source_task_id": "450",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "58cb8a1f8f69a4ad537539f6017e31f0e95dfd8e55148588232e3e7bf11301d0"
+        },
+        {
+          "rank": 1,
+          "memory_id": "65aae7bb-9e59-4604-914a-3546d0c8f468",
+          "memory_id_sha256": "3f4bf531d81cb9e5f8ca7c71bfd5b48a7040fa66627248ca7afe806862542abc",
+          "source_task_id": "118",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ee54d3b6fffbbb42f0c453fba0c161994d8c73c90cdf073dc8c753289cc4f2e8"
+        },
+        {
+          "rank": 2,
+          "memory_id": "dcd0c1d2-3d8a-445f-9825-ae29503dd617",
+          "memory_id_sha256": "aa4a150ed5f04ac51c102dbee143e86da5c02d5c45397382c74faa00232dc64d",
+          "source_task_id": "8",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "943b0544764496406871ead231669774996c3ddbeca0b67412d2be7c751d102a"
+        },
+        {
+          "rank": 3,
+          "memory_id": "d89ef442-4603-4854-8aeb-3d45482ed2a8",
+          "memory_id_sha256": "55f8e5d66dbef31d3900df393ecdd73bf3e9bf90279c4a1d54ba0b0d6bc8ce6a",
+          "source_task_id": "203",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a4ed64a2e1aa6f6241664ddfed64ffab5f5af45b7f9efbc6ca7559596dd3b1f4"
+        },
+        {
+          "rank": 4,
+          "memory_id": "51685eb7-bbf4-4b6e-903e-3d04c2361d81",
+          "memory_id_sha256": "c4f9af3b741bc8eefafa1db1e4b797cb9782ad09489b43b54a69be93e714a73d",
+          "source_task_id": "26",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "f6a52c5e93c328d18fde659dc49c0a67251473c4a299e0d0ce9ad72e502431aa"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "99584637b7f64146e7abcba56924dce4c8041ff2fcd96a4ccf327710ecff7ada",
+      "selected_source_outcome_sequence_sha256": "571b5338c5cfb47b05d4388d50253be39b5798e2541ce2cffd049808734e46e4"
+    },
+    {
+      "r54_eligible_order_index": 64,
+      "validation_task_id": "101",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "find",
+        "ls",
+        "mkdir"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a project directory with: 1) 'project/src' and 'project/doc' directories, 2) project/README.txt containing 'Project Title', 3) project/VERSION with '1.0.0', 4) project/.gitignore excluding 'src/' and '*.log', 5) project/src/main.py with \"print('Hello World')\", and 6) project/doc/notes.txt with 'Documentation'. Set 755 permissions for all directories and 644 for files. Log the final structure to 'structure.log' with an appended 'Setup completed' message.",
+      "task_instruction_utf8_sha256": "d40558519308c36a4146092dd35cf2ecaa4822142aaa34f067a78b1b8e573e65",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "11ddd33d-baa8-4eec-be11-e7465d12ee68",
+          "memory_id_sha256": "11b6568699588ba1b78cde4f6302064ed592d6231ffdc8b58df346b3ab78037c",
+          "source_task_id": "30",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3bfa819f788de46b0d970c3408e5135ae76917f22219c7e554088936abd8e9aa"
+        },
+        {
+          "rank": 1,
+          "memory_id": "5f275ab1-d69d-45fc-977b-bdafd78084e5",
+          "memory_id_sha256": "913979e09581de65a9197e029fa4fafe973a8b9ce03f23acedfbf0acd438e845",
+          "source_task_id": "170",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ce3eb73089f090605647f3537fd53a825386d50622717381b2ab76b5b2884370"
+        },
+        {
+          "rank": 2,
+          "memory_id": "142b1e87-3213-47a1-8d6f-5d40f3ad64bc",
+          "memory_id_sha256": "45d20c663dbbd046677bb2b5f5343c6d9799f29cc276c0f22fa3b93b248c0330",
+          "source_task_id": "328",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "3a9227c25efff163583e4e381f36832fe3eb60a4d62d8c962c0f64176eca2a5c"
+        },
+        {
+          "rank": 3,
+          "memory_id": "3261acb4-04d2-4fe8-be3a-d9962d3bb1f0",
+          "memory_id_sha256": "70a5f253f706ffa3b44c656424dbb51747f6fad946d4378e1ba592a7d55eac24",
+          "source_task_id": "154",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5f1861fc3c79c3d780518a32a9624d3cd5813905ac7d881074c89414268d0eab"
+        },
+        {
+          "rank": 4,
+          "memory_id": "993f1db9-74a6-43bf-ab56-f90298b7c6d3",
+          "memory_id_sha256": "5133951dbedda8307f541f23e616ef0567f41f39b6784c2f07886ff7ff865072",
+          "source_task_id": "196",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "cdc1652fe9adb08e6ba789d6c3093d5514cc1313d10c09cc43d57ff2dba7ceab"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "ace6520697ee9925957afa3160bb351422f3814adcdeefc7f6e47afaa4168050",
+      "selected_source_outcome_sequence_sha256": "d4dab23734460da03f0a7c8c2d55fa8451323f4b3ed2fd004cc77c4acf4ddd52"
+    },
+    {
+      "r54_eligible_order_index": 65,
+      "validation_task_id": "486",
+      "cluster_signature": [
+        "chage",
+        "grep",
+        "mkdir",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Configure password aging policies for user 'testuser' to require a password change every 30 days, set a minimum of 2 days between changes, warn 5 days before expiration, set account expiration to 2024-12-31, and 14 days of password inactivity. Verify settings in both chage output and /etc/shadow.",
+      "task_instruction_utf8_sha256": "341c93904ec41c455d538928db6d647107261ccba6d9ffd782819e26a50f73df",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "43eea2be-68ed-46f6-add8-b899e27a2f66",
+          "memory_id_sha256": "b6192e0661658ca084d61e7948300ad2a556ede1c4be0790dafa41174e853ddc",
+          "source_task_id": "231",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a473fe2caec9410458314d46517c3680066a7282eb1b0805802922abfb27da3f"
+        },
+        {
+          "rank": 1,
+          "memory_id": "36c653d0-11f7-4331-852d-d80cd1e5abe7",
+          "memory_id_sha256": "8aa9759f82558ac5e8936b3510755e78d43c04d045e8f14f7da6c3a11db1dc93",
+          "source_task_id": "322",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5968151740c9e449e7cf478924d5d103a884ffdf03ee77d4c78dd45c172f1776"
+        },
+        {
+          "rank": 2,
+          "memory_id": "2259de87-67e5-4471-b124-cbd3e776b7a3",
+          "memory_id_sha256": "ce6d8c4cbd8f20abdb17d0cfcf7c34851e607d2210323ddb370dd43b77e20fc1",
+          "source_task_id": "339",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "1d968002780431f03dc870754f8fbc20b2fc4b763aa938f467320374947b5c24"
+        },
+        {
+          "rank": 3,
+          "memory_id": "ace0f888-e3fb-41a1-8291-99fa4ec37063",
+          "memory_id_sha256": "6e3762c2117673300619447cd1cc46b1146ada6115492edb25c0fa85b01f436d",
+          "source_task_id": "356",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "72f8367c75eaf37fe094b7c15408d845221fb1d3ab72f3feeffd58a295b3dccb"
+        },
+        {
+          "rank": 4,
+          "memory_id": "badd0f12-ff08-4445-a072-639f4c0531cc",
+          "memory_id_sha256": "502d9694b7b2f5c2067f25196ad186e67c741181bad7a93ff4b90ede63d43382",
+          "source_task_id": "223",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5b183d53fb75280d2d7f9ea838f5860b6209c45f967a372717363109c7fa797a"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "a1316012ce5c50011760a20eacff8207a65aaebe5125a0824799bf20bef55a18",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 66,
+      "validation_task_id": "412",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "chmod",
+        "ls",
+        "mkdir",
+        "mv",
+        "rm",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create four new .txt files named recent1.txt, recent2.txt, recent3.txt, and recent4.txt in /data/files. Then generate a report listing the three most recently modified .txt files in /data/files and save it to /data/reports/file_report.txt.",
+      "task_instruction_utf8_sha256": "129e5d6e576b39a97b7e313beb86a1e507712024c3ddc7c829b9b33d1c23270d",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "739cd621-a6cb-4336-ba13-bb5d8df06be4",
+          "memory_id_sha256": "e0ab30fd9e78dcf55535eb6f529e7d247a0e37d4e32c0409aa16ee2a4cc60384",
+          "source_task_id": "342",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "0fef11550c42e73ca1f8395fa1a1911d3c56e1b1a71d3466b31919f9fe721331"
+        },
+        {
+          "rank": 1,
+          "memory_id": "d30ed112-0f2e-4e95-b545-ef41e58c13b8",
+          "memory_id_sha256": "92bb38ab9f19d1d6102510dd0de1b6cd2f9f986951c23d0af4447a72e0581b1f",
+          "source_task_id": "495",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "863de0833ffe832a7a19b430f1f8d3a666e760d1e73e6060f80d1c851f629400"
+        },
+        {
+          "rank": 2,
+          "memory_id": "e970664d-79e3-4dec-88f1-e9fca89f50b7",
+          "memory_id_sha256": "c4ae741067c72fcca665f8ad425a7a700b39873da2cb1691c1b1373b5d9e43be",
+          "source_task_id": "265",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "945137d1c1f82c7dce0755a618c10d97451a714f8661f879b7d1f245f6bcddb4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "e806180b-0d12-4c84-93ff-fc3e88239f53",
+          "memory_id_sha256": "e9f862aae4eef0d76fbc186f6add4a1ea437e14c49dd243cf35ecb5711e3c005",
+          "source_task_id": "34",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3a7213df2677560d4be2ddc2fb9b470fe7a08c9cd93a310d7bd3478ffc5ce65e"
+        },
+        {
+          "rank": 4,
+          "memory_id": "cbab14e9-d561-4d46-87a1-871177070c1b",
+          "memory_id_sha256": "740bbe90ecbceabeb85a6ec42430bb55af332734f17ea5aad926b01bc7070764",
+          "source_task_id": "239",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e0417de5baa383ca1fcca3138e1bd0bbd830fc8ce38d26c2b25a5c72ee7b35b8"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "2ddd53e9a16d1463ef864d262835254662e87ad7f7f4ffed923e87fd2363ed18",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 67,
+      "validation_task_id": "219",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "grep",
+        "mkdir",
+        "sleep"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a script in '/usr/local/bin/delayed_logger.sh' that sleeps for 1 second and appends 'Task completed after 1 second' to '/var/log/sleep_task.log', execute it in the background, wait for completion, and verify the log entry.",
+      "task_instruction_utf8_sha256": "937561904b56e437ded4761cc283a8d42f547d309121aff7a2eec73f2607ed28",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "53efe796-0f39-41e5-9cd7-0ffb42945cb0",
+          "memory_id_sha256": "984d0825bf58231cb4df2bbf8fb87f6d7f1003d92af8c38fdf54b05562eeacab",
+          "source_task_id": "230",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7ac276af7dc758c9d86b9a53b8d00c4f12bb3e2f9e5d2a3a3a6ed79918cd0da9"
+        },
+        {
+          "rank": 1,
+          "memory_id": "e6e492f0-e9eb-4f93-9e34-d7c933084a0b",
+          "memory_id_sha256": "7c2af34c52f3b9d8f8fc42083db2c5a636986cf3204ce1cfdb3bb88cadc16d64",
+          "source_task_id": "29",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "144bff0f805567261a75427c33c7333d1d5d97009e8c8ba71595e2bbae434d8b"
+        },
+        {
+          "rank": 2,
+          "memory_id": "1226da03-72ca-44c9-958b-8864e284337a",
+          "memory_id_sha256": "ebaaf42efdc475707869c712742590dab326a49a4953679e011294c2faa5b7b0",
+          "source_task_id": "54",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c2a1e08cf25ef38611f25e07d8ec43cfbf37b305e0e2482e8fa51400b77c76ca"
+        },
+        {
+          "rank": 3,
+          "memory_id": "7055c48e-92d5-41e4-b6e9-19f368e35ab6",
+          "memory_id_sha256": "767c18a0d9f0b7f25503b93fe20fe4f41361ee119dd653011c242a7a6987d022",
+          "source_task_id": "393",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "339736443216af6afec31c7fcbba08dc85c2d1af56dc410800cf4e453fbf3717"
+        },
+        {
+          "rank": 4,
+          "memory_id": "bda1ee20-f4a3-4f8e-a8ad-a5ca7c79bd57",
+          "memory_id_sha256": "96af2cafb28be8269b183d3b1972cafe778058900f1e82ab97742b1e8924d323",
+          "source_task_id": "440",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "90b5d5f53e0295c0b959c219bf2b1437b5377a2d5b960d716f2b5272b16dab84"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "691a9e50544f5c88036545b97cf6d8ec90a69524eabf7bb150eb8d0f1c647e16",
+      "selected_source_outcome_sequence_sha256": "20216324baf1ebdbf05613eb8098027d2f01da60873cac340098cc61dfb5406f"
+    },
+    {
+      "r54_eligible_order_index": 68,
+      "validation_task_id": "108",
+      "cluster_signature": [
+        "addgroup",
+        "chmod",
+        "echo",
+        "exit",
+        "ls",
+        "useradd",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a user 'testuser', add them to 'testgroup', and generate a script '/check_user.sh' that exits with code 0 if the specified user is in 'testgroup', otherwise exits with code 1.",
+      "task_instruction_utf8_sha256": "e398449e999bd56f5d5bde79d01d6849459cd647a3613ddd58d12f431faa4ceb",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "fb9e5e14-ac99-461a-acc0-8e160ce3ec18",
+          "memory_id_sha256": "acb2eecdf031138ab738510ad6ab1bd1aa3fbbd3b4fb6231d98c04c13e8f3118",
+          "source_task_id": "120",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "0c5c3559cfbd8f60289b6b7edbbb9251cfd85d597c4c7cbc6b53226ca183dfbe"
+        },
+        {
+          "rank": 1,
+          "memory_id": "a422352f-472f-4320-b0b8-46e8e772aa72",
+          "memory_id_sha256": "b1b53a1875dfa0c74ade327c1e2736681fa6c36ab5075213924066afceae5908",
+          "source_task_id": "384",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "d74348d7bfdcdba4c4eb59bba10f783e7d9edd93e94a58226f47795cc10d6704"
+        },
+        {
+          "rank": 2,
+          "memory_id": "02002f02-f3f4-462b-b504-c56b8b762341",
+          "memory_id_sha256": "ed6bc3185bafe73dc6a47921d330fe44b02f7f21e46c3f91696f9ef03708a78b",
+          "source_task_id": "18",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "20dd1a8e5523ed2c853f6a2d8dbbeaa51c44dfb1c193a040fc4345081642c232"
+        },
+        {
+          "rank": 3,
+          "memory_id": "606c61d5-b39d-472a-98be-93d1e8f1a7b0",
+          "memory_id_sha256": "9c595147214e3dd10418daa627856b2447f4c4e0c28a3fd1c676d9a1b9173dff",
+          "source_task_id": "11",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8ba13d714a10da9915d70b69b62a5ce894a3a0df574c2978d8dc59d49e84021c"
+        },
+        {
+          "rank": 4,
+          "memory_id": "564e36cd-9ea1-415c-a0e8-ab6966031c6a",
+          "memory_id_sha256": "bee4ef73b82399c6c8ed3f1ff9fa3d870556c5ae78e9333c16a089463ba74b89",
+          "source_task_id": "162",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8f1547f7bcd2384e96803ae686968c103944c5b8ad16d15c6ebeab88ebcd4c67"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "0a60c120d02c8b79cb406540340a8b5ac856ba92ced0ea73ce58ecf78b82d90f",
+      "selected_source_outcome_sequence_sha256": "a581e4553e81d5b6bf535db0782ea64a47019d8452be5fc61f832a378708ec45"
+    },
+    {
+      "r54_eligible_order_index": 69,
+      "validation_task_id": "216",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "grep",
+        "ls",
+        "mkdir",
+        "mv",
+        "rm",
+        "tee",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create the directory /target. Move all .txt files from /source/docs and /source/data to /target. Set permissions of /target to 755 and all moved .txt files in /target to 644. Create a log file at /target/moved.log with a header line 'Moved:' followed by the filenames (without paths) of all moved files. Finally, create an empty marker file named COMPLETED in /target.",
+      "task_instruction_utf8_sha256": "1f802b1da1d6742b3c693530f782741b1295e6d60712bb09651a2a26ac7b48b2",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "72003628-5fb7-4a7b-9d7b-5d5deaf4e284",
+          "memory_id_sha256": "ccb0700c5e6dd8adf077168beb62867b4539fa16fa30601703de508f712ab413",
+          "source_task_id": "378",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "9d7a42dd3858338ce6a222cccfe30acabe7730c5c0b62ebd23376d306c9600a5"
+        },
+        {
+          "rank": 1,
+          "memory_id": "30a8c580-1f5d-40ba-b044-ee3dd6402ffe",
+          "memory_id_sha256": "bda4272d63ad97244bc2738fde1451680c8b931a3cd808fe50183b9f5b48aaf2",
+          "source_task_id": "410",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "cc90c222cb90bfd92f46cf466ffd5debdce70ba18114a9b518ebd283c74c8c75"
+        },
+        {
+          "rank": 2,
+          "memory_id": "bbf3dfe2-9659-48fc-9fc0-2e7ea24b97f9",
+          "memory_id_sha256": "7f473661a46c712bca3daaae66583e64a7adea92d2ef485f00959542b52d7399",
+          "source_task_id": "455",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c5b5b2c08c941b634d0cfac9f828fa6ec09e98d2701ffd66b25e1c2f0ed77790"
+        },
+        {
+          "rank": 3,
+          "memory_id": "71485ebf-2d67-4a81-aeb3-3023af2eb3c2",
+          "memory_id_sha256": "01770f79d7ff5833dbcae86a11a22f2e29d50e15c1ccdc13df2fcf26baa2eb46",
+          "source_task_id": "263",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "2e1be9c3fca21f65925629307e52e69180b3a06739f98bba71e5555e5a5d7fb8"
+        },
+        {
+          "rank": 4,
+          "memory_id": "c93dde21-b15e-416e-a18b-2becb716ed17",
+          "memory_id_sha256": "155ff6389f30fa074439191d1374c53e4925fcec9d16b36dc811c627deeefa1c",
+          "source_task_id": "197",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ef1e0cbbec9ea0ad1bd2d1a422a37665458d28c9f1a033315fa7e7f3deb30a53"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "91c9260869a3ad4e8bad6b8415df853cc2373d66c25e9d01f4226f82fed99c40",
+      "selected_source_outcome_sequence_sha256": "20216324baf1ebdbf05613eb8098027d2f01da60873cac340098cc61dfb5406f"
+    },
+    {
+      "r54_eligible_order_index": 70,
+      "validation_task_id": "114",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "gpasswd",
+        "mkdir",
+        "useradd"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', add users 'alice' and 'bob' to it, set 'alice' as the group administrator, and configure a shared directory '/devteam_shared' accessible only by the group.",
+      "task_instruction_utf8_sha256": "258db4f60a5c7e86b97de803a54b37268b1fbe598641c6db9c9e895971cf9d66",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "2bb35108-2bd2-443f-aa61-13b12d24051a",
+          "memory_id_sha256": "ec2ac10a196ff3668dcfcc36dabe66e2b68bfcb6501047994ed25d6f9e263b0d",
+          "source_task_id": "207",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7ce0610e72cfdfaafa22c3f71a5c6f56a8b8c8ba2a3b8af206b9690590e8d1ee"
+        },
+        {
+          "rank": 1,
+          "memory_id": "27c26d35-1193-4924-a896-736aa7328c4d",
+          "memory_id_sha256": "7e1a3718aae85b5f823269dc99687138e3036b5080f4923c4cf20accc031adba",
+          "source_task_id": "319",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "933af0f662874d85ecf5922c80fffb3a8aee85fc5df7f31b4fdcf561e8f2052a"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ecdac677-e26f-47e0-b1f6-1a9cdbbee15d",
+          "memory_id_sha256": "daf5e0448878b267e1b95edd985d046658edb77dd3947e4bdd339b593c83c9ee",
+          "source_task_id": "143",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7e798d6d6d1a4abee9ef8383ee20a3ed15b7b802f7b092dad8d34fd05c4027e0"
+        },
+        {
+          "rank": 3,
+          "memory_id": "d0863163-b6c5-4fc2-831f-7fec3600f896",
+          "memory_id_sha256": "93f617fba4693263ea2da9c14d81e8c56ea2c0e149cd84a32544cce835e12dcc",
+          "source_task_id": "164",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3481aa892f5e3412623ee7c90761c91be9ce4c4f95536aa7dec9365349ecf6dd"
+        },
+        {
+          "rank": 4,
+          "memory_id": "d949be36-703b-46b9-b93d-082689d13f60",
+          "memory_id_sha256": "2f02e957f5696dd551383b096c973a68c8b07d879018d70855489f245ba3861e",
+          "source_task_id": "340",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "4ff48929de71d2ce3c93462f532368fc9751da9e43be781a466bc407bb95ea89"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "fb5f27ad9db150d0a8b2146b5af7184fb88a3eddf3268afda0c0690a5bd040e2",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 71,
+      "validation_task_id": "13",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "mkdir",
+        "sleep",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a script at '/task/script.sh' that performs the following actions in sequence: 1) writes 'Task started' to '/task/log.txt', 2) creates a directory '/task/temp', 3) waits 1 second, 4) removes '/task/temp', 5) waits another 1 second, 6) creates '/task/success.txt'. Make the script executable, then execute it after a 1-second delay.",
+      "task_instruction_utf8_sha256": "057648d72a47873e82867866a613bf5bbc660216297e19a27ea947ccb027da93",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "e6e492f0-e9eb-4f93-9e34-d7c933084a0b",
+          "memory_id_sha256": "7c2af34c52f3b9d8f8fc42083db2c5a636986cf3204ce1cfdb3bb88cadc16d64",
+          "source_task_id": "29",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "144bff0f805567261a75427c33c7333d1d5d97009e8c8ba71595e2bbae434d8b"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fdbd5233-3f74-4e6e-bb6a-02cc41fbd2d3",
+          "memory_id_sha256": "6c9975680f7b59953f63f99fa0df0d5e8cc9282f249aace4d2a5ff479909638c",
+          "source_task_id": "249",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "fdd37c1ca66e7906cc6ddb0c9bc649a294f410e1e1859bde23e386cf1c59f86d"
+        },
+        {
+          "rank": 2,
+          "memory_id": "1226da03-72ca-44c9-958b-8864e284337a",
+          "memory_id_sha256": "ebaaf42efdc475707869c712742590dab326a49a4953679e011294c2faa5b7b0",
+          "source_task_id": "54",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c2a1e08cf25ef38611f25e07d8ec43cfbf37b305e0e2482e8fa51400b77c76ca"
+        },
+        {
+          "rank": 3,
+          "memory_id": "cdc5fc34-ea1b-474f-9521-c2d21e38fa62",
+          "memory_id_sha256": "36b4b7dc22b7ab9e1f3e958e1d9567a660998873cd57e20da75fd2a332840e9f",
+          "source_task_id": "241",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "79095085c1fc34fb55addcf6f5526dd3aeb398669f82f38368c18dcf5dc58309"
+        },
+        {
+          "rank": 4,
+          "memory_id": "be837e92-9b56-42c6-9fa0-f939dbc86e0f",
+          "memory_id_sha256": "4e52357e1c872b1cb478d335cc4a4b986f7546f0ba2054f1f0412ab85989c1ef",
+          "source_task_id": "310",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c04955273817286a98269b37fb321efde865dc148de43097529e57a98028193c"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "success"
+      ],
+      "selected_content_sequence_sha256": "0eedd301bf100aac8003ebba7976707402df47a3d6306c201cd434af09d355bc",
+      "selected_source_outcome_sequence_sha256": "07992e8cb501c42f56a579fa0818cbe8562cb6decffcfb6a6e122cb4d9084dcd"
+    },
+    {
+      "r54_eligible_order_index": 72,
+      "validation_task_id": "494",
+      "cluster_signature": [
+        "chgrp",
+        "chmod",
+        "chown",
+        "chsh",
+        "echo",
+        "groupadd",
+        "mkdir",
+        "touch",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the default shell of 'testuser' to '/bin/zsh', add them to the 'developers' group, create a .zshrc file in their home directory, and ensure the '/home/testuser/dev' directory is owned by the 'developers' group.",
+      "task_instruction_utf8_sha256": "0fe48b41792c5b52d051c5c6cce3e68b6da4112eb26c915e13dec85922520304",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "32f6e4d1-b85c-4928-977c-66a4679b8ee8",
+          "memory_id_sha256": "f38a24d6aaa56d2b05797877e52a25023a82c39578b1632b920d0b688889b297",
+          "source_task_id": "493",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "551d69e6cdd45d9424329f1b18d549fe39d3059da910d34bc03ce1acb3519820"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fafc138c-b13c-403b-b2ed-5c8e5db7e94a",
+          "memory_id_sha256": "1fc6d92c4b07c96a6a52c05d1eb6c7de8009bfb41705ac4f9f2a9354b66767bd",
+          "source_task_id": "472",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e06c6d70e70c73363d8499c3c9b73ffecf6dd047e3423bec2dce93996d68d1c9"
+        },
+        {
+          "rank": 2,
+          "memory_id": "47942aef-03e1-4869-b2eb-c6b15025ffe3",
+          "memory_id_sha256": "a2a70e8e90717b1c11dba5090714139c78defcc58b8a74e0bf77761abaffc9b7",
+          "source_task_id": "448",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e6b7b9f1a231ca004c450ded226132aa7f371d8853f38a217c9666cc6d5a18c4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "d7350749-7210-4737-bbdc-660f9f3ba3df",
+          "memory_id_sha256": "28ec12dad52093a100649860d5af5681516e0636f634ce297e42553032505db4",
+          "source_task_id": "65",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "b360ba89dfc0307a73a08b598f11e477cf9a9abb8c9996657ba4693b2a66f85b"
+        },
+        {
+          "rank": 4,
+          "memory_id": "1488ebd8-5bf1-4ffb-ae26-0969d5a3fc9f",
+          "memory_id_sha256": "1dbcc7697ff62b90b5be801bd8367038fbb34992261a945c57211873f4ab349b",
+          "source_task_id": "365",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1caaee0ef822e4317caa77cd01b525d31fce1e53a05533408a1504116fff8d13"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "474d102dbb88456cd40ba1c0ef89d470ec3d9a19a5d870c54ebf00cbf031bfca",
+      "selected_source_outcome_sequence_sha256": "d4dab23734460da03f0a7c8c2d55fa8451323f4b3ed2fd004cc77c4acf4ddd52"
+    },
+    {
+      "r54_eligible_order_index": 73,
+      "validation_task_id": "232",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "chmod",
+        "echo",
+        "grep",
+        "rm",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create three log files (log1.txt, log2.txt, log3.txt) in /project/logs containing at least one 'ERROR' entry each along with other messages. Combine their contents into a temporary file, extract all lines containing 'ERROR' into errors.log, count the total errors into error_report.txt, create full_report.log with all combined logs, then set both report files to have 644 permissions. Remove temporary files after completion.",
+      "task_instruction_utf8_sha256": "8724e0836441253907065492c5f9def69b26de38658b0d71fc17be40b0a0851e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "cddc3102-bd5e-43fd-b450-31722ce2c9d1",
+          "memory_id_sha256": "11df83487b37fcc1b386b7df1bd5c5d2f8eda0a7c4fdda899ea08ed393a53716",
+          "source_task_id": "253",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "31836103476f750a1b32836b05aeaf9c308c7ac6b6e15c94f99f14ec1eb88db4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "6ea507a3-8018-4947-8cbf-e21da5b060e2",
+          "memory_id_sha256": "d5bc675ea5a9d002a1fdb060ee9df3998db64024793f966d1146f90fe13696cd",
+          "source_task_id": "276",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "0443a021be772ba30406e5fa1a2355652b194282e2ce4c3a46643a019c785590"
+        },
+        {
+          "rank": 2,
+          "memory_id": "a1ac3efb-5dab-4e39-a062-46cc7b146cfd",
+          "memory_id_sha256": "35ae2d0baaf7ba22807f2e57d475895a3565b3026eb607a350853d5dcdffbaf9",
+          "source_task_id": "224",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3c632e48c54c4bdc442c5e6130432f12580f73aebd207f2dfc426ed27ff58516"
+        },
+        {
+          "rank": 3,
+          "memory_id": "69976a7f-f81a-4526-a8d9-a6a499509170",
+          "memory_id_sha256": "9a3bdf9a589a41a45bc0b272eb7b8c1dace891a8de828e8ca411b5dc375b59bc",
+          "source_task_id": "305",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2e87dcc16d07968644d6516230afb19e6241639d391f2bdb00a24d593545a0e3"
+        },
+        {
+          "rank": 4,
+          "memory_id": "92d29a48-44dd-4d2b-b091-abe0dc55f480",
+          "memory_id_sha256": "59851d2575706596691195a314e8cf7c56b8f0ac2057471c114faf8f3c3704d8",
+          "source_task_id": "452",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "8de90e887c21d517eb60efa936f66c55957325b462f92dfcd790d993418e8d4f"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "2ac0492869f72a0870045ac8240cecdf403d3a5859cc62f1ce008c6f83ca66e4",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 74,
+      "validation_task_id": "287",
+      "cluster_signature": [
+        "grep",
+        "ls",
+        "mkdir",
+        "tee",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a directory '/reports' with subdirectories 'sub1' and 'sub2', generate five empty .log files within them, list all .log files recursively, sort them by name, and save the sorted list to '/log_list.txt'.",
+      "task_instruction_utf8_sha256": "952659a599ac575bf624f784cb0ccc2104c302cec08349b694e68d2619e9696e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "68619c49-3afc-4e65-a67f-e82c4176da6e",
+          "memory_id_sha256": "97b58078123eee672dab72aa8defe8772bb418216ae3d6613f90f45e773a666b",
+          "source_task_id": "354",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "51e761678941b610c880da8e08edbe207ad1fb5f74b0bc1ecc2342fc2c91fff7"
+        },
+        {
+          "rank": 1,
+          "memory_id": "9f6ab3f8-d058-4e22-9ffd-c2e2826abfc5",
+          "memory_id_sha256": "fd7735bbf6880f832869d236a3349b90dcb799dc86b022046f05114f8509dcc6",
+          "source_task_id": "190",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8fc1968f6f2b359aa94aefeefc11183f24aa2c7367fbfdfd084a10c336a27924"
+        },
+        {
+          "rank": 2,
+          "memory_id": "a78dc706-3315-4bf3-b4c8-2ef8827b4de4",
+          "memory_id_sha256": "279612c0e53848011300a0ee063802e9d3463eb6ab73ad279af1bf0210e4b240",
+          "source_task_id": "466",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bff838f6c0bc16b4a2ed84e3b8e8f3a9b461e74859090767591b6f99bc813807"
+        },
+        {
+          "rank": 3,
+          "memory_id": "e806180b-0d12-4c84-93ff-fc3e88239f53",
+          "memory_id_sha256": "e9f862aae4eef0d76fbc186f6add4a1ea437e14c49dd243cf35ecb5711e3c005",
+          "source_task_id": "34",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3a7213df2677560d4be2ddc2fb9b470fe7a08c9cd93a310d7bd3478ffc5ce65e"
+        },
+        {
+          "rank": 4,
+          "memory_id": "cbab14e9-d561-4d46-87a1-871177070c1b",
+          "memory_id_sha256": "740bbe90ecbceabeb85a6ec42430bb55af332734f17ea5aad926b01bc7070764",
+          "source_task_id": "239",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e0417de5baa383ca1fcca3138e1bd0bbd830fc8ce38d26c2b25a5c72ee7b35b8"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "abc2a314b3e903b3449f3bb1da4126097cd00e9930deed2cb4479b05063d4c40",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 75,
+      "validation_task_id": "189",
+      "cluster_signature": [
+        "chgrp",
+        "chmod",
+        "gpasswd",
+        "groupadd",
+        "mkdir",
+        "touch",
+        "useradd"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', create users 'developer' and 'adminuser', add both users to the group, set 'adminuser' as the group administrator using gpasswd, and create a directory '/devprojects' owned by 'devteam' with permissions 770.",
+      "task_instruction_utf8_sha256": "f4b9011591061fb9f08e3ac895889919098c4a7696d3f01f1455d00157be6260",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "f9d37d8e-bda6-46a6-942a-0487c0c74da5",
+          "memory_id_sha256": "4cfc576ddcdfac592262fb5e2d0c410aa2d244bc0a2fa68131e38ed317505775",
+          "source_task_id": "372",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "898b1acbafd66464207bb1d2337800071d3f1318e0b55bded484b03d8c81e0b3"
+        },
+        {
+          "rank": 1,
+          "memory_id": "2bb35108-2bd2-443f-aa61-13b12d24051a",
+          "memory_id_sha256": "ec2ac10a196ff3668dcfcc36dabe66e2b68bfcb6501047994ed25d6f9e263b0d",
+          "source_task_id": "207",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7ce0610e72cfdfaafa22c3f71a5c6f56a8b8c8ba2a3b8af206b9690590e8d1ee"
+        },
+        {
+          "rank": 2,
+          "memory_id": "27c26d35-1193-4924-a896-736aa7328c4d",
+          "memory_id_sha256": "7e1a3718aae85b5f823269dc99687138e3036b5080f4923c4cf20accc031adba",
+          "source_task_id": "319",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "933af0f662874d85ecf5922c80fffb3a8aee85fc5df7f31b4fdcf561e8f2052a"
+        },
+        {
+          "rank": 3,
+          "memory_id": "ecdac677-e26f-47e0-b1f6-1a9cdbbee15d",
+          "memory_id_sha256": "daf5e0448878b267e1b95edd985d046658edb77dd3947e4bdd339b593c83c9ee",
+          "source_task_id": "143",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7e798d6d6d1a4abee9ef8383ee20a3ed15b7b802f7b092dad8d34fd05c4027e0"
+        },
+        {
+          "rank": 4,
+          "memory_id": "d0863163-b6c5-4fc2-831f-7fec3600f896",
+          "memory_id_sha256": "93f617fba4693263ea2da9c14d81e8c56ea2c0e149cd84a32544cce835e12dcc",
+          "source_task_id": "164",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3481aa892f5e3412623ee7c90761c91be9ce4c4f95536aa7dec9365349ecf6dd"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "6514983722c88736316aba07eaf62749135a759b5db93dd0511513b6bbbd7026",
+      "selected_source_outcome_sequence_sha256": "a1709507ee6edec70ca3751c20aa989e662dbedce0e2479762bb85cac43494aa"
+    },
+    {
+      "r54_eligible_order_index": 76,
+      "validation_task_id": "12",
+      "cluster_signature": [
+        "chgrp",
+        "chmod",
+        "echo",
+        "find",
+        "grep",
+        "groupadd",
+        "ls",
+        "touch",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'securegroup', add 'testuser' to it, set the setgid bit on '/secure_dir', and ensure '/secure_dir' has permissions 750 and '/secure_dir/testfile.txt' has permissions 640.",
+      "task_instruction_utf8_sha256": "348abf6439f173f716f8948dfc08ff599963acaf4b81c0f6b7eba588babd07e4",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "a0adfb31-da9c-48af-b563-f48b2f3b3cba",
+          "memory_id_sha256": "a1206f851277be1754dfcd20918c4a870e5aa0f1a3255c8bce2c76e9e094130c",
+          "source_task_id": "254",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "28711966c14be1aff1fdcf4a32037d89974d5d4f455ad043945e5facff390385"
+        },
+        {
+          "rank": 1,
+          "memory_id": "2430d2cd-2ac0-479b-bf4b-f3cf7007cf63",
+          "memory_id_sha256": "c8700e07195145c7d733775dfd40fab6d160e7a4548fc487c13803227316501a",
+          "source_task_id": "405",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "629a8c3039cd5b70a590457fac453438112c11f6d5a5d480fdb9b16d42e82def"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ed176cad-bee6-4dc9-a5ba-1aa6188f9231",
+          "memory_id_sha256": "601e9c6625f8c3c6c113c1e2cfa75432ba1024d0924094599c316764cde8b850",
+          "source_task_id": "233",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "72c2ba4beeed7511aac7dcf6eec19823d73fbeb73191ad3354f9e1cf9c6c4b29"
+        },
+        {
+          "rank": 3,
+          "memory_id": "0475a086-8aff-4dc4-a194-387920891f47",
+          "memory_id_sha256": "e573f1160d70aa6bf35be75b64c1428a44984985479b933222c2b7078f739e5f",
+          "source_task_id": "226",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "fe00edf4ec0c1029679c7c35430eb285d70799de64432fa2ef384297d1e78ba4"
+        },
+        {
+          "rank": 4,
+          "memory_id": "a422352f-472f-4320-b0b8-46e8e772aa72",
+          "memory_id_sha256": "b1b53a1875dfa0c74ade327c1e2736681fa6c36ab5075213924066afceae5908",
+          "source_task_id": "384",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "d74348d7bfdcdba4c4eb59bba10f783e7d9edd93e94a58226f47795cc10d6704"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "0632a0459cb517a292c90150258f07ae8fd48e07e34a655e71aee9a94da9fd62",
+      "selected_source_outcome_sequence_sha256": "a1709507ee6edec70ca3751c20aa989e662dbedce0e2479762bb85cac43494aa"
+    },
+    {
+      "r54_eligible_order_index": 77,
+      "validation_task_id": "424",
+      "cluster_signature": [
+        "cd",
+        "chmod",
+        "chown",
+        "echo",
+        "grep",
+        "mkdir",
+        "touch",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a secure configuration file '/etc/appconfig/config.conf' using 'vi', set permissions to 600, ownership to root:root, and insert 'This is a secret key: 12345'.",
+      "task_instruction_utf8_sha256": "f8a54e3f1e0fdd245994a173f9f23af2e6c8d2f234860b5468794c2ede25fc0d",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "73e6e216-7885-4cab-ae38-9e3e82187439",
+          "memory_id_sha256": "b09619632dea4a69de984ed01cb509e2311a55333c5605abebed244efa547fdb",
+          "source_task_id": "361",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ec68d7874026e982b05ff8a20ef231b2e197d4416d5333380344662855a3963d"
+        },
+        {
+          "rank": 1,
+          "memory_id": "ddfa8e7e-81c2-4d2c-aad0-3d60839ced8c",
+          "memory_id_sha256": "a846d4eed2fca723c34bde494c4bda892a07a20dcc1777459a1bd8623c3586ea",
+          "source_task_id": "210",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "32eca2d25f74bddc3da3f2951a41fcbbb4b088e44e1b6e7227e17a18d7fe6e07"
+        },
+        {
+          "rank": 2,
+          "memory_id": "0907b5f2-03f8-4e66-8aba-5be0f44b69d0",
+          "memory_id_sha256": "b16e652eac24676d9e6be8903b048e889202ffafaecd36843aff799d85a5a30b",
+          "source_task_id": "217",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e56b43dd4b8e5792a7ca941a55b258862b1dd81a085c45a08a5639d1175b7fa1"
+        },
+        {
+          "rank": 3,
+          "memory_id": "c6c628e3-56b1-4cdd-9768-ecc172bf7630",
+          "memory_id_sha256": "59820e87ddd20cdf4bad58c69f76b858110069b7f464f48e2242a5559a303641",
+          "source_task_id": "286",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "64f9e0fe4517528d08fc9a8c8fa0e732d274d47bdb1abfc7a9057d390c5abec3"
+        },
+        {
+          "rank": 4,
+          "memory_id": "9d2bdd43-98a0-4f78-9e22-6572c067cd07",
+          "memory_id_sha256": "7e64a11f5ef14f3461137e78e235a1b7a6a6c70b6fa193df781e2a1c781ad282",
+          "source_task_id": "175",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "323c97a88d7273d4c968c579cc4001ab6a6190e0906ed8f01f481e19cd3d0e17"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "754ac47dc9edbc0841888df7bedd064eb26fdb36f29341b156ccd3b23a2c5dd1",
+      "selected_source_outcome_sequence_sha256": "09f48307042042b5ae2bfe27dde669d1721266c6a25bef4b15f687bc2b7b6f55"
+    },
+    {
+      "r54_eligible_order_index": 78,
+      "validation_task_id": "490",
+      "cluster_signature": [
+        "cd",
+        "chmod",
+        "chown",
+        "echo",
+        "ls",
+        "mkdir",
+        "mv",
+        "rm",
+        "sed",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Move all .log files from '/var/log/source' to '/var/log/archive', prepend 'Log Start' to the first line of each moved file, append 'ARCHIVED_ON [current_date]' to the end of each moved file, set permissions to 640, change ownership to root:root, generate a summary.txt file in /var/log/archive containing the file details of the moved logs, and then delete all .log files from /var/log/source. Replace [current_date] with the actual execution date in YYYY-MM-DD format.",
+      "task_instruction_utf8_sha256": "ff3431b945c4442c9d9a8d39007a4f4c5fea4f456e8de5ac9aaf8b08932f73d1",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "0eb841b3-13d2-4d4f-a312-6c7b9f55abfa",
+          "memory_id_sha256": "795517701d6a316c36916931f6158594c575147869106cb1b1328ad95385678f",
+          "source_task_id": "315",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5606a5a0b07759cd60fc2f9a7a3c81260676230a159a10081ad50f8154b6afce"
+        },
+        {
+          "rank": 1,
+          "memory_id": "d30ed112-0f2e-4e95-b545-ef41e58c13b8",
+          "memory_id_sha256": "92bb38ab9f19d1d6102510dd0de1b6cd2f9f986951c23d0af4447a72e0581b1f",
+          "source_task_id": "495",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "863de0833ffe832a7a19b430f1f8d3a666e760d1e73e6060f80d1c851f629400"
+        },
+        {
+          "rank": 2,
+          "memory_id": "e56e4bbc-430e-47d7-a2a3-f63b63ad679a",
+          "memory_id_sha256": "246f0f1a91134446995a2b4fa11150b7b2c71abe9024b86b71977635b376b052",
+          "source_task_id": "17",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "57aada9226e68e13823d574015496dd88e45e4614ae729daedea5b0112c9366f"
+        },
+        {
+          "rank": 3,
+          "memory_id": "b18af653-8315-423f-891c-860741515c39",
+          "memory_id_sha256": "a42ab5707fa9126538d008799ec5d1651824e23e7e0ccb63660d33261c9309de",
+          "source_task_id": "288",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "259c0797eaeb70e74bb2ce4b6ac813a3cd03cab44f52b8c51d14de8d018fbf22"
+        },
+        {
+          "rank": 4,
+          "memory_id": "f57193da-bdad-4110-b70f-21ab6d651681",
+          "memory_id_sha256": "4373e3a9c10e6c36b5e3ec8af89b6e97d399490e299dc4dec77c446e6e65f439",
+          "source_task_id": "144",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "35d4ac1781f9ccce66f3f797959ea6fe102698e86c0bc307b5a1feffa05c7cd9"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "e2d10f9c769e9036894addcc3044c855df8357b2703a20cc96df2d1256a1c288",
+      "selected_source_outcome_sequence_sha256": "a1709507ee6edec70ca3751c20aa989e662dbedce0e2479762bb85cac43494aa"
+    },
+    {
+      "r54_eligible_order_index": 79,
+      "validation_task_id": "321",
+      "cluster_signature": [
+        "addgroup",
+        "cd",
+        "chgrp",
+        "chmod",
+        "echo",
+        "mkdir",
+        "useradd",
+        "usermod",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a configuration file '/etc/appconfig/app.conf' using vi with content 'ENABLE_LOG=1', set its group to 'appadmin' with read/write permissions, and add 'appuser' to 'appadmin'.",
+      "task_instruction_utf8_sha256": "054ef34295749d6fca6a3e93b2f252ec6918a2b053dad55b54e4368931c95fa4",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "dcc05caf-0c3e-4bfc-aa0d-8b0853bfc94b",
+          "memory_id_sha256": "c525f9e33c375f21ae143fea9443e2c07833f3e522aadefe2d30f6b5f95a266d",
+          "source_task_id": "450",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "58cb8a1f8f69a4ad537539f6017e31f0e95dfd8e55148588232e3e7bf11301d0"
+        },
+        {
+          "rank": 1,
+          "memory_id": "b1c4393a-dbc3-41b1-b08c-470519b2584d",
+          "memory_id_sha256": "f6ffdfe81bfed3e4c1cd43028ae8b0c7d13b724e0ecdfafa0c8d68587425ec28",
+          "source_task_id": "208",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "3b244206c4faca2ccd2e70f632818829ba97854ee57d03d0b3bf4331673990a0"
+        },
+        {
+          "rank": 2,
+          "memory_id": "c65f76be-c25a-47f6-a206-dff4bc004e4d",
+          "memory_id_sha256": "f423c9f6d27f500dfe2da87d52e54584a0e3c96e9478371260a7640426b9d5af",
+          "source_task_id": "264",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "009078cb27a248297edbac72daa6830f625e67bd746e67b8c09cec8365db5c52"
+        },
+        {
+          "rank": 3,
+          "memory_id": "0fcd41d2-b31a-4a02-afe8-1ffdd9d59fae",
+          "memory_id_sha256": "88b1df578a391005424be47219eb9c888bf6ec8f3a646e7a568a56819c111866",
+          "source_task_id": "222",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "876314afbb56f6b9f601b8d9f0f81d13e3bf465d096bfb15cc806fc4c9daad89"
+        },
+        {
+          "rank": 4,
+          "memory_id": "561ed422-47d0-470b-929a-a7148d1ecef4",
+          "memory_id_sha256": "66774a27df426e47264195f0bc6222901afb390b7d4dd3b9f35d38b9f8f661a8",
+          "source_task_id": "251",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "883fb48bfff7d058013cebd8450aabf3e3f419bd4d3a2615a6e7e7be13a23390"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "c4b0cf07d732c2a3ee51bd4b9fd8636fa335f684dbbbdf205c34466da50e0f71",
+      "selected_source_outcome_sequence_sha256": "7abc7022539cd33a19f45a55246af332cad56d8345a0f8b6c1661431de772605"
+    },
+    {
+      "r54_eligible_order_index": 80,
+      "validation_task_id": "52",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "grep",
+        "ls",
+        "mkdir",
+        "sleep"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a script '/usr/local/bin/timed_task' that sleeps for 2 seconds, creates '/var/log/task_success', and ensures the file has 644 permissions. Verify the file exists after execution.",
+      "task_instruction_utf8_sha256": "073ff1302b5972ea7395e38a11cf00791777598b5158e39463f3f171859d701e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "53efe796-0f39-41e5-9cd7-0ffb42945cb0",
+          "memory_id_sha256": "984d0825bf58231cb4df2bbf8fb87f6d7f1003d92af8c38fdf54b05562eeacab",
+          "source_task_id": "230",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7ac276af7dc758c9d86b9a53b8d00c4f12bb3e2f9e5d2a3a3a6ed79918cd0da9"
+        },
+        {
+          "rank": 1,
+          "memory_id": "e6e492f0-e9eb-4f93-9e34-d7c933084a0b",
+          "memory_id_sha256": "7c2af34c52f3b9d8f8fc42083db2c5a636986cf3204ce1cfdb3bb88cadc16d64",
+          "source_task_id": "29",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "144bff0f805567261a75427c33c7333d1d5d97009e8c8ba71595e2bbae434d8b"
+        },
+        {
+          "rank": 2,
+          "memory_id": "7055c48e-92d5-41e4-b6e9-19f368e35ab6",
+          "memory_id_sha256": "767c18a0d9f0b7f25503b93fe20fe4f41361ee119dd653011c242a7a6987d022",
+          "source_task_id": "393",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "339736443216af6afec31c7fcbba08dc85c2d1af56dc410800cf4e453fbf3717"
+        },
+        {
+          "rank": 3,
+          "memory_id": "1226da03-72ca-44c9-958b-8864e284337a",
+          "memory_id_sha256": "ebaaf42efdc475707869c712742590dab326a49a4953679e011294c2faa5b7b0",
+          "source_task_id": "54",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c2a1e08cf25ef38611f25e07d8ec43cfbf37b305e0e2482e8fa51400b77c76ca"
+        },
+        {
+          "rank": 4,
+          "memory_id": "527fa833-df81-4d06-8b9c-c9b6a3667638",
+          "memory_id_sha256": "f2e0aa916f21b6d384b31d19556694f106d4cb1b5d661f81a55adfc32c8e7513",
+          "source_task_id": "257",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "66e56e5cfcc7b2bdfbbdd4a23de4378c7b6f87d078920a51826a35920ef2e233"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "79720c0811fc32717cc09d6aed669ab688814af9124e10cbadb69d51126a39d6",
+      "selected_source_outcome_sequence_sha256": "20216324baf1ebdbf05613eb8098027d2f01da60873cac340098cc61dfb5406f"
+    },
+    {
+      "r54_eligible_order_index": 81,
+      "validation_task_id": "409",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "exit",
+        "grep",
+        "rm",
+        "tee",
+        "useradd"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a script at /usr/local/bin/check_user that exits with code 0 if user 'testuser' exists, their home directory '/home/testuser' exists and is owned by them, otherwise exit with code 1. Use the 'exit' command in both the solution script and the creation process.",
+      "task_instruction_utf8_sha256": "bb291c516fd0c4e7a8d61dc8d1d589cb89fdfe3a8eafa821ffd35f9b7cffc3ac",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "fb9e5e14-ac99-461a-acc0-8e160ce3ec18",
+          "memory_id_sha256": "acb2eecdf031138ab738510ad6ab1bd1aa3fbbd3b4fb6231d98c04c13e8f3118",
+          "source_task_id": "120",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "0c5c3559cfbd8f60289b6b7edbbb9251cfd85d597c4c7cbc6b53226ca183dfbe"
+        },
+        {
+          "rank": 1,
+          "memory_id": "0c61df74-a289-4741-8253-aadb3ef87e86",
+          "memory_id_sha256": "25bc062385bf4987a3dbd45c5de55255c56b14e2fc71c59c6fb77e3c838e1d59",
+          "source_task_id": "304",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "c2a748bef083084e1d2252c1c3e8dd53f73350a2e343bc0c7c66a37c51608ed0"
+        },
+        {
+          "rank": 2,
+          "memory_id": "e3444ab8-aa4b-4463-8d30-e571d7944e8c",
+          "memory_id_sha256": "ed923b3a2923bc6b54580a23d444a534fca903242ecc449897eba1110aceaa1f",
+          "source_task_id": "5",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "b16b8ac4bfc56a79e193c062e2af9dc0bb21825b7e19810392ad11354eea1ce3"
+        },
+        {
+          "rank": 3,
+          "memory_id": "606c61d5-b39d-472a-98be-93d1e8f1a7b0",
+          "memory_id_sha256": "9c595147214e3dd10418daa627856b2447f4c4e0c28a3fd1c676d9a1b9173dff",
+          "source_task_id": "11",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8ba13d714a10da9915d70b69b62a5ce894a3a0df574c2978d8dc59d49e84021c"
+        },
+        {
+          "rank": 4,
+          "memory_id": "564e36cd-9ea1-415c-a0e8-ab6966031c6a",
+          "memory_id_sha256": "bee4ef73b82399c6c8ed3f1ff9fa3d870556c5ae78e9333c16a089463ba74b89",
+          "source_task_id": "162",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8f1547f7bcd2384e96803ae686968c103944c5b8ad16d15c6ebeab88ebcd4c67"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "efd4d029502f011eabaf0c793e6e0dc5bfea8cfa9228a42efc895437bea17a22",
+      "selected_source_outcome_sequence_sha256": "262b5e72f009bf13fe0578bb41e287548fe3588f3e648f59f19596a155f29770"
+    },
+    {
+      "r54_eligible_order_index": 82,
+      "validation_task_id": "433",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "chown",
+        "gpasswd",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'securegroup', add users 'testuser1' and 'testuser2' to it, assign 'testuser1' as group admin, and configure '/secure_data' to be owned by 'securegroup' with permissions 2770. Also, create a file '/secure_data/testfile' owned by 'testuser1:securegroup'.",
+      "task_instruction_utf8_sha256": "5d5e56989249144f5fa8cd49b85d1dee50616d17248b6326eca71da79dc70526",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "a0adfb31-da9c-48af-b563-f48b2f3b3cba",
+          "memory_id_sha256": "a1206f851277be1754dfcd20918c4a870e5aa0f1a3255c8bce2c76e9e094130c",
+          "source_task_id": "254",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "28711966c14be1aff1fdcf4a32037d89974d5d4f455ad043945e5facff390385"
+        },
+        {
+          "rank": 1,
+          "memory_id": "2430d2cd-2ac0-479b-bf4b-f3cf7007cf63",
+          "memory_id_sha256": "c8700e07195145c7d733775dfd40fab6d160e7a4548fc487c13803227316501a",
+          "source_task_id": "405",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "629a8c3039cd5b70a590457fac453438112c11f6d5a5d480fdb9b16d42e82def"
+        },
+        {
+          "rank": 2,
+          "memory_id": "8462d8a0-563c-4090-9ab1-3ceeff019d8a",
+          "memory_id_sha256": "a0fa5a68147b1039bcdf4b9731aa311efacd8a51b9217ad821745d652f708557",
+          "source_task_id": "280",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "da38f51fa36ce213125030a5977858aecbae8eddba66eaaf0b386f2c57c80fe2"
+        },
+        {
+          "rank": 3,
+          "memory_id": "587558b7-6885-40db-90fb-3f7af88f940c",
+          "memory_id_sha256": "057c8b6e6d27f8f757a58f90faa970aa8becda81f6fb06f83073fa0980d184e1",
+          "source_task_id": "152",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "d4d357d72bd2af4ed612853d18eba2ed871148d0438462d8a0c826f85edde210"
+        },
+        {
+          "rank": 4,
+          "memory_id": "ed176cad-bee6-4dc9-a5ba-1aa6188f9231",
+          "memory_id_sha256": "601e9c6625f8c3c6c113c1e2cfa75432ba1024d0924094599c316764cde8b850",
+          "source_task_id": "233",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "72c2ba4beeed7511aac7dcf6eec19823d73fbeb73191ad3354f9e1cf9c6c4b29"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "fc76038e023869484f1d5855cdbc899bf10f3343e70699adfe3f6adb0f684759",
+      "selected_source_outcome_sequence_sha256": "262b5e72f009bf13fe0578bb41e287548fe3588f3e648f59f19596a155f29770"
+    },
+    {
+      "r54_eligible_order_index": 83,
+      "validation_task_id": "308",
+      "cluster_signature": [
+        "awk",
+        "cat",
+        "cp",
+        "echo",
+        "mkdir",
+        "rm"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Backup '/var/log/app/access.log' to '/var/log/app/backup/', then parse the log to count the number of GET and POST requests per hour. Save the results in a formatted output to '/var/log/app/hourly_stats.txt', showing each hour and its corresponding request counts for both methods.",
+      "task_instruction_utf8_sha256": "3e7bebfa42d9adb92bfd9ec739aad23a9032052ecf9cf74efb3d951575bd94f0",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "b8701e0b-c2cf-4799-ba88-2e1da748ac42",
+          "memory_id_sha256": "7da86ebb19c1038a17146c4e552570ead4a51b29d666b39030bbc76c1abb895b",
+          "source_task_id": "76",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "72be90f73660415d7d6921ca60f6ea686d9da39fe73154d8df8f233789d8980f"
+        },
+        {
+          "rank": 1,
+          "memory_id": "b535155b-34b1-4938-a742-741d8349b14d",
+          "memory_id_sha256": "8bace6b6bfd46db27d58a7484aa9eed054055d28920cf99a6640527a0e80f9ec",
+          "source_task_id": "247",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "593c155c77fde354eaf66e1c66834de22fd2710d0822bc31f6545e214be3f5f4"
+        },
+        {
+          "rank": 2,
+          "memory_id": "0b4a6730-c4b5-4af7-8b93-d4b99ef212e0",
+          "memory_id_sha256": "8e8313662983bfb3e5060f1187ed72b12955c5d77b16745299f5185ea04c2d40",
+          "source_task_id": "169",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6842cde4bf1177303c0fab3be0cb096eea82542341a30b90b42363457c1d2e09"
+        },
+        {
+          "rank": 3,
+          "memory_id": "eb795819-f8e9-4b91-9685-efb589310a6d",
+          "memory_id_sha256": "aad3c18178df4f025ad479d82cc507f81eb4cbd9f9af9dd3573833a90728fd42",
+          "source_task_id": "306",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "5d00d023784800a00eb4d5e5591f2a6002cbdee1f8b5bfa125c4d048d71bfb58"
+        },
+        {
+          "rank": 4,
+          "memory_id": "fe9f975b-0f8d-4cbf-9f1e-247a4c23bd26",
+          "memory_id_sha256": "602a1065cb1f6c78f69577e2dd32b041554f33d46159511fe4767c771ccc5943",
+          "source_task_id": "488",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6e5550a13db60411666be8748102d94b6d4ce508c007b6eb2eaf4d3ba65e1247"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "a1e0d06d272b28455653981bf6059f2729b2eb6bb73613afaed176f1cf50166d",
+      "selected_source_outcome_sequence_sha256": "eb0082b1254d34c716b698f7422f45fadd0f61a581cf828f1c8d8da9ce5c652f"
+    },
+    {
+      "r54_eligible_order_index": 84,
+      "validation_task_id": "343",
+      "cluster_signature": [
+        "cd",
+        "find",
+        "mkdir",
+        "mv"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Move all .txt files from 'source/docs' to 'target/docs', rename .log files in 'source/data' to .bak in 'target/data', move hidden files from 'source/.tmp' to 'target/.hidden', and move empty directories to 'target/empty'.",
+      "task_instruction_utf8_sha256": "d201b648c669bbae30119257b1b9e677c05a0417bbe6f255ddc35be2d81d17cf",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "30a8c580-1f5d-40ba-b044-ee3dd6402ffe",
+          "memory_id_sha256": "bda4272d63ad97244bc2738fde1451680c8b931a3cd808fe50183b9f5b48aaf2",
+          "source_task_id": "410",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "cc90c222cb90bfd92f46cf466ffd5debdce70ba18114a9b518ebd283c74c8c75"
+        },
+        {
+          "rank": 1,
+          "memory_id": "c24f86b1-67b3-4130-a0c4-aef0cec9b42e",
+          "memory_id_sha256": "40be8cb8fad75a5124347581ef6e780ea02c41ae3e678def0527eb695337fb4d",
+          "source_task_id": "489",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "50c67a1a1d3a40b1ef543d553204a226e066ce268fe913289838a8c4ff4dc868"
+        },
+        {
+          "rank": 2,
+          "memory_id": "bbf3dfe2-9659-48fc-9fc0-2e7ea24b97f9",
+          "memory_id_sha256": "7f473661a46c712bca3daaae66583e64a7adea92d2ef485f00959542b52d7399",
+          "source_task_id": "455",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c5b5b2c08c941b634d0cfac9f828fa6ec09e98d2701ffd66b25e1c2f0ed77790"
+        },
+        {
+          "rank": 3,
+          "memory_id": "4bca03d0-de48-4c4d-8c28-471d72e81729",
+          "memory_id_sha256": "ae413e767837061ecdffc109d149243deda14c3a0656a253e3fc7cc19034e09f",
+          "source_task_id": "459",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e13f452ac2a88e17f6b415f03b7aff2f342d2b079a3f2e5d02f790e2826dacd0"
+        },
+        {
+          "rank": 4,
+          "memory_id": "b92e1577-81cf-4b75-8cb1-a6d83bc0c6e3",
+          "memory_id_sha256": "941594f1c60fbecf3c21452746cb8c383a895d1a3490114a22312d72395d8a2c",
+          "source_task_id": "109",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "de35fde348b8f461fb8aee4905bc971bc7f146e3a40960836e315c5e40868c1c"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "382bbfee7b281ab42148f4773e26941ba8ab7a4e4d010e74f0afe31af99d61cd",
+      "selected_source_outcome_sequence_sha256": "f13d217aab315699f46f51422c9b731368a056a034ffa9878dac3ad420fe1dc2"
+    },
+    {
+      "r54_eligible_order_index": 85,
+      "validation_task_id": "445",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "chmod",
+        "echo",
+        "grep",
+        "mkdir",
+        "rm"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Search all .log files in /var/log/app for lines containing 'error: 500', count the total occurrences, extract their timestamps (formatted as [YYYY-MM-DD HH:MM]), and save the results to /reports/report.txt with proper formatting.",
+      "task_instruction_utf8_sha256": "912583e25ca2bedf2296876d7de9180169129ec7989f3b6a3f01d04076937487",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "26b20e68-9973-469e-bb59-f06b1248fcf4",
+          "memory_id_sha256": "a9b2e42881024ec1730d2e476dee95e7c96be47ebea748424da292fff8b44e96",
+          "source_task_id": "465",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "dc1ef4bbc144abab6f4275a4c459cb64b0acb0b02e7aa3d21f852b29de4a41a4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "3d678e72-1fa5-4fcc-9e4c-c14f83eaa3e2",
+          "memory_id_sha256": "adbc18136840dffc5ddac7910f5dc90d839571cca2a50bd813f473bdb0bde4cb",
+          "source_task_id": "187",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2b76d43214e59eefb22a59fb074cb19b451b59ca6f5cb3433f15638f99a31d31"
+        },
+        {
+          "rank": 2,
+          "memory_id": "fe9f975b-0f8d-4cbf-9f1e-247a4c23bd26",
+          "memory_id_sha256": "602a1065cb1f6c78f69577e2dd32b041554f33d46159511fe4767c771ccc5943",
+          "source_task_id": "488",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "6e5550a13db60411666be8748102d94b6d4ce508c007b6eb2eaf4d3ba65e1247"
+        },
+        {
+          "rank": 3,
+          "memory_id": "c584e624-c969-4111-8fb7-d33fad1ad53e",
+          "memory_id_sha256": "f26dc3648421b76be4d6829999716bbf9824390967285d64c658b4e2cfb42f68",
+          "source_task_id": "416",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "b567da88223b99a1a23924c9b0cd839e184939b60eac02b202f6d69ede9442c2"
+        },
+        {
+          "rank": 4,
+          "memory_id": "69976a7f-f81a-4526-a8d9-a6a499509170",
+          "memory_id_sha256": "9a3bdf9a589a41a45bc0b272eb7b8c1dace891a8de828e8ca411b5dc375b59bc",
+          "source_task_id": "305",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2e87dcc16d07968644d6516230afb19e6241639d391f2bdb00a24d593545a0e3"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "ad5fd96437403578bdc61d59e70be275790f72535bc1193f86e759018dd44b8e",
+      "selected_source_outcome_sequence_sha256": "eb0082b1254d34c716b698f7422f45fadd0f61a581cf828f1c8d8da9ce5c652f"
+    },
+    {
+      "r54_eligible_order_index": 86,
+      "validation_task_id": "295",
+      "cluster_signature": [
+        "addgroup",
+        "chage",
+        "chmod",
+        "chown",
+        "echo",
+        "mkdir",
+        "tee",
+        "useradd",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a user 'testuser' with a home directory, set the default shell to /bin/bash, create groups 'devteam' and 'docker' if they don't exist, add the user to both groups, set the password to expire after 30 days, create the directory '/home/testuser/projects' with ownership 'testuser:devteam' and permissions 770, append 'export PATH=$PATH:/usr/local/bin' to the user's .bashrc file, and set the .bashrc file permissions to 644.",
+      "task_instruction_utf8_sha256": "be3884a27d3c759006b80eedd489b400c6c026df9e533cb800d4b53cd41343bd",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "a8efb1cb-7a8f-4232-88b8-47cab8bf2a96",
+          "memory_id_sha256": "6b2be562ec5a7ef558f9d2f3bdd359848d17b31a31aa5394b583785052768514",
+          "source_task_id": "245",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "135ccbbae0f6f69e6f56c4e81aacd9f4f0cd8075a38e0b02bf8c3f7158266a4a"
+        },
+        {
+          "rank": 1,
+          "memory_id": "5f275ab1-d69d-45fc-977b-bdafd78084e5",
+          "memory_id_sha256": "913979e09581de65a9197e029fa4fafe973a8b9ce03f23acedfbf0acd438e845",
+          "source_task_id": "170",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "ce3eb73089f090605647f3537fd53a825386d50622717381b2ab76b5b2884370"
+        },
+        {
+          "rank": 2,
+          "memory_id": "97f29dc7-320d-4e65-af9f-562672e0259e",
+          "memory_id_sha256": "0b18707b62c058ae0584f00170dec3269980f7c72d848c316d5fe8281feed00c",
+          "source_task_id": "149",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bb050d49ac1602685833f97310ebc88a0092a9b9ccd40cb99526010883f508c5"
+        },
+        {
+          "rank": 3,
+          "memory_id": "121232cc-563f-430b-b5ce-78bf97b464e2",
+          "memory_id_sha256": "616d53a2317dbe5941e8e54ce49405d58bdd9d9ce7bab856653b42715c49db12",
+          "source_task_id": "479",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2c00e5a9b2808299eb55e04c88b7691e01ad5b35e7f3acf0bde93dd7feed1873"
+        },
+        {
+          "rank": 4,
+          "memory_id": "e8e72113-87c5-4473-9b89-286f2e816d24",
+          "memory_id_sha256": "6cde9e2362ab53b1075c7e086caf25aac446bddc04a847f89eb077d6730630a7",
+          "source_task_id": "188",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "741f6b67f1e154cdeeb6c4bcfd922d9da8de0de3407dfd5e445c90da2b72cd56"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "b54c3221c967ee596f4a78b8c1ce9b13595b5db6b1fafe9c458c279cf1937fd1",
+      "selected_source_outcome_sequence_sha256": "174d26d2d6f1395e5133df9f83e0aba052faf0fc1b67251166115fb824104354"
+    },
+    {
+      "r54_eligible_order_index": 87,
+      "validation_task_id": "444",
+      "cluster_signature": [
+        "chmod",
+        "echo",
+        "ls",
+        "mkdir",
+        "tee",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Append three log entries to both '/var/log/application.log' and '/backup/application.log.bak' using tee, create necessary directories, and set file permissions to 644.",
+      "task_instruction_utf8_sha256": "29caf604d298ddd3881325d5ceab8d35854f7e1786389c2dbe9a1dbb9dff08bc",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "dcc05caf-0c3e-4bfc-aa0d-8b0853bfc94b",
+          "memory_id_sha256": "c525f9e33c375f21ae143fea9443e2c07833f3e522aadefe2d30f6b5f95a266d",
+          "source_task_id": "450",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "58cb8a1f8f69a4ad537539f6017e31f0e95dfd8e55148588232e3e7bf11301d0"
+        },
+        {
+          "rank": 1,
+          "memory_id": "79cbf8ab-fcb7-49f2-8093-a0603e4f8646",
+          "memory_id_sha256": "2ed6110ec26e26a800d8a3d5ab60b71b3f0429cbc86b5d9bddcd34ab3ade06aa",
+          "source_task_id": "248",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "33f6321dbe9e99d96f2476ecaa5d76ff14edd7b793f7f29eb1f7b5990db522d7"
+        },
+        {
+          "rank": 2,
+          "memory_id": "d89ef442-4603-4854-8aeb-3d45482ed2a8",
+          "memory_id_sha256": "55f8e5d66dbef31d3900df393ecdd73bf3e9bf90279c4a1d54ba0b0d6bc8ce6a",
+          "source_task_id": "203",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a4ed64a2e1aa6f6241664ddfed64ffab5f5af45b7f9efbc6ca7559596dd3b1f4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "6ea507a3-8018-4947-8cbf-e21da5b060e2",
+          "memory_id_sha256": "d5bc675ea5a9d002a1fdb060ee9df3998db64024793f966d1146f90fe13696cd",
+          "source_task_id": "276",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "0443a021be772ba30406e5fa1a2355652b194282e2ce4c3a46643a019c785590"
+        },
+        {
+          "rank": 4,
+          "memory_id": "0dfa2b01-e551-4872-beb5-cec2e9b8897a",
+          "memory_id_sha256": "0954e8b351a6587ec3b531a2624cc04598460fc68595a241943e6521ece5a758",
+          "source_task_id": "404",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "188e9bee06cc96e8afeedc637c3f3720b5a3e320fcb3eddcb0737d95f22b777c"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "08235bc90f8f59d50d6f248e06d2bb998e15a69b587ab58096721a08b4b68bc3",
+      "selected_source_outcome_sequence_sha256": "09f48307042042b5ae2bfe27dde669d1721266c6a25bef4b15f687bc2b7b6f55"
+    },
+    {
+      "r54_eligible_order_index": 88,
+      "validation_task_id": "111",
+      "cluster_signature": [
+        "chgrp",
+        "chmod",
+        "groupadd",
+        "mkdir",
+        "touch",
+        "useradd",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', add users 'user1' and 'user2' to it, create a directory '/project' owned by 'devteam' with permissions 770, and create an empty file 'access.txt' inside.",
+      "task_instruction_utf8_sha256": "d2c1a3a1ef2ae6d8f77758270ae6d4143ae91b1cfe27f9f96a53ee26d9bda086",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "2bb35108-2bd2-443f-aa61-13b12d24051a",
+          "memory_id_sha256": "ec2ac10a196ff3668dcfcc36dabe66e2b68bfcb6501047994ed25d6f9e263b0d",
+          "source_task_id": "207",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7ce0610e72cfdfaafa22c3f71a5c6f56a8b8c8ba2a3b8af206b9690590e8d1ee"
+        },
+        {
+          "rank": 1,
+          "memory_id": "18a53ed0-1ab9-407c-96be-b07d42f04ea8",
+          "memory_id_sha256": "7d22eeb000f9e0b8700ec4bb62ef14c5badaebf5da4264b27c21f65292fb4863",
+          "source_task_id": "84",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "778aaf7a3bf3a6fcb0cf17aca838720b1b31c3ba03a263715059027fec36ee18"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ecdac677-e26f-47e0-b1f6-1a9cdbbee15d",
+          "memory_id_sha256": "daf5e0448878b267e1b95edd985d046658edb77dd3947e4bdd339b593c83c9ee",
+          "source_task_id": "143",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7e798d6d6d1a4abee9ef8383ee20a3ed15b7b802f7b092dad8d34fd05c4027e0"
+        },
+        {
+          "rank": 3,
+          "memory_id": "2e3519a7-fa5a-40e4-8cf3-e96bcfaf0017",
+          "memory_id_sha256": "254eead8fedeb526206e5bd6bf0f27e1d55a5fa0426f2cc25d3d2f8c2077837e",
+          "source_task_id": "462",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "47d8e6a4ca70ec669d36f5e925e298b65d95fd59ab18563ebc607825f177491a"
+        },
+        {
+          "rank": 4,
+          "memory_id": "d949be36-703b-46b9-b93d-082689d13f60",
+          "memory_id_sha256": "2f02e957f5696dd551383b096c973a68c8b07d879018d70855489f245ba3861e",
+          "source_task_id": "340",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "4ff48929de71d2ce3c93462f532368fc9751da9e43be781a466bc407bb95ea89"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "abab2207c49fbbed696ef4fa350d83a86a238cb193c2d4e57a8c2254dd06fd52",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 89,
+      "validation_task_id": "87",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "echo",
+        "find",
+        "grep",
+        "ls",
+        "mkdir",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', recursively change group ownership of directory '/data/project' and all its contents to 'devteam', set directory permissions to 2770 (setgid), and file permissions to 660.",
+      "task_instruction_utf8_sha256": "966163ff3c9fdf73ce39b87ae800afdc51a3de293e0623452608cc82e99f4518",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "0b3f836a-3923-4d72-8e29-f1dac64627f3",
+          "memory_id_sha256": "7058642f1114cdbbf14b5277a793174f37be6c6a3140604849dadd0f505f46a8",
+          "source_task_id": "423",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "89bcea47c6e2b45e8aeb325d333f4d61c247e84d9cae7d51276cd9abab58556a"
+        },
+        {
+          "rank": 1,
+          "memory_id": "f9d37d8e-bda6-46a6-942a-0487c0c74da5",
+          "memory_id_sha256": "4cfc576ddcdfac592262fb5e2d0c410aa2d244bc0a2fa68131e38ed317505775",
+          "source_task_id": "372",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "898b1acbafd66464207bb1d2337800071d3f1318e0b55bded484b03d8c81e0b3"
+        },
+        {
+          "rank": 2,
+          "memory_id": "27e3bb63-ff73-4752-b2b1-baf25ad72a8a",
+          "memory_id_sha256": "77a10b1a1067490bf28aa7e712e175224728e89ab60546ce8f2120241a844c0d",
+          "source_task_id": "418",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "b69e79ecfdfda1a7f8b3887beaca3a3cf5185abc5be1b46363194b47c318443b"
+        },
+        {
+          "rank": 3,
+          "memory_id": "fd536294-bcc7-469d-bbe0-334d6070b192",
+          "memory_id_sha256": "c24ebc3c0bd2b5987f2e2b76e6cd364059672a68879a239d2b9c356472da8737",
+          "source_task_id": "487",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "d99ed6edf9f87ac7bc226ff0bfcb6df6234f18eb00c83fa023c7b8e21b6c0730"
+        },
+        {
+          "rank": 4,
+          "memory_id": "6725b552-7ade-4ccf-bf74-e01935b63a22",
+          "memory_id_sha256": "1041552530014ddc663ff519f1978ce9cec9d972fad7ee6d7c0f0134bc514661",
+          "source_task_id": "383",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "663a4708d4a41a909df9d7eabe0153ea022c11258526d213eee20bc905ad10a6"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "c7686700e0f87af0c39254929ee3af7a8e6b4235112ad69e9435c2f4b84349c5",
+      "selected_source_outcome_sequence_sha256": "7ac9f7771b4c3e4f0c45906c5a494916e244e90656cac5bf3339eb96df19e2cc"
+    },
+    {
+      "r54_eligible_order_index": 90,
+      "validation_task_id": "298",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "echo",
+        "gpasswd",
+        "mkdir",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'sharedgroup', add users 'user1', 'user2', and 'user3' to it using gpasswd, create a directory '/shared' with setgid bit, and ensure '/shared/testfile' inherits the group and permissions.",
+      "task_instruction_utf8_sha256": "b18f684f5ea8a78ee04365eea49c919cc3013e8c8f956df0edfc65f56b32a993",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "cb045e7f-02aa-4f29-874d-c49f587c4ba9",
+          "memory_id_sha256": "16b5a4dee55299734358a7023d4caf4d6ab8183bbf2b6b01cd9a5b0bc7bed288",
+          "source_task_id": "220",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "f5f51dff4cf1ab96f97c0f4a47c5ca49c9f0151ee5a436a0c13318db21248842"
+        },
+        {
+          "rank": 1,
+          "memory_id": "20ce458c-cd57-4bb8-bfa7-e91f6896081d",
+          "memory_id_sha256": "90e7592b83264a32be73c602f2d6b47b424fa6a9812d5fc5a02e9edb4f1a391c",
+          "source_task_id": "323",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c2d722aaba9d17ed699a95f5cf6a029263e63e80393ca3ed86eb6610b7e45de8"
+        },
+        {
+          "rank": 2,
+          "memory_id": "a0adfb31-da9c-48af-b563-f48b2f3b3cba",
+          "memory_id_sha256": "a1206f851277be1754dfcd20918c4a870e5aa0f1a3255c8bce2c76e9e094130c",
+          "source_task_id": "254",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "28711966c14be1aff1fdcf4a32037d89974d5d4f455ad043945e5facff390385"
+        },
+        {
+          "rank": 3,
+          "memory_id": "32cd2f07-e2d4-4e41-b900-5cfdad2588b3",
+          "memory_id_sha256": "30cfd17d4ac30770919b51131f38f3fd5a37eab54e53b088664222b679c1bd30",
+          "source_task_id": "184",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "85454aa24a4239da5de691bd07a1251bbf790fa16e0eeecd04fc357fc685cdca"
+        },
+        {
+          "rank": 4,
+          "memory_id": "38cb25a6-4ce9-42e3-b33c-171e29990620",
+          "memory_id_sha256": "ff8f7607cbfa0e2e0e9a7b989ed36b0d696c7eb99c83ecde5a12ca7810b5e448",
+          "source_task_id": "7",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "81fcc1da6902921881e6a16ea6b3aff97a39a03b81d669faabbc76f7e396a2f7"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "53a43dc4e1be00af5b5067a23d4c81ae679b5114dc704f5d4df6d609c81239a8",
+      "selected_source_outcome_sequence_sha256": "8c551d65459f5636777ff2ae8bbeda06569da6d505c765a6629b497e03b2b005"
+    },
+    {
+      "r54_eligible_order_index": 91,
+      "validation_task_id": "346",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "chmod",
+        "chown",
+        "chsh",
+        "echo",
+        "grep",
+        "mkdir",
+        "rm",
+        "tee",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the login shell of 'testuser' to '/bin/zsh', ensure '/bin/zsh' is listed in /etc/shells, and create a '.zshrc' file in their home directory with permissions 644 and ownership set to 'testuser:testuser'.",
+      "task_instruction_utf8_sha256": "ad92d0500d77e2a7e26e551ad58c197ecd48c81b2ef421f1e082707aa23ebc7b",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "32f6e4d1-b85c-4928-977c-66a4679b8ee8",
+          "memory_id_sha256": "f38a24d6aaa56d2b05797877e52a25023a82c39578b1632b920d0b688889b297",
+          "source_task_id": "493",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "551d69e6cdd45d9424329f1b18d549fe39d3059da910d34bc03ce1acb3519820"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fafc138c-b13c-403b-b2ed-5c8e5db7e94a",
+          "memory_id_sha256": "1fc6d92c4b07c96a6a52c05d1eb6c7de8009bfb41705ac4f9f2a9354b66767bd",
+          "source_task_id": "472",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e06c6d70e70c73363d8499c3c9b73ffecf6dd047e3423bec2dce93996d68d1c9"
+        },
+        {
+          "rank": 2,
+          "memory_id": "47942aef-03e1-4869-b2eb-c6b15025ffe3",
+          "memory_id_sha256": "a2a70e8e90717b1c11dba5090714139c78defcc58b8a74e0bf77761abaffc9b7",
+          "source_task_id": "448",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e6b7b9f1a231ca004c450ded226132aa7f371d8853f38a217c9666cc6d5a18c4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "1488ebd8-5bf1-4ffb-ae26-0969d5a3fc9f",
+          "memory_id_sha256": "1dbcc7697ff62b90b5be801bd8367038fbb34992261a945c57211873f4ab349b",
+          "source_task_id": "365",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1caaee0ef822e4317caa77cd01b525d31fce1e53a05533408a1504116fff8d13"
+        },
+        {
+          "rank": 4,
+          "memory_id": "d7350749-7210-4737-bbdc-660f9f3ba3df",
+          "memory_id_sha256": "28ec12dad52093a100649860d5af5681516e0636f634ce297e42553032505db4",
+          "source_task_id": "65",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "b360ba89dfc0307a73a08b598f11e477cf9a9abb8c9996657ba4693b2a66f85b"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "7483f1a7fb94179f95d4249efa65cad6bf048976d3206f24ebb519a701ad213b",
+      "selected_source_outcome_sequence_sha256": "b3aeeeebfddbffd690bd6d1e7e209ae4b425cfb0c02a9a18b82b2f51182ea1d9"
+    },
+    {
+      "r54_eligible_order_index": 92,
+      "validation_task_id": "137",
+      "cluster_signature": [
+        "cd",
+        "chmod",
+        "echo",
+        "grep",
+        "mkdir",
+        "tee",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a script '/task_dir/script.sh' containing '#!/bin/bash' and 'echo \"Task completed\"', make it executable, then execute it and check if it outputs 'Task completed'. Ensure all operations are non-interactive.",
+      "task_instruction_utf8_sha256": "02326c3e5d3246902eb8b14863c3ef6cc984e872cbdecf46681eb305582a8249",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "e6e492f0-e9eb-4f93-9e34-d7c933084a0b",
+          "memory_id_sha256": "7c2af34c52f3b9d8f8fc42083db2c5a636986cf3204ce1cfdb3bb88cadc16d64",
+          "source_task_id": "29",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "144bff0f805567261a75427c33c7333d1d5d97009e8c8ba71595e2bbae434d8b"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fdbd5233-3f74-4e6e-bb6a-02cc41fbd2d3",
+          "memory_id_sha256": "6c9975680f7b59953f63f99fa0df0d5e8cc9282f249aace4d2a5ff479909638c",
+          "source_task_id": "249",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "fdd37c1ca66e7906cc6ddb0c9bc649a294f410e1e1859bde23e386cf1c59f86d"
+        },
+        {
+          "rank": 2,
+          "memory_id": "be837e92-9b56-42c6-9fa0-f939dbc86e0f",
+          "memory_id_sha256": "4e52357e1c872b1cb478d335cc4a4b986f7546f0ba2054f1f0412ab85989c1ef",
+          "source_task_id": "310",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c04955273817286a98269b37fb321efde865dc148de43097529e57a98028193c"
+        },
+        {
+          "rank": 3,
+          "memory_id": "1226da03-72ca-44c9-958b-8864e284337a",
+          "memory_id_sha256": "ebaaf42efdc475707869c712742590dab326a49a4953679e011294c2faa5b7b0",
+          "source_task_id": "54",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c2a1e08cf25ef38611f25e07d8ec43cfbf37b305e0e2482e8fa51400b77c76ca"
+        },
+        {
+          "rank": 4,
+          "memory_id": "f65e7275-e663-463a-a193-2de84aeb229e",
+          "memory_id_sha256": "0c065d2ead45418e6e2d67a41423ff30e926670fe4cd54b05c21d5a3319e1466",
+          "source_task_id": "45",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ee96629ac61212730adf7ace846c757c30ee68222d5bfcc50335ca699a35902c"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "success"
+      ],
+      "selected_content_sequence_sha256": "46da1120152d0067545370350d88cd74e803a6ae54bbf32da68bec30f2bfd1d3",
+      "selected_source_outcome_sequence_sha256": "07992e8cb501c42f56a579fa0818cbe8562cb6decffcfb6a6e122cb4d9084dcd"
+    },
+    {
+      "r54_eligible_order_index": 93,
+      "validation_task_id": "359",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "chmod",
+        "echo",
+        "ls",
+        "mkdir",
+        "mv",
+        "rm",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "List all non-empty .txt files in the '/data' directory, sorted lexicographically, and save the sorted list to '/output/report.txt'. Ensure the final output contains only filenames of non-empty files in alphabetical order.",
+      "task_instruction_utf8_sha256": "21e215f2ecbf91380c7a06b6290516796fb8c93ea4b70f793ce25f8bd720112e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "30a8c580-1f5d-40ba-b044-ee3dd6402ffe",
+          "memory_id_sha256": "bda4272d63ad97244bc2738fde1451680c8b931a3cd808fe50183b9f5b48aaf2",
+          "source_task_id": "410",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "cc90c222cb90bfd92f46cf466ffd5debdce70ba18114a9b518ebd283c74c8c75"
+        },
+        {
+          "rank": 1,
+          "memory_id": "71485ebf-2d67-4a81-aeb3-3023af2eb3c2",
+          "memory_id_sha256": "01770f79d7ff5833dbcae86a11a22f2e29d50e15c1ccdc13df2fcf26baa2eb46",
+          "source_task_id": "263",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "2e1be9c3fca21f65925629307e52e69180b3a06739f98bba71e5555e5a5d7fb8"
+        },
+        {
+          "rank": 2,
+          "memory_id": "739cd621-a6cb-4336-ba13-bb5d8df06be4",
+          "memory_id_sha256": "e0ab30fd9e78dcf55535eb6f529e7d247a0e37d4e32c0409aa16ee2a4cc60384",
+          "source_task_id": "342",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "0fef11550c42e73ca1f8395fa1a1911d3c56e1b1a71d3466b31919f9fe721331"
+        },
+        {
+          "rank": 3,
+          "memory_id": "ece59767-a563-487c-882a-85bd6504b0d0",
+          "memory_id_sha256": "6b63d598fa7c1addb7e909a9d5676829d0fa5f39d9b36caf0f504c55ed7dfe52",
+          "source_task_id": "267",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "365a878aa44a9befd7555296cdfca114e78610ba00c12a0683e73dd3e9822988"
+        },
+        {
+          "rank": 4,
+          "memory_id": "545467b8-9e3f-4947-abca-8f51d412b501",
+          "memory_id_sha256": "1a511013069439428ce44c3ea6596d1833845416d20405286a89a8dd45cda669",
+          "source_task_id": "291",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8dbba988408eb88a2f294428cbff92ae22bd86aa9d61026a0be235161bac8701"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "19c43d0de3c98096cdb5522d28a9178c26ad47162c71a24ac919ee1c30b33fc8",
+      "selected_source_outcome_sequence_sha256": "1925395280712493b21f0d84182915e495780898409ac7262f3caa27dffc4a28"
+    },
+    {
+      "r54_eligible_order_index": 94,
+      "validation_task_id": "148",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "chown",
+        "echo",
+        "tee",
+        "touch",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'securegroup', add user 'secureuser' to it, set directory '/secure' to be accessible only by the group, and create two files with group read/write permissions.",
+      "task_instruction_utf8_sha256": "7ebebfa8e55a92a033de7eb767a45565332520a85d4a42f4cc3290dc4198653e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "a0adfb31-da9c-48af-b563-f48b2f3b3cba",
+          "memory_id_sha256": "a1206f851277be1754dfcd20918c4a870e5aa0f1a3255c8bce2c76e9e094130c",
+          "source_task_id": "254",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "28711966c14be1aff1fdcf4a32037d89974d5d4f455ad043945e5facff390385"
+        },
+        {
+          "rank": 1,
+          "memory_id": "2430d2cd-2ac0-479b-bf4b-f3cf7007cf63",
+          "memory_id_sha256": "c8700e07195145c7d733775dfd40fab6d160e7a4548fc487c13803227316501a",
+          "source_task_id": "405",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "629a8c3039cd5b70a590457fac453438112c11f6d5a5d480fdb9b16d42e82def"
+        },
+        {
+          "rank": 2,
+          "memory_id": "7804e01a-dee7-4dc6-86e7-c2a0674e61c7",
+          "memory_id_sha256": "46a34e112376e353672d4395d4ff7d1782da6fbad96196c3b1d7333bdb35b9b8",
+          "source_task_id": "95",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "0cba07740d46b56f022a22487a55bccdc83bef14bc7683c1a84e3bc38b08be8d"
+        },
+        {
+          "rank": 3,
+          "memory_id": "017a3400-7816-403b-adfe-cb22bc227372",
+          "memory_id_sha256": "1ac4203aae7161e607cb7d04fbc61d08e9bc79c638b06e05e8f0865923b2625f",
+          "source_task_id": "292",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "015375492615d93439bd9fbed16d9bfcdff56d3015b01aaa5c6adc97fee22970"
+        },
+        {
+          "rank": 4,
+          "memory_id": "ed176cad-bee6-4dc9-a5ba-1aa6188f9231",
+          "memory_id_sha256": "601e9c6625f8c3c6c113c1e2cfa75432ba1024d0924094599c316764cde8b850",
+          "source_task_id": "233",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "72c2ba4beeed7511aac7dcf6eec19823d73fbeb73191ad3354f9e1cf9c6c4b29"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "bff7e601d5eb6d8dcbba195b846842b3c73878fcf8c55b9c7d63af86cd9bff6b",
+      "selected_source_outcome_sequence_sha256": "d4dab23734460da03f0a7c8c2d55fa8451323f4b3ed2fd004cc77c4acf4ddd52"
+    },
+    {
+      "r54_eligible_order_index": 95,
+      "validation_task_id": "376",
+      "cluster_signature": [
+        "chmod",
+        "chown",
+        "chsh",
+        "cp",
+        "echo",
+        "grep",
+        "ls",
+        "touch"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the login shell of 'testuser' to '/bin/bash', create a .bash_profile in their home directory owned by 'testuser' with permissions 644, and add the aliases 'll' for 'ls -l' and 'la' for 'ls -A' to the file.",
+      "task_instruction_utf8_sha256": "f132c64c98c2c7b0b919425c16ad731a84b27a58c39c41bb59bb1b7844b81caf",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "32f6e4d1-b85c-4928-977c-66a4679b8ee8",
+          "memory_id_sha256": "f38a24d6aaa56d2b05797877e52a25023a82c39578b1632b920d0b688889b297",
+          "source_task_id": "493",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "551d69e6cdd45d9424329f1b18d549fe39d3059da910d34bc03ce1acb3519820"
+        },
+        {
+          "rank": 1,
+          "memory_id": "dc0e1c86-6dfe-4f85-80b8-35880eacecc9",
+          "memory_id_sha256": "24a76a76f8bd7462b686e95ce6e0868a13f704ba34f25b22f2a16362487d6c80",
+          "source_task_id": "394",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a564380fa308f374fcb20dfe820763fb0f41a59eda2a262094018f9793113ef8"
+        },
+        {
+          "rank": 2,
+          "memory_id": "4f9927ff-1a8a-49ca-a0fd-7e61db724283",
+          "memory_id_sha256": "46a0a44401eb0154e280ba07d54b2744753f5f73bb2e725e8d91f11466698207",
+          "source_task_id": "159",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ade9535f81f8f72fdbe1504cfc552adf29ccc742ed8201000e496087c5431aef"
+        },
+        {
+          "rank": 3,
+          "memory_id": "700c7679-c0ef-446b-a1fa-3db1778e792e",
+          "memory_id_sha256": "8eb6f5085203c72d8d67eef0caac6b00cc967120bd7acdbdca258492fba6e392",
+          "source_task_id": "180",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "d6f99ea614c140999d9e96f89d90cfad492883fb35a93c4b935240c3fa9d76b4"
+        },
+        {
+          "rank": 4,
+          "memory_id": "dea3db03-0f17-4246-978d-c0535ab2828f",
+          "memory_id_sha256": "193841af5f92074f08b47ea69d17328b9ea45f451e3a3e29441afc7ef5461f2b",
+          "source_task_id": "93",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e9f9645901db00b14aff0387c3af2f01b0599ca9b369255f6750f66de7f6cf67"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "2b9981756fe0e67f15055fd7a178a0d2080249a04e042983bdea4681e859dfb2",
+      "selected_source_outcome_sequence_sha256": "d4dab23734460da03f0a7c8c2d55fa8451323f4b3ed2fd004cc77c4acf4ddd52"
+    },
+    {
+      "r54_eligible_order_index": 96,
+      "validation_task_id": "33",
+      "cluster_signature": [
+        "chsh",
+        "echo",
+        "exit",
+        "grep",
+        "rm",
+        "sleep"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the login shell of 'testuser' to /bin/zsh, ensuring that /bin/zsh is listed in /etc/shells, and verify the change by confirming the user's shell entry in /etc/passwd.",
+      "task_instruction_utf8_sha256": "3278852cc0b7d6d1c16baa75c099cf8375aaaef78e40bace16848ac82488f8c6",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "47942aef-03e1-4869-b2eb-c6b15025ffe3",
+          "memory_id_sha256": "a2a70e8e90717b1c11dba5090714139c78defcc58b8a74e0bf77761abaffc9b7",
+          "source_task_id": "448",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e6b7b9f1a231ca004c450ded226132aa7f371d8853f38a217c9666cc6d5a18c4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fafc138c-b13c-403b-b2ed-5c8e5db7e94a",
+          "memory_id_sha256": "1fc6d92c4b07c96a6a52c05d1eb6c7de8009bfb41705ac4f9f2a9354b66767bd",
+          "source_task_id": "472",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e06c6d70e70c73363d8499c3c9b73ffecf6dd047e3423bec2dce93996d68d1c9"
+        },
+        {
+          "rank": 2,
+          "memory_id": "32f6e4d1-b85c-4928-977c-66a4679b8ee8",
+          "memory_id_sha256": "f38a24d6aaa56d2b05797877e52a25023a82c39578b1632b920d0b688889b297",
+          "source_task_id": "493",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "551d69e6cdd45d9424329f1b18d549fe39d3059da910d34bc03ce1acb3519820"
+        },
+        {
+          "rank": 3,
+          "memory_id": "1488ebd8-5bf1-4ffb-ae26-0969d5a3fc9f",
+          "memory_id_sha256": "1dbcc7697ff62b90b5be801bd8367038fbb34992261a945c57211873f4ab349b",
+          "source_task_id": "365",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1caaee0ef822e4317caa77cd01b525d31fce1e53a05533408a1504116fff8d13"
+        },
+        {
+          "rank": 4,
+          "memory_id": "ccb0b51e-a5ad-405e-9fcb-e2ebabb689db",
+          "memory_id_sha256": "af4a87c591a4c06e0f706b70e6c4b59fc91cd2afd45e5863df7c91ec42021858",
+          "source_task_id": "90",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8f8dd743ee0881350066592033e8c9e891e1f9945aaf033629a63ded283da9ca"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "5c9d723a91d4426c087a8980372e1b53cc075660e8d2e8fed81e3544ea3da1ca",
+      "selected_source_outcome_sequence_sha256": "3e87aa63a4c3bd99c8f53703e2652fcdd44b2796b4185a0e7ba8f9db71b897f4"
+    },
+    {
+      "r54_eligible_order_index": 97,
+      "validation_task_id": "447",
+      "cluster_signature": [
+        "cat",
+        "cd",
+        "echo",
+        "grep"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a directory 'logs', generate three log files each containing two ERROR entries, concatenate them into combined.log, and extract all ERROR lines into errors.log ensuring exactly six errors.",
+      "task_instruction_utf8_sha256": "2b72f8a7a09236739ce96723ba50c574043c5d93fce8d0fe013fef9bb39a01f9",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "68619c49-3afc-4e65-a67f-e82c4176da6e",
+          "memory_id_sha256": "97b58078123eee672dab72aa8defe8772bb418216ae3d6613f90f45e773a666b",
+          "source_task_id": "354",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "51e761678941b610c880da8e08edbe207ad1fb5f74b0bc1ecc2342fc2c91fff7"
+        },
+        {
+          "rank": 1,
+          "memory_id": "b281c3d0-b251-4994-a346-86a83f56867c",
+          "memory_id_sha256": "6cc1efa8e112c644eeac999ab27707c216d336d8b738cc30768e89126f644469",
+          "source_task_id": "94",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1fe1a79a77fd130e89718e3f879c9ecbae29b6c104e7e469fd181fcd2647ba27"
+        },
+        {
+          "rank": 2,
+          "memory_id": "f946059e-3cfa-4796-a44d-99a538351d51",
+          "memory_id_sha256": "ea974ad01277bfa4c3cd2502140de1d868ff8ba696631bb7f8cd47dba561cc2c",
+          "source_task_id": "317",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e3c8cc584221dd7069b9fa10706777d299e97e11166b2c8dd1dc54e864e5e289"
+        },
+        {
+          "rank": 3,
+          "memory_id": "a78dc706-3315-4bf3-b4c8-2ef8827b4de4",
+          "memory_id_sha256": "279612c0e53848011300a0ee063802e9d3463eb6ab73ad279af1bf0210e4b240",
+          "source_task_id": "466",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bff838f6c0bc16b4a2ed84e3b8e8f3a9b461e74859090767591b6f99bc813807"
+        },
+        {
+          "rank": 4,
+          "memory_id": "a1ac3efb-5dab-4e39-a062-46cc7b146cfd",
+          "memory_id_sha256": "35ae2d0baaf7ba22807f2e57d475895a3565b3026eb607a350853d5dcdffbaf9",
+          "source_task_id": "224",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3c632e48c54c4bdc442c5e6130432f12580f73aebd207f2dfc426ed27ff58516"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "52741fde12bb6db958577c56fa36c0114204b1e8d32ae5c6fb8238f2d1170e7b",
+      "selected_source_outcome_sequence_sha256": "e1b7188aeae9c8cf1556d77681f23109fc7ade460c82f3b04468c8f0c6a28743"
+    },
+    {
+      "r54_eligible_order_index": 98,
+      "validation_task_id": "126",
+      "cluster_signature": [
+        "cd",
+        "chgrp",
+        "chmod",
+        "echo",
+        "grep",
+        "ls",
+        "mkdir",
+        "touch",
+        "vi"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a configuration file '/etc/appconfig/settings.conf' using 'vi' containing the lines 'SERVER_IP=192.168.1.100' and 'DEBUG_MODE=false', set its group ownership to 'appgroup', and permissions to 640.",
+      "task_instruction_utf8_sha256": "315d2f4d2419d382088ca83c2d0088557e677993d7fc4e3caba9894706b71f12",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "5c23490a-8c3d-47ca-97c6-ba5a76b16ef2",
+          "memory_id_sha256": "0b7c671ca398114fe30f2fe45bf7b0494de60908f29c8b7af190b2081ab2464b",
+          "source_task_id": "74",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "3ee46f198c8ba918dff7248ad03f09c0652c87bf6d7a31767618f0b2dc404b6b"
+        },
+        {
+          "rank": 1,
+          "memory_id": "4d929afc-9955-4cfb-9c13-284f8c08288e",
+          "memory_id_sha256": "f215c6861ea6d6429ba29b6e97c4662bed2abf531326885bb36438d144464c69",
+          "source_task_id": "347",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "7862ead6570cbb0066009eabcacfa34f8052032f47b3a8292bff12cac204c59f"
+        },
+        {
+          "rank": 2,
+          "memory_id": "404daf3f-da79-4b31-8261-d2f470f5f6ca",
+          "memory_id_sha256": "c0d2eb95c261c4c769c04e0e755a32794891158280424dd5fe1eb3ee331c21d7",
+          "source_task_id": "38",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "12c32e294f965ab553a5e0264514efc97d308068f29b2ff10f4bbf5095e5590f"
+        },
+        {
+          "rank": 3,
+          "memory_id": "b1c4393a-dbc3-41b1-b08c-470519b2584d",
+          "memory_id_sha256": "f6ffdfe81bfed3e4c1cd43028ae8b0c7d13b724e0ecdfafa0c8d68587425ec28",
+          "source_task_id": "208",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "3b244206c4faca2ccd2e70f632818829ba97854ee57d03d0b3bf4331673990a0"
+        },
+        {
+          "rank": 4,
+          "memory_id": "b4d626d1-d2a9-46c8-921d-5400b39ad73f",
+          "memory_id_sha256": "eedb56bef9f239ac1bfcbead2dcfe2350e959e017cf315d994b0110465e58cec",
+          "source_task_id": "358",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "0d6047d6e2db69ef6ed44c0f16294fc0e97d37e2346ea321747dc2acf61723fd"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "745e98e089d5a345be39890a0d8dab06793cac0f19ad1e171b5a068eafe7687a",
+      "selected_source_outcome_sequence_sha256": "3e87aa63a4c3bd99c8f53703e2652fcdd44b2796b4185a0e7ba8f9db71b897f4"
+    },
+    {
+      "r54_eligible_order_index": 99,
+      "validation_task_id": "464",
+      "cluster_signature": [
+        "cat",
+        "echo",
+        "grep",
+        "rm",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Count the number of lines containing 'ERROR' in all .log files under /var/log/app and save the result to /var/log/app/error_count.txt. Assume the log files already contain entries, and do not modify them (only read and count).",
+      "task_instruction_utf8_sha256": "39e09af37bc2c5c67087619ef6100eb7254f5cb9a90b89b972b3026d641100f0",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "26b20e68-9973-469e-bb59-f06b1248fcf4",
+          "memory_id_sha256": "a9b2e42881024ec1730d2e476dee95e7c96be47ebea748424da292fff8b44e96",
+          "source_task_id": "465",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "dc1ef4bbc144abab6f4275a4c459cb64b0acb0b02e7aa3d21f852b29de4a41a4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "3d678e72-1fa5-4fcc-9e4c-c14f83eaa3e2",
+          "memory_id_sha256": "adbc18136840dffc5ddac7910f5dc90d839571cca2a50bd813f473bdb0bde4cb",
+          "source_task_id": "187",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "2b76d43214e59eefb22a59fb074cb19b451b59ca6f5cb3433f15638f99a31d31"
+        },
+        {
+          "rank": 2,
+          "memory_id": "27f836d2-b686-4a26-9fda-4da046dc9f2f",
+          "memory_id_sha256": "a5fb8b27f0eb3e4b66329df2e0df352f7e19eb1bb6a9e2b151b60a64ea597b6a",
+          "source_task_id": "333",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "36e486b9cde1fb131cd00155d6fe306fa223cb83fc1271ac7c26b7d5386ae070"
+        },
+        {
+          "rank": 3,
+          "memory_id": "c0348117-0a6e-46a4-b112-6307318fb90e",
+          "memory_id_sha256": "3a85051fe8645d40a311b48541c325e4fd7e1208b5467d6b8073ac097f9269d4",
+          "source_task_id": "297",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "715f227239ef099640613afa51d5182832a67be74c7ef398a92614e0fbdadbc9"
+        },
+        {
+          "rank": 4,
+          "memory_id": "cc103572-90a0-45f6-9460-ab2bdc29b6fb",
+          "memory_id_sha256": "aa906e866d32c230df391a86392d9f6a8c3efa4e19e7f39be29459a198e9a1c2",
+          "source_task_id": "364",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "f1baca5aea29994438759741853e244c7121596f5491549e850f763faeb7481e"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "d0b065c9b2de88b2eb837919655a4d313a5f5292b89f34e79f54d82254afced9",
+      "selected_source_outcome_sequence_sha256": "d4dab23734460da03f0a7c8c2d55fa8451323f4b3ed2fd004cc77c4acf4ddd52"
+    },
+    {
+      "r54_eligible_order_index": 100,
+      "validation_task_id": "390",
+      "cluster_signature": [
+        "chage",
+        "chmod",
+        "chown",
+        "chsh",
+        "echo",
+        "grep",
+        "ls",
+        "mkdir",
+        "sed",
+        "tee",
+        "touch",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the login shell of 'testuser' to '/bin/zsh', ensuring '/bin/zsh' is listed in /etc/shells. Create the following directories and files in the user's home: a '.ssh' directory with 700 permissions, a '.bashrc' file with 644 permissions containing 'export PATH=$PATH:/usr/local/bin', and ensure ownership of all files/directories belongs to 'testuser'. Also, add the user to the 'users' group and set their account expiration date to 2025-01-01.",
+      "task_instruction_utf8_sha256": "22fdce509ae074539893d80b617943ba335e644a41a07dcf0028af493f366010",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "32f6e4d1-b85c-4928-977c-66a4679b8ee8",
+          "memory_id_sha256": "f38a24d6aaa56d2b05797877e52a25023a82c39578b1632b920d0b688889b297",
+          "source_task_id": "493",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "551d69e6cdd45d9424329f1b18d549fe39d3059da910d34bc03ce1acb3519820"
+        },
+        {
+          "rank": 1,
+          "memory_id": "fafc138c-b13c-403b-b2ed-5c8e5db7e94a",
+          "memory_id_sha256": "1fc6d92c4b07c96a6a52c05d1eb6c7de8009bfb41705ac4f9f2a9354b66767bd",
+          "source_task_id": "472",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "e06c6d70e70c73363d8499c3c9b73ffecf6dd047e3423bec2dce93996d68d1c9"
+        },
+        {
+          "rank": 2,
+          "memory_id": "47942aef-03e1-4869-b2eb-c6b15025ffe3",
+          "memory_id_sha256": "a2a70e8e90717b1c11dba5090714139c78defcc58b8a74e0bf77761abaffc9b7",
+          "source_task_id": "448",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e6b7b9f1a231ca004c450ded226132aa7f371d8853f38a217c9666cc6d5a18c4"
+        },
+        {
+          "rank": 3,
+          "memory_id": "1488ebd8-5bf1-4ffb-ae26-0969d5a3fc9f",
+          "memory_id_sha256": "1dbcc7697ff62b90b5be801bd8367038fbb34992261a945c57211873f4ab349b",
+          "source_task_id": "365",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1caaee0ef822e4317caa77cd01b525d31fce1e53a05533408a1504116fff8d13"
+        },
+        {
+          "rank": 4,
+          "memory_id": "ae28b24b-0851-4fb0-9161-dc50fe1ee17f",
+          "memory_id_sha256": "9e22fb94204723c7615dc4bcf0d7324b826e8683f777ad80134b1d1fc6f6e750",
+          "source_task_id": "171",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "316beca07ef3394184e67ee9b16dfbde8ec72218c29716fc7c0e2c1564d9e638"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "dc5f997a9a231b6ac52c36b3c7b62cd94d6b3197af2cc3ee449c1be194862bd3",
+      "selected_source_outcome_sequence_sha256": "b3aeeeebfddbffd690bd6d1e7e209ae4b425cfb0c02a9a18b82b2f51182ea1d9"
+    },
+    {
+      "r54_eligible_order_index": 101,
+      "validation_task_id": "166",
+      "cluster_signature": [
+        "chage",
+        "chmod",
+        "chown",
+        "echo",
+        "ls",
+        "mkdir",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Configure password aging policies for user 'testuser' to expire every 90 days, require at least 7 days between changes, set account expiration to 2024-12-31, and save the policy details to /var/reports/testuser_policy.txt.",
+      "task_instruction_utf8_sha256": "6e44375cece1748a28e909707eae1a4bf7058a1fb58c193ca306f0f04f774855",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "43eea2be-68ed-46f6-add8-b899e27a2f66",
+          "memory_id_sha256": "b6192e0661658ca084d61e7948300ad2a556ede1c4be0790dafa41174e853ddc",
+          "source_task_id": "231",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "a473fe2caec9410458314d46517c3680066a7282eb1b0805802922abfb27da3f"
+        },
+        {
+          "rank": 1,
+          "memory_id": "36c653d0-11f7-4331-852d-d80cd1e5abe7",
+          "memory_id_sha256": "8aa9759f82558ac5e8936b3510755e78d43c04d045e8f14f7da6c3a11db1dc93",
+          "source_task_id": "322",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5968151740c9e449e7cf478924d5d103a884ffdf03ee77d4c78dd45c172f1776"
+        },
+        {
+          "rank": 2,
+          "memory_id": "2259de87-67e5-4471-b124-cbd3e776b7a3",
+          "memory_id_sha256": "ce6d8c4cbd8f20abdb17d0cfcf7c34851e607d2210323ddb370dd43b77e20fc1",
+          "source_task_id": "339",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "1d968002780431f03dc870754f8fbc20b2fc4b763aa938f467320374947b5c24"
+        },
+        {
+          "rank": 3,
+          "memory_id": "ace0f888-e3fb-41a1-8291-99fa4ec37063",
+          "memory_id_sha256": "6e3762c2117673300619447cd1cc46b1146ada6115492edb25c0fa85b01f436d",
+          "source_task_id": "356",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "72f8367c75eaf37fe094b7c15408d845221fb1d3ab72f3feeffd58a295b3dccb"
+        },
+        {
+          "rank": 4,
+          "memory_id": "9fed93a4-ba18-4269-a193-0d9f407962ae",
+          "memory_id_sha256": "0be0d5f73e3ee3d6ff52d9be8f6230f7866f9db57d22b93f047e5f5c8c2e98ec",
+          "source_task_id": "4",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "bbc221bc011c26a62a68a7f6415c7fb8237b42c9e58486718d8374cca3cc402d"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure"
+      ],
+      "selected_content_sequence_sha256": "d5c9d57d3eeda578e7a797a17be51c3568185bd61a2641ff6fa7b597d9ead932",
+      "selected_source_outcome_sequence_sha256": "b571c3c56a3edf68a4edffce58915f43af182035878386f2d3563317e844d39a"
+    },
+    {
+      "r54_eligible_order_index": 102,
+      "validation_task_id": "255",
+      "cluster_signature": [
+        "addgroup",
+        "chgrp",
+        "chmod",
+        "gpasswd",
+        "ls",
+        "mkdir"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a group 'devteam', add users 'user1' to 'user5' as members using gpasswd, assign 'admin1' as group administrator via gpasswd, and create a directory '/devteam_shared' with 770 permissions owned by devteam.",
+      "task_instruction_utf8_sha256": "f847f9ea06b7e1a003843cb0fa6709b4dc30ace767116aa7670b5018d4deef78",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "f9d37d8e-bda6-46a6-942a-0487c0c74da5",
+          "memory_id_sha256": "4cfc576ddcdfac592262fb5e2d0c410aa2d244bc0a2fa68131e38ed317505775",
+          "source_task_id": "372",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "898b1acbafd66464207bb1d2337800071d3f1318e0b55bded484b03d8c81e0b3"
+        },
+        {
+          "rank": 1,
+          "memory_id": "38cb25a6-4ce9-42e3-b33c-171e29990620",
+          "memory_id_sha256": "ff8f7607cbfa0e2e0e9a7b989ed36b0d696c7eb99c83ecde5a12ca7810b5e448",
+          "source_task_id": "7",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "81fcc1da6902921881e6a16ea6b3aff97a39a03b81d669faabbc76f7e396a2f7"
+        },
+        {
+          "rank": 2,
+          "memory_id": "27c26d35-1193-4924-a896-736aa7328c4d",
+          "memory_id_sha256": "7e1a3718aae85b5f823269dc99687138e3036b5080f4923c4cf20accc031adba",
+          "source_task_id": "319",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "933af0f662874d85ecf5922c80fffb3a8aee85fc5df7f31b4fdcf561e8f2052a"
+        },
+        {
+          "rank": 3,
+          "memory_id": "692d7747-957e-4bc9-80be-3f40aeafe875",
+          "memory_id_sha256": "59f96987b010a3b84529bab3781225b538a408196237047622688a7223375637",
+          "source_task_id": "385",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3b29f590839a43b4ce3a998306428cf36cf328cae3deddff3b94b4bec55b198d"
+        },
+        {
+          "rank": 4,
+          "memory_id": "d0863163-b6c5-4fc2-831f-7fec3600f896",
+          "memory_id_sha256": "93f617fba4693263ea2da9c14d81e8c56ea2c0e149cd84a32544cce835e12dcc",
+          "source_task_id": "164",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "3481aa892f5e3412623ee7c90761c91be9ce4c4f95536aa7dec9365349ecf6dd"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "9d2b70dceca8fa3427c0f8b7cadb578763a921f40605ef3f17f22b2c2397978c",
+      "selected_source_outcome_sequence_sha256": "a1709507ee6edec70ca3751c20aa989e662dbedce0e2479762bb85cac43494aa"
+    },
+    {
+      "r54_eligible_order_index": 103,
+      "validation_task_id": "51",
+      "cluster_signature": [
+        "cd",
+        "cp",
+        "echo",
+        "grep",
+        "ls",
+        "sleep",
+        "touch",
+        "wc"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create two .txt files in /source, copy all .txt files to /target, and verify that exactly two files were copied successfully.",
+      "task_instruction_utf8_sha256": "2e71585c35796f4758fbf3d7603821d6abd5fea77d930d6deb05223a3b00728e",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "72003628-5fb7-4a7b-9d7b-5d5deaf4e284",
+          "memory_id_sha256": "ccb0700c5e6dd8adf077168beb62867b4539fa16fa30601703de508f712ab413",
+          "source_task_id": "378",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "9d7a42dd3858338ce6a222cccfe30acabe7730c5c0b62ebd23376d306c9600a5"
+        },
+        {
+          "rank": 1,
+          "memory_id": "30a8c580-1f5d-40ba-b044-ee3dd6402ffe",
+          "memory_id_sha256": "bda4272d63ad97244bc2738fde1451680c8b931a3cd808fe50183b9f5b48aaf2",
+          "source_task_id": "410",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "cc90c222cb90bfd92f46cf466ffd5debdce70ba18114a9b518ebd283c74c8c75"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ad61265f-55fe-48e5-9283-331ed13b3aee",
+          "memory_id_sha256": "2e6426945d38fe81f503fcd6c12cffea072a12918c3921deeb1cf60572e0bd53",
+          "source_task_id": "398",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "1bb1e56225645d6ffdf85cfa91783bc353d715acc7fbcfd266dee2ac179ff9a5"
+        },
+        {
+          "rank": 3,
+          "memory_id": "22439979-1bc4-473a-9a67-a31b6eb51086",
+          "memory_id_sha256": "a476d1921d06d899f185bd7ad204dcc6a08ddcce177b8eeadd9ac6aef4985d9b",
+          "source_task_id": "426",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "f52ee9b567ad567fd35052e420b1daddd3dba9c77d6a1ef876d8d4214e770e2f"
+        },
+        {
+          "rank": 4,
+          "memory_id": "1b4f684e-5980-4ebb-bb71-79909596832b",
+          "memory_id_sha256": "d2b42ddfac76d339b9a0c2a8ae5840714949dafb54b0121a56d312f89664c182",
+          "source_task_id": "259",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e133c0f1f3348b4ad2dee8ff62013b058f6b461d708d93e9da1df7a2046ff7d6"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "e4ceae77c0b1ab142e95add133efe914f80e03202df6eac529d4fef73f9c1f4a",
+      "selected_source_outcome_sequence_sha256": "537234e36a01871db96414ccfce7be89030b1290562d4f68a9f80471e4e5e362"
+    },
+    {
+      "r54_eligible_order_index": 104,
+      "validation_task_id": "23",
+      "cluster_signature": [
+        "awk",
+        "chsh",
+        "echo",
+        "grep",
+        "rm",
+        "tee"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Change the login shell of 'testuser' to '/bin/dash' and verify the change was successful.",
+      "task_instruction_utf8_sha256": "f4911356034aed36e84a64288b180bf9d69171e7639d66408df4793c1fa9265a",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "47942aef-03e1-4869-b2eb-c6b15025ffe3",
+          "memory_id_sha256": "a2a70e8e90717b1c11dba5090714139c78defcc58b8a74e0bf77761abaffc9b7",
+          "source_task_id": "448",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "e6b7b9f1a231ca004c450ded226132aa7f371d8853f38a217c9666cc6d5a18c4"
+        },
+        {
+          "rank": 1,
+          "memory_id": "d8f9923c-9e65-44a3-99ba-a9dc68d805f3",
+          "memory_id_sha256": "a198215362b77c251cdb80babb9abd982843daefaa548a7559ec008abb714caf",
+          "source_task_id": "307",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "8d94c42edb9724ff338fa52b812fd3f53ee79b28954c72c9af09c6e08b951a77"
+        },
+        {
+          "rank": 2,
+          "memory_id": "ec72f5a6-df02-46ae-aaee-cad724846367",
+          "memory_id_sha256": "e3a7ea597852fde1c4242e0349fda524b19f96168a51e7e63e020f3f67552557",
+          "source_task_id": "85",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ea6be6d3fc228efae2444af59a92132dcf436795ac474684ded8f5d36cc0c1b7"
+        },
+        {
+          "rank": 3,
+          "memory_id": "4f9927ff-1a8a-49ca-a0fd-7e61db724283",
+          "memory_id_sha256": "46a0a44401eb0154e280ba07d54b2744753f5f73bb2e725e8d91f11466698207",
+          "source_task_id": "159",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "ade9535f81f8f72fdbe1504cfc552adf29ccc742ed8201000e496087c5431aef"
+        },
+        {
+          "rank": 4,
+          "memory_id": "0c61df74-a289-4741-8253-aadb3ef87e86",
+          "memory_id_sha256": "25bc062385bf4987a3dbd45c5de55255c56b14e2fc71c59c6fb77e3c838e1d59",
+          "source_task_id": "304",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "c2a748bef083084e1d2252c1c3e8dd53f73350a2e343bc0c7c66a37c51608ed0"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "427cb875a0b1a450bd592bdedd1d7f6019740ef9cc3e54e79fd590f8e3d82a9d",
+      "selected_source_outcome_sequence_sha256": "48f7bad3d2d0ea2f61682f74e948dc98d341384e47e4ecfed9273089c05fbd86"
+    },
+    {
+      "r54_eligible_order_index": 105,
+      "validation_task_id": "299",
+      "cluster_signature": [
+        "chgrp",
+        "chmod",
+        "groupadd",
+        "mkdir",
+        "touch",
+        "usermod"
+      ],
+      "cluster_members": [],
+      "task_instruction": "Create a directory structure for user 'testuser' including 'documents/work', 'documents/personal', 'media/photos', and 'media/music'. Set permissions for 'documents' to 755, 'work' to 750, and ensure 'work' is owned by the 'devteam' group. Also, create an empty 'report.txt' in 'work'.",
+      "task_instruction_utf8_sha256": "373d43e5e082f61ac72781901a910515135dcef8d40a6d111471764fb7c3f853",
+      "selected": [
+        {
+          "rank": 0,
+          "memory_id": "3261acb4-04d2-4fe8-be3a-d9962d3bb1f0",
+          "memory_id_sha256": "70a5f253f706ffa3b44c656424dbb51747f6fad946d4378e1ba592a7d55eac24",
+          "source_task_id": "154",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "5f1861fc3c79c3d780518a32a9624d3cd5813905ac7d881074c89414268d0eab"
+        },
+        {
+          "rank": 1,
+          "memory_id": "8462d8a0-563c-4090-9ab1-3ceeff019d8a",
+          "memory_id_sha256": "a0fa5a68147b1039bcdf4b9731aa311efacd8a51b9217ad821745d652f708557",
+          "source_task_id": "280",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "da38f51fa36ce213125030a5977858aecbae8eddba66eaaf0b386f2c57c80fe2"
+        },
+        {
+          "rank": 2,
+          "memory_id": "dcd0c1d2-3d8a-445f-9825-ae29503dd617",
+          "memory_id_sha256": "aa4a150ed5f04ac51c102dbee143e86da5c02d5c45397382c74faa00232dc64d",
+          "source_task_id": "8",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "943b0544764496406871ead231669774996c3ddbeca0b67412d2be7c751d102a"
+        },
+        {
+          "rank": 3,
+          "memory_id": "40f5687e-4cf0-4686-9179-9253a2b07787",
+          "memory_id_sha256": "29777fa938c4c67ed1934cd3bf2ea2f7bff0e8e032ef9e84f0f16373a8973b27",
+          "source_task_id": "151",
+          "source_outcome_success": true,
+          "content_utf8_sha256": "c7a734aabab0fba1e20219dea562bf02870786db1141db3436c321cb6213be72"
+        },
+        {
+          "rank": 4,
+          "memory_id": "6dd2c378-4d05-4a46-9c0e-a4df247dcf1b",
+          "memory_id_sha256": "7124bf0fee78b623556c12edf713ca5b32da94786f85ed824ef4ab6145afa78e",
+          "source_task_id": "80",
+          "source_outcome_success": false,
+          "content_utf8_sha256": "acee5cec4cb758206bf3b2ef7565fb7165c2ab0f85f2659a2db9fb08f6fc520d"
+        }
+      ],
+      "selected_count": 5,
+      "selected_polarities": [
+        "failure",
+        "success"
+      ],
+      "selected_content_sequence_sha256": "af1a52c7b080359e9dfc866532a09efa3c82b81d992bbbeea14d068b8ce03bc3",
+      "selected_source_outcome_sequence_sha256": "eb0082b1254d34c716b698f7422f45fadd0f61a581cf828f1c8d8da9ce5c652f"
+    }
+  ],
+  "global_source_outcome_polarities": [
+    "failure",
+    "success"
+  ],
+  "mixed_polarity_task_count": 57,
+  "prior_primary_or_utilization_overlap_count": 0,
+  "panel_selection_uses_new_outcomes": false,
+  "panel_treatment_outcomes_observed_before_freeze": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "receipt_sha256": "bdfb80d67e353a755f8df6a43fe4889e81f8ff2b7ea902a2e07934a31b99be20"
+}
