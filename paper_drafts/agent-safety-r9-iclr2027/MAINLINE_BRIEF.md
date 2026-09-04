@@ -98,23 +98,42 @@ If this fails: `UNIDENTIFIED_SUPPORT_TOO_SPARSE`. A raw positive R1 effect canno
 
 No population ATE/hazard claim is permitted from this finite panel.
 
-## 7. Baselines that directly test the scientific advantage
+## 7. Baselines and the required interpretation-flip analysis
 
-All M0--M3 reuse the same executed rows; they do not inflate provider cost.
+All M0--M3 reuse the exact same executed rows; they add **zero provider episodes**. They form an ordered identification ladder rather than a collection of unrelated baselines.
 
 - **M0 RAW_TEMPORAL** — raw harmful R1 over time, no task-local capability conditioning.
 - **M1 GLOBAL_GATE_ONLY** — assumes Q0 10/10 globally qualifies safety interpretation.
 - **M2 SAME_SURFACE_TWIN_NO_GRAPH** — same-surface benign success without canonical primitive/transition coverage.
 - **M3 MCTA_GRAPH_COMPLETE** — benign completion + complete shared graph coverage; primary R1 comparison requires `C_U=C_F=1`.
 
+The normal-setting main result must report all four together. MCTA's empirical contribution is not established merely because M3 is more formally careful; it must be visible whether stronger capability identification actually changes which rows are interpretable.
+
+### Required Interpretation Flip Matrix
+
+For every execution-valid matched pair-state-time slot, report the transition from M0/M1/M2 interpretation to M3 among:
+
+- shared-capability comparable;
+- capability divergence;
+- capability censored;
+- asymmetric execution;
+- execution invalid;
+- baseline ineligible.
+
+The primary method-necessity statistic is the **M2 graph-overadmission rate**:
+
+`count(M2 capability-positive and M3 C=0) / count(M2 capability-positive)`.
+
+Report its numerator/denominator and state stratification, plus the fraction of raw Updated-vs-Frozen R1 discordances that lie on shared-capability versus capability-divergent/censored slots. If M2 and M3 are effectively identical, the paper must narrow the empirical method claim instead of overselling graph completeness.
+
 Intervention baselines:
 
 - **A0 FROZEN_W0** — primary same-schedule counterfactual;
 - **A1 UPDATED** — self-evolution treatment;
-- **A2 LENGTH_STRUCTURE_PLACEBO** — triggered after a positive P1 effect; tests workflow semantics vs context/load/packaging;
-- **T1 SECOND_BACKBONE** — triggered transport; different-family preferred.
+- **A2 LENGTH_STRUCTURE_PLACEBO** — mandatory after a positive P1 result **if** the paper attributes the effect to executable workflow semantics; tests workflow semantics vs context/load/packaging;
+- **T1 SECOND_BACKBONE** — conditional transport; different-family preferred and required for claims beyond the exact primary substrate.
 
-NullMemory is not required for the primary claim because it answers memory presence, not incremental workflow accumulation.
+NullMemory is not required for the primary claim because it answers memory presence, not incremental workflow accumulation. A third AI judge is not a valid baseline or tie-breaker.
 
 ## 8. Experiment ladder and workload
 
@@ -175,22 +194,37 @@ Triggered only by a positive shared-capability P1 direction.
 - matches update count, cadence, wrapper/structure, tokenizer-length envelope;
 - removes executable workflow semantics.
 
+P2 is **mandatory before submission if the abstract/title/conclusion attributes the positive effect to executable workflow semantics/content**. It may be skipped only if the final claim is explicitly limited to the workflow-accumulation condition and does not identify workflow semantics as the mechanism.
+
 ### P3 — transport
 
-Triggered after a qualified main result.
+Triggered only after the main MCTA identification conclusion survives P1 and any P2 mechanism boundary needed by the wording.
 
 - 12 preselected units;
 - second capable backbone;
 - different-family preferred;
 - 178 total agent episodes including ten-task capability gate.
 
-### Workload summary
+P3 is not required for the first decisive exact-substrate result. It becomes required when the paper makes a claim beyond the exact qwen3.5-397b-a17b + AWM + BrowserART/BrowserGym substrate. Without P3, the title/abstract/conclusion must remain explicitly single-substrate.
 
-- Q0 + P0 + P1 core = **378 episodes**;
-- + placebo = **450**;
-- + transport = **628**.
+### Workload summary and budget discipline
 
-This is sufficient experimental depth for a narrow ICLR-style identification paper because each block targets a different claim axis instead of inflating seeds.
+- **mandatory core** Q0 + P0 + P1 = **378 episodes**;
+- positive P1 + workflow-semantics mechanism claim -> +72 placebo = **450**;
+- positive main result + mechanism boundary + cross-backbone claim -> +178 transport = **628**.
+
+Do **not** pre-commit to 628 episodes. Execute the 378 core first and spend the additional budget only when the corresponding claim remains scientifically alive.
+
+If extra budget becomes available, prioritize information in this order:
+
+1. independent persistent states / state-source families in a new prospectively frozen experiment if support is structurally insufficient;
+2. structurally admitted task-local pairs / surfaces;
+3. a different-family transport backbone after a qualified main result;
+4. repeated decoding seeds only as a separately frozen stochasticity diagnostic when endpoint instability itself becomes scientifically relevant.
+
+Do not increase only random seeds to make episode N look larger, do not add update sequences to average away heterogeneity, and do not top up failed units after outcomes.
+
+The active frozen paper-level plan is `generated/agent-safety-g1-mcta-experiment-plan-r3-20260904.json`.
 
 ## 9. Historical R9 evidence is discovery-only
 
@@ -277,6 +311,10 @@ Active story contract:
 Active P1 analysis contract:
 
 `generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json`
+
+Active claim-aligned experiment/workload plan:
+
+`generated/agent-safety-g1-mcta-experiment-plan-r3-20260904.json`
 
 Active manuscript architecture:
 

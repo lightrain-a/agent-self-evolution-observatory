@@ -15,8 +15,9 @@ Read first:
 2. `SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R2_MCTA.md` — active preconfirmatory paper architecture.
 3. `main_skillzip_preconfirmatory_r2_mcta.tex` — active compilable preconfirmatory LaTeX with explicit outcome placeholders.
 4. `generated/agent-safety-g1-skillzip-paper-story-r2-mcta-20260904.json` — machine-readable active story contract.
-5. `generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json` — active P1 analysis/interpretation contract.
-6. `main.tex` — preserved ERTA-centered historical manuscript draft; **not the active story source of truth**.
+5. `generated/agent-safety-g1-mcta-p1-conditional-contract-r2-20260904.json` — active P1 primary analysis/interpretation contract.
+6. `generated/agent-safety-g1-mcta-experiment-plan-r3-20260904.json` — active claim-aligned experiment/workload plan, including the Interpretation Flip Matrix and conditional P2/P3 gates.
+7. `main.tex` — preserved ERTA-centered historical manuscript draft; **not the active story source of truth**.
 
 The earlier `SKILLZIP_PRECONFIRMATORY_MANUSCRIPT_R1.md`, `main_skillzip_preconfirmatory.tex`, and `generated/agent-safety-g1-skillzip-paper-story-r1-20260904.json` are retained as the immediately preceding paper iteration. They are no longer execution authority because R2 repairs an additional capability-divergence confound before any P1 outcome.
 
@@ -111,16 +112,20 @@ Failure -> `UNIDENTIFIED_SUPPORT_TOO_SPARSE`; raw R1 cannot rescue the paper-lev
 
 ### Triggered extensions
 
-- P2 length/structure placebo: +72 episodes, only after a positive predeclared shared-capability P1 direction;
-- P3 second-backbone transport: +178 episodes including its ten-task capability gate, only after a qualified main result; different-family preferred.
+- P2 length/structure placebo: +72 episodes after a positive predeclared shared-capability P1 direction. It is mandatory before any claim that executable workflow semantics/content caused the effect; otherwise the final claim must remain at the workflow-accumulation-condition level.
+- P3 second-backbone transport: +178 episodes including its ten-task capability gate after a qualified main result. It is required for claims extending beyond the exact primary backbone/AWM/BrowserART substrate; different-family transport is preferred.
 
-Workload:
+Workload policy:
 
-- Q0 + P0 + P1 core = **378 episodes**;
-- + placebo = **450**;
-- + transport = **628**.
+- **mandatory core** Q0 + P0 + P1 = **378 episodes**;
+- positive effect + workflow-semantics mechanism claim = **450** with P2;
+- positive effect + mechanism boundary + cross-backbone claim = **628** with P3.
 
-## Baseline matrix
+Do not automatically run all 628 episodes. The extra 72 and 178 calls exist only to eliminate specific alternative explanations that remain alive after the preceding gate.
+
+For any later budget expansion, prioritize independent persistent states/state-source families, then structurally admitted task-local pairs, then different-family transport. Repeated decoding seeds are last-priority diagnostics rather than the default way to enlarge N.
+
+## Baseline matrix and Interpretation Flip Matrix
 
 The main result must show increasingly strong interpretations of the same executed rows:
 
@@ -137,6 +142,8 @@ Intervention/mechanism controls:
 - T1 second-backbone transport if triggered.
 
 NullMemory is not a required primary baseline because it answers memory presence, not the incremental effect of workflow accumulation.
+
+The main result must also include a zero-extra-call **Interpretation Flip Matrix** that shows how M0/M1/M2 classifications change under M3. In particular, report the M2 graph-overadmission rate `count(M2 capability-positive and M3 C=0) / count(M2 capability-positive)` with numerator/denominator and state stratification. If M2 and M3 are empirically almost identical, graph completeness should be presented as a validity safeguard rather than exaggerated as a large empirical gain.
 
 ## Historical discovery evidence
 
