@@ -1,0 +1,103 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-fdlimit-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-04T10:27:10+08:00",
+  "status": "AUTHORIZED_PI05_PRACTICAL_BATCH16_FORMAL_RUN2_FDLIMIT",
+  "run2_id": "shared26-seed42-practical-b16-run2-fdlimit",
+  "scope": "Distinct prospective step-0 rerun after outcome-blind adjudication of run1 preterminal file-descriptor infrastructure failure. This is not exact-state continuation of run1.",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_practical_batch16_formal_train_run2.py",
+    "sha256": "2ee4f9cef1731136fdaa9f34240843287a74d903b9039b40b37a73e0c7f030bb"
+  },
+  "runner_sha256": "2ee4f9cef1731136fdaa9f34240843287a74d903b9039b40b37a73e0c7f030bb",
+  "launcher": {
+    "path": "scripts/run_behavior_formal_goal_pi05_practical_batch16_formal_train_run2_231.sh",
+    "sha256": "f09ecca8fb440d4f1316f591ea6f63c1dfc2e56acb8da28e246acccaebf1fc9d"
+  },
+  "launcher_sha256": "f09ecca8fb440d4f1316f591ea6f63c1dfc2e56acb8da28e246acccaebf1fc9d",
+  "run1_lineage": {
+    "formal_authority_sha256": "6aea20a8cd06c3b58fc80668534e16e2416818478e62d64ea884daae8d43fd86",
+    "durable_progress_path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run1-progress-20260904.json",
+    "durable_progress_sha256": "5b09c74f7227326d8fa2ddf4c964922470de3ecda4bee5f159751902813e2379",
+    "failure_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run1-fd-failure-adjudication-20260904.json",
+    "failure_adjudication_sha256": "7f100fa01223b3db365d48a79fb8b94af1443b5a9e6044475851d5d64da54e4c",
+    "run1_scientific_disposition": "CLOSED_FAILED_INFRASTRUCTURE_NO_SCIENTIFIC_EVALUATION",
+    "run1_checkpoint_reused": false,
+    "run1_optimizer_state_reused": false,
+    "run1_model_state_reused": false,
+    "run1_outcomes_read": false
+  },
+  "fd_infrastructure_repair": {
+    "canonical_qualification_path": "generated/behavior-formal-goal-coupling-shared26-pi05-video-decoder-fd-cache-qualification-20260904.json",
+    "canonical_qualification_sha256": "d24b7076a90a4d3c5e6dbc34403accb332f46a00ff7bf508d615bd4996a66dfd",
+    "source_qualification_sha256": "fa2cd4d9c94c3c82d93b40905aa7a5efe8eb4ad762f12c03951177efb7d174a5",
+    "qualified_unique_video_files": 1146,
+    "qualified_max_open_fds": 1150,
+    "run2_rlimit_nofile_soft": 65536,
+    "run2_rlimit_nofile_hard_min": 65536,
+    "scientific_variable_changed": false
+  },
+  "frozen_scientific_inputs": {
+    "practical_batch_preregistration_sha256": "382449b4320bacd85f736c0df9342f9677b3c755f2daeedcd680212aed2a503a",
+    "synthetic_batch16_full_step_result_sha256": "3914b1f2a3fd5e7964524eac7f625b64b4f089c0048a12dc5ebe9b79ba9bd86e",
+    "practical_batch_selection_sha256": "1f63415a2e9d6af60d67ec995ba4f0b803054ee7a96f202178d060bda2bfbdbb",
+    "real_data_zero_update_smoke_repair2_sha256": "57d92cbf081237fd21d3ec8775c4113132b150edc13dc8096300780c59e57cc4",
+    "ffmpeg_runtime_qualification_sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+    "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3"
+  },
+  "formal_run": {
+    "host": "222.20.126.231",
+    "config": "pi05_b1k_shared26_frozen",
+    "exp_name": "shared26-seed42-practical-b16-run2-fdlimit",
+    "start_state": "fresh step0 from frozen pi05 base checkpoint",
+    "physical_batch": 16,
+    "effective_optimizer_batch": 16,
+    "gradient_accumulation": 1,
+    "seed": 42,
+    "optimizer_updates": 50000,
+    "num_workers": 0,
+    "action_horizon": 32,
+    "optimizer": "AdamW(b1=0.9,b2=0.95,eps=1e-8,weight_decay=1e-10,clip_gradient_norm=1.0)",
+    "lr_schedule": "CosineDecaySchedule(warmup_steps=1000,peak_lr=2.5e-05,decay_steps=30000,decay_lr=2.5e-06)",
+    "ema_decay": 0.99,
+    "save_labels": [10000, 20000, 30000, 40000, 49999],
+    "terminal_checkpoint_label_for_scientific_evaluation": 49999,
+    "intermediate_checkpoints_role": "exact-state recovery only; forbidden for evaluation or selection",
+    "validation": false,
+    "wandb": false,
+    "loss_logging_or_reading": false
+  },
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9,
+    "rlimit_nofile_soft": 65536
+  },
+  "exactly_once": {
+    "fresh_checkpoint_directory_required": true,
+    "automatic_retry": false,
+    "automatic_restart_after_optimizer_updates": false,
+    "run2_is_distinct_from_run1": true,
+    "future_recovery_allowed_only_by_separate_exact_state_adjudication": true
+  },
+  "forbidden": [
+    "reuse of run1 model, optimizer, or checkpoint state",
+    "loss/grad-norm/param-norm reading or reporting",
+    "validation",
+    "W&B",
+    "checkpoint shopping",
+    "evaluating intermediate checkpoints",
+    "changing batch, seed, optimizer, LR, EMA, dataset, normalization, action horizon, update count, checkpoint evaluation rule, or FD limit after launch",
+    "policy rollout or Q/reward/success read before terminal checkpoint content-address and serving qualification"
+  ],
+  "scientific_training_authorized": true,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_complete": "PI05_RUN2_TERMINAL_CHECKPOINT_49999_CONTENT_ADDRESS_AND_SERVING_QUALIFICATION",
+  "next_gate_if_failure": "FORMAL_RUN2_FAILURE_EXACT_STATE_ADJUDICATION"
+}
