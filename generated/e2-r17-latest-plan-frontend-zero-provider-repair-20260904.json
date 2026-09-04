@@ -2,6 +2,7 @@
   "artifact_type": "e2-r17-latest-plan-frontend-zero-provider-repair",
   "date": "2026-09-04",
   "status": "ZERO_PROVIDER_REPAIR_COMPLETE_PENDING_REREVIEW",
+  "repair_commit": "1e3db1ec2d25addddde2112f7871223f1e3d0728",
   "trigger_review": {
     "verdict": "REVISE_ZERO_PROVIDER_PLAN_OR_FRONTEND",
     "review_path": "consultations/e2-r17-latest-plan-frontend-gpt56-review-20260904.md",
@@ -25,7 +26,7 @@
       "paper_story_sha256": "e77ccc28e5ea7955523025e2de3f767f1414d9cb868f663a6cba8a65e4279ea5",
       "skillzip_iteration_sha256": "839c912bc18d010a4b391f1c1f5d958eedb5ac8ea555cf27fdbb84f5c8ee7f0c",
       "paper_outline_sha256": "d637a7d4775ff94e936b3c875a459e3caefe45561f5575aa1f889f094adc05ff",
-      "frontend_status_sha256": "b35958a99f3fece35396027ce8cc9d0b0487822afc5284ef51d3a4e20687e9bb",
+      "frontend_status_sha256": "a9b15beecac846d46eb61f443ce4460bf7743bbaca22545ce634c6ac4f6648d6",
       "frontend_view_sha256": "94c5a679af79bb6e3303052f718bfc7b395c76d0ee47902052224d9ced6a9f30",
       "rules": [
         "Do not claim or title the result as globally best-to-act versus best-to-learn.",

@@ -142,6 +142,6 @@ window.E2_R17_FRONTEND_STATUS = {
     roadmap: "consultations/e2-r17-experiment-plan-v4-20260904.md",
     execution_map: "consultations/e2-r17-experiment-plan-v4-execution-map-20260904.md",
     paper_outline: "paper_drafts/e2-r17-paper-outline-skillzip-iteration-20260903.md",
-    plan_revision: "e811cd07b00c3f222f70f2b641ced6e18061f4e5"
+    plan_revision: "1e3db1ec2d25addddde2112f7871223f1e3d0728"
   }
 };
