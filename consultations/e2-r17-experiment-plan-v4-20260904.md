@@ -9,6 +9,8 @@ Frozen R2 preflight SHA256: `e257438bd482d4f2209a8321d4a222bd97acf2c03bff46a1d55
 
 This plan is the current **paper-level experiment roadmap**. It supersedes older V1/V2/V3 roadmap documents for future planning only. It does not rewrite historical experiments or modify the already-reviewed V3/R2 controlled experiment. It grants no provider call, Stage-A, Stage-B, public-benchmark, analyzer, or paper-claim authority.
 
+For day-to-day execution, use the compact map `consultations/e2-r17-experiment-plan-v4-execution-map-20260904.md`. The canonical sequence is: **A completed evidence -> B mandatory controlled V3 -> C one unified public transport/baseline lane -> D optional robustness only after the required ladder is complete.**
+
 ---
 
 ## 1. Paper-level experimental objective
@@ -335,19 +337,20 @@ Use the official implementation adapted to the unified rerun harness with:
 
 SkillOpt is mandatory because it is a strong current external-skill optimizer with official code and broad public evaluation.
 
-### B8 — Trace2Skill
+### B8 — trajectory-to-skill / contrastive baseline slot
 
-Use official/public implementation if runtime qualification passes.
+At least **one** credible trajectory-to-skill / contrastive baseline is mandatory in the unified public main table.
 
-Purpose: trajectory-to-skill conversion baseline with a direct implementation surface.
+Preferred order:
 
-### B9 — SkillCAT-style contrast
+1. **Trace2Skill** if its official/public implementation passes runtime qualification under the common public harness;
+2. otherwise a clearly labeled **SkillCAT-style contrast** reconstruction under the frozen common harness.
 
-Use same-task success/failure contrast under a clearly labeled reconstruction unless an official pinned implementation is available.
+Run both only if they answer materially different alternative explanations at acceptable marginal cost. Do not spend a second full evolution lane merely to duplicate the same scientific reduction.
 
-Never label this row as an exact SkillCAT reproduction without source-faithful code/runtime.
+Never label a SkillCAT-style row as an exact SkillCAT reproduction without a source-faithful pinned implementation/runtime.
 
-Purpose: strongest direct reduction of E2 into success/failure contrastive skill extraction.
+Purpose: test the strongest direct reduction of E2 into generic trajectory-to-skill or success/failure contrastive skill extraction.
 
 ## 6.3 Conditional E2 method row
 
@@ -512,8 +515,7 @@ Rows:
 - RethinkSkill Success-only;
 - RethinkSkill Fail-only;
 - SkillOpt;
-- Trace2Skill;
-- SkillCAT-style contrast;
+- one mandatory trajectory-to-skill / contrastive baseline slot: Trace2Skill if source-faithful qualification passes, otherwise clearly labeled SkillCAT-style contrast; optionally both only if scientifically nonredundant;
 - E2 policy, only if its gate passes.
 
 Columns should include at least:
@@ -649,7 +651,7 @@ For a strong standalone causal systems/interface submission, the target package 
 - V3 primary controlled mechanism result;
 - secondary controlled-divergence gate reported separately;
 - one public SpreadsheetBench Verified lane;
-- unified closest-method main table with at least RethinkSkill feedback arms, SkillOpt, and one trajectory-to-skill contrast baseline;
+- unified closest-method main table with RethinkSkill feedback arms, SkillOpt, and at least one credible trajectory-to-skill / contrastive baseline;
 - cost/accounting and paired uncertainty;
 - no benchmark shopping.
 
