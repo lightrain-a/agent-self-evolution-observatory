@@ -1,0 +1,1109 @@
+{
+  "artifact_type": "c1-b10-zero-provider-collision-mmd2-diagnostic",
+  "authority": {
+    "claim_expansion": false,
+    "prospective_replication": false,
+    "submission": false
+  },
+  "cells": [
+    {
+      "between_branch_collision": 0.5,
+      "collision_mmd2_u": 0.33333333333333326,
+      "failure_actions": [
+        "click_element:23",
+        "click_element:23",
+        "click_element:23",
+        "click_element:23"
+      ],
+      "failure_frequency": {
+        "click_element:23": 4
+      },
+      "future_task": 26,
+      "historical_empirical_tv": 0.5,
+      "intent_template_id": 222,
+      "selected_source_task": 25,
+      "success_actions": [
+        "click_element:23",
+        "click_element:53",
+        "click_element:53",
+        "click_element:23"
+      ],
+      "success_frequency": {
+        "click_element:23": 2,
+        "click_element:53": 2
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 0.3333333333333333
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 124,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 159,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 126,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 159,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 142,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 162,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 0.75,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:13"
+      ],
+      "failure_frequency": {
+        "click_element:0": 3,
+        "click_element:13": 1
+      },
+      "future_task": 143,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 162,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 0.5,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 144,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 162,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 147,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 155,
+      "selected_source_task": 146,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 149,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 155,
+      "selected_source_task": 148,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 150,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 155,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 0.5,
+      "collision_mmd2_u": -0.16666666666666674,
+      "failure_actions": [
+        "click_element:23",
+        "click_element:23",
+        "click_element:44",
+        "click_element:23"
+      ],
+      "failure_frequency": {
+        "click_element:23": 3,
+        "click_element:44": 1
+      },
+      "future_task": 164,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 136,
+      "selected_source_task": 163,
+      "success_actions": [
+        "click_element:44",
+        "click_element:23",
+        "click_element:23",
+        "click_element:44"
+      ],
+      "success_frequency": {
+        "click_element:23": 2,
+        "click_element:44": 2
+      },
+      "within_failure_collision": 0.5,
+      "within_success_collision": 0.3333333333333333
+    },
+    {
+      "between_branch_collision": 0.5,
+      "collision_mmd2_u": -0.16666666666666674,
+      "failure_actions": [
+        "click_element:23",
+        "click_element:66",
+        "click_element:23",
+        "click_element:66"
+      ],
+      "failure_frequency": {
+        "click_element:23": 2,
+        "click_element:66": 2
+      },
+      "future_task": 165,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 136,
+      "selected_source_task": 163,
+      "success_actions": [
+        "click_element:23",
+        "click_element:66",
+        "click_element:23",
+        "click_element:23"
+      ],
+      "success_frequency": {
+        "click_element:23": 3,
+        "click_element:66": 1
+      },
+      "within_failure_collision": 0.3333333333333333,
+      "within_success_collision": 0.5
+    },
+    {
+      "between_branch_collision": 0.75,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:36",
+        "click_element:36",
+        "click_element:36",
+        "click_element:23"
+      ],
+      "failure_frequency": {
+        "click_element:23": 1,
+        "click_element:36": 3
+      },
+      "future_task": 167,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 136,
+      "selected_source_task": 163,
+      "success_actions": [
+        "click_element:36",
+        "click_element:36",
+        "click_element:36",
+        "click_element:36"
+      ],
+      "success_frequency": {
+        "click_element:36": 4
+      },
+      "within_failure_collision": 0.5,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 190,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 214,
+      "selected_source_task": 189,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 192,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 214,
+      "selected_source_task": 188,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 227,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 370,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 0.75,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "go_to_url",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "go_to_url": 1,
+        "input_text": 3
+      },
+      "future_task": 228,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 370,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 0.5,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 0.75,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 229,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 370,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "click_element:6"
+      ],
+      "success_frequency": {
+        "click_element:6": 1,
+        "input_text": 3
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 0.5
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 230,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 370,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 233,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 213,
+      "selected_source_task": 232,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 279,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 204,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 280,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 204,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 0.75,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:6",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "click_element:6": 1,
+        "input_text": 3
+      },
+      "future_task": 281,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 204,
+      "selected_source_task": 225,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 0.5,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "input_text": 4
+      },
+      "future_task": 282,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 204,
+      "selected_source_task": 226,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 319,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 160,
+      "selected_source_task": 188,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 320,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 160,
+      "selected_source_task": 188,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 321,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 160,
+      "selected_source_task": 188,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 322,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 160,
+      "selected_source_task": 188,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 323,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 160,
+      "selected_source_task": 188,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 329,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 147,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 330,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 147,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 331,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 147,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 333,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 147,
+      "selected_source_task": 141,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 358,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 206,
+      "selected_source_task": 189,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 360,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 206,
+      "selected_source_task": 231,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 1.0,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "failure_frequency": {
+        "click_element:0": 4
+      },
+      "future_task": 362,
+      "historical_empirical_tv": 0.0,
+      "intent_template_id": 206,
+      "selected_source_task": 231,
+      "success_actions": [
+        "click_element:0",
+        "click_element:0",
+        "click_element:0",
+        "click_element:0"
+      ],
+      "success_frequency": {
+        "click_element:0": 4
+      },
+      "within_failure_collision": 1.0,
+      "within_success_collision": 1.0
+    },
+    {
+      "between_branch_collision": 0.75,
+      "collision_mmd2_u": 0.0,
+      "failure_actions": [
+        "input_text",
+        "click_element:19",
+        "input_text",
+        "input_text"
+      ],
+      "failure_frequency": {
+        "click_element:19": 1,
+        "input_text": 3
+      },
+      "future_task": 384,
+      "historical_empirical_tv": 0.25,
+      "intent_template_id": 666,
+      "selected_source_task": 25,
+      "success_actions": [
+        "input_text",
+        "input_text",
+        "input_text",
+        "input_text"
+      ],
+      "success_frequency": {
+        "input_text": 4
+      },
+      "within_failure_collision": 0.5,
+      "within_success_collision": 1.0
+    }
+  ],
+  "date": "2026-09-04",
+  "decision": "D2_STOCHASTICITY_ADJUSTED_SEPARATION_NOT_SUPPORTED",
+  "estimand": {
+    "finite_sample_negative_values_allowed": true,
+    "kernel": "exact match: k(a,b)=1[a==b]",
+    "no_memory_used_in_primary": false,
+    "per_state": "unbiased two-sample MMD2/collision U-statistic",
+    "provider_repeats_nested_within_state": true,
+    "scientific_unit": "frozen matched Shopping branch-comparison state"
+  },
+  "execution": {
+    "historical_success_failure_draws_read": 288,
+    "new_gpu_runs": 0,
+    "new_provider_calls": 0
+  },
+  "experiment_id": "D2-PROXY-B10-NATIVE-FIRST-ACTION-TRANSPORT",
+  "inference": {
+    "alpha": 0.05,
+    "bootstrap": {
+      "percentile_2_5": -0.018518518518518528,
+      "percentile_97_5": 0.02314814814814814,
+      "repetitions": 10000,
+      "seed": 20260904
+    },
+    "bootstrap_role": "descriptive fixed-state uncertainty only",
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260824,
+    "primary_statistic": "mean collision_mmd2_u over 36 states",
+    "support_rule": "observed mean U > 0 and one-sided p < 0.05"
+  },
+  "interpretation_boundary": [
+    "post-hoc zero-provider diagnostic on prospectively collected historical B10 draws",
+    "not an independent prospective replication",
+    "no equality or zero-effect conclusion from non-support",
+    "no population generalization beyond the frozen 36-state panel",
+    "no adaptive top-up based on this p-value"
+  ],
+  "paper_action": "Retain first-action uptake as the first unsupported measured native stage. The collision diagnostic does not establish equality or a zero effect and does not justify significance-chasing top-up.",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "preoutcome_design_binding": {
+    "b10_result": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-result.json",
+      "sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6"
+    },
+    "plan_json": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-20260904.json",
+      "sha256": "1ae5fd159dda44d06ee72ae052257d0dd694793e10297b944cd533e6e76e4d92"
+    },
+    "plan_md": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-effective-experiment-plan-v2.1-20260904.md",
+      "sha256": "42e7ca7cc8d954a514308443915e0de81d649d5b1e8060d5da3be0536b02ade6"
+    },
+    "raw_replay_receipt": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-b10-first-action-raw-replay-qualification-20260904.json",
+      "sha256": "2bac711b6ebec8b77568bdca3cd0ea47d62d2dde52add8e34f44493703ff88d7"
+    },
+    "seal_commit": "dc3e5c4b297c4598b65669e5e68c7d7a2d9cff2d"
+  },
+  "schema_version": "1.0",
+  "status": "M2Z_ZERO_PROVIDER_COLLISION_MMD2_COMPLETE",
+  "summary": {
+    "alpha": 0.05,
+    "draws_per_branch_per_state": 4,
+    "fixed_state_bootstrap_95": [
+      -0.018518518518518528,
+      0.02314814814814814
+    ],
+    "mean_between_branch_collision": 0.9166666666666666,
+    "mean_collision_mmd2_u": -6.1679056923619804e-18,
+    "mean_within_failure_collision": 0.8981481481481483,
+    "mean_within_success_collision": 0.9351851851851851,
+    "median_collision_mmd2_u": 0.0,
+    "negative_u_states": 2,
+    "one_sided_randomization_p": 0.5800941990580094,
+    "positive_u_states": 1,
+    "randomization_ge_count": 58009,
+    "states": 36,
+    "support_rule_pass": false,
+    "zero_u_states": 33
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-09-04",
+  "object": "C1-V2.1-M2Z-ADJUDICATION",
+  "status": "M2Z_COMPLETE_KEEP_MEASUREMENT_CLAIM_PROSPECTIVE_TOPUP_CLOSED_BY_DEFAULT",
+  "preoutcome_design_seal": "dc3e5c4b297c4598b65669e5e68c7d7a2d9cff2d",
+  "implementation_checkpoint": "ccbcabe8ee4fe5727552fb9f9ae8cd47c79ce0dc",
+  "raw_replay_receipt_sha256": "2bac711b6ebec8b77568bdca3cd0ea47d62d2dde52add8e34f44493703ff88d7",
+  "m2z_result_sha256": "65901eaf5188fd2ffb071f7f4359e78dc26b71b1f0a1439e4f7e81410c1e9c56",
+  "question": "Does the historical success-memory versus failure-memory first-action contrast remain supported after correcting the categorical comparison for same-condition stochastic concentration?",
+  "scientific_unit": {
+    "type": "frozen matched Shopping branch-comparison state",
+    "count": 36,
+    "success_draws_per_state": 4,
+    "failure_draws_per_state": 4,
+    "repeated_calls_are_scientific_units": false
+  },
+  "result": {
+    "mean_collision_mmd2_u": -6.1679056923619804e-18,
+    "median_collision_mmd2_u": 0.0,
+    "mean_within_success_collision": 0.9351851851851851,
+    "mean_within_failure_collision": 0.8981481481481483,
+    "mean_between_branch_collision": 0.9166666666666666,
+    "positive_u_states": 1,
+    "zero_u_states": 33,
+    "negative_u_states": 2,
+    "one_sided_randomization_p": 0.5800941990580094,
+    "fixed_state_bootstrap_95": [-0.018518518518518528, 0.02314814814814814],
+    "support_rule": "mean U > 0 and p < 0.05",
+    "support_rule_pass": false,
+    "decision": "D2_STOCHASTICITY_ADJUSTED_SEPARATION_NOT_SUPPORTED"
+  },
+  "allowed_interpretation": "Stable S/F first-action branch uptake is not established on the replay-qualified frozen Shopping panel; a post-hoc collision/MMD2 diagnostic correcting for within-condition stochastic concentration also does not support aggregate S/F separation.",
+  "forbidden_interpretations": [
+    "success/failure first-action distributions are equal",
+    "the behavioral effect is exactly zero",
+    "retrieved branch memory is latently irrelevant",
+    "retrieved branch memory has zero behavioral authority",
+    "the result is an independent prospective replication",
+    "the result population-generalizes beyond the frozen 36-state panel"
+  ],
+  "prospective_first_action_topup": {
+    "default_authorized": false,
+    "reopen_only_if": "fresh independent submission review says post-hoc status is itself a verdict-changing blocker for the intended first-action claim and requires a prospective stochasticity-controlled replicate",
+    "adaptive_topup_for_significance": false
+  },
+  "remaining_program": {
+    "mandatory_zero_provider": [
+      "M1_EVALUATION_SURFACE_BASELINE_PACKAGING",
+      "M3_CLAIM_FIGURE_MACHINE_AUDIT",
+      "M3_INDEPENDENT_SUBMISSION_REVIEW"
+    ],
+    "conditional_only": [
+      "REDDIT_E_U_IF_CROSS_DOMAIN_REPLICATION_IS_VERDICT_CHANGING",
+      "ONE_SECOND_EXECUTOR_IF_MODEL_SPECIFICITY_IS_VERDICT_CHANGING",
+      "PACTA_MSR_AS_INDEPENDENT_METHOD_EXPANSION"
+    ]
+  },
+  "execution": {
+    "new_provider_calls": 0,
+    "new_gpu_runs": 0
+  }
+}
