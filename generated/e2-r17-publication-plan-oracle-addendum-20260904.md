@@ -3,7 +3,8 @@
 Date: 2026-09-04
 Status: `ZERO_PROVIDER / PLANNING_ONLY / NO_SCIENTIFIC_EXECUTION_AUTHORITY`
 Parent plan: `generated/e2-r17-publication-experiment-coverage-plan-20260904.md`
-Independent review: GPT-5.6 Sol + Extra High, session `e2-r17-latest-plan-project`, conversation `6a9a73c6-1464-83ee-9e5d-bc85e77ff910`
+Independent review: GPT-5.6 Sol + Extra High, session `e2-r17-latest-plan-project`, conversation `6a9a38aa-7a10-83e8-b0c5-7d11683385db`
+Transcript SHA256: `dda2b18f10138a418d43e02f21893262eef57b162d388f10ee274999054c2298`
 Review verdict: `REVISE_ZERO_PROVIDER_PLAN_OR_FRONTEND`
 
 This addendum repairs the publication plan only. It does not reopen R2, change M2/M3R4/M4, open Stage A, freeze public IDs, or authorize any provider/model/GPU call.
