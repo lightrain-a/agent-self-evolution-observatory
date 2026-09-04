@@ -1,0 +1,201 @@
+{
+  "actor": {
+    "conversation_context_carryover": false,
+    "fresh_reset_runtime_per_logical_unit": true,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b"
+  },
+  "artifact_type": "e2-r17-m3r4-execution-draft-contract",
+  "authority": {
+    "actor_measurement": false,
+    "analysis": false,
+    "e3": false,
+    "m4_bridge": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "semantic_transfer": false,
+    "submission": false,
+    "updater": false
+  },
+  "bound_code": {
+    "analysis_metric": {
+      "path": "research_pipeline/e2_r17_regeneration_metrics_v4.py",
+      "sha256": "998083d8e96254f634f609696fa3009792df9c198af8bffa3944a1229bf2620c"
+    },
+    "draft_freezer": {
+      "path": "scripts/freeze_e2_r17_m3r4_execution_draft.py",
+      "sha256": "4642e45363c9601012b47105fce377ae6ea32cbfa89fff545d849a166a9bfde4"
+    },
+    "execution_plan": {
+      "path": "research_pipeline/e2_r17_m3r4_execution_plan.py",
+      "sha256": "a4be0c55a543f81c45c49bf5a89b01e6da157b685e2fa787837c10baa1944052"
+    },
+    "execution_plan_tests": {
+      "path": "research_pipeline/test_e2_r17_m3r4_execution_plan.py",
+      "sha256": "d0c8fc275a014610cb4d49dabf5e124976d9406158123fe9504a665f43e0632f"
+    }
+  },
+  "created_at_utc": "2026-09-04T02:02:54+00:00",
+  "draft_payload_sha256": "cba0291849d83b5ead608b55e8999e8045f3eded49996d46df4c44a2391e4ebf",
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "fresh_model_identity_gate": {
+    "fresh_identity_artifact": null,
+    "fresh_identity_sha256": null,
+    "historical_identity_path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "historical_identity_reusable_for_m3r4": false,
+    "historical_identity_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "if_resolved_identity_changes": "HOLD_REVIEW_REQUIRED_NO_AUTOMATIC_MODEL_SUBSTITUTION",
+    "max_output_tokens_smoke": 8192,
+    "provider_retry_limit_must_remain": 0,
+    "reason": "Historical adjudication explicitly binds only its 2026-08-31 review tranche and requires requalification for any later scientific tranche.",
+    "requested_model_must_remain": "deepseek-v4-pro",
+    "required_before_final_contract": true,
+    "resolved_model_must_remain": "deepseek-v4-pro-ga-260813",
+    "route_must_remain": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "thinking_must_remain": "disabled"
+  },
+  "git_commit_at_draft_freeze": "ee202c5173a7b7467922113c1c658cc3cdd58d25",
+  "independent_preexecution_review": {
+    "execution_authority": false,
+    "path": "generated/e2-r17-m3r4-preexecution-review-pass-20260904.json",
+    "sha256": "b9a6d50c9a84a16b11bbec92a74d987f7e62add1b1c63b6fd69f0acd5c167a32",
+    "verdict": "PASS_PREEXECUTION_DESIGN"
+  },
+  "inference_qualification": {
+    "assumption_failure_automatic_rerun": false,
+    "cross_task_conditional_factorization_required_for_binomial_tail": true,
+    "detected_coupling_blocks_inference": true,
+    "observed_e_real_descriptive_if_inference_blocked": true,
+    "within_task_iid_stationarity_required_for_propensity_and_exact_test": true
+  },
+  "interpretation_boundary": "Zero-provider execution preparation only. This draft cannot reach actor/provider I/O. A fresh model-identity qualification, final content-addressed contract, actual-path zero-provider preflight, and separate explicit measurement authorization are still required.",
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-m3r4-frozen-state-localization-v1.json",
+  "logical_unit_order": {
+    "logical_units_sha256": "8f30ced123c0ea6c7febacd21c7b76657a469cb1fefd59827d530331c4e7dee8",
+    "order_salt": "E2-R17-M3R4-EXECUTION-ORDER-v1",
+    "outcome_conditioned": false,
+    "path": "generated/e2-r17-m3r4-logical-unit-order-20260904.json",
+    "round_count": 4,
+    "round_treatment_counts": "4/4/5/5",
+    "rule": "four_round_content_hash_ranked_latin_rotation_v1",
+    "sha256": "f8d5d2ece484b5d96708dbc97644991d2e41cca7117e6feca42faf38b7249c14",
+    "task_once_per_round": true
+  },
+  "m3r4_protocol": {
+    "path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r4-proposal-20260904.md",
+    "sha256": "2ee4d928725fbb6a3dbe02b81ca4e8fcc69fe618c995593ed050e5e8c35381b6"
+  },
+  "mindmemos": {
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "next_gate": "FRESH_DEEPSEEK_MODEL_IDENTITY_REQUALIFICATION_AFTER_RESOURCE_PRIORITY_GATE_THEN_FINAL_CONTRACT_AND_ACTUAL_PATH_PREFLIGHT",
+  "outcome_embargo": {
+    "analysis_authorized": false,
+    "before_72_units_complete": true,
+    "completed_unit_replay": false,
+    "partial_effect_read": false
+  },
+  "provider_budget": {
+    "automatic_retry": false,
+    "claims_before_io": true,
+    "claims_never_released": true,
+    "derivation": "72 actor logical units x 10 max actor turns/calls; no updater calls",
+    "hard_max_provider_calls_structural": 720,
+    "logical_units": 72,
+    "max_provider_calls_per_logical_unit": 10,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "unused_budget_reallocation": false
+  },
+  "resource_priority": {
+    "m2_outcome_may_change_m3r4_design": false,
+    "recovery_v3_currently_absent_at_draft_freeze": true,
+    "recovery_v3_lease": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-recovery2-v3.json",
+    "recovery_v3_run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery2-v3-20260903",
+    "rule": "Existing Recovery V3 scheduled continuation has priority after Ark quota reset. M3R4 provider authority must not compete with or pre-empt that recovery."
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/m3r4-frozen-state-localization-20260904",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-M3R4-FROZEN-STATE-ACTOR-LOCALIZATION-20260904",
+  "scientific_scope": {
+    "actor_replicates_per_state_task": 2,
+    "analysis_metric": "E_REAL = D_X - D_A plus exact conditional state-label test",
+    "historical_actor_outcomes_in_gate": false,
+    "historical_ff_hist_in_gate": false,
+    "historical_win_common_in_gate": false,
+    "logical_units": 72,
+    "new_learned_states": 0,
+    "state_count": 2,
+    "states": [
+      "ff_r1",
+      "ff_r2"
+    ],
+    "task_count": 18,
+    "task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "updater_calls": 0
+  },
+  "states": [
+    {
+      "parent_authorization_sha256": "e5d5a8ac04fe8b924327672e5b4efbe82ab053a6882ec5167d2771f8d06b84e4",
+      "parent_contract_sha256": "dd508d9cefb3bfba1a439f784f718cb7962f78130b83c18f14e5b0d591478dea",
+      "skill_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/update/skill_post/SKILL.md",
+      "skill_sha256": "596bd30b49935d16f35d51e9eed36e19567332cd8a9104ae50d832f91ffdf04f",
+      "state_id": "ff_r1",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/update/update_receipt.json",
+      "update_receipt_sha256": "332fd5d3a265c01c3be5887fa3e8f40c37d1f0e5c5825840a8fddc257b83a5c1"
+    },
+    {
+      "parent_authorization_sha256": "d4553bdddf2a8838b2866b917fe721c37d5510be27a8a21dadb57936c2fec7f2",
+      "parent_contract_sha256": "9afbcd0d499a7e0a3ea9982975a9538f27033ef07b0e1a9043da7bf6b57c1ca9",
+      "skill_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/first_fail/update/skill_post/SKILL.md",
+      "skill_sha256": "fb5454a27faf8182ba1b0d722273c4377d4762815cd1898c3780cc8ff336615e",
+      "state_id": "ff_r2",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/first_fail/update/update_receipt.json",
+      "update_receipt_sha256": "acf25c85f672010ccb0203365c309e53c574ea7840f81808c26a837f6d4e1cfa"
+    }
+  ],
+  "status": "HOLD_FRESH_MODEL_IDENTITY_REQUALIFICATION_REQUIRED_ZERO_PROVIDER_PREP_ONLY",
+  "suite": {
+    "population_sample_claimed": false,
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "selected_panel_is_historical_outcome_selected": true,
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  }
+}

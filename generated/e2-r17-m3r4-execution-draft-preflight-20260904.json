@@ -1,0 +1,112 @@
+{
+  "artifact_type": "e2-r17-m3r4-execution-draft-zero-provider-preflight",
+  "authority": {
+    "actor_measurement": false,
+    "analysis": false,
+    "e3": false,
+    "m4_bridge": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "submission": false,
+    "updater": false
+  },
+  "checks": {
+    "draft_zero_authority": true,
+    "fresh_identity_missing_as_expected": true,
+    "historical_identity_nonreusable": true,
+    "lineage_lease_absent": true,
+    "m3r4_protocol_review_pass_bound": true,
+    "mindmemos_commit_bound": true,
+    "provider_budget_ledger_created": false,
+    "provider_calls": 0,
+    "recovery_v3_lease_absent_now": true,
+    "recovery_v3_run_root_absent_now": true,
+    "run_root_absent": true,
+    "runtime_freeze_bound": true,
+    "scientific_outcomes_read": false,
+    "state_artifacts_content_addressed": true,
+    "suite_manifests_content_addressed": true,
+    "updater_receipts_content_addressed": true
+  },
+  "created_at_utc": "2026-09-04T02:02:54+00:00",
+  "draft_contract_path": "generated/e2-r17-m3r4-execution-draft-contract-20260904.json",
+  "draft_contract_sha256": "4ee69b6cf2455bd78971d1bf556b1ea2ba2179bb1304c74c770f6b64430c2378",
+  "fresh_model_identity_gate": {
+    "fresh_identity_artifact": null,
+    "fresh_identity_sha256": null,
+    "historical_identity_path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "historical_identity_reusable_for_m3r4": false,
+    "historical_identity_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "if_resolved_identity_changes": "HOLD_REVIEW_REQUIRED_NO_AUTOMATIC_MODEL_SUBSTITUTION",
+    "max_output_tokens_smoke": 8192,
+    "provider_retry_limit_must_remain": 0,
+    "reason": "Historical adjudication explicitly binds only its 2026-08-31 review tranche and requires requalification for any later scientific tranche.",
+    "requested_model_must_remain": "deepseek-v4-pro",
+    "required_before_final_contract": true,
+    "resolved_model_must_remain": "deepseek-v4-pro-ga-260813",
+    "route_must_remain": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "thinking_must_remain": "disabled"
+  },
+  "interpretation_boundary": "Zero-provider draft preflight only. Static execution structure is qualified, but no current identity artifact is eligible for M3R4 scientific execution and no provider/actor authority exists.",
+  "logical_unit_order": {
+    "actor_replicate_counts": {
+      "1": 36,
+      "2": 36
+    },
+    "combo_counts_by_round": {
+      "0": {
+        "ff_r1/actor_rep_1": 5,
+        "ff_r1/actor_rep_2": 4,
+        "ff_r2/actor_rep_1": 5,
+        "ff_r2/actor_rep_2": 4
+      },
+      "1": {
+        "ff_r1/actor_rep_1": 4,
+        "ff_r1/actor_rep_2": 5,
+        "ff_r2/actor_rep_1": 5,
+        "ff_r2/actor_rep_2": 4
+      },
+      "2": {
+        "ff_r1/actor_rep_1": 4,
+        "ff_r1/actor_rep_2": 5,
+        "ff_r2/actor_rep_1": 4,
+        "ff_r2/actor_rep_2": 5
+      },
+      "3": {
+        "ff_r1/actor_rep_1": 5,
+        "ff_r1/actor_rep_2": 4,
+        "ff_r2/actor_rep_1": 4,
+        "ff_r2/actor_rep_2": 5
+      }
+    },
+    "logical_units": 72,
+    "logical_units_sha256": "8f30ced123c0ea6c7febacd21c7b76657a469cb1fefd59827d530331c4e7dee8",
+    "path": "generated/e2-r17-m3r4-logical-unit-order-20260904.json",
+    "round_counts": {
+      "0": 18,
+      "1": 18,
+      "2": 18,
+      "3": 18
+    },
+    "sha256": "f8d5d2ece484b5d96708dbc97644991d2e41cca7117e6feca42faf38b7249c14",
+    "state_counts": {
+      "ff_r1": 36,
+      "ff_r2": 36
+    }
+  },
+  "next_gate": "AFTER_RECOVERY_V3_RESOURCE_PRIORITY_AND_ARK_QUOTA_AVAILABILITY_RUN_FRESH_NONSCIENTIFIC_M3R4_MODEL_IDENTITY_REQUALIFICATION",
+  "provider_budget": {
+    "automatic_retry": false,
+    "claims_before_io": true,
+    "claims_never_released": true,
+    "derivation": "72 actor logical units x 10 max actor turns/calls; no updater calls",
+    "hard_max_provider_calls_structural": 720,
+    "logical_units": 72,
+    "max_provider_calls_per_logical_unit": 10,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "unused_budget_reallocation": false
+  },
+  "schema_version": "1.0",
+  "status": "HOLD_FRESH_MODEL_IDENTITY_REQUALIFICATION_REQUIRED_ZERO_PROVIDER_PREFLIGHT_PASS"
+}

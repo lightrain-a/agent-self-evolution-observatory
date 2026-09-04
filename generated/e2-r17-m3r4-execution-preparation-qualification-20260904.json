@@ -1,0 +1,127 @@
+{
+  "artifact_type": "e2-r17-m3r4-execution-preparation-qualification",
+  "schema_version": "1.0",
+  "created_date": "2026-09-04",
+  "status": "PASS_ZERO_PROVIDER_M3R4_EXECUTION_PREPARATION_HOLD_FRESH_MODEL_IDENTITY",
+  "scientific_object": "E2-R17-M3R4-FROZEN-STATE-ACTOR-LOCALIZATION-20260904",
+  "branch": "research/e2-r17-m3r4-execution-preflight-20260904",
+  "base_commit": "ee202c5173a7b7467922113c1c658cc3cdd58d25",
+  "m3r4_design": {
+    "protocol_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r4-proposal-20260904.md",
+    "protocol_sha256": "2ee4d928725fbb6a3dbe02b81ca4e8fcc69fe618c995593ed050e5e8c35381b6",
+    "independent_preexecution_review_path": "generated/e2-r17-m3r4-preexecution-review-pass-20260904.json",
+    "independent_preexecution_review_sha256": "b9a6d50c9a84a16b11bbec92a74d987f7e62add1b1c63b6fd69f0acd5c167a32",
+    "independent_verdict": "PASS_PREEXECUTION_DESIGN"
+  },
+  "execution_structure": {
+    "states": ["ff_r1", "ff_r2"],
+    "state_count": 2,
+    "task_count": 18,
+    "actor_replicates_per_state_task": 2,
+    "logical_units": 72,
+    "new_updater_calls": 0,
+    "historical_actor_outcomes_in_gate": false,
+    "order_rule": "four_round_content_hash_ranked_latin_rotation_v1",
+    "round_count": 4,
+    "tasks_per_round": 18,
+    "round_treatment_balance": "4/4/5/5",
+    "logical_units_sha256": "8f30ced123c0ea6c7febacd21c7b76657a469cb1fefd59827d530331c4e7dee8",
+    "order_manifest_path": "generated/e2-r17-m3r4-logical-unit-order-20260904.json",
+    "order_manifest_sha256": "f8d5d2ece484b5d96708dbc97644991d2e41cca7117e6feca42faf38b7249c14"
+  },
+  "provider_budget": {
+    "logical_units": 72,
+    "max_provider_calls_per_logical_unit": 10,
+    "hard_max_provider_calls_structural": 720,
+    "derivation": "72 actor units x max_turns=10; M3R4 has no updater calls",
+    "provider_retry_limit": 0,
+    "claims_before_io": true,
+    "claims_never_released": true,
+    "automatic_retry": false,
+    "unused_budget_reallocation": false
+  },
+  "fresh_model_identity_gate": {
+    "required": true,
+    "historical_20260831_identity_reusable": false,
+    "historical_identity_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "reason": "Historical adjudication explicitly requires requalification before a later scientific tranche.",
+    "future_required_status": "PASS_M3R4_SCIENTIFIC_TRANCHE_MODEL_IDENTITY",
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "thinking": "disabled",
+    "max_output_tokens_smoke": 8192,
+    "provider_retry_limit": 0,
+    "identity_drift_policy": "HOLD_REVIEW_REQUIRED_NO_AUTOMATIC_MODEL_SUBSTITUTION",
+    "fresh_identity_executed": false
+  },
+  "inference_qualification": {
+    "within_task_iid_stationarity_required": true,
+    "cross_task_conditional_factorization_required": true,
+    "detected_coupling_blocks_inference": true,
+    "assumption_failure_automatic_rerun": false,
+    "observed_e_real_can_remain_descriptive_when_inference_blocked": true
+  },
+  "draft_objects": {
+    "contract": {
+      "path": "generated/e2-r17-m3r4-execution-draft-contract-20260904.json",
+      "sha256": "4ee69b6cf2455bd78971d1bf556b1ea2ba2179bb1304c74c770f6b64430c2378",
+      "status": "HOLD_FRESH_MODEL_IDENTITY_REQUALIFICATION_REQUIRED_ZERO_PROVIDER_PREP_ONLY"
+    },
+    "zero_provider_preflight": {
+      "path": "generated/e2-r17-m3r4-execution-draft-preflight-20260904.json",
+      "sha256": "3b03ad6e94fbb242261604b3aa2f982858fd119e306805864be3be947f9eea2c",
+      "status": "HOLD_FRESH_MODEL_IDENTITY_REQUALIFICATION_REQUIRED_ZERO_PROVIDER_PREFLIGHT_PASS"
+    }
+  },
+  "bound_code": {
+    "execution_plan": ["research_pipeline/e2_r17_m3r4_execution_plan.py", "a4be0c55a543f81c45c49bf5a89b01e6da157b685e2fa787837c10baa1944052"],
+    "execution_guard": ["research_pipeline/e2_r17_m3r4_execution_guard.py", "39b27f0c14b4fc5171ae39a5117cba61ff94a5d3d6bc9693083f2ee7596ff42f"],
+    "draft_freezer": ["scripts/freeze_e2_r17_m3r4_execution_draft.py", "4642e45363c9601012b47105fce377ae6ea32cbfa89fff545d849a166a9bfde4"],
+    "draft_preflight": ["scripts/preflight_e2_r17_m3r4_execution_draft.py", "a57a14f307b46f8d290a6a2b1e6d2c0eb23fc3df184ff0172fd0b9d9692a0041"],
+    "fresh_identity_qualifier": ["scripts/qualify_e2_r17_m3r4_model_identity.py", "713a61ea5faf4af59dcfeaebc0ac44e4bbc8093a01bd02fb3fa3c1b267490645"],
+    "m3r4_runner": ["scripts/run_e2_r17_m3r4.py", "8eb8c98841f32a5f794f6f3de59d591d7c193b6c68b00fc6911ac0fcc5562ae4"],
+    "analysis_metric": ["research_pipeline/e2_r17_regeneration_metrics_v4.py", "998083d8e96254f634f609696fa3009792df9c198af8bffa3944a1229bf2620c"]
+  },
+  "tests": {
+    "combined_adjacent_regression": "123/123 PASS",
+    "execution_plan_tests": "7/7 PASS",
+    "execution_draft_contract_tests": "8/8 PASS",
+    "execution_guard_tests": "5/5 PASS",
+    "fresh_identity_qualification_tests": "4/4 PASS",
+    "synthetic_actual_actor_path_preflight": "1/1 PASS",
+    "synthetic_actual_actor_path_uses_real_mindmemos_suite_and_ff_states": true,
+    "synthetic_actual_actor_path_provider_calls": 0,
+    "synthetic_actual_actor_path_provider_ledger_created": false,
+    "synthetic_actual_actor_path_run_root_created": false,
+    "synthetic_actual_actor_path_lease_created": false
+  },
+  "filesystem_state": {
+    "scientific_run_root_exists": false,
+    "scientific_lease_exists": false,
+    "provider_budget_ledger_exists": false
+  },
+  "resource_priority": {
+    "recovery_v3_scheduled_continuation_has_priority": true,
+    "m2_outcome_may_redesign_m3r4": false,
+    "m3r4_scientific_execution_started": false
+  },
+  "scientific_execution": false,
+  "provider_calls": 0,
+  "scientific_outcomes_read": false,
+  "authority": {
+    "provider_io": false,
+    "actor_measurement": false,
+    "updater": false,
+    "analysis": false,
+    "m4_bridge": false,
+    "semantic_transfer": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_gate": "AFTER_RECOVERY_V3_RESOURCE_PRIORITY_AND_ARK_QUOTA_AVAILABILITY_RUN_ONE_FRESH_NONSCIENTIFIC_M3R4_MODEL_IDENTITY_QUALIFICATION; ONLY ON EXACT PASS MAY A FINAL CONTRACT AND ACTUAL-PATH PREFLIGHT AUTHORIZATION BE FROZEN",
+  "interpretation_boundary": "M3R4 execution software and static structure are qualified to the provider-I/O boundary. No current model-identity artifact is eligible for this later scientific tranche, so no scientific execution authorization can yet be minted."
+}
