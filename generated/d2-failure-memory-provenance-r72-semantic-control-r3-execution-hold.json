@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R72-SEMANTIC-CONTROL-R3-HOLD",
+  "recorded_at": "2026-09-04T03:19:22+00:00",
+  "status": "HOLD_R72_REQUIRES_INDEPENDENT_R3_REVIEW_BEFORE_EXECUTION",
+  "protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
+  "planned_trajectories": 321,
+  "authority": {
+    "qwen_execution": false,
+    "llama_execution": false,
+    "gpu": false,
+    "analysis": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false
+  },
+  "new_model_trajectories": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "13032b5572809e63b834b0bd849c70fb0ff29cbcec405337f64dc779c27f7594"
+}

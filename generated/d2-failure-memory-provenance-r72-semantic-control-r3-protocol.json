@@ -1,0 +1,3295 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R72-SEMANTIC-CONTROL-R3-PROTOCOL",
+  "status": "R72_SEMANTIC_CONTROL_R3_READY_FOR_INDEPENDENT_R3_REVIEW",
+  "recorded_at": "2026-09-04T03:19:22+00:00",
+  "role": "ZERO_PROVIDER_SEMANTIC_CONTROL_PROTOCOL_AFTER_FRESH_R2_REVIEW_REPAIR",
+  "scientific_question": "Does truthful source-outcome information change closed-loop terminal success beyond a representation- and token-footprint-matched neutral explicit-field control?",
+  "bindings": {
+    "r54_frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "r68_panel_file_sha256": "5e0a3cb743a608896b7192a73207bc0240fe1a1b9d30f23f062c9abfc2ee491d",
+    "r68_panel_receipt_sha256": "bdfb80d67e353a755f8df6a43fe4889e81f8ff2b7ea902a2e07934a31b99be20",
+    "r70_tokenizer_audit_file_sha256": "4532df3d431ef2c7fed27c4cc1db63f2b35ffe706237f7bff97f356e5c150017",
+    "r70_tokenizer_audit_receipt_sha256": "cf436fe3fb5465a39ea9060adc6184ccb1c19878586b5cde8422020fa78792ad",
+    "r70_independent_review_file_sha256": "3531dc2702d16a2c4acb490a488579dd8875b373e1e265b2a84a1dab430762ac",
+    "r70_independent_review_receipt_sha256": "e7fd2f2aba0ca4d5b433b5549f1a1576cba1a3dc17f50738f22ba7dd7dfae294",
+    "r72_r2_review_file_sha256": "99f9855b2d7c6ce884cf8836719e28f442e02be036db87e46d7c7d069f9648c9",
+    "r72_r2_review_receipt_sha256": "e568d4e5657b0e079544ed184577f2f4d2cbb83fa708822b54fd7398be69b117",
+    "parent_r70_protocol_file_sha256": "d5899177315b55a4db515a4adafacd5e33c9ef904c74233ae409e2efc4853aa0",
+    "parent_r70_protocol_receipt_sha256": "12acbc309b3b2d87d1ae0561148c1bafd7073e237cee638d684acfe218f653de",
+    "r72_renderer_audit_receipt_sha256": "464031d0d4074040dacfd8b5037ed7664ec2fc218770d3540acffa2efd63d3e6",
+    "r72_freeze_runner_sha256": "544ad093889c9d67511ac82a0e80b4c8ab8faaa2a5f509669e4b17cb74eb4b8b",
+    "r73_execute_runner_sha256": "636603221649771b141025e119333861a694f8069b123d90d90856f59c78146c",
+    "qwen_parent_manifest_file_sha256": "8217d7fab3a27687560d143f1671769f004a3f1f12018c87f0b5ed31b34d2a67",
+    "llama_parent_manifest_file_sha256": "2add9259f78d5d8a63aad10fc15c9d7cfaf7a14f58b670e61279930b79c81340",
+    "r72_renderer_audit_file_sha256": "9590a4ea8b6112c70e326ba7cb287904802ab082adb5d7a14d46e534cd8155bf"
+  },
+  "units": {
+    "count": 66,
+    "representative_ids": [
+      "377",
+      "492",
+      "316",
+      "63",
+      "373",
+      "57",
+      "331",
+      "44",
+      "185",
+      "454",
+      "116",
+      "357",
+      "142",
+      "285",
+      "338",
+      "234",
+      "36",
+      "474",
+      "301",
+      "329",
+      "112",
+      "302",
+      "496",
+      "274",
+      "101",
+      "486",
+      "412",
+      "219",
+      "108",
+      "216",
+      "114",
+      "13",
+      "494",
+      "232",
+      "287",
+      "189",
+      "12",
+      "424",
+      "490",
+      "321",
+      "52",
+      "409",
+      "433",
+      "308",
+      "343",
+      "445",
+      "295",
+      "444",
+      "111",
+      "87",
+      "298",
+      "346",
+      "137",
+      "359",
+      "148",
+      "376",
+      "33",
+      "447",
+      "126",
+      "464",
+      "390",
+      "166",
+      "255",
+      "51",
+      "23",
+      "299"
+    ],
+    "representative_ids_sha256": "7c2b84aee347faba6d369abb403eb3a25afb164b8f5c6800ba867c25d1017187",
+    "mixed_provenance_ids": [
+      "377",
+      "492",
+      "316",
+      "373",
+      "331",
+      "44",
+      "185",
+      "454",
+      "116",
+      "357",
+      "142",
+      "338",
+      "234",
+      "36",
+      "474",
+      "301",
+      "329",
+      "112",
+      "302",
+      "274",
+      "101",
+      "219",
+      "108",
+      "216",
+      "114",
+      "494",
+      "232",
+      "287",
+      "189",
+      "12",
+      "424",
+      "490",
+      "321",
+      "52",
+      "409",
+      "433",
+      "308",
+      "343",
+      "445",
+      "295",
+      "444",
+      "111",
+      "87",
+      "298",
+      "346",
+      "359",
+      "148",
+      "376",
+      "33",
+      "447",
+      "126",
+      "464",
+      "390",
+      "255",
+      "51",
+      "23",
+      "299"
+    ],
+    "mixed_provenance_count": 57,
+    "selection_rule": "exhaustive R54 outcome-blind eligible suffix eligible[40:]",
+    "historical_treatment_overlap": 0
+  },
+  "field_control": {
+    "field": "source_outcome_status",
+    "value_type": "string",
+    "codes": {
+      "success": "S",
+      "failure": "F",
+      "unknown": "U"
+    },
+    "shared_prefix": "[Retrieved Memory Context]\n[Source outcome codes: S=success, F=failure, U=unknown]\n",
+    "P_neutral": "all values U",
+    "T_truthful": "S/F from frozen source outcome",
+    "S_shuffled": "within-retrieval nonidentity permutation of S/F preserving exact per-prompt multiset",
+    "same_token_footprint_verified_for_both_executor_tokenizers": true
+  },
+  "shuffle_freeze": {
+    "algorithm": "random.Random(int(SHA256(seed|task_id)[:16],16)); repeatedly shuffle truthful S/F sequence until nonidentity; preserve exact multiset",
+    "seed": "B1-R70-SHUFFLE-20260904",
+    "assignments": [
+      {
+        "task_id": "377",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028"
+      },
+      {
+        "task_id": "492",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "ca0f54daea2efd6be0622b4d4160366db13487cebd0911f413fc56f7f10f5a25",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf"
+      },
+      {
+        "task_id": "316",
+        "truthful_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "bac77c045007bb4b925e56b793b77297e0947c230866b64f607e4e0d2c97b431",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "be7aa5da9d471bff1aa99d470aa9ee70189eb4be48fb2f6da811c2b7e31d4abc"
+      },
+      {
+        "task_id": "373",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "1f48cfdccb7ed446cd30f811948b352b42ad86e3f8607f81f9a176e44c27d683",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40"
+      },
+      {
+        "task_id": "331",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "1f7afa5ba832c13f6d103b4b99431f655c6ea2bd7eda688f99f69b40982c3009",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "49fc8e8cbdf6a343450fef59f87582e26eda723a39cecec2386acaab316db0e6"
+      },
+      {
+        "task_id": "44",
+        "truthful_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "e24cf240c09f38fc0853863e5d2e923e635e80b2c37ff7df0df7f97370f85e18",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff"
+      },
+      {
+        "task_id": "185",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028"
+      },
+      {
+        "task_id": "454",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467"
+      },
+      {
+        "task_id": "116",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd"
+      },
+      {
+        "task_id": "357",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995"
+      },
+      {
+        "task_id": "142",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "b7cea824ffa766223d5fcd978dab3429acf67107ee54402814988185e0831991",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540"
+      },
+      {
+        "task_id": "338",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46"
+      },
+      {
+        "task_id": "234",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "0a8b5e69aaecb58af9cc5f05a5c669b08793c1942e010d5a8c2c2e709b76d559",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80"
+      },
+      {
+        "task_id": "36",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995"
+      },
+      {
+        "task_id": "474",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289"
+      },
+      {
+        "task_id": "301",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd"
+      },
+      {
+        "task_id": "329",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "fe062dd148e3b14b7b1721e04eb431c1881e17ed5cd1b5eab6f086cc1f8630c2",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5"
+      },
+      {
+        "task_id": "112",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "b1d4a11bbb18573211a6f07376a0e6101bd4ab3e64f4f5769bf525f7f34836d6"
+      },
+      {
+        "task_id": "302",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "e3f6acf5f00605a3e949f8472067fcda2224c3e350e21c86ed62c9512017fb0d",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "39b487f48f2a869aa01391b997df3dec92d245ae2152c8f5f59c636d320088cd"
+      },
+      {
+        "task_id": "274",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028"
+      },
+      {
+        "task_id": "101",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5"
+      },
+      {
+        "task_id": "219",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540"
+      },
+      {
+        "task_id": "108",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "ca0f54daea2efd6be0622b4d4160366db13487cebd0911f413fc56f7f10f5a25",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "023cfe27d63871a3eb79a4d36608156fec78198abc0e7cd594b4c634842e5097"
+      },
+      {
+        "task_id": "216",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540"
+      },
+      {
+        "task_id": "114",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028"
+      },
+      {
+        "task_id": "494",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "68a4fbe8b5d35d7526ea628f573322cb85ea9bc3fc619c9105805507e3d90ea5"
+      },
+      {
+        "task_id": "232",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289"
+      },
+      {
+        "task_id": "287",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd"
+      },
+      {
+        "task_id": "189",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289"
+      },
+      {
+        "task_id": "12",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd"
+      },
+      {
+        "task_id": "424",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "bac77c045007bb4b925e56b793b77297e0947c230866b64f607e4e0d2c97b431"
+      },
+      {
+        "task_id": "490",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "9cfac2a71065b8902d2d85fc167ced3dcfbd6075394589959990043144770289"
+      },
+      {
+        "task_id": "321",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "39b487f48f2a869aa01391b997df3dec92d245ae2152c8f5f59c636d320088cd",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "be7aa5da9d471bff1aa99d470aa9ee70189eb4be48fb2f6da811c2b7e31d4abc"
+      },
+      {
+        "task_id": "52",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "54170d3c36da1c47ae420a40f66578678f623ffe503179641421823d2397e3d4"
+      },
+      {
+        "task_id": "409",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "1f48cfdccb7ed446cd30f811948b352b42ad86e3f8607f81f9a176e44c27d683",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a37097a6497508f1b570e575d797389424d8bf929d5a729863a8897ca2599995"
+      },
+      {
+        "task_id": "433",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "1f48cfdccb7ed446cd30f811948b352b42ad86e3f8607f81f9a176e44c27d683",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40"
+      },
+      {
+        "task_id": "308",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46"
+      },
+      {
+        "task_id": "343",
+        "truthful_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff"
+      },
+      {
+        "task_id": "445",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd"
+      },
+      {
+        "task_id": "295",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "bfa122538cee831baaeda178458e4a1dae7ec01646ed1fcd6bcabd56c4ff9e80",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5"
+      },
+      {
+        "task_id": "444",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "ed73268da65476dbd3d7f9b0c15ff217ceaad8d1bbb551353f6d7a8df16b2627"
+      },
+      {
+        "task_id": "111",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028"
+      },
+      {
+        "task_id": "87",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "b7cea824ffa766223d5fcd978dab3429acf67107ee54402814988185e0831991",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "e24cf240c09f38fc0853863e5d2e923e635e80b2c37ff7df0df7f97370f85e18"
+      },
+      {
+        "task_id": "298",
+        "truthful_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "68a4fbe8b5d35d7526ea628f573322cb85ea9bc3fc619c9105805507e3d90ea5",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5"
+      },
+      {
+        "task_id": "346",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "5dc16e3a593479f8d6d6666e5b58fc14d44216bf6e0ae7af147d2d563e1674f9",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "b1d4a11bbb18573211a6f07376a0e6101bd4ab3e64f4f5769bf525f7f34836d6"
+      },
+      {
+        "task_id": "359",
+        "truthful_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "e24cf240c09f38fc0853863e5d2e923e635e80b2c37ff7df0df7f97370f85e18",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "ea8a2b92a34268e22335735a4757ec6061b9e698fb5ffbef90645ecf1f5cb540"
+      },
+      {
+        "task_id": "148",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "b1d4a11bbb18573211a6f07376a0e6101bd4ab3e64f4f5769bf525f7f34836d6"
+      },
+      {
+        "task_id": "376",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "a124464c133afbe279e65142422af0680cf5bd9b29652b7b4dc19724fa2a98e5"
+      },
+      {
+        "task_id": "33",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "79149c5ab859386f9243bf18c4fe6eff0ce3f7827eda7963b96fdca9d5a70a21",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "8f7607b3034105bbb5d5e351709f293a8e6de1a0a5f674203294f90f53b770cf"
+      },
+      {
+        "task_id": "447",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "F",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "b1fd47786fb2a58d221990c6916d3337ca73ea04200dc10bf4f756fd48b6de46",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028"
+      },
+      {
+        "task_id": "126",
+        "truthful_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "S",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "79149c5ab859386f9243bf18c4fe6eff0ce3f7827eda7963b96fdca9d5a70a21",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "bac77c045007bb4b925e56b793b77297e0947c230866b64f607e4e0d2c97b431"
+      },
+      {
+        "task_id": "464",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "0e56ce581f21ae3ab23ff08ac346e37d1a6468c50c3678d5ef2d18db48421f40",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "0a8b5e69aaecb58af9cc5f05a5c669b08793c1942e010d5a8c2c2e709b76d559"
+      },
+      {
+        "task_id": "390",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "5dc16e3a593479f8d6d6666e5b58fc14d44216bf6e0ae7af147d2d563e1674f9",
+        "shuffled_code_sequence": [
+          "S",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "0a8b5e69aaecb58af9cc5f05a5c669b08793c1942e010d5a8c2c2e709b76d559"
+      },
+      {
+        "task_id": "255",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "F",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "97de2365495527f04e15a95c062822f6be5e3a05ae7eb12ff1cc13baf8dca6cd"
+      },
+      {
+        "task_id": "51",
+        "truthful_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "F",
+          "S"
+        ],
+        "truthful_code_sequence_sha256": "7b761024b9681349763e7eb6566902f0521f86e892d9a0116cd5cc7a7c97f12c",
+        "shuffled_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "be7aa5da9d471bff1aa99d470aa9ee70189eb4be48fb2f6da811c2b7e31d4abc"
+      },
+      {
+        "task_id": "23",
+        "truthful_code_sequence": [
+          "S",
+          "S",
+          "S",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "54170d3c36da1c47ae420a40f66578678f623ffe503179641421823d2397e3d4",
+        "shuffled_code_sequence": [
+          "F",
+          "S",
+          "S",
+          "S",
+          "S"
+        ],
+        "shuffled_code_sequence_sha256": "0f2b6381b7eeb8b2f6b087b12026a8d41fa7cc7d8bba4ceea7d986bacdafe4ff"
+      },
+      {
+        "task_id": "299",
+        "truthful_code_sequence": [
+          "F",
+          "F",
+          "F",
+          "S",
+          "F"
+        ],
+        "truthful_code_sequence_sha256": "2f10e40aaaad51d6da13daaac503421fa8ebb7a5f0575b851869979432d97028",
+        "shuffled_code_sequence": [
+          "F",
+          "F",
+          "S",
+          "F",
+          "F"
+        ],
+        "shuffled_code_sequence_sha256": "dc9e2bac59254b9d6694feb74c7d2f41f4ef3a106c047597cee89fca8283f467"
+      }
+    ],
+    "assignments_sha256": "3406976fc46c56c8d3e0bab0be40bf35d457afd8ea54dfc27ab25650ce96a29c"
+  },
+  "run_matrix": {
+    "Qwen": {
+      "P_neutral": 66,
+      "T_truthful": 66,
+      "S_shuffled": 57,
+      "total": 189
+    },
+    "Llama": {
+      "P_neutral": 66,
+      "T_truthful": 66,
+      "S_shuffled": 0,
+      "total": 132
+    },
+    "total_new_trajectories": 321,
+    "reduction_vs_rejected_R68_660": 339
+  },
+  "staging": {
+    "Qwen": {
+      "schedule": [
+        {
+          "stage_ordinal": 0,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "377",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 1,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "377",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 2,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "377",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 3,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "492",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 4,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "492",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 5,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "492",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 6,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "316",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 7,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "316",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 8,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "316",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 9,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "63",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 10,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "63",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 11,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "373",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 12,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "373",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 13,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "373",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 14,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "57",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 15,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "57",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 16,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "331",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 17,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "331",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 18,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "331",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 19,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "44",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 20,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "44",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 21,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "44",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 22,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "185",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 23,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "185",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 24,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "185",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 25,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "454",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 26,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "454",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 27,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "454",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 28,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "116",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 29,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "116",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 30,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "116",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 31,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "357",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 32,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "357",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 33,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "357",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 34,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "142",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 35,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "142",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 36,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "142",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 37,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "285",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 38,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "285",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 39,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "338",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 40,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "338",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 41,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "338",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 42,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "234",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 43,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "234",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 44,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "234",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 45,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "36",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 46,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "36",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 47,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "36",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 48,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "474",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 49,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "474",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 50,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "474",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 51,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "301",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 52,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "301",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 53,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "301",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 54,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "329",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 55,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "329",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 56,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "329",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 57,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "112",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 58,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "112",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 59,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "112",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 60,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "302",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 61,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "302",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 62,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "302",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 63,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "496",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 64,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "496",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 65,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "274",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 66,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "274",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 67,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "274",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 68,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "101",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 69,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "101",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 70,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "101",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 71,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "486",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 72,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "486",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 73,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "412",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 74,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "412",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 75,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "219",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 76,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "219",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 77,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "219",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 78,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "108",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 79,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "108",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 80,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "108",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 81,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "216",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 82,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "216",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 83,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "216",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 84,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "114",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 85,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "114",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 86,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "114",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 87,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "13",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 88,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "13",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 89,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "494",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 90,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "494",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 91,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "494",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 92,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "232",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 93,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "232",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 94,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "232",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 95,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "287",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 96,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "287",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 97,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "287",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 98,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "189",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 99,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "189",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 100,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "189",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 101,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "12",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 102,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "12",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 103,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "12",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 104,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "424",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 105,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "424",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 106,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "424",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 107,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "490",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 108,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "490",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 109,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "490",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 110,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "321",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 111,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "321",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 112,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "321",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 113,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "52",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 114,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "52",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 115,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "52",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 116,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "409",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 117,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "409",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 118,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "409",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 119,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "433",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 120,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "433",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 121,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "433",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 122,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "308",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 123,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "308",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 124,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "308",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 125,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "343",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 126,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "343",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 127,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "343",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 128,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "445",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 129,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "445",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 130,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "445",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 131,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "295",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 132,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "295",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 133,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "295",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 134,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "444",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 135,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "444",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 136,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "444",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 137,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "111",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 138,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "111",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 139,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "111",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 140,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "87",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 141,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "87",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 142,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "87",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 143,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "298",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 144,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "298",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 145,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "298",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 146,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "346",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 147,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "346",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 148,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "346",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 149,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "137",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 150,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "137",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 151,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "359",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 152,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "359",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 153,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "359",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 154,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "148",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 155,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "148",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 156,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "148",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 157,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "376",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 158,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "376",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 159,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "376",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 160,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "33",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 161,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "33",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 162,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "33",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 163,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "447",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 164,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "447",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 165,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "447",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 166,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "126",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 167,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "126",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 168,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "126",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 169,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "464",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 170,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "464",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 171,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "464",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 172,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "390",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 173,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "390",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 174,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "390",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 175,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "166",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 176,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "166",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 177,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "255",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 178,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "255",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 179,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "255",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 180,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "51",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 181,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "51",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 182,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "51",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 183,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "23",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 184,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "23",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 185,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "23",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 186,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "299",
+          "arm": "S_shuffled"
+        },
+        {
+          "stage_ordinal": 187,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "299",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 188,
+          "model": "Qwen2.5-7B-Instruct",
+          "task_id": "299",
+          "arm": "P_neutral"
+        }
+      ],
+      "seal": "no Qwen effect inspection until all 189 scheduled Qwen units are terminal or prospectively classified technical-missing"
+    },
+    "Llama": {
+      "schedule": [
+        {
+          "stage_ordinal": 0,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "377",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 1,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "377",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 2,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "492",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 3,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "492",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 4,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "316",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 5,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "316",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 6,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "63",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 7,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "63",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 8,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "373",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 9,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "373",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 10,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "57",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 11,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "57",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 12,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "331",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 13,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "331",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 14,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "44",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 15,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "44",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 16,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "185",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 17,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "185",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 18,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "454",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 19,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "454",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 20,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "116",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 21,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "116",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 22,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "357",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 23,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "357",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 24,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "142",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 25,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "142",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 26,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "285",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 27,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "285",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 28,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "338",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 29,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "338",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 30,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "234",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 31,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "234",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 32,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "36",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 33,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "36",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 34,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "474",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 35,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "474",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 36,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "301",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 37,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "301",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 38,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "329",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 39,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "329",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 40,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "112",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 41,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "112",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 42,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "302",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 43,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "302",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 44,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "496",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 45,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "496",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 46,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "274",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 47,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "274",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 48,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "101",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 49,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "101",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 50,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "486",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 51,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "486",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 52,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "412",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 53,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "412",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 54,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "219",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 55,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "219",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 56,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "108",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 57,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "108",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 58,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "216",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 59,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "216",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 60,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "114",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 61,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "114",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 62,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "13",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 63,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "13",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 64,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "494",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 65,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "494",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 66,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "232",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 67,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "232",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 68,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "287",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 69,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "287",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 70,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "189",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 71,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "189",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 72,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "12",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 73,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "12",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 74,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "424",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 75,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "424",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 76,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "490",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 77,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "490",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 78,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "321",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 79,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "321",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 80,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "52",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 81,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "52",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 82,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "409",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 83,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "409",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 84,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "433",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 85,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "433",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 86,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "308",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 87,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "308",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 88,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "343",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 89,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "343",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 90,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "445",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 91,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "445",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 92,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "295",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 93,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "295",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 94,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "444",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 95,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "444",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 96,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "111",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 97,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "111",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 98,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "87",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 99,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "87",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 100,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "298",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 101,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "298",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 102,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "346",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 103,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "346",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 104,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "137",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 105,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "137",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 106,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "359",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 107,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "359",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 108,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "148",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 109,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "148",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 110,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "376",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 111,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "376",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 112,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "33",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 113,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "33",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 114,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "447",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 115,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "447",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 116,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "126",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 117,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "126",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 118,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "464",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 119,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "464",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 120,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "390",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 121,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "390",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 122,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "166",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 123,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "166",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 124,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "255",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 125,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "255",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 126,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "51",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 127,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "51",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 128,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "23",
+          "arm": "T_truthful"
+        },
+        {
+          "stage_ordinal": 129,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "23",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 130,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "299",
+          "arm": "P_neutral"
+        },
+        {
+          "stage_ordinal": 131,
+          "model": "Meta-Llama-3.1-8B-Instruct",
+          "task_id": "299",
+          "arm": "T_truthful"
+        }
+      ],
+      "design_frozen_before_Qwen_exposure": true,
+      "commitment_to_run_independent_of_Qwen_result": true,
+      "may_execute_after_Qwen_analysis": true,
+      "seal": "no Llama effect inspection until all 132 Llama scheduled units are terminal or prospectively classified technical-missing"
+    }
+  },
+  "analysis": {
+    "primary": {
+      "executor": "Qwen2.5-7B-Instruct",
+      "contrast": "T_truthful - P_neutral",
+      "n": 66,
+      "endpoint": "paired native OSInteraction terminal success",
+      "test": "two-sided exact paired sign test alpha=0.05",
+      "intervals": [
+        "100000-resample paired percentile bootstrap",
+        "conservative sparse-discordance paired RD"
+      ],
+      "decision": {
+        "EFFECT_DETECTED": "complete-pair two-sided exact p<0.05 AND worst-case missing-pair exact sign-test p<0.05 AND conservative technical-missing paired-RD sensitivity excludes 0 in the same direction",
+        "NO_EFFECT_DETECTED": "otherwise; does not imply equivalence, practical smallness, or prompt-format-only explanation"
+      }
+    },
+    "gatekept_correctness": {
+      "executor": "Qwen2.5-7B-Instruct",
+      "contrast": "T_truthful - S_shuffled",
+      "n": 57,
+      "opens_confirmatory_interpretation_only_if_primary_EFFECT_DETECTED": true,
+      "correctness_sensitive": "same-direction complete-pair exact p<0.05 AND worst-case missing-pair exact sign-test p<0.05 AND conservative technical-missing paired-RD sensitivity excludes 0",
+      "otherwise": "mechanism unresolved"
+    },
+    "executor_replication": {
+      "executor": "Meta-Llama-3.1-8B-Instruct",
+      "contrast": "T_truthful - P_neutral",
+      "n": 66,
+      "no_pooling": true,
+      "successful_replication": "effect independently detected in same direction as Qwen primary using the same complete-pair + worst-case-missing sign-test + paired-RD robustness gate",
+      "otherwise": "report independent estimate; no null/equivalence upgrade"
+    },
+    "diagnostics": {
+      "first_executable_action": "descriptive_only",
+      "step_count": "descriptive_only",
+      "subgroups": "descriptive_only"
+    },
+    "multiplicity": "fixed hierarchy: Qwen T-P primary at alpha .05; Qwen T-S gate-kept at alpha .05 only after primary; Llama separately labelled executor replication; diagnostics cannot rescue primary"
+  },
+  "failure_policy": {
+    "scientific_boundary": "treatment exposure, not durable STARTED",
+    "pre_exposure_infrastructure_failure": {
+      "definition": "failure before first treatment-conditioned inference dispatch; includes task/container reset/build failures and transport failures provably before dispatch",
+      "max_total_attempts_same_unit_arm": 3,
+      "fresh_reset_each_attempt": true,
+      "replacement": false,
+      "all_attempts_logged": true
+    },
+    "post_exposure": {
+      "native_model_or_environment_failure": "scientific outcome under native evaluator",
+      "genuine_external_technical_failure": "TECHNICAL_MISSING_INVALID; no rerun",
+      "complete_pair_primary_report": true,
+      "missing_pair_sensitivity": "for m technical-missing pairs among N planned: paired RD worst/best bounds must exclude 0 in the observed direction AND the maximum two-sided exact paired sign-test p-value over every admissible left-only/right-only/concordant completion of the missing pairs must remain <0.05; applies to Qwen T-P, gate-kept Qwen T-S, and any Llama result labelled successful replication"
+    }
+  },
+  "hard_limits": {
+    "no_N0_no_memory": true,
+    "no_M1_masked": true,
+    "no_R4_reversed": true,
+    "no_additional_SOTA_memory_baseline": true,
+    "no_panel_shrink_or_replacement": true,
+    "no_cross_model_pooling": true,
+    "no_equivalence_claim": true,
+    "no_semantic_reasoning_claim_from_first_action": true,
+    "no_PSMG_or_L3_claim": true,
+    "no_change_to_Llama_design_or_run_commitment_after_Qwen_open": true
+  },
+  "preexecution_accounting": {
+    "new_model_trajectories": 0,
+    "task_outcomes_observed": 0,
+    "external_provider_calls": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23"
+}
