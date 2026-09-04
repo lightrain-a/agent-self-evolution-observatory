@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "object_id": "E2-R17-PUBLICATION-PLAN-ORACLE-ADDENDUM-20260904",
+  "status": "ZERO_PROVIDER_PLAN_REPAIR_PASS_NO_EXECUTION_AUTHORITY",
+  "parent_plan": "generated/e2-r17-publication-experiment-coverage-plan-20260904.md",
+  "review": {
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High",
+    "session": "e2-r17-latest-plan-project",
+    "conversation_id": "6a9a73c6-1464-83ee-9e5d-bc85e77ff910",
+    "verdict": "REVISE_ZERO_PROVIDER_PLAN_OR_FRONTEND"
+  },
+  "public_c4_transport": {
+    "eligibility": "prospective pre-treatment observables only",
+    "freeze_per_eligible_unit": [
+      "common_starting_persistent_state",
+      "common_realized_search_evidence_object",
+      "common_served_winner_or_action",
+      "common_serving_behavior",
+      "common_target_future_task",
+      "common_evaluator",
+      "common_executor_updater_family",
+      "common_non_treatment_context_and_preprocessing",
+      "common_budgets"
+    ],
+    "only_changed_variable": "learner_projection_g(T_K)",
+    "paired_estimand": "Delta_transport,m = (FF4_Typed_m - FF4_Free_m) - (WIN_Typed_m - WIN_Free_m)",
+    "end_to_end_main_table_is_not_causal_transport": true,
+    "post_outcome_matching_or_replacement": false
+  },
+  "public_split": {
+    "train_evolution": 80,
+    "validation": 40,
+    "test": 280,
+    "test_used_for_calibration": false,
+    "test_used_for_method_or_baseline_debugging": false,
+    "outcome_conditioned_top_up": false,
+    "confirmatory_minimum_eligible_c4_pairs": 20,
+    "below_minimum_classification": "SUPPORTIVE_TRANSPORT_ONLY"
+  },
+  "corpus_comparator_parity": {
+    "freeze": [
+      "corpus_source_revision",
+      "deduplication_key_and_granularity",
+      "normalization",
+      "source_license_and_access_class",
+      "task_ids_by_split",
+      "no_test_to_train_retrieval_or_index_leakage",
+      "comparator_implementation_revision_and_legal_surface",
+      "per_method_context_construction_and_preprocessing"
+    ],
+    "cross_model_byte_identity_required": false,
+    "within_model_non_treatment_context_identity_required": true,
+    "model_conditioned_unit_filtering": false
+  },
+  "stochastic_evolution_replication": {
+    "deterministic_full_evolution": "one realization allowed only with fully pinned reproducible evolution",
+    "stochastic_full_evolution_minimum_paired_realizations": 3,
+    "heldout_repeats_substitute_for_evolution_replicates": false,
+    "report_separately": [
+      "between_evolution_realization_variation",
+      "within_evolved_state_evaluation_variation"
+    ],
+    "reroll_failed_evolution_realization": false
+  },
+  "reader_facing_language": {
+    "forbidden": [
+      "best to act != best to learn",
+      "best to learn",
+      "unconditional Universal MRW4 compatibility",
+      "authority gate for non-authorization status flags"
+    ],
+    "preferred_question": "With the served winner held fixed, does retaining an alternative projection of the same realized search evidence improve future learning relative to winner-coupled learning?",
+    "preferred_gate_terms": [
+      "fresh qualification gate",
+      "execution gate",
+      "status flag"
+    ],
+    "lifecycle_constraint": "The learner must not update from the current task outcome before the serving action or trajectory being evaluated is complete.",
+    "public_anchor": "Universal MRW4 or prospectively frozen public-compatible alternative"
+  },
+  "stop_rules": [
+    "M4_Q1_FAIL_NO_PUBLIC_RESCUE",
+    "C4_COMMON_OBJECT_OR_SERVING_PARITY_FAIL_NO_CAUSAL_TRANSPORT_CLAIM",
+    "PUBLIC_SPLIT_DEDUP_LICENSE_ACCESS_PARITY_FAIL_PUBLIC_LANE_CLOSED",
+    "STOCHASTIC_METHOD_WITHOUT_THREE_FULL_EVOLUTION_REALIZATIONS_NO_METHOD_LEVEL_ROBUSTNESS_CLAIM",
+    "C4_ELIGIBLE_PAIRS_LT_20_SUPPORTIVE_ONLY",
+    "SECOND_BACKBONE_OR_PUBLIC_DISAGREEMENT_REPORT_DEPENDENCE_NO_MODEL_SWEEP_RESCUE"
+  ],
+  "authority": {
+    "r2_redesign": false,
+    "additional_pre_stage_a_experiment": false,
+    "provider_execution": false,
+    "gpu": false,
+    "public_baseline_execution": false,
+    "public_benchmark_execution": false,
+    "paper_claim_expansion": false
+  },
+  "scientific_provider_calls": 0,
+  "scientific_outcomes_read": 0
+}
