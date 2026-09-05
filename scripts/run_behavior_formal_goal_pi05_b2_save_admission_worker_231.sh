@@ -3,6 +3,7 @@ set -euo pipefail
 ROOT=/data/wyt/formal-goal-pi05-resource-repair-20260902
 PHASE="$ROOT/scripts/run_behavior_formal_goal_pi05_b2_checkpoint_phase_231.sh"
 AUTH="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-qualification-authority-231-20260905.json"
+SUPERSEDED="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b2-host231-authority-superseded-by-host69-20260905.json"
 OUT=/data/wyt/formal-goal-checkpoint-save-qualification-231-20260905/b2-leaf-batched-8gb-52g
 SAVE="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b2-checkpoint-save-result-231-20260905.json"
 DISK="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b2-disk-verify-result-231-20260905.json"
@@ -18,6 +19,7 @@ stop(){ echo "$(ts) STOP $*"; exit 2; }
 
 [[ "$(cat /etc/machine-id)" == "$EXPECTED_MACHINE_ID" ]] || stop "machine-id mismatch"
 [[ -x "$PHASE" && -f "$AUTH" ]] || stop "B2 phase launcher/authority missing"
+[[ ! -e "$SUPERSEDED" ]] || stop "host231 B2 authority superseded by host69: $SUPERSEDED"
 
 while true; do
   # Existence means this exactly-once qualification was already consumed or started.

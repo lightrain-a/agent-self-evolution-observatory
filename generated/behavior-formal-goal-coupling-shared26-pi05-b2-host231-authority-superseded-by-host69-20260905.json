@@ -1,0 +1,19 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-host231-authority-superseded-by-host69-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T21:06:00+08:00",
+  "status": "HOST231_B2_AUTHORITY_SUPERSEDED_UNCONSUMED_BY_HOST69_SUBSTITUTION",
+  "host231_authority_path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-qualification-authority-231-20260905.json",
+  "host231_authority_sha256": "0cd015a81d957d7f854e547ee54076f2a472bb7330cb4c914a21983ec43777d8",
+  "host231_save_result_existed_at_supersession": false,
+  "host231_disk_result_existed_at_supersession": false,
+  "host231_restore_result_existed_at_supersession": false,
+  "host231_qualification_consumed": false,
+  "replacement_review_path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-host69-substitution-independent-review-20260905.json",
+  "replacement_review_sha256": "23a0ca6507d03c5516147aff7d1396afa6cbf559dc46fc425a713832be367943",
+  "host67_forbidden": true,
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false,
+  "decision": "STOP_HOST231_ADMISSION_WORKER_AND_ALLOW_ONLY_A_FRESH_HOST69_SPECIFIC_B2_AUTHORITY"
+}
