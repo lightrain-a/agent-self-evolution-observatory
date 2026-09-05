@@ -1,0 +1,694 @@
+{
+  "authority_sha256": "d6e15c0c8ee4bdbeb41d8297ac29769fa4090699aa5a0b5f3170b7f18eedc505",
+  "batch_manifest": [
+    {
+      "batch_index": 0,
+      "device_bytes": 134217728,
+      "leaf_count": 2,
+      "leaf_indices": [
+        0,
+        1
+      ]
+    },
+    {
+      "batch_index": 1,
+      "device_bytes": 134217728,
+      "leaf_count": 2,
+      "leaf_indices": [
+        2,
+        3
+      ]
+    },
+    {
+      "batch_index": 2,
+      "device_bytes": 134217728,
+      "leaf_count": 2,
+      "leaf_indices": [
+        4,
+        5
+      ]
+    }
+  ],
+  "cache_endpoint": {
+    "event_count": 12,
+    "max_file_drop_bytes": 80392192,
+    "positive_event_count": 6,
+    "single_threshold_pass": true,
+    "total_file_drop_bytes": 358760448,
+    "total_threshold_pass": true
+  },
+  "cgroup_limits": {
+    "memory_max": 2147483648,
+    "memory_swap_max": 0
+  },
+  "checkpoint_bytes": 358743471,
+  "checkpoint_file_count": 19,
+  "exact_sha256_roundtrip": true,
+  "expected_batch_count": 3,
+  "formal_run3_authorized": false,
+  "generated_at": "2026-09-05T14:51:43.254967+00:00",
+  "leaf_bytes": 67108864,
+  "leaf_count": 6,
+  "memory_after_arrays": {
+    "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+    "memory_current": 635469824,
+    "memory_stat": {
+      "active_file": 12288,
+      "anon": 598638592,
+      "file": 2375680,
+      "file_dirty": 0,
+      "file_writeback": 0,
+      "inactive_file": 2363392
+    }
+  },
+  "memory_after_restore": {
+    "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+    "memory_current": 1309679616,
+    "memory_stat": {
+      "active_file": 12288,
+      "anon": 917315584,
+      "file": 361308160,
+      "file_dirty": 8192,
+      "file_writeback": 0,
+      "inactive_file": 361230336
+    }
+  },
+  "memory_after_save": {
+    "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+    "memory_current": 807026688,
+    "memory_stat": {
+      "active_file": 12288,
+      "anon": 773570560,
+      "file": 2482176,
+      "file_dirty": 24576,
+      "file_writeback": 0,
+      "inactive_file": 2469888
+    }
+  },
+  "memory_after_source_release": {
+    "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+    "memory_current": 470532096,
+    "memory_stat": {
+      "active_file": 12288,
+      "anon": 438157312,
+      "file": 2502656,
+      "file_dirty": 40960,
+      "file_writeback": 0,
+      "inactive_file": 2490368
+    }
+  },
+  "memory_baseline": {
+    "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+    "memory_current": 165883904,
+    "memory_stat": {
+      "active_file": 12288,
+      "anon": 128815104,
+      "file": 2375680,
+      "file_dirty": 0,
+      "file_writeback": 0,
+      "inactive_file": 2359296
+    }
+  },
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "pass_thresholds": {
+    "min_single_file_drop_bytes": 1048576,
+    "min_total_file_drop_bytes": 67108864
+  },
+  "reclamation_manifest": [
+    {
+      "batch_index": 0,
+      "blobs": [
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 750190592,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652603392,
+              "file": 62234624,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62222336
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 811577344,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652578816,
+              "file": 122019840,
+              "file_dirty": 16384,
+              "file_writeback": 0,
+              "inactive_file": 122007552
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 811577344,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652578816,
+              "file": 122019840,
+              "file_dirty": 16384,
+              "file_writeback": 0,
+              "inactive_file": 122007552
+            }
+          },
+          "mtime_ns": 1788619892923983287,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/29dda6b7189e626ee0a1df5835d507e0",
+          "relative_to_item": "ocdbt.process_0/d/29dda6b7189e626ee0a1df5835d507e0",
+          "size": 59788634
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 750186496,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652603392,
+              "file": 62234624,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62222336
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 750190592,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652603392,
+              "file": 62234624,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62222336
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 750190592,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652603392,
+              "file": 62234624,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62222336
+            }
+          },
+          "mtime_ns": 1788619892297996175,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/aa2d906ea4712d2e5ffa9a788f9bab30",
+          "relative_to_item": "ocdbt.process_0/d/aa2d906ea4712d2e5ffa9a788f9bab30",
+          "size": 186
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 688795648,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652611584,
+              "file": 2437120,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2424832
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 750186496,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652603392,
+              "file": 62234624,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62222336
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 750186496,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652603392,
+              "file": 62234624,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62222336
+            }
+          },
+          "mtime_ns": 1788619894120958679,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/aeba06a461bb9db76bd172977e32205f",
+          "relative_to_item": "ocdbt.process_0/d/aeba06a461bb9db76bd172977e32205f",
+          "size": 59789725
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 688791552,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652611584,
+              "file": 2437120,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2424832
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 688795648,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652611584,
+              "file": 2437120,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2424832
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 688795648,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 652611584,
+              "file": 2437120,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2424832
+            }
+          },
+          "mtime_ns": 1788619892801985799,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/fdadb23ff64a82855477adfe8cfb0135",
+          "relative_to_item": "ocdbt.process_0/d/fdadb23ff64a82855477adfe8cfb0135",
+          "size": 200
+        }
+      ],
+      "reclaimed_blob_count": 4,
+      "reclaimed_bytes": 119578745
+    },
+    {
+      "batch_index": 1,
+      "blobs": [
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808927232,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 870318080,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 122048512,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 122036224
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 870318080,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 122048512,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 122036224
+            }
+          },
+          "mtime_ns": 1788619895800924206,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/0a0eeb0e504020d24cb5fcf6753e669e",
+          "relative_to_item": "ocdbt.process_0/d/0a0eeb0e504020d24cb5fcf6753e669e",
+          "size": 59790006
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808923136,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808927232,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808927232,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "mtime_ns": 1788619895215936202,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/8b1062d954cead49f1b41621d820cc20",
+          "relative_to_item": "ocdbt.process_0/d/8b1062d954cead49f1b41621d820cc20",
+          "size": 290
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808919040,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808923136,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808923136,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "mtime_ns": 1788619895220936099,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/c9f9115d653b6fb05f6c1a9a6e4f304b",
+          "relative_to_item": "ocdbt.process_0/d/c9f9115d653b6fb05f6c1a9a6e4f304b",
+          "size": 297
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 747528192,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713687040,
+              "file": 2453504,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2441216
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808919040,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 808919040,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 713682944,
+              "file": 82845696,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 82927616
+            }
+          },
+          "mtime_ns": 1788619895358933269,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/f33e84c443bd9510a7bc0c22e8c29658",
+          "relative_to_item": "ocdbt.process_0/d/f33e84c443bd9510a7bc0c22e8c29658",
+          "size": 59790320
+        }
+      ],
+      "reclaimed_blob_count": 4,
+      "reclaimed_bytes": 119580913
+    },
+    {
+      "batch_index": 2,
+      "blobs": [
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 868200448,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 62271488,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62259200
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 929857536,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773554176,
+              "file": 122064896,
+              "file_dirty": 8192,
+              "file_writeback": 0,
+              "inactive_file": 122052608
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 929857536,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773554176,
+              "file": 122064896,
+              "file_dirty": 8192,
+              "file_writeback": 0,
+              "inactive_file": 122052608
+            }
+          },
+          "mtime_ns": 1788619898418870640,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/17615877feef3e5d61f3a0702eb86a1b",
+          "relative_to_item": "ocdbt.process_0/d/17615877feef3e5d61f3a0702eb86a1b",
+          "size": 59790205
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806813696,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 868200448,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 62271488,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62259200
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 868200448,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 62271488,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 62259200
+            }
+          },
+          "mtime_ns": 1788619898782863206,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/5a96c78194f95281fa5743e673b15de1",
+          "relative_to_item": "ocdbt.process_0/d/5a96c78194f95281fa5743e673b15de1",
+          "size": 59789050
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806809600,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806813696,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806813696,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "mtime_ns": 1788619897428890875,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/bda7439aa384e011d3ad66bbbdd4ed53",
+          "relative_to_item": "ocdbt.process_0/d/bda7439aa384e011d3ad66bbbdd4ed53",
+          "size": 355
+        },
+        {
+          "advice": "POSIX_FADV_DONTNEED",
+          "durability_barrier": "fsync",
+          "memory_after_fadvise": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806805504,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "memory_after_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806809600,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "memory_before_fsync": {
+            "cgroup": "/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-b3-d2-cache-accounting-69-20260905.service",
+            "memory_current": 806809600,
+            "memory_stat": {
+              "active_file": 12288,
+              "anon": 773570560,
+              "file": 2482176,
+              "file_dirty": 24576,
+              "file_writeback": 0,
+              "inactive_file": 2469888
+            }
+          },
+          "mtime_ns": 1788619897714885026,
+          "path": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905/checkpoint.orbax-checkpoint-tmp-0/ocdbt.process_0/d/d42c23f6b941032e4882e8da8b7d1e81",
+          "relative_to_item": "ocdbt.process_0/d/d42c23f6b941032e4882e8da8b7d1e81",
+          "size": 366
+        }
+      ],
+      "reclaimed_blob_count": 4,
+      "reclaimed_bytes": 119579976
+    }
+  ],
+  "restored_sha256": {
+    "leaf_00": "8c726a96e11039e6d8905221e2f08a92ee0fbd363667021fe070db5d37ce915c",
+    "leaf_01": "cb653760fcd6c5ca80a7949bd53608b057ead064daafaca28774567b3f100010",
+    "leaf_02": "d26225d25986ee091c284f00648f506ca3d453a7180595f7449bc4193df44110",
+    "leaf_03": "6eeb412d0ee591ad5482245ff157b2fa4f6bc39169293a24b9e193f3153d79c3",
+    "leaf_04": "99e1baf735e5a6757130a307e3d4e2bf9d36c31c6267030e50c12446397ca06d",
+    "leaf_05": "081c0eb6a50691decc6884767b95944ba45a3399f7be4cbc22c38698dd64bfaa"
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b3-d2-cache-accounting-v1",
+  "scientific_data_accessed": false,
+  "scope": "SYNTHETIC_CPU_ONLY_NO_MODEL_NO_SCIENTIFIC_DATA",
+  "source_sha256": {
+    "leaf_00": "8c726a96e11039e6d8905221e2f08a92ee0fbd363667021fe070db5d37ce915c",
+    "leaf_01": "cb653760fcd6c5ca80a7949bd53608b057ead064daafaca28774567b3f100010",
+    "leaf_02": "d26225d25986ee091c284f00648f506ca3d453a7180595f7449bc4193df44110",
+    "leaf_03": "6eeb412d0ee591ad5482245ff157b2fa4f6bc39169293a24b9e193f3153d79c3",
+    "leaf_04": "99e1baf735e5a6757130a307e3d4e2bf9d36c31c6267030e50c12446397ca06d",
+    "leaf_05": "081c0eb6a50691decc6884767b95944ba45a3399f7be4cbc22c38698dd64bfaa"
+  },
+  "standard_orbax_restore": true,
+  "status": "PI05_B3_D2_CACHE_ACCOUNTING_PASS",
+  "synthetic_d2h_batch_bytes": 134217728,
+  "synthetic_seed": 20260905,
+  "synthetic_total_bytes": 402653184,
+  "tmp_residue": []
+}
