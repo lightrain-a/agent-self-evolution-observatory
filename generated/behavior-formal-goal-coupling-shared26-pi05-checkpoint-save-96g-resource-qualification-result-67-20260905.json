@@ -1,0 +1,160 @@
+{
+  "adjudication_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-throttled-sync-checkpoint-save-4gb-40g-failure-adjudication-20260905.json",
+  "adjudication_sha256": "843200d154bddd5f6f15f04c87f41834ef3b9fccd909e9edb924a4d269e8bf6b",
+  "authority_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-qualification-authority-20260905.json",
+  "authority_sha256": "dbf395bd68a0a3715b1788ce8482dc215d0ee3e0e8c9669893391617da7d02c5",
+  "backward_pass_executed": false,
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "batch_size_configured": 16,
+  "checkpoint_bytes": 3623482417,
+  "checkpoint_file_count": 21,
+  "checkpoint_restore_completed": false,
+  "checkpoint_save_completed": false,
+  "checkpoint_save_started": true,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "dataset_accessed": false,
+  "enable_async_checkpointing": false,
+  "error": "ValueError: Requested more bytes than we reserved space for: 4831838208 > 4000000000",
+  "expected_memory_max_gib": 96,
+  "formal_training_authorized": false,
+  "forward_pass_executed": false,
+  "generated_at": "2026-09-05T04:52:40.358223+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host": "67",
+  "host_before": {
+    "MemAvailable_kib": 122120548,
+    "MemFree_kib": 56670796,
+    "MemTotal_kib": 131739372,
+    "SwapFree_kib": 17204220,
+    "SwapTotal_kib": 19531772,
+    "process_rss_kib": 19928
+  },
+  "independent_review_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-resource-independent-review-20260905.json",
+  "independent_review_sha256": "d98f674a4083fc41b3b79979d3e3440f1862fcfd21fc31de30d3780fec89db1e",
+  "loss_values_read_or_reported": false,
+  "manager_steps": [],
+  "next_gate": "CANDIDATE_B_CHUNKED_D2H_SEPARATE_REVIEW_REQUIRED",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_executed": false,
+  "policy_outcomes_read": false,
+  "portable_openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "portable_openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "pytree_restore_concurrent_gb": 4,
+  "pytree_save_concurrent_gb": 4,
+  "real_scientific_optimizer_updates": 0,
+  "resolved_checkpointer_type": "Checkpointer",
+  "resource_scope_before": {
+    "cpu_affinity": "0-63",
+    "memory_current_bytes": 12452638720,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_max_bytes": 103079215104,
+    "memory_peak_bytes": 12469317632,
+    "memory_swap_max_bytes": 0,
+    "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-checkpoint-save-96g-resource-qual-67-20260905.service"
+  },
+  "restored_state_step": null,
+  "runner_sha256": "eb2afafdfc13985e1e73c1d90f9b931214522cd1e5b6375798f23a5d037e8c2b",
+  "save_label": 10000,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-qualification-v1",
+  "seed": 42,
+  "snapshots": {
+    "after_error": {
+      "cgroup": {
+        "cpu_affinity": "0-63",
+        "memory_current_bytes": 64041705472,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_max_bytes": 103079215104,
+        "memory_peak_bytes": 66079469568,
+        "memory_swap_max_bytes": 0,
+        "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-checkpoint-save-96g-resource-qual-67-20260905.service"
+      },
+      "gpu": {
+        "gpus": [
+          {
+            "index": 0,
+            "memory_total_mib": 81920,
+            "memory_used_mib": 73499,
+            "name": "NVIDIA A100-SXM4-80GB",
+            "utilization_gpu_percent": 0
+          }
+        ]
+      },
+      "host": {
+        "MemAvailable_kib": 63888172,
+        "MemFree_kib": 6486228,
+        "MemTotal_kib": 131739372,
+        "SwapFree_kib": 17208828,
+        "SwapTotal_kib": 19531772,
+        "process_rss_kib": 58813444
+      }
+    },
+    "after_state": {
+      "cgroup": {
+        "cpu_affinity": "0-63",
+        "memory_current_bytes": 19189309440,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_max_bytes": 103079215104,
+        "memory_peak_bytes": 36279201792,
+        "memory_swap_max_bytes": 0,
+        "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-checkpoint-save-96g-resource-qual-67-20260905.service"
+      },
+      "gpu": {
+        "gpus": [
+          {
+            "index": 0,
+            "memory_total_mib": 81920,
+            "memory_used_mib": 73499,
+            "name": "NVIDIA A100-SXM4-80GB",
+            "utilization_gpu_percent": 16
+          }
+        ]
+      },
+      "host": {
+        "MemAvailable_kib": 115446760,
+        "MemFree_kib": 48980688,
+        "MemTotal_kib": 131739372,
+        "SwapFree_kib": 17206780,
+        "SwapTotal_kib": 19531772,
+        "process_rss_kib": 6164912
+      }
+    }
+  },
+  "state_signature_after": null,
+  "state_signature_before": "47f606fcd316966931bf4fe6ef8ac3fbc97ef35b46126c298689d18dfba2dfb8",
+  "state_signature_match": false,
+  "status": "PI05_CHECKPOINT_SAVE_96G_RESOURCE_CHILD_HOLD",
+  "train_state_ready": true
+}

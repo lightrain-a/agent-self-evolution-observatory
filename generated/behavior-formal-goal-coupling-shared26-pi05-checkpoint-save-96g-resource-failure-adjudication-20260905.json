@@ -1,0 +1,78 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T12:55:00+08:00",
+  "status": "PI05_CHECKPOINT_SAVE_96G_RESOURCE_CHILD_LIMITER_LEAF_SIZE_HOLD",
+  "decision": "CLOSE_CANDIDATE_A_QUALIFICATION_NO_RUN3_ADVANCE_TO_CANDIDATE_B_REVIEW_ONLY",
+  "independent_review_sha256": "d98f674a4083fc41b3b79979d3e3440f1862fcfd21fc31de30d3780fec89db1e",
+  "authority_sha256": "dbf395bd68a0a3715b1788ce8482dc215d0ee3e0e8c9669893391617da7d02c5",
+  "result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-qualification-result-67-20260905.json",
+    "sha256": "3fbb78d7b6e60dc37183c764f9eedf6601e09445618d7de384b82e37ce73cd82",
+    "status": "PI05_CHECKPOINT_SAVE_96G_RESOURCE_CHILD_HOLD",
+    "train_state_ready": true,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "checkpoint_restore_completed": false,
+    "manager_steps": [],
+    "state_signature_match": false,
+    "error": "ValueError: Requested more bytes than we reserved space for: 4831838208 > 4000000000"
+  },
+  "execution": {
+    "host": "67",
+    "unit": "pi05-checkpoint-save-96g-resource-qual-67-20260905.service",
+    "systemd_result": "exit-code",
+    "exec_main_code": "exited",
+    "exec_main_status": 2,
+    "memory_max_bytes": 103079215104,
+    "memory_peak_bytes_systemd": 65917800448,
+    "memory_peak_gib_systemd": 61.39,
+    "memory_swap_peak_bytes": 0,
+    "duration_seconds_approx": 164,
+    "oom_kill": false
+  },
+  "mechanistic_localization": {
+    "requested_single_leaf_bytes": 4831838208,
+    "requested_single_leaf_gib": 4.50,
+    "frozen_limiter_bytes": 4000000000,
+    "failure_layer": "ByteLimiter reservation before checkpoint completion",
+    "interpretation": "Candidate A did not fail by exhausting the independently reviewed 96GiB host-memory ceiling. It failed because the prospectively retained 4GB write limiter is smaller than one serialization request/leaf. Therefore this result cannot be used to infer that 96GiB is insufficient.",
+    "no_posthoc_limiter_change": "The A authority explicitly forbids choosing another limiter after observing this result. The obvious 5/8GB continuation is therefore not authorized."
+  },
+  "checkpoint_disposition": {
+    "complete_checkpoint_exists": false,
+    "manager_visible_steps": [],
+    "restore_qualified": false,
+    "partial_output_scientifically_usable": false,
+    "partial_output_resume_authorized": false
+  },
+  "scientific_boundary": {
+    "behavior_dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false,
+    "formal_run3_authorized": false,
+    "policy_evaluation_authorized": false
+  },
+  "next_gate": {
+    "status": "CANDIDATE_B_SEPARATE_INDEPENDENT_REVIEW_REQUIRED",
+    "candidate": "CHUNKED_DEVICE_TO_HOST_CHECKPOINT_SERIALIZATION",
+    "purpose": "Bound the device-to-host staging operation itself instead of only post-D2H background write concurrency.",
+    "formal_run3_authorized": false,
+    "candidate_b_execution_authorized": false
+  },
+  "forbidden": [
+    "replay candidate A",
+    "change save_concurrent_gb to 5, 8, or any new value as an A continuation",
+    "change MemoryMax as an A continuation",
+    "formal run3",
+    "resume from run2 or candidate-A partial checkpoints",
+    "checkpoint content, format, label, or frequency changes",
+    "scientific variable changes",
+    "BEHAVIOR Q, policy outcome, effect, p-value, validation loss, or loss-based selection access"
+  ]
+}
