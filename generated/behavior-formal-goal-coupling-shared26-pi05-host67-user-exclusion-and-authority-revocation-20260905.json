@@ -1,0 +1,46 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-host67-user-exclusion-and-authority-revocation-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T16:43:53+08:00",
+  "status": "HOST67_USER_EXCLUDED_AND_SPLIT_HARNESS_AUTHORITY_REVOKED",
+  "source": "explicit user directive in active project conversation: do not use host67",
+  "host_exclusion": {
+    "host": "222.20.126.67",
+    "scope": "all further execution for this Formal Goal Coupling child unless the user explicitly reverses this directive in a later message",
+    "scientific_inference": false,
+    "reason_required": false
+  },
+  "revoked_authority": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-b1-split-harness-checkpoint-qualification-repair1-authority-20260905.json",
+    "sha256": "5cfa58d81fee7a1ea987bb6fdf9bcea791672b2f6bc75638529a8145d3fbaf4d",
+    "prior_status": "AUTHORIZED_PI05_B1_SPLIT_HARNESS_QUALIFICATION_REPAIR1",
+    "revocation_scope": "execution on host67",
+    "qualification_attempt_consumed_before_revocation": false
+  },
+  "stopped_control_plane": {
+    "worker": "pi05-b1-split-admission-worker-67-20260905.service",
+    "worker_content_sha256": "a6f9685f5959d09182eaa542cdbcd1b03b7f86401ad0b74bffa9ec3a05c42062",
+    "phase_launcher_content_sha256": "9be952e3843631a74de866cce123ef3c1e0013f5a7dcc9bb1d9b881d5d9abb48",
+    "worker_state_after_stop": "inactive",
+    "reference_receipt_present": false,
+    "save_receipt_present": false,
+    "verify_result_present": false,
+    "formal_run3_started": false
+  },
+  "forbidden": [
+    "start or queue the split-harness qualification on host67",
+    "start or queue formal run3 on host67",
+    "use host67 as a relay execution host for this child",
+    "treat the revoked host67 authority as live execution permission"
+  ],
+  "next_gate": {
+    "status": "NEW_NON67_CHECKPOINT_QUALIFICATION_EXECUTION_PATH_REQUIRED",
+    "requirements": [
+      "preserve the approved F/S/V split-harness scientific and checkpoint semantics unless separately reviewed",
+      "select a non67 host with sufficient GPU and host-memory resources, or redesign the checkpoint qualification under a separately reviewed non67 resource contract",
+      "freeze a new non67 authority before any qualification execution",
+      "do not authorize formal run3 before the non67 checkpoint qualification passes"
+    ]
+  }
+}

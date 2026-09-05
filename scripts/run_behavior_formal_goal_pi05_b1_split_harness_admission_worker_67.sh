@@ -5,6 +5,7 @@ PHASE="$ROOT/scripts/run_behavior_formal_goal_pi05_b1_split_harness_phase_67.sh"
 REF="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b1-split-reference-result-67-20260905.json"
 SAVE="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b1-split-save-stage-result-67-20260905.json"
 RESULT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-b1-split-harness-checkpoint-qualification-result-67-20260905.json"
+REVOCATION="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-host67-user-exclusion-and-authority-revocation-20260905.json"
 OUT=/data/wyt/formal-goal-checkpoint-save-qualification-67-20260905/b1-split-repair1-8gb-96g
 LOG=/data/wyt/formal-goal-b1-split-harness-admission-worker-67-20260905.log
 MIN_AVAILABLE_KIB=$((104*1024*1024))
@@ -13,6 +14,10 @@ exec >>"$LOG" 2>&1
 
 ts(){ date '+%Y-%m-%dT%H:%M:%S%z'; }
 fail(){ echo "$(ts) STOP $*"; exit 2; }
+
+# User-level host exclusion supersedes the earlier host67 execution authority.
+# Fail closed even if an operator accidentally restarts this historical worker.
+[[ ! -e "$REVOCATION" ]] || fail "host67 execution revoked by explicit user directive: $REVOCATION"
 
 # Waiting does not consume the authorized qualification attempt. Any pre-existing
 # split-harness receipt/output means another actor already consumed or started it.
