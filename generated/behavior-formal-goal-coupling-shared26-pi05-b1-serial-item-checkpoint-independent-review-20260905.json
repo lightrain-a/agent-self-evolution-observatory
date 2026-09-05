@@ -1,0 +1,35 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-independent-review-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T13:02:45+08:00",
+  "reviewer": {
+    "kind": "independent_codexflow_codex_read_only_review",
+    "session_id": "01a06feb-dc71-75a3-ab38-ffaddb58dd4a",
+    "tools_or_file_edits_authorized": false
+  },
+  "verbatim_compact_response": "VERDICT=APPROVE_B1_FIRST; LIMITER8=OK; MEM96=OK; B2=FALLBACK; GATE=Clean host67 step0 save+barrier+restore: no OOM/swap, ≤96GiB, exact items/labels/tree/dtypes/shapes/values; RUN3_NOW=NO; FORBID=run3 pre-gate, limiter ladder, format/content changes, naive chunked serialize; WHY=B1 removes item overlap; 8GB exceeds measured 4.83GB; B2 only if B1 fails.",
+  "verdict": "APPROVE_B1_FIRST",
+  "scientific_invariants_preserved": true,
+  "limiter8": "APPROVED_SINGLE_FIXED_VALUE",
+  "memory96": "APPROVED",
+  "candidate_b2": "FALLBACK_ONLY_IF_B1_FAILS",
+  "run3_authorized_now": false,
+  "qualification_gate": [
+    "fresh step0 state only on clean host67",
+    "serial item checkpoint save completes under MemoryMax=96GiB and swap=0",
+    "immediate completion barrier returns",
+    "manager exposes completed label 10000",
+    "exact item names and checkpoint format preserved",
+    "CPU/NumPy restore completes",
+    "canonical state-dict tree, leaf shapes, leaf dtypes, and per-leaf SHA256 values match pre-save fingerprints",
+    "normalization asset SHA256 is unchanged"
+  ],
+  "forbidden": [
+    "formal run3 before B1 PASS and separate authority",
+    "limiter laddering after B1",
+    "checkpoint format/content/label/frequency changes",
+    "naive repeated super().serialize chunking that overwrites array metadata",
+    "policy outcome, Q, effect, p-value, or loss access"
+  ]
+}

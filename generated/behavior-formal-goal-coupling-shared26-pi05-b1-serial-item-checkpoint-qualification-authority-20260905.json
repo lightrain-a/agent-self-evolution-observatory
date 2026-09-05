@@ -1,0 +1,82 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T13:11:00+08:00",
+  "status": "AUTHORIZED_PI05_B1_SERIAL_ITEM_CHECKPOINT_QUALIFICATION",
+  "decision": "ONE_FRESH_STEP0_SERIAL_ITEM_SAVE_PLUS_CPU_EXACT_RESTORE_QUALIFICATION_ONLY",
+  "parent_failure_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-failure-adjudication-20260905.json",
+  "parent_failure_adjudication_sha256": "27463804b533421a887d9c4c6d443bd80b90276b7e70d40e6aba21cddcbb72ba",
+  "independent_review_path": "generated/behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-independent-review-20260905.json",
+  "independent_review_sha256": "fa75f42c86d0cc27948e57711f0fab59381c4f0b10227a19c7eead85215d69a5",
+  "source_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-source-adjudication-20260905.json",
+  "source_adjudication_sha256": "f2d38a4a1abf61a0a9c363027cc5e103b36c9426bef23b74d6a6b861390c5213",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b1_serial_item_checkpoint_save.py",
+  "runner_sha256": "56970bbb1168b7caa1e0821c5063a89a09286941eba1a99b04b5aef9bb0e9f2a",
+  "verifier_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b1_serial_item_checkpoint_verify.py",
+  "verifier_sha256": "7417757be4e4af2f0ab4e4650e44b511a32e811b686a76d9a16cb8ccf20a7ef8",
+  "launcher_path": "scripts/run_behavior_formal_goal_pi05_b1_serial_item_checkpoint_qualification_67.sh",
+  "launcher_sha256": "89d5ac48e5e36de91464b64e493428ef0020730d9bfed54ac3494ba23ac7c8b2",
+  "host": "67",
+  "resource_scope": {
+    "gpu": "one A100-SXM4-80GB for save stage only",
+    "restore_backend": "CPU/NumPy in a separate process after save process exits",
+    "memory_max_gib": 96,
+    "memory_swap_max_gib": 0,
+    "cpu_affinity": "0-63",
+    "enable_async_checkpointing": false,
+    "pytree_save_concurrent_gb": 8,
+    "pytree_restore_concurrent_gb": 8,
+    "serial_large_items": ["train_state", "params"],
+    "checkpoint_completion_barrier_required": true
+  },
+  "implementation_boundary": {
+    "changed": "Scheduling only: train_state and params PyTree handlers are wrapped as blocking CheckpointHandlers, eliminating their CompositeHandler overlap. One fixed 8GB ByteLimiter is used because the independently observed single request is 4.831838208GB.",
+    "unchanged": [
+      "OpenPI checkpoints._split_params content",
+      "CheckpointManager step directory layout",
+      "item names assets/train_state/params",
+      "PyTreeCheckpointHandler serialization format",
+      "normalization asset bytes",
+      "checkpoint labels/frequency/content",
+      "model/data/batch/seed/optimizer/LR/EMA/action horizon/update count"
+    ]
+  },
+  "qualification": {
+    "fresh_step0_state": true,
+    "save_label": 10000,
+    "behavior_dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "real_scientific_optimizer_updates": 0,
+    "required_pass": [
+      "fresh step0 state initializes on one A10080",
+      "canonical state-dict fingerprints are computed before save",
+      "train_state and params save intervals do not overlap",
+      "synchronous save and immediate completion barrier finish with no OOM or swap",
+      "CheckpointManager exposes exactly label 10000",
+      "final step has exact item names _CHECKPOINT_METADATA/assets/params/train_state",
+      "no Orbax temporary checkpoint path remains",
+      "normalization asset SHA256 equals 5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+      "save process exits and releases GPU state",
+      "separate CPU/NumPy restore completes for train_state and params",
+      "restored canonical tree structure, leaf paths, shapes, dtypes, byte counts, and per-leaf SHA256 values exactly match pre-save fingerprints"
+    ]
+  },
+  "if_pass": "Stop qualification and create a separate formal-run3 B1 authority. Run3 remains unauthorized until that later authority is frozen.",
+  "if_fail": "Stop B1. Do not ladder limiter or memory values. Candidate B2 chunked-D2H may be separately reviewed but is not authorized by this authority.",
+  "formal_run3_authorized": false,
+  "candidate_b2_execution_authorized": false,
+  "policy_evaluation_authorized": false,
+  "forbidden": [
+    "formal run3 before B1 PASS and separate authority",
+    "replay B1 qualification",
+    "another limiter value",
+    "another MemoryMax value",
+    "checkpoint format/content/label/frequency changes",
+    "naive chunked repeated ArrayHandler.serialize calls",
+    "resume from run2 or any partial qualification checkpoint",
+    "BEHAVIOR Q, policy outcome, effect, p-value, validation loss, or loss-based selection access"
+  ]
+}

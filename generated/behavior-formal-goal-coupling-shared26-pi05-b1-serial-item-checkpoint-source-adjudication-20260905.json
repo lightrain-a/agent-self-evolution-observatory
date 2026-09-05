@@ -1,0 +1,54 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-source-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T13:03:30+08:00",
+  "status": "PI05_B1_SERIAL_ITEM_CHECKPOINT_SOURCE_DESIGN_READY",
+  "parent_a_failure_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-failure-adjudication-20260905.json",
+    "sha256": "27463804b533421a887d9c4c6d443bd80b90276b7e70d40e6aba21cddcbb72ba"
+  },
+  "source_hashes": {
+    "orbax_composite_checkpoint_handler_py": "476b4c0220cd4fdf83705821adfdbad49c3a5715fa95e60ad8f0d878941c438e",
+    "orbax_type_handlers_py": "831540d47a30cacf2e5fc5495386f297625d7d79eaa35cc9902528c495c0b12d",
+    "orbax_array_metadata_store_py": "c12e1567ebeb346f88af1cb65e61b54fc2772ac9f60e16af82e91b73f6155b1c",
+    "openpi_checkpoints_py": "9e8782f0171eec4b5623728204f975a976d5f89defa7b317100db6395990dd13"
+  },
+  "source_facts": {
+    "composite_item_saves_are_gathered": true,
+    "large_items": ["train_state", "params"],
+    "openpi_split_semantics": "When EMA exists, train_state retains live params and optimizer state while the separate params item contains EMA params.",
+    "array_handler_d2h_before_background_write": true,
+    "array_metadata_store_write_overwrites_process_file": true,
+    "naive_multi_call_arrayhandler_chunking_is_not_qualified": true,
+    "candidate_a_largest_observed_request_bytes": 4831838208,
+    "candidate_a_largest_observed_request_gib": 4.50
+  },
+  "b1_design": {
+    "name": "SERIAL_LARGE_ITEM_COMPOSITE_CHECKPOINT",
+    "implementation": "Wrap the two PyTree handlers in synchronous blocking CheckpointHandler adapters so CompositeCheckpointHandler completes one large item before starting the other. Preserve item names, PyTreeCheckpointHandler, OCDBT/default format, assets callback, and CheckpointManager layout.",
+    "enable_async_checkpointing": false,
+    "memory_max_gib": 96,
+    "memory_swap_max_gib": 0,
+    "pytree_save_concurrent_gb": 8,
+    "pytree_restore_concurrent_gb": 8,
+    "limiter_selection": "One independently reviewed fixed value. 8GB exceeds the observed 4.831838208GB single request and is not a post-result ladder.",
+    "completion_barrier_after_save": true,
+    "checkpoint_content_changed": false,
+    "checkpoint_format_changed": false,
+    "checkpoint_item_names_changed": false,
+    "checkpoint_labels_changed": false,
+    "scientific_variables_changed": false
+  },
+  "roundtrip_validation": {
+    "save_process": "Generate canonical state-dict per-leaf SHA256 fingerprints before save, then perform the B1 serial save and exit to release GPU memory.",
+    "restore_process": "In a separate CPU/NumPy process, restore train_state and params from checkpoint metadata, recompute per-leaf SHA256 fingerprints, and require exact match.",
+    "normalization_asset_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "manager_step_required": 10000
+  },
+  "if_pass": "Stop qualification and design a separate fresh formal run3 authority using the same B1 implementation. Run3 is not authorized by this source adjudication.",
+  "if_fail": "Stop B1. Candidate B2 chunked-D2H remains fallback only and requires another independent review before execution.",
+  "formal_run3_authorized": false,
+  "candidate_b1_execution_authorized": false,
+  "candidate_b2_execution_authorized": false
+}
