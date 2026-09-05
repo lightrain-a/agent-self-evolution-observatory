@@ -1,0 +1,23 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-independent-review-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T16:58:00+08:00",
+  "reviewer": {
+    "kind": "independent_codexflow_codex_read_only_review",
+    "session_id": "01a070cc-58a4-7470-aa3a-0e819a313455",
+    "tools_or_file_edits_authorized": false
+  },
+  "verbatim_compact_response": "VERDICT=APPROVE_CONDITIONAL;FORMAT=PRESERVED_if_specs,destinations,names,metadata,OCDBT_unchanged;ROUNDTRIP=per-leaf_save_SHA256+exact_disk_check+fresh_standard_restore_step0;MEMORY52=DEFENSIBLE_peak<52GiB,no_OOM,swap0;REQUIRED=host231,step0,sync_serial,8GB_batches,label10000,all_leaves,no_tmp,stop_on_result;FORBIDDEN=scientific_access,updates,async_overlap,format_change,resource_ladder;HOST67=FORBIDDEN;RUN3=UNAUTHORIZED",
+  "verdict": "APPROVE_CONDITIONAL",
+  "format_preserving": true,
+  "roundtrip_evidence_sufficient": true,
+  "memory_max_gib": 52,
+  "memory_swap_max_gib": 0,
+  "required_host": "231",
+  "d2h_batch_bytes": 8000000000,
+  "required_save_label": 10000,
+  "host67_forbidden": true,
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false
+}

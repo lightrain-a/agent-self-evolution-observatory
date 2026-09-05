@@ -1,0 +1,45 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-orbax-cpu-smoke-v2",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T17:06:00+08:00",
+  "status": "PI05_B2_LEAF_BATCHED_ORBAX_CPU_SMOKE_PASS",
+  "serializer_sha256": "de189f04e29e9e87a9311c0edc34ece116200bc5229c857a0241e81904de0b03",
+  "tests": {
+    "single_pytree_format_roundtrip": {
+      "status": "PASS",
+      "forced_batch_count": 3,
+      "leaf_count": 4,
+      "standard_orbax_restore": true,
+      "exact_array_equality": true,
+      "consolidated_array_metadata_file_count": 1
+    },
+    "single_pytree_direct_leaf_verify": {
+      "status": "PASS",
+      "exact_sha256_match": true,
+      "standard_orbax_restore": true
+    },
+    "composite_standard_item_restore": {
+      "status": "PASS",
+      "items": ["train_state", "params"],
+      "scalar_state_step_supported": true,
+      "state_step": 0,
+      "standard_pytree_handlers_only_for_restore": true
+    },
+    "composite_direct_leaf_verify": {
+      "status": "PASS",
+      "train_state_verified_leaves": 2,
+      "params_verified_leaves": 1,
+      "final_item_directories_used": ["10000/train_state", "10000/params"]
+    }
+  },
+  "scientific_boundary": {
+    "pi05_state_loaded": false,
+    "behavior_dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "policy_outcomes_read": false,
+    "formal_run3_authorized": false
+  }
+}
