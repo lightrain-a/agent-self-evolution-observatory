@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-stage-a-r3-provider-reset-readiness-audit",
+  "created_at_utc": "2026-09-05T14:14:00+00:00",
+  "status": "PASS_ZERO_PROVIDER_R3_RESET_READINESS_WAIT_PROVIDER_RESET",
+  "provider_reset_not_before": "2026-09-07T00:00:00+08:00",
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "support_inspected": false,
+  "stage_b_authority": false,
+  "contract": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r3-recovery-20260905.json",
+    "sha256": "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085"
+  },
+  "preflight": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-preflight-r3-recovery-20260905.json",
+    "sha256": "56208e171b2524a01ec429618c7b018a4fee1a9a785028f024fee5a40bd10df2"
+  },
+  "execution_units": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-execution-units-20260905.json",
+    "sha256": "e3ba3eba68523c087f475511e3b639721743fb63ee88e5ccdc5a13e06447ea86",
+    "original_planned_tasks": 160,
+    "provider_execution_tasks": 158,
+    "actor_rollouts_if_complete": 1264,
+    "terminal_technical_missing_task_id": "r17-b21-cgwb-p0",
+    "matched_no_provider_censor_task_id": "r17-b21-cgwp-p0",
+    "replacement_task_count": 0,
+    "replayed_task_count": 0
+  },
+  "opportunity_manifest": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-opportunity-manifest-20260905.json",
+    "sha256": "2a63142123afe631e8a919de05c2cbec3be2b2b78c5b46cf3857ee13841d56f9",
+    "stream_count": 20,
+    "support_required_mixed_per_stream": 4,
+    "matched_affected_stream_provider_opportunities": [7, 7],
+    "unaffected_stream_provider_opportunities": 8
+  },
+  "provider_budget": {
+    "task_count_is_not_api_call_count": true,
+    "provider_execution_tasks": 158,
+    "actor_rollouts": 1264,
+    "provider_calls_per_rollout_limit": 10,
+    "max_provider_interactions": 12640
+  },
+  "exact_hash_review": {
+    "receipt_path": "generated/e2-r17-v3-stage-a-r3-exact-hash-gpt56-review-20260905.json",
+    "receipt_sha256": "6fb37037cb6cb850a99da155fd65aff42b7fffb9a4a8e3bb658f32d557835c99",
+    "pass_gate_path": "generated/e2-r17-v3-stage-a-r3-exact-hash-pass-gate-20260905.json",
+    "pass_gate_sha256": "a4ade82e32bbc33cc701c4cd20e94e700b39f739ce51494bf0855d8ed1071907",
+    "verdict": "PASS_TO_SEPARATE_R3_RECOVERY_AUTHORIZATION"
+  },
+  "static_checks": {
+    "r3_run_root_absent": true,
+    "r3_lease_absent": true,
+    "env_file_exists": true,
+    "all_bound_code_hashes_match": true,
+    "split_manifest_hash_matches": true,
+    "burn_receipt_hash_matches": true,
+    "matched_censor_receipt_hash_matches": true,
+    "one_missing_review_hash_matches": true,
+    "matched_censor_review_hash_matches": true,
+    "r3_control_tests_passed": 3,
+    "r3_control_tests_total": 3,
+    "stale_r2_identity_rejected_by_r3_authorizer": true,
+    "authorization_minted_from_stale_identity": false,
+    "old_r2_lease_pid_alive": false,
+    "old_r2_lease_pgid_alive": false
+  },
+  "r3_lineage": {
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r3-matched-censor-20260905",
+    "global_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v3-stage-a-r3-matched-censor.json",
+    "run_root_exists": false,
+    "lease_exists": false,
+    "old_r2_lease_preserved_as_incident_evidence": true
+  },
+  "reset_time_enforcement": {
+    "source": "frozen exact-hash review/pass-gate control-plane policy",
+    "hard_coded_into_authorizer": false,
+    "bound_authorizer_must_not_be_modified_without_new_exact_hash_review": true
+  },
+  "post_reset_sequence": [
+    "exactly one fresh DeepSeek identity qualification",
+    "require deepseek-v4-pro -> deepseek-v4-pro-ga-260813 with thinking disabled and provider retry limit 0",
+    "local identity adjudication to PASS_CURRENT_REVIEW_TRANCHE",
+    "mint separate single-use R3 recovery authorization only if identity passes",
+    "run only the frozen 158-task R3 provider universe",
+    "terminal equal-dose recovery adjudication",
+    "support read only after terminal recovery boundary permits it",
+    "Stage B remains separately closed"
+  ],
+  "authority_before_reset": {
+    "fresh_r3_identity_provider_call": false,
+    "r3_recovery_authorization": false,
+    "r3_provider_execution": false,
+    "stage_a_support_read": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "stage_b_execution": false,
+    "public_benchmark": false
+  }
+}

@@ -7,8 +7,8 @@ window.E2_R17_FRONTEND_STATUS = {
     en: "Decoupling Serving and Persistent Learning over Test-Time Search"
   },
   subtitle: {
-    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · identity 已 PASS；Stage-A 首次执行因 Ark 周额度 429 fail-closed，当前只允许 zero-provider recovery adjudication",
-    en: "Exact-same-pool causal identification · Search-Projection Censoring · identity passed; the first Stage-A execution failed closed on Ark weekly-quota 429, and only zero-provider recovery adjudication is currently allowed"
+    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · R3 matched-censor recovery 已通过 exact-hash 审查并完成 reset-readiness；2026-09-07 00:00 +0800 前禁止 provider call",
+    en: "Exact-same-pool causal identification · Search-Projection Censoring · R3 matched-censor recovery passed exact-hash review and reset-readiness; provider calls are forbidden before 2026-09-07 00:00 +0800"
   },
   paper_identity: "CAUSAL_SYSTEMS_INTERFACE_PAPER",
   scientific_object: {
@@ -38,6 +38,8 @@ window.E2_R17_FRONTEND_STATUS = {
   authority: {
     fresh_identity_qualification_permitted: false,
     fresh_identity_called: true,
+    r3_fresh_identity_required_after_reset: true,
+    r3_recovery_authorized: false,
     stage_a: false,
     stage_b: false,
     public_p1: false,
@@ -48,10 +50,11 @@ window.E2_R17_FRONTEND_STATUS = {
     support_inspected: false
   },
   stage_a_incident: {
-    status: "FAIL_CLOSED_TECHNICAL_MISSING_RECOVERY_REVIEW",
+    status: "R3_RECOVERY_READY_WAIT_PROVIDER_RESET",
     cause: "Ark AccountQuotaExceeded",
     provider_reset_time: "2026-09-07 00:00:00 +0800",
     burned_task_id: "r17-b21-cgwb-p0",
+    matched_no_provider_censor_task_id: "r17-b21-cgwp-p0",
     attempted_task_markers: 1,
     sealed_task_receipts: 0,
     frozen_k8_pools: 0,
@@ -61,13 +64,27 @@ window.E2_R17_FRONTEND_STATUS = {
     heldout_access: 0,
     replay_allowed: false,
     replacement_allowed: false,
-    proposed_recovery_zh: "独立审查中的最小方案：固定 1 个 post-dispatch terminal technical missing，不 replay、不 replacement；只在新版本 recovery contract 下执行其余 159 个原始 task，并保持每 stream >=4 mixed pools 的绝对阈值。",
-    proposed_recovery_en: "Minimal proposal under independent review: freeze exactly one post-dispatch terminal technical missing with no replay and no replacement; execute only the remaining 159 original tasks under a versioned recovery contract while preserving the absolute >=4 mixed-pools threshold per stream."
+    proposed_recovery_zh: "R3 matched-censor recovery 已冻结并通过 exact-hash 独立审查：burned task 永久 technical-missing，其 exact semantic counterpart 作为 0-provider matched censor；reset 后只执行其余 158 个原始 task（1264 actor rollouts），保持 7/7/8 opportunity geometry 与每 stream >=4 mixed pools 的绝对阈值。",
+    proposed_recovery_en: "The R3 matched-censor recovery is frozen and independently exact-hash reviewed: the burned task remains terminal technical-missing, its exact semantic counterpart is a zero-provider matched censor, and only the other 158 original tasks (1264 actor rollouts) may execute after reset while preserving 7/7/8 opportunity geometry and the absolute >=4 mixed-pools threshold per stream."
+  },
+  r3_recovery: {
+    status: "PASS_ZERO_PROVIDER_R3_RESET_READINESS_WAIT_PROVIDER_RESET",
+    contract_sha256: "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
+    preflight_sha256: "56208e171b2524a01ec429618c7b018a4fee1a9a785028f024fee5a40bd10df2",
+    exact_hash_review_verdict: "PASS_TO_SEPARATE_R3_RECOVERY_AUTHORIZATION",
+    provider_execution_tasks: 158,
+    actor_rollouts: 1264,
+    max_provider_interactions: 12640,
+    run_root_exists: false,
+    lease_exists: false,
+    control_tests: "3/3 PASS",
+    stale_r2_identity_rejected: true,
+    support_inspected: false
   },
   next_gate: {
-    code: "ZERO_PROVIDER_TECHNICAL_MISSING_RECOVERY_ADJUDICATION",
-    zh: "当前唯一合法下一步：对首个 post-dispatch quota technical missing 做独立 zero-provider recovery adjudication。禁止重跑 burned task、禁止 replacement、禁止读取 Stage-A support。",
-    en: "Only legal next step: independently adjudicate the first post-dispatch quota technical missing under a zero-provider recovery review. Do not replay the burned task, replace it, or read Stage-A support."
+    code: "WAIT_PROVIDER_RESET_THEN_FRESH_R3_IDENTITY_THEN_SEPARATE_RECOVERY_AUTHORIZATION",
+    zh: "当前硬门：2026-09-07 00:00 +0800 前不做 provider call。reset 后恰好 1 次 fresh DeepSeek R3 identity → 本地 adjudication → PASS 才单独 mint R3 recovery authorization → 只跑冻结的 158 个原始 task。",
+    en: "Hard gate now: no provider call before 2026-09-07 00:00 +0800. After reset: exactly one fresh DeepSeek R3 identity → local adjudication → only on PASS mint a separate R3 recovery authorization → run only the frozen 158 original tasks."
   },
   completed_evidence: [
     {
@@ -94,23 +111,23 @@ window.E2_R17_FRONTEND_STATUS = {
   mandatory_controlled: [
     {
       id: "B0",
-      title_zh: "Fresh model identity gate",
-      title_en: "Fresh model identity gate",
-      status: "COMPLETE",
-      scale_zh: "已执行恰好 1 次 provider identity call；resolved=deepseek-v4-pro-ga-260813；无 scientific outcome",
-      scale_en: "Exactly one provider identity call completed; resolved=deepseek-v4-pro-ga-260813; no scientific outcome",
-      gate_zh: "已 PASS，并已据此签发一次性 Stage-A authorization；该 authorization 在首次 fail-closed run 中已被消费。",
-      gate_en: "PASS; a single-use Stage-A authorization was minted from it and consumed by the first fail-closed run."
+      title_zh: "Model identity gate · R3 requalification",
+      title_en: "Model identity gate · R3 requalification",
+      status: "R3_REQUALIFICATION_WAIT_PROVIDER_RESET",
+      scale_zh: "首次 identity 已 PASS 并被 fail-closed Stage-A run 消费；R3 要求 reset 后重新做恰好 1 次 fresh identity，旧 identity 已验证会被 authorizer 拒绝。",
+      scale_en: "The first identity PASS was consumed by the fail-closed Stage-A run. R3 requires exactly one fresh post-reset identity; the authorizer has been verified to reject the stale R2 identity.",
+      gate_zh: "2026-09-07 00:00 +0800 前禁止 fresh R3 identity provider call。",
+      gate_en: "A fresh R3 identity provider call is forbidden before 2026-09-07 00:00 +0800."
     },
     {
       id: "B1",
-      title_zh: "V3 Stage A · support acquisition",
-      title_en: "V3 Stage A · support acquisition",
-      status: "FAIL_CLOSED_RECOVERY_REVIEW",
-      scale_zh: "原计划 5 skeletons · 20 streams · 160 tasks · K=8 · 1280 rollouts；当前 1 attempted / 0 sealed pools / 0 completed streams",
-      scale_en: "Original plan: 5 skeletons · 20 streams · 160 tasks · K=8 · 1280 rollouts; current state: 1 attempted / 0 sealed pools / 0 completed streams",
-      gate_zh: "首个 task 在 provider dispatch 后遭遇 Ark 周额度 429，已 burn。当前禁止 replay/replacement/support read；必须先完成独立 recovery adjudication。",
-      gate_en: "The first task hit Ark weekly-quota 429 after provider dispatch and is burned. Replay, replacement, and support read are forbidden pending independent recovery adjudication."
+      title_zh: "V3 Stage A · R3 matched-censor recovery",
+      title_en: "V3 Stage A · R3 matched-censor recovery",
+      status: "R3_RECOVERY_READY_WAIT_PROVIDER_RESET",
+      scale_zh: "160 原始 opportunities = 1 terminal technical missing + 1 matched 0-provider censor + 158 provider tasks；K=8 → 1264 actor rollouts；R3 run root/lease 尚未创建。",
+      scale_en: "160 original opportunities = 1 terminal technical missing + 1 matched zero-provider censor + 158 provider tasks; K=8 gives 1264 actor rollouts; the R3 run root/lease do not yet exist.",
+      gate_zh: "exact-hash review 与 reset-readiness 均 PASS；reset 后 fresh R3 identity PASS + separate authorization 才能执行。support 仍未读取，Stage B 仍关闭。",
+      gate_en: "Exact-hash review and reset-readiness both PASS; execution still requires a fresh post-reset R3 identity PASS plus separate authorization. Support remains unread and Stage B remains closed."
     },
     {
       id: "B2",
@@ -180,6 +197,7 @@ window.E2_R17_FRONTEND_STATUS = {
     execution_map: "consultations/e2-r17-experiment-plan-v4-execution-map-20260904.md",
     paper_outline: "paper_drafts/e2-r17-paper-outline-skillzip-iteration-20260903.md",
     scope_calibration: "consultations/e2-r17-premise-scope-calibration-frontend-20260905.md",
+    r3_reset_readiness: "consultations/e2-r17-v3-stage-a-r3-reset-readiness-audit-20260905.md",
     plan_revision: "1e3db1ec2d25addddde2112f7871223f1e3d0728"
   }
 };
