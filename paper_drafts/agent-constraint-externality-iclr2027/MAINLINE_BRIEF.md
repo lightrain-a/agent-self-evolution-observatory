@@ -67,6 +67,8 @@ If RQ1–RQ3 pass, does GTCC reduce collateral regression at matched probe budge
 
 Canonical detailed plan: `consultations/agent-constraint-externality-minimum-effective-experiment-plan-20260904.md`.
 
+Execution sequencing is mechanically closed in `generated/agent-constraint-externality-confirmatory-execution-readiness-v2-20260905.json`. It adds no authority. In particular, the confirmatory reserve must pass source/repair creation and topology-neutral `TARGET_ONLY_VERIFICATION` before the panel is frozen; SHAM artifacts/subset are frozen before collateral outcomes. RQ1/RQ2 outcomes are then **collected once on one locked panel**. RQ1 is adjudicated first; RQ2 is a conditional analysis of those same frozen outcomes, not a second adaptively chosen data collection.
+
 The objective is **identification per episode**, not a target episode count. All family counts below are planning caps/defaults, not quotas that must be exhausted. Before confirmatory execution, freeze: (i) the family-level estimand, (ii) the smallest scientifically meaningful effect for each claim, (iii) the paired analysis, and (iv) stop/continue rules. Never enlarge the sample because an interim effect looks promising or just misses a threshold.
 
 ### Must-have A — Primary controlled mechanism panel

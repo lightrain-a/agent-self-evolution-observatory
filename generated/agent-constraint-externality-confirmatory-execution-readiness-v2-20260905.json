@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-CONFIRMATORY-EXECUTION-READINESS-V2-20260905",
+  "recorded_date": "2026-09-05",
+  "status": "EXECUTION_SEQUENCE_MECHANICALLY_CLOSED_AUTHORITY_FALSE",
+  "scientific_object": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_statuses": {
+    "execution_proposal": "READY_FOR_SEPARATE_EXECUTION_AUTHORITY_GATE",
+    "preexec_freeze": "ZERO_PROVIDER_PREEXEC_FREEZE_COMPLETE_EXECUTION_AUTHORITY_CLOSED",
+    "preexec_audit": "PASS_PREEXEC_CONSISTENCY_EXECUTION_AUTHORITY_CLOSED",
+    "preexec_closeout": "PREEXEC_DESIGN_DETAILS_FROZEN_PROVIDER_AND_EXECUTION_AUTHORITY_CLOSED"
+  },
+  "provenance": {
+    "proposal_file_sha256": "918cdbc2f166a9b3e863d34e1e75197a5913a78e268da13c48abb022551b536a",
+    "freeze_file_sha256": "d6e12ac2b98b8bb343b43fe5e3b1cd6055ea34b44c798b2c355919b41ad46511",
+    "freeze_content_sha256": "66fd8b27ca125c1a55609e72357ba62772d423fc1ba2174b67887990117c91f3",
+    "audit_file_sha256": "957f749d6321b4279c5a4ddf8100901c8a590cada5a177fa7ef0f614dc51aefe",
+    "audit_content_sha256": "079cb3058c1d5e71dbde5067081ede71b7b66e8987838486b2c463640a99be85",
+    "closeout_file_sha256": "d13b77336e0301661b820035d911be8858d9ffe48df3520e1e0604098956acca",
+    "closeout_content_sha256": "595a0b1dcd3eeb13f588a2dc8ce09dd1ddb05ccfab5455e3e3f90cd686cfbf7a"
+  },
+  "execution_sequence": [
+    {
+      "stage": "PROVIDER_READINESS_CHECK",
+      "scientific_outcome": false,
+      "purpose": "verify provider credit/interface availability without touching a scientific case",
+      "opens_only": "SEPARATE_HUMAN_AUTHORITY",
+      "failure_action": "STOP_NO_SCIENTIFIC_DISPATCH"
+    },
+    {
+      "stage": "GATE0_DIRECT_ACTOR_CAPABILITY",
+      "scientific_outcome": false,
+      "purpose": "qualify the exact clean direct actor/runtime on the frozen capability contract",
+      "failure_action": "STOP_BEFORE_GATE1"
+    },
+    {
+      "stage": "GATE1_DIRECT_SFQ_A0",
+      "scientific_outcome": false,
+      "purpose": "qualify a normal semantic repair-opportunity regime on the frozen fresh development set",
+      "failure_action": "STOP_SOURCE_SUBSTRATE_NO_CHALLENGE_VERSION_FISHING"
+    },
+    {
+      "stage": "DEVELOPMENT_REPEAT_QUALIFICATION",
+      "scientific_outcome": false,
+      "families": 6,
+      "R_candidates": [
+        2,
+        3
+      ],
+      "purpose": "freeze repeat count from within-condition stability only",
+      "failure_action": "STOP_IF_R3_STILL_UNSTABLE_OR_ANY_TECHNICAL_INVALIDITY"
+    },
+    {
+      "stage": "PRECISION_N_STAR_FREEZE",
+      "scientific_outcome": false,
+      "new_actor_episodes": 0,
+      "N_candidates": [
+        12,
+        16,
+        20,
+        24
+      ],
+      "purpose": "choose N* from conservative development dispersion without emitting/using effect mean or sign",
+      "failure_action": "PRECISION_QUALIFICATION_STOP_N24_INSUFFICIENT"
+    },
+    {
+      "stage": "CONFIRMATORY_RESERVE_FREEZE",
+      "scientific_outcome": false,
+      "reserve_family_ids": 24,
+      "stable_order_salt": "ACE-CONFIRMATORY-PANEL-ORDER-20260904-V1",
+      "purpose": "freeze reserve IDs/order before any topology/collateral outcome"
+    },
+    {
+      "stage": "CONFIRMATORY_SOURCE_AND_REPAIR",
+      "scientific_outcome": false,
+      "purpose": "establish valid semantic source failures and freeze exactly one repair artifact per reserve candidate before topology treatment",
+      "forbidden": [
+        "topology outcome readout",
+        "collateral outcome readout",
+        "repair regeneration after topology outcome"
+      ]
+    },
+    {
+      "stage": "TARGET_ONLY_VERIFICATION",
+      "surface_id": "TARGET_ONLY_VERIFICATION_V1",
+      "scientific_outcome": false,
+      "purpose": "determine pre-topology repair-uptake eligibility on the common snapshot using exact frozen repair bytes",
+      "uptake_delta_min": 0.5,
+      "post_topology_target_outcomes_may_change_eligibility": false
+    },
+    {
+      "stage": "CONFIRMATORY_PANEL_FREEZE",
+      "scientific_outcome": false,
+      "purpose": "select first N* eligible families under frozen stable-hash order",
+      "insufficient_support_action": "STOP_DO_NOT_SHRINK_N",
+      "post_topology_backfill_allowed": false
+    },
+    {
+      "stage": "SHAM_ARTIFACT_AND_SUBSET_FREEZE",
+      "scientific_outcome": false,
+      "default_subset_families": 8,
+      "topology_extremes": [
+        "INDEPENDENT",
+        "HIGH"
+      ],
+      "purpose": "freeze sham update/subset before collateral outcomes to falsify generic persistent-context insertion"
+    },
+    {
+      "stage": "RQ1_RQ2_LOCKED_PANEL_EXECUTION",
+      "scientific_outcome": true,
+      "scientific_unit": "family",
+      "arms": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "branches": [
+        "NO_UPDATE",
+        "REAL_REPAIR"
+      ],
+      "collect_once_analyze_sequentially": true,
+      "post_treatment_target_filtering": false,
+      "purpose": "collect the full prequalified matched panel once; first adjudicate RQ1, then conditionally interpret RQ2 on the same frozen outcomes"
+    },
+    {
+      "stage": "RQ1_ANALYSIS_GATE",
+      "new_actor_episodes": 0,
+      "scientific_outcome": true,
+      "primary": "pooled UE = CRR_REAL_REPAIR - CRR_NO_UPDATE on full prequalified panel",
+      "co_report": "topology-specific target-repair retention",
+      "failure_action": "STOP_RQ2_CLAIM_AND_ALL_DOWNSTREAM_MECHANISM_DERIVED_CLAIMS"
+    },
+    {
+      "stage": "RQ2_ANALYSIS_IF_RQ1_PASS",
+      "new_actor_episodes": 0,
+      "scientific_outcome": true,
+      "primary": "UE_HIGH - UE_INDEPENDENT",
+      "uses_same_locked_panel_outcomes": true,
+      "failure_action": "STOP_TOPOLOGY_MECHANISM_AND_RQ3_RQ4"
+    },
+    {
+      "stage": "RQ3_HELDOUT_PREDICTION_IF_RQ1_RQ2_PASS",
+      "scientific_outcome": true,
+      "H_candidates": [
+        12,
+        16
+      ],
+      "offline_zero_extra_actor_baselines": [
+        "Random",
+        "Same-App",
+        "resource-count-only",
+        "distance-only",
+        "ExposureRank",
+        "oracle-upper-bound"
+      ],
+      "failure_action": "STOP_PREDICTION_DO_NOT_OPEN_GTCC"
+    },
+    {
+      "stage": "RQ4_GTCC_IF_RQ1_RQ2_RQ3_PASS",
+      "scientific_outcome": true,
+      "M_candidates": [
+        8,
+        12,
+        16
+      ],
+      "policies": [
+        "Always Commit",
+        "Target-Only Validation",
+        "Random-k",
+        "Same-App-k",
+        "GTCC"
+      ],
+      "budget_matched": [
+        "Random-k",
+        "Same-App-k",
+        "GTCC"
+      ],
+      "full_check_role": "small prespecified oracle upper bound only",
+      "failure_action": "STOP_GTCC_NOVELTY_IF_PRACTICALLY_EQUIVALENT_TO_RANDOM_K_OR_SAME_APP_K"
+    }
+  ],
+  "mechanical_invariants": {
+    "target_only_verification_precedes_topology": true,
+    "N_star_effect_direction_blind": true,
+    "R_star_within_condition_stability_only": true,
+    "R_greater_than_3_forbidden": true,
+    "post_topology_target_filtering_forbidden": true,
+    "post_topology_backfill_forbidden": true,
+    "rq1_rq2_data_collected_once": true,
+    "rq2_analysis_requires_rq1_pass": true,
+    "rq3_requires_rq1_rq2_pass": true,
+    "rq4_requires_rq1_rq2_rq3_pass": true,
+    "nested_episodes_never_count_as_independent_family_n": true
+  },
+  "authority": {
+    "provider_readiness_check": false,
+    "provider_execution": false,
+    "gate0": false,
+    "gate1": false,
+    "development_repeat_qualification": false,
+    "confirmatory_source_and_repair": false,
+    "target_only_verification": false,
+    "rq1_rq2_execution": false,
+    "rq1_analysis": false,
+    "rq2_analysis": false,
+    "rq3": false,
+    "rq4": false,
+    "secondary_actor": false,
+    "external_updater": false,
+    "paper_claim": false
+  },
+  "scientific_provider_calls_created": 0,
+  "scientific_outcomes_created": 0,
+  "next_legal_action": "EXPLICIT_SEPARATE_HUMAN_AUTHORITY_FOR_PROVIDER_READINESS_ONLY; SCIENTIFIC DISPATCH REMAINS CLOSED",
+  "content_sha256": "517768354989a28ba3745e3b63eb5b5db01c7b2818f7dee62ba300376f969416"
+}
