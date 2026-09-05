@@ -280,6 +280,19 @@ def build() -> Path:
             copy_file(source, destination)
             copied.add(destination)
 
+    # The advisor meeting pack is a deliberately public, SHA-bound set of nine
+    # PDFs reviewed by both the human advisor and the external reviewer. Keep
+    # it separate from private review receipts and copy only the frozen PDFs.
+    advisor_downloads_source = downloads_source / "advisor-20260906"
+    advisor_downloads_output = downloads_output / "advisor-20260906"
+    advisor_pdf_names: list[str] = []
+    if advisor_downloads_source.exists():
+        for source in sorted(advisor_downloads_source.glob("*.pdf")):
+            destination = advisor_downloads_output / source.name
+            copy_file(source, destination)
+            copied.add(destination)
+            advisor_pdf_names.append(source.name)
+
     required = (
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
@@ -319,6 +332,11 @@ def build() -> Path:
         OUTPUT / "current-research-status-view.js",
         OUTPUT / "experiments.html",
         OUTPUT / "system-overview.html",
+        OUTPUT / "advisor-review.html",
+        OUTPUT / "advisor-review.css",
+        OUTPUT / "advisor-review.js",
+        OUTPUT / "generated" / "advisor-meeting-data.js",
+        OUTPUT / "generated" / "advisor-paper-pack-manifest.json",
         OUTPUT / "app.js",
         OUTPUT / "experiment-terminal-view.js",
         OUTPUT / "experiment-page-view.js",
@@ -407,6 +425,9 @@ def build() -> Path:
         OUTPUT / "downloads" / "D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
     )
     required = required + tuple(OUTPUT / "downloads" / name for name in sorted(declared_download_names))
+    required = required + tuple(OUTPUT / "downloads" / "advisor-20260906" / name for name in advisor_pdf_names)
+    if len(advisor_pdf_names) != 9:
+        raise RuntimeError(f"Advisor meeting pack must contain exactly 9 public PDFs, found {len(advisor_pdf_names)}")
     missing = [str(path.relative_to(OUTPUT)) for path in required if not path.exists()]
     if missing:
         raise RuntimeError("Static site is missing required files: " + ", ".join(missing))

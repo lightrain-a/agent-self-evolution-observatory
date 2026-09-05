@@ -1,0 +1,142 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-primary-developmental-runtime-v22",
+  "observed_at": "2026-09-05T14:03:52+08:00",
+  "state": "PRIMARY_DEVELOPMENTAL_TRAINING_RUNNING_NO_SCIENTIFIC_OUTCOMES",
+  "canonical_base": {
+    "origin_main": "7b3e00d76c27a901aa8c0e52e33eb23baa3a3956",
+    "oracle_r1_pivot_commit": "4ebb8aa1e1d862b81f7ec89a35105d7961a63546",
+    "oracle_r2_freeze_commit": "ef89712f6ff16ca4f5e579070ca25d2c0f00f447",
+    "developmental_authority_commit": "676a129533d9b84124473751fde9df18fef6e2a7",
+    "recovery_amendment_commit": "05cc7989585b5f795838c998616ccf1eea13c39d"
+  },
+  "paper_scope_after_oracle_r2": {
+    "primary_model": "SGP-14_PLUS_ONE_FROZEN_SHARED_SG2SC",
+    "primary_topology": "COUNT_3_4_MATCHED_CHAIN_VS_HUB",
+    "primary_localization": "EXACT_IDENTITY_ORACLE_GRAPH_SUBSTITUTION_THROUGH_IDENTICAL_SHARED_DECODER",
+    "sgp12_role": "SECONDARY_EXPOSURE_REGIME_CONTEXT_ONLY_NOT_REQUIRED_FOR_DEVELOPMENTAL_GO",
+    "sgp12_launched_in_this_runtime": false,
+    "reason_sgp12_not_launched": "Oracle R1/R2 rejects pure support causality because SGP-14 receives higher relation-edge and token supervision dose; the next scientific gate requires SGP-14 plus the shared decoder only.",
+    "next_scientific_gate": "COMPLETE_SGP14_AND_SHARED_DECODER_TRAINING_WITHOUT_OUTCOME_INSPECTION_THEN_REQUEST_SEPARATE_VALIDATION_P1_AUTHORITY"
+  },
+  "corpus_transport_recovery": {
+    "classification": "TRANSPORT_MATERIALIZATION_RECOVERY_ONLY_NO_SCIENTIFIC_CHANGE",
+    "source_host": "232",
+    "source_root": "/data/wyt/relational-topology-stage-3d-qualification-20260901/corpus",
+    "source_content_addresses": {
+      "IS-SUPPORT-12.jsonl": "9884b2afd58e05ed0eb80864154765e55551e5f77632d4fbd6308d0af50dd58b",
+      "IS-SUPPORT-14.jsonl": "51e9e6011250970c660d91c75843919f55192b800423d8ad59a2cfb5c08c4b05",
+      "eligible_scenes.txt": "b70774d506ae8ae121ddf37cd8ff5b8f7b09194fac9827d3f70d1b1a05e1b9c5"
+    },
+    "source_sizes_bytes": {
+      "IS-SUPPORT-12.jsonl": 20083599,
+      "IS-SUPPORT-14.jsonl": 24244827,
+      "eligible_scenes.txt": 168219
+    },
+    "rows": {
+      "IS-SUPPORT-12": 12240,
+      "IS-SUPPORT-14": 12240,
+      "eligible_scenes": 3060
+    },
+    "direct_232_to_52_transport_available": false,
+    "recovery_method": "DETERMINISTIC_V3_COMPILE_PAIR_REPLAY_ON_52_THEN_CONTENT_ADDRESS_CHECK",
+    "frozen_generator_combined_sha256": "f20c4708866fdc3ec42f7c03292612bc435205825c483fb81203230b7d1eea1a",
+    "frozen_generator_file_sha256": {
+      "research_pipeline/relational_topology_real_corpus.py": "56e42da009d1c0ddd614728367a28ec951481ec6ab5fc56c99d7cd54cd0ba3d9",
+      "research_pipeline/relational_topology_real_protocol.py": "3a880878d4aad49ff98290845c215694e96730e34bb7dda3a583626aece3df77"
+    },
+    "replay_workers": 4,
+    "replay_traversal": "forward",
+    "replay_status": "PASS_BYTE_IDENTICAL_CONTENT_ADDRESSED",
+    "restored_target_root_52": "/data/wyt/relational-topology-stage-3d-gpuqual-20260901/corpus"
+  },
+  "preflight_history_52": [
+    {
+      "run_root": "/data/wyt/relational-topology-stage-3d-official-training-20260902/resource-preflight-v19-52",
+      "component": "SGP-12",
+      "classification": "PRE_CLAIM_TRANSPORT_PRECONDITION_FAILURE",
+      "reason": "IS-SUPPORT-12.jsonl absent on 52",
+      "optimizer_steps": 0,
+      "scientific_outcomes": 0,
+      "artifact_policy": "EMPTY_COMPONENT_DIRECTORY_PRESERVED_UNMODIFIED"
+    },
+    {
+      "run_root": "/data/wyt/relational-topology-stage-3d-official-training-20260902/resource-preflight-v20-52",
+      "component": "SGP-14",
+      "classification": "PRE_CLAIM_TRANSPORT_PRECONDITION_FAILURE",
+      "reason": "eligible_scenes.txt absent on 52",
+      "optimizer_steps": 0,
+      "scientific_outcomes": 0,
+      "artifact_policy": "EMPTY_COMPONENT_DIRECTORY_PRESERVED_UNMODIFIED"
+    },
+    {
+      "run_root": "/data/wyt/relational-topology-stage-3d-official-training-20260902/resource-preflight-v21-52",
+      "component": "SGP-14",
+      "classification": "RESOURCE_PREFLIGHT_PASS",
+      "batch_size": 128,
+      "gpu_model": "NVIDIA GeForce RTX 3090",
+      "gpu_total_memory_bytes": 25438126080,
+      "peak_allocated_vram_bytes": 4888655872,
+      "peak_reserved_vram_bytes": 5190451200,
+      "parameter_count": 51156834,
+      "initial_model_state_sha256": "efd8ee84bf36e5ebfc9a191155495d5c540f289e20a117356c4b490a4c2fb3f3",
+      "first_batch_keys_sha256": "eb0a851c60e6a55f4eca2d4f9e7abb9236e44dbc1b22232d6abc5c347fff836f",
+      "content_sha256": "51e9e6011250970c660d91c75843919f55192b800423d8ad59a2cfb5c08c4b05",
+      "config_sha256": "64ce016dbeb1d3c5cee7174ae05370a5874ae716ed9fe93280b997415b1864d7",
+      "optimizer_steps": 0,
+      "scientific_outcomes": 0
+    }
+  ],
+  "training_code": {
+    "staging_root": "/data/wyt/relational-topology-stage-3d-official-training-20260902/code/observatory-v17a-52",
+    "staging_state": "CONTENT_ADDRESSED_CODE_STAGING_PASS",
+    "source_git_commit": "e454077e8eef94d98904e746c87bea6cb7f25fe6",
+    "composite_training_code_sha256": "b807e6fd884a8b45272ae5dbd3d6f88d9bfeda1f02d7a9eeb6b0f8d231d06da1",
+    "note": "The staging snapshot is intentionally not a Git checkout, so runtime git_state.observatory_head is null; code identity is bound by the staging manifest and composite training-code SHA256."
+  },
+  "active_training_snapshot": {
+    "shared_decoder": {
+      "component": "BEDROOM-SG2SC-SHARED",
+      "host": "52",
+      "gpu_index": 3,
+      "pid": 3720792,
+      "run_root": "/data/wyt/relational-topology-stage-3d-official-training-20260902/resource-preflight-v19-52",
+      "heartbeat_state": "TRAINING_RUNNING",
+      "global_step_observed": 242131,
+      "target_optimizer_steps": 1000000,
+      "latest_committed_checkpoint_step": 200000,
+      "latest_committed_checkpoint_sha256": "627784e4e41a397daad9d4cec9088ca82ea9d245401e13750dbb70364a4d28b5",
+      "initial_resume_anchor_sha256": "7c37056c4cab3c4eb76ecca071ae009d24f8a026f00568b982d85257444c9c9c",
+      "scientific_outcomes": 0
+    },
+    "sgp14": {
+      "component": "SGP-14",
+      "host": "52",
+      "gpu_index": 4,
+      "pid": 1859236,
+      "run_root": "/data/wyt/relational-topology-stage-3d-official-training-20260902/resource-preflight-v21-52",
+      "heartbeat_state": "TRAINING_RUNNING",
+      "global_step_observed": 89,
+      "target_optimizer_steps": 1000000,
+      "optimizer_steps_committed_in_claim_at_snapshot": 0,
+      "initial_resume_anchor_sha256": "b708ee39e25852138009c29b9a7b8888633668b6d33bf38082911fa433f726c4",
+      "training_code_sha256": "b807e6fd884a8b45272ae5dbd3d6f88d9bfeda1f02d7a9eeb6b0f8d231d06da1",
+      "scientific_outcomes": 0
+    }
+  },
+  "authority_boundary": {
+    "developmental_training_authorized": true,
+    "validation_p1_authorized": false,
+    "test_opened": false,
+    "topology_metrics_opened": false,
+    "training_loss_used_as_scientific_evidence": false,
+    "provider_calls": 0,
+    "scientific_outcomes": 0,
+    "port_010": {
+      "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+      "evidence_review": "BLOCK_BAKE_IN",
+      "changed": false
+    }
+  },
+  "verdict": "CONTINUE_PRIMARY_DEVELOPMENTAL_TRAINING_SGP14_PLUS_SHARED_DECODER_NO_P1"
+}

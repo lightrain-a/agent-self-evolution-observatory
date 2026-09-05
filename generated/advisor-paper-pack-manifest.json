@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "meeting_candidate_main": "bb9b99d915de1141ac39654550dd91f81070ee00",
+  "paper_pack_status": "9_OF_9_READY",
+  "papers": [
+    {
+      "paper_id": "E1",
+      "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
+      "filename": "01-E1-STRI.pdf",
+      "paper_candidate_ref": "origin/main@bb9b99d9 + clean rebuild from STRI source commit 8a924e8c",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Claim-expansion P0/P1/P2 remains separate/prospective unless explicitly integrated.",
+      "paper_status": "PDF_READY",
+      "pages": 12,
+      "bytes": 324822,
+      "pdf_sha256": "cb09d2dd54a5b59725bcda9895be3ccfa668d274d09d027761c518a38865c9e1"
+    },
+    {
+      "paper_id": "B1",
+      "title": "Failure Memory Provenance",
+      "filename": "02-B1-Failure-Memory-Provenance.pdf",
+      "paper_candidate_ref": "origin/main downloads/B1-Failure-Memory.pdf (R66 release)",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "R75-R79 paired-ID/repeatability/mechanism/scale diagnostics postdate this integrated PDF; show separately in evidence drawer.",
+      "paper_status": "PDF_READY",
+      "pages": 16,
+      "bytes": 277405,
+      "pdf_sha256": "7337d7eaf2edbb21673ec147af37d55a36693ed71b17cd1c99ba09a4d96ef957"
+    },
+    {
+      "paper_id": "C1",
+      "title": "Stage-Resolved Memory Transport",
+      "filename": "03-C1-Stage-Resolved-Memory-Transport.pdf",
+      "paper_candidate_ref": "C1 R7 post-Stanford repair PDF",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Sep4 first-action/collision/noise-floor audits postdate R7 PDF; do not silently fold into claims.",
+      "paper_status": "PDF_READY",
+      "pages": 14,
+      "bytes": 305587,
+      "pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167"
+    },
+    {
+      "paper_id": "G1",
+      "title": "Separating Capability Unlock from Safety Drift in Persistent Browser Agents",
+      "filename": "04-G1-MCTA.pdf",
+      "paper_candidate_ref": "origin/paper/g1-mcta-paper-iteration-20260904@236d4efe",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Preconfirmatory MCTA manuscript: future safety outcome remains prospective.",
+      "paper_status": "PDF_READY",
+      "pages": 6,
+      "bytes": 147930,
+      "pdf_sha256": "4e9059f1f14fcb92c2b5911d4f90df40fc36e3d376ef8694eec3902acf800314"
+    },
+    {
+      "paper_id": "E2",
+      "title": "Same Evidence, Different Skill: State Regeneration Instability in Self-Evolving Agents",
+      "filename": "05-E2-State-Regeneration.pdf",
+      "paper_candidate_ref": "origin/research/e2-r17-manuscript-state-generation-20260903@19d56a54",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Typed compiler bridge remains prospective where explicitly stated; no unobserved V3/V4 outcome inferred.",
+      "paper_status": "PDF_READY",
+      "pages": 16,
+      "bytes": 250412,
+      "pdf_sha256": "6194ac7a97a34bdb7f21c36ed2fa5b6f14c4c7184007d5418c643ff11b1c3f15"
+    },
+    {
+      "paper_id": "PAPER_A",
+      "title": "From Memory Influence to Source Fidelity: A Causal Audit of Failure-Derived Memory in Embodied Agents",
+      "filename": "06-Paper-A-Influence-Fidelity.pdf",
+      "paper_candidate_ref": "paper/embodied-memory-plans-20260904@dda11db4 + generated preconfirmatory advisor draft",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Decisive native closed-loop P0/P1/P2 outcomes remain prospective; current carrier evidence only.",
+      "paper_status": "ADVISOR_DRAFT_PRECONFIRMATORY",
+      "pages": 3,
+      "bytes": 242218,
+      "pdf_sha256": "11716be6f78402b26a4e17067b9d902e58346bf86d25e3928b95ce63b3c553c9"
+    },
+    {
+      "paper_id": "CONSTRAINT_EXTERNALITY",
+      "title": "Agent Constraint Externality",
+      "filename": "07-Constraint-Externality.pdf",
+      "paper_candidate_ref": "origin/main paper_drafts/agent-constraint-externality-iclr2027/main.pdf@c3b9db68",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Sep5 readiness/provider-gate updates postdate the PDF; scientific execution remains gated.",
+      "paper_status": "PDF_READY",
+      "pages": 8,
+      "bytes": 209521,
+      "pdf_sha256": "f107dbff4c9126ad71bd376b2a33374ee2b9e54f195a1a1dda991a1b5658fa8b"
+    },
+    {
+      "paper_id": "PAPER_B",
+      "title": "When Does an Embodied Agent Actually Self-Evolve? Causal Identification of Persistent Memory Across Episodes",
+      "filename": "08-Paper-B-Persistent-Memory.pdf",
+      "paper_candidate_ref": "paper/embodied-memory-plans-20260904@dda11db4 + generated preconfirmatory advisor draft",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Longitudinal committed-update vs frozen-preupdate confirmatory outcome remains prospective.",
+      "paper_status": "ADVISOR_DRAFT_PRECONFIRMATORY",
+      "pages": 3,
+      "bytes": 243463,
+      "pdf_sha256": "deee83f4e6d033ec9b5a09d63910c0566e8f8d1c8e9aa6ea9d5983ae8bc6ca68"
+    },
+    {
+      "paper_id": "3D",
+      "title": "Beyond Relation Count: Endpoint-Sharing Topology in Text-Guided 3D Scene Generation",
+      "filename": "09-3D-Relational-Topology.pdf",
+      "paper_candidate_ref": "origin/research/relational-topology-stage-3d-runtime-20260905@bb9b99d9 + generated preconfirmatory advisor draft",
+      "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
+      "delta": "Primary SGP-14 training/untouched-test topology evidence remains prospective; development evidence is not paper evidence.",
+      "paper_status": "ADVISOR_DRAFT_PRECONFIRMATORY",
+      "pages": 3,
+      "bytes": 267520,
+      "pdf_sha256": "76909e7572849dca55aca38f2cc5488462a74d3262b19d7669c24465173bcf1f"
+    }
+  ]
+}
