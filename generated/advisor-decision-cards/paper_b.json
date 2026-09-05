@@ -20,5 +20,5 @@
   "default_action": "FREEZE_CAUSAL_FORK_THEN_PHASE_A_ONLY",
   "override_trigger": "fork 不可精确复现、Phase A semantic sensitivity fail、或师兄决定与 Paper A 合并 → 不进入 Phase B；governance superiority 未执行 ALWAYS_WRITE 时不得写方法优越性。",
   "cross_paper_leverage": "Paper A 可作为 future-episode influence/fidelity mechanism readout；C1 提供 transport vocabulary；B1 提供 provenance control，但 Paper B 的主 claim 必须保持 longitudinal utility。",
-  "advisor_question": "Is the longitudinal committed-update lifecycle effect a distinct standalone causal object from Paper A’s source-fidelity effect?"
+  "advisor_question": "Assuming Paper A remains the source-fidelity owner, is Paper B’s minimum standalone claim the exact COMMITTED_UPDATE-vs-FROZEN_PREUPDATE cross-episode total effect, with fidelity subordinate mechanism evidence and governance superiority out of scope unless separately identified?"
 }

@@ -27,7 +27,9 @@
       "primary_claim_owner": "evaluator-relative temporal-safety measurement",
       "relationship": "ERTA remains the G1 paper. MCTA is a separate stopped/held G2 candidate and must not be used to reopen G1."
     },
-    "boundary_note": "Default is separate ownership with explicit support relations. Merge/split only when the advisor changes one of these primary scientific objects, not merely because papers share memory vocabulary."
+    "boundary_note": "Default is separate ownership with explicit support relations. Merge/split only when the advisor changes one of these primary scientific objects, not merely because papers share memory vocabulary.",
+    "memory_family_architecture_decision_owner": "PAPER_A",
+    "memory_family_architecture_rule": "Paper A owns the family-level keep-separate/merge decision for B1/Paper A/Paper B. Paper B only decides whether its minimum longitudinal total-effect claim remains distinct assuming Paper A keeps source-fidelity ownership."
   },
   "shared_risks": [
     {
@@ -80,6 +82,7 @@
   "shared_risk_reopen_rules": [
     {
       "premise": "skill-access / representation invariance",
+      "primitive": "package identity / finite access",
       "directly_affected": [
         "E1"
       ],
@@ -87,22 +90,69 @@
         "E2",
         "C1"
       ],
-      "reopen_threshold": "Reopen E2/C1 only if the failed identity/access mechanism appears on their frozen causal path; otherwise E1 only."
+      "reopen_threshold": "Reopen E2/C1 only if the same package-identity or finite-access mechanism is explicitly load-bearing for their frozen claim; otherwise E1 only."
     },
     {
-      "premise": "persistent-memory object / state semantics",
+      "premise": "persistent-memory semantics",
+      "primitive": "provenance-field semantics",
       "directly_affected": [
-        "B1",
-        "C1",
-        "E2",
+        "B1"
+      ],
+      "conditionally_affected": [
         "PAPER_A",
         "PAPER_B"
       ],
-      "conditionally_affected": [],
-      "reopen_threshold": "Reopen only papers whose exact state identity, write/retrieval semantics, provenance object, or commit semantics depend on the failed primitive; no family-wide automatic reopen."
+      "reopen_threshold": "Reopen Paper A/B only if their frozen control or causal object actually consumes the same provenance-field semantics; otherwise B1 only."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "source-fidelity memory semantics",
+      "directly_affected": [
+        "PAPER_A"
+      ],
+      "conditionally_affected": [
+        "PAPER_B"
+      ],
+      "reopen_threshold": "Reopen Paper B only if its longitudinal claim relies on Paper A’s source-fidelity construct rather than using it as a subordinate diagnostic."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "exact persistent-state / commit identity",
+      "directly_affected": [
+        "PAPER_B"
+      ],
+      "conditionally_affected": [
+        "C1",
+        "E2"
+      ],
+      "reopen_threshold": "Reopen C1/E2 only if the same exact state/commit identity primitive is load-bearing in their frozen evidence object; otherwise Paper B only."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "native retrieval / transport semantics",
+      "directly_affected": [
+        "C1",
+        "PAPER_B"
+      ],
+      "conditionally_affected": [
+        "PAPER_A"
+      ],
+      "reopen_threshold": "Reopen Paper A only if its later-policy fidelity estimand requires the same native retrieval rule; otherwise C1/Paper B only."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "evidence → state realization identity",
+      "directly_affected": [
+        "E2"
+      ],
+      "conditionally_affected": [
+        "C1"
+      ],
+      "reopen_threshold": "Reopen C1 only if its writer/state object uses the same realization identity mechanism; otherwise E2 only."
     },
     {
       "premise": "measurement / evaluator validity",
+      "primitive": "frozen evaluator / measurement surface",
       "directly_affected": [
         "G1"
       ],
@@ -110,14 +160,14 @@
         "C1",
         "B1"
       ],
-      "reopen_threshold": "Reopen C1/B1 only if the same invalid measurement/evaluator assumption appears in their own load-bearing endpoint; otherwise G1 only."
+      "reopen_threshold": "Reopen C1/B1 only if the same invalid evaluator/measurement assumption is load-bearing for their own endpoint; otherwise G1 only."
     }
   ],
   "meeting_outputs": [
     "Nine-paper disposition ledger: continue state | claim scope | next closure | advisor confidence.",
     "Claim-ownership map: especially B1 / Paper A / Paper B, while C1/E2/G1 ownership remains explicit and non-overlapping by default.",
     "Shared-risk reopen table: premise → directly affected papers → conditional papers → reopen threshold.",
-    "Resource sequence: cheap closure / already-running compute / qualification-first / formalize-first; change order only for a real scarce-resource collision.",
+    "Frozen Resource + Authority ledger for all nine papers: authorized-now work | post-meeting human-hour cap | cost-to-stop | next authority gate | future conditional envelope | explicit non-authority; preserve lane order unless a real scarce-resource collision requires reprioritization.",
     "Every unresolved decision has one named owner and one concrete follow-up output; no generic “think more” item."
   ],
   "schedule": [

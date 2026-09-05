@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "status": "FIXES_APPLIED_PENDING_INDEPENDENT_POSTFIX_VERIFICATION",
+  "source_review": "generated/advisor-final-decision-sufficiency-review-20260906.json",
+  "reviewed_decision_surface_hash": "d3e18b1df671420eced2834f4580ae9068e6f9fab9fe338eddb18bf5f03e1751",
+  "postfix_decision_surface_hash": "79c6a05dab0eae5897ee94227a42939f1fd609a939b8fb5eda560adecb358e32",
+  "closures": {
+    "paper_b_minimum_distinct_claim_ask": true,
+    "paper_a_family_architecture_owner_explicit": true,
+    "persistent_memory_reopen_rules_primitive_specific": true,
+    "g1_post_meeting_human_hour_cap": true,
+    "3d_post_meeting_human_hour_cap": true,
+    "resource_authority_output_strengthened": true,
+    "next_authority_gate_9_of_9": true,
+    "explicit_non_authority_9_of_9": true
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_meeting_projection_only": true
+  }
+}

@@ -87,7 +87,9 @@ window.ADVISOR_MEETING_DATA = {
         "parallelization": "Fully parallel; no scarce compute dependency.",
         "priority_note": "High scheduling priority because closure is cheap and submission-near.",
         "current_decision_cost": "¥0 + 0 GPU; author/advisor positioning and submission signoff only.",
-        "cost_to_stop": "No new compute: if advisor rejects the standalone reality/abstraction premise, freeze the narrow result or merge without opening optional expansion."
+        "cost_to_stop": "No new compute: if advisor rejects the standalone reality/abstraction premise, freeze the narrow result or merge without opening optional expansion.",
+        "next_authority_gate": "None for the narrow submission claim. Any optional expansion requires an explicit scientific reopen and fresh experiment authority.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -186,7 +188,9 @@ window.ADVISOR_MEETING_DATA = {
         "parallelization": "Runs independently from 3D because it uses a different local GPU resource pool.",
         "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work.",
         "current_decision_cost": "Already-authorized 1×A100-80GB Qwen stage is running; no additional compute commitment is requested in the advisor meeting.",
-        "cost_to_stop": "Finish the already-authorized Qwen stage and seal it; do not open Llama or later scale checks without successor authority or if the frozen gate fails."
+        "cost_to_stop": "Finish the already-authorized Qwen stage and seal it; do not open Llama or later scale checks without successor authority or if the frozen gate fails.",
+        "next_authority_gate": "Llama successor stage requires separate successor authority after the Qwen stage seal; analysis authority remains separate.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -274,7 +278,9 @@ window.ADVISOR_MEETING_DATA = {
         "parallelization": "Fully parallel.",
         "priority_note": "Cheap closure; should advance while GPU/API-heavy papers run.",
         "current_decision_cost": "¥0 + 0 GPU; unified-story manuscript convergence, PDF QA, and human/advisor review only.",
-        "cost_to_stop": "No new compute: if advisor rejects the unified two-act feedback→memory→behavior story, split/reframe using current frozen evidence rather than reopening experiments."
+        "cost_to_stop": "No new compute: if advisor rejects the unified two-act feedback→memory→behavior story, split/reframe using current frozen evidence rather than reopening experiments.",
+        "next_authority_gate": "No new science execution for the current claim. Any split/new experiment requires an explicit scientific reopen.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "PRIOR_VERSION",
@@ -354,17 +360,19 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "0",
-          "post_meeting_execution_human_hours": "bounded human semantic-label/adjudication + 2–4 h manuscript/prebuttal work",
+          "post_meeting_execution_human_hours": "4–8 h planned cap: existing 24-item semantic labeling/adjudication + manuscript/prebuttal integration.",
           "provider_credential_dependency": "N/A for current G1/ERTA",
           "calendar_latency": "human-review bound, not compute-bound"
         },
         "next_if_pass": "Freeze ERTA manuscript after human evidence is integrated; proceed to content convergence and delivery QA.",
         "conditional_envelope": "Any third evaluator, cross-backbone replication, or MCTA capability-matching program is optional/new science and is not required for the current ERTA claim.",
-        "human_effort_estimate": "existing 24-item semantic-label/adjudication packet plus manuscript integration",
+        "human_effort_estimate": "4–8 h planned post-meeting cap for semantic adjudication + manuscript/prebuttal integration",
         "parallelization": "Fully parallel with GPU/API experiments on other papers.",
         "priority_note": "Cheap high-leverage closure; do not spend provider budget on MCTA under the G1 label.",
         "current_decision_cost": "¥0 + 0 GPU/provider calls; existing human semantic-label/adjudication plus manuscript/prebuttal integration only.",
-        "cost_to_stop": "No new provider/GPU work: complete the existing human semantic adjudication. If evaluator-relative temporal safety is not judged standalone, narrow/merge ERTA without adding a third judge/backbone for appearance."
+        "cost_to_stop": "No new provider/GPU work: complete the existing human semantic adjudication. If evaluator-relative temporal safety is not judged standalone, narrow/merge ERTA without adding a third judge/backbone for appearance.",
+        "next_authority_gate": "No new scientific execution is required for current ERTA. Any third evaluator/backbone or G2/MCTA program requires a separate scientific contract and fresh authority.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -455,7 +463,9 @@ window.ADVISOR_MEETING_DATA = {
         "parallelization": "Provider-limited rather than GPU-limited; can run alongside local GPU work if quota/priority permits.",
         "priority_note": "Current spend should stop at one identity gate; do not reserve the 720-call envelope before qualification.",
         "current_decision_cost": "One non-scientific model-identity qualification request only; planning order ~¥0.02 if token-routed, route-dependent.",
-        "cost_to_stop": "Stop after the single identity/route qualification if exact model identity cannot be established; do not open the 72-unit M3R4 block."
+        "cost_to_stop": "Stop after the single identity/route qualification if exact model identity cannot be established; do not open the 72-unit M3R4 block.",
+        "next_authority_gate": "M3R4 execution requires separate frozen execution authority after the identity/route qualification passes.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -546,7 +556,9 @@ window.ADVISOR_MEETING_DATA = {
         "priority_note": "High information-per-cost now because the next gate is essentially zero-compute.",
         "current_decision_cost": "¥0 + 0 GPU; causal/fidelity formalization only. The 128-run VLA block is a future conditional envelope.",
         "cost_to_stop": "Stop before 128 VLA runs if the fidelity signature, no-op tolerance, endpoints, or same-condition replay contract cannot be frozen cleanly.",
-        "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment"
+        "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment",
+        "next_authority_gate": "Phase A 128-run VLA block requires fresh protocol approval and execution authority after fidelity/A0 formalization passes.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -633,7 +645,9 @@ window.ADVISOR_MEETING_DATA = {
         "parallelization": "API/provider-limited; can proceed independently of GPU work after credit recovery.",
         "priority_note": "Do not budget the 192+32 mechanism block until the source phenomenon is qualified.",
         "current_decision_cost": "¥0 + 0 provider calls committed; restore provider credit/interface only. A readiness request needs fresh authority.",
-        "cost_to_stop": "Stop before source/mechanism blocks if provider readiness cannot be restored and freshly authorized, or if the one-request readiness gate fails."
+        "cost_to_stop": "Stop before source/mechanism blocks if provider readiness cannot be restored and freshly authorized, or if the one-request readiness gate fails.",
+        "next_authority_gate": "A readiness request requires NEW explicit one-request authority after credit/interface restoration; every later gate has separate authority.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -681,7 +695,7 @@ window.ADVISOR_MEETING_DATA = {
       "default_action": "FREEZE_CAUSAL_FORK_THEN_PHASE_A_ONLY",
       "override_trigger": "fork 不可精确复现、Phase A semantic sensitivity fail、或师兄决定与 Paper A 合并 → 不进入 Phase B；governance superiority 未执行 ALWAYS_WRITE 时不得写方法优越性。",
       "cross_paper_leverage": "Paper A 可作为 future-episode influence/fidelity mechanism readout；C1 提供 transport vocabulary；B1 提供 provenance control，但 Paper B 的主 claim 必须保持 longitudinal utility。",
-      "advisor_question": "Is the longitudinal committed-update lifecycle effect a distinct standalone causal object from Paper A’s source-fidelity effect?",
+      "advisor_question": "Assuming Paper A remains the source-fidelity owner, is Paper B’s minimum standalone claim the exact COMMITTED_UPDATE-vs-FROZEN_PREUPDATE cross-episode total effect, with fidelity subordinate mechanism evidence and governance superiority out of scope unless separately identified?",
       "reality_support": {
         "reality_verdict": "STRONGLY_SUPPORTED_WITH_NOVELTY_PRESSURE",
         "supporting_cases": [
@@ -730,7 +744,9 @@ window.ADVISOR_MEETING_DATA = {
         "priority_note": "Do not treat 200 runs as current budget; only formalization is authorized now.",
         "current_decision_cost": "¥0 + 0 GPU; causal estimand and exact-fork formalization only. The 128-run VLA block is a future conditional envelope.",
         "cost_to_stop": "Stop before Phase A if the exact persistent-state fork/SCM cannot be made reproducible; if Phase A semantic sensitivity fails, do not open Phase B.",
-        "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment"
+        "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment",
+        "next_authority_gate": "Phase A requires fresh protocol/execution authority after exact-fork formalization; Phase B requires a separate post-Phase-A authority.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -811,7 +827,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "2×RTX 3090 live; SGP-14 + shared decoder",
-          "post_meeting_execution_human_hours": "low active monitoring",
+          "post_meeting_execution_human_hours": "3–6 h total monitoring budget to the current training seals (≈0.25–0.5 h/day under the current ETA); operational only.",
           "provider_credential_dependency": "N/A",
           "calendar_latency": "rough remaining ~11.6 / ~7.5 GPU-days at 22:55 observed averages; operational estimate only"
         },
@@ -828,11 +844,13 @@ window.ADVISOR_MEETING_DATA = {
         },
         "next_if_pass": "After both training seals, P1 validation needs separate authority. No validation/test/topology metrics are opened during training.",
         "conditional_envelope": "If P1 GO later justifies replication, additional seeds require a fresh compute authority; they are not part of the current committed budget.",
-        "human_effort_estimate": "Low active human time while training; checkpoint/resource monitoring only",
+        "human_effort_estimate": "3–6 h total active monitoring budget to current training seals; no scientific outcome inspection",
         "parallelization": "Keep the two running 3090 jobs isolated. Other zero-compute/API work can proceed in parallel.",
         "priority_note": "High opportunity cost but already committed; stopping early without a frozen mechanical failure wastes sunk compute and violates the protocol.",
         "current_decision_cost": "Already-authorized 2×RTX3090 developmental training continues; no new P1/replication compute commitment is requested today.",
-        "cost_to_stop": "Continue only the already-authorized training to seal. After seal, lexical/salience manipulation checks plus P1 validation are the first scientific stop gate; P1 fail stops extra seeds/relations."
+        "cost_to_stop": "Continue only the already-authorized training to seal. After seal, lexical/salience manipulation checks plus P1 validation are the first scientific stop gate; P1 fail stops extra seeds/relations.",
+        "next_authority_gate": "P1 validation requires separate authority after both training seals; replication seeds/relations require later fresh compute authority.",
+        "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
         "status": "READY",
@@ -941,11 +959,14 @@ window.ADVISOR_MEETING_DATA = {
       "primary_claim_owner": "evaluator-relative temporal-safety measurement",
       "relationship": "ERTA remains the G1 paper. MCTA is a separate stopped/held G2 candidate and must not be used to reopen G1."
     },
-    "boundary_note": "Default is separate ownership with explicit support relations. Merge/split only when the advisor changes one of these primary scientific objects, not merely because papers share memory vocabulary."
+    "boundary_note": "Default is separate ownership with explicit support relations. Merge/split only when the advisor changes one of these primary scientific objects, not merely because papers share memory vocabulary.",
+    "memory_family_architecture_decision_owner": "PAPER_A",
+    "memory_family_architecture_rule": "Paper A owns the family-level keep-separate/merge decision for B1/Paper A/Paper B. Paper B only decides whether its minimum longitudinal total-effect claim remains distinct assuming Paper A keeps source-fidelity ownership."
   },
   "shared_risk_reopen_rules": [
     {
       "premise": "skill-access / representation invariance",
+      "primitive": "package identity / finite access",
       "directly_affected": [
         "E1"
       ],
@@ -953,22 +974,69 @@ window.ADVISOR_MEETING_DATA = {
         "E2",
         "C1"
       ],
-      "reopen_threshold": "Reopen E2/C1 only if the failed identity/access mechanism appears on their frozen causal path; otherwise E1 only."
+      "reopen_threshold": "Reopen E2/C1 only if the same package-identity or finite-access mechanism is explicitly load-bearing for their frozen claim; otherwise E1 only."
     },
     {
-      "premise": "persistent-memory object / state semantics",
+      "premise": "persistent-memory semantics",
+      "primitive": "provenance-field semantics",
       "directly_affected": [
-        "B1",
-        "C1",
-        "E2",
+        "B1"
+      ],
+      "conditionally_affected": [
         "PAPER_A",
         "PAPER_B"
       ],
-      "conditionally_affected": [],
-      "reopen_threshold": "Reopen only papers whose exact state identity, write/retrieval semantics, provenance object, or commit semantics depend on the failed primitive; no family-wide automatic reopen."
+      "reopen_threshold": "Reopen Paper A/B only if their frozen control or causal object actually consumes the same provenance-field semantics; otherwise B1 only."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "source-fidelity memory semantics",
+      "directly_affected": [
+        "PAPER_A"
+      ],
+      "conditionally_affected": [
+        "PAPER_B"
+      ],
+      "reopen_threshold": "Reopen Paper B only if its longitudinal claim relies on Paper A’s source-fidelity construct rather than using it as a subordinate diagnostic."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "exact persistent-state / commit identity",
+      "directly_affected": [
+        "PAPER_B"
+      ],
+      "conditionally_affected": [
+        "C1",
+        "E2"
+      ],
+      "reopen_threshold": "Reopen C1/E2 only if the same exact state/commit identity primitive is load-bearing in their frozen evidence object; otherwise Paper B only."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "native retrieval / transport semantics",
+      "directly_affected": [
+        "C1",
+        "PAPER_B"
+      ],
+      "conditionally_affected": [
+        "PAPER_A"
+      ],
+      "reopen_threshold": "Reopen Paper A only if its later-policy fidelity estimand requires the same native retrieval rule; otherwise C1/Paper B only."
+    },
+    {
+      "premise": "persistent-memory semantics",
+      "primitive": "evidence → state realization identity",
+      "directly_affected": [
+        "E2"
+      ],
+      "conditionally_affected": [
+        "C1"
+      ],
+      "reopen_threshold": "Reopen C1 only if its writer/state object uses the same realization identity mechanism; otherwise E2 only."
     },
     {
       "premise": "measurement / evaluator validity",
+      "primitive": "frozen evaluator / measurement surface",
       "directly_affected": [
         "G1"
       ],
@@ -976,14 +1044,14 @@ window.ADVISOR_MEETING_DATA = {
         "C1",
         "B1"
       ],
-      "reopen_threshold": "Reopen C1/B1 only if the same invalid measurement/evaluator assumption appears in their own load-bearing endpoint; otherwise G1 only."
+      "reopen_threshold": "Reopen C1/B1 only if the same invalid evaluator/measurement assumption is load-bearing for their own endpoint; otherwise G1 only."
     }
   ],
   "meeting_outputs": [
     "Nine-paper disposition ledger: continue state | claim scope | next closure | advisor confidence.",
     "Claim-ownership map: especially B1 / Paper A / Paper B, while C1/E2/G1 ownership remains explicit and non-overlapping by default.",
     "Shared-risk reopen table: premise → directly affected papers → conditional papers → reopen threshold.",
-    "Resource sequence: cheap closure / already-running compute / qualification-first / formalize-first; change order only for a real scarce-resource collision.",
+    "Frozen Resource + Authority ledger for all nine papers: authorized-now work | post-meeting human-hour cap | cost-to-stop | next authority gate | future conditional envelope | explicit non-authority; preserve lane order unless a real scarce-resource collision requires reprioritization.",
     "Every unresolved decision has one named owner and one concrete follow-up output; no generic “think more” item."
   ],
   "do_not_spend_advisor_time_on": [
