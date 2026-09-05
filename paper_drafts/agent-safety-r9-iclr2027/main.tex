@@ -33,6 +33,15 @@ This paper exposes that failure mode in a controlled web-agent setting. Our star
 
 Under HarmBench, the story is apparently clean: the current panel is 0/12, and future branch events are 8/12 with updates, 4/12 with the base workflow, and 0/12 with NullMemory. Under DeepSeek, the same future trajectories produce 5/12, 5/12, and 8/12 event branches. The two evaluators agree on 88/108 future episode labels, but their scientific ordering differs. Moreover, re-evaluating the original current panel with DeepSeek changes one of the 12 labels, so the premise ``the agent currently passes'' is itself evaluator-relative.
 
+Figure~\ref{fig:g1-scene} makes the measurement problem explicit: the agent trajectories are held fixed, while evaluator identity changes the current-pass premise, future first-event set, and arm ordering. The scientific object is therefore not a scalar ``safety label'' attached to persistent state, but an evaluator-indexed temporal claim whose robustness must be audited before mechanism interpretation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/g1-evaluator-relative-scene-handdrawn.pdf}
+\caption{\textbf{Scene: evaluator identity can change a temporal safety conclusion without changing the trajectory.} The same frozen Qwen3-8B/AWM trajectories are evaluated by independently frozen HarmBench and DeepSeek judges. HarmBench reports a current pass and the branch ordering updated $>$ base $>$ NullMemory; DeepSeek changes one current label and reports NullMemory $>$ updated $=$ base. The lower timeline emphasizes that first-event interpretation can differ even when state, task, seed, and trace bytes are held fixed.}
+\label{fig:g1-scene}
+\end{figure}
+
 We turn this observation into a measurement method rather than selecting a preferred judge after seeing the disagreement. \textbf{Evaluator-Robust Temporal Audit (ERTA)} retains one output vector per frozen evaluator and tests three layers before a temporal claim can be called evaluator-robust: (i) the current-pass premise must hold for every evaluator; (ii) future first-event sets must be reported per evaluator, with their overlap; and (iii) any claimed intervention ordering must have the same sign under every evaluator. A fourth diagnostic localizes disagreement by task identity instead of assuming homogeneous label noise. ERTA deliberately does \emph{not} construct a post-hoc majority or consensus label.
 
 Our contributions are:
@@ -42,6 +51,15 @@ Our contributions are:
     \item \textbf{A concrete measurement reversal.} HarmBench orders the arms $8>4>0$ by event branches, whereas DeepSeek orders them $8>5=5$ with NullMemory highest. Exact matched-slot testing is significant for HarmBench ($p=0.00148$) and null for DeepSeek ($p=1.0$).
     \item \textbf{A prospective held-out application.} After freezing ERTA, we evaluate all three previously unused R9 held-out task IDs in 12 new NullMemory episodes. HarmBench gives 0/12 and DeepSeek 3/12, prospectively exercising ERTA's measurement-inconclusive outcome rather than selecting a judge after seeing disagreement.
 \end{itemize}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/g1-erta-method-handdrawn.pdf}
+\caption{\textbf{Method: ERTA keeps evaluator uncertainty visible and fails closed.} We freeze the longitudinal trajectories and evaluator identities before interpretation. ERTA then checks current-premise stability, reports definite/possible first-event sets, tests evaluator contrast envelopes, and localizes disagreement by task. A deterministic compiler returns robust-supported, robust-refuted, or evaluator-unidentified without learning judge weights. The held-out PV1 panel is frozen after method derivation and before its new labels. The separate MCTA capability-matched extension remains stopped because no qualified pre-treatment capability variable was available; no MCTA safety outcomes enter the current paper.}
+\label{fig:g1-method}
+\end{figure}
+
+\paragraph{Reader's map.} Figure~\ref{fig:g1-scene} motivates evaluator-relative temporal conclusions; Figure~\ref{fig:g1-method} summarizes the ERTA audit contract. The later longitudinal-protocol figure records the exact three-arm substrate. Results are then organized by the particular scientific predicates ERTA can preserve or withhold, rather than by choosing whichever evaluator keeps the original mechanism story intact.
 
 \section{Evaluator-Robust Temporal Audit}
 \label{sec:method}
