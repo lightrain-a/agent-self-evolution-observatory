@@ -1,0 +1,41 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-host69-repair1-gpu-admission-race-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T21:20:00+08:00",
+  "status": "PI05_B2_HOST69_REPAIR1_PRE_RESULT_GPU_ADMISSION_RACE_NO_QUALIFICATION_CONSUMED",
+  "authority_path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-qualification-authority-69-repair1-20260905.json",
+  "authority_sha256": "fe9ef8e891252a6034b2acb18ae1e18cc208e2048b97bd2999a2b3913c4a6b7a",
+  "observed_failure_time": "2026-09-05T21:16:59+08:00",
+  "failure": {
+    "exception": "RuntimeError: B2 GPU admission failed",
+    "observed_gpu": {
+      "name": "NVIDIA A100-SXM4-80GB",
+      "memory_used_mib": 5783,
+      "utilization_gpu_percent": 46
+    },
+    "concurrent_nonproject_actor": "dualiats_paraphrase_rewrite_v1.py --rewriter gemma2_2b",
+    "layer": "pre-model-load GPU admission after input/base rehash"
+  },
+  "save_result_present": false,
+  "checkpoint_output_root_present": false,
+  "checkpoint_save_started": false,
+  "model_state_initialized": false,
+  "optimizer_update_executed": false,
+  "policy_outcomes_read": false,
+  "loss_values_read_or_reported": false,
+  "qualification_attempt_consumed": false,
+  "host67_forbidden": true,
+  "formal_run3_authorized": false,
+  "decision": "ALLOW_REINVOKE_SAME_REPAIR1_AUTHORITY_ONLY_AFTER_STABLE_IDLE_CONTROL_GATE;_NO_B2_OR_RESOURCE_PARAMETER_CHANGE",
+  "stable_idle_gate": {
+    "host": "69",
+    "required_consecutive_checks": 3,
+    "check_interval_seconds": 30,
+    "gpu_compute_apps": 0,
+    "gpu_memory_used_mib_max": 1024,
+    "host_memavailable_kib_min": 104857600,
+    "forbid_matching_actor_pattern": "dualiats_paraphrase",
+    "scientific_variable_changed": false
+  }
+}
