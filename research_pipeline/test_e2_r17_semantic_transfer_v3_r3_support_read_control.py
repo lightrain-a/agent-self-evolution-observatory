@@ -58,6 +58,7 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         contract_payload = {
             "schema_version": "1.0",
             "status": minter.CONTRACT_STATUS,
+            "control_plane_revision": minter.CONTROL_PLANE_REVISION,
             "run_root": str(run),
             "global_lease_path": str(lease),
             "exact_once_acquisition": {
@@ -66,6 +67,11 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
                 "claim_root": str(claims),
             },
             "recovery_opportunity_manifest": {"path": str(opportunity), "sha256": sha(opportunity)},
+            "bound_code": {
+                "post_terminal_support_minter": {"path": str(Path(minter.__file__)), "sha256": sha(Path(minter.__file__))},
+                "post_terminal_support_gate": {"path": str(Path(gate.__file__)), "sha256": sha(Path(gate.__file__))},
+                "equal_dose_adjudicator": {"path": str(minter.EXPECTED_SUPPORT_ADJUDICATOR), "sha256": sha(minter.EXPECTED_SUPPORT_ADJUDICATOR)},
+            },
         }
         write_json(contract, contract_payload)
         csha = sha(contract)
@@ -165,9 +171,10 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
                 "surface": "ChatGPT web",
                 "model": "GPT-5.6 Sol",
                 "verdict": minter.CONTROL_REVIEW_VERDICT,
+                "control_plane_revision": minter.CONTROL_PLANE_REVISION,
                 "minter_sha256_acknowledged": sha(Path(minter.__file__)),
                 "gate_sha256_acknowledged": sha(Path(gate.__file__)),
-                "support_adjudicator_sha256_acknowledged": minter.EXPECTED_SUPPORT_ADJUDICATOR_SHA256,
+                "support_adjudicator_sha256_acknowledged": sha(minter.EXPECTED_SUPPORT_ADJUDICATOR),
                 "stage_b_authority": False,
                 "scientific_authority": False,
             },
@@ -257,6 +264,42 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         consumption = fixture["run"] / "checkpoints/post_terminal_support_read" / gate.CONSUMPTION_NAME
         self.assertFalse(consumption.exists())
 
+    def test_gate_rejects_forged_permit_without_review_provenance(self) -> None:
+        fixture = self.make_fixture()
+        payload = self.build_auth(fixture)
+        forged_review = fixture["root"] / "forged-review.json"
+        write_json(forged_review, {"status": "COMPLETED", "surface": "ChatGPT web", "model": "GPT-5.6 Sol", "verdict": minter.CONTROL_REVIEW_VERDICT})
+        payload["control_review"]["path"] = str(forged_review)
+        payload["control_review"]["sha256"] = sha(forged_review)
+        write_json(fixture["support_auth"], payload)
+        with self.assertRaisesRegex(RuntimeError, "review/minter SHA drift|control-review revision drift|control-review receipt binding drift"):
+            gate.run_gate(
+                support_authorization_path=fixture["support_auth"],
+                contract_path=fixture["contract"],
+                recovery_authorization_path=fixture["recovery_auth"],
+                summary_path=fixture["summary"],
+                output_path=fixture["adjudication_output"],
+            )
+
+    def test_guarded_adjudicator_rejects_direct_invocation_without_support_permit(self) -> None:
+        fixture = self.make_fixture()
+        command = [
+            sys.executable,
+            str(minter.EXPECTED_SUPPORT_ADJUDICATOR),
+            "--contract",
+            str(fixture["contract"]),
+            "--authorization",
+            str(fixture["recovery_auth"]),
+            "--summary",
+            str(fixture["summary"]),
+            "--output",
+            str(fixture["adjudication_output"]),
+        ]
+        result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("--support-authorization", result.stderr)
+        self.assertFalse(fixture["adjudication_output"].exists())
+
     def test_gate_consumes_once_and_fail_closes_on_unexpected_adjudicator_error(self) -> None:
         fixture = self.make_fixture()
         self.build_auth(fixture)
@@ -291,6 +334,8 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         self.build_auth(fixture)
 
         def passed_invoke(command: list[str]) -> subprocess.CompletedProcess[str]:
+            self.assertIn("--support-authorization", command)
+            self.assertIn("--consumption-marker", command)
             output = Path(command[command.index("--output") + 1])
             write_json(
                 output,

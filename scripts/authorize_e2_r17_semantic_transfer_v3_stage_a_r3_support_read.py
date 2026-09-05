@@ -19,8 +19,8 @@ CONTROL_REVIEW_VERDICT = "PASS_R3_POST_TERMINAL_SUPPORT_CONTROL_PLANE"
 BURNED = "r17-b21-cgwb-p0"
 CENSOR = "r17-b21-cgwp-p0"
 EXPECTED_SUPPORT_ADJUDICATOR = ROOT / "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py"
-EXPECTED_SUPPORT_ADJUDICATOR_SHA256 = "e326ee92f7765aa68856c6fe09610996209d4aa3d3ad464a65d391a88a4cbae4"
 EXPECTED_GATE = ROOT / "scripts/run_e2_r17_semantic_transfer_v3_stage_a_r3_support_adjudication_gate.py"
+CONTROL_PLANE_REVISION = "R3B_POST_TERMINAL_SUPPORT_GUARD"
 EXPECTED_ADJUDICATION_OUTPUT = ROOT / "generated/e2-r17-semantic-transfer-v3-stage-a-r3-equal-dose-adjudication-20260907.json"
 
 
@@ -54,7 +54,7 @@ def task_claim_paths(claim_root: Path, task_id: str) -> tuple[Path, Path]:
     return claim_root / f"{stem}.attempt.json", claim_root / f"{stem}.sealed.json"
 
 
-def validate_control_review(review_path: Path, *, minter_sha: str, gate_sha: str) -> dict[str, Any]:
+def validate_control_review(review_path: Path, *, minter_sha: str, gate_sha: str, support_adjudicator_sha: str) -> dict[str, Any]:
     review = load(review_path)
     req(review.get("status") == "COMPLETED", "post-terminal control review is not completed")
     req(review.get("surface") == "ChatGPT web", "post-terminal control review surface drift")
@@ -62,10 +62,8 @@ def validate_control_review(review_path: Path, *, minter_sha: str, gate_sha: str
     req(review.get("verdict") == CONTROL_REVIEW_VERDICT, "post-terminal control review did not PASS")
     req(review.get("minter_sha256_acknowledged") == minter_sha, "post-terminal control review minter SHA drift")
     req(review.get("gate_sha256_acknowledged") == gate_sha, "post-terminal control review gate SHA drift")
-    req(
-        review.get("support_adjudicator_sha256_acknowledged") == EXPECTED_SUPPORT_ADJUDICATOR_SHA256,
-        "post-terminal control review support-adjudicator SHA drift",
-    )
+    req(review.get("support_adjudicator_sha256_acknowledged") == support_adjudicator_sha, "post-terminal control review support-adjudicator SHA drift")
+    req(review.get("control_plane_revision") == CONTROL_PLANE_REVISION, "post-terminal control review revision drift")
     req(review.get("stage_b_authority") is False, "post-terminal control review grants Stage-B authority")
     req(review.get("scientific_authority") is False, "post-terminal control review grants scientific authority")
     return review
@@ -85,6 +83,7 @@ def validate_terminal_structure(
     ssha = sha(summary_path)
 
     req(contract.get("status") == CONTRACT_STATUS, "R3 recovery contract status drift")
+    req(contract.get("control_plane_revision") == CONTROL_PLANE_REVISION, "R3B support-control revision absent")
     req(recovery_auth.get("status") == RECOVERY_AUTH_STATUS, "R3 recovery authorization status drift")
     req(recovery_auth.get("contract_sha256") == csha, "R3 recovery authorization contract SHA drift")
     req(recovery_auth.get("single_use") is True and recovery_auth.get("exactly_once") is True, "R3 recovery authorization single-use drift")
@@ -205,16 +204,31 @@ def build_support_authorization(
     created_at_utc: str | None = None,
 ) -> dict[str, Any]:
     req(not output_path.exists(), "post-terminal support-read authorization already exists")
-    req(EXPECTED_SUPPORT_ADJUDICATOR.is_file(), "frozen R3 support adjudicator absent")
-    req(sha(EXPECTED_SUPPORT_ADJUDICATOR) == EXPECTED_SUPPORT_ADJUDICATOR_SHA256, "frozen R3 support adjudicator SHA drift")
+    req(EXPECTED_SUPPORT_ADJUDICATOR.is_file(), "R3B guarded support adjudicator absent")
     req(EXPECTED_GATE.is_file(), "post-terminal support gate absent")
     minter_sha = sha(Path(__file__))
     gate_sha = sha(EXPECTED_GATE)
-    review = validate_control_review(control_review_path, minter_sha=minter_sha, gate_sha=gate_sha)
+    support_adjudicator_sha = sha(EXPECTED_SUPPORT_ADJUDICATOR)
     state = validate_terminal_structure(
         contract_path=contract_path,
         recovery_authorization_path=recovery_authorization_path,
         summary_path=summary_path,
+    )
+    contract = state["contract"]
+    bound_code = contract.get("bound_code") or {}
+    for key, path, expected_sha in (
+        ("post_terminal_support_minter", Path(__file__), minter_sha),
+        ("post_terminal_support_gate", EXPECTED_GATE, gate_sha),
+        ("equal_dose_adjudicator", EXPECTED_SUPPORT_ADJUDICATOR, support_adjudicator_sha),
+    ):
+        row = bound_code.get(key) or {}
+        req(bound(str(row.get("path") or "")).resolve() == path.resolve(), f"R3B contract {key} path drift")
+        req(row.get("sha256") == expected_sha, f"R3B contract {key} SHA drift")
+    review = validate_control_review(
+        control_review_path,
+        minter_sha=minter_sha,
+        gate_sha=gate_sha,
+        support_adjudicator_sha=support_adjudicator_sha,
     )
     req(not adjudication_output_path.exists(), "R3 support adjudication output already exists")
 
@@ -236,19 +250,19 @@ def build_support_authorization(
         "terminal_lease_path": str(state["lease_path"]),
         "terminal_lease_sha256": sha(state["lease_path"]),
         "control_review": {
-            "path": str(control_review_path),
+            "path": str(control_review_path.resolve()),
             "sha256": sha(control_review_path),
             "verdict": review["verdict"],
             "model": review["model"],
             "surface": review["surface"],
         },
         "bound_control_plane": {
-            "minter_path": str(Path(__file__)),
+            "minter_path": str(Path(__file__).resolve()),
             "minter_sha256": minter_sha,
             "gate_path": str(EXPECTED_GATE),
             "gate_sha256": gate_sha,
             "support_adjudicator_path": str(EXPECTED_SUPPORT_ADJUDICATOR),
-            "support_adjudicator_sha256": EXPECTED_SUPPORT_ADJUDICATOR_SHA256,
+            "support_adjudicator_sha256": support_adjudicator_sha,
         },
         "execution_scope": {
             "required_adjudication_output": str(adjudication_output_path),

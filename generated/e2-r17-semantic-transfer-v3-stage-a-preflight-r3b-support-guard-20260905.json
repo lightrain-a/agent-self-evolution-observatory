@@ -1,0 +1,62 @@
+{
+  "actual_support_read_authorization_minted": false,
+  "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-r3b-support-guard-zero-provider-preflight",
+  "authority": {
+    "heldout": false,
+    "paper_claim": false,
+    "provider_recovery": false,
+    "stage_a_support_read": false,
+    "stage_b_execution": false
+  },
+  "authority_review_path": "generated/e2-r17-v3-r3-post-terminal-support-authority-gpt56-review-20260905.json",
+  "authority_review_sha256": "575ab2f4535d994bfd23e2dedcd9effbc26d8d358f5c3b1b3d26411c7f0d6846",
+  "checks": {
+    "all_bound_code_hashes_match": true,
+    "fresh_r3b_lineage_absent": true,
+    "post_terminal_support_control_bound": true,
+    "provider_recovery_runner_unchanged": true,
+    "support_control_compile_pass": true,
+    "support_control_tests_9_of_9_pass": true,
+    "support_read_artifacts_absent": true
+  },
+  "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r3b-support-guard-20260905.json",
+  "contract_sha256": "7454608db38e58f2b39b412045e5a2ffe6f2b26db0d012bb2983e37259cb2da9",
+  "created_at_utc": "2026-09-05T14:55:32+00:00",
+  "fresh_identity_qualified": false,
+  "next_gate": "FRESH_GPT56_SOL_EXTRA_HIGH_R3B_EXACT_HASH_PREEXECUTION_REVIEW_THEN_PROVIDER_RESET_THEN_FRESH_IDENTITY_THEN_SEPARATE_RECOVERY_AUTHORIZATION",
+  "parent_r3_contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r3-recovery-20260905.json",
+  "parent_r3_contract_sha256": "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
+  "provider_calls": 0,
+  "r1_exact_code_review_path": "generated/e2-r17-v3-r3-support-control-exact-code-gpt56-review-r1-20260905.json",
+  "r1_exact_code_review_sha256": "48bb7a5d51c99d2ed60fb844423eaa87c455d7f56ce49a1adecaeb9f6373c3e4",
+  "r3b_recovery_authorization_minted": false,
+  "schema_version": "1.0",
+  "science_keys_equal_parent": [
+    "failed_r2_parent",
+    "suite",
+    "mindmemos",
+    "provider_route",
+    "model_identity_policy",
+    "recovery_exceptions",
+    "recovery_opportunity_manifest",
+    "exact_once_acquisition",
+    "equal_dose_support",
+    "actor",
+    "budget",
+    "analysis_boundary",
+    "stage_b_plan_no_authority",
+    "runtime",
+    "env_file_path",
+    "run_root",
+    "global_lease_path"
+  ],
+  "scientific_execution": false,
+  "stage_b_authority": false,
+  "status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_V3_STAGE_A_R3B_SUPPORT_GUARD_PREFLIGHT",
+  "support_inspected": false,
+  "unit_tests": {
+    "passed": 9,
+    "suite": "research_pipeline.test_e2_r17_semantic_transfer_v3_r3_support_read_control",
+    "total": 9
+  }
+}

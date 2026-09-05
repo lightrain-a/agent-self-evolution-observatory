@@ -15,7 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SUPPORT_AUTH_STATUS = "AUTHORIZED_E2_R17_V3_R3_POST_TERMINAL_SUPPORT_READ"
 SUMMARY_STATUS = "COMPLETED_158_POOLS_PLUS_TWO_FROZEN_EXCEPTIONS_PENDING_R3_EQUAL_DOSE_ADJUDICATION"
 EXPECTED_SUPPORT_ADJUDICATOR = ROOT / "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py"
-EXPECTED_SUPPORT_ADJUDICATOR_SHA256 = "e326ee92f7765aa68856c6fe09610996209d4aa3d3ad464a65d391a88a4cbae4"
+CONTROL_REVIEW_VERDICT = "PASS_R3_POST_TERMINAL_SUPPORT_CONTROL_PLANE"
+CONTROL_PLANE_REVISION = "R3B_POST_TERMINAL_SUPPORT_GUARD"
 CONSUMPTION_NAME = "post_terminal_support_read_authorization.consumed.json"
 COMPLETION_NAME = "post_terminal_support_read_adjudication.completed.json"
 
@@ -91,10 +92,25 @@ def validate_support_authorization(
     req(summary.get("stage_b_authority") is False, "terminal summary grants Stage-B authority")
 
     control = support_auth.get("bound_control_plane") or {}
-    req(control.get("gate_sha256") == sha(Path(__file__)), "support-read gate SHA drift")
-    req(control.get("support_adjudicator_sha256") == EXPECTED_SUPPORT_ADJUDICATOR_SHA256, "support adjudicator binding drift")
-    req(EXPECTED_SUPPORT_ADJUDICATOR.is_file() and sha(EXPECTED_SUPPORT_ADJUDICATOR) == EXPECTED_SUPPORT_ADJUDICATOR_SHA256, "frozen support adjudicator SHA drift")
-    req(Path(str(control.get("support_adjudicator_path") or "")).resolve() == EXPECTED_SUPPORT_ADJUDICATOR.resolve(), "support adjudicator path drift")
+    minter_path = Path(str(control.get("minter_path") or ""))
+    gate_path = Path(str(control.get("gate_path") or ""))
+    adjudicator_path = Path(str(control.get("support_adjudicator_path") or ""))
+    req(minter_path.is_file() and control.get("minter_sha256") == sha(minter_path), "support-read minter provenance drift")
+    req(gate_path.resolve() == Path(__file__).resolve() and control.get("gate_sha256") == sha(Path(__file__)), "support-read gate SHA drift")
+    req(adjudicator_path.resolve() == EXPECTED_SUPPORT_ADJUDICATOR.resolve(), "support adjudicator path drift")
+    req(EXPECTED_SUPPORT_ADJUDICATOR.is_file() and control.get("support_adjudicator_sha256") == sha(EXPECTED_SUPPORT_ADJUDICATOR), "guarded support adjudicator SHA drift")
+
+    review_row = support_auth.get("control_review") or {}
+    review_path = Path(str(review_row.get("path") or ""))
+    req(review_path.is_file() and review_row.get("sha256") == sha(review_path), "support-read control-review receipt binding drift")
+    review = load(review_path)
+    req(review.get("status") == "COMPLETED" and review.get("surface") == "ChatGPT web" and review.get("model") == "GPT-5.6 Sol", "support-read control-review provenance drift")
+    req(review.get("verdict") == CONTROL_REVIEW_VERDICT and review_row.get("verdict") == CONTROL_REVIEW_VERDICT, "support-read control-review verdict drift")
+    req(review.get("control_plane_revision") == CONTROL_PLANE_REVISION, "support-read control-review revision drift")
+    req(review.get("minter_sha256_acknowledged") == control.get("minter_sha256"), "support-read review/minter SHA drift")
+    req(review.get("gate_sha256_acknowledged") == control.get("gate_sha256"), "support-read review/gate SHA drift")
+    req(review.get("support_adjudicator_sha256_acknowledged") == control.get("support_adjudicator_sha256"), "support-read review/adjudicator SHA drift")
+    req(review.get("stage_b_authority") is False and review.get("scientific_authority") is False, "support-read control review grants forbidden authority")
 
     scope = support_auth.get("execution_scope") or {}
     req(Path(str(scope.get("required_adjudication_output") or "")).resolve() == output_path.resolve(), "support adjudication output path drift")
@@ -140,6 +156,8 @@ def run_gate(
 
     auth_sha = sha(support_authorization_path)
     summary_sha = sha(summary_path)
+    support_auth = state["support_authorization"]
+    review_row = support_auth["control_review"]
     consumption_payload = {
         "schema_version": "1.0",
         "artifact_type": "e2-r17-v3-stage-a-r3-post-terminal-support-read-consumption",
@@ -150,6 +168,8 @@ def run_gate(
         "terminal_summary_path": str(summary_path),
         "terminal_summary_sha256": summary_sha,
         "required_output": str(output_path),
+        "gate_sha256": sha(Path(__file__)),
+        "control_review_sha256": review_row["sha256"],
         "automatic_retry": False,
         "stage_b_authority": False,
     }
@@ -164,6 +184,10 @@ def run_gate(
         str(recovery_authorization_path),
         "--summary",
         str(summary_path),
+        "--support-authorization",
+        str(support_authorization_path),
+        "--consumption-marker",
+        str(consumption),
         "--output",
         str(output_path),
     ]
