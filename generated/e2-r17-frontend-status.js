@@ -1,6 +1,6 @@
 window.E2_R17_FRONTEND_STATUS = {
   schema_version: "1.0",
-  as_of_date: "2026-09-04",
+  as_of_date: "2026-09-05",
   project_track: "E2-R17",
   title: {
     zh: "解耦 Test-Time Search 的 Serving 与 Persistent Learning",
@@ -12,8 +12,22 @@ window.E2_R17_FRONTEND_STATUS = {
   },
   paper_identity: "CAUSAL_SYSTEMS_INTERFACE_PAPER",
   scientific_object: {
-    zh: "Search 先生成同一个 realized object T_K；当前行为消费 a(T_K)，持久学习消费 g(T_K)。核心实验固定 T_K 与 serving，只改变 learner-visible projection。",
-    en: "Search first generates one realized object T_K; current behavior consumes a(T_K), while persistent learning consumes g(T_K). The core intervention fixes T_K and serving, changing only the learner-visible projection."
+    zh: "面向 search-augmented agents：系统在 serving commit 前已经生成或探索一个 richer search object T_K；当前行为消费 a(T_K)，持久学习消费 g(T_K)。核心实验固定 T_K 与 serving，只改变 learner-visible projection。",
+    en: "For search-augmented agents, the system has already generated or explored a richer search object T_K before the serving commit; current behavior consumes a(T_K), while persistent learning consumes g(T_K). The core intervention fixes T_K and serving, changing only the learner-visible projection."
+  },
+  premise_scope: {
+    verdict: "SCOPE_CALIBRATED_SEARCH_AUGMENTED_AGENTS",
+    title_zh: "适用范围校准：不是所有 Agent 都先跑多条完整轨迹",
+    title_en: "Scope calibration: not every agent runs multiple full trajectories first",
+    premise_zh: "论文不再假设“现代 Agent 普遍并行生成多条完整轨迹再选最好的一条”。更准确的对象是 search-augmented / test-time-scaling agents：它们在最终 serving commit 前，会生成或探索多个 candidate actions、branches 或 trajectories。",
+    premise_en: "The paper no longer assumes that modern agents generally generate many complete trajectories in parallel and then choose one. The intended substrate is search-augmented / test-time-scaling agents that generate or explore multiple candidate actions, branches, or trajectories before the final serving commit.",
+    tk_definition_zh: "T_K 是 serving commit 前已经实际产生并被系统评估过的 candidate evidence/search object；它可以来自 Best-of-N、tree/MCTS、step-wise candidate reranking、beam/lookahead，不要求必须是 K 条并行完整 trajectory。",
+    tk_definition_en: "T_K is the candidate evidence/search object actually produced and evaluated before the serving commit. It may come from Best-of-N, tree/MCTS, step-wise candidate reranking, or beam/lookahead; it need not be K parallel complete trajectories.",
+    out_of_scope_zh: "如果一个 Agent 只有单轨 sequential execution，且 serving 前没有产生可分离的 candidate search object，那么本文的 projection-censoring 问题并不天然存在。",
+    out_of_scope_en: "If an agent only performs single-path sequential execution and produces no separable candidate search object before serving, the projection-censoring problem studied here does not arise by default.",
+    why_it_matters_zh: "因此论文 claim 应限定为 search-enabled agents 的 serving→persistent-learning interface，而不是所有 Agent 的普遍缺陷。",
+    why_it_matters_en: "Accordingly, the paper's claim is about the serving→persistent-learning interface in search-enabled agents, not a universal defect of all agents.",
+    representative_workflows: ["Best-of-N / wide sampling", "Tree or MCTS search", "Step-wise candidate reranking", "Beam / shallow lookahead"]
   },
   frozen_scientific_r2: {
     commit: "29799c83c662887694db52acba4bb19e83131bb0",
@@ -108,6 +122,8 @@ window.E2_R17_FRONTEND_STATUS = {
     exact_ids_frozen: false,
     purpose_zh: "同一条 public lane 承载两个分开的 estimand：统一 end-to-end closest-method comparison，以及 exact-same-pool / same-acting 的 paired causal transport；二者不能混为一个结果。",
     purpose_en: "One public lane carries two separate estimands: unified end-to-end closest-method comparison and paired exact-same-pool / same-acting causal transport; they must not be conflated.",
+    search_workflow_requirement_zh: "SpreadsheetBench Verified-400 只是任务 substrate。冻结 Public P1 时，还必须明确一个真实 search-enabled workflow，使 T_K_public 来自 serving 前实际生成/探索的 candidate actions、branches 或 trajectories；否则只能证明 benchmark performance，不能支撑本文的 search-interface 外部有效性。",
+    search_workflow_requirement_en: "SpreadsheetBench Verified-400 is only the task substrate. When Public P1 is frozen, it must also instantiate a real search-enabled workflow so that T_K_public comes from candidate actions, branches, or trajectories actually generated/explored before serving; otherwise the experiment supports benchmark performance but not the paper's search-interface external validity.",
     primary_model_zh: "先只用一个统一主模型/harness：优先 DeepSeek V4-Pro exact qualified release；不做 4×4 模型矩阵。",
     primary_model_en: "Use one common primary model/harness first: preferably the exact qualified DeepSeek V4-Pro release; no 4×4 model matrix.",
     anchors: ["No Skill", "Initial / Parent Skill", "WIN-C", "Universal MRW4 / prospectively frozen public-compatible alternative"],
@@ -143,6 +159,7 @@ window.E2_R17_FRONTEND_STATUS = {
     roadmap: "consultations/e2-r17-experiment-plan-v4-20260904.md",
     execution_map: "consultations/e2-r17-experiment-plan-v4-execution-map-20260904.md",
     paper_outline: "paper_drafts/e2-r17-paper-outline-skillzip-iteration-20260903.md",
+    scope_calibration: "consultations/e2-r17-premise-scope-calibration-frontend-20260905.md",
     plan_revision: "1e3db1ec2d25addddde2112f7871223f1e3d0728"
   }
 };
