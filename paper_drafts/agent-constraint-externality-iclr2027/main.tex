@@ -97,7 +97,7 @@ We therefore rebuilt a clean direct-provider development set, Direct-SFQ-A0, con
  \item maximum public-oracle path length 48 under an 80-call development cap, leaving at least 32 calls of headroom;
  \item zero overlap in case IDs, instruction hashes, fixture hashes, and target-resource hashes against SQ0 V1--V5 and the old F0 source set.
 \end{itemize}
-Model execution of this fresh set remains blocked by direct-provider credit availability. No Direct-SFQ model outcome is claimed.
+Model execution of this fresh set remains blocked by direct-provider credit availability. The most recent readiness attempt used the frozen direct binding (\texttt{qwen3.7-flash}, OpenAI Responses-compatible endpoint), zero tools, zero retries, temperature zero, and no AppWorld content. The provider returned HTTP 400 with \texttt{invalid\_request\_error / insufficient\_credit}. Because the request was synthetic and non-scientific, this receipt says nothing about actor capability, source-failure prevalence, or the target mechanism. No Direct-SFQ model outcome is claimed.
 
 \begin{table}[t]
 \centering
@@ -108,7 +108,8 @@ Model execution of this fresh set remains blocked by direct-provider credit avai
 \toprule
 Layer & Question & Current status \\
 \midrule
-Capability & Can the actor perform representative tasks? & Historical PASS; not inherited as clean-direct evidence \\
+Provider readiness & Can the frozen direct interface complete one synthetic request? & Credit stop; no scientific call \\
+Capability & Can the actor perform representative tasks? & Historical PASS only; clean-direct Gate 0 closed \\
 Source failure & Do fresh cases yield semantic repairable failures? & Fresh set static-qualified; execution pending \\
 RQ1 phenomenon & Does a successful local repair create collateral regression? & Not executed \\
 RQ2 mechanism & Does coupling topology moderate the externality? & Not executed \\
@@ -118,104 +119,191 @@ RQ4 mitigation & Can targeted checks reduce harm at fixed budget? & Conditional;
 \end{tabular}
 \end{table}
 
+\section{Confirmatory design and frozen analysis protocol}
+\label{sec:confirmatory}
+The confirmatory program is designed to make adaptation to observed collateral outcomes mechanically difficult. Its central rule is that eligibility, sample size, repeat count, treatment bytes, graph construction, and analysis order are frozen using information that is upstream of the confirmatory non-target outcomes they could otherwise bias.
+
+\subsection{Scientific unit, repeat qualification, and precision freeze}
+The \emph{repair family} is the scientific unit. Topology arms, UPDATE/NO\_UPDATE branches, and stochastic repeats are nested technical executions and are never counted as independent samples. Before confirmatory execution, a disjoint development-only stability exercise uses 4--6 families that are permanently excluded from confirmatory analysis. It freezes a repeat count $R^*\in\{2,3\}$ from within-condition stability only; $R^*=2$ is the efficiency preference, while $R^*=3$ is permitted only if the preregistered stability criterion requires it. Repeat count cannot change because a treatment effect is near a desired magnitude or significance boundary.
+
+A separate development-only precision calculation freezes the required eligible-family count $N^*\in\{12,16,20,24\}$. The calculation is direction-blind with respect to the confirmatory effect and is completed before any confirmatory collateral outcome is opened. The smallest scientifically meaningful effect, desired family-level interval precision, paired analysis procedure, missingness handling, and reserve activation rule are frozen at the same boundary. The default planning point $N^*=16,R^*=2$ is a cost envelope, not an execution commitment.
+
+\subsection{Prospective reserve and topology-neutral eligibility}
+Before confirmatory collateral evaluation, we prospectively generate a 24-family reserve pool balanced across the File/Gmail and Todo/Note/File constructions. Families are ordered by a frozen stable hash. A family may enter the primary panel only through facts that are pre-topology and pre-collateral:
+\begin{enumerate}
+ \item a normally terminated semantic source failure;
+ \item a valid persistent repair artifact generated only from the target-relevant failure slice and then content-addressed and frozen;
+ \item positive target repair uptake on a topology-neutral \texttt{TARGET\_ONLY\_VERIFICATION} surface instantiated from the common pre-update snapshot with the exact frozen repair bytes; and
+ \item no provider, interface, harness, or measurement invalidity.
+\end{enumerate}
+The first $N^*$ eligible families in stable-hash order form the panel. Reserve families may replace only preregistered pre-treatment eligibility attrition. They are never activated because an observed collateral or topology effect is weak, inconvenient, or nearly significant.
+
+The topology-neutral target-only check is deliberately upstream of the topology intervention. Once a family is admitted, target success inside INDEPENDENT, LOW, or HIGH becomes a treatment-responsive outcome. No family or topology arm may then be deleted because the repair ceases to help its target. Instead, target-repair retention is reported jointly with collateral outcomes. This prevents conditioning on a post-treatment variable from manufacturing a ``successful-repair'' subset.
+
+\subsection{One locked collection for RQ1 and RQ2}
+Each admitted family is instantiated as a matched $3\times2$ design: three coupling worlds (INDEPENDENT, LOW, HIGH) crossed with NO\_UPDATE and exact REAL\_REPAIR. All branches start from the same frozen pre-update snapshot, use the same actor and tool surface, and preserve the same target obligation, constraint count, non-topological difficulty recipe, instruction budget, repair bytes, and repeat policy.
+
+RQ1 and RQ2 are not two separately collected experiments. They share one locked panel and one frozen outcome collection. RQ1 is adjudicated first using the pooled UPDATE versus NO\_UPDATE externality. Only if RQ1 supports the collateral phenomenon is RQ2 opened as a conditional analysis of the already collected same-panel outcomes. No second mechanism dataset is collected after seeing RQ1, and no topology-specific recollection or family backfill is allowed.
+
+At the default planning point $N^*=16,R^*=2$, the complete primary matrix contains $16\times3\times2\times2=192$ technical probe episodes. The absolute reserve envelope $N^*=24,R^*=3$ would contain 432 probes. These episode counts describe cost, not scientific sample size.
+
+\subsection{Semantic sham control}
+A balanced subset is designated by stable hash before collateral outcomes (default eight primary families). It receives a \texttt{SHAM\_UPDATE} on the same persistent update surface. The sham matches the real repair's general format and approximate length budget but contains no target-specific action rule; its bytes are frozen before any collateral outcome. To maximize information per episode, the sham is run only at the INDEPENDENT and HIGH topology extremes.
+
+The resulting three-way comparison REAL\_REPAIR versus SHAM\_UPDATE versus NO\_UPDATE separates repair semantics from the generic effect of adding persistent text or context. If SHAM produces the same collateral pattern as the real repair, the mechanism claim is narrowed or stopped rather than rescued by additional families. With eight families and $R^*=2$, this control adds 32 technical episodes.
+
+\subsection{Sequential opening of downstream claims}
+The execution and analysis order is frozen as
+\begin{quote}\small
+provider readiness $\rightarrow$ Gate 0 clean capability $\rightarrow$ Gate 1 Direct-SFQ-A0 $\rightarrow$ development repeat qualification $\rightarrow$ $N^*$ precision freeze $\rightarrow$ 24-family reserve freeze $\rightarrow$ confirmatory source+repair freeze $\rightarrow$ \texttt{TARGET\_ONLY\_VERIFICATION} $\rightarrow$ final panel freeze $\rightarrow$ SHAM artifact/subset freeze $\rightarrow$ one locked RQ1/RQ2 collection $\rightarrow$ RQ1 analysis $\rightarrow$ conditional RQ2 analysis $\rightarrow$ RQ3 $\rightarrow$ conditional RQ4.
+\end{quote}
+A failed layer closes its dependent claims. This is both a validity rule and a workload rule: later experiments are not run merely to make the paper look complete.
+
 \section{RQ1: Does a successful local repair create collateral regression?}
 \label{sec:rq1}
-The first confirmatory endpoint is not a topology contrast. For each eligible repair family, we first require positive target repair uptake. We then compare UPDATE and NO\_UPDATE from the same pre-update snapshot and report pooled $\mathrm{UE}$ across topology arms. Negative values are retained rather than truncated.
+The first confirmatory endpoint is the collateral phenomenon itself, not a topology contrast. Eligibility already requires positive target uptake on the topology-neutral verification surface. On the locked topology panel we then compare REAL\_REPAIR and NO\_UPDATE from the same pre-update snapshot and report pooled update externality $\mathrm{UE}$ across the frozen topology arms. Negative values are retained rather than truncated: a repair that unexpectedly improves a non-target constraint is part of the estimand rather than an observation to discard.
 
-The main reporting unit is the repair family. Episode-level executions are technical repeats, not independent scientific samples. Results will jointly show target gain and collateral regression so that an overall task-success metric cannot hide ``fix one, break another'' behavior.
+\paragraph{Family-level paired estimand.}
+For each family, topology, and branch, the $R^*$ technical repeats are aggregated according to the preregistered repeat rule before the family enters any inferential calculation. The scientific sample size is therefore the number of frozen families, not the number of episodes. The primary analysis uses paired within-family UPDATE--NO\_UPDATE differences, which removes between-family difficulty variation by construction. The exact interval/test procedure and smallest scientifically meaningful effect are frozen before confirmatory outcomes under the precision protocol in Section~\ref{sec:confirmatory}.
 
-A null RQ1 result stops the externality story even if a later arm-level difference could be manufactured. In that case topology may still affect ordinary task difficulty, but the paper cannot claim a local-repair externality mechanism.
+\paragraph{Target utility is reported jointly, not conditioned away.}
+A repair can create a collateral effect while also losing target efficacy in one topology arm. Such a case is scientifically informative because topology is part of the intervention. We therefore report target satisfaction/repair-retention alongside collateral regression in every arm and prohibit post-treatment deletion of families whose target effect weakens. The stronger verbal statement ``a still-effective repair breaks something else'' is made only if the preregistered panel-level target-retention falsifier is also satisfied; otherwise the result is described more narrowly as an update-attributable externality under the topology intervention.
+
+\paragraph{Sham falsifier.}
+On the predesignated sham subset, REAL\_REPAIR is compared both with NO\_UPDATE and with a format/length-matched SHAM\_UPDATE. Evidence that REAL and SHAM induce indistinguishable collateral changes would favor a generic persistent-context explanation over repair semantics. This falsifier is evaluated without creating a new post-hoc subset.
+
+A null RQ1 result stops the externality story even if an arm-level difference could later be found. In that case topology may still change ordinary task difficulty or target efficacy, but the paper cannot claim a local-repair collateral mechanism and RQ2 is not opened as a confirmatory claim.
 
 \section{RQ2: Does constraint coupling cause the externality?}
 \label{sec:rq2}
-RQ2 opens only after RQ1 establishes the phenomenon. Each eligible family reuses exact repair bytes $u$ across INDEPENDENT, LOW, and HIGH worlds. The primary contrast is $\Delta_{\mathrm{topo}}=\mathrm{UE}_{H}-\mathrm{UE}_{I}$. LOW is retained for the ordered secondary prediction $H\ge L\ge I$.
+RQ2 opens only after RQ1 establishes the phenomenon. No new data collection is triggered by that decision: each eligible family has already reused exact repair bytes $u$ across INDEPENDENT, LOW, and HIGH worlds in the single locked RQ1/RQ2 collection. The primary family-level mechanism contrast is
+\begin{equation}
+\Delta_{\mathrm{topo}}=\mathrm{UE}_{H}-\mathrm{UE}_{I},
+\end{equation}
+with LOW retained for the preregistered ordered secondary prediction $H\ge L\ge I$.
 
-Mechanism localization further decomposes collateral regressions by graph distance to the target and by shared mutable-resource exposure. These analyses are meaningful only because graph structure is frozen outcome-blind. If ordinary controls for count, instruction length, task difficulty, or update size absorb the contrast, the topology claim is stopped rather than rescued by changing families or actors.
+\paragraph{What is held fixed.}
+The topology manipulation does not regenerate or rewrite the repair. It holds fixed the target obligation, actor, tool surface, instruction budget, initial snapshot recipe, constraint count, non-topological difficulty controls, repeat policy, and exact repair bytes. The intended difference is whether target-relevant state/actions are structurally independent of, weakly coupled to, or strongly coupled to resources/prerequisites used by the non-target constraints. This exact-same-update requirement distinguishes a topology mechanism test from a comparison of three different tasks that merely happen to have different failure rates.
+
+\paragraph{Outcome-blind mechanism localization.}
+The coupling graph is built without collateral labels. Secondary localization therefore asks whether observed externalities concentrate near direct prerequisite edges, target-write$\rightarrow$non-target-read/write relations, larger shared mutable-resource exposure, or shorter graph distance. Family type (File/Gmail versus Todo/Note/File) is reported as heterogeneity rather than pooled as additional independent samples. These decompositions are secondary to the HIGH--INDEPENDENT contrast and cannot redefine the graph after outcomes are observed.
+
+\paragraph{Alternative explanations.}
+Because topology arms are matched at construction time, ordinary controls such as instruction length, number of constraints, repair length, and planned task difficulty should not systematically differ. We nevertheless report their realized balance as a design diagnostic. If the apparent topology contrast is explainable by an ordinary non-topological imbalance, or if the sham control reproduces the same pattern, the structural mechanism claim is narrowed or stopped rather than rescued by changing families, actors, or graph definitions.
 
 \section{RQ3: Prospective structural prediction}
 \label{sec:rq3}
-A causal mechanism becomes substantially more useful if it predicts risk before the non-target failure is observed. We therefore avoid a flexible learned graph-risk model and freeze a parameter-free ranking rule, \emph{ExposureRank}:
+A causal mechanism becomes substantially more useful if it predicts risk before the non-target failure is observed. RQ3 therefore moves to untouched families rather than fitting a flexible predictor on the RQ1/RQ2 panel. Sixteen held-out candidate families are generated prospectively and are disjoint from source-development, repeat/precision qualification, and primary confirmatory families. Before any held-out collateral outcome is opened, an eligible target count $H^*\in\{12,16\}$, the ranking rule, its tie-breaks, every ablation ranking, and $k$ are frozen using only coverage/eligibility information and the allowed future probe budget.
+
+We deliberately use a parameter-free rule, \emph{ExposureRank}:
 \begin{enumerate}
  \item direct prerequisite or target-write$\rightarrow$non-target-read/write edges first;
  \item larger shared mutable-resource count first;
  \item shorter prerequisite/resource path distance first;
  \item stable constraint hash only as a deterministic tie break.
 \end{enumerate}
-The value of $k$ is determined from the allowed future probe budget before held-out outcomes. On families never used for challenge construction or calibration, the preregistered test asks whether update-attributable regressions are enriched in ExposureRank top-$k$ relative to same-$k$ random ranking.
+The held-out execution collects only the UPDATE/NO\_UPDATE evidence required to label update-attributable regression; it does not repeat the full three-topology mechanism matrix unless the prediction estimand itself requires it. At the default $H^*=12,R^*=2$, this is 48 technical probes; the maximum planned envelope is 96.
 
-Failure of this prospective enrichment stops the prediction claim and prevents the mitigation stage from opening. We do not fit a new risk model after seeing held-out labels.
+\paragraph{Zero-extra-call ranking controls.}
+The same frozen held-out outcomes are reused to evaluate same-$k$ Random ranking, Same-App ranking, shared-resource-count-only ranking, graph-distance-only ranking, the full ExposureRank, and an outcome-aware oracle upper bound. These are offline ranking comparisons and therefore require no additional actor episodes. The oracle is used only to show attainable headroom and is never described as a deployable baseline.
+
+The preregistered claim asks whether update-attributable regressions are prospectively enriched in ExposureRank top-$k$ relative to same-$k$ random ranking. Failure of this enrichment stops the prediction claim and prevents mitigation from opening. We do not fit a new risk model, change $k$, or alter graph features after seeing held-out labels.
 
 \section{Conditional minimum mitigation}
 \label{sec:gtcc}
-If RQ1--RQ3 all pass, the same frozen ExposureRank induces a minimum safeguard: \textbf{Graph-Targeted Collateral Check (GTCC)}. Before committing a target-local repair, the system evaluates the target and the top-$k$ exposed non-target constraints from a matched pre-update snapshot. The repair is committed only when target validation is positive and the selected collateral checks reveal no new update-attributable regression.
+If and only if RQ1--RQ3 pass, the same frozen ExposureRank induces a minimum safeguard: \textbf{Graph-Targeted Collateral Check (GTCC)}. Before committing a target-local repair, the system evaluates the target and the top-$k$ exposed non-target constraints from a matched pre-update snapshot. The repair is committed only when target validation is positive and the selected collateral checks reveal no new update-attributable regression. GTCC introduces no learned risk model and no new graph fitted to policy-evaluation outcomes.
 
-GTCC is intentionally simple. It is compared against:
+A fresh policy-evaluation reserve of 16 candidate families is generated in advance. Before policy outcomes, the eligible target $M^*\in\{8,12,16\}$ is frozen; 12 is the default budgeting point. Evaluation is paired on the same family/snapshot and compares only policies that answer distinct alternatives:
 \begin{itemize}
- \item \textbf{Always Commit};
- \item \textbf{Target-Only Validation};
- \item \textbf{Random-$k$ Collateral Check}, using the same probe budget;
- \item \textbf{Same-App-$k$ Check}, a coarse locality heuristic using the same probe budget;
- \item \textbf{Full Non-target Check}, reported as an oracle/upper bound rather than a same-cost baseline.
+ \item \textbf{Always Commit}, the naive persistent-repair policy;
+ \item \textbf{Target-Only Validation}, which checks only whether the repaired target improves;
+ \item \textbf{Random-$k$ Collateral Check}, controlling for the value of checking any $k$ constraints;
+ \item \textbf{Same-App-$k$ Check}, a coarse locality heuristic;
+ \item \textbf{GTCC}, using frozen ExposureRank;
+ \item \textbf{Full Non-target Check}, on a small prespecified subset as an oracle/upper bound rather than a same-cost competitor.
 \end{itemize}
-If Random-$k$ matches GTCC, we do not claim a topology-aware mitigation advantage. If a simple nearest/exposure rule is sufficient, we do not introduce a learned controller.
+Random-$k$, Same-App-$k$, and GTCC use exactly the same $k$ and total probe budget. At the default $M^*=12,R^*=2$, the five same-scope policies require 120 technical policy episodes. Full checking is restricted to a prespecified small subset (default six families) because its purpose is to show the upper-bound cost/risk trade-off, not to win an unfair budget comparison.
+
+The policy table jointly reports target success/repair gain, collateral regression rate, commit rate, paired policy difference with uncertainty, LLM requests, tool calls, and wall-clock cost. If GTCC is practically equivalent to Random-$k$ or Same-App-$k$ under the frozen meaningful-effect margin, the topology-aware mitigation claim stops. We do not add a learned controller or enlarge the panel merely because a simpler policy performs well.
 
 \section{Current evidence and what it does not show}
 \label{sec:current}
 The current project history contains useful evidence, but most of it concerns experimental validity rather than the target mechanism.
 
 \paragraph{What is supported.}
-The AppWorld matched-topology construct, agent-visible treatment, state reset, programmatic evaluator, and exactly-once execution machinery are implementable. The old F0 source execution directly demonstrates that capability qualification does not guarantee the availability of repairable failures. Fresh Direct-SFQ-A0 cases are publicly reachable under their frozen development budget and are content-disjoint from prior development/source sets.
+The AppWorld matched-topology construct, agent-visible treatment, state reset, programmatic evaluator, content-addressed repair artifacts, and exactly-once execution machinery are implementable. The old F0 source execution directly demonstrates that capability qualification does not guarantee the availability of repairable failures. Fresh Direct-SFQ-A0 cases are publicly reachable under their frozen development budget and are content-disjoint from prior development/source sets. The current pre-execution protocol also fixes the family-level scientific unit, development-only $R^*$ and $N^*$ freezes, 24-family reserve ordering, topology-neutral target-only eligibility, sham construction, and one locked RQ1/RQ2 collection before any confirmatory collateral outcome.
+
+\paragraph{Current execution boundary.}
+Provider-readiness R1 stopped before dispatch because the approved credential was not configured in the isolated execution worktree. After secure credential restoration, R2 dispatched exactly one non-scientific synthetic request under the frozen direct binding and received HTTP 400 / \texttt{insufficient\_credit}; no retry was attempted. R2 created zero AppWorld episodes, zero repair artifacts, and zero scientific outcomes. Its authority is exhausted. Gate 0 remains closed until usable credit is restored on the same frozen provider, a new readiness authority is issued, and a fresh synthetic readiness attempt passes.
 
 \paragraph{What is not supported.}
-There is currently no scientific evidence that a successful local repair increases collateral regression, no evidence that HIGH coupling is more dangerous than INDEPENDENT coupling, no held-out topology-prediction result, and no GTCC method gain. Provider-credit failures and AtomCode transport contamination are execution-layer failures, not scientific negatives.
+There is currently no clean-direct capability result, no executed Direct-SFQ-A0 source-failure distribution, no scientific evidence that a successful local repair increases collateral regression, no evidence that HIGH coupling is more dangerous than INDEPENDENT coupling, no held-out topology-prediction result, and no GTCC method gain. Provider-credit failures and AtomCode transport contamination are execution-layer failures, not scientific negatives.
 
-\section{Experimental plan after the source gate}
+\section{Workload envelopes and conditional generalization}
 \label{sec:plan}
-Following the source-failure gate, the confirmatory experiment will freeze all remaining degrees of freedom before any collateral outcome is read. Candidate families are generated prospectively as a reserve pool; the final eligible-family count and repeat count are frozen from development-only precision/stability information, not from confirmatory effect direction. A predesignated subset also receives a length/format-matched sham update to separate repair semantics from generic persistent-context effects. The main table is designed to answer claims rather than enumerate implementation variants. Planned family counts and repeats are treated as maximum envelopes, not workload targets: the protocol will freeze the smallest scientifically meaningful effect and family-level precision criterion, use paired within-family contrasts to maximize information per episode, and permit any sample-size expansion only through outcome-direction-blind nuisance/precision rules. We do not add families or repeats because a treatment effect is close to a desired threshold.
+The experiment budget is defined by identification needs rather than by a target trajectory count. Table~\ref{tab:matrix} separates scientific sample size from execution cost. The primary panel is the only mandatory mechanism dataset after all gates pass; every later panel is conditional on an upstream claim.
 
 \begin{table}[t]
 \centering
-\caption{Planned claim-aligned experimental matrix. Rows open sequentially; a failed row closes all dependent claims.}
+\caption{Claim-aligned execution envelopes. Family counts are scientific units; episode counts are technical cost at the indicated planning defaults.}
 \label{tab:matrix}
 \small
-\begin{tabular}{p{0.13\linewidth}p{0.25\linewidth}p{0.27\linewidth}p{0.21\linewidth}}
+\begin{tabular}{p{0.13\linewidth}p{0.27\linewidth}p{0.22\linewidth}p{0.24\linewidth}}
 \toprule
-Stage & Main comparison & Primary readout & Stop condition \\
+Stage & Frozen scientific object & Default technical envelope & Stop/continue rule \\
 \midrule
-RQ1 & REAL vs NO\_UPDATE; sham subset & Target gain + pooled UE + sham exclusion & No collateral phenomenon / real=sham \\
-RQ2 & HIGH vs INDEPENDENT; LOW ordered & $\Delta_{\mathrm{topo}}$ + exposure profile & Topology absorbed by ordinary controls \\
-RQ3 & ExposureRank top-$k$ vs random-$k$ & Held-out regression enrichment & No prospective enrichment \\
-RQ4 & GTCC vs Random-$k$/Same-App-$k$/Target-only/Always & Collateral rate at matched budget & Budget-matched heuristics equivalent to GTCC \\
+RQ1/RQ2 & $N^*$ family panel; one locked collection & $16\times3\times2\times2=192$ & RQ2 opens only if RQ1 passes \\
+SHAM & 8-family predesignated subset & $8\times2\times2=32$ extra & Real must differ meaningfully from generic persistent text \\
+RQ3 & $H^*$ untouched families & $12\times2\times2=48$ & No held-out enrichment $\Rightarrow$ stop prediction/GTCC \\
+RQ4 & $M^*$ fresh policy families & $12\times5\times2=120$ & Open only after RQ1--RQ3; stop if simple matched-budget checks suffice \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A public-benchmark and multi-model expansion is deliberately downstream. Once the mechanism-facing RQs survive, the main result table should compare multiple capability tiers and include both target utility and collateral harm. A multi-round extension is justified only if the paper expands its claim from a single persistent repair to accumulated self-evolution.
+\paragraph{Expansion rules.}
+Reserve activation or larger frozen values may be justified only by confirmatory-effect-independent information: development-only variance/stability, preregistered source-failure or topology-neutral repair-uptake attrition, interface/measurement invalidity, and pre-outcome precision calculations. Forbidden reasons include a nearly significant $p$-value, a desired sign with an inconvenient interval, a smaller-than-hoped HIGH--LOW difference, or an unexpectedly strong baseline. The maximum primary envelope is 432 probes at $N^*=24,R^*=3$; RQ3 and RQ4 likewise retain prespecified maxima rather than open-ended growth.
+
+\paragraph{Secondary actor.}
+Cross-model evidence is supporting external validity, not extra $n$ for the primary causal claim. Only after RQ1/RQ2 are established do we test one additional capability-qualified actor first, on a frozen stratified subset of eight primary families. At $R^*=2$, replaying the $3\times2$ topology/update matrix costs 96 episodes. A second additional actor is justified only if the first replication leaves a material model-dependence ambiguity that changes claim scope.
+
+\paragraph{Existing updater compatibility.}
+Methods such as ACE~\citep{zhang2026ace}, SkillOpt~\citep{yang2026skillopt}, or other self-evolution systems change update generation, acceptance, or memory semantics and therefore cannot serve as primary RQ2 controls without destroying the exact-same-update estimand. A higher-value downstream test is to select one AppWorld-compatible updater (ACE is the preferred published candidate), freeze its produced update bytes, and run the same collateral audit on approximately 6--8 fresh families. This is a plug-in compatibility/generalization test, not a replacement for the causal controls.
+
+\paragraph{Longitudinal extension.}
+The paper currently claims a single persistent-repair externality. A multi-round experiment is therefore not mandatory. It opens only if the final claim expands to accumulated self-evolution, in which case a small pre-frozen family set is followed across a fixed number of update rounds under Always Commit, Target-Only, and GTCC, measuring accumulated collateral risk, recovery, and target utility. This extension must not be used simply to add volume after a weak single-update result.
 
 \section{Related work}
 \label{sec:related}
-\paragraph{Persistent agent memory and error propagation.}
-\citet{xiong2026memory} show that LLM agents follow retrieved experience and can propagate errors or replay misaligned experiences. \citet{zhang2026faultymemory} further show that continuously consolidated memories can become faulty even when useful underlying experiences are available. These results motivate auditing persistent updates, but they do not isolate the same successful repair under manipulated constraint-coupling topology. Our intended contribution is treatment-level attribution of previously satisfied non-target regression.
+\paragraph{Language feedback, workflow memory, and evolving context.}
+Reflexion stores verbal reflections from trial-and-error in an episodic memory buffer to improve later decisions without weight updates~\citep{shinn2023reflexion}. Agent Workflow Memory (AWM) induces reusable workflows from prior trajectories and retrieves them to guide later web-agent execution~\citep{wang2025awm}. ACE goes further toward persistent self-improvement by treating context as an evolving playbook updated through generation, reflection, and curation; its published evaluation includes AppWorld~\citep{zhang2026ace}. These systems establish that persistent textual state can materially improve future agent behavior. Our question is orthogonal to whether such updates improve their intended target: once a target-local update is fixed, what happens to constraints that were already satisfied?
 
-\paragraph{Structured skills and faithful evolution.}
-SkillZip treats a skill as a typed behavioral object whose triggers, workflow edges, tool requirements, obligations, and output fields must survive compression~\citep{bai2026skillzip}. SkillZip Pro extends this view to progressively loaded directory bundles and preserves routing/loading boundaries~\citep{bai2026skillzippro}. We borrow the methodological lesson rather than the compression objective: scientific objects should preserve execution-relevant contracts and boundary conditions. Here that means treating capability, source-failure availability, repair uptake, collateral outcomes, and topology as separate objects instead of collapsing them into one success score.
+\paragraph{Memory failure and experience-following.}
+\citet{xiong2026memory} empirically study how memory operations affect experience-following and show that retrieved experience can propagate errors or replay misaligned behavior. \citet{zhang2026faultymemory} show that useful memories can degrade under continuous LLM-based updating. This line of work makes broad claims such as ``memory can hurt'' unavailable as novelty. It does not, however, isolate an exact successful repair as the treatment, compare UPDATE against NO\_UPDATE from the same state, and manipulate an outcome-blind dependency topology to explain newly broken non-target constraints.
 
-\paragraph{AppWorld and collateral state changes.}
-AppWorld provides stateful multi-app tasks and programmatic evaluation that can detect unexpected state changes~\citep{trivedi2024appworld}. Our study turns that general capability into a matched counterfactual design: the same pre-update snapshot and same repair are replayed with and without the update, then across outcome-blind topology arms.
+\paragraph{Self-evolving skills and optimization.}
+SAGE uses reinforcement learning with sequential rollout and an accumulated skill library for self-improving agents on AppWorld~\citep{wang2026sage}. SkillOpt treats the skill document as optimizable external state and uses bounded textual edits plus held-out validation~\citep{yang2026skillopt}. Recent controlled work on self-evolving skills further shows that successful and failed trajectories have different effects over multiple feedback rounds and that persistent evolution is sparse and validation-dependent~\citep{liu2026rethinking}. These methods are important external-validity substrates, but they change the writer, optimizer, acceptance rule, or even model parameters. Putting them directly into the RQ2 causal table would confound update identity with topology. We instead freeze one update and manipulate only structural coupling; an existing updater can enter later as a plug-in compatibility test.
+
+\paragraph{Structured skills and execution contracts.}
+SkillZip treats a skill as a typed behavioral object whose triggers, workflow edges, tool requirements, obligations, and output fields must survive compression~\citep{bai2026skillzip}. SkillZip Pro extends this view to progressively loaded directory bundles and preserves routing/loading boundaries~\citep{bai2026skillzippro}. We borrow the methodological lesson rather than the compression objective: execution-relevant contracts and boundaries should remain explicit. In our setting, capability, source-failure availability, repair uptake, non-target preservation, and coupling topology are separate scientific objects rather than one aggregate success score.
+
+\paragraph{Stateful agent benchmarks and collateral state changes.}
+AppWorld provides controllable multi-app state, explicit snapshots, and programmatic evaluation for interactive agents~\citep{trivedi2024appworld}. Its evaluators can reveal unexpected state changes, making it suitable for collateral measurement. Our contribution is not a new state-change detector. It is the counterfactual attribution design built on top of that substrate: same snapshot, UPDATE versus NO\_UPDATE, exact repair bytes across matched topology arms, and prospective structural prediction on untouched families.
 
 \begin{table}[t]
 \centering
-\caption{Positioning by scientific object rather than by the broad topic ``agent memory.''}
+\caption{Positioning by scientific object rather than by the broad topic ``agent memory.'' ``Non-target attribution'' means a matched causal endpoint for constraints satisfied before the update.}
 \label{tab:related-position}
 \small
-\begin{tabular}{p{0.17\linewidth}p{0.26\linewidth}p{0.22\linewidth}p{0.20\linewidth}}
+\begin{tabular}{p{0.18\linewidth}p{0.28\linewidth}p{0.21\linewidth}p{0.20\linewidth}}
 \toprule
-Work & Primary object & Update-attributable non-target endpoint & Same-update structural test \\
+Work & Primary object & Non-target attribution & Exact same-update structural test \\
 \midrule
-Xiong et al.~\citep{xiong2026memory} & Memory add/delete and experience following & Error propagation, but not matched collateral attribution & No \\
-Zhang et al.~\citep{zhang2026faultymemory} & Continuous memory consolidation & Memory utility degradation & No \\
-SkillZip / Pro~\citep{bai2026skillzip,bai2026skillzippro} & Skill contract / bundle compression & Contract and route preservation & No \\
-Ours & Persistent target-local repair family & Previously satisfied non-target regression & Exact repair bytes + matched topology + held-out prediction \\
+Reflexion / AWM~\citep{shinn2023reflexion,wang2025awm} & Reflections / reusable workflows for future target performance & No & No \\
+ACE~\citep{zhang2026ace} & Continually evolving context playbook & No matched collateral endpoint & No \\
+Xiong / Zhang~\citep{xiong2026memory,zhang2026faultymemory} & Memory use and degradation & Broad error/degradation evidence & No \\
+SAGE / SkillOpt / RethinkSkill~\citep{wang2026sage,yang2026skillopt,liu2026rethinking} & Skill learning, optimization, feedback dynamics & Target/validation-centered & Update object changes \\
+SkillZip / Pro~\citep{bai2026skillzip,bai2026skillzippro} & Skill contract / bundle compression & Preservation-oriented & No repair-topology intervention \\
+Ours & Frozen target-local repair family & Previously satisfied non-target regression & Yes: exact bytes + matched topology + held-out prediction \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -238,10 +326,102 @@ The decisive mechanism experiment is not yet executed, so the present manuscript
 A local repair should not be judged only by whether its target improves. The stronger reliability question is whether previously satisfied constraints remain intact, and whether any new regression can be attributed to the repair rather than to ordinary task difficulty or stochasticity. We formulate that question as update-attributable collateral regression and isolate constraint coupling with an exact-same-update matched-topology design. Our execution history shows why capability, repairable-failure availability, mechanism evidence, prospective prediction, and mitigation must be separated. The next valid scientific result must begin with a clean source-failure qualification; only then can the paper test whether local repairs truly stay local.
 
 \section*{Reproducibility Statement}
-All experimental gates are content-addressed. Provider, transport, measurement, source-substrate, and scientific failures are stored as distinct artifacts. Exactly-once execution forbids automatic replay after durable dispatch; retries and replacements require separately frozen authority. Development source-failure cases are excluded from future confirmatory families, and topology/ranking objects are frozen before the outcomes they are intended to explain or predict.
+All experimental gates are content-addressed. Provider, transport, measurement, source-substrate, and scientific failures are stored as distinct artifacts rather than collapsed into task failure. Exactly-once execution forbids automatic replay after durable dispatch; retries and replacements require separately frozen authority. Development source-failure and repeat/precision families are permanently excluded from confirmatory families. The 24-family reserve order, $N^*$, $R^*$, target-only eligibility rule, repair bytes, topology graphs, sham artifacts/subset, RQ1/RQ2 panel, ExposureRank, held-out $k$, and downstream policy budget are frozen before the outcomes they could otherwise adapt to. Episode-level repeats are never presented as independent scientific samples.
 
 \section*{AI Use Statement}
 Generative AI tools were used to refine hypotheses and experimental methodology, assist with research software, inspect experiment artifacts, search related literature, draft manuscript text, and generate adversarial review feedback. Quantitative statements are checked against persisted source-bound artifacts. The authors take responsibility for the final claims, citations, and experimental decisions.
+
+\clearpage
+\appendix
+
+\section{Execution-readiness ledger}
+\label{app:readiness}
+The execution ledger is intentionally more conservative than ordinary retry logic because an infrastructure event can otherwise become entangled with scientific sample selection. Table~\ref{tab:readiness-ledger} records the current direct-provider boundary. Neither row is a scientific actor measurement.
+
+\begin{table}[h]
+\centering
+\caption{Current provider-readiness ledger. These are infrastructure receipts, not scientific outcomes.}
+\label{tab:readiness-ledger}
+\small
+\begin{tabular}{p{0.13\linewidth}p{0.24\linewidth}p{0.28\linewidth}p{0.23\linewidth}}
+\toprule
+Attempt & Authorized action & Observed result & Scientific interpretation \\
+\midrule
+R1 & One non-scientific readiness check & Stopped before dispatch: approved credential absent in isolated worktree; 0 requests & Credential/configuration stop only \\
+R2 & One synthetic \texttt{/responses} request; \texttt{qwen3.7-flash}; 0 tools; 0 retries & HTTP 400, \texttt{invalid\_request\_error / insufficient\_credit}; 1 request; no retry & Provider-credit stop only; Gate 0 remains closed \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+R2 contained no AppWorld instruction, state, repair, topology arm, or evaluator. It created zero scientific provider calls and zero scientific outcomes. Consequently it cannot be used to infer that the model lacks AppWorld capability or that Direct-SFQ-A0 would fail. The next execution boundary is: restore usable credit on the same frozen provider/interface, obtain new explicit provider-readiness authority, execute one fresh synthetic readiness attempt, and stop again if readiness does not pass. Provider or model substitution is not an implicit recovery action.
+
+\section{Eligibility, invalidity, and anti-selection invariants}
+\label{app:invariants}
+The following invariants are part of the scientific design rather than implementation convenience.
+
+\paragraph{Pre-treatment eligibility only.}
+Confirmatory family admission may use semantic source-failure validity, repair-artifact validity, topology-neutral \texttt{TARGET\_ONLY\_VERIFICATION}, and interface/measurement validity. It may not use target retention observed inside INDEPENDENT/LOW/HIGH or any non-target collateral outcome. Once admitted, a family remains in every frozen topology arm unless the entire unit is invalid under a preregistered technical-missingness rule.
+
+\paragraph{No outcome-driven reserve activation.}
+The 24-family reserve is ordered before confirmatory outcomes. The first $N^*$ eligible families are selected. A reserve unit may activate only for preregistered pre-treatment attrition or technical invalidity. It cannot replace a family because a treatment effect has an undesirable sign, a confidence interval is wide after outcomes are visible, or one topology weakens the target repair.
+
+\paragraph{No repeat inflation.}
+$R^*$ is frozen from development-only within-condition stability. Repeats are nested executions, not independent samples, and no extra repeat is added because a particular family is discordant after treatment.
+
+\paragraph{No RQ2 recollection.}
+RQ2 uses exactly the outcomes collected for the locked RQ1/RQ2 panel. Opening RQ2 after RQ1 is an analysis decision, not permission to collect a more favorable topology dataset.
+
+\paragraph{No graph leakage.}
+Topology and ExposureRank may use declared resources, API/state mutation relations, prerequisites, and deterministic hashes. They may not use collateral labels, co-failure statistics, outcome correlations, or embeddings fit to the confirmatory labels.
+
+\section{Planned result reporting}
+\label{app:reporting}
+When scientific execution becomes legal, the paper will report target utility and collateral harm together. This prevents a high aggregate task-success score from hiding non-target regressions.
+
+\begin{table}[h]
+\centering
+\caption{Schema for the primary RQ1/RQ2 result table. Values remain unfilled until the locked confirmatory execution occurs.}
+\label{tab:primary-schema}
+\small
+\begin{tabular}{p{0.20\linewidth}p{0.15\linewidth}p{0.16\linewidth}p{0.16\linewidth}p{0.17\linewidth}}
+\toprule
+Topology / control & Family $n$ & Target retention & Collateral regression & Paired update externality \\
+\midrule
+INDEPENDENT & Frozen $N^*$ & -- & -- & -- \\
+LOW & Frozen $N^*$ & -- & -- & -- \\
+HIGH & Frozen $N^*$ & -- & -- & -- \\
+SHAM subset: INDEPENDENT & Frozen subset & -- & -- & -- \\
+SHAM subset: HIGH & Frozen subset & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For RQ1, the headline result is the pooled family-level UPDATE--NO\_UPDATE externality together with target-repair retention and the sham falsifier. For RQ2, the headline result is HIGH--INDEPENDENT on the same locked families, with LOW and exposure-distance analyses secondary. We will report family-level uncertainty and the number of technical episodes separately so that repeated executions do not inflate the apparent sample size.
+
+\begin{table}[h]
+\centering
+\caption{Schema for the conditional mitigation table. All budget-matched methods use the same $k$ and total collateral-probe allowance.}
+\label{tab:policy-schema}
+\small
+\begin{tabular}{p{0.24\linewidth}p{0.15\linewidth}p{0.16\linewidth}p{0.12\linewidth}p{0.18\linewidth}}
+\toprule
+Policy & Target success / gain & Collateral rate & Commit rate & Cost (requests / tools / time) \\
+\midrule
+Always Commit & -- & -- & -- & -- \\
+Target-Only Validation & -- & -- & -- & -- \\
+Random-$k$ & -- & -- & -- & -- \\
+Same-App-$k$ & -- & -- & -- & -- \\
+GTCC & -- & -- & -- & -- \\
+Full Check (oracle subset) & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Generalization boundaries}
+\label{app:generalization}
+The primary causal claim is intentionally family-level and AppWorld-based. A positive result does not automatically imply that every self-evolving architecture or persistent-memory substrate exhibits the same externality. Cross-model and external-updater studies therefore enter as scope tests after identification, not as pooled evidence that artificially increases primary $n$.
+
+The preferred first external-validity sequence is: one secondary capability-qualified actor on a frozen eight-family subset, followed---if useful---by one AppWorld-compatible updater such as ACE whose produced update is frozen before the collateral audit. Multiple additional models, benchmarks, or longitudinal rounds are added only when they resolve a concrete ambiguity in claim scope. Conversely, a clean null primary phenomenon is not rescued by a broad model sweep.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
