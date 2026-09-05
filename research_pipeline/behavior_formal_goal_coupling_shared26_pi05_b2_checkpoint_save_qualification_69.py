@@ -147,7 +147,8 @@ def main() -> int:
     if parent_a.get("decision") != "CLOSE_CANDIDATE_A_QUALIFICATION_NO_RUN3_ADVANCE_TO_CANDIDATE_B_REVIEW_ONLY":
         raise RuntimeError("candidate-A lineage drift")
     revocation = load_json(p["host67_revocation"])
-    if revocation.get("status") != "HOST67_USER_EXCLUDED_AND_SPLIT_HARNESS_AUTHORITY_REVOKED" or revocation.get("host67_excluded") is not True:
+    host_exclusion = revocation.get("host_exclusion") or {}
+    if revocation.get("status") != "HOST67_USER_EXCLUDED_AND_SPLIT_HARNESS_AUTHORITY_REVOKED" or host_exclusion.get("host") != "222.20.126.67":
         raise RuntimeError("host67 exclusion drift")
 
     if Path("/etc/machine-id").read_text().strip() != EXPECTED_MACHINE_ID:

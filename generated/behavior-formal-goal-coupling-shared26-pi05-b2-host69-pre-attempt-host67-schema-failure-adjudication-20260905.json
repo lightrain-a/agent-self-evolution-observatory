@@ -1,0 +1,32 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-host69-pre-attempt-host67-schema-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T21:15:00+08:00",
+  "status": "PI05_B2_HOST69_PRE_ATTEMPT_SCHEMA_FAILURE_NO_QUALIFICATION_CONSUMED",
+  "parent_authority_path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-qualification-authority-69-20260905.json",
+  "parent_authority_sha256": "b7d35cd5f7ed9dfa2740ee503d221efd510e2bde5c6854d4a6adb6e9daca0ebc",
+  "failure": {
+    "exception": "RuntimeError: host67 exclusion drift",
+    "cause": "host69 save runner expected a nonexistent host67_excluded boolean instead of the frozen revocation receipt's host_exclusion.host field",
+    "layer": "pre-model-load authority/revocation schema validation",
+    "scientific_variable_changed": false
+  },
+  "observed_remote_start_times": [
+    "2026-09-05T21:10:41+08:00",
+    "2026-09-05T21:11:25+08:00",
+    "2026-09-05T21:12:36+08:00"
+  ],
+  "all_attempts_same_pre_result_failure": true,
+  "save_result_present": false,
+  "checkpoint_output_root_present": false,
+  "model_state_initialized": false,
+  "checkpoint_save_started": false,
+  "qualification_attempt_consumed": false,
+  "policy_outcomes_read": false,
+  "loss_values_read_or_reported": false,
+  "optimizer_update_executed": false,
+  "host67_remains_forbidden": true,
+  "formal_run3_authorized": false,
+  "decision": "ALLOW_ONE_REPAIR1_AUTHORITY_AFTER_FIXING_ONLY_THE_REVOCATION_SCHEMA_READER;_DO_NOT_CHANGE_B2_RESOURCE_OR_CHECKPOINT_CONTRACT"
+}
