@@ -1,0 +1,59 @@
+{
+  "actual_support_read_authorization_minted": false,
+  "additive_control_plane": {
+    "gate_path": "scripts/run_e2_r17_semantic_transfer_v3_stage_a_r3_support_adjudication_gate.py",
+    "gate_sha256": "8802f5f5b2fbe44d7649974d8b4e6b82517bf91241b95c9b8bd932cd4c63eda8",
+    "minter_path": "scripts/authorize_e2_r17_semantic_transfer_v3_stage_a_r3_support_read.py",
+    "minter_sha256": "6bffa212eed8a1be630b7d0917a5b12d53b65b3e43969e009ded638745edc471",
+    "tests_path": "research_pipeline/test_e2_r17_semantic_transfer_v3_r3_support_read_control.py",
+    "tests_sha256": "bf4cfb83e6af1843b1c30d8ccd2804c1dff2328db0b36b954c6ebf1b4df5649a"
+  },
+  "artifact_type": "e2-r17-v3-stage-a-r3-post-terminal-support-control-zero-provider-preflight",
+  "authority": {
+    "heldout": false,
+    "paper_claim": false,
+    "provider_recovery": false,
+    "stage_a_support_read": false,
+    "stage_b_execution": false
+  },
+  "authority_review_path": "generated/e2-r17-v3-r3-post-terminal-support-authority-gpt56-review-20260905.json",
+  "authority_review_sha256": "575ab2f4535d994bfd23e2dedcd9effbc26d8d358f5c3b1b3d26411c7f0d6846",
+  "authority_review_verdict": "REQUIRE_SEPARATE_POST_TERMINAL_SUPPORT_READ_AUTHORIZATION",
+  "checks": {
+    "additive_gate_exists": true,
+    "additive_minter_exists": true,
+    "authority_review_requires_separate_support_auth": true,
+    "live_r3_lease_absent": true,
+    "live_r3_run_root_absent": true,
+    "live_support_adjudication_output_absent": true,
+    "live_support_read_authorization_absent": true,
+    "provider_recovery_authority_unaffected": true,
+    "r3_contract_unchanged": true,
+    "r3_recovery_runner_unchanged": true,
+    "r3_support_adjudicator_unchanged": true,
+    "stage_b_authority": false,
+    "zero_provider_tests_exist": true
+  },
+  "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r3-recovery-20260905.json",
+  "contract_sha256": "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
+  "created_at_utc": "2026-09-05T14:40:11+00:00",
+  "exact_code_review_complete": false,
+  "frozen_scientific_code": {
+    "recovery_runner_path": "scripts/run_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
+    "recovery_runner_sha256": "491b2ae6e53fcfe732f15ef263cc365ce61846b3219d7a13fe70e3834f6d3c89",
+    "support_adjudicator_path": "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
+    "support_adjudicator_sha256": "e326ee92f7765aa68856c6fe09610996209d4aa3d3ad464a65d391a88a4cbae4"
+  },
+  "next_gate": "FRESH_GPT56_SOL_EXTRA_HIGH_EXACT_CODE_REVIEW_OF_ADDITIVE_SUPPORT_READ_CONTROL_PLANE",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "stage_b_authority": false,
+  "status": "PASS_ZERO_PROVIDER_R3_POST_TERMINAL_SUPPORT_CONTROL_PREFLIGHT",
+  "support_inspected": false,
+  "unit_tests": {
+    "passed": 7,
+    "suite": "research_pipeline.test_e2_r17_semantic_transfer_v3_r3_support_read_control",
+    "total": 7
+  }
+}
