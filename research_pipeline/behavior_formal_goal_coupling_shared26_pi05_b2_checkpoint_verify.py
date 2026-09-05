@@ -55,7 +55,7 @@ def require_binding(authority: dict[str, Any], key: str, path: Path) -> str:
 def _fingerprint(arr: np.ndarray) -> str:
     arr = np.asarray(arr)
     if not arr.flags.c_contiguous:
-        arr = np.ascontiguousarray(arr)
+        raise RuntimeError("bounded disk verification forbids a full-size contiguity copy")
     return hashlib.sha256(memoryview(arr).cast("B")).hexdigest()
 
 

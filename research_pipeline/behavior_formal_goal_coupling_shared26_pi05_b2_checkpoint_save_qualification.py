@@ -215,6 +215,7 @@ def main() -> int:
     status = "PI05_B2_CHECKPOINT_SAVE_QUALIFICATION_HOLD"
     error = None
     manager_steps: list[int] = []
+    save_started = False
     save_completed = False
     item_names: list[str] = []
     tmp_paths: list[str] = []
@@ -305,6 +306,7 @@ def main() -> int:
         if isinstance(manager._checkpointer, ocp.AsyncCheckpointer):
             raise RuntimeError("B2 manager resolved to AsyncCheckpointer")
 
+        save_started = True
         progress = dict(initial)
         progress.update({"generated_at": datetime.now(timezone.utc).isoformat(), "status": "PI05_B2_CHECKPOINT_SAVE_QUALIFICATION_SAVE_STARTED", "train_state_ready": True, "checkpoint_save_started": True, "snapshots": snapshots})
         atomic_json(p["result"], progress)
@@ -368,7 +370,7 @@ def main() -> int:
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "status": status,
             "train_state_ready": bool(snapshots.get("after_state")),
-            "checkpoint_save_started": True,
+            "checkpoint_save_started": save_started,
             "checkpoint_save_completed": save_completed,
             "manager_steps": manager_steps,
             "checkpoint_item_names": item_names,
