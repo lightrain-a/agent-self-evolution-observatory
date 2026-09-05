@@ -9,6 +9,7 @@ from pathlib import Path
 import socket
 import subprocess
 import sys
+import threading
 from typing import Any
 
 import jax
@@ -64,18 +65,20 @@ def require_binding(authority: dict[str, Any], key: str, path: Path) -> str:
 
 
 class BlockingHandler(checkpoint_handler.CheckpointHandler):
-    def __init__(self, name: str, inner):
+    def __init__(self, name: str, inner, serial_lock: threading.Lock):
         self.name = name
         self.inner = inner
+        self.serial_lock = serial_lock
         self.events: list[dict[str, Any]] = []
 
     def save(self, directory, *args, **kwargs):
         import time
-        start = time.monotonic_ns()
-        try:
-            return self.inner.save(directory, *args, **kwargs)
-        finally:
-            self.events.append({"item": self.name, "start_ns": start, "end_ns": time.monotonic_ns()})
+        with self.serial_lock:
+            start = time.monotonic_ns()
+            try:
+                return self.inner.save(directory, *args, **kwargs)
+            finally:
+                self.events.append({"item": self.name, "start_ns": start, "end_ns": time.monotonic_ns()})
 
     def restore(self, directory, *args, **kwargs):
         return self.inner.restore(directory, *args, **kwargs)
@@ -285,8 +288,9 @@ def main() -> int:
 
         train_registry, train_array_handler = clone_global_registry_with_leaf_batched_array_handler(d2h_batch_bytes=DEFAULT_D2H_BATCH_BYTES)
         params_registry, params_array_handler = clone_global_registry_with_leaf_batched_array_handler(d2h_batch_bytes=DEFAULT_D2H_BATCH_BYTES)
-        train_block = BlockingHandler("train_state", ocp.PyTreeCheckpointHandler(save_concurrent_gb=8, restore_concurrent_gb=8, type_handler_registry=train_registry))
-        params_block = BlockingHandler("params", ocp.PyTreeCheckpointHandler(save_concurrent_gb=8, restore_concurrent_gb=8, type_handler_registry=params_registry))
+        serial_lock = threading.Lock()
+        train_block = BlockingHandler("train_state", ocp.PyTreeCheckpointHandler(save_concurrent_gb=8, restore_concurrent_gb=8, type_handler_registry=train_registry), serial_lock)
+        params_block = BlockingHandler("params", ocp.PyTreeCheckpointHandler(save_concurrent_gb=8, restore_concurrent_gb=8, type_handler_registry=params_registry), serial_lock)
 
         p["output_root"].mkdir(parents=True, exist_ok=False)
         manager = ocp.CheckpointManager(
