@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R81-QWEN-STAGE-EXECUTION-AUTHORITY",
+  "recorded_date": "2026-09-05",
+  "status": "R81_QWEN_STAGE_AUTHORIZED_PATH_EQUIVALENT_RUNTIME_PREOUTCOME",
+  "role": "QWEN_STAGE_ONLY_EXECUTION_AUTHORITY_AFTER_R3_DESIGN_PASS_AND_R80_PREOUTCOME_SCALE_FREEZE",
+  "protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
+  "bindings": {
+    "r74_design_closeout_receipt_sha256": "bca2052dbdd6b5c8416490c2c7dd65a7c01ebb1eec9b241b667eb048afc2067a",
+    "r80_scale_freeze_receipt_sha256": "90cd06c3aba9190bdc8d3d87d5956398eed9571dd280f17bd333233f2dab3423",
+    "qwen_path_equivalent_manifest_receipt_sha256": "508842b5807eeafd1d5f1e60afcd444e5a6627c5a3277a5f59f8d9bc90c865cf",
+    "qwen_path_equivalent_source_checkout": "/data/wyt/b1-r76-memrl-source-c1b322ca"
+  },
+  "authority": {
+    "qwen_execution": true,
+    "llama_execution": false,
+    "analysis": false,
+    "gpu": true,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false,
+    "strong_model_download": false,
+    "strong_model_execution": false
+  },
+  "scope": {
+    "stage": "Qwen",
+    "planned_stage_trajectories": 189,
+    "arms": [
+      "P_neutral",
+      "T_truthful",
+      "S_shuffled"
+    ],
+    "resume_only_under_frozen_R73_rules": true,
+    "no_interim_scientific_analysis": true,
+    "Llama_stage_requires_separate_successor_authority": true,
+    "complete_analysis_requires_separate_successor_authority": true
+  },
+  "outcomes_observed_when_authority_created": 0,
+  "scientific_authority": false,
+  "experiment_authority": true,
+  "gpu_authority": true,
+  "receipt_sha256": "e3557c69dd9797026695ea8e94394e1c7945e9708d7ed3f4611e0c00edac5708"
+}

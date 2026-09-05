@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R80-STRONG-SCALE-OUTCOME-BLIND-FREEZE",
+  "recorded_date": "2026-09-05",
+  "status": "R80_STRONG_SCALE_MODEL_AND_MATCH_RULE_FROZEN_OUTCOME_BLIND_EXECUTION_NOT_AUTHORIZED",
+  "role": "OPTIONAL_POST_R73_EXTERNAL_VALIDITY_FREEZE",
+  "bindings": {
+    "r68_panel_receipt_sha256": "bdfb80d67e353a755f8df6a43fe4889e81f8ff2b7ea902a2e07934a31b99be20",
+    "r72_protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
+    "panel_representative_ids_sha256": "7c2b84aee347faba6d369abb403eb3a25afb164b8f5c6800ba867c25d1017187"
+  },
+  "strong_model": {
+    "repository": "Qwen/Qwen2.5-32B-Instruct",
+    "revision": "c53f764956643a675cfff8ad85b3c9e9b3029e06",
+    "family": "Qwen2.5",
+    "parameter_scale": "32.5B",
+    "license": "Apache-2.0",
+    "selection_reason": "same-family scale-up from the Qwen2.5-7B primary executor; isolates capability/scale better than changing both family and scale",
+    "future_materialization_requirement": "Before any strong-model outcome, download exactly this revision and freeze a complete local file SHA256 manifest plus tokenizer/config hashes.",
+    "decoding": {
+      "temperature": 0.0,
+      "do_sample": false,
+      "max_new_tokens": 512
+    },
+    "environment": "same OSInteraction task/parser/evaluator semantics as R72/R73; host may differ only after a separately validated runtime-equivalence preflight"
+  },
+  "trigger": {
+    "classification_source": "union of P_neutral/T_truthful terminal-discordant task IDs across sealed Qwen and sealed Llama R73 stages",
+    "requires_complete_PT_classification_for_all_66_tasks_on_both_executors": true,
+    "D_zero_action": "DO_NOT_RUN_STRONG_SCALE_CHECK",
+    "technical_missing_action": "HOLD_STRONG_SCALE_CHECK_NO_AUTOMATIC_PANEL",
+    "discordant_ids_deduplicated": true
+  },
+  "control_pool": "tasks with P/T terminal concordance on both Qwen and Llama after both R73 stage seals",
+  "matching": {
+    "without_replacement": true,
+    "discordant_iteration_order": "frozen R68 panel order",
+    "seed": "B1-R80-STRONG-SCALE-MATCH-20260905",
+    "lexicographic_distance": [
+      "absolute selected-retrieval-count difference",
+      "absolute truthful-source-success-count difference",
+      "cluster-signature Jaccard distance",
+      "absolute cluster-signature-size difference",
+      "absolute UTF-8 instruction-byte-length difference",
+      "SHA256(B1-R80 seed|discordant_id|candidate_id) deterministic tie-break"
+    ],
+    "uses_strong_model_outcome": false,
+    "manual_override_allowed": false
+  },
+  "strong_stage": {
+    "arms": [
+      "P_neutral",
+      "T_truthful"
+    ],
+    "trajectory_count_formula": "4D = (D discordant + D matched concordant controls) x 2 arms",
+    "cross_model_pooling": false,
+    "primary_R72_R73_claim_change_allowed": false,
+    "S_shuffled": false
+  },
+  "authority": {
+    "strong_model_download": false,
+    "strong_model_execution": false,
+    "qwen_execution": false,
+    "llama_execution": false,
+    "analysis": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false
+  },
+  "outcomes_observed_during_freeze": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "90cd06c3aba9190bdc8d3d87d5956398eed9571dd280f17bd333233f2dab3423"
+}
