@@ -1,0 +1,147 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T17:23:00+08:00",
+  "status": "AUTHORIZED_PI05_B2_LEAF_BATCHED_CHECKPOINT_QUALIFICATION_231",
+  "qualification_run_id": "b2-leaf-batched-8gb-52g-host231-20260905",
+  "decision": "ONE_HOST231_STEP0_SAVE_DISK_VERIFY_STANDARD_RESTORE_QUALIFICATION_ONLY",
+  "source_commit": "10cd5e7ad3f60e9499a152006a45c67f6f44be20",
+  "host": {
+    "name": "231",
+    "machine_id": "6fd433c546c241218ccd29813f304aee",
+    "required_gpu": "one NVIDIA A100-SXM4-80GB",
+    "host67_forbidden": true
+  },
+  "bindings": {
+    "serializer": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b2_leaf_batched_orbax.py",
+      "sha256": "de189f04e29e9e87a9311c0edc34ece116200bc5229c857a0241e81904de0b03"
+    },
+    "save_runner": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b2_checkpoint_save_qualification.py",
+      "sha256": "682ffbf93fc6c130a9e961056926e93fcbde03142b444e8f820ba6fca33faf35"
+    },
+    "verify_runner": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b2_checkpoint_verify.py",
+      "sha256": "304490ba4687adf397c975c8df529b577dfdcc907f2c945330f351c1cf8e569d"
+    },
+    "phase_launcher": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/scripts/run_behavior_formal_goal_pi05_b2_checkpoint_phase_231.sh",
+      "sha256": "5e06e4c3e664e6295d6a4bfe9d3ac56af48dd8df5df6e58a756c774de3babd4c"
+    },
+    "review": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-independent-review-20260905.json",
+      "sha256": "96fb1e13ea3e715a0a70ba00161968e39eaef89dcab59ebd1b9548200b6b4e53"
+    },
+    "cpu_smoke": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-orbax-cpu-smoke-20260905.json",
+      "sha256": "fc9cdcddda7a997d564c8dca3384cbfeacf078db53cf6e2af8539fe97c98b7dc"
+    },
+    "parent_a_failure": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-failure-adjudication-20260905.json",
+      "sha256": "27463804b533421a887d9c4c6d443bd80b90276b7e70d40e6aba21cddcbb72ba"
+    },
+    "host67_revocation": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-host67-user-exclusion-and-authority-revocation-20260905.json",
+      "sha256": "5a9d8a9daf20e526916438cb12d58d8b2a44fc42545a0d321dba54ac3570cff8"
+    },
+    "base_receipt": {
+      "path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+      "sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed"
+    },
+    "norm_stats": {
+      "path": "/data/wyt/behavior-formal-goal-shared26-norm-v1/norm_stats.json",
+      "sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce"
+    }
+  },
+  "immutable_runtime_binding": {
+    "python": "3.11.16",
+    "jax": "0.5.3",
+    "torch": "2.7.1+cu128",
+    "pyarrow": "24.0.0",
+    "openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "seed": 42,
+    "device": "one A100-SXM4-80GB for S and V2; CPU for V1"
+  },
+  "resource_scope": {
+    "memory_max_gib": 52,
+    "memory_swap_max_gib": 0,
+    "cpu_affinity": "0-63",
+    "d2h_batch_bytes": 8000000000,
+    "pytree_save_concurrent_gb": 8,
+    "pytree_restore_concurrent_gb": 8,
+    "enable_async_checkpointing": false,
+    "serial_large_items": ["train_state", "params"],
+    "tmp_root": "/data/wyt/formal-goal-b2-tmp-231-20260905",
+    "no_resource_ladder": true
+  },
+  "checkpoint_contract": {
+    "format": "unchanged Orbax PyTree + TensorStore/OCDBT",
+    "item_names": ["_CHECKPOINT_METADATA", "assets", "params", "train_state"],
+    "save_label": 10000,
+    "normalization_asset_unchanged": true,
+    "array_metadata_store": "one consolidated process metadata write per PyTree item",
+    "leaf_d2h_order": "deterministic original PyTree leaf order grouped greedily under 8,000,000,000 bytes",
+    "largest_known_leaf_bytes": 4831838208,
+    "checkpoint_content_changed": false,
+    "checkpoint_format_changed": false,
+    "checkpoint_label_changed": false,
+    "checkpoint_frequency_changed": false
+  },
+  "phase_contract": {
+    "S_save": "Fresh deterministic step0 on host231; no BEHAVIOR data; serial train_state then params; each PyTree D2H staged in deterministic <=8GB leaf batches; compute source per-leaf SHA256 from the same host buffers used for save; standard TensorStore destinations; one consolidated ArrayMetadataStore write; synchronous completion barrier.",
+    "V1_disk": "After S exits, CPU-only bounded direct TensorStore reads of every final train_state and params leaf; compare path/shape/dtype/nbytes/SHA256 to S fingerprints; one leaf retained at a time.",
+    "V2_restore": "After V1 exits, fresh host231 GPU process; completely standard Orbax PyTreeCheckpointHandler restore_concurrent_gb=8 restores final train_state and params item directories; require full aggregate shape/bytes and state.step=0."
+  },
+  "required_pass": [
+    "S runs on machine-id 6fd433c546c241218ccd29813f304aee with one idle A100-80GB",
+    "S cgroup MemoryMax is exactly 52GiB, swap0, and observed peak remains below ceiling",
+    "S manager exposes exactly label10000 and no orbax tmp path remains",
+    "S final item names are exactly _CHECKPOINT_METADATA/assets/params/train_state",
+    "S train_state fingerprints cover exactly 156 leaves / 40241206476 bytes",
+    "S params fingerprints cover exactly 51 leaves / 13413735488 bytes",
+    "every S D2H batch is <=8000000000 bytes and source fingerprints are recorded from those same host buffers",
+    "V1 verifies all 207 leaves and all 53654941964 serialized array bytes exactly by SHA256",
+    "V2 uses standard Orbax restore handlers only, completes both large items, and returns state.step=0",
+    "no BEHAVIOR data, forward, backward, optimizer update, loss, Q, policy outcome, effect, or p-value access"
+  ],
+  "scientific_invariants": {
+    "panel": "26 frozen tasks / 13 matched pairs",
+    "model": "pi0.5 shared26 multitask policy",
+    "physical_batch": 16,
+    "seed": 42,
+    "optimizer": "same frozen AdamW",
+    "lr_schedule": "same frozen schedule",
+    "ema": 0.99,
+    "normalization": "same frozen shared26 normalization",
+    "action_horizon": 32,
+    "optimizer_updates_target": 50000,
+    "recovery_labels": [10000, 20000, 30000, 40000],
+    "scientific_terminal_label": 49999,
+    "scientific_variables_changed": false
+  },
+  "output_paths": {
+    "checkpoint_root": "/data/wyt/formal-goal-checkpoint-save-qualification-231-20260905/b2-leaf-batched-8gb-52g",
+    "save_result": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b2-checkpoint-save-result-231-20260905.json",
+    "disk_result": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b2-disk-verify-result-231-20260905.json",
+    "restore_result": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b2-standard-restore-result-231-20260905.json"
+  },
+  "if_pass": "Stop qualification. A separate prospective formal-run3 authority may be designed; run3 remains unauthorized until that later authority is frozen.",
+  "if_fail": "Stop B2. Do not change MemoryMax, D2H batch size, checkpoint format/content/labels/frequency, or auto-retry. Require a new independent review for any new checkpoint child.",
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false,
+  "host67_authorized": false,
+  "forbidden": [
+    "host67 execution",
+    "formal run3",
+    "resume from run2 or any partial qualification checkpoint",
+    "asynchronous checkpoint overlap",
+    "MemoryMax or D2H-batch ladder after observing qualification result",
+    "checkpoint content/format/label/frequency changes",
+    "BEHAVIOR data or policy outcome access",
+    "forward/backward/optimizer update during qualification",
+    "loss/Q/effect/p-value access"
+  ]
+}
