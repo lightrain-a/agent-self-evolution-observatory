@@ -14,6 +14,7 @@ window.NAV_GROUPS = [
   ]},
   { title:{en:"Current Research",zh:"当前科研"}, open:false, pages:[
     ["selected-paper.html",{en:"Paper Collection · Current 9",zh:"论文合集 · 当前 9 篇"}],
+    ["advisor-review.html",{en:"Advisor Review · 9 Papers",zh:"师兄审阅 · 九篇论文"}],
     ["paper-e1.html",{en:"① E1 · STRI",zh:"① E1 · STRI"}],
     ["paper-g1.html",{en:"② G1 · Temporal Safety",zh:"② G1 · 时间安全"}],
     ["paper-c1.html",{en:"③ C1 · Memory Transport",zh:"③ C1 · 记忆传输"}],
