@@ -1,0 +1,109 @@
+{
+  "adjudication_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-async-checkpoint-resource-adjudication-20260905.json",
+  "adjudication_sha256": "9907427fdf7c90364cf25247f6a46a56173907ab12ef0ba58347a20d8962ef20",
+  "authority_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-40g-qualification-authority-20260905.json",
+  "authority_sha256": "0a92a2671c6abde93ced9ed223cf78fc2ef82de11038279e74b8cfab3da01a8c",
+  "backward_pass_executed": false,
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "batch_size_configured": 16,
+  "checkpoint_restore_completed": false,
+  "checkpoint_save_completed": false,
+  "checkpoint_save_started": true,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "dataset_accessed": false,
+  "enable_async_checkpointing": false,
+  "expected_memory_max_gib": 40,
+  "formal_training_authorized": false,
+  "forward_pass_executed": false,
+  "generated_at": "2026-09-05T03:44:18.175852+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host": "67",
+  "host_before": {
+    "MemAvailable_kib": 122075052,
+    "MemFree_kib": 56966108,
+    "MemTotal_kib": 131739372,
+    "SwapFree_kib": 17475836,
+    "SwapTotal_kib": 19531772,
+    "process_rss_kib": 11284
+  },
+  "loss_values_read_or_reported": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_executed": false,
+  "policy_outcomes_read": false,
+  "portable_openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "portable_openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "real_scientific_optimizer_updates": 0,
+  "resource_scope_before": {
+    "cpu_affinity": "0-63",
+    "memory_current_bytes": 12464435200,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_max_bytes": 42949672960,
+    "memory_peak_bytes": 12481114112,
+    "memory_swap_max_bytes": 0,
+    "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-sync-checkpoint-save-40g-qual-67-20260905.service"
+  },
+  "runner_sha256": "5a8c9143b3a9d95650b315af8bdcf0a929550eda894364c4c71f9056d693e8a1",
+  "save_label": 10000,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-qualification-v1",
+  "seed": 42,
+  "snapshots": {
+    "after_state": {
+      "cgroup": {
+        "cpu_affinity": "0-63",
+        "memory_current_bytes": 19244269568,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_max_bytes": 42949672960,
+        "memory_peak_bytes": 35814219776,
+        "memory_swap_max_bytes": 0,
+        "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-sync-checkpoint-save-40g-qual-67-20260905.service"
+      },
+      "gpu": {
+        "gpus": [
+          {
+            "index": 0,
+            "memory_total_mib": 81920,
+            "memory_used_mib": 73489,
+            "name": "NVIDIA A100-SXM4-80GB",
+            "utilization_gpu_percent": 0
+          }
+        ]
+      },
+      "host": {
+        "MemAvailable_kib": 115267932,
+        "MemFree_kib": 49081944,
+        "MemTotal_kib": 131739372,
+        "SwapFree_kib": 17478396,
+        "SwapTotal_kib": 19531772,
+        "process_rss_kib": 6142780
+      }
+    }
+  },
+  "status": "PI05_SYNC_CHECKPOINT_SAVE_40G_SAVE_STARTED",
+  "train_state_ready": true
+}

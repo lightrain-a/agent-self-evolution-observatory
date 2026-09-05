@@ -1,0 +1,49 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-40g-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:48:00Z",
+  "status": "PI05_SYNC_CHECKPOINT_SAVE_40G_REPRODUCED_CGROUP_OOM",
+  "decision": "ADVANCE_ONLY_TO_PREREGISTERED_SYNC64_STAGE",
+  "parent_sync40_authority_sha256": "0a92a2671c6abde93ced9ed223cf78fc2ef82de11038279e74b8cfab3da01a8c",
+  "partial_receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-40g-qualification-result-67-20260905.json",
+  "partial_receipt_sha256": "26e4f91535904d2909536943eca876dad0084006b5551462e727018ca9665dc5",
+  "execution": {
+    "host": "67",
+    "unit": "pi05-sync-checkpoint-save-40g-qual-67-20260905.service",
+    "systemd_result": "oom-kill",
+    "exec_main_signal": 9,
+    "memory_max_bytes": 42949672960,
+    "memory_peak_bytes": 42949672960,
+    "memory_swap_max_bytes": 0,
+    "partial_checkpoint_size_approx_gib": 6.5
+  },
+  "qualification_state": {
+    "fresh_step0_state_ready": true,
+    "checkpoint_manager_passed_non_async_runtime_assertion": true,
+    "enable_async_checkpointing": false,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "checkpoint_restore_completed": false,
+    "real_scientific_optimizer_updates": 0,
+    "behavior_dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false
+  },
+  "interpretation": {
+    "supported": "Source-native synchronous checkpointing removes the async implementation path but does not make the full π0.5 checkpoint save fit inside a 40 GiB no-swap cgroup.",
+    "not_supported": "This failure does not justify changing checkpoint contents, scientific training variables, or testing arbitrary memory ceilings.",
+    "next": "The already-preregistered synchronous 64 GiB stage is the only remaining memory repair candidate."
+  },
+  "next_gate": {
+    "name": "SYNC_CHECKPOINT_SAVE_64G_STAGE2_QUALIFICATION",
+    "memory_max_gib": 64,
+    "memory_swap_max_gib": 0,
+    "enable_async_checkpointing": false,
+    "formal_run3_authorized": false,
+    "automatic_memory_escalation_beyond_64g": false
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-64g-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:51:00Z",
+  "status": "AUTHORIZED_PI05_SYNC_CHECKPOINT_SAVE_QUALIFICATION",
+  "scope": "Stage 2 and final stage of the preregistered source-native synchronous checkpoint repair. Stage 1 sync40 ended in a cgroup OOM. This authority permits one sync64 step-0 checkpoint save/restore qualification only and does not authorize formal run3.",
+  "parent_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-async-checkpoint-resource-adjudication-20260905.json",
+  "adjudication_sha256": "9907427fdf7c90364cf25247f6a46a56173907ab12ef0ba58347a20d8962ef20",
+  "stage1_failure_path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-40g-failure-adjudication-20260905.json",
+  "stage1_failure_sha256": "32fdee4f91b4bcb71af84d3b7d04ce8042b17c8535c7e057bea1b630ee963d32",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_sync_checkpoint_save_qualification.py",
+  "runner_sha256": "5a8c9143b3a9d95650b315af8bdcf0a929550eda894364c4c71f9056d693e8a1",
+  "launcher_path": "scripts/run_behavior_formal_goal_pi05_sync_checkpoint_save_64g_qualification_67.sh",
+  "launcher_sha256": "f562fe856aa955dc82f910baf3cee640c9525c1b8c87443c3ee216d756b17c98",
+  "host": "67",
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 64,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "checkpoint_implementation": {
+    "orbax_checkpoint_version": "0.11.13",
+    "enable_async_checkpointing": false,
+    "resolved_checkpointer_must_not_be": "AsyncCheckpointer",
+    "item_handlers_unchanged": [
+      "assets: CallbackHandler",
+      "train_state: PyTreeCheckpointHandler",
+      "params: PyTreeCheckpointHandler"
+    ],
+    "checkpoint_format_changed": false,
+    "checkpoint_content_changed": false,
+    "checkpoint_label": 10000,
+    "completion_barrier": "manager.wait_until_finished() before restore or any subsequent model operation"
+  },
+  "scientific_invariants": {
+    "practical_batch": 16,
+    "seed": 42,
+    "base_checkpoint_unchanged": true,
+    "optimizer_unchanged": true,
+    "lr_schedule_unchanged": true,
+    "ema_unchanged": true,
+    "normalization_unchanged": true,
+    "action_horizon": 32,
+    "target_training_updates": 50000,
+    "terminal_scientific_checkpoint_label": 49999,
+    "policy_outcome_protocol_unchanged": true
+  },
+  "qualification": {
+    "initial_state": "fresh step-0 practical-batch16 train state",
+    "output_root": "/data/wyt/formal-goal-checkpoint-save-qualification-67-20260905/sync-save-64g",
+    "receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-64g-qualification-result-67-20260905.json",
+    "behavior_dataset_access": false,
+    "forward_pass": false,
+    "backward_pass": false,
+    "optimizer_update": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_read": false,
+    "policy_outcome_read": false
+  },
+  "pass_gate": {
+    "required_status": "PI05_SYNC_CHECKPOINT_SAVE_64G_PASS",
+    "resolved_checkpointer_must_be_synchronous": true,
+    "checkpoint_save_completed": true,
+    "checkpoint_restore_completed": true,
+    "manager_contains_label_10000": true,
+    "systemd_result_must_not_be_oom_kill": true
+  },
+  "if_pass": "Stop the checkpoint repair ladder. A separate formal-run3 authority may be designed using synchronous checkpointing, 64 GiB no-swap host scope, and an immediate completion barrier after every recovery/terminal checkpoint save. Run3 must start fresh from step 0 because run2 has no recoverable exact state. No automatic run3 launch from this authority.",
+  "if_fail": "STOP checkpoint resource repair. No MemoryMax above 64 GiB, checkpoint-content reduction, checkpoint-format substitution, checkpoint-frequency change, or formal run3 is authorized without a new independently reviewed scientific/resource design.",
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false,
+  "forbidden": [
+    "memory ceiling above 64 GiB",
+    "formal run3 from this authority",
+    "resume from run2 partial checkpoint",
+    "BEHAVIOR Q or policy outcome access",
+    "loss inspection",
+    "scientific batch/seed/optimizer/LR/EMA/action-horizon/training-horizon changes"
+  ]
+}
