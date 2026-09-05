@@ -1,0 +1,15 @@
+{
+  "paper_id":"B1","route":"EXECUTE_FROZEN",
+  "best_case":"在 retrieved content/order 固定时，审计显式 source-outcome/provenance 信息到底改变多少局部动作与终端结果，并进一步定位 executor-specific decision geometry。",
+  "story":"同一条 memory 内容不变，只改变 executor 能否看到真实 source outcome；B1 问这个 provenance channel 是否提供 content 之外的增量决策信息，以及这种影响为什么只在部分 executor/task 边界出现。",
+  "premise":"source provenance 是 content 之外可被 agent 使用的独立信息通道，而不是 field-format、implicit failure wording 或模型能力边界造成的 prompt sensitivity。",
+  "risk":"terminal discordance 稀疏且明显 executor-specific；若完整 semantic controls 后差异主要由 prompt surface 或小模型 decision boundary 解释，standalone provenance claim 会明显收窄，并可能被 Paper A 吸收。",
+  "strongest_simplification":"同结构字段的 P_neutral / T_truthful / S_shuffled 三臂是当前 strongest same-information control；若 shuffled/neutral 能解释 truthful 差异，则语义 provenance 使用不成立。",
+  "evidence_state":"R76：历史 Llama 4 个 terminal flips 在 temperature=0 exact rerun 下 4/4 复现；R77：其中 2 个表现为 same-state decision-boundary shift，另 2 个更依赖 transcript/self-conditioning；相同 4 个 task 在 Qwen 上均 concordant。R80 已冻结 321-run 并只授予 Qwen/Llama execution authority；analysis/claim change/30B execution 均关闭。",
+  "next_closure":"完成 sealed Qwen 189 → Llama 132，共 321 trajectories；只在 stage seals 完成后另开 analysis authority。Qwen3.5-27B 只按未来 discordant 数 D 触发 4D targeted check，目前不授权。",
+  "cost_class":"MEDIUM · ALREADY_RUNNING","cost_to_next_decision":"本地 A100/open-weight 推理，直接 API cash≈0；主成本是 A100 占用与 321-run wall-time。当前 Qwen execution 已启动，不能因中间结果改 schedule。",
+  "dependencies":["clean MemRL checkout pinned to c1b322ca…","local OpenAI-compatible Qwen/Llama runtime","sealed Qwen then Llama stage order","separate post-seal analysis authorization"],
+  "default_action":"COMPLETE_FROZEN_321_NO_SCOPE_CHANGE","override_trigger":"若执行完整性或 technical seal 失败则 fail closed；若最终 semantic-control 结果不支持独立 provenance 信息价值，或师兄判断与 Paper A scientific object 重叠过高，再考虑 merge/narrow。",
+  "cross_paper_leverage":"与 Paper A 共用 provenance/source-fidelity 边界；B1 可提供数字 Agent 上的 format/provenance control 经验，Paper A 必须避免重复造同一 scientific object。",
+  "advisor_question":"在 executor-specific、terminal effect 稀疏的边界下，provenance audit 是否仍值得 standalone，还是应成为 Paper A 的数字-Agent机制证据？"
+}

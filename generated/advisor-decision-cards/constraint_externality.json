@@ -1,0 +1,15 @@
+{
+  "paper_id":"CONSTRAINT_EXTERNALITY","route":"QUALIFY_FIRST",
+  "best_case":"同一个局部 benign repair 在保持 target gain 时可能对非目标约束产生 collateral regression；用 matched UPDATE/NO_UPDATE 与 coupling topology 分离这种 externality。",
+  "story":"局部修复不是免费操作：它可能通过共享资源或依赖拓扑伤到未被修的约束。论文要测的是 update-attributable collateral，而不是一般任务难度。",
+  "premise":"首先必须有真实可修 failure；repair 能严格 target-local；INDEPENDENT/LOW/HIGH coupling 在 outcome-blind graph 上构成真正的结构干预，而不是难度/规模代理。",
+  "risk":"当前没有已确认的主现象：旧 source 8/8 success 导致 zero repair families；repair writer locality、topology manipulation check 与统计功效仍未被 outcome 验证。Stanford 6.2 也把没有 core phenomenon evidence 列为最大限制。",
+  "strongest_simplification":"先做 TARGET_ONLY / UPDATE-vs-NO_UPDATE 在 topology-neutral source 上，证明 target repair 可发生且不会由 generic update magnitude 解释；在这之前任何 topology table 都没有识别价值。",
+  "evidence_state":"旧 F0 因 8/8 target success 按协议 STOP。新的 Direct-SFQ-A0 12-case source qualification 已完成 public-oracle reachability/freshness 12/12，但 direct provider scientific execution 仍被 credit/provider readiness 阻塞；无 confirmatory collateral outcome。",
+  "next_closure":"恢复 direct provider 后只执行 12-case Direct-SFQ-A0，先确认真实 failure/repair availability。只有 source gate PASS 才冻结 N*；高效默认 N*=16、R*=2，之后主 mechanism≈192 probes + 8-family sham≈32。",
+  "cost_class":"LOW_NOW / MEDIUM_IF_QUALIFIED","cost_to_next_decision":"眼前只有 12 个 source-qualification provider cases。192+32 的主实验预算在 source gate 前不应视为已承诺成本。",
+  "dependencies":["direct provider credit/readiness","strict target-local repair writer","outcome-blind topology graph","TARGET_ONLY verification before topology analysis"],
+  "default_action":"QUALIFY_SOURCE_FAILURE_ONLY","override_trigger":"12-case SFQ 无足够 repairable failures → HOLD/STOP current substrate；不得通过换 topology 或扩大 workload 制造现象。",
+  "cross_paper_leverage":"与 G1 共享先证明 capability/repair、再解释 safety/collateral 的资格顺序；若两篇都成立，可形成 controlled-update family，但不应共享 outcome。",
+  "advisor_question":"constraint externality 最终应该把贡献落在 measurement、topology prediction，还是 mitigation/control？在现象尚未确认前，哪一层值得优先保留？"
+}

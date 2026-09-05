@@ -1,0 +1,15 @@
+{
+  "paper_id":"E1","route":"FREEZE_SUBMIT",
+  "best_case":"用精确证书刻画：语义等价的 skill 打包/身份不应改变实际可访问的技能控制面，并定位 finite-budget access 下的表示不稳定。",
+  "story":"语义 capability 没变时，仅改变 skill package 的拆分、身份或重叠表示，就可能改变 agent 实际拿到的 capability；STRI 给出这种表示依赖何时无法靠 package-only weighting 消掉的精确边界。",
+  "premise":"现实 self-evolving skill system 确实把 package identity 当作控制单元，并且 finite access budget、priority 或 overlap 足够常见，使 representation invariance 成为真实系统属性而非只在构造例子中成立。",
+  "risk":"运行时 semantic projection φ(E_t) 在不同系统里的实例化仍偏抽象；动态行为传播目前只有一个 AutoSkill P19 bounded witness，不能把 access-level invariance 自动升级成普遍 utility/safety 影响。",
+  "strongest_simplification":"先用 exact-semantic quotient、whole-package pruning、uniform/optimal package weights 和 capacity+1 对照。若这些简单 same-information controls 已消掉现象，就不需要额外修复方法故事。",
+  "evidence_state":"CURRENT CLAIM SCIENCE CLOSED：Skill-SP support geometry 含 R*=2 residual/equalizable regimes；SkillRL fresh-ID × finite-budget identity sensitivity；AutoSkill P19 有 bounded representation→access→behavior mediator witness；held-out behavior propagation 按冻结门 STOP。",
+  "next_closure":"当前 narrow paper 不需要新增 scientific closure。周日只需决定：保持冻结直接进入 human submission，还是把 non-clone repeated-access V4 作为一份完全独立的 claim-expansion contract。",
+  "cost_class":"ZERO_REQUIRED / OPTIONAL_MEDIUM","cost_to_next_decision":"当前论文：0 新 model/GPU。若师兄明确打开 V4，第一道门只做约 12–24 个 hosted-agent P0 trajectories；后续 P1/P2/P3 均 conditional。",
+  "dependencies":["human author/OpenReview signoff","optional V4 needs a genuinely repeated-access, non-clone substrate"],
+  "default_action":"FREEZE_AND_SUBMIT_NARROW","override_trigger":"只有师兄认为 package-identity abstraction 在真实 skill ecosystem 中缺乏意义，或明确授权一个与当前投稿解耦的 V4 扩展，才改变默认路线。",
+  "cross_paper_leverage":"可为 E2/C1 提供 representation/state identity 不是中性工程细节的系统级语言，但不需要与它们合并。",
+  "advisor_question":"这个 abstraction 在真实 Agent skill ecosystem 中是否足够常见、足够重要，值得 standalone paper？"
+}

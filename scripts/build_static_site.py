@@ -169,6 +169,14 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Rebuild the advisor-meeting projection from the nine independent
+    # Decision Card source files. This projection is advisory only and cannot
+    # grant scientific, experiment, GPU, or submission authority.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_advisor_meeting_frontend.py")],
+        cwd=ROOT,
+        check=True,
+    )
     # PaperRegistry is reader-facing only when every canonical PaperState has a
     # complete Paper Story V3 argument.  This gate is intentionally zero-authority:
     # it cannot change claims or PaperState, but it fails closed before public copy

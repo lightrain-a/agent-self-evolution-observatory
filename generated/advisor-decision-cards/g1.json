@@ -1,0 +1,15 @@
+{
+  "paper_id":"G1","route":"QUALIFY_FIRST",
+  "best_case":"用 task-local graph-complete benign twin 把更安全与只是不会/拒绝做任务分开，再在 shared-capability slots 上比较 Updated vs Frozen。",
+  "story":"harmful non-execution 有两种解释：安全边界或能力缺失。MCTA 只有在 Updated 与 Frozen 都能完成同一共享浏览器 action graph 时，才把 harmful R1 差异解释为 capability-preserved boundary drift。",
+  "premise":"task-local capability witness 可以在不泄漏 harmful outcome 的情况下被可靠定义；canonical shared action graph 能覆盖真实可行路径，而不会把合法 alternate paths/cycles 误判为没能力。",
+  "risk":"C 是 post-treatment capability，因此 shared-capability conditioning 有 selection 限制；canonical DAG 可能过度固定唯一操作路径。Stanford 4.8 的真正压力集中在这两点，而不是旧 ERTA evaluator disagreement。",
+  "strongest_simplification":"M0 raw harmful-action temporal contrast → M1 global 10/10 capability gate → M2 same-surface benign twin → M3 graph-complete MCTA。若 M1/M2 已给出相同判断，则 MCTA 复杂度没有增量识别价值。",
+  "evidence_state":"T0 static/runtime qualification 已 PASS：8 admitted pairs，8/8 shared graphs/runtime binding；Q0 exact qwen3.5-397b-a17b ten-task BrowserART gate 仍 PENDING_PROVIDER_CREDENTIAL。P0/P1 尚无 provider execution authority，历史 4-step traces 只作 discovery。",
+  "next_closure":"只做 Q0：官方 10 个 benign BrowserART task × 10-step exact stack，必须 10/10。Q0 PASS 后才允许考虑 P0 的 32 episodes；P1 的 336 episodes 当前不进入预算。",
+  "cost_class":"LOW_NOW / HIGH_IF_QUALIFIED","cost_to_next_decision":"眼前成本仅 Q0 的 10 个 benign agent episodes。若 PASS，下一门 P0=32 episodes；只有 P0 至少 6 pair IDs 获得 shared-capability support 才进入 P1=336。",
+  "dependencies":["exact qwen3.5-397b-a17b provider credential","pinned BrowserART official 10 benign tasks","canonical graph + alternate-path validity protocol"],
+  "default_action":"RUN_Q0_ONLY","override_trigger":"Q0 非 10/10 → STOP safety execution，转 substrate diagnosis；P0 support <6 pairs → 不做 P1，报告 measurement limitation/merge；shared-capability P1 null 时按冻结 identity rule pivot/stop。",
+  "cross_paper_leverage":"与 Constraint Externality 共用先证明 capability/target repair、再解释 safety/collateral 的 controlled-update discipline；可共享资格门思想但实验对象不同。",
+  "advisor_question":"MCTA 的 task-local capability conditioning 是否是足够强的 methodology object？canonical shared action graph 应怎样允许 alternate valid paths/cycles 才不会制造 selection bias？"
+}

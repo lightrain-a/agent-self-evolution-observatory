@@ -1,0 +1,15 @@
+{
+  "paper_id":"PAPER_A","route":"FORMALIZE_FIRST",
+  "best_case":"从 memory 会影响动作推进到这种影响是否忠实追随 source experience，用 matched counterfactual controls 做 causal fidelity audit。",
+  "story":"MemoryVLA 的 memory edit 已能改变 action，但这不说明 agent 使用的是 source experience 的正确语义。Paper A 要把 influence 与 source fidelity 分开识别。",
+  "premise":"可以从 source trajectory/state/action 记录中定义 outcome-independent、programmatic fidelity signature，并且下游 source-consistent direction 可以在多种有效策略下仍被稳定判定。",
+  "risk":"目前只有 carrier influence（同状态 action shift，||Δa||₂≈0.5541），没有 source-fidelity 或 utility 证据；signature、endpoint、阈值与 same-condition replay 还不够具象，科学对象可能被 B1 provenance 或 Paper B lifecycle 吸收。",
+  "strongest_simplification":"No-op serialization control + unrelated-content edit + same-content/different-provenance + frozen baseline memory。若 unrelated/no-op 产生同样 action shift，就直接否定 source-fidelity interpretation。",
+  "evidence_state":"PRECONFIRMATORY：MemoryVLA/LIBERO carrier 可编辑且存在局部 action influence；decisive native closed-loop influence/fidelity/utility 尚未执行。Stanford 5.7 主要要求具体 fidelity signature examples、primary endpoints、thresholds 与 stochastic replay contract。",
+  "next_closure":"不要直接启动 128-run confirmatory。先零/低成本冻结至少 2 个 task 的 fidelity-signature worked examples、source-consistent endpoint、随机性控制和 A0 no-op tolerance；A0/construct PASS 后才开 32 units×4 conditions=128 downstream runs。",
+  "cost_class":"LOW_NOW / MEDIUM_IF_QUALIFIED","cost_to_next_decision":"当前只需 protocol/CPU qualification≈0 GPU；正式 base confirmatory 才需要本地 VLA GPU 128 downstream runs，扩到 64 units 只能按预先 precision rule。",
+  "dependencies":["MemoryVLA + LIBERO-Plus frozen carrier","versioned source trajectory/state/action records","deterministic or frozen stochastic replay","programmatic kinematic/source-fidelity signature"],
+  "default_action":"QUALIFY_FIDELITY_OBJECT_BEFORE_128","override_trigger":"若 signature 无法 outcome-independently 冻结、no-op gate fail、或师兄判断与 B1/Paper B scientific object 重合，应 MERGE/NARROW 而不是用更多 rollouts rescue。",
+  "cross_paper_leverage":"直接承接 B1 的 provenance-control lessons，并可成为 Paper B future-episode mechanism readout；周日需要明确它是 standalone identification paper 还是 family-level measurement module。",
+  "advisor_question":"Influence–Fidelity 是否应该独立成 embodied-memory identification paper，还是并入 Paper B，并把 B1 当数字-Agent对照证据？"
+}
