@@ -131,6 +131,7 @@ def main() -> int:
     if authority.get("host", {}).get("machine_id") != EXPECTED_MACHINE_ID:
         raise RuntimeError("B2 host binding drift")
 
+    require_binding(authority, "save_runner", Path(__file__).resolve())
     for key in ["review", "cpu_smoke", "parent_a_failure", "host67_revocation", "serializer"]:
         require_binding(authority, key, p[key])
     require_binding(authority, "base_receipt", p["base_receipt"])
