@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-m3r4-atomgit-engineering-preparation",
+  "created_at": "2026-09-06T01:08:16+08:00",
+  "status": "PASS_ZERO_PROVIDER_ATOMGIT_ENGINEERING_PREPARATION",
+  "base_commit": "da34b1fe270a2f4f5063ca261746b781e08a8796",
+  "branch": "research/e2-r17-m3r4-atomgit-engineering-20260906",
+  "atomgit": {
+    "plan": "AtomGit CodingPlan Pro",
+    "account_window": "500 requests / 5h rolling window",
+    "engineering_model_used": "qwen3.8-27b",
+    "health_check": "PASS",
+    "final_freeze_authority_audit": "PASS",
+    "scientific_provider_substitution": false,
+    "scientific_model_identity_changed": false,
+    "scientific_outcomes_accessed": false
+  },
+  "new_engineering_artifacts": {
+    "final_contract_freezer": {
+      "path": "scripts/freeze_e2_r17_m3r4_final_contract.py",
+      "sha256": "12d079290649472c1cc69bce46fc0b80460d5e062652d29703d8d5c14bd9bcb8",
+      "role": "After a future fresh exact model-identity PASS, mechanically freeze a zero-authority final contract plus a preflight-only authorization. It never creates measurement authority."
+    },
+    "final_contract_freezer_tests": {
+      "path": "research_pipeline/test_e2_r17_m3r4_final_contract_freeze.py",
+      "sha256": "c46ab2585e64a2cfcdb817a285e6e508d31f69d8cf5c81740035d43092f274ac"
+    }
+  },
+  "bound_existing_artifacts": {
+    "draft_contract": {
+      "path": "generated/e2-r17-m3r4-execution-draft-contract-20260904.json",
+      "sha256": "4ee69b6cf2455bd78971d1bf556b1ea2ba2179bb1304c74c770f6b64430c2378"
+    },
+    "independent_preexecution_review": {
+      "path": "generated/e2-r17-m3r4-preexecution-review-pass-20260904.json",
+      "sha256": "b9a6d50c9a84a16b11bbec92a74d987f7e62add1b1c63b6fd69f0acd5c167a32",
+      "verdict": "PASS_PREEXECUTION_DESIGN"
+    }
+  },
+  "verification": {
+    "m3r4_focused_tests": "28/28 PASS",
+    "recovery_v3_tests": "6/6 PASS",
+    "git_diff_check": "PASS",
+    "m3r4_scientific_run_root_absent": true,
+    "m3r4_scientific_lease_absent": true,
+    "recovery_v3_run_root_absent": true,
+    "recovery_v3_lease_absent": true
+  },
+  "authority": {
+    "scientific_experiment": false,
+    "provider_io": false,
+    "actor_measurement": false,
+    "updater": false,
+    "analysis": false,
+    "m4_bridge": false,
+    "e3": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_gate": "RECOVERY_V3_PRIORITY_THEN_FRESH_EXACT_DEEPSEEK_IDENTITY_THEN_FINAL_CONTRACT_AND_ZERO_PROVIDER_ACTUAL_PATH_PREFLIGHT",
+  "interpretation_boundary": "AtomGit CodingPlan was used only as research-engineering capacity. No CodingPlan model replaced the frozen DeepSeek V4 Pro scientific identity, no scientific provider call was made, and no M3R4 or Bridge outcome was opened."
+}
