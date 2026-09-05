@@ -1,0 +1,63 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-sync64-and-limiter-source-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:54:15Z",
+  "status": "PI05_SYNC64_CHECKPOINT_OOM_LIMITER_REPAIR_DESIGN_READY",
+  "decision": "STOP_UNTHROTTLED_SYNC_PATH_AND_TEST_ONE_SOURCE_NATIVE_4GB_PER_ITEM_LIMITER",
+  "sync64": {
+    "authority_sha256": "80f6cd87830546002bad599f592fc334389e9a47e7d07643d09e59a8365e6f5e",
+    "partial_receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-64g-qualification-result-67-20260905.json",
+    "partial_receipt_sha256": "1a0a96c6061ed88d09c5220a2899b65598b604bff3347b48d8634676f80797fb",
+    "systemd_result": "oom-kill",
+    "memory_peak_bytes": 68719476736,
+    "memory_max_bytes": 68719476736,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "checkpoint_restore_completed": false,
+    "real_scientific_optimizer_updates": 0,
+    "policy_outcomes_read": false
+  },
+  "orbax_source_audit": {
+    "version": "0.11.13",
+    "pytree_handler_source_sha256": "6009bf69f2f8fe8204fedb0977b664796520886d9af889b6aee66114a5ea3024",
+    "composite_handler_source_sha256": "476b4c0220cd4fdf83705821adfdbad49c3a5715fa95e60ad8f0d878941c438e",
+    "pytree_default_concurrent_gb": 96,
+    "pytree_none_resolves_to_bytes": 96000000000,
+    "composite_concurrent_workers": 3,
+    "current_openpi_train_state_handler_save_concurrent_gb": null,
+    "current_openpi_params_handler_save_concurrent_gb": null,
+    "source_native_control": "PyTreeCheckpointHandler(save_concurrent_gb=..., restore_concurrent_gb=...)"
+  },
+  "mechanistic_interpretation": {
+    "supported": "The current checkpoint path permits up to 96 GB of in-flight serialization bytes per PyTree handler while the composite checkpoint contains two large PyTree items, train_state and params. This source-level concurrency budget is grossly mismatched to the 40/64 GiB cgroup ceilings and is a direct engineering target for bounded staging.",
+    "not_claimed": "The source audit alone does not prove exact per-item simultaneous peak residency or guarantee a 4 GB limiter will pass; that requires the prospective qualification below."
+  },
+  "prospective_repair": {
+    "name": "THROTTLED_SYNCHRONOUS_CHECKPOINT_4GB_PER_PYTREE_ITEM",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "enable_async_checkpointing": false,
+    "train_state_save_concurrent_gb": 4,
+    "train_state_restore_concurrent_gb": 4,
+    "params_save_concurrent_gb": 4,
+    "params_restore_concurrent_gb": 4,
+    "assets_handler_unchanged": true,
+    "checkpoint_content_unchanged": true,
+    "checkpoint_format_unchanged": true,
+    "checkpoint_label": 10000,
+    "scientific_variables_unchanged": true,
+    "selection_rationale": "4 GB/item is a single conservative source-native limiter chosen before execution. With two large PyTree items this caps their serialization in-flight allowances far below the 40 GiB cgroup instead of allowing 96 GB/item. No limiter ladder is authorized.",
+    "if_pass": "Stop resource qualification and design a separate fresh run3 authority using the same 4 GB/item synchronous checkpoint implementation plus completion barrier.",
+    "if_fail": "STOP checkpoint resource repair. Do not test another limiter, higher MemoryMax, altered checkpoint content/format/frequency, or formal run3 without a new independently reviewed design.",
+    "formal_run3_authorized": false
+  },
+  "forbidden": [
+    "another save_concurrent_gb value after seeing this qualification",
+    "MemoryMax above 64 GiB as a continuation of the closed ladder",
+    "resume from run2 partial checkpoint",
+    "checkpoint content reduction or format substitution",
+    "scientific batch/seed/optimizer/LR/EMA/action-horizon/training-horizon changes",
+    "BEHAVIOR Q, loss, effect, or p-value access"
+  ]
+}

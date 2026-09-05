@@ -1,0 +1,96 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-throttled-sync-checkpoint-save-4gb-40g-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:56:00Z",
+  "status": "AUTHORIZED_PI05_THROTTLED_SYNC_CHECKPOINT_SAVE_4GB_40G_QUALIFICATION",
+  "scope": "One final outcome-blind checkpoint resource qualification using source-native PyTree in-flight byte limiting. The checkpoint content, item schema, label, scientific training recipe, and 40 GiB no-swap resource ceiling remain unchanged. No formal run3 is authorized.",
+  "parent_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync64-and-limiter-source-adjudication-20260905.json",
+  "adjudication_sha256": "a8838ee71435dc08e173f54351ffbf0e0c16690090614b30f8341adc55b108bc",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_throttled_sync_checkpoint_save_qualification.py",
+  "runner_sha256": "5b984c742a7195515d805cb1fdf4e1a07b288294bc62562bd0b9db643e606ae2",
+  "launcher_path": "scripts/run_behavior_formal_goal_pi05_throttled_sync_checkpoint_save_4gb_40g_qualification_67.sh",
+  "launcher_sha256": "025f882d5cf20bf46aeb7523ccfeaa508cf10a9ec0f1e7d511a17894b8a344b8",
+  "host": "67",
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "checkpoint_implementation": {
+    "orbax_checkpoint_version": "0.11.13",
+    "enable_async_checkpointing": false,
+    "train_state_handler": {
+      "type": "PyTreeCheckpointHandler",
+      "save_concurrent_gb": 4,
+      "restore_concurrent_gb": 4
+    },
+    "params_handler": {
+      "type": "PyTreeCheckpointHandler",
+      "save_concurrent_gb": 4,
+      "restore_concurrent_gb": 4
+    },
+    "assets_handler": "OpenPI CallbackHandler unchanged",
+    "resolved_save_concurrent_bytes_per_pytree_item": 4000000000,
+    "resolved_restore_concurrent_bytes_per_pytree_item": 4000000000,
+    "checkpoint_content_changed": false,
+    "checkpoint_format_changed": false,
+    "checkpoint_label": 10000,
+    "completion_barrier": "manager.wait_until_finished() before restore or any subsequent model operation"
+  },
+  "selection_rule": {
+    "candidate_count": 1,
+    "chosen_limiter_gb_per_pytree_item": 4,
+    "reason": "Chosen prospectively from the Orbax source audit: default None resolves to 96 GB/item, while two large PyTree items coexist under a 40 GiB cgroup. A fixed 4 GB/item limiter directly bounds serialization staging without changing checkpoint semantics. No limiter sweep is authorized."
+  },
+  "scientific_invariants": {
+    "practical_batch": 16,
+    "seed": 42,
+    "base_checkpoint_unchanged": true,
+    "optimizer_unchanged": true,
+    "lr_schedule_unchanged": true,
+    "ema_unchanged": true,
+    "normalization_unchanged": true,
+    "action_horizon": 32,
+    "target_training_updates": 50000,
+    "terminal_scientific_checkpoint_label": 49999,
+    "policy_outcome_protocol_unchanged": true
+  },
+  "qualification": {
+    "initial_state": "fresh step-0 practical-batch16 train state",
+    "output_root": "/data/wyt/formal-goal-checkpoint-save-qualification-67-20260905/throttled-sync-4gb-40g",
+    "receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-throttled-sync-checkpoint-save-4gb-40g-qualification-result-67-20260905.json",
+    "behavior_dataset_access": false,
+    "forward_pass": false,
+    "backward_pass": false,
+    "optimizer_update": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_read": false,
+    "policy_outcome_read": false
+  },
+  "pass_gate": {
+    "required_status": "PI05_THROTTLED_SYNC_CHECKPOINT_SAVE_4GB_40G_PASS",
+    "resolved_checkpointer_must_be_synchronous": true,
+    "checkpoint_save_completed": true,
+    "checkpoint_restore_completed": true,
+    "manager_contains_label_10000": true,
+    "restored_state_step": 0,
+    "systemd_result_must_not_be_oom_kill": true
+  },
+  "if_pass": "Stop resource qualification. A separate fresh run3 authority may be designed using the same 4 GB/item synchronous handlers and immediate checkpoint completion barrier. No automatic formal launch from this authority.",
+  "if_fail": "STOP checkpoint resource repair. Do not change limiter, memory ceiling, checkpoint content/format/frequency, or scientific training variables without a new independently reviewed design.",
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false,
+  "forbidden": [
+    "another save/restore concurrency limiter after observing this result",
+    "MemoryMax escalation",
+    "formal run3 from this authority",
+    "resume from run2 partial checkpoint",
+    "BEHAVIOR Q, loss, effect, or p-value access",
+    "scientific batch/seed/optimizer/LR/EMA/action-horizon/training-horizon changes"
+  ]
+}
