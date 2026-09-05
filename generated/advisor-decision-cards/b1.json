@@ -5,11 +5,11 @@
   "premise":"source provenance 是 content 之外可被 agent 使用的独立信息通道，而不是 field-format、implicit failure wording 或模型能力边界造成的 prompt sensitivity。",
   "risk":"terminal discordance 稀疏且明显 executor-specific；若完整 semantic controls 后差异主要由 prompt surface 或小模型 decision boundary 解释，standalone provenance claim 会明显收窄，并可能被 Paper A 吸收。",
   "strongest_simplification":"同结构字段的 P_neutral / T_truthful / S_shuffled 三臂是当前 strongest same-information control；若 shuffled/neutral 能解释 truthful 差异，则语义 provenance 使用不成立。",
-  "evidence_state":"R76：历史 Llama 4 个 terminal flips 在 temperature=0 exact rerun 下 4/4 复现；R77：其中 2 个表现为 same-state decision-boundary shift，另 2 个更依赖 transcript/self-conditioning；相同 4 个 task 在 Qwen 上均 concordant。R80 已冻结 321-run 并只授予 Qwen/Llama execution authority；analysis/claim change/30B execution 均关闭。",
-  "next_closure":"完成 sealed Qwen 189 → Llama 132，共 321 trajectories；只在 stage seals 完成后另开 analysis authority。Qwen3.5-27B 只按未来 discordant 数 D 触发 4D targeted check，目前不授权。",
-  "cost_class":"MEDIUM · ALREADY_RUNNING","cost_to_next_decision":"本地 A100/open-weight 推理，直接 API cash≈0；主成本是 A100 占用与 321-run wall-time。当前 Qwen execution 已启动，不能因中间结果改 schedule。",
-  "dependencies":["clean MemRL checkout pinned to c1b322ca…","local OpenAI-compatible Qwen/Llama runtime","sealed Qwen then Llama stage order","separate post-seal analysis authorization"],
-  "default_action":"COMPLETE_FROZEN_321_NO_SCOPE_CHANGE","override_trigger":"若执行完整性或 technical seal 失败则 fail closed；若最终 semantic-control 结果不支持独立 provenance 信息价值，或师兄判断与 Paper A scientific object 重叠过高，再考虑 merge/narrow。",
+  "evidence_state":"R76：历史 Llama 4 个 terminal flips 在 temperature=0 exact rerun 下 4/4 复现；R77：其中 2 个表现为 same-state decision-boundary shift，另 2 个更依赖 transcript/self-conditioning；相同 4 个 task 在 Qwen 上均 concordant。最新 R81 仅授予 Qwen stage execution authority：189 trajectories、P/T/S 三臂、no interim scientific analysis；Llama、analysis、claim change、strong-model execution 均关闭。R80 已 outcome-blind 冻结 future scale model Qwen2.5-32B-Instruct 及 4D matched-control rule，但当前不授权下载/执行。",
+  "next_closure":"当前只完成 sealed Qwen 189。Qwen stage seal 后，若执行完整性通过，再单独申请 Llama 132 successor authority；两阶段都 seal 后才生成 P/T discordance classification 并另开 analysis authority。Future Qwen2.5-32B scale check 只按两 executor 的 union discordant 数 D 触发 4D，且仍需独立下载/执行 authority。",
+  "cost_class":"MEDIUM · ALREADY_RUNNING","cost_to_next_decision":"眼前只计 Qwen 189：本地 A100/open-weight 推理，直接 API cash≈0；主成本是 A100 占用与 Qwen stage wall-time。Llama 132 和 future 4D strong-scale check 都不是当前已授权成本。当前 Qwen execution 已启动，不能因中间结果改 schedule。",
+  "dependencies":["path-equivalent clean MemRL checkout pinned to c1b322ca…","local Qwen2.5-7B runtime for current stage","Qwen stage seal before any Llama authority","separate Llama successor authority","separate post-seal analysis authority"],
+  "default_action":"COMPLETE_QWEN_189_ONLY_NO_INTERIM_ANALYSIS","override_trigger":"若执行完整性或 technical seal 失败则 fail closed；若最终 semantic-control 结果不支持独立 provenance 信息价值，或师兄判断与 Paper A scientific object 重叠过高，再考虑 merge/narrow。",
   "cross_paper_leverage":"与 Paper A 共用 provenance/source-fidelity 边界；B1 可提供数字 Agent 上的 format/provenance control 经验，Paper A 必须避免重复造同一 scientific object。",
   "advisor_question":"在 executor-specific、terminal effect 稀疏的边界下，provenance audit 是否仍值得 standalone，还是应成为 Paper A 的数字-Agent机制证据？"
 }
