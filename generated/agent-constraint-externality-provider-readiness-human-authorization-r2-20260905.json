@@ -1,0 +1,51 @@
+{
+  "authority": {
+    "confirmatory_source_and_repair": false,
+    "development_repeat_qualification": false,
+    "external_updater": false,
+    "gate0": false,
+    "gate1": false,
+    "paper_claim": false,
+    "provider_execution": false,
+    "provider_readiness_check": true,
+    "rq1_analysis": false,
+    "rq1_rq2_execution": false,
+    "rq2_analysis": false,
+    "rq3": false,
+    "rq4": false,
+    "secondary_actor": false,
+    "target_only_verification": false
+  },
+  "authorization_source": "CURRENT_SESSION_USER_MESSAGE_CONTINUE_AFTER_R1_CREDENTIAL_BLOCKER_AND_SECURE_SECRET_RESTORATION",
+  "authorized_at": "2026-09-05T16:02:00+08:00",
+  "base_url": "https://api.aa.com.cn/api/v1",
+  "content_sha256": "fcc0a38d7330dab3a1b7daf68a6c35e71fb7a74d82024958e265680b322a5254",
+  "forbidden": [
+    "Gate 0 dispatch",
+    "AppWorld scientific case dispatch",
+    "provider/model substitution",
+    "retry after any dispatched readiness request",
+    "scientific outcome interpretation"
+  ],
+  "model_id": "qwen3.7-flash",
+  "non_scientific_provider_requests_authorized": 1,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_readiness_content_sha256": "517768354989a28ba3745e3b63eb5b5db01c7b2818f7dee62ba300376f969416",
+  "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+  "r2_recovery_proposal_content_sha256": "4ea8ed76fedaf0c3379fc70759c83c4c5b293b1b00276cc07ca028202d7a0369",
+  "request_contract": {
+    "contains_appworld_state": false,
+    "contains_repair_artifact": false,
+    "contains_scientific_case": false,
+    "endpoint": "/responses",
+    "max_retries": 0,
+    "store": false,
+    "temperature": 0,
+    "tools": 0
+  },
+  "schema_version": "ace-provider-readiness-human-authorization-r2-v1",
+  "scientific_outcomes_observed": 0,
+  "scientific_provider_calls_authorized": 0,
+  "scope": "ONE_NON_SCIENTIFIC_QWEN37FLASH_RESPONSES_READINESS_ATTEMPT_ZERO_TOOLS_ZERO_RETRIES",
+  "status": "USER_AUTHORIZED_NON_SCIENTIFIC_PROVIDER_READINESS_R2_ONLY"
+}
