@@ -1,0 +1,158 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-host69-repair1-save-oom-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T22:21:25+08:00",
+  "status": "PI05_B2_HOST69_REPAIR1_SAVE_CGROUP_OOM_TERMINAL_HOLD",
+  "decision": "STOP_B2_NO_AUTOMATIC_RETRY_INDEPENDENT_REDESIGN_REVIEW_REQUIRED",
+  "execution_source_commit": "25578b5133cbc30b9e6783bc7cea578fe7e7743d",
+  "authority": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-leaf-batched-checkpoint-qualification-authority-69-repair1-20260905.json",
+    "sha256": "fe9ef8e891252a6034b2acb18ae1e18cc208e2048b97bd2999a2b3913c4a6b7a",
+    "qualification_run_id": "b2-leaf-batched-8gb-52g-host69-repair1-20260905",
+    "frozen_if_fail_rule": "Stop B2. Do not change MemoryMax, D2H batch size, checkpoint format/content/labels/frequency, or auto-retry. Require a new independent review for any new checkpoint child."
+  },
+  "independent_review_lineage": {
+    "b2_design_review_sha256": "96fb1e13ea3e715a0a70ba00161968e39eaef89dcab59ebd1b9548200b6b4e53",
+    "host69_substitution_review_sha256": "23a0ca6507d03c5516147aff7d1396afa6cbf559dc46fc425a713832be367943",
+    "pre_result_gpu_race_adjudication_sha256": "96181762dc6543457a69c0727f08920afcb4a50a9f703220a465228a9ebc5cfb"
+  },
+  "qualification_consumption": {
+    "stable_idle_gate_passed_at": "2026-09-05T22:10:12+08:00",
+    "required_consecutive_checks": 3,
+    "check_interval_seconds": 30,
+    "qualification_attempt_consumed": true,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "automatic_retry_authorized": false
+  },
+  "partial_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-checkpoint-save-result-69-20260905.json",
+    "sha256": "c44e615ad3d0f9878c9e4216989ec1203b9865bfcc30175b6e6d9723d701a6d9",
+    "status": "PI05_B2_CHECKPOINT_SAVE_QUALIFICATION_SAVE_STARTED",
+    "terminalized_by_runner": false,
+    "terminalization_reason": "The Python runner was SIGKILLed by the cgroup OOM killer before its finally block could rewrite the receipt to PASS/HOLD.",
+    "train_state_ready": true,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false,
+    "formal_run3_authorized": false
+  },
+  "systemd_terminal_evidence": {
+    "host": "69",
+    "machine_id": "c4046d3ca4454a958f5de081aac4dc2e",
+    "unit": "pi05-b2-checkpoint-save-69-20260905.service",
+    "started_at": "2026-09-05T22:10:12+08:00",
+    "oom_killer_event_at": "2026-09-05T22:17:11+08:00",
+    "main_process_exit_at": "2026-09-05T22:17:14+08:00",
+    "systemd_result": "oom-kill",
+    "exec_main_code": "killed",
+    "exec_main_signal": 9,
+    "memory_max_bytes": 55834574848,
+    "memory_peak_bytes": 55834574848,
+    "memory_peak_equals_ceiling": true,
+    "memory_swap_peak_bytes": 0,
+    "journal_terminal_lines": [
+      "A process of this unit has been killed by the OOM killer.",
+      "Main process exited, code=killed, status=9/KILL",
+      "Failed with result 'oom-kill'.",
+      "Consumed 5min 38.349s CPU time, 52.0G memory peak, 0B memory swap peak."
+    ]
+  },
+  "resource_progression": {
+    "resource_scope_before": {
+      "memory_current_bytes": 11168792576,
+      "memory_peak_bytes": 11197227008,
+      "memory_max_bytes": 55834574848
+    },
+    "after_fresh_step0_state": {
+      "memory_current_bytes": 19150577664,
+      "memory_peak_bytes": 28429033472,
+      "memory_max_bytes": 55834574848
+    },
+    "during_save_observed_peak_bytes": 55834574848,
+    "interpretation": "Fresh step0 state construction itself fit below the 52GiB ceiling. Memory reached the exact ceiling during checkpoint serialization/write progress."
+  },
+  "checkpoint_residue": {
+    "root": "/data/wyt/formal-goal-checkpoint-save-qualification-69-20260905/b2-leaf-batched-8gb-52g",
+    "bytes_observed_after_kill": 24883636947,
+    "top_level_entries": [
+      "10000.orbax-checkpoint-tmp-0"
+    ],
+    "complete_checkpoint_exists": false,
+    "temporary_orbax_root_remains": true,
+    "scientifically_usable": false,
+    "resume_authorized": false,
+    "disposition": "LOGICAL_QUARANTINE_IN_PLACE_DO_NOT_RESTORE_DO_NOT_RESUME_DO_NOT_REUSE_AS_SOURCE"
+  },
+  "downstream_gate_state": {
+    "v1_disk_result_present": false,
+    "v2_standard_restore_result_present": false,
+    "v1_authorized_after_s_failure": false,
+    "v2_authorized_after_s_failure": false,
+    "formal_run3_authorized": false,
+    "policy_evaluation_authorized": false
+  },
+  "postsave_controller_defect": {
+    "status": "OPERATIONAL_ORCHESTRATION_BUG_NO_SCIENTIFIC_EXECUTION_EFFECT",
+    "script": "scripts/run_behavior_formal_goal_pi05_b2_postsave_chain_69.sh",
+    "observed_at": "2026-09-05T22:11:34+08:00",
+    "behavior": "The controller stopped when the save receipt first existed with status PI05_B2_CHECKPOINT_SAVE_QUALIFICATION_STARTED instead of polling until a terminal PASS/HOLD state.",
+    "v1_started": false,
+    "v2_started": false,
+    "effect_on_s": "none",
+    "required_before_any_future_child": "Repair terminal-status polling and statically/runtime-smoke verify the orchestration before any newly reviewed checkpoint child is executed."
+  },
+  "mechanistic_localization": {
+    "supported": [
+      "B2 did not fail at GPU admission or fresh step0 construction.",
+      "B2 entered checkpoint save and was terminated by the host69 52GiB no-swap cgroup OOM killer.",
+      "The cgroup peak reached exactly the frozen MemoryMax ceiling while the only on-disk top-level artifact remained an Orbax temporary checkpoint tree."
+    ],
+    "not_yet_adjudicated": [
+      "Whether the dominant incremental host-memory charge was D2H staging, TensorStore/OCDBT write buffering, filesystem/page cache, or another serialization-lifetime component.",
+      "Whether any page-cache/writeback-lifetime repair can preserve the exact Orbax/OCDBT checkpoint contract without changing scientific variables.",
+      "Whether a different MemoryMax is scientifically/operationally justified. No new MemoryMax continuation is authorized by this result."
+    ],
+    "review_hypothesis_only": "Because after-state memory was well below the ceiling and the checkpoint temporary tree grew substantially before OOM, write-path/cache lifetime is a plausible next mechanism to inspect, but this adjudication does not promote that hypothesis to a conclusion."
+  },
+  "scientific_boundary": {
+    "behavior_dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false,
+    "q_effect_p_read": false,
+    "scientific_claim_updated": false
+  },
+  "next_gate": {
+    "status": "FRESH_INDEPENDENT_CHECKPOINT_REDESIGN_REVIEW_REQUIRED",
+    "execution_authorized": false,
+    "review_scope": "Determine whether any new mechanism-level checkpoint child is justified after B2 OOM, with special attention to serialization/write/cache lifetime rather than another unreviewed memory or concurrency ladder.",
+    "must_preserve": [
+      "host67 forbidden",
+      "formal run3 unauthorized",
+      "no BEHAVIOR outcome access",
+      "checkpoint content/format/label/frequency unchanged unless a future independent authority explicitly adjudicates otherwise",
+      "frozen scientific training variables unchanged"
+    ]
+  },
+  "forbidden": [
+    "replay B2 repair1",
+    "change MemoryMax as a B2 continuation",
+    "change D2H batch size as a B2 continuation",
+    "reuse the partial checkpoint residue",
+    "run V1 or V2 on the partial residue",
+    "formal run3",
+    "host67 execution",
+    "policy outcome, loss, Q, effect, or p-value access"
+  ]
+}
