@@ -7,8 +7,8 @@ window.E2_R17_FRONTEND_STATUS = {
     en: "Decoupling Serving and Persistent Learning over Test-Time Search"
   },
   subtitle: {
-    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · identity qualification 为下一条可执行资格门；Stage A/B/Public P1 科学权限仍关闭",
-    en: "Exact-same-pool causal identification · Search-Projection Censoring · identity qualification is the next executable qualification gate; Stage A/B/Public P1 scientific authority remains closed"
+    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · identity 已 PASS；Stage-A 首次执行因 Ark 周额度 429 fail-closed，当前只允许 zero-provider recovery adjudication",
+    en: "Exact-same-pool causal identification · Search-Projection Censoring · identity passed; the first Stage-A execution failed closed on Ark weekly-quota 429, and only zero-provider recovery adjudication is currently allowed"
   },
   paper_identity: "CAUSAL_SYSTEMS_INTERFACE_PAPER",
   scientific_object: {
@@ -36,18 +36,38 @@ window.E2_R17_FRONTEND_STATUS = {
     changed_by_frontend: false
   },
   authority: {
-    fresh_identity_qualification_permitted: true,
-    fresh_identity_called: false,
+    fresh_identity_qualification_permitted: false,
+    fresh_identity_called: true,
     stage_a: false,
     stage_b: false,
     public_p1: false,
     baseline_execution: false,
-    provider_calls_current_continuation: 0
+    identity_provider_generation_attempts: 1,
+    stage_a_provider_pre_io_claims: 4,
+    stage_a_complete_pools: 0,
+    support_inspected: false
+  },
+  stage_a_incident: {
+    status: "FAIL_CLOSED_TECHNICAL_MISSING_RECOVERY_REVIEW",
+    cause: "Ark AccountQuotaExceeded",
+    provider_reset_time: "2026-09-07 00:00:00 +0800",
+    burned_task_id: "r17-b21-cgwb-p0",
+    attempted_task_markers: 1,
+    sealed_task_receipts: 0,
+    frozen_k8_pools: 0,
+    completed_streams: 0,
+    support_inspected: false,
+    updater_calls: 0,
+    heldout_access: 0,
+    replay_allowed: false,
+    replacement_allowed: false,
+    proposed_recovery_zh: "独立审查中的最小方案：固定 1 个 post-dispatch terminal technical missing，不 replay、不 replacement；只在新版本 recovery contract 下执行其余 159 个原始 task，并保持每 stream >=4 mixed pools 的绝对阈值。",
+    proposed_recovery_en: "Minimal proposal under independent review: freeze exactly one post-dispatch terminal technical missing with no replay and no replacement; execute only the remaining 159 original tasks under a versioned recovery contract while preserving the absolute >=4 mixed-pools threshold per stream."
   },
   next_gate: {
-    code: "ONE_FRESH_DEEPSEEK_IDENTITY_THEN_LOCAL_ADJUDICATION_THEN_SEPARATE_STAGE_A_AUTH",
-    zh: "当前已允许的下一边界：恰好 1 次 fresh DeepSeek identity qualification → 本地 adjudication → PASS 后另行签发一次性 Stage-A authorization。",
-    en: "Current permitted next boundary: exactly one fresh DeepSeek identity qualification → local adjudication → if PASS, separately mint single-use Stage-A authorization."
+    code: "ZERO_PROVIDER_TECHNICAL_MISSING_RECOVERY_ADJUDICATION",
+    zh: "当前唯一合法下一步：对首个 post-dispatch quota technical missing 做独立 zero-provider recovery adjudication。禁止重跑 burned task、禁止 replacement、禁止读取 Stage-A support。",
+    en: "Only legal next step: independently adjudicate the first post-dispatch quota technical missing under a zero-provider recovery review. Do not replay the burned task, replace it, or read Stage-A support."
   },
   completed_evidence: [
     {
@@ -76,21 +96,21 @@ window.E2_R17_FRONTEND_STATUS = {
       id: "B0",
       title_zh: "Fresh model identity gate",
       title_en: "Fresh model identity gate",
-      status: "NEXT_EXECUTABLE",
-      scale_zh: "1 次 provider identity call；无科学 outcome",
-      scale_en: "1 provider identity call; no scientific outcome",
-      gate_zh: "identity PASS 才能另行 mint Stage-A authorization。",
-      gate_en: "Only identity PASS permits a separately minted Stage-A authorization."
+      status: "COMPLETE",
+      scale_zh: "已执行恰好 1 次 provider identity call；resolved=deepseek-v4-pro-ga-260813；无 scientific outcome",
+      scale_en: "Exactly one provider identity call completed; resolved=deepseek-v4-pro-ga-260813; no scientific outcome",
+      gate_zh: "已 PASS，并已据此签发一次性 Stage-A authorization；该 authorization 在首次 fail-closed run 中已被消费。",
+      gate_en: "PASS; a single-use Stage-A authorization was minted from it and consumed by the first fail-closed run."
     },
     {
       id: "B1",
       title_zh: "V3 Stage A · support acquisition",
       title_en: "V3 Stage A · support acquisition",
-      status: "PLANNED_LOCKED",
-      scale_zh: "5 skeletons · 20 streams · 160 tasks · K=8 · 1280 actor rollouts · 0 updater · 0 heldout",
-      scale_en: "5 skeletons · 20 streams · 160 tasks · K=8 · 1280 actor rollouts · 0 updater · 0 heldout",
-      gate_zh: "20/20 streams 都必须至少有 4 个 mixed pools；任一失败即 HOLD，不换 task/model/K。",
-      gate_en: "All 20 streams must have at least 4 mixed pools; any failure causes HOLD with no task/model/K replacement."
+      status: "FAIL_CLOSED_RECOVERY_REVIEW",
+      scale_zh: "原计划 5 skeletons · 20 streams · 160 tasks · K=8 · 1280 rollouts；当前 1 attempted / 0 sealed pools / 0 completed streams",
+      scale_en: "Original plan: 5 skeletons · 20 streams · 160 tasks · K=8 · 1280 rollouts; current state: 1 attempted / 0 sealed pools / 0 completed streams",
+      gate_zh: "首个 task 在 provider dispatch 后遭遇 Ark 周额度 429，已 burn。当前禁止 replay/replacement/support read；必须先完成独立 recovery adjudication。",
+      gate_en: "The first task hit Ark weekly-quota 429 after provider dispatch and is burned. Replay, replacement, and support read are forbidden pending independent recovery adjudication."
     },
     {
       id: "B2",
