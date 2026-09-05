@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R76-LLAMA-DISCORDANT-REPEATABILITY",
+  "recorded_date": "2026-09-05",
+  "status": "R76_LLAMA_DISCORDANT_EXACT_RERUN_4_OF_4_PAIR_PATTERNS_REPRODUCED",
+  "role": "POST_HOC_REPEATABILITY_DIAGNOSTIC_NOT_PRIMARY_INFERENCE",
+  "scientific_question": "Are the four historical Llama R61 terminal-outcome flips plausibly ordinary temperature-sampling noise, or do they reproduce under the same greedy decoding substrate?",
+  "historical_binding": {
+    "executor": "Meta-Llama-3.1-8B-Instruct",
+    "model_artifact_manifest_sha256": "8071d53a4509c0404328b791800ba79657556490b276b8383e1e8b2f0f63e104",
+    "temperature": 0.0,
+    "do_sample": false,
+    "historical_r61_completed_ab_arms_file_sha256": "34747ca158bf33a354516b3480975483b6214e3c00fc97e78325ae663f04af38",
+    "historical_r61_runner_sha256": "3232be72be617e4e471d5f17d317f0aa83903fe983d3d8df6442dc8336ccc72c",
+    "historical_runtime_provider_sha256": "32762bafdf0bb4274c6f3b521ceb3e8c008178361503c320691543d51007a3f2",
+    "source_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "source_checkout_migration": "old shared checkout contained two unrelated untracked temp files; R76 used a new clean detached worktree at the same commit and rechecked pinned source-file hashes, validation-split hash, Docker image identity, model route, memory-context hashes, and historical system-prompt hashes before first exposure"
+  },
+  "raw_r76_binding": {
+    "host": "222.20.126.231",
+    "root": "/data/wyt/b1-memrl-r76-llama-discordant-repeatability",
+    "phase1_preflight_file_sha256": "a85992d39feecd62aeac30cadd6bbfb641afc4c939d89f1628eee6ac5dc0524c",
+    "phase1_started_arms_file_sha256": "b82a026247e86a47ccc4616589ae24ddf03f8408b1110a5504185f2b875ab87e",
+    "phase1_completed_arms_file_sha256": "9552ed18b4a6013b7ea6ba0e231c5c0ddface9edae27db65131c792fa956c0c7",
+    "phase1_result_file_sha256": "bf617d76871c6ca72193caf5768612aa1badc51217cfbfa0c0245db69428f1fd",
+    "execution_runner_file_sha256": "b9e32c22d7aa1f42e5b0a2e370178946f537c2de83db205232d2640e4297b32d"
+  },
+  "phase1_design": {
+    "selected_posthoc_discordant_task_ids": ["125", "136", "193", "327"],
+    "arms": ["A_content_only", "B_raw_provenance"],
+    "fresh_reruns_per_arm": 1,
+    "new_model_trajectories": 8,
+    "sequential_rule": "If any historical terminal pair pattern failed to reproduce, expand only that unstable task to total five fresh repetitions per arm; otherwise stop.",
+    "phase2_triggered": false
+  },
+  "task_results": [
+    {
+      "task_id": "125",
+      "historical_A_B": [true, false],
+      "rerun_A_B": [true, false],
+      "pair_pattern_reproduced": true,
+      "historical_steps_A_B": [10, 16],
+      "rerun_steps_A_B": [10, 16],
+      "first_action_reproduced_A_B": [true, true],
+      "full_normalized_action_sequence_reproduced_A_B": [true, true]
+    },
+    {
+      "task_id": "136",
+      "historical_A_B": [false, true],
+      "rerun_A_B": [false, true],
+      "pair_pattern_reproduced": true,
+      "historical_steps_A_B": [6, 6],
+      "rerun_steps_A_B": [6, 6],
+      "first_action_reproduced_A_B": [true, true],
+      "full_normalized_action_sequence_reproduced_A_B": [true, true]
+    },
+    {
+      "task_id": "193",
+      "historical_A_B": [false, true],
+      "rerun_A_B": [false, true],
+      "pair_pattern_reproduced": true,
+      "historical_steps_A_B": [10, 6],
+      "rerun_steps_A_B": [8, 6],
+      "first_action_reproduced_A_B": [true, true],
+      "full_normalized_action_sequence_reproduced_A_B": [false, true],
+      "A_common_normalized_action_prefix_steps": 6
+    },
+    {
+      "task_id": "327",
+      "historical_A_B": [true, false],
+      "rerun_A_B": [true, false],
+      "pair_pattern_reproduced": true,
+      "historical_steps_A_B": [16, 4],
+      "rerun_steps_A_B": [16, 4],
+      "first_action_reproduced_A_B": [true, true],
+      "full_normalized_action_sequence_reproduced_A_B": [true, true]
+    }
+  ],
+  "aggregate_repeatability": {
+    "terminal_arm_outcomes_reproduced": "8/8",
+    "terminal_pair_patterns_reproduced": "4/4",
+    "first_executable_actions_reproduced": "8/8",
+    "step_counts_reproduced": "7/8",
+    "full_normalized_action_sequences_reproduced": "7/8",
+    "unstable_task_ids_under_prespecified_terminal_pattern_rule": []
+  },
+  "scientific_interpretation": {
+    "temperature_sampling_explanation": "not supported: historical and R76 runs use temperature=0.0 with do_sample=false, and all four post-hoc discordant pair patterns reproduced",
+    "supported_diagnostic_reading": "the observed flips are consistent with stable task-specific prompt-conditioned policy sensitivity near the executor capability boundary; a small metadata change can steer a closed-loop trajectory into a different action/recovery basin",
+    "runtime_variation_boundary": "temperature=0 is not a theorem of bitwise whole-trajectory determinism; Task 193 A followed the same first six normalized actions but completed in 8 rather than 10 steps while retaining the same terminal failure",
+    "not_identified": "R76 is post-hoc selected on historical discordant tasks and cannot estimate population prevalence, average treatment effect, or causal effect size"
+  },
+  "changes_R72_R73_primary_inference": false,
+  "changes_R72_R73_execution_schedule": false,
+  "additional_repeatability_expansion_required": false,
+  "external_provider_calls": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "092e480513a590d6f13b3afc76546a05590d9d3b36b3c91bfde8bca2f3d7fc13"
+}
