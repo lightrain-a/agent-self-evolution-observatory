@@ -33,6 +33,24 @@ MIN_SINGLE_FILE_DROP_BYTES = 1 * 1024**2
 MIN_TOTAL_FILE_DROP_BYTES = 64 * 1024**2
 
 
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def require_binding(authority: dict[str, Any], key: str, path: Path) -> str:
+    binding = authority.get("bindings", {}).get(key)
+    if not isinstance(binding, dict):
+        raise RuntimeError(f"D2 missing authority binding: {key}")
+    actual = sha256_file(path)
+    if binding.get("path") != str(path) or binding.get("sha256") != actual:
+        raise RuntimeError(f"D2 authority binding drift: {key}")
+    return actual
+
+
 def atomic_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -74,11 +92,50 @@ def tree_bytes(root: Path) -> tuple[int, int]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--authority", type=Path, required=True)
+    ap.add_argument("--serializer", type=Path, required=True)
+    ap.add_argument("--cache", type=Path, required=True)
+    ap.add_argument("--development-review", type=Path, required=True)
+    ap.add_argument("--d0d1d3", type=Path, required=True)
     ap.add_argument("--work-root", type=Path, required=True)
     ap.add_argument("--result", type=Path, required=True)
     args = ap.parse_args()
+
+    authority_path = args.authority.resolve()
+    serializer_path = args.serializer.resolve()
+    cache_path = args.cache.resolve()
+    development_review_path = args.development_review.resolve()
+    d0d1d3_path = args.d0d1d3.resolve()
     root = args.work_root.resolve()
     result = args.result.resolve()
+
+    authority = json.loads(authority_path.read_text())
+    if authority.get("status") != "AUTHORIZED_PI05_B3_D2_OFFLINE_CACHE_ACCOUNTING":
+        raise RuntimeError("D2 authority status drift")
+    if authority.get("formal_run3_authorized") is not False:
+        raise RuntimeError("D2 authority illegally opens run3")
+    if authority.get("model_execution_authorized") is not False:
+        raise RuntimeError("D2 authority illegally opens model execution")
+    require_binding(authority, "runner", Path(__file__).resolve())
+    require_binding(authority, "serializer", serializer_path)
+    require_binding(authority, "cache", cache_path)
+    require_binding(authority, "development_review", development_review_path)
+    require_binding(authority, "d0d1d3", d0d1d3_path)
+    frozen = authority.get("frozen_d2", {})
+    expected = {
+        "synthetic_seed": SYNTHETIC_SEED,
+        "leaf_count": LEAF_COUNT,
+        "leaf_bytes": LEAF_BYTES,
+        "synthetic_total_bytes": TOTAL_BYTES,
+        "d2h_batch_bytes": D2H_BATCH_BYTES,
+        "memory_max_bytes": MEMORY_MAX_BYTES,
+        "memory_swap_max_bytes": 0,
+        "min_single_file_drop_bytes": MIN_SINGLE_FILE_DROP_BYTES,
+        "min_total_file_drop_bytes": MIN_TOTAL_FILE_DROP_BYTES,
+    }
+    if frozen != expected:
+        raise RuntimeError(f"D2 frozen contract drift: {frozen}")
+
     if root.exists() or result.exists():
         raise RuntimeError("D2 is single-shot: work root/result already exists")
     if any(device.platform != "cpu" for device in jax.devices()):
@@ -95,6 +152,7 @@ def main() -> int:
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "PI05_B3_D2_CACHE_ACCOUNTING_HOLD",
         "scope": "SYNTHETIC_CPU_ONLY_NO_MODEL_NO_SCIENTIFIC_DATA",
+        "authority_sha256": sha256_file(authority_path),
         "synthetic_seed": SYNTHETIC_SEED,
         "leaf_count": LEAF_COUNT,
         "leaf_bytes": LEAF_BYTES,
