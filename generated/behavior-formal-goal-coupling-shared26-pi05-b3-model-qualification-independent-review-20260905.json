@@ -1,0 +1,53 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b3-model-qualification-independent-review-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-05T22:56:00+08:00",
+  "reviewer": {
+    "kind": "fresh_independent_codexflow_codex_read_only_review",
+    "session_id": "01a0720f-738e-72b2-8304-b58147c163f2"
+  },
+  "evidence_binding": {
+    "b2_terminal_adjudication_sha256": "febf6a6967b3869173418766c79ace56aba50149239f3d5d0101b0ab730910c5",
+    "b3_d0_d1_d3_v2_sha256": "e0afbf9ac08b85404b97f49d91083db0a4887b913c763a32537b419e9ae171ee",
+    "b3_d2_authority_sha256": "d6e15c0c8ee4bdbeb41d8297ac29769fa4090699aa5a0b5f3170b7f18eedc505",
+    "b3_d2_result_sha256": "eac37f960477f109c3282420300690dc02a47de68a661db6f67175876039549b",
+    "b3_d2_result_commit": "673d642793919c214d0c1ca36e9a1bbf6b7b3581",
+    "serializer_sha256": "f79e3b5c0e74bb37e2e16dae8a7c2921340f9a20e722b9901e2502f8c60047e9",
+    "cache_helper_sha256": "88495d244613ed7ddc8ac163ccb0e5f66d978facdedf2c7ee6e918e709d25a42"
+  },
+  "verdict": "APPROVE_ONE_B3_S_V1_V2_QUALIFICATION",
+  "review_summary": {
+    "A": "D0-D3 plus D2 are sufficient to justify one prospective model-scale step0 checkpoint qualification. They do not prove that page cache caused the B2 OOM, and that causal overclaim remains forbidden.",
+    "B": "The 128MiB D2 synthetic batching is acceptable for mechanism qualification because it exercised the same bounded-write completion/reclamation lifecycle. The model qualification must preserve the already-frozen <=8GB D2H bound rather than retune it.",
+    "C": "Keep host69, MemoryMax=52GiB, swap0, <=8GB D2H, unchanged Orbax/TensorStore/OCDBT semantics, and all scientific variables frozen so the operational contrast to B2 is the post-write reclamation mechanism only.",
+    "S": "Fresh host69 step0 save only. PASS requires frozen limits, no OOM/swap/tmp/prohibited activity, terminal PASS, cgroup memory.stat recording, and at least one eligible OCDBT blob completing fsync then POSIX_FADV_DONTNEED.",
+    "V1": "Preserve the stronger prior direct CPU per-leaf TensorStore path/shape/dtype/nbytes/SHA256 verification against S fingerprints.",
+    "V2": "After V1 PASS, fresh standard Orbax restore of the same immutable artifact with aggregate validation and state.step=0.",
+    "stop_rule": "Any S/V1/V2 failure closes B3. No retry or resource/batch/cache-advice ladder without a new independent review."
+  },
+  "clarification": {
+    "prompted_ambiguity": "The compressed restatement initially described V1 as a standard restore.",
+    "reviewer_exact_line": "V1_CONTRACT=PRESERVE_DIRECT_SHA_THEN_STANDARD_RESTORE",
+    "resolved_contract": "V1 remains direct per-leaf SHA verification; V2 remains the standard Orbax restore."
+  },
+  "remains_unauthorized": [
+    "formal run3",
+    "BEHAVIOR data access",
+    "forward pass",
+    "backward pass",
+    "optimizer update",
+    "loss access",
+    "policy outcome access",
+    "Q/effect/p-value access",
+    "host67 execution",
+    "MemoryMax ladder",
+    "D2H batch ladder",
+    "checkpoint semantic changes"
+  ],
+  "execution_authorized": {
+    "one_b3_step0_S": true,
+    "V1_after_S_PASS": true,
+    "V2_after_V1_PASS": true,
+    "formal_run3": false
+  }
+}
