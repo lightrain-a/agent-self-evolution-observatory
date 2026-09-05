@@ -11,7 +11,7 @@ G = ROOT / "generated"
 PDF_DIR = ROOT / "downloads" / "advisor-20260906"
 ORDER = ["E1", "B1", "C1", "G1", "E2", "PAPER_A", "CONSTRAINT_EXTERNALITY", "PAPER_B", "3D"]
 ROUTES = {"FREEZE_SUBMIT", "EXECUTE_FROZEN", "QUALIFY_FIRST", "FORMALIZE_FIRST"}
-RESOURCE_DIMENSIONS = ["api_cash", "local_gpu_occupancy", "human_time", "provider_credential_dependency", "calendar_latency"]
+RESOURCE_DIMENSIONS = ["api_cash", "local_gpu_occupancy", "post_meeting_execution_human_hours", "provider_credential_dependency", "calendar_latency"]
 
 
 def load(path: Path):
@@ -41,6 +41,9 @@ def main() -> int:
     overlay = load(G / "advisor-reality-cost-independent-review-20260905.json")
     overlay_fix = load(G / "advisor-reality-cost-fix-closure-20260905.json")
     final_attempt = load(G / "advisor-final-decision-sufficiency-review-attempt-20260905.json")
+    final_review = load(G / "advisor-final-decision-sufficiency-review-20260906.json")
+    agenda = load(G / "advisor-meeting-agenda-20260906.json")
+    final_fix = load(G / "advisor-final-decision-sufficiency-fix-closure-20260906.json")
 
     cards = {}
     card_paths = []
@@ -128,6 +131,62 @@ def main() -> int:
     if final_attempt.get("valid_review_count") != 0 or final_attempt.get("valid_review") is not False:
         errors.append("invalid final decision-sufficiency attempt must remain 0 valid reviews")
 
+    reviewer = final_review.get("reviewer") or {}
+    if final_review.get("status") != "VALID_INDEPENDENT_REVIEW" or reviewer.get("valid_review_count") != 1 or reviewer.get("assistant_complete") is not True:
+        errors.append("final decision-sufficiency review is not one complete valid independent review")
+    if final_review.get("verdict") != "REVISE_ADVISOR_MEETING_DECISION_SUFFICIENCY" or final_review.get("freeze_decision") != "REVISE_AND_REFREEZE":
+        errors.append("unexpected final decision-sufficiency reviewer verdict/freeze decision")
+    if final_fix.get("status") != "FIXES_APPLIED_DETERMINISTIC_PASS":
+        errors.append("final decision-sufficiency fix closure is not PASS")
+
+    # The reviewer-required single-decision asks are bound exactly.
+    requested_asks = {pid: row.get("question") for pid, row in (final_review.get("per_paper_ask") or {}).items() if row.get("action") == "REPLACE"}
+    for pid, expected in requested_asks.items():
+        if cards.get(pid, {}).get("advisor_question") != expected:
+            errors.append(f"final reviewer replacement ask not bound: {pid}")
+
+    ownership = agenda.get("claim_ownership_map") or {}
+    expected_owners = {
+        "B1": "provenance-field incremental decision value",
+        "PAPER_A": "source-faithful causal transport from source outcome to later policy use",
+        "PAPER_B": "longitudinal committed-update causal lifecycle across episodes",
+    }
+    for pid, expected in expected_owners.items():
+        if (ownership.get(pid) or {}).get("primary_claim_owner") != expected:
+            errors.append(f"memory claim ownership not frozen: {pid}")
+    if len(agenda.get("shared_risk_reopen_rules") or []) < 3 or any(not str(x.get("reopen_threshold") or "").strip() for x in agenda.get("shared_risk_reopen_rules") or []):
+        errors.append("shared-risk reopen table is incomplete")
+    if len(agenda.get("meeting_outputs") or []) != 5:
+        errors.append("meeting outputs must contain exactly five locked outputs")
+    if len(agenda.get("do_not_spend_advisor_time_on") or []) > 6:
+        errors.append("do-not-spend-advisor-time list exceeds reviewer cap")
+
+    # Meeting schedule must remain exactly three hours while moving time from E1/cost into memory ownership.
+    def minutes(hm: str) -> int:
+        h, m = map(int, hm.split(":")); return h * 60 + m
+    schedule = agenda.get("schedule") or []
+    total_minutes = sum(minutes(x["end"]) - minutes(x["start"]) for x in schedule)
+    if total_minutes != 180 or not schedule or schedule[0].get("start") != "14:00" or schedule[-1].get("end") != "17:00":
+        errors.append(f"advisor schedule must cover exactly 14:00-17:00 / 180 minutes, got {total_minutes}")
+    e1_minutes = sum(minutes(x["end"]) - minutes(x["start"]) for x in schedule if str(x.get("label")).startswith("E1"))
+    memory_minutes = sum(minutes(x["end"]) - minutes(x["start"]) for x in schedule if str(x.get("label")).startswith("Memory"))
+    cost_minutes = sum(minutes(x["end"]) - minutes(x["start"]) for x in schedule if "resource" in str(x.get("label")).lower())
+    if e1_minutes > 15 or memory_minutes < 60 or cost_minutes > 12:
+        errors.append(f"reviewer time reallocation not closed: E1={e1_minutes}, memory={memory_minutes}, resource={cost_minutes}")
+    if not any("Unresolved exceptions" in str(x.get("label")) for x in schedule):
+        errors.append("generic nine-paper closure sweep was not replaced by unresolved-exception sweep")
+
+    for pid in ORDER:
+        rr = (resources.get("papers") or {}).get(pid, {})
+        if not str(rr.get("current_decision_cost") or "").strip():
+            errors.append(f"missing current_decision_cost: {pid}")
+        if not str(rr.get("cost_to_stop") or "").strip():
+            errors.append(f"missing cost_to_stop: {pid}")
+    for pid in ["PAPER_A", "PAPER_B"]:
+        rr = (resources.get("papers") or {}).get(pid, {})
+        if "not current commitment" not in str(rr.get("conditional_envelope_label") or "").lower():
+            errors.append(f"future VLA envelope not visually separated from current commitment: {pid}")
+
     sources = [
         G / "advisor-paper-pack-manifest.json",
         G / "advisor-reality-support.json",
@@ -135,6 +194,9 @@ def main() -> int:
         G / "advisor-reality-cost-independent-review-20260905.json",
         G / "advisor-reality-cost-fix-closure-20260905.json",
         G / "advisor-final-decision-sufficiency-review-attempt-20260905.json",
+        G / "advisor-final-decision-sufficiency-review-20260906.json",
+        G / "advisor-final-decision-sufficiency-fix-closure-20260906.json",
+        G / "advisor-meeting-agenda-20260906.json",
         *card_paths,
         *review_paths,
     ]
@@ -159,6 +221,12 @@ def main() -> int:
             "prior_independent_reality_cost_review_valid": overlay.get("browser_evidence", {}).get("assistant_complete") is True,
             "prior_reality_cost_fixes_closed": overlay_fix.get("status") == "FIXES_APPLIED_DETERMINISTIC_PASS",
             "final_decision_sufficiency_attempt_fail_closed": final_attempt.get("valid_review_count") == 0,
+            "final_decision_sufficiency_review_valid": final_review.get("status") == "VALID_INDEPENDENT_REVIEW" and reviewer.get("valid_review_count") == 1,
+            "final_decision_sufficiency_fixes_closed": final_fix.get("status") == "FIXES_APPLIED_DETERMINISTIC_PASS",
+            "memory_claim_ownership_frozen": all((ownership.get(pid) or {}).get("primary_claim_owner") == expected for pid, expected in expected_owners.items()),
+            "shared_risk_reopen_table_frozen": len(agenda.get("shared_risk_reopen_rules") or []) >= 3,
+            "advisor_schedule_reallocated": e1_minutes <= 15 and memory_minutes >= 60 and cost_minutes <= 12,
+            "cost_to_stop_9_of_9": all(str((resources.get("papers") or {}).get(pid, {}).get("cost_to_stop") or "").strip() for pid in ORDER),
         },
         "errors": errors,
         "source_hashes": source_hashes,

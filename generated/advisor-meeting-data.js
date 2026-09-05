@@ -1,13 +1,13 @@
 window.ADVISOR_MEETING_DATA = {
-  "schema_version": "3.1",
-  "generated_at": "2026-09-05",
+  "schema_version": "3.2",
+  "generated_at": "2026-09-06",
   "meeting": {
     "id": "2026-09-06-advisor",
     "main_ref": "bb9b99d915de1141ac39654550dd91f81070ee00",
     "status": "9_OF_9_READY",
     "review_route": "exception-and-boundary-review",
     "freeze_status": "MEETING_CANDIDATE_FROZEN",
-    "candidate_hash": "6d5e9cbc302dfcc7fbcb6ba5cdfff99a8352f4d3f350e5c658a2545374528733"
+    "candidate_hash": "3819d61c099d7e8bb9d55ca114660751d4bceb011dfe8aef3e9ca3c2489285bd"
   },
   "route_summary": {
     "FREEZE_SUBMIT": 2,
@@ -77,7 +77,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "0",
-          "human_time": "1–3 h",
+          "post_meeting_execution_human_hours": "1–3 h",
           "provider_credential_dependency": "N/A",
           "calendar_latency": "human signoff only; not compute-bound"
         },
@@ -85,7 +85,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "Optional V4 first gate: approximately 12–24 hosted-agent trajectories; later stages remain conditional.",
         "human_effort_estimate": "1–3 h advisor/author positioning + submission signoff",
         "parallelization": "Fully parallel; no scarce compute dependency.",
-        "priority_note": "High scheduling priority because closure is cheap and submission-near."
+        "priority_note": "High scheduling priority because closure is cheap and submission-near.",
+        "current_decision_cost": "¥0 + 0 GPU; author/advisor positioning and submission signoff only.",
+        "cost_to_stop": "No new compute: if advisor rejects the standalone reality/abstraction premise, freeze the narrow result or merge without opening optional expansion."
       },
       "stanford": {
         "status": "READY",
@@ -164,7 +166,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "1×A100-80GB; frozen Qwen 189 stage",
-          "human_time": "<1 h active monitoring",
+          "post_meeting_execution_human_hours": "<1 h active monitoring",
           "provider_credential_dependency": "N/A",
           "calendar_latency": "roughly 6.4 h remaining at the 22:55 observed average; operational estimate only; throughput-sensitive"
         },
@@ -180,7 +182,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "After Qwen+Llama seals, analysis authority is separate. Strong-scale Qwen2.5-32B check is 4D only if future discordant-task count D is nonzero and separately authorized.",
         "human_effort_estimate": "<1 h runtime oversight now; later analysis/review is separate",
         "parallelization": "Runs independently from 3D because it uses a different local GPU resource pool.",
-        "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work."
+        "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work.",
+        "current_decision_cost": "Already-authorized 1×A100-80GB Qwen stage is running; no additional compute commitment is requested in the advisor meeting.",
+        "cost_to_stop": "Finish the already-authorized Qwen stage and seal it; do not open Llama or later scale checks without successor authority or if the frozen gate fails."
       },
       "stanford": {
         "status": "READY",
@@ -256,7 +260,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "0",
-          "human_time": "2–4 h",
+          "post_meeting_execution_human_hours": "2–4 h",
           "provider_credential_dependency": "N/A",
           "calendar_latency": "human/editorial only; not compute-bound"
         },
@@ -264,7 +268,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "Method-extension reopen only with a new independently qualified semantic-validity asset.",
         "human_effort_estimate": "2–4 h manuscript/advisor boundary work",
         "parallelization": "Fully parallel.",
-        "priority_note": "Cheap closure; should advance while GPU/API-heavy papers run."
+        "priority_note": "Cheap closure; should advance while GPU/API-heavy papers run.",
+        "current_decision_cost": "¥0 + 0 GPU; manuscript boundary/convergence only.",
+        "cost_to_stop": "No new compute: if stage-resolved diagnosis is not judged standalone, keep current evidence as a bounded analysis/supporting result and do not reopen experiments."
       },
       "stanford": {
         "status": "READY",
@@ -309,7 +315,7 @@ window.ADVISOR_MEETING_DATA = {
       "default_action": "RESOLVE_Q0_CREDENTIAL_AND_AUTHORITY_THEN_RUN_Q0_ONLY",
       "override_trigger": "Q0 非 10/10 → STOP safety execution，转 substrate diagnosis；P0 support <6 pairs → 不做 P1，报告 measurement limitation/merge；shared-capability P1 null 时按冻结 identity rule pivot/stop。",
       "cross_paper_leverage": "与 Constraint Externality 共用先证明 capability/target repair、再解释 safety/collateral 的 controlled-update discipline；可共享资格门思想但实验对象不同。",
-      "advisor_question": "MCTA 的 task-local capability conditioning 是否是足够强的 methodology object？canonical shared action graph 应怎样允许 alternate valid paths/cycles 才不会制造 selection bias？",
+      "advisor_question": "For the current paper, should the estimand remain SHARED_CAPABILITY_CONDITIONAL, or should the paper instead target an unconditional longitudinal safety effect?",
       "reality_support": {
         "reality_verdict": "STRONGLY_SUPPORTED",
         "supporting_cases": [
@@ -342,7 +348,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0 committed now",
           "local_gpu_occupancy": "0",
-          "human_time": "1–3 h graph/alternate-path protocol + credential handling",
+          "post_meeting_execution_human_hours": "1–3 h graph/alternate-path protocol + credential handling",
           "provider_credential_dependency": "exact qwen3.5-397b-a17b credential AND explicit Q0 execution authority must both be confirmed",
           "calendar_latency": "UNKNOWN until credential/authority are both available"
         },
@@ -351,7 +357,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "First-tier planning reference for the historical 2.8M/0.28M token envelope is ~¥5.4; exact future cost requires per-call receipts and actual route.",
         "human_effort_estimate": "1–3 h graph/alternate-path protocol + credential handling",
         "parallelization": "Can proceed in parallel once provider credential exists; does not need local GPU.",
-        "priority_note": "Spend only the 10-episode qualification budget before considering larger safety runs."
+        "priority_note": "Spend only the 10-episode qualification budget before considering larger safety runs.",
+        "current_decision_cost": "¥0 + 0 provider calls committed; credential and explicit Q0 authority verification only.",
+        "cost_to_stop": "Zero provider spend until credential + authority; Q0 (10 benign episodes) is the first scientific falsifier. Q0 != 10/10 stops safety execution before P0/P1."
       },
       "stanford": {
         "status": "READY",
@@ -429,7 +437,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "~¥0.02 planning order for the single identity request; route-dependent",
           "local_gpu_occupancy": "0",
-          "human_time": "<1 h",
+          "post_meeting_execution_human_hours": "<1 h",
           "provider_credential_dependency": "Ark/provider availability + exact resolved DeepSeek identity",
           "calendar_latency": "one request once provider is available"
         },
@@ -438,7 +446,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "If future calls resemble the recent actor-token average, 720 calls are roughly ¥11.5 token-route order; Ark AFP billing can differ materially.",
         "human_effort_estimate": "<1 h qualification/preflight now",
         "parallelization": "Provider-limited rather than GPU-limited; can run alongside local GPU work if quota/priority permits.",
-        "priority_note": "Current spend should stop at one identity gate; do not reserve the 720-call envelope before qualification."
+        "priority_note": "Current spend should stop at one identity gate; do not reserve the 720-call envelope before qualification.",
+        "current_decision_cost": "One non-scientific model-identity qualification request only; planning order ~¥0.02 if token-routed, route-dependent.",
+        "cost_to_stop": "Stop after the single identity/route qualification if exact model identity cannot be established; do not open the 72-unit M3R4 block."
       },
       "stanford": {
         "status": "READY",
@@ -516,7 +526,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "0 committed now; contingent Phase A GPU type/count and GPU-hours are UNKNOWN until frozen carrier/A0 runtime preflight",
-          "human_time": "2–5 h scientific formalization",
+          "post_meeting_execution_human_hours": "2–5 h scientific formalization",
           "provider_credential_dependency": "N/A for current formalization",
           "calendar_latency": "formalization first; later 128-run wall-clock UNKNOWN until frozen runtime preflight"
         },
@@ -524,7 +534,10 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "Expansion to 64 units is allowed only by a predeclared precision rule; no automatic second-carrier expansion.",
         "human_effort_estimate": "2–5 h scientific formalization before any GPU run",
         "parallelization": "Formalization is fully parallel. Later VLA runs should use an idle eligible GPU and must not preempt frozen B1/3D work.",
-        "priority_note": "High information-per-cost now because the next gate is essentially zero-compute."
+        "priority_note": "High information-per-cost now because the next gate is essentially zero-compute.",
+        "current_decision_cost": "¥0 + 0 GPU; causal/fidelity formalization only. The 128-run VLA block is a future conditional envelope.",
+        "cost_to_stop": "Stop before 128 VLA runs if the fidelity signature, no-op tolerance, endpoints, or same-condition replay contract cannot be frozen cleanly.",
+        "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment"
       },
       "stanford": {
         "status": "READY",
@@ -598,7 +611,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0 committed now; credit restoration is account funding, not a scientific-call budget",
           "local_gpu_occupancy": "0",
-          "human_time": "<1 h operational recovery",
+          "post_meeting_execution_human_hours": "<1 h operational recovery",
           "provider_credential_dependency": "same provider credit/interface restored + NEW explicit one-request readiness authority",
           "calendar_latency": "UNKNOWN until credit/interface restoration"
         },
@@ -607,7 +620,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "Mechanism block was planned at roughly 192 probes + ~32 sham probes, but this is not a committed cost until all source/repair gates pass.",
         "human_effort_estimate": "<1 h operational recovery now; later protocol review is conditional",
         "parallelization": "API/provider-limited; can proceed independently of GPU work after credit recovery.",
-        "priority_note": "Do not budget the 192+32 mechanism block until the source phenomenon is qualified."
+        "priority_note": "Do not budget the 192+32 mechanism block until the source phenomenon is qualified.",
+        "current_decision_cost": "¥0 + 0 provider calls committed; restore provider credit/interface only. A readiness request needs fresh authority.",
+        "cost_to_stop": "Stop before source/mechanism blocks if provider readiness cannot be restored and freshly authorized, or if the one-request readiness gate fails."
       },
       "stanford": {
         "status": "READY",
@@ -653,7 +668,7 @@ window.ADVISOR_MEETING_DATA = {
       "default_action": "FREEZE_CAUSAL_FORK_THEN_PHASE_A_ONLY",
       "override_trigger": "fork 不可精确复现、Phase A semantic sensitivity fail、或师兄决定与 Paper A 合并 → 不进入 Phase B；governance superiority 未执行 ALWAYS_WRITE 时不得写方法优越性。",
       "cross_paper_leverage": "Paper A 可作为 future-episode influence/fidelity mechanism readout；C1 提供 transport vocabulary；B1 提供 provenance control，但 Paper B 的主 claim 必须保持 longitudinal utility。",
-      "advisor_question": "longitudinal persistent-state fork 是否足够构成独立 embodied self-evolution paper？Paper A 应作为它的 measurement module，还是保持两篇？",
+      "advisor_question": "Is the longitudinal committed-update lifecycle effect a distinct standalone causal object from Paper A’s source-fidelity effect?",
       "reality_support": {
         "reality_verdict": "STRONGLY_SUPPORTED_WITH_NOVELTY_PRESSURE",
         "supporting_cases": [
@@ -691,7 +706,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "0 committed now; contingent Phase A GPU type/count and GPU-hours are UNKNOWN until exact fork/runtime preflight",
-          "human_time": "2–5 h SCM/fork formalization",
+          "post_meeting_execution_human_hours": "2–5 h SCM/fork formalization",
           "provider_credential_dependency": "N/A for current formalization",
           "calendar_latency": "formalization first; later 128-run wall-clock UNKNOWN until frozen runtime preflight"
         },
@@ -699,7 +714,10 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "Phase B: 24 streams × 3 branches = 72 local VLA runs only after Phase A PASS; full base program = 200 runs.",
         "human_effort_estimate": "2–5 h SCM/fork formalization before compute",
         "parallelization": "Formalization is fully parallel. Later VLA phases must wait for their own gates and available local GPU.",
-        "priority_note": "Do not treat 200 runs as current budget; only formalization is authorized now."
+        "priority_note": "Do not treat 200 runs as current budget; only formalization is authorized now.",
+        "current_decision_cost": "¥0 + 0 GPU; causal estimand and exact-fork formalization only. The 128-run VLA block is a future conditional envelope.",
+        "cost_to_stop": "Stop before Phase A if the exact persistent-state fork/SCM cannot be made reproducible; if Phase A semantic sensitivity fails, do not open Phase B.",
+        "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment"
       },
       "stanford": {
         "status": "READY",
@@ -745,7 +763,7 @@ window.ADVISOR_MEETING_DATA = {
       "default_action": "CONTINUE_TRAINING_NO_OUTCOME_INSPECTION",
       "override_trigger": "只因机械/resource failure 才暂停/修复训练；不能因 training loss 或开发观察改 topology/predicate/panel。P1 若不支持 count-matched topology residual，则按 frozen STOP，不加 5/6 relations rescue。",
       "cross_paper_leverage": "方法学上与全 portfolio 共用 matched-counterfactual / strongest-simplification discipline，但科学对象独立，几乎没有 merge 风险。",
-      "advisor_question": "endpoint-sharing topology 是真实 3D instruction complexity 的关键变量，还是 controlled benchmark 中才突出的分析轴？P1 前最必须补哪一个 confound control？",
+      "advisor_question": "Is endpoint-sharing topology beyond relation count a scientifically durable factor of 3D instruction difficulty under the stated matched-control regime?",
       "reality_support": {
         "reality_verdict": "SUPPORTED_WITH_NOVELTY_BOUNDARY",
         "supporting_cases": [
@@ -778,7 +796,7 @@ window.ADVISOR_MEETING_DATA = {
         "resource_dimensions": {
           "api_cash": "¥0",
           "local_gpu_occupancy": "2×RTX 3090 live; SGP-14 + shared decoder",
-          "human_time": "low active monitoring",
+          "post_meeting_execution_human_hours": "low active monitoring",
           "provider_credential_dependency": "N/A",
           "calendar_latency": "rough remaining ~11.6 / ~7.5 GPU-days at 22:55 observed averages; operational estimate only"
         },
@@ -797,7 +815,9 @@ window.ADVISOR_MEETING_DATA = {
         "conditional_envelope": "If P1 GO later justifies replication, additional seeds require a fresh compute authority; they are not part of the current committed budget.",
         "human_effort_estimate": "Low active human time while training; checkpoint/resource monitoring only",
         "parallelization": "Keep the two running 3090 jobs isolated. Other zero-compute/API work can proceed in parallel.",
-        "priority_note": "High opportunity cost but already committed; stopping early without a frozen mechanical failure wastes sunk compute and violates the protocol."
+        "priority_note": "High opportunity cost but already committed; stopping early without a frozen mechanical failure wastes sunk compute and violates the protocol.",
+        "current_decision_cost": "Already-authorized 2×RTX3090 developmental training continues; no new P1/replication compute commitment is requested today.",
+        "cost_to_stop": "Continue only the already-authorized training to seal. After seal, lexical/salience manipulation checks plus P1 validation are the first scientific stop gate; P1 fail stops extra seeds/relations."
       },
       "stanford": {
         "status": "READY",
@@ -824,17 +844,19 @@ window.ADVISOR_MEETING_DATA = {
         "PAPER_A",
         "PAPER_B"
       ],
-      "question": "这些论文是否共享了一个未经充分验证的 persistent-state / memory semantics 前提？一个 closure 是否能同时给多篇降风险？"
+      "question": "这些论文是否共享了一个 load-bearing persistent-state / memory semantics 前提？",
+      "reopen_rule": "Only reopen a paper when the failed memory/state definition or identity primitive is load-bearing for that paper’s frozen claim; do not reopen the whole memory family by association."
     },
     {
       "id": "provenance-fidelity",
-      "label": "Provenance / source-fidelity distinction",
+      "label": "Provenance / source-fidelity / longitudinal ownership",
       "papers": [
         "B1",
         "PAPER_A",
         "PAPER_B"
       ],
-      "question": "provenance、source fidelity 与 longitudinal persistent utility 是否应拆成三篇，还是应形成 parent-child / merge 结构？"
+      "question": "请批准或修改显式 claim ownership：B1=provenance-field incremental value；Paper A=source-faithful causal transport；Paper B=longitudinal committed-update lifecycle。",
+      "reopen_rule": "A collision or premise failure reopens only the overlapping owner boundary; C1/E2 remain unchanged unless their own load-bearing state semantics are implicated."
     },
     {
       "id": "controlled-update",
@@ -843,7 +865,8 @@ window.ADVISOR_MEETING_DATA = {
         "G1",
         "CONSTRAINT_EXTERNALITY"
       ],
-      "question": "安全 capability confound 与 update collateral 是否共享一个更高层 controlled-update scientific object？"
+      "question": "安全 capability confound 与 update collateral 是否共享一个更高层 controlled-update scientific object？",
+      "reopen_rule": "Reopen both only if the shared capability-preservation/target-local-update assumption fails in a way used by both estimands; otherwise reopen only the affected paper."
     },
     {
       "id": "representation-support",
@@ -853,8 +876,65 @@ window.ADVISOR_MEETING_DATA = {
         "E2",
         "C1"
       ],
-      "question": "identity/representation changes 是否只是各自 substrate artifact，还是 self-evolution control surface 的共同系统问题？"
+      "question": "identity/representation changes 是否只是各自 substrate artifact，还是 self-evolution control surface 的共同系统问题？",
+      "reopen_rule": "A skill-access/representation premise failure directly reopens E1; E2/C1 reopen only if the same identity/access mechanism is explicitly load-bearing for their claim."
     }
+  ],
+  "claim_ownership_map": {
+    "B1": {
+      "primary_claim_owner": "provenance-field incremental decision value",
+      "relationship": "Standalone provenance audit; may provide antecedent evidence/controls to Paper A and Paper B, but does not own source-fidelity transport or longitudinal utility."
+    },
+    "PAPER_A": {
+      "primary_claim_owner": "source-faithful causal transport from source outcome to later policy use",
+      "relationship": "Distinct influence/fidelity identification object; may serve as a mechanism readout inside Paper B if the advisor preserves both papers."
+    },
+    "PAPER_B": {
+      "primary_claim_owner": "longitudinal committed-update causal lifecycle across episodes",
+      "relationship": "Owns commit → native retrieval → future closed-loop utility; Paper A fidelity is subordinate mechanism evidence rather than the primary longitudinal estimand."
+    },
+    "boundary_note": "C1 retains stage-resolved transport diagnosis and E2 retains evidence→state-generation instability unless an explicit dependency/reopen threshold below is triggered."
+  },
+  "shared_risk_reopen_rules": [
+    {
+      "premise": "skill-access / representation invariance",
+      "directly_affected": [
+        "E1"
+      ],
+      "conditionally_affected": [
+        "E2",
+        "C1"
+      ],
+      "reopen_threshold": "Reopen E2/C1 only if the failed identity/access mechanism appears on their frozen causal path; otherwise E1 only."
+    },
+    {
+      "premise": "persistent-memory object / state semantics",
+      "directly_affected": [
+        "B1",
+        "C1",
+        "E2",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "conditionally_affected": [],
+      "reopen_threshold": "Reopen only papers whose exact state identity, write/retrieval semantics, provenance object, or commit semantics depend on the failed primitive; no family-wide automatic reopen."
+    },
+    {
+      "premise": "controlled update preserves capability / target locality",
+      "directly_affected": [
+        "G1",
+        "CONSTRAINT_EXTERNALITY"
+      ],
+      "conditionally_affected": [],
+      "reopen_threshold": "Reopen both only when the same shared assumption fails; paper-specific capability or repair-locality failures reopen only that paper."
+    }
+  ],
+  "meeting_outputs": [
+    "Nine-paper disposition ledger: continue state | claim scope | next closure | advisor confidence.",
+    "Memory-family ownership map: B1 / Paper A / Paper B primary claim owner and support relation; C1/E2 boundary unchanged unless an explicit dependency fires.",
+    "Shared-risk reopen table: premise → directly affected papers → reopen threshold.",
+    "Resource sequence: cheap closure / already-running compute / qualification-first / formalize-first; change order only for a real scarce-resource collision.",
+    "Every unresolved decision has one named owner and one concrete follow-up output; no generic “think more” item."
   ],
   "resource_pricing_basis": {
     "source": "generated/provider-price-comparison-snapshot-20260903.json",
@@ -915,6 +995,8 @@ window.ADVISOR_MEETING_DATA = {
     "independent_verdict": "REVISE_REALITY_COST_OVERLAY",
     "postfix_status": "FIXES_APPLIED_DETERMINISTIC_PASS",
     "verification_path": "DETERMINISTIC_SCHEMA_AND_EXACT_TEXT_GUARDS",
+    "final_sufficiency_verdict": "REVISE_ADVISOR_MEETING_DECISION_SUFFICIENCY",
+    "final_sufficiency_status": "VALID_INDEPENDENT_REVIEW",
     "model_slug": "gpt-5-6-thinking",
     "extra_high": true,
     "authority": {
@@ -924,6 +1006,14 @@ window.ADVISOR_MEETING_DATA = {
       "advisor_overlay_only": true
     }
   },
+  "do_not_spend_advisor_time_on": [
+    "Stanford numerical scores",
+    "prose polishing/title wording/section order unless paper identity or claim ownership changes",
+    "provider/API implementation details unless feasibility or scheduling order changes",
+    "B1/3D live progress or interim scientific outcomes",
+    "exact GPU/API arithmetic already in the resource ledger",
+    "reviewer objections that do not change claim scope, next closure, ownership, or stop condition"
+  ],
   "schedule": [
     {
       "start": "14:00",
@@ -932,38 +1022,43 @@ window.ADVISOR_MEETING_DATA = {
     },
     {
       "start": "14:15",
-      "end": "14:40",
-      "label": "E1"
+      "end": "14:28",
+      "label": "E1 · standalone premise / abstraction only"
     },
     {
-      "start": "14:40",
-      "end": "15:30",
-      "label": "Memory / Provenance / Evolution family"
+      "start": "14:28",
+      "end": "15:28",
+      "label": "Memory / Provenance / Evolution · ownership + boundaries"
     },
     {
-      "start": "15:30",
-      "end": "15:55",
+      "start": "15:28",
+      "end": "15:53",
       "label": "G1 + Constraint Externality"
     },
     {
-      "start": "15:55",
-      "end": "16:10",
-      "label": "3D"
+      "start": "15:53",
+      "end": "16:08",
+      "label": "3D · topology premise only"
     },
     {
-      "start": "16:10",
-      "end": "16:35",
-      "label": "Exception-based nine-paper closure sweep"
+      "start": "16:08",
+      "end": "16:28",
+      "label": "Unresolved exceptions + claim ownership conflicts only"
     },
     {
-      "start": "16:35",
+      "start": "16:28",
+      "end": "16:40",
+      "label": "Cross-paper scarce-resource conflict check"
+    },
+    {
+      "start": "16:40",
       "end": "16:53",
-      "label": "Cost / Dependencies / Scheduling"
+      "label": "Lock disposition ledger + shared-risk reopen table + named follow-ups"
     },
     {
       "start": "16:53",
       "end": "17:00",
-      "label": "Read-back"
+      "label": "Read-back / confirm receipts"
     }
   ]
 };

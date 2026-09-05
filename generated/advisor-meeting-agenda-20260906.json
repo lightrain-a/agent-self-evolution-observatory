@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "meeting_id": "2026-09-06-advisor",
+  "review_route": "exception-and-boundary-review",
+  "claim_ownership_map": {
+    "B1": {
+      "primary_claim_owner": "provenance-field incremental decision value",
+      "relationship": "Standalone provenance audit; may provide antecedent evidence/controls to Paper A and Paper B, but does not own source-fidelity transport or longitudinal utility."
+    },
+    "PAPER_A": {
+      "primary_claim_owner": "source-faithful causal transport from source outcome to later policy use",
+      "relationship": "Distinct influence/fidelity identification object; may serve as a mechanism readout inside Paper B if the advisor preserves both papers."
+    },
+    "PAPER_B": {
+      "primary_claim_owner": "longitudinal committed-update causal lifecycle across episodes",
+      "relationship": "Owns commit → native retrieval → future closed-loop utility; Paper A fidelity is subordinate mechanism evidence rather than the primary longitudinal estimand."
+    },
+    "boundary_note": "C1 retains stage-resolved transport diagnosis and E2 retains evidence→state-generation instability unless an explicit dependency/reopen threshold below is triggered."
+  },
+  "shared_risks": [
+    {
+      "id": "persistent-memory-object",
+      "label": "Persistent-memory object / state semantics",
+      "papers": [
+        "B1",
+        "C1",
+        "E2",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "question": "这些论文是否共享了一个 load-bearing persistent-state / memory semantics 前提？",
+      "reopen_rule": "Only reopen a paper when the failed memory/state definition or identity primitive is load-bearing for that paper’s frozen claim; do not reopen the whole memory family by association."
+    },
+    {
+      "id": "provenance-fidelity",
+      "label": "Provenance / source-fidelity / longitudinal ownership",
+      "papers": [
+        "B1",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "question": "请批准或修改显式 claim ownership：B1=provenance-field incremental value；Paper A=source-faithful causal transport；Paper B=longitudinal committed-update lifecycle。",
+      "reopen_rule": "A collision or premise failure reopens only the overlapping owner boundary; C1/E2 remain unchanged unless their own load-bearing state semantics are implicated."
+    },
+    {
+      "id": "controlled-update",
+      "label": "Controlled update and capability preservation",
+      "papers": [
+        "G1",
+        "CONSTRAINT_EXTERNALITY"
+      ],
+      "question": "安全 capability confound 与 update collateral 是否共享一个更高层 controlled-update scientific object？",
+      "reopen_rule": "Reopen both only if the shared capability-preservation/target-local-update assumption fails in a way used by both estimands; otherwise reopen only the affected paper."
+    },
+    {
+      "id": "representation-support",
+      "label": "Representation / identity support",
+      "papers": [
+        "E1",
+        "E2",
+        "C1"
+      ],
+      "question": "identity/representation changes 是否只是各自 substrate artifact，还是 self-evolution control surface 的共同系统问题？",
+      "reopen_rule": "A skill-access/representation premise failure directly reopens E1; E2/C1 reopen only if the same identity/access mechanism is explicitly load-bearing for their claim."
+    }
+  ],
+  "shared_risk_reopen_rules": [
+    {
+      "premise": "skill-access / representation invariance",
+      "directly_affected": [
+        "E1"
+      ],
+      "conditionally_affected": [
+        "E2",
+        "C1"
+      ],
+      "reopen_threshold": "Reopen E2/C1 only if the failed identity/access mechanism appears on their frozen causal path; otherwise E1 only."
+    },
+    {
+      "premise": "persistent-memory object / state semantics",
+      "directly_affected": [
+        "B1",
+        "C1",
+        "E2",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "conditionally_affected": [],
+      "reopen_threshold": "Reopen only papers whose exact state identity, write/retrieval semantics, provenance object, or commit semantics depend on the failed primitive; no family-wide automatic reopen."
+    },
+    {
+      "premise": "controlled update preserves capability / target locality",
+      "directly_affected": [
+        "G1",
+        "CONSTRAINT_EXTERNALITY"
+      ],
+      "conditionally_affected": [],
+      "reopen_threshold": "Reopen both only when the same shared assumption fails; paper-specific capability or repair-locality failures reopen only that paper."
+    }
+  ],
+  "meeting_outputs": [
+    "Nine-paper disposition ledger: continue state | claim scope | next closure | advisor confidence.",
+    "Memory-family ownership map: B1 / Paper A / Paper B primary claim owner and support relation; C1/E2 boundary unchanged unless an explicit dependency fires.",
+    "Shared-risk reopen table: premise → directly affected papers → reopen threshold.",
+    "Resource sequence: cheap closure / already-running compute / qualification-first / formalize-first; change order only for a real scarce-resource collision.",
+    "Every unresolved decision has one named owner and one concrete follow-up output; no generic “think more” item."
+  ],
+  "schedule": [
+    {
+      "start": "14:00",
+      "end": "14:15",
+      "label": "Portfolio Dashboard + Common-Cause Risk Scan"
+    },
+    {
+      "start": "14:15",
+      "end": "14:28",
+      "label": "E1 · standalone premise / abstraction only"
+    },
+    {
+      "start": "14:28",
+      "end": "15:28",
+      "label": "Memory / Provenance / Evolution · ownership + boundaries"
+    },
+    {
+      "start": "15:28",
+      "end": "15:53",
+      "label": "G1 + Constraint Externality"
+    },
+    {
+      "start": "15:53",
+      "end": "16:08",
+      "label": "3D · topology premise only"
+    },
+    {
+      "start": "16:08",
+      "end": "16:28",
+      "label": "Unresolved exceptions + claim ownership conflicts only"
+    },
+    {
+      "start": "16:28",
+      "end": "16:40",
+      "label": "Cross-paper scarce-resource conflict check"
+    },
+    {
+      "start": "16:40",
+      "end": "16:53",
+      "label": "Lock disposition ledger + shared-risk reopen table + named follow-ups"
+    },
+    {
+      "start": "16:53",
+      "end": "17:00",
+      "label": "Read-back / confirm receipts"
+    }
+  ],
+  "do_not_spend_advisor_time_on": [
+    "Stanford numerical scores",
+    "prose polishing/title wording/section order unless paper identity or claim ownership changes",
+    "provider/API implementation details unless feasibility or scheduling order changes",
+    "B1/3D live progress or interim scientific outcomes",
+    "exact GPU/API arithmetic already in the resource ledger",
+    "reviewer objections that do not change claim scope, next closure, ownership, or stop condition"
+  ]
+}

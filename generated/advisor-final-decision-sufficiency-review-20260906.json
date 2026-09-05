@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "review_id": "advisor-final-decision-sufficiency-20260906",
+  "status": "VALID_INDEPENDENT_REVIEW",
+  "review_scope": "advisor-meeting decision surface only; no scientific-state authority",
+  "meeting_candidate_hash_reviewed": "6d5e9cbc302dfcc7fbcb6ba5cdfff99a8352f4d3f350e5c658a2545374528733",
+  "reviewer": {
+    "surface": "fresh ChatGPT web / Oracle Browser",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High",
+    "thinking_visible_level": "4/5",
+    "session_id": "advisor-final-sufficienc-20260906",
+    "transcript_sha256": "1142ebeb9b59059708661d13ad12c37da61800bd1b57719e88ec022ba0ab8775",
+    "assistant_complete": true,
+    "fresh_conversation": true,
+    "valid_review_count": 1,
+    "conversation_id_sha256_16": "f6d19d91661206a9"
+  },
+  "verdict": "REVISE_ADVISOR_MEETING_DECISION_SUFFICIENCY",
+  "top_defects": [
+    "Time allocation overweights E1 and the cost block while underweighting the five-paper Memory/Provenance/Evolution ownership decision.",
+    "The Memory family lacks an explicit claim-ownership map for B1, Paper A, and Paper B; merge/separate wording alone is insufficient.",
+    "G1, Paper B, and 3D advisor asks each combine more than one senior decision and should be reduced to one route-changing question."
+  ],
+  "per_paper_ask": {
+    "E1": {
+      "action": "KEEP"
+    },
+    "B1": {
+      "action": "KEEP"
+    },
+    "C1": {
+      "action": "KEEP"
+    },
+    "G1": {
+      "action": "REPLACE",
+      "question": "For the current paper, should the estimand remain SHARED_CAPABILITY_CONDITIONAL, or should the paper instead target an unconditional longitudinal safety effect?"
+    },
+    "E2": {
+      "action": "KEEP"
+    },
+    "PAPER_A": {
+      "action": "KEEP"
+    },
+    "CONSTRAINT_EXTERNALITY": {
+      "action": "KEEP"
+    },
+    "PAPER_B": {
+      "action": "REPLACE",
+      "question": "Is the longitudinal committed-update lifecycle effect a distinct standalone causal object from Paper A’s source-fidelity effect?"
+    },
+    "3D": {
+      "action": "REPLACE",
+      "question": "Is endpoint-sharing topology beyond relation count a scientifically durable factor of 3D instruction difficulty under the stated matched-control regime?"
+    }
+  },
+  "missing_p0_decisions": [
+    "Freeze an explicit claim-ownership map: B1 = provenance-field incremental decision value; Paper A = source-faithful causal transport from source outcome to later policy; Paper B = longitudinal committed-update causal lifecycle.",
+    "Freeze a shared-premise contagion/reopen table so a failure reopens only papers whose load-bearing claim actually depends on that premise.",
+    "No other P0 meeting decision is missing once the three advisor asks are sharpened."
+  ],
+  "resource_corrections": [
+    "Rename human_time to post-meeting execution human-hours so it cannot be confused with the three-hour advisor-meeting discussion allocation.",
+    "For Paper A and Paper B, display current decision cost as formalization only; the 128-run VLA blocks are future conditional envelopes and must not be visually totaled with current commitments.",
+    "Show cost_to_stop alongside cost_to_next_decision, especially for 3D and G1, to make cheap falsification versus further commitment explicit."
+  ],
+  "cut_or_merge": [
+    "Replace the generic 16:10–16:35 nine-paper closure sweep with unresolved exceptions, claim ownership conflicts, and low-confidence decisions only.",
+    "Shorten the cost/dependency block to a cross-paper scarce-resource conflict check instead of rereading all nine cost rows.",
+    "Treat E2 vocabulary, G1 venue role, and Paper A/B naming as follow-through from scientific decisions rather than separate advisor agenda items."
+  ],
+  "by_17_00": [
+    "Nine-paper disposition ledger: continue state | claim scope | next closure | confidence.",
+    "Memory-family ownership map for B1/Paper A/Paper B, with C1/E2 boundary unchanged unless an explicit dependency is triggered.",
+    "Shared-risk reopen table: premise -> directly affected papers -> reopen threshold.",
+    "Resource sequence preserving cheap closure, already-running compute, qualification-first, and formalize-first lanes unless a real scarce-resource collision changes order.",
+    "Every unresolved decision has one named owner and one concrete follow-up output; no generic think-more items."
+  ],
+  "do_not_spend_advisor_time_on": [
+    "Stanford numerical scores.",
+    "Prose polishing, title wording, or section order unless it changes paper identity or claim ownership.",
+    "Provider/API implementation details unless they change feasibility or scheduling order.",
+    "B1/3D live progress or interim scientific outcomes.",
+    "Exact GPU/API arithmetic already captured in the resource ledger.",
+    "Reviewer objections that do not change claim scope, next closure, ownership, or stop condition."
+  ],
+  "freeze_decision": "REVISE_AND_REFREEZE",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_meeting_projection_only": true
+  }
+}

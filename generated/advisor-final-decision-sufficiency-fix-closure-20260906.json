@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "status": "FIXES_APPLIED_DETERMINISTIC_PASS",
+  "source_review": "generated/advisor-final-decision-sufficiency-review-20260906.json",
+  "reviewed_candidate_hash": "6d5e9cbc302dfcc7fbcb6ba5cdfff99a8352f4d3f350e5c658a2545374528733",
+  "closures": {
+    "time_allocation_rebalanced": true,
+    "memory_claim_ownership_explicit": true,
+    "g1_single_advisor_ask_bound": true,
+    "paper_b_single_advisor_ask_bound": true,
+    "3d_single_advisor_ask_bound": true,
+    "post_meeting_human_hours_disambiguated": true,
+    "paper_a_b_future_vla_envelopes_separated": true,
+    "cost_to_stop_visible_for_all_nine": true,
+    "generic_closure_sweep_replaced_by_unresolved_exceptions": true,
+    "shared_premise_reopen_table_explicit": true,
+    "five_by_17_00_outputs_explicit": true
+  },
+  "changed_source_hashes": [
+    {
+      "path": "generated/advisor-decision-cards/g1.json",
+      "sha256": "24a7440cef47c677baf6610cbc430ce298e7ee5d3d855a344f2cf30fac3e0ba5"
+    },
+    {
+      "path": "generated/advisor-decision-cards/paper_b.json",
+      "sha256": "3d35118618b017979a38bec94ee87d0b3e56f0fab2de3b92497d4714808e0703"
+    },
+    {
+      "path": "generated/advisor-decision-cards/3d.json",
+      "sha256": "c548abb562ef74d10772be95c9d2b45d807d57a990f60fb7c663ddf87106993e"
+    },
+    {
+      "path": "generated/advisor-resource-ledger.json",
+      "sha256": "0d73c237c9b57ddb8f8a109a2d952d40d3d22c468c236f12a57a69985646b42f"
+    },
+    {
+      "path": "generated/advisor-meeting-agenda-20260906.json",
+      "sha256": "4412dbccc76d682995ae6ede0417fb74266db94efbc20bd77bc77d720f52ae04"
+    },
+    {
+      "path": "scripts/build_advisor_meeting_frontend.py",
+      "sha256": "4a3ba36d06204ab0efec6c1b2afb8d0b866436d378913d074e04dfc9a46c6dd2"
+    },
+    {
+      "path": "advisor-review.js",
+      "sha256": "7c246e81f008c55d953f3b37f794230bcc381d31e465ae54eb2953bb91719130"
+    }
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_meeting_projection_only": true
+  },
+  "note": "This receipt closes meeting-design defects only. No paper claim, experiment result, execution authority, or submission authority is changed."
+}
