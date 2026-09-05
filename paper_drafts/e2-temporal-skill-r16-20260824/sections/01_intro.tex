@@ -3,6 +3,15 @@ Suppose an agent is asked: \emph{What was the latest value known by the end of A
 
 The first problem is the comparator. A targeted helper can beat a generic helper simply because the generic helper degrades the original agent. We observe exactly this pattern on a frozen DeepSeek cutoff cell: targeted T succeeds on 100\%, target-blind G on 72\%, and the original agent N on 100\% of endpoint-repeat observations. A conventional T-versus-G evaluation reports +28 points; adding N changes the verdict to \emph{no repair}. This is not a variance correction. It changes which scientific claim is admissible.
 
+Figure~\ref{fig:e2-scene} turns this identification problem into the running example for the paper. The same cutoff question can make T look beneficial against a mechanism-misaligned stress helper while showing no improvement over the original agent. The lower row previews the next attribution problem: even when net repair exists, helper exposure, targeted operation output, and where that output enters the harness are distinct interventions and need distinct controls.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/e2-temporal-repair-scene-handdrawn.pdf}
+\caption{\textbf{Scene: a targeted skill can look helpful because its comparator is harmful.} On one frozen DeepSeek cutoff cell, T and the original agent N are both 100\%, whereas the target-blind stress helper G is 72\%. A T-versus-G comparison therefore shows +28 points even though T--N is exactly zero and no repair occurred. The bottom row previews the attribution controls used later: G$_0$ isolates same-surface no-operation exposure, and R$_{\mathrm{surf}}$ holds the exact T output fixed while changing only its integration surface.}
+\label{fig:e2-scene}
+\end{figure}
+
 The second problem is attribution. We therefore keep four observable contrasts separate:
 \begin{equation}
 \underbrace{\Delta_{T-N}}_{\text{net repair}},\qquad
@@ -20,3 +29,5 @@ The paper is an evaluation and identification study, not a skill-learning algori
 
 \paragraph{Contributions.}
 We make three contributions. First, we separate net repair, same-surface operation-output contrast, placebo/surface perturbation, and integration-surface effect rather than collapsing them into one ``skill effect.'' Second, we show that this separation changes conclusions: T$>$G but T$=$N is an observed false positive; fresh controls preserve bounded DeepSeek repairs while reclassifying EIA as surface-interacting and downgrading Kimi grounding. Third, an exact-output context-materialization control yields a passing TOST at the prospectively frozen $\pm10$-point \emph{portfolio-average} margin; because the design has low sensitivity and a ceiling-heavy portfolio, we treat this as a frozen-margin surface check while leaving the low-count non-ceiling subset and broader temporal-retrieval questions unresolved. The contribution is therefore methodological understanding: within the registered endpoint portfolio and tested resolution, stronger controls can preserve, narrow, or reverse an apparent reusable-skill effect.
+
+\paragraph{Reader's map.} Figure~\ref{fig:e2-scene} motivates the comparator and attribution problem. Figure~\ref{fig:e2-method} summarizes the full intervention ladder and shows how the later R17 search-projection study fits as a bounded mechanism child rather than a replacement for the R16 paper. The original causal intervention map and regime-effect plot remain as detailed mechanism/result figures.

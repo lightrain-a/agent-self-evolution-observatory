@@ -1,5 +1,13 @@
 \section{An Intervention Audit of Reusable Procedures}
 \label{sec:mechanism}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/e2-repair-attribution-method-handdrawn.pdf}
+\caption{\textbf{Method: intervention ladder for repair and attribution, with the bounded R17 mechanism child.} The R16 audit keeps four contrasts separate: T--N measures net repair, T--G$_0$ is the same-surface operation-output contrast, G$_0$--N diagnoses helper-surface perturbation, and T--R$_{\mathrm{surf}}$ tests integration surface while holding the exact operation output fixed. Fail-closed rules prevent T$>$G with T$\leq$N from being called repair and prevent nonzero G$_0$--N from being hidden inside a ``pure operation'' claim. The lower branch summarizes R17: WIN-C and MRW expose different views of the same realized search pool to a persistent updater. Its global effect is unresolved, one frozen First-Fail state is stable, and independently generated updater states do not reproduce that benefit; R17 therefore remains bounded mechanism evidence rather than a standalone promotion claim.}
+\label{fig:e2-method}
+\end{figure}
+
 The audit treats a reusable procedure as an intervention rather than a label attached to a successful run. Let endpoint $i$ specify a question $x_i$, evidence package $E_i$, model configuration $M_i$, and family-specific binary outcome $Y_i\in\{0,1\}$. For repeated executions under arm $a$, let $\bar Y_i(a)$ be the repeat mean. Repeats measure execution robustness; endpoints remain the independent scientific units.
 
 \paragraph{Base stress test: N, G, and T.}
