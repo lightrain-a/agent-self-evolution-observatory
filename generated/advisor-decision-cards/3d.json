@@ -1,0 +1,15 @@
+{
+  "paper_id":"3D","route":"EXECUTE_FROZEN",
+  "best_case":"在 relation count、对象、谓词和 decoder 全部匹配时，只改变 Chain/Hub endpoint-sharing topology，再用 oracle graph substitution 定位 Text→Graph 与 Graph→Scene bottleneck。",
+  "story":"relation count 相同的 instruction 仍可能因 endpoint-sharing topology 不同而难度不同；3D 用 count-matched Chain/Hub counterfactual 和 exact graph intervention 隔离这个结构轴。",
+  "premise":"Chain/Hub 的差异来自 endpoint connectivity，而不是重复 hub object 带来的 lexical/coreference load、object salience/size 或 predicate implication；一个 frozen shared decoder 足以做条件化 localization。",
+  "risk":"目前 zero scientific outcomes；单 substrate/窄 predicate set，且 lexical/coreference/salience confounds 还要在 P1 前显式 manipulation check。Stanford 4.1 的低分主要是尚无结果，不是已观察到负效应。",
+  "strongest_simplification":"固定 count/object/predicate multiset/token budget 的 Chain/HUB matched pairs，再做 predicted-graph vs exact instructed-graph substitution；若 lexical/salience matching 或 oracle substitution 不能按预期改变 gap，就停止 topology/localization claim。",
+  "evidence_state":"DEVELOPMENTAL TRAINING ONLY：SGP-14 与 shared SG2SC decoder 正在训练，scientific_outcomes=0、P1 authority=false。2026-09-05 live check：shared decoder 272,249/1,000,000 steps；SGP-14 25,170/1,000,000；training loss 不进入论文证据。",
+  "next_closure":"继续已授权 developmental training 到两个组件 checkpoint seal，期间不打开 validation/test/topology metrics。训练完成后另行申请 frozen P1 validation authority，并先补 lexical/coreference + hub-object salience manipulation checks。",
+  "cost_class":"VERY_HIGH · ALREADY_RUNNING","cost_to_next_decision":"当前持续占用两张 RTX 3090（shared decoder + SGP-14）；0 commercial API。成本主要是剩余 optimizer wall-time/opportunity，P1 不是当前已授权成本。",
+  "dependencies":["two-RTX-3090 training capacity","content-addressed checkpoints","frozen matched compiler","shared decoder identity","separate P1 authority after training seal"],
+  "default_action":"CONTINUE_TRAINING_NO_OUTCOME_INSPECTION","override_trigger":"只因机械/resource failure 才暂停/修复训练；不能因 training loss 或开发观察改 topology/predicate/panel。P1 若不支持 count-matched topology residual，则按 frozen STOP，不加 5/6 relations rescue。",
+  "cross_paper_leverage":"方法学上与全 portfolio 共用 matched-counterfactual / strongest-simplification discipline，但科学对象独立，几乎没有 merge 风险。",
+  "advisor_question":"endpoint-sharing topology 是真实 3D instruction complexity 的关键变量，还是 controlled benchmark 中才突出的分析轴？P1 前最必须补哪一个 confound control？"
+}

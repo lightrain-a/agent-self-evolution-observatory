@@ -1,0 +1,15 @@
+{
+  "paper_id":"E2","route":"QUALIFY_FIRST",
+  "best_case":"同一 byte-identical evidence 经过 updater 可以生成不同 persistent states；把 state generator 本身从 evidence selection 中分离出来，审计 regeneration instability。",
+  "story":"历史上一个有用的 persistent state 在冻结后仍可工作，但从完全相同 evidence 重新生成 state 时优势不稳定；E2 因此把 evidence→state generator 作为独立实验变量。",
+  "premise":"same-evidence state disagreement 超过 downstream actor noise，且不是一个 outcome-selected First-Fail 特例；typed canonicalization 的增量若存在，应来自 generator constraint，而不是 generic scope/hygiene。",
+  "risk":"当前最强现象仍来自 selected development case、单 backbone/private suite；generator-factor 与 actor variance 尚未 prospective 分开。Stanford 的核心 concern 是 M3R4/M4 仍未执行。",
+  "strongest_simplification":"先做同一 frozen state 的 actor repeat 与 same-evidence repeated synthesis；M4 再用 FREE vs typed COMP 加 score-only / diagnosis-cardinality generic controls。若 actor noise 或 generic canonicalization 已解释差异，就没有 state-generator bottleneck 方法故事。",
+  "evidence_state":"48-pair source study 总体 MRW−WIN-C=+0.023、p=.172，HOLD heterogeneous/underpowered。历史 First-Fail state 的优势在 fresh same-evidence regeneration 中不稳定。M3R4 independent preexecution design PASS，但 scientific execution=0；72 logical actor units/0 updater calls 已静态资格化，卡在 fresh DeepSeek model-identity requalification。",
+  "next_closure":"只执行一次 fresh non-scientific model-identity qualification：requested deepseek-v4-pro 必须解析为 deepseek-v4-pro-ga-260813、thinking disabled、retry=0。Exact PASS 后再冻结 final contract/actual-path preflight；此时才讨论 72-unit M3R4。",
+  "cost_class":"NEAR_ZERO_NOW / HIGH_IF_QUALIFIED","cost_to_next_decision":"当前 next-decision 只是一笔 identity smoke/qualification，不是 720 calls。若通过，M3R4=72 actor logical units，结构 hard cap 720 provider calls，0 updater calls。",
+  "dependencies":["Recovery V3 resource priority first","Ark quota/provider availability","exact DeepSeek resolved identity","frozen MindMemOS runtime/state SHA"],
+  "default_action":"QUALIFY_MODEL_IDENTITY_ONLY","override_trigger":"resolved identity drift 或 qualification fail → HOLD，无自动替代模型；M3R4 primary generator result fail → STOP automatic state-generation-method story，不用第二 backbone/benchmark rescue。",
+  "cross_paper_leverage":"与 E1/C1 共享 persistent representation/state identity 不能当中性实现细节的上层问题；与 Paper B 的长期 memory lifecycle 不同，E2 聚焦 state realization。",
+  "advisor_question":"state-regeneration instability 是否是 self-evolving agent 中足够基础的 scientific object，还是当前 evidence 仍太像一个 selected-case implementation instability？"
+}

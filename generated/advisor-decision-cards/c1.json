@@ -1,0 +1,15 @@
+{
+  "paper_id":"C1","route":"FREEZE_SUBMIT",
+  "best_case":"把 memory 写入了却没改变行为拆成 write → native exposure → uptake → endpoint 的阶段证据，定位 persistent-memory transport 在哪里衰减。",
+  "story":"persistent state divergence 本身不是 behavioral learning；C1 用 stage-resolved measurement 追踪 branch difference 从写入、原生检索、policy uptake 到 terminal outcome 的传输边界。",
+  "premise":"把 heterogeneous stage evidence 保持为分层估计，比一个 end-to-end 成败率更能回答 memory difference 到底在哪一层消失，并且这种 diagnosis 本身有独立研究价值。",
+  "risk":"writer intervention 是 bundled protocol change，native exposure 还不是 treatment-residual exposure，uptake 主要落在 first action；如果读者要求 causal atom 或新治理方法，当前 measurement paper 会被认为只做诊断。",
+  "strongest_simplification":"forced fixed-evidence capacity 与 native transport 分开：若 memory 在 forced exposure 下可影响行为、但 native path 衰减，就不应继续堆 writer/model baseline；这已经是最便宜、最判别的解释。",
+  "evidence_state":"CURRENT CLAIM SCIENCE CLOSED：write divergence、native exposure、first-action uptake 与 endpoint 分层结果已冻结；forced fixed-evidence capacity 4×4 共 256 rollouts 显示 latent leverage；CBRG method extension 因缺 outcome-independent semantic adjudicator 已 STOP/MERGE，不影响 measurement paper。",
+  "next_closure":"不再新增 provider/GPU 实验。只做 manuscript convergence，并让师兄判断 stage-resolved diagnosis 是否足够 standalone；不得为了更像方法论文重开已停止的 CBRG。",
+  "cost_class":"ZERO_REQUIRED","cost_to_next_decision":"0 新 scientific API/GPU；只剩 paper integration / human review。",
+  "dependencies":["current frozen evidence ledger","no new semantic-adjudicator asset is currently admissible"],
+  "default_action":"FREEZE_MEASUREMENT_PAPER","override_trigger":"只有出现新的、独立资格化 outcome-independent semantic validity asset，或师兄明确认为 standalone measurement value 不足并要求 merge，才改变路线。",
+  "cross_paper_leverage":"为 Paper A/B/E2 提供写入≠使用≠终端效果的 stage vocabulary；可复用测量思想，但不要共享同一 scientific claim。",
+  "advisor_question":"stage-resolved diagnosis 本身是否足够构成 paper-level contribution，还是更适合作为 Paper A/B 的测量组件？"
+}

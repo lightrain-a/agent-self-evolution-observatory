@@ -1,0 +1,15 @@
+{
+  "paper_id":"CONSTRAINT_EXTERNALITY","route":"QUALIFY_FIRST",
+  "best_case":"同一个局部 benign repair 在保持 target gain 时可能对非目标约束产生 collateral regression；用 matched UPDATE/NO_UPDATE 与 coupling topology 分离这种 externality。",
+  "story":"局部修复不是免费操作：它可能通过共享资源或依赖拓扑伤到未被修的约束。论文要测的是 update-attributable collateral，而不是一般任务难度。",
+  "premise":"首先必须有真实可修 failure；repair 能严格 target-local；INDEPENDENT/LOW/HIGH coupling 在 outcome-blind graph 上构成真正的结构干预，而不是难度/规模代理。",
+  "risk":"当前没有已确认的主现象：旧 source 8/8 success 导致 zero repair families；repair writer locality、topology manipulation check 与统计功效仍未被 outcome 验证。Stanford 6.2 也把没有 core phenomenon evidence 列为最大限制。",
+  "strongest_simplification":"先做 TARGET_ONLY / UPDATE-vs-NO_UPDATE 在 topology-neutral source 上，证明 target repair 可发生且不会由 generic update magnitude 解释；在这之前任何 topology table 都没有识别价值。",
+  "evidence_state":"旧 F0 因 8/8 target success 按协议 STOP。Direct-SFQ-A0 的 12-case public-oracle reachability/freshness 已完成 12/12，但 scientific dispatch 尚未开始。最新 provider-readiness R2 仅发送 1 次 non-scientific synthetic request，返回 HTTP 400 / insufficient_credit；readiness_pass=false，Gate 0 及全部 scientific authority 仍关闭。这是 infrastructure/credit blocker，不是机制证据。",
+  "next_closure":"先恢复/充值同一 frozen provider credit 或修复同一 interface，不替换 provider/model；随后需要一份新的 explicit provider-readiness authority，只允许 1 次 synthetic readiness request、zero tools、zero retries。只有 readiness PASS 才能另行打开 Gate 0；Direct-SFQ-A0 与后续 source/repair qualification 仍是更后面的 gate。",
+  "cost_class":"NEAR_ZERO_NOW / MEDIUM_IF_QUALIFIED","cost_to_next_decision":"眼前不是 12-case science，而是 provider credit/interface repair + 1 次 non-scientific readiness request。只有 readiness PASS 后才逐级预算 Gate 0 / Direct-SFQ-A0；192+32 的主实验在这些 gates 前都不是承诺成本。",
+  "dependencies":["same frozen direct provider credit/interface restored","new explicit one-request readiness authority","no provider/model substitution","strict target-local repair writer only after later gates","outcome-blind topology graph"],
+  "default_action":"RESTORE_CREDIT_THEN_ONE_READINESS_ATTEMPT","override_trigger":"readiness 仍 fail → STOP，无 scientific dispatch；未来 Gate 0 / SFQ 若不通过也按各自 frozen rule fail closed，不得通过换 provider、topology 或扩大 workload 制造现象。",
+  "cross_paper_leverage":"与 G1 共享先证明 capability/repair、再解释 safety/collateral 的资格顺序；若两篇都成立，可形成 controlled-update family，但不应共享 outcome。",
+  "advisor_question":"constraint externality 最终应该把贡献落在 measurement、topology prediction，还是 mitigation/control？在现象尚未确认前，哪一层值得优先保留？"
+}
