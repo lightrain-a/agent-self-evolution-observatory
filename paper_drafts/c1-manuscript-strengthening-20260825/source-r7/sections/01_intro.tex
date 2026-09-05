@@ -1,6 +1,15 @@
 \section{Introduction}
 A persistent-memory agent can disagree with itself long before task accuracy reveals anything. Consider two copies of the same successful interaction trajectory. If one copy is labeled successful and the other failed before reflection, an outcome-conditioned memory writer may store different reusable advice even though the underlying experience is unchanged. That is already a meaningful state intervention. But it leaves a harder question unanswered: \emph{where, if anywhere, does the resulting state difference become a behavioral difference?}
 
+Figure~\ref{fig:c1-scene} shows the failure mode that motivates the paper. The same frozen source trajectory is routed through the released success- versus failure-reflection branches, producing different persistent memories. Later, both branches can expose the corresponding source-memory item on the same matched Shopping state, yet the first structured decision can remain unchanged. The paper therefore does not ask whether the memory store changed; it asks how far evidence for that branch-conditioned difference survives along the deployed reuse path.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/c1-memory-divergence-scene-handdrawn.pdf}
+\caption{\textbf{Scene: persistent-state divergence need not become behavioral divergence.} A frozen source trajectory is passed through the released success- and failure-reflection branches, yielding different persistent memories. Native retrieval may expose the branch-conditioned source item on a matched future Shopping state, while the measured first structured action remains stable. C1 asks where the first \emph{measured} native branch contrast becomes unsupported; it does not infer an unobserved causal attenuation point from this cartoon.}
+\label{fig:c1-scene}
+\end{figure}
+
 This distinction matters because persistent self-improvement contains several causal surfaces that are often collapsed into one ``memory helped'' statement. A terminal signal may first alter what is \textbf{written}; the resulting branch-conditioned source-memory item may or may not be \textbf{exposed} by retrieval on a later task; the policy may or may not \textbf{use} the treatment-specific information within that retrieved item; and only then can behavior change at the terminal \textbf{outcome}. A positive memory-similarity result identifies the first surface, while a retrieval hit only identifies availability. Neither is evidence by itself that the agent's decision rule changed. Conversely, an endpoint null does not reveal whether the update failed to write, failed to retrieve, or was filtered after retrieval. We call this \emph{evaluation coarsening}: observing only a projection of the stage chain aliases distinct internal explanations into the same coarse success or failure label.
 
 We study this problem through a stage-resolved intervention rather than a new memory algorithm. For a frozen trajectory $\tau$, we switch the released success/failure reflection branch and construct paired persistent memories while holding the source experience fixed. This is a bundled writer-protocol intervention: the branch changes the reflection instruction together with its outcome/reward semantics, so it is not an atom-level isolation of a reward bit. We then instrument four native stages,
@@ -24,3 +33,5 @@ Our contributions are:
 \end{enumerate}
 
 The resulting claim is deliberately narrower than a new memory method: \textbf{persistent-state divergence is not behavioral authority, and retrieval availability is not policy use}. This boundary tells us what a self-improving agent evaluation must measure before crediting a persistent update with downstream control.
+
+\paragraph{Reader's map.} Figure~\ref{fig:c1-scene} motivates the memory-versus-behavior mismatch. Figure~\ref{fig:c1-method} then summarizes the native stage chain and the forced-capacity side control. The later write/control and stage-transport figures contain the detailed empirical evidence. This ordering keeps the scientific object visible: the paper is an identification and measurement study, not a proposed memory repair algorithm.
