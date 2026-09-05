@@ -1,0 +1,123 @@
+{
+  "D0": {
+    "durability_before_fadvise": true,
+    "malformed_filename_rejected": true,
+    "manifest_excluded": true,
+    "safe_event": {
+      "advice": "POSIX_FADV_DONTNEED",
+      "durability_barrier": "fsync",
+      "memory_after_fadvise": {
+        "cgroup": "/user.slice/user-1006.slice/session-12521.scope",
+        "memory_current": 89661440,
+        "memory_stat": {
+          "active_file": 0,
+          "anon": 76939264,
+          "file": 151552,
+          "file_dirty": 94208,
+          "file_writeback": 12288,
+          "inactive_file": 65536
+        }
+      },
+      "memory_after_fsync": {
+        "cgroup": "/user.slice/user-1006.slice/session-12521.scope",
+        "memory_current": 89731072,
+        "memory_stat": {
+          "active_file": 0,
+          "anon": 76939264,
+          "file": 151552,
+          "file_dirty": 94208,
+          "file_writeback": 12288,
+          "inactive_file": 65536
+        }
+      },
+      "memory_before_fsync": {
+        "cgroup": "/user.slice/user-1006.slice/session-12521.scope",
+        "memory_current": 93437952,
+        "memory_stat": {
+          "active_file": 0,
+          "anon": 76939264,
+          "file": 151552,
+          "file_dirty": 94208,
+          "file_writeback": 12288,
+          "inactive_file": 65536
+        }
+      },
+      "mtime_ns": 1788619455043494025,
+      "path": "/data/wyt/formal-goal-b3-development-gates-20260905/d0_path/ocdbt.process_0/d/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "relative_to_item": "ocdbt.process_0/d/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "size": 65536
+    },
+    "serializer_order": [
+      "tensorstore_write_await",
+      "sharding_commit",
+      "reclaim",
+      "host_buffer_release"
+    ],
+    "status": "PASS",
+    "symlink_rejected": true
+  },
+  "D1": {
+    "advised_blobs_unchanged_through_final_checkpoint": true,
+    "batch_count": 3,
+    "exact_array_equality": true,
+    "manifest_or_metadata_advised": false,
+    "reclaimed_blob_count": 8,
+    "reclaimed_bytes": 1761123,
+    "reclamation_batch_count": 3,
+    "standard_orbax_restore": true,
+    "status": "PASS",
+    "tmp_residue": []
+  },
+  "D3": {
+    "cases": [
+      {
+        "actual": "WAIT",
+        "expected": "WAIT",
+        "input": "ABSENT"
+      },
+      {
+        "actual": "WAIT",
+        "expected": "WAIT",
+        "input": "PI05_B3_CHECKPOINT_SAVE_QUALIFICATION_STARTED"
+      },
+      {
+        "actual": "WAIT",
+        "expected": "WAIT",
+        "input": "PI05_B3_CHECKPOINT_SAVE_QUALIFICATION_SAVE_STARTED"
+      },
+      {
+        "actual": "HOLD",
+        "expected": "HOLD",
+        "input": "PI05_B3_CHECKPOINT_SAVE_QUALIFICATION_HOLD"
+      },
+      {
+        "actual": "PASS",
+        "expected": "PASS",
+        "input": "PI05_B3_CHECKPOINT_SAVE_QUALIFICATION_PASS"
+      },
+      {
+        "actual": "HOLD",
+        "expected": "HOLD",
+        "input": "UNKNOWN"
+      },
+      {
+        "actual": "HOLD",
+        "expected": "HOLD",
+        "input": "INVALID_JSON"
+      }
+    ],
+    "only_terminal_pass_unlocks_downstream": true,
+    "status": "PASS"
+  },
+  "formal_run3_authorized": false,
+  "generated_at": "2026-09-05T14:44:23.258929+00:00",
+  "model_loaded": false,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b3-development-gates-v1",
+  "scientific_data_accessed": false,
+  "scope": "CPU_STATIC_SYNTHETIC_ONLY_NO_MODEL_NO_SCIENTIFIC_DATA",
+  "source_sha256": {
+    "cache": "88495d244613ed7ddc8ac163ccb0e5f66d978facdedf2c7ee6e918e709d25a42",
+    "serializer": "f79e3b5c0e74bb37e2e16dae8a7c2921340f9a20e722b9901e2502f8c60047e9"
+  },
+  "status": "PI05_B3_D0_D1_D3_PASS"
+}
