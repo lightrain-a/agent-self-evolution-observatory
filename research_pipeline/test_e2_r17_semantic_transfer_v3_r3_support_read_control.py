@@ -8,6 +8,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
+from .e2_r17_r3c_signed_support_capability import HARD_PROVIDER_NOT_BEFORE, sign_document
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
@@ -32,6 +37,18 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         self.addCleanup(td.cleanup)
         root = Path(td.name)
         run = root / "run"
+        private_key = Ed25519PrivateKey.generate()
+        private_key_path = root / "test-signing-private.pem"
+        public_key_path = root / "test-signing-public.pem"
+        private_key_path.write_bytes(private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption(),
+        ))
+        public_key_path.write_bytes(private_key.public_key().public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo,
+        ))
         claims = run / "checkpoints/stage_a_task_claims"
         claims.mkdir(parents=True)
         completed = run / "checkpoints/completed_streams.jsonl"
@@ -71,6 +88,15 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
                 "post_terminal_support_minter": {"path": str(Path(minter.__file__)), "sha256": sha(Path(minter.__file__))},
                 "post_terminal_support_gate": {"path": str(Path(gate.__file__)), "sha256": sha(Path(gate.__file__))},
                 "equal_dose_adjudicator": {"path": str(minter.EXPECTED_SUPPORT_ADJUDICATOR), "sha256": sha(minter.EXPECTED_SUPPORT_ADJUDICATOR)},
+            },
+            "post_terminal_support_read_control": {
+                "trusted_external_signer": {
+                    "algorithm": "Ed25519",
+                    "public_key_path": str(public_key_path),
+                    "public_key_sha256": sha(public_key_path),
+                    "private_key_in_repository": False,
+                    "signed_capability_required": True,
+                }
             },
         }
         write_json(contract, contract_payload)
@@ -188,6 +214,9 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
             "lease": lease,
             "control_review": control_review,
             "support_auth": root / "support-auth.json",
+            "signed_capability": root / "signed-capability.json",
+            "private_key": private_key_path,
+            "public_key": public_key_path,
             "adjudication_output": root / "support-adjudication.json",
         }
 
@@ -203,6 +232,42 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         )
         write_json(fixture["support_auth"], payload)
         return payload
+
+    def build_signed_capability(self, fixture: dict[str, Path]) -> dict:
+        support_auth = json.loads(fixture["support_auth"].read_text())
+        control = support_auth["bound_control_plane"]
+        scope = support_auth["execution_scope"]
+        payload = {
+            "capability_id": "test-capability-r3c",
+            "issued_at_utc": "2026-09-07T00:01:00+08:00",
+            "control_plane_revision": minter.CONTROL_PLANE_REVISION,
+            "hard_provider_not_before": HARD_PROVIDER_NOT_BEFORE,
+            "contract_sha256": sha(fixture["contract"]),
+            "recovery_authorization_sha256": sha(fixture["recovery_auth"]),
+            "terminal_summary_sha256": sha(fixture["summary"]),
+            "support_authorization_sha256": sha(fixture["support_auth"]),
+            "control_review_sha256": sha(fixture["control_review"]),
+            "minter_sha256": control["minter_sha256"],
+            "gate_sha256": control["gate_sha256"],
+            "support_adjudicator_sha256": control["support_adjudicator_sha256"],
+            "required_adjudication_output": str(fixture["adjudication_output"].resolve()),
+            "required_run_root": str(Path(scope["required_run_root"]).resolve()),
+            "single_use": True,
+            "stage_a_support_read": True,
+            "stage_a_provider_execution": False,
+            "stage_b_learning_execution": False,
+            "updater": False,
+            "heldout_evaluation": False,
+            "analyzer": False,
+            "second_backbone": False,
+            "public_benchmark": False,
+            "paper_promotion": False,
+            "submission": False,
+            "scientific_authority": False,
+        }
+        document = sign_document(payload=payload, private_key_path=fixture["private_key"], public_key_path=fixture["public_key"])
+        write_json(fixture["signed_capability"], document)
+        return document
 
     def test_minter_rejects_absent_or_nonterminal_summary(self) -> None:
         fixture = self.make_fixture()
@@ -259,6 +324,7 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
                 contract_path=fixture["contract"],
                 recovery_authorization_path=fixture["recovery_auth"],
                 summary_path=fixture["summary"],
+                signed_capability_path=fixture["signed_capability"],
                 output_path=fixture["adjudication_output"],
             )
         consumption = fixture["run"] / "checkpoints/post_terminal_support_read" / gate.CONSUMPTION_NAME
@@ -278,6 +344,7 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
                 contract_path=fixture["contract"],
                 recovery_authorization_path=fixture["recovery_auth"],
                 summary_path=fixture["summary"],
+                signed_capability_path=fixture["signed_capability"],
                 output_path=fixture["adjudication_output"],
             )
 
@@ -300,19 +367,112 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         self.assertIn("--support-authorization", result.stderr)
         self.assertFalse(fixture["adjudication_output"].exists())
 
+    def test_full_forged_review_permit_and_capability_cannot_directly_invoke_adjudicator(self) -> None:
+        fixture = self.make_fixture()
+        support_auth = self.build_auth(fixture)
+
+        # Construct the verdict-changing adversarial path from the R3B reviewer:
+        # a field-complete forged review plus a field-complete forged permit.
+        genuine_review = json.loads(fixture["control_review"].read_text())
+        forged_review = fixture["root"] / "field-complete-forged-review.json"
+        write_json(forged_review, genuine_review)
+        support_auth["control_review"]["path"] = str(forged_review.resolve())
+        support_auth["control_review"]["sha256"] = sha(forged_review)
+        write_json(fixture["support_auth"], support_auth)
+
+        control = support_auth["bound_control_plane"]
+        scope = support_auth["execution_scope"]
+        payload = {
+            "capability_id": "attacker-fabricated-capability",
+            "issued_at_utc": "2026-09-07T00:01:00+08:00",
+            "control_plane_revision": minter.CONTROL_PLANE_REVISION,
+            "hard_provider_not_before": HARD_PROVIDER_NOT_BEFORE,
+            "contract_sha256": sha(fixture["contract"]),
+            "recovery_authorization_sha256": sha(fixture["recovery_auth"]),
+            "terminal_summary_sha256": sha(fixture["summary"]),
+            "support_authorization_sha256": sha(fixture["support_auth"]),
+            "control_review_sha256": sha(forged_review),
+            "minter_sha256": control["minter_sha256"],
+            "gate_sha256": control["gate_sha256"],
+            "support_adjudicator_sha256": control["support_adjudicator_sha256"],
+            "required_adjudication_output": str(fixture["adjudication_output"].resolve()),
+            "required_run_root": str(Path(scope["required_run_root"]).resolve()),
+            "single_use": True,
+            "stage_a_support_read": True,
+            "stage_a_provider_execution": False,
+            "stage_b_learning_execution": False,
+            "updater": False,
+            "heldout_evaluation": False,
+            "analyzer": False,
+            "second_backbone": False,
+            "public_benchmark": False,
+            "paper_promotion": False,
+            "submission": False,
+            "scientific_authority": False,
+        }
+        wrong_private = Ed25519PrivateKey.generate()
+        wrong_private_path = fixture["root"] / "attacker-private.pem"
+        wrong_public_path = fixture["root"] / "attacker-public.pem"
+        wrong_private_path.write_bytes(wrong_private.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption(),
+        ))
+        wrong_public_path.write_bytes(wrong_private.public_key().public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo,
+        ))
+        forged_capability = sign_document(payload=payload, private_key_path=wrong_private_path, public_key_path=wrong_public_path)
+        # The attacker can copy every public metadata field, including the trusted
+        # public-key fingerprint, but cannot create a signature verifiable by it.
+        forged_capability["signature"]["public_key_sha256"] = sha(fixture["public_key"])
+        write_json(fixture["signed_capability"], forged_capability)
+
+        command = [
+            sys.executable,
+            str(minter.EXPECTED_SUPPORT_ADJUDICATOR),
+            "--contract", str(fixture["contract"]),
+            "--authorization", str(fixture["recovery_auth"]),
+            "--summary", str(fixture["summary"]),
+            "--support-authorization", str(fixture["support_auth"]),
+            "--signed-capability", str(fixture["signed_capability"]),
+            "--output", str(fixture["adjudication_output"]),
+        ]
+        result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("signature verification failed", result.stderr)
+        self.assertFalse(fixture["adjudication_output"].exists())
+        consumption = fixture["run"] / "checkpoints/post_terminal_support_read" / gate.CONSUMPTION_NAME
+        self.assertFalse(consumption.exists())
+
     def test_gate_consumes_once_and_fail_closes_on_unexpected_adjudicator_error(self) -> None:
         fixture = self.make_fixture()
         self.build_auth(fixture)
+        self.build_signed_capability(fixture)
 
         def failed_invoke(command: list[str]) -> subprocess.CompletedProcess[str]:
+            self.assertIn("--signed-capability", command)
+            control = fixture["run"] / "checkpoints/post_terminal_support_read"
+            write_json(
+                control / gate.CONSUMPTION_NAME,
+                {
+                    "artifact_type": "e2-r17-v3-stage-a-r3c-signed-support-capability-consumption",
+                    "status": "CONSUMED_IN_FLIGHT_DO_NOT_RETRY",
+                    "signed_capability_sha256": sha(fixture["signed_capability"]),
+                    "trusted_public_key_sha256": sha(fixture["public_key"]),
+                    "stage_b_authority": False,
+                    "scientific_authority": False,
+                },
+            )
             return subprocess.CompletedProcess(command, 2, stdout="", stderr="synthetic failure")
 
-        with self.assertRaisesRegex(RuntimeError, "permit remains consumed"):
+        with self.assertRaisesRegex(RuntimeError, "signed support capability remains consumed"):
             gate.run_gate(
                 support_authorization_path=fixture["support_auth"],
                 contract_path=fixture["contract"],
                 recovery_authorization_path=fixture["recovery_auth"],
                 summary_path=fixture["summary"],
+                signed_capability_path=fixture["signed_capability"],
                 output_path=fixture["adjudication_output"],
                 invoke=failed_invoke,
             )
@@ -325,6 +485,7 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
                 contract_path=fixture["contract"],
                 recovery_authorization_path=fixture["recovery_auth"],
                 summary_path=fixture["summary"],
+                signed_capability_path=fixture["signed_capability"],
                 output_path=fixture["adjudication_output"],
                 invoke=failed_invoke,
             )
@@ -332,10 +493,23 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
     def test_gate_accepts_terminal_pass_without_stage_b_authority(self) -> None:
         fixture = self.make_fixture()
         self.build_auth(fixture)
+        self.build_signed_capability(fixture)
 
         def passed_invoke(command: list[str]) -> subprocess.CompletedProcess[str]:
             self.assertIn("--support-authorization", command)
-            self.assertIn("--consumption-marker", command)
+            self.assertIn("--signed-capability", command)
+            control = fixture["run"] / "checkpoints/post_terminal_support_read"
+            write_json(
+                control / gate.CONSUMPTION_NAME,
+                {
+                    "artifact_type": "e2-r17-v3-stage-a-r3c-signed-support-capability-consumption",
+                    "status": "CONSUMED_IN_FLIGHT_DO_NOT_RETRY",
+                    "signed_capability_sha256": sha(fixture["signed_capability"]),
+                    "trusted_public_key_sha256": sha(fixture["public_key"]),
+                    "stage_b_authority": False,
+                    "scientific_authority": False,
+                },
+            )
             output = Path(command[command.index("--output") + 1])
             write_json(
                 output,
@@ -357,6 +531,7 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
             contract_path=fixture["contract"],
             recovery_authorization_path=fixture["recovery_auth"],
             summary_path=fixture["summary"],
+            signed_capability_path=fixture["signed_capability"],
             output_path=fixture["adjudication_output"],
             invoke=passed_invoke,
         )

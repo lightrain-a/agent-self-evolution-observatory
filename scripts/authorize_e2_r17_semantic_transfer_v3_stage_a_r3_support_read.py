@@ -20,7 +20,7 @@ BURNED = "r17-b21-cgwb-p0"
 CENSOR = "r17-b21-cgwp-p0"
 EXPECTED_SUPPORT_ADJUDICATOR = ROOT / "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py"
 EXPECTED_GATE = ROOT / "scripts/run_e2_r17_semantic_transfer_v3_stage_a_r3_support_adjudication_gate.py"
-CONTROL_PLANE_REVISION = "R3B_POST_TERMINAL_SUPPORT_GUARD"
+CONTROL_PLANE_REVISION = "R3C_EXTERNAL_SIGNED_SUPPORT_CAPABILITY"
 EXPECTED_ADJUDICATION_OUTPUT = ROOT / "generated/e2-r17-semantic-transfer-v3-stage-a-r3-equal-dose-adjudication-20260907.json"
 
 
@@ -83,7 +83,14 @@ def validate_terminal_structure(
     ssha = sha(summary_path)
 
     req(contract.get("status") == CONTRACT_STATUS, "R3 recovery contract status drift")
-    req(contract.get("control_plane_revision") == CONTROL_PLANE_REVISION, "R3B support-control revision absent")
+    req(contract.get("control_plane_revision") == CONTROL_PLANE_REVISION, "R3C support-control revision absent")
+    trusted = ((contract.get("post_terminal_support_read_control") or {}).get("trusted_external_signer") or {})
+    req(trusted.get("algorithm") == "Ed25519", "R3C trusted signer algorithm drift")
+    expected_signer_sha = str(trusted.get("public_key_sha256") or "")
+    trusted_key = bound(str(trusted.get("public_key_path") or ""))
+    req(bool(expected_signer_sha) and trusted_key.is_file(), "R3C trusted signer public-key path/SHA absent")
+    req(sha(trusted_key) == expected_signer_sha, "R3C trusted signer public-key content drift")
+    req(trusted.get("private_key_in_repository") is False, "R3C trusted signer private key must remain external")
     req(recovery_auth.get("status") == RECOVERY_AUTH_STATUS, "R3 recovery authorization status drift")
     req(recovery_auth.get("contract_sha256") == csha, "R3 recovery authorization contract SHA drift")
     req(recovery_auth.get("single_use") is True and recovery_auth.get("exactly_once") is True, "R3 recovery authorization single-use drift")
@@ -216,6 +223,7 @@ def build_support_authorization(
     )
     contract = state["contract"]
     bound_code = contract.get("bound_code") or {}
+    trusted_signer = ((contract.get("post_terminal_support_read_control") or {}).get("trusted_external_signer") or {})
     for key, path, expected_sha in (
         ("post_terminal_support_minter", Path(__file__), minter_sha),
         ("post_terminal_support_gate", EXPECTED_GATE, gate_sha),
@@ -264,6 +272,13 @@ def build_support_authorization(
             "support_adjudicator_path": str(EXPECTED_SUPPORT_ADJUDICATOR),
             "support_adjudicator_sha256": support_adjudicator_sha,
         },
+        "trusted_external_signer": {
+            "algorithm": trusted_signer["algorithm"],
+            "public_key_path": str(bound(str(trusted_signer["public_key_path"])).resolve()),
+            "public_key_sha256": trusted_signer["public_key_sha256"],
+            "private_key_in_repository": False,
+            "signed_capability_required_at_point_of_use": True,
+        },
         "execution_scope": {
             "required_adjudication_output": str(adjudication_output_path),
             "required_run_root": str(state["run_root"]),
@@ -288,7 +303,8 @@ def build_support_authorization(
             "paper_promotion": False,
             "submission": False,
         },
-        "interpretation_boundary": "Single-use zero-provider authority to invoke the already exact-hash-reviewed R3 Stage-A support adjudicator after the exact terminal recovery state only. It grants no provider execution, updater, heldout, Stage-B execution, public benchmark, analyzer, or paper-claim authority.",
+        "interpretation_boundary": "Structural post-terminal support-read request only. It is not sufficient authority by itself: point-of-use execution additionally requires an externally Ed25519-signed single-use capability from the separately trusted controller key. It grants no provider execution, updater, heldout, Stage-B execution, public benchmark, analyzer, or paper-claim authority.",
+        "authority_requires_external_signed_capability": True,
     }
     return payload
 

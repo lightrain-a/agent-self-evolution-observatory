@@ -12,11 +12,18 @@ from pathlib import Path
 from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from research_pipeline.e2_r17_r3c_signed_support_capability import (
+    CONTROL_PLANE_REVISION,
+    HARD_PROVIDER_NOT_BEFORE,
+    verify_document,
+)
 SUPPORT_AUTH_STATUS = "AUTHORIZED_E2_R17_V3_R3_POST_TERMINAL_SUPPORT_READ"
 SUMMARY_STATUS = "COMPLETED_158_POOLS_PLUS_TWO_FROZEN_EXCEPTIONS_PENDING_R3_EQUAL_DOSE_ADJUDICATION"
 EXPECTED_SUPPORT_ADJUDICATOR = ROOT / "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py"
 CONTROL_REVIEW_VERDICT = "PASS_R3_POST_TERMINAL_SUPPORT_CONTROL_PLANE"
-CONTROL_PLANE_REVISION = "R3B_POST_TERMINAL_SUPPORT_GUARD"
 CONSUMPTION_NAME = "post_terminal_support_read_authorization.consumed.json"
 COMPLETION_NAME = "post_terminal_support_read_adjudication.completed.json"
 
@@ -56,13 +63,17 @@ def validate_support_authorization(
     contract_path: Path,
     recovery_authorization_path: Path,
     summary_path: Path,
+    signed_capability_path: Path,
     output_path: Path,
 ) -> dict[str, Any]:
     support_auth = load(support_authorization_path)
+    contract = load(contract_path)
     req(support_auth.get("status") == SUPPORT_AUTH_STATUS, "post-terminal support-read authorization status drift")
     req(support_auth.get("single_use") is True, "post-terminal support-read authorization is not single-use")
     req(support_auth.get("provider_calls") == 0, "post-terminal support-read authorization provider-call drift")
     req(support_auth.get("scientific_execution") is False, "post-terminal support-read authorization incorrectly records scientific execution")
+    req(support_auth.get("authority_requires_external_signed_capability") is True, "R3C support authorization does not require external signed capability")
+    req(contract.get("control_plane_revision") == CONTROL_PLANE_REVISION, "R3C contract revision drift")
 
     authority = support_auth.get("authority") or {}
     req(authority.get("stage_a_support_read") is True, "Stage-A support-read authority absent")
@@ -122,7 +133,35 @@ def validate_support_authorization(
     req(run_root.is_dir(), "post-terminal support-read run root absent")
     lease_path = Path(str(support_auth.get("terminal_lease_path") or ""))
     req(lease_path.is_file() and support_auth.get("terminal_lease_sha256") == sha(lease_path), "post-terminal support-read lease binding drift")
-    return {"support_authorization": support_auth, "summary": summary, "run_root": run_root, "lease_path": lease_path}
+
+    trusted = ((contract.get("post_terminal_support_read_control") or {}).get("trusted_external_signer") or {})
+    req(trusted.get("algorithm") == "Ed25519", "R3C trusted signer algorithm drift")
+    public_key_path = Path(str(trusted.get("public_key_path") or ""))
+    if not public_key_path.is_absolute():
+        public_key_path = ROOT / public_key_path
+    expected_public_sha = str(trusted.get("public_key_sha256") or "")
+    req(public_key_path.is_file() and sha(public_key_path) == expected_public_sha, "R3C trusted signer public-key binding drift")
+    req(trusted.get("private_key_in_repository") is False, "R3C trusted signer private key must remain external")
+    req(signed_capability_path.is_file(), "R3C signed support capability absent")
+    capability_document = load(signed_capability_path)
+    capability_payload = verify_document(
+        capability_document,
+        public_key_path=public_key_path,
+        expected_public_key_sha256=expected_public_sha,
+        expected_payload_fields={
+            "contract_sha256": sha(contract_path),
+            "recovery_authorization_sha256": sha(recovery_authorization_path),
+            "terminal_summary_sha256": sha(summary_path),
+            "support_authorization_sha256": sha(support_authorization_path),
+            "control_review_sha256": review_row["sha256"],
+            "minter_sha256": control.get("minter_sha256"),
+            "gate_sha256": control.get("gate_sha256"),
+            "support_adjudicator_sha256": control.get("support_adjudicator_sha256"),
+            "required_adjudication_output": str(output_path.resolve()),
+            "required_run_root": str(run_root.resolve()),
+        },
+    )
+    return {"support_authorization": support_auth, "summary": summary, "run_root": run_root, "lease_path": lease_path, "signed_capability_payload": capability_payload, "signed_capability_sha256": sha(signed_capability_path), "trusted_public_key_sha256": expected_public_sha}
 
 
 def default_invoke(command: list[str]) -> subprocess.CompletedProcess[str]:
@@ -135,6 +174,7 @@ def run_gate(
     contract_path: Path,
     recovery_authorization_path: Path,
     summary_path: Path,
+    signed_capability_path: Path,
     output_path: Path,
     invoke: Callable[[list[str]], subprocess.CompletedProcess[str]] = default_invoke,
     python_executable: str = sys.executable,
@@ -145,6 +185,7 @@ def run_gate(
         contract_path=contract_path,
         recovery_authorization_path=recovery_authorization_path,
         summary_path=summary_path,
+        signed_capability_path=signed_capability_path,
         output_path=output_path,
     )
     run_root: Path = state["run_root"]
@@ -157,24 +198,11 @@ def run_gate(
     auth_sha = sha(support_authorization_path)
     summary_sha = sha(summary_path)
     support_auth = state["support_authorization"]
-    review_row = support_auth["control_review"]
-    consumption_payload = {
-        "schema_version": "1.0",
-        "artifact_type": "e2-r17-v3-stage-a-r3-post-terminal-support-read-consumption",
-        "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "status": "CONSUMED_IN_FLIGHT_DO_NOT_RETRY",
-        "support_authorization_path": str(support_authorization_path),
-        "support_authorization_sha256": auth_sha,
-        "terminal_summary_path": str(summary_path),
-        "terminal_summary_sha256": summary_sha,
-        "required_output": str(output_path),
-        "gate_sha256": sha(Path(__file__)),
-        "control_review_sha256": review_row["sha256"],
-        "automatic_retry": False,
-        "stage_b_authority": False,
-    }
-    _exclusive_json(consumption, consumption_payload)
 
+    # The gate is now an orchestration wrapper. Point-of-use authorization and
+    # one-shot consumption are enforced inside the adjudicator against the
+    # externally signed capability, so caller-writable marker origin is no
+    # longer a trust boundary.
     command = [
         python_executable,
         str(EXPECTED_SUPPORT_ADJUDICATOR),
@@ -186,18 +214,22 @@ def run_gate(
         str(summary_path),
         "--support-authorization",
         str(support_authorization_path),
-        "--consumption-marker",
-        str(consumption),
+        "--signed-capability",
+        str(signed_capability_path),
         "--output",
         str(output_path),
     ]
     result = invoke(command)
     if result.returncode not in {0, 3}:
         raise RuntimeError(
-            "R3 support adjudicator failed outside terminal PASS/HOLD states; support-read permit remains consumed and manual review is required. "
+            "R3 support adjudicator failed outside terminal PASS/HOLD states; externally signed support capability remains consumed and manual review is required. "
             f"returncode={result.returncode}; stdout_tail={result.stdout[-1200:]}; stderr_tail={result.stderr[-1200:]}"
         )
     req(output_path.is_file(), "R3 support adjudicator returned terminal code without output artifact")
+    req(consumption.is_file(), "R3C adjudicator returned without signed-capability consumption artifact")
+    consumption_row = load(consumption)
+    req(consumption_row.get("signed_capability_sha256") == state["signed_capability_sha256"], "R3C consumption/capability SHA drift")
+    req(consumption_row.get("trusted_public_key_sha256") == state["trusted_public_key_sha256"], "R3C consumption trusted-key drift")
     adjudication = load(output_path)
     expected_statuses = {
         0: "PASS_SEMANTIC_TRANSFER_V3_R3_MATCHED_CENSOR_EQUAL_DOSE_SUPPORT_READY_FOR_STAGE_B_DESIGN",
@@ -216,6 +248,9 @@ def run_gate(
         "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "status": "COMPLETED_POST_TERMINAL_SUPPORT_READ",
         "support_authorization_sha256": auth_sha,
+        "signed_capability_path": str(signed_capability_path),
+        "signed_capability_sha256": state["signed_capability_sha256"],
+        "trusted_public_key_sha256": state["trusted_public_key_sha256"],
         "consumption_path": str(consumption),
         "consumption_sha256": sha(consumption),
         "terminal_summary_sha256": summary_sha,
@@ -243,6 +278,7 @@ def main() -> int:
     parser.add_argument("--contract", type=Path, required=True)
     parser.add_argument("--recovery-authorization", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
+    parser.add_argument("--signed-capability", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     result = run_gate(
@@ -250,6 +286,7 @@ def main() -> int:
         contract_path=args.contract,
         recovery_authorization_path=args.recovery_authorization,
         summary_path=args.summary,
+        signed_capability_path=args.signed_capability,
         output_path=args.output,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
