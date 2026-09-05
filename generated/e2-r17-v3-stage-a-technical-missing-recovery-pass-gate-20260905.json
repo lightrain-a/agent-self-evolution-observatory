@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-stage-a-technical-missing-recovery-pass-gate",
+  "created_at_utc": "2026-09-05T13:34:00+00:00",
+  "status": "PASS_TO_FREEZE_R3_ZERO_PROVIDER_RECOVERY_OBJECTS_ONLY",
+  "review_receipt_path": "generated/e2-r17-v3-stage-a-technical-missing-recovery-gpt56-review-20260905.json",
+  "review_verdict": "PASS_RECOVER_WITH_ONE_TERMINAL_TECHNICAL_MISSING",
+  "allowed_next_actions": [
+    "freeze immutable terminal-missing burn receipt",
+    "freeze exact 159-task remaining execution manifest",
+    "freeze per-stream opportunity manifest",
+    "prepare and statically validate a versioned R3 recovery contract",
+    "prepare R3 recovery runner, support adjudicator, preflight, and authorizer",
+    "perform zero-provider tests and independent pre-execution review"
+  ],
+  "forbidden_until_separate_authorization": [
+    "any new scientific provider execution",
+    "replay or continuation of r17-b21-cgwb-p0",
+    "task replacement",
+    "Stage-A support read",
+    "updater execution",
+    "heldout evaluation",
+    "Stage-B execution",
+    "public benchmark execution",
+    "paper claim promotion"
+  ],
+  "fresh_identity_required_before_resumed_provider_tranche": true,
+  "second_post_dispatch_technical_missing_policy": "STOP",
+  "r2_replay_allowed": false,
+  "stage_b_authority": false,
+  "scientific_execution_authority": false
+}

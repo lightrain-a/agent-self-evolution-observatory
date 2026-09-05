@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-stage-a-technical-missing-recovery-independent-review",
+  "created_at_utc": "2026-09-05T13:33:00+00:00",
+  "status": "COMPLETED",
+  "surface": "ChatGPT web",
+  "model": "GPT-5.6 Sol",
+  "thinking_level": "Extra High 4/5",
+  "conversation_url": "https://chatgpt.com/c/6a9c19b0-dc7c-83ee-876a-a9be0872e13c",
+  "successful_session_slug": "e2-r17-stage-a-recovery-2",
+  "prompt_packet_path": "oracle_briefs/E2_R17_V3_STAGE_A_TECHNICAL_MISSING_RECOVERY_REVIEW_INLINE_20260905.md",
+  "prompt_packet_sha256": "dabc84370c90dc1d02caf54a849f43f93935780d2b2edadedb55992d6713fe3c",
+  "prompt_submissions": 1,
+  "response_sha256": "3f96a20bdd80f41d28bac641aa52c28dbe5ad8e9906ff45dbf43fbac65bf39b2",
+  "oracle_transcript_sha256": "6c95966d48e31d21e14cc075acf21b1ecfa30dcb447ef9e2cabf9f1765878298",
+  "model_selection_verified": true,
+  "verdict": "PASS_RECOVER_WITH_ONE_TERMINAL_TECHNICAL_MISSING",
+  "synthesis": {
+    "missingness_mechanism_assessment": "Exogenous post-dispatch provider-quota missingness before any scientific support inspection; admissible as exactly one terminal technical missing if never replayed, replaced, reconstructed, or used scientifically.",
+    "option_a_validity": "PASS_UNDER_NEW_R3_RECOVERY_CONTRACT",
+    "option_b_validity": "VALID_BUT_NOT_PREFERRED",
+    "equal_dose_preservation": true,
+    "support_gate_preservation": true,
+    "fresh_identity_required": true,
+    "r2_replay_allowed": false,
+    "stage_b_authority": false,
+    "additional_scientific_experiment_required_before_recovery": false,
+    "immediate_action": "Freeze the R3 one-missing recovery contract and zero-provider audit artifacts; then obtain a fresh identity qualification and separate R3 recovery authorization before executing only the remaining 159 original task IDs exactly once."
+  },
+  "required_recovery_guards": {
+    "burned_task_terminal_missing": "r17-b21-cgwb-p0",
+    "burned_task_replay": false,
+    "burned_task_replacement": false,
+    "partial_provider_content_scientific_use": false,
+    "remaining_original_task_count": 159,
+    "affected_stream_observable_pools": 7,
+    "other_stream_observable_pools": 8,
+    "required_mixed_pools_per_stream": 4,
+    "stage_b_treated_pools_per_stream_if_support_passes": 4,
+    "stage_b_treated_pool_total_if_support_passes": 80,
+    "second_post_dispatch_technical_missing": "STOP",
+    "support_read_before_terminal_recovery_state": false,
+    "terminal_accounting": "160 planned = 159 sealed K8 pools + 1 terminal technical missing"
+  },
+  "delivery_forensics": {
+    "prior_failed_delivery_slug": "e2-r17-stage-a-recovery",
+    "prior_failed_delivery_committed_user_turns": 0,
+    "prior_failed_delivery_commit_probe": {
+      "turns_count": 0,
+      "user_matched": false,
+      "has_new_turn": false,
+      "composer_cleared": false,
+      "editor_length": 11339
+    },
+    "duplicate_scientific_review_submission_created": false
+  },
+  "authority": {
+    "resume_provider_execution": false,
+    "mint_recovery_authorization": false,
+    "stage_b_learning_execution": false,
+    "support_read": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  },
+  "private_credentials_included": false,
+  "raw_response_ids_included": false
+}
