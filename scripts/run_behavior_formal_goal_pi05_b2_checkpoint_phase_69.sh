@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 PHASE=${1:?phase required: save|disk|restore}
-ROOT=/data/wyt/formal-goal-pi05-resource-repair-20260902
+ROOT=/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902
 PY=/data/wyt/formal-goal-shared26-openpi-env-20260901/bin/python
 CHILD=/data/wyt/formal-goal-portable-openpi-child-69-20260903
 PARAMS=/data/wyt/formal-goal-pi05-base-params-v1
