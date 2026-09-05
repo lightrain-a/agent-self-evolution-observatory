@@ -1,0 +1,66 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b3-d2-cache-accounting-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-05T22:50:31+08:00",
+  "status": "AUTHORIZED_PI05_B3_D2_OFFLINE_CACHE_ACCOUNTING",
+  "decision": "ONE_SHOT_SYNTHETIC_CPU_D2_ONLY",
+  "execution_source_commit": "51d7a92b51e81d5a795755f926c8c94cfe7ff730",
+  "host": {
+    "name": "69",
+    "machine_id": "c4046d3ca4454a958f5de081aac4dc2e",
+    "host67_forbidden": true
+  },
+  "bindings": {
+    "runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_d2_cache_accounting.py",
+      "sha256": "8e2d88dc531950c8e781624841045671938937a382110cba059d454982724d24"
+    },
+    "serializer": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_writeback_aware_orbax.py",
+      "sha256": "f79e3b5c0e74bb37e2e16dae8a7c2921340f9a20e722b9901e2502f8c60047e9"
+    },
+    "cache": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_writeback_cache.py",
+      "sha256": "88495d244613ed7ddc8ac163ccb0e5f66d978facdedf2c7ee6e918e709d25a42"
+    },
+    "development_review": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-development-independent-review-20260905.json",
+      "sha256": "b08ad0d8a7f12713d90f197c79f4d7bc1173ba0c67d7f7e03d0a51c2093fc040"
+    },
+    "d0d1d3": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-d0-d1-d3-v2-result-20260905.json",
+      "sha256": "e0afbf9ac08b85404b97f49d91083db0a4887b913c763a32537b419e9ae171ee"
+    }
+  },
+  "frozen_d2": {
+    "synthetic_seed": 20260905,
+    "leaf_count": 6,
+    "leaf_bytes": 67108864,
+    "synthetic_total_bytes": 402653184,
+    "d2h_batch_bytes": 134217728,
+    "memory_max_bytes": 2147483648,
+    "memory_swap_max_bytes": 0,
+    "min_single_file_drop_bytes": 1048576,
+    "min_total_file_drop_bytes": 67108864
+  },
+  "work_root": "/data/wyt/formal-goal-b3-d2-cache-accounting-20260905",
+  "result": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-d2-cache-accounting-result-20260905.json",
+  "systemd_unit": "pi05-b3-d2-cache-accounting-69-20260905.service",
+  "pass_contract": {
+    "cpu_only": true,
+    "model_loaded": false,
+    "scientific_data_accessed": false,
+    "expected_batch_count": 3,
+    "standard_orbax_restore": true,
+    "exact_sha256_roundtrip": true,
+    "tmp_residue": false,
+    "cache_endpoint": "max fsync-to-DONTNEED file-charge drop >=1MiB AND summed nonnegative drop >=64MiB"
+  },
+  "failure_rule": "Any binding, cgroup, path, CPU-only, batch-count, cache-endpoint, restore-integrity, or temp-residue failure closes this D2 attempt. Do not rerun with another payload size, batch size, threshold, cgroup limit, or host without a new independent review.",
+  "model_execution_authorized": false,
+  "b3_s_authorized": false,
+  "v1_authorized": false,
+  "v2_authorized": false,
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false
+}
