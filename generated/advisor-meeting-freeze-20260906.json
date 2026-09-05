@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "meeting_id": "2026-09-06-advisor",
+  "status": "MEETING_CANDIDATE_FROZEN",
+  "meeting_candidate_hash": "6d5e9cbc302dfcc7fbcb6ba5cdfff99a8352f4d3f350e5c658a2545374528733",
+  "paper_count": 9,
+  "paper_order": [
+    "E1",
+    "B1",
+    "C1",
+    "G1",
+    "E2",
+    "PAPER_A",
+    "CONSTRAINT_EXTERNALITY",
+    "PAPER_B",
+    "3D"
+  ],
+  "route_summary": {
+    "EXECUTE_FROZEN": 2,
+    "FORMALIZE_FIRST": 2,
+    "FREEZE_SUBMIT": 2,
+    "QUALIFY_FIRST": 3
+  },
+  "checks": {
+    "paper_pack_9_of_9": true,
+    "decision_cards_9_of_9": true,
+    "reality_support_9_of_9": true,
+    "resource_ledger_9_of_9": true,
+    "stanford_reviews_9_of_9_ready": true,
+    "pdf_sha_binding_9_of_9": true,
+    "route_authority_cost_consistency": true,
+    "prior_independent_reality_cost_review_valid": true,
+    "prior_reality_cost_fixes_closed": true,
+    "final_decision_sufficiency_attempt_fail_closed": true
+  },
+  "errors": [],
+  "source_hashes": [
+    {
+      "path": "generated/advisor-decision-cards/3d.json",
+      "sha256": "136723f55381334963ad9d4647dd5a4aa6e39e4b2580925baa401e8c3b75dd56"
+    },
+    {
+      "path": "generated/advisor-decision-cards/b1.json",
+      "sha256": "0eefab0d64026bcaf648b21ac26c37c5418cac6d9e86521be0813e4e0c114f03"
+    },
+    {
+      "path": "generated/advisor-decision-cards/c1.json",
+      "sha256": "b635d9d22d167c3348297d5db0846da9ca66e9bd8dcf9eb06ba36c70e5a2e664"
+    },
+    {
+      "path": "generated/advisor-decision-cards/constraint_externality.json",
+      "sha256": "848913bf3ffc47aa909bf41070b262343c1cec887d1fb4b57ed65e2df8e14106"
+    },
+    {
+      "path": "generated/advisor-decision-cards/e1.json",
+      "sha256": "4b695a85e32beace6b64f3dcfc6023e5f31dd00c9d0c3e50d0269eaea282fc9a"
+    },
+    {
+      "path": "generated/advisor-decision-cards/e2.json",
+      "sha256": "ba9e7117d582fee82d6f1dc07eaa946c123d74a2e0feec3ecb1d55ed1ca3cb2c"
+    },
+    {
+      "path": "generated/advisor-decision-cards/g1.json",
+      "sha256": "70fe82aef7ccd028ff51b46932f3cdc2018236fcb56ff86fe71cb3f6002e3b09"
+    },
+    {
+      "path": "generated/advisor-decision-cards/paper_a.json",
+      "sha256": "aa3eb3091d1abfeefe4a8656e5cba362064e41959120c99548160c04b3c4c554"
+    },
+    {
+      "path": "generated/advisor-decision-cards/paper_b.json",
+      "sha256": "d819d3b0b0642863968bd2644ad0899ff40830dc8dc46b33ef19a7775bc84924"
+    },
+    {
+      "path": "generated/advisor-final-decision-sufficiency-review-attempt-20260905.json",
+      "sha256": "1f2573490f7a030a419e7369ac61eb3007811de5ba047230b23b0c40fe372d5e"
+    },
+    {
+      "path": "generated/advisor-paper-pack-manifest.json",
+      "sha256": "2bfa40a06dafcff0b8633436cab921a84f82c7817c405f53707b3f17847c91a6"
+    },
+    {
+      "path": "generated/advisor-reality-cost-fix-closure-20260905.json",
+      "sha256": "cc359ef7dbf6e2aaaae2d57a4852da47ca25c844cf11dd2844e01ba31b429455"
+    },
+    {
+      "path": "generated/advisor-reality-cost-independent-review-20260905.json",
+      "sha256": "265a52d4d3091cc1bbe49fca6887e2e06b73ff4b137044d395e485883ed2f8b7"
+    },
+    {
+      "path": "generated/advisor-reality-support.json",
+      "sha256": "1436797b1f54667775529cc24820f0d65aa866327be3d4f54dd0d0daca9b53b8"
+    },
+    {
+      "path": "generated/advisor-resource-ledger.json",
+      "sha256": "cabe6fed6900bdb05dc305f47d8aaed8d3ffe235d6d1beab14eaec800730fe47"
+    },
+    {
+      "path": "generated/stanford-3d-review.json",
+      "sha256": "21dbcfd36b918cf739d7e84290b47fd2e2cc644a12b4a7068843583c9b5bff6c"
+    },
+    {
+      "path": "generated/stanford-b1-review.json",
+      "sha256": "c7e2b421fa3845caaf49952202b084421a4a2603dcd5d65f2d46e4cc633a98b4"
+    },
+    {
+      "path": "generated/stanford-c1-review.json",
+      "sha256": "9bb97f584bbef065861e1cbefff7119f43e5966e58e77b99dfec1688e50666af"
+    },
+    {
+      "path": "generated/stanford-constraint_externality-review.json",
+      "sha256": "09f8adc455fd55953aef50fa76351d032a89e75302073d35ffae33b2ac9f4079"
+    },
+    {
+      "path": "generated/stanford-e1-review.json",
+      "sha256": "d969ffcdf9b4006fa8181bea3041d5c02796eb0f9fce607d32b655699eaf7527"
+    },
+    {
+      "path": "generated/stanford-e2-review.json",
+      "sha256": "fe2b93f5d2aafb2c6e62577922a923b816430a5966e66b2bbca164f71fbf36a8"
+    },
+    {
+      "path": "generated/stanford-g1-review.json",
+      "sha256": "f048287c84648ca3d5228ce14cbf0b5684229a47d9ec6f5c5e78430c9fe9b659"
+    },
+    {
+      "path": "generated/stanford-paper_a-review.json",
+      "sha256": "e49c5c3ae328cdb99e15e71d6afdc8941f415c9e03ae22ec12ff75bff9101e95"
+    },
+    {
+      "path": "generated/stanford-paper_b-review.json",
+      "sha256": "1e8ace8cb701cffe728d87072fbeeeab80b3614ed49b7650d185e9f900650445"
+    }
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_meeting_projection_only": true
+  },
+  "freeze_rule": "Any later substantive change to a decision card, reality support, resource ledger, frozen PDF, or Stanford review overlay changes the meeting_candidate_hash and requires an explicit new meeting candidate. Operational-only B1/3D ETA refresh may be shown as a separately timestamped overlay without changing scientific decisions."
+}

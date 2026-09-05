@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "review_object": "2026-09-06 advisor meeting final integrated decision-sufficiency pack",
+  "verification_path": "MEETING_DECISION_SUFFICIENCY",
+  "review_mode": "fresh_temporary_chat_independent_review",
+  "packet": {
+    "source": "live deployed generated/advisor-meeting-data.js at origin/main 1471a7d80a28c01c066db98d565e5f5e0c30e3d9",
+    "sha256": "ce9cb6ae1ee35960eb84b0a77c2a37901b5d44c53beefa6cb6a2f9469b9a5263",
+    "source_chars_before_dom_normalization": 36024
+  },
+  "browser_evidence": {
+    "temporary_chat": true,
+    "fresh_user_turns_before_submit": 0,
+    "fresh_assistant_turns_before_submit": 0,
+    "model_button": "5.6 / Extra High",
+    "message_model_slug": "gpt-5-6-thinking",
+    "submitted_user_turn_chars_dom": 36280,
+    "submitted_user_turns_after_submit": 1,
+    "assistant_turns_after_completion": 1,
+    "assistant_final_text": "A.",
+    "assistant_final_chars_dom": 2,
+    "worked_for": "2m 14s",
+    "rate_limited_at_final": false
+  },
+  "valid_review": false,
+  "valid_review_count": 0,
+  "reason": "The fresh GPT-5.6 Sol Extra High Temporary Chat accepted the complete frozen packet and completed a long thinking pass, but the final DOM contained only the heading 'A.'. This is an incomplete final and cannot be used as a reviewer verdict.",
+  "scientific_or_meeting_state_change_allowed": false,
+  "retry_policy": "Do not reopen the same verification path merely to obtain a nicer answer. Preserve the prior valid independent route/reality-cost reviews and use deterministic consistency guards for the final freeze unless a genuinely new verification dimension is introduced.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_overlay_only": true
+  }
+}

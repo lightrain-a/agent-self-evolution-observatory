@@ -10,6 +10,8 @@ reality_bundle=json.loads((GENERATED/'advisor-reality-support.json').read_text()
 resource_bundle=json.loads((GENERATED/'advisor-resource-ledger.json').read_text())
 overlay_review=json.loads((GENERATED/'advisor-reality-cost-independent-review-20260905.json').read_text())
 overlay_fix=json.loads((GENERATED/'advisor-reality-cost-fix-closure-20260905.json').read_text())
+freeze_path=GENERATED/'advisor-meeting-freeze-20260906.json'
+freeze_receipt=json.loads(freeze_path.read_text()) if freeze_path.exists() else {}
 
 order=['E1','B1','C1','G1','E2','PAPER_A','CONSTRAINT_EXTERNALITY','PAPER_B','3D']
 decision_fields={}
@@ -51,7 +53,7 @@ shared=[
 
 schedule=[['14:00','14:15','Portfolio Dashboard + Common-Cause Risk Scan'],['14:15','14:40','E1'],['14:40','15:30','Memory / Provenance / Evolution family'],['15:30','15:55','G1 + Constraint Externality'],['15:55','16:10','3D'],['16:10','16:35','Exception-based nine-paper closure sweep'],['16:35','16:53','Cost / Dependencies / Scheduling'],['16:53','17:00','Read-back']]
 route_summary={route:sum(p.get('route')==route for p in papers) for route in ['FREEZE_SUBMIT','EXECUTE_FROZEN','QUALIFY_FIRST','FORMALIZE_FIRST']}
-data={'schema_version':'3.0','generated_at':'2026-09-05','meeting':{'id':'2026-09-06-advisor','main_ref':manifest['meeting_candidate_main'],'status':manifest.get('paper_pack_status'),'review_route':'exception-and-boundary-review'},'route_summary':route_summary,'papers':papers,'shared_risks':shared,'resource_pricing_basis':resource_bundle.get('pricing_basis',{}),'portfolio_schedule':resource_bundle.get('portfolio_schedule',[]),'overlay_audit':{'independent_verdict':overlay_review.get('response',{}).get('final_verdict'),'postfix_status':overlay_fix.get('status'),'verification_path':overlay_fix.get('postfix_verification_path'),'model_slug':overlay_review.get('browser_evidence',{}).get('message_model_slug'),'extra_high':overlay_review.get('browser_evidence',{}).get('extra_high_visible'),'authority':overlay_review.get('authority',{})},'schedule':[{'start':a,'end':b,'label':c} for a,b,c in schedule]}
+data={'schema_version':'3.1','generated_at':'2026-09-05','meeting':{'id':'2026-09-06-advisor','main_ref':manifest['meeting_candidate_main'],'status':manifest.get('paper_pack_status'),'review_route':'exception-and-boundary-review','freeze_status':freeze_receipt.get('status'),'candidate_hash':freeze_receipt.get('meeting_candidate_hash')},'route_summary':route_summary,'papers':papers,'shared_risks':shared,'resource_pricing_basis':resource_bundle.get('pricing_basis',{}),'portfolio_schedule':resource_bundle.get('portfolio_schedule',[]),'overlay_audit':{'independent_verdict':overlay_review.get('response',{}).get('final_verdict'),'postfix_status':overlay_fix.get('status'),'verification_path':overlay_fix.get('postfix_verification_path'),'model_slug':overlay_review.get('browser_evidence',{}).get('message_model_slug'),'extra_high':overlay_review.get('browser_evidence',{}).get('extra_high_visible'),'authority':overlay_review.get('authority',{})},'schedule':[{'start':a,'end':b,'label':c} for a,b,c in schedule]}
 OUT.write_text('window.ADVISOR_MEETING_DATA = '+json.dumps(data,ensure_ascii=False,indent=2)+';\n')
 print(OUT)
 print('papers',len(papers),'review_ready',sum((p['stanford'].get('status')=='READY') for p in papers))

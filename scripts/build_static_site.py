@@ -46,6 +46,7 @@ EXCLUDED_PUBLIC_FILES = {
     "advisor-priority-ideas.js",
     "advisor-priority-ideas.json",
     "advisor-priority-meta-review.json",
+    "advisor-final-decision-sufficiency-review-attempt-20260905.json",
 }
 EXCLUDED_PUBLIC_PREFIXES = (
     "ark-",
@@ -161,6 +162,14 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Fail closed if any frozen advisor-meeting source drifted without a new
+    # meeting-candidate receipt. The validator is zero-authority and does not
+    # rewrite the committed freeze receipt in --check mode.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "validate_advisor_meeting_freeze.py"), "--check"],
+        cwd=ROOT,
+        check=True,
+    )
     # Rebuild the advisor-meeting projection from the committed nine-paper
     # decision cards plus the reality-support and staged resource ledgers.
     # This is a zero-authority frontend projection: it may summarize current
@@ -175,14 +184,6 @@ def build() -> Path:
     # only the current dashboard from the committed read-only timeline.
     subprocess.run(
         [sys.executable, str(ROOT / "scripts" / "build_research_timeline.py"), "--dashboard-only"],
-        cwd=ROOT,
-        check=True,
-    )
-    # Rebuild the advisor-meeting projection from the nine independent
-    # Decision Card source files. This projection is advisory only and cannot
-    # grant scientific, experiment, GPU, or submission authority.
-    subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "build_advisor_meeting_frontend.py")],
         cwd=ROOT,
         check=True,
     )
@@ -356,6 +357,7 @@ def build() -> Path:
         OUTPUT / "generated" / "advisor-paper-pack-manifest.json",
         OUTPUT / "generated" / "advisor-reality-support.json",
         OUTPUT / "generated" / "advisor-resource-ledger.json",
+        OUTPUT / "generated" / "advisor-meeting-freeze-20260906.json",
         OUTPUT / "app.js",
         OUTPUT / "experiment-terminal-view.js",
         OUTPUT / "experiment-page-view.js",
