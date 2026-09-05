@@ -1,0 +1,98 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b3-writeback-aware-ocdbt-proposal-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T22:33:00+08:00",
+  "status": "PROPOSAL_ONLY_INDEPENDENT_REVIEW_REQUIRED_EXECUTION_UNAUTHORIZED",
+  "parent_b2_terminal_adjudication_sha256": "febf6a6967b3869173418766c79ace56aba50149239f3d5d0101b0ab730910c5",
+  "parent_independent_redesign_review": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-b2-post-oom-independent-redesign-review-20260905.json",
+    "verdict": "APPROVE_NEW_MECHANISM_REVIEW_ONLY"
+  },
+  "mechanism": {
+    "name": "B3_WRITEBACK_AWARE_OCDBT_CACHE_RECLAMATION",
+    "single_changed_operational_mechanism": "After each already-bounded TensorStore/OCDBT leaf batch has completed, introduce a durability/completion barrier and reclaim clean filesystem page-cache residency for newly materialized OCDBT data files before staging the next batch.",
+    "purpose": "Bound post-write host-memory lifetime rather than changing model state, checkpoint semantics, D2H batch size, or cgroup ceiling.",
+    "not_a_resource_ladder": true
+  },
+  "frozen_resources": {
+    "host": "69",
+    "machine_id": "c4046d3ca4454a958f5de081aac4dc2e",
+    "required_gpu": "one idle NVIDIA A100-SXM4-80GB for model S/V2 only",
+    "memory_max_gib": 52,
+    "memory_swap_max_gib": 0,
+    "d2h_batch_bytes": 8000000000,
+    "pytree_save_concurrent_gb": 8,
+    "pytree_restore_concurrent_gb": 8,
+    "serial_large_items": ["train_state", "params"]
+  },
+  "checkpoint_semantics_frozen": {
+    "format": "unchanged Orbax PyTree + TensorStore/OCDBT",
+    "label": 10000,
+    "item_names": ["_CHECKPOINT_METADATA", "assets", "params", "train_state"],
+    "content_changed": false,
+    "frequency_changed": false,
+    "normalization_asset_changed": false,
+    "standard_orbax_restore_required": true
+  },
+  "proposed_writeback_control": {
+    "ordering": [
+      "complete existing <=8GB D2H batch",
+      "await all TensorStore writes for that batch",
+      "identify only newly materialized regular OCDBT data files under the current item temporary directory",
+      "open each completed file read-only and request a durability barrier before reclamation",
+      "use os.posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED) only after completion/durability, then close fd",
+      "sample cgroup memory.stat and memory.current",
+      "only then stage the next D2H batch"
+    ],
+    "host_capability": {
+      "python_os_posix_fadvise": true,
+      "POSIX_FADV_DONTNEED": 4
+    },
+    "forbidden": [
+      "global drop_caches",
+      "root-only cache manipulation",
+      "deleting or rewriting OCDBT files",
+      "changing TensorStore/OCDBT spec or checkpoint format",
+      "changing D2H batch bytes after seeing a result",
+      "changing MemoryMax after seeing a result"
+    ]
+  },
+  "mandatory_pre_execution_development_gates": {
+    "D0_static_source_gate": "Demonstrate that the reclamation hook executes only after the corresponding TensorStore batch await/completion and cannot touch files outside the current qualification output root.",
+    "D1_cpu_ocdbt_format_smoke": "Synthetic CPU-only multi-leaf save using the same Orbax/OCDBT handler path; require byte-stable logical arrays, standard Orbax restore, exact SHA256 roundtrip, and no tmp residue after successful finalization.",
+    "D2_cache_accounting_smoke": "In a small disposable user cgroup on /data ext4, record memory.stat anon/file/file_dirty/file_writeback before write, after write, after durability barrier, and after POSIX_FADV_DONTNEED; require the mechanism to reduce clean file-cache charge without changing restored content.",
+    "D3_orchestration_gate": "Repair STARTED-vs-terminal polling; synthetic state machine must prove V1/V2 cannot start on STARTED/SAVE_STARTED/HOLD/absent and can start only after terminal S PASS.",
+    "D4_fresh_independent_review": "A fresh reviewer must inspect D0-D3 receipts and prospectively approve or reject exactly one B3 S/V1/V2 qualification. No execution before this review and a separate authority artifact."
+  },
+  "prospective_model_qualification_if_later_authorized": {
+    "S": "One fresh deterministic step0 save only, on host69 after 3x30s stable-idle admission, same 52GiB/swap0/8GB bounds. Capture time-aligned cgroup memory.current and memory.stat anon/file/file_dirty/file_writeback at state-ready and every post-write reclamation barrier. PASS requires complete exact label10000 checkpoint, no tmp residue, all expected fingerprints, no OOM, and peak strictly below 52GiB.",
+    "V1": "Only after terminal S PASS: CPU direct TensorStore verification of all 207 leaves / expected serialized array bytes by path/shape/dtype/nbytes/SHA256.",
+    "V2": "Only after V1 PASS and a fresh stable-idle GPU gate: standard Orbax restore with unchanged handlers, full aggregate checks, state.step=0.",
+    "stop_rule": "Any D0-D4 or S/V1/V2 failure closes B3. No automatic retry, MemoryMax ladder, D2H ladder, cache-advice ladder, or format change."
+  },
+  "scientific_invariants": {
+    "panel": "26 frozen tasks / 13 matched pairs",
+    "model": "pi0.5 shared26 multitask policy",
+    "physical_batch": 16,
+    "seed": 42,
+    "optimizer": "same frozen AdamW",
+    "lr_schedule": "same frozen schedule",
+    "ema": 0.99,
+    "normalization": "same frozen shared26 normalization",
+    "action_horizon": 32,
+    "optimizer_updates_target": 50000,
+    "recovery_labels": [10000, 20000, 30000, 40000],
+    "scientific_terminal_label": 49999
+  },
+  "scientific_boundary": {
+    "behavior_data_access_authorized": false,
+    "forward_backward_authorized": false,
+    "optimizer_update_authorized": false,
+    "loss_access_authorized": false,
+    "policy_outcome_access_authorized": false,
+    "formal_run3_authorized": false
+  },
+  "host67_forbidden": true,
+  "execution_authorized": false
+}

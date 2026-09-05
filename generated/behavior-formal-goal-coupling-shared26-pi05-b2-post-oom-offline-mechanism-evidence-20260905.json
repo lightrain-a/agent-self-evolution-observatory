@@ -1,0 +1,60 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b2-post-oom-offline-mechanism-evidence-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-05T22:32:00+08:00",
+  "scope": "OFFLINE_MECHANISM_LOCALIZATION_ONLY_NO_MODEL_REPLAY_NO_SCIENTIFIC_ACCESS",
+  "b2_terminal_adjudication_sha256": "febf6a6967b3869173418766c79ace56aba50149239f3d5d0101b0ab730910c5",
+  "source_evidence": {
+    "orbax_serialization_sha256": "5fae9d80c425b56e3622cdf106653d7e6a993e7b450b91c14ec9b5cfb039c8e4",
+    "orbax_tensorstore_utils_sha256": "cf3416cf55669955e69e4f5d8ad08449d3b1c95689c63736c4023188d6958203",
+    "orbax_base_pytree_handler_sha256": "4b22eaac550497ad3e1785baa5d654af46402f4f41534ae36db7238d5b38b246",
+    "b2_serializer_sha256": "de189f04e29e9e87a9311c0edc34ece116200bc5229c857a0241e81904de0b03",
+    "facts": [
+      "BasePyTreeCheckpointHandler.save blocks until copy and commit complete.",
+      "B2 BlockingHandler therefore serializes large PyTree item saves at item-completion granularity.",
+      "Orbax async_serialize_from_host awaits TensorStore fragment writes and uses can_reference_source_data_indefinitely=True.",
+      "Default OCDBT TensorStore context cache_pool#ocdbt.total_bytes_limit is 100000000 bytes, so the configured OCDBT cache pool alone cannot explain tens of GiB growth."
+    ]
+  },
+  "residue_evidence": {
+    "root": "/data/wyt/formal-goal-checkpoint-save-qualification-69-20260905/b2-leaf-batched-8gb-52g/10000.orbax-checkpoint-tmp-0",
+    "params_bytes": 12441740599,
+    "train_state_bytes": 12441896183,
+    "written_total_bytes": 24883636782,
+    "params_metadata_present": true,
+    "params_metadata_mtime": "2026-09-05T22:13:57+08:00",
+    "train_state_metadata_present": false,
+    "train_state_sharding_mtime": "2026-09-05T22:16:23+08:00",
+    "interpretation": "The residue is consistent with params completing first and train_state being partially written second under the intended serial-item contract."
+  },
+  "resource_reconstruction": {
+    "memory_max_bytes": 55834574848,
+    "after_fresh_step0_memory_current_bytes": 19150577664,
+    "written_ocdbt_bytes_observed": 24883636782,
+    "frozen_d2h_batch_max_bytes": 8000000000,
+    "sum_state_plus_written_bytes_plus_max_d2h": 52034214446,
+    "remaining_to_cgroup_ceiling_bytes": 3800360402,
+    "fraction_of_ceiling_before_other_runtime_overhead": 0.9319353570373585,
+    "interpretation": "The observed resident step0 state plus already-written OCDBT bytes plus the prospectively bounded D2H staging budget account for about 93.2% of the 52GiB ceiling before Python/JAX/TensorStore and other runtime overhead. This strongly motivates a write/cache-lifetime mechanism review but does not prove kill-time file-cache residency because historical cgroup memory.stat was not captured."
+  },
+  "negative_diagnostic": {
+    "test": "64MB CPU local TensorStore write weakref/RSS smoke comparing can_reference_source_data_indefinitely=true versus false",
+    "model_loaded": false,
+    "scientific_data_accessed": false,
+    "result": "NO_POST_AWAIT_SOURCE_ARRAY_RETENTION_REPRODUCED",
+    "details": {
+      "true_weak_alive_after_array_delete": false,
+      "false_weak_alive_after_array_delete": false
+    },
+    "interpretation": "The hard-coded TensorStore reference flag is not by itself sufficient to explain B2 host-memory accumulation; a simple local write released the source array after await."
+  },
+  "missing_evidence": [
+    "kill-time cgroup memory.stat anon/file/file_dirty/file_writeback breakdown was not retained",
+    "non-root kernel logs do not expose a more detailed OOM memory breakdown",
+    "there is no authorization to replay B2 merely to collect diagnostics"
+  ],
+  "mechanistic_verdict": "WRITE_PATH_FILE_CACHE_OR_WRITEBACK_LIFETIME_IS_STRONGLY_MOTIVATED_BUT_NOT_DIRECTLY_PROVEN",
+  "next_action": "DESIGN_ONE_PROSPECTIVE_WRITEBACK_AWARE_CACHE_RECLAMATION_CHILD_FOR_INDEPENDENT_REVIEW_ONLY",
+  "formal_run3_authorized": false,
+  "host67_forbidden": true
+}
