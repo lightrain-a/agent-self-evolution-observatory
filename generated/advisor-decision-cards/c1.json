@@ -1,15 +1,21 @@
 {
-  "paper_id":"C1","route":"FREEZE_SUBMIT",
-  "best_case":"把 memory 写入了却没改变行为拆成 write → native exposure → uptake → endpoint 的阶段证据，定位 persistent-memory transport 在哪里衰减。",
-  "story":"persistent state divergence 本身不是 behavioral learning；C1 用 stage-resolved measurement 追踪 branch difference 从写入、原生检索、policy uptake 到 terminal outcome 的传输边界。",
-  "premise":"把 heterogeneous stage evidence 保持为分层估计，比一个 end-to-end 成败率更能回答 memory difference 到底在哪一层消失，并且这种 diagnosis 本身有独立研究价值。",
-  "risk":"writer intervention 是 bundled protocol change，native exposure 还不是 treatment-residual exposure，uptake 主要落在 first action；如果读者要求 causal atom 或新治理方法，当前 measurement paper 会被认为只做诊断。",
-  "strongest_simplification":"forced fixed-evidence capacity 与 native transport 分开：若 memory 在 forced exposure 下可影响行为、但 native path 衰减，就不应继续堆 writer/model baseline；这已经是最便宜、最判别的解释。",
-  "evidence_state":"CURRENT CLAIM SCIENCE CLOSED：write divergence、native exposure、first-action uptake 与 endpoint 分层结果已冻结；forced fixed-evidence capacity 4×4 共 256 rollouts 显示 latent leverage；CBRG method extension 因缺 outcome-independent semantic adjudicator 已 STOP/MERGE，不影响 measurement paper。",
-  "next_closure":"不再新增 provider/GPU 实验。只做 manuscript convergence，并让师兄判断 stage-resolved diagnosis 是否足够 standalone；不得为了更像方法论文重开已停止的 CBRG。",
-  "cost_class":"ZERO_REQUIRED","cost_to_next_decision":"0 新 scientific API/GPU；只剩 paper integration / human review。",
-  "dependencies":["current frozen evidence ledger","no new semantic-adjudicator asset is currently admissible"],
-  "default_action":"FREEZE_MEASUREMENT_PAPER","override_trigger":"只有出现新的、独立资格化 outcome-independent semantic validity asset，或师兄明确认为 standalone measurement value 不足并要求 merge，才改变路线。",
-  "cross_paper_leverage":"为 Paper A/B/E2 提供写入≠使用≠终端效果的 stage vocabulary；可复用测量思想，但不要共享同一 scientific claim。",
-  "advisor_question":"stage-resolved diagnosis 本身是否足够构成 paper-level contribution，还是更适合作为 Paper A/B 的测量组件？"
+  "paper_id": "C1",
+  "route": "FREEZE_SUBMIT",
+  "best_case": "同一 source experience 经不同 feedback-conditioned writer branch 会被写成不同 persistent state；这些差异在 forced exposure 下有行为杠杆，但在 native exposure → uptake → outcome 链路中不一定传成稳定行为差异。",
+  "story": "C1 是一条完整的 feedback → persistent state → behavior 链：第一幕解释差异如何被写进 durable memory，第二幕解释已经写入的差异为什么在 deployed native reuse 中不一定获得稳定 behavioral authority。",
+  "premise": "feedback-to-state 与 state-to-behavior 是同一个 persistent self-improvement lifecycle 的相邻科学问题；把两者放在同一 controlled lineage 中，比只讲 writer effect 或只讲 stage diagnosis 更能解释“写入强但终端弱”的表面矛盾。",
+  "risk": "writer intervention 仍是 bundled protocol change（instruction + outcome semantics），不是 pure reward-bit；native exposure 还是 source-item level，uptake 主要测 first action。因此不能把第一幕写成 atom-level reward causality，也不能把第二幕写成 causal mediation。",
+  "strongest_simplification": "统一故事不需要新 method：same-trajectory writer contrast + stronger wording control 回答“怎么写进去”；forced capacity + native exposure/uptake/outcome 回答“为什么不一定传下去”。这是现有证据的最小完整解释。",
+  "evidence_state": "CURRENT CLAIM SCIENCE CLOSED：24/24 paired source experiences 写出不同 branch memory；same-mode wording control paired excess 0.105, p=0.0078；forced fixed-evidence 256 rollouts 显示 |Δ|=0.15625, p=0.00074；native Shopping 125/172 exposure，但 first-action TV=0.06944, p=0.5801、0/36 modal changes，terminal |Δ|=0.02083, p=0.4289、34/36 zero。",
+  "next_closure": "不新增 provider/GPU 实验。完成 unified-story manuscript convergence；让师兄只判断这条“写进去 + 传不下去”的两幕链是否足够 standalone，以及 bundled writer boundary 是否需要在标题/摘要进一步降噪。",
+  "cost_class": "ZERO_REQUIRED",
+  "cost_to_next_decision": "0 新 scientific API/GPU；当前只需 manuscript integration、PDF QA 与 human/advisor review。",
+  "dependencies": [
+    "current frozen feedback-to-state evidence",
+    "current frozen stage-resolved transport evidence"
+  ],
+  "default_action": "FREEZE_UNIFIED_C1_AFTER_MANUSCRIPT_CONVERGENCE",
+  "override_trigger": "只有师兄认为 feedback-to-state 与 transport 两幕放在一起反而稀释核心贡献，或发现 decisive closest-work collision，才重新考虑拆 C2；不是因为旧 6.7 分数高就机械拆稿。",
+  "cross_paper_leverage": "为 Paper A/B/E2 提供“state creation ≠ native uptake ≠ terminal effect”的 lifecycle vocabulary；但 C1 自己保留完整 feedback→memory→behavior 证据链。",
+  "advisor_question": "把“差异怎么写进去”与“写进去以后为什么不一定传得下去”合成一篇 C1，是否比拆成 C1/C2 更完整、更有说服力？"
 }

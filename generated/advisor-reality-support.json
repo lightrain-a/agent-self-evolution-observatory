@@ -5,9 +5,21 @@
     "E1": {
       "reality_verdict": "SUPPORTED_WITH_BOUNDARY",
       "supporting_cases": [
-        {"title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents", "url": "https://arxiv.org/abs/2608.11079", "why": "Explicitly models self-evolving agents that continually accumulate reusable skills and failure fixes; supports the premise that skill libraries grow and need maintenance."},
-        {"title": "SkillZip Pro: Execution-Aware Dynamic Compression of Progressively Loaded Skills", "url": "https://arxiv.org/abs/2608.30785", "why": "Treats production skills as directory bundles with progressive loading and routing boundaries; directly supports selective access to parts of a skill bundle rather than loading everything."},
-        {"title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory", "url": "https://arxiv.org/abs/2608.16114", "why": "Uses structured skill memory, retrieval ranking, pruning, and merging; supports dynamic skill-memory organization and finite retrieval as real system operations."}
+        {
+          "title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents",
+          "url": "https://arxiv.org/abs/2608.11079",
+          "why": "Explicitly models self-evolving agents that continually accumulate reusable skills and failure fixes; supports the premise that skill libraries grow and need maintenance."
+        },
+        {
+          "title": "SkillZip Pro: Execution-Aware Dynamic Compression of Progressively Loaded Skills",
+          "url": "https://arxiv.org/abs/2608.30785",
+          "why": "Treats production skills as directory bundles with progressive loading and routing boundaries; directly supports selective access to parts of a skill bundle rather than loading everything."
+        },
+        {
+          "title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",
+          "url": "https://arxiv.org/abs/2608.16114",
+          "why": "Uses structured skill memory, retrieval ranking, pruning, and merging; supports dynamic skill-memory organization and finite retrieval as real system operations."
+        }
       ],
       "what_this_does_not_prove": "These systems establish dynamic skill libraries, routing, retrieval, and maintenance; they do not establish that package identity or finite access budget causes the specific STRI instability observed in E1.",
       "strongest_escape": "Semantic deduplication/canonical IDs or semantic-first retrieval may make package identity largely irrelevant in well-designed systems."
@@ -15,9 +27,21 @@
     "B1": {
       "reality_verdict": "SUPPORTED_WITH_BOUNDARY",
       "supporting_cases": [
-        {"title": "From Agent Traces to Trust: Evidence Tracing and Execution Provenance in LLM Agents", "url": "https://arxiv.org/abs/2606.04990", "why": "Explicitly argues that evidence and execution provenance, including provenance-bearing memory, are needed to explain how memory influenced later decisions."},
-        {"title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks", "url": "https://arxiv.org/abs/2602.16313", "why": "Implements memory-agent-environment loops where actions, observations, feedback, and memory are reused across sessions; supports provenance-bearing historical context as a realistic object."},
-        {"title": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management", "url": "https://aclanthology.org/2026.acl-long.981/", "why": "Lets an agent actively store, retrieve, update, summarize, and discard memory, supporting memory metadata/control as a real decision surface."}
+        {
+          "title": "From Agent Traces to Trust: Evidence Tracing and Execution Provenance in LLM Agents",
+          "url": "https://arxiv.org/abs/2606.04990",
+          "why": "Explicitly argues that evidence and execution provenance, including provenance-bearing memory, are needed to explain how memory influenced later decisions."
+        },
+        {
+          "title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks",
+          "url": "https://arxiv.org/abs/2602.16313",
+          "why": "Implements memory-agent-environment loops where actions, observations, feedback, and memory are reused across sessions; supports provenance-bearing historical context as a realistic object."
+        },
+        {
+          "title": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management",
+          "url": "https://aclanthology.org/2026.acl-long.981/",
+          "why": "Lets an agent actively store, retrieve, update, summarize, and discard memory, supporting memory metadata/control as a real decision surface."
+        }
       ],
       "what_this_does_not_prove": "Prior work supports provenance and memory-management relevance, not that an explicit truthful source-outcome field has standalone terminal value beyond identical content.",
       "strongest_escape": "Observed action shifts may be explained by prompt-surface sensitivity, implicit failure wording already present in memory text, or executor-specific decision boundaries."
@@ -25,9 +49,21 @@
     "C1": {
       "reality_verdict": "SUPPORTED",
       "supporting_cases": [
-        {"title": "MemoryArena", "url": "https://arxiv.org/abs/2602.16313", "why": "Directly evaluates whether memory acquired in earlier interaction is used to guide later actions, supporting the need to distinguish memorization from action."},
-        {"title": "MemoryLake on MemoryArena: A Matched Study of Agent Memory Backends", "url": "https://arxiv.org/abs/2608.13883", "why": "Distinguishes write, retrieval, consolidation, budgeting, and prompt assembly as different but still bundled backend operations; this supports stage-aware concern without claiming that MemoryLake causally isolates those components."},
-        {"title": "From Agent Traces to Trust", "url": "https://arxiv.org/abs/2606.04990", "why": "Motivates process-level provenance and failure localization rather than final-answer accuracy alone."}
+        {
+          "title": "MemoryArena",
+          "url": "https://arxiv.org/abs/2602.16313",
+          "why": "Directly evaluates whether memory acquired in earlier interaction is used to guide later actions, supporting the need to distinguish memorization from action."
+        },
+        {
+          "title": "MemoryLake on MemoryArena: A Matched Study of Agent Memory Backends",
+          "url": "https://arxiv.org/abs/2608.13883",
+          "why": "Distinguishes write, retrieval, consolidation, budgeting, and prompt assembly as different but still bundled backend operations; this supports stage-aware concern without claiming that MemoryLake causally isolates those components."
+        },
+        {
+          "title": "From Agent Traces to Trust",
+          "url": "https://arxiv.org/abs/2606.04990",
+          "why": "Motivates process-level provenance and failure localization rather than final-answer accuracy alone."
+        }
       ],
       "what_this_does_not_prove": "These works motivate stage-aware diagnosis but do not prove that C1's exact write→exposure→uptake→endpoint ladder is the uniquely right decomposition or sufficient as a standalone contribution.",
       "strongest_escape": "A simpler end-to-end matched intervention plus forced-exposure diagnostic may answer most practical questions without a full stage taxonomy."
@@ -35,19 +71,43 @@
     "G1": {
       "reality_verdict": "STRONGLY_SUPPORTED",
       "supporting_cases": [
-        {"title": "ST-WebAgentBench", "url": "https://arxiv.org/abs/2410.06703", "why": "Separates task completion from policy compliance and shows large gaps between nominal completion and completion-under-policy in realistic web agents."},
-        {"title": "BrowserART", "url": "https://github.com/scaleapi/browser-art", "why": "Shows refusal-trained LLMs that refuse harmful chat requests can still pursue harmful behavior as browser agents, demonstrating that capability/action surface and safety behavior can diverge."},
-        {"title": "Safety in Self-Evolving LLM Agent Systems", "url": "https://arxiv.org/abs/2606.23075", "why": "Argues that persistent updates can amplify and preserve safety failures, supporting longitudinal safety evaluation as a real system concern."}
+        {
+          "title": "ST-WebAgentBench",
+          "url": "https://arxiv.org/abs/2410.06703",
+          "why": "Shows realistic web-agent safety evaluation requires policy-aware measurement beyond task completion, supporting evaluator design as a load-bearing part of the safety conclusion."
+        },
+        {
+          "title": "BrowserART",
+          "url": "https://github.com/scaleapi/browser-art",
+          "why": "Provides the browser-agent safety substrate used by the frozen study and demonstrates that web-agent safety behavior is evaluated through dedicated safety instrumentation rather than task success alone."
+        },
+        {
+          "title": "Safety in Self-Evolving LLM Agent Systems",
+          "url": "https://arxiv.org/abs/2606.23075",
+          "why": "Motivates longitudinal safety evaluation under persistent updates, making the stability of the evaluator across time and intervention arms a real scientific concern."
+        }
       ],
-      "what_this_does_not_prove": "The literature supports separating task competence and policy compliance; it does not prove that post-treatment shared-capability conditioning with one canonical action graph is unbiased or necessary.",
-      "strongest_escape": "A simpler benign-twin capability gate may be sufficient; over-constrained canonical graphs can misclassify alternative valid paths as incapability."
+      "what_this_does_not_prove": "These works motivate longitudinal/policy-aware safety measurement; they do not prove that HarmBench or DeepSeek is semantic ground truth, nor that the exact evaluator reversal observed in G1 generalizes beyond the frozen BrowserART/AWM case.",
+      "strongest_escape": "If a prospectively defined human/ground-truth adjudicator showed one frozen evaluator to be clearly invalid on the disagreement strata, the ERTA envelope could be unnecessarily conservative; this is why the human semantic-label closure matters."
     },
     "E2": {
       "reality_verdict": "SUPPORTED_CONTEXT_ONLY",
       "supporting_cases": [
-        {"title": "Agentic Memory", "url": "https://aclanthology.org/2026.acl-long.981/", "why": "Makes memory state generation and update an explicit learned operation rather than a passive store."},
-        {"title": "HyperSkill", "url": "https://arxiv.org/abs/2608.16114", "why": "Periodically prunes, merges, and restructures skill memory, showing that the evidence→persistent-state transformation is an active system component."},
-        {"title": "Robo-Cortex", "url": "https://arxiv.org/abs/2605.18729", "why": "Distills trajectories into reusable heuristics and long-term principle memory, supporting experience-to-state synthesis as a realistic self-evolution step."}
+        {
+          "title": "Agentic Memory",
+          "url": "https://aclanthology.org/2026.acl-long.981/",
+          "why": "Makes memory state generation and update an explicit learned operation rather than a passive store."
+        },
+        {
+          "title": "HyperSkill",
+          "url": "https://arxiv.org/abs/2608.16114",
+          "why": "Periodically prunes, merges, and restructures skill memory, showing that the evidence→persistent-state transformation is an active system component."
+        },
+        {
+          "title": "Robo-Cortex",
+          "url": "https://arxiv.org/abs/2605.18729",
+          "why": "Distills trajectories into reusable heuristics and long-term principle memory, supporting experience-to-state synthesis as a realistic self-evolution step."
+        }
       ],
       "what_this_does_not_prove": "These systems establish that persistent state is synthesized from evidence, but they do not report same-evidence regeneration instability or show that generator variance dominates actor/runtime variance.",
       "strongest_escape": "If frozen-state actor repeats or generic canonicalization explain the observed disagreement, state-generation instability may be implementation noise rather than a standalone scientific object."
@@ -55,9 +115,21 @@
     "PAPER_A": {
       "reality_verdict": "SUPPORTED_WITH_BOUNDARY",
       "supporting_cases": [
-        {"title": "MemoryVLA", "url": "https://iclr.cc/virtual/2026/poster/10011504", "why": "Uses a memory bank to retrieve decision-relevant perceptual/cognitive entries for long-horizon robotic action, directly validating memory-conditioned VLA behavior as a real carrier."},
-        {"title": "From Agent Traces to Trust", "url": "https://arxiv.org/abs/2606.04990", "why": "Motivates tracing how memory and evidence support later actions rather than treating influence alone as sufficient explanation."},
-        {"title": "MemoryArena", "url": "https://arxiv.org/abs/2602.16313", "why": "Explicitly tests whether experience distilled into memory guides later decisions across sessions."}
+        {
+          "title": "MemoryVLA",
+          "url": "https://iclr.cc/virtual/2026/poster/10011504",
+          "why": "Uses a memory bank to retrieve decision-relevant perceptual/cognitive entries for long-horizon robotic action, directly validating memory-conditioned VLA behavior as a real carrier."
+        },
+        {
+          "title": "From Agent Traces to Trust",
+          "url": "https://arxiv.org/abs/2606.04990",
+          "why": "Motivates tracing how memory and evidence support later actions rather than treating influence alone as sufficient explanation."
+        },
+        {
+          "title": "MemoryArena",
+          "url": "https://arxiv.org/abs/2602.16313",
+          "why": "Explicitly tests whether experience distilled into memory guides later decisions across sessions."
+        }
       ],
       "what_this_does_not_prove": "Memory-conditioned action is real, but prior work does not establish that source fidelity is separable from generic memory influence under Paper A's proposed controls.",
       "strongest_escape": "If no-op or unrelated-content edits cause comparable action changes, the proposed fidelity interpretation collapses to generic memory/prompt sensitivity."
@@ -65,8 +137,16 @@
     "CONSTRAINT_EXTERNALITY": {
       "reality_verdict": "SUPPORTED_AS_ENGINEERING_RISK",
       "supporting_cases": [
-        {"title": "AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering", "url": "https://arxiv.org/abs/2601.04620", "why": "Treats pass→fail regressions as first-class evidence in agent updates and promotes changes through explicit non-regression gating, directly supporting collateral regression as a practical update risk."},
-        {"title": "Safety in Self-Evolving LLM Agent Systems", "url": "https://arxiv.org/abs/2606.23075", "why": "Shows persistent updates can activate cross-cutting threats and amplify failures across lifecycle stages, supporting the premise that local updates can have non-local consequences."}
+        {
+          "title": "AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering",
+          "url": "https://arxiv.org/abs/2601.04620",
+          "why": "Treats pass→fail regressions as first-class evidence in agent updates and promotes changes through explicit non-regression gating, directly supporting collateral regression as a practical update risk."
+        },
+        {
+          "title": "Safety in Self-Evolving LLM Agent Systems",
+          "url": "https://arxiv.org/abs/2606.23075",
+          "why": "Shows persistent updates can activate cross-cutting threats and amplify failures across lifecycle stages, supporting the premise that local updates can have non-local consequences."
+        }
       ],
       "what_this_does_not_prove": "The engineering risk of regression is real, but no cited work establishes that graph coupling topology causally moderates collateral regression under an identical local repair.",
       "strongest_escape": "Strong regression testing and target-local update interfaces may already control most collateral effects without a new topology-based mechanism."
@@ -74,10 +154,26 @@
     "PAPER_B": {
       "reality_verdict": "STRONGLY_SUPPORTED_WITH_NOVELTY_PRESSURE",
       "supporting_cases": [
-        {"title": "MemoryArena", "url": "https://arxiv.org/abs/2602.16313", "why": "Directly defines multi-session loops where agents learn from earlier actions/feedback and use memory on later tasks."},
-        {"title": "Agentic Memory", "url": "https://aclanthology.org/2026.acl-long.981/", "why": "Provides explicit long-term memory store/retrieve/update/discard operations across long-horizon agent tasks."},
-        {"title": "Robo-Cortex", "url": "https://arxiv.org/abs/2605.18729", "why": "Maintains long-term principle memory distilled from past trajectories in a continuous reflection-adaptation loop."},
-        {"title": "MemoryVLA", "url": "https://iclr.cc/virtual/2026/poster/10011504", "why": "Demonstrates memory-conditioned long-horizon robotic manipulation, supporting embodied memory as a real deployment substrate."}
+        {
+          "title": "MemoryArena",
+          "url": "https://arxiv.org/abs/2602.16313",
+          "why": "Directly defines multi-session loops where agents learn from earlier actions/feedback and use memory on later tasks."
+        },
+        {
+          "title": "Agentic Memory",
+          "url": "https://aclanthology.org/2026.acl-long.981/",
+          "why": "Provides explicit long-term memory store/retrieve/update/discard operations across long-horizon agent tasks."
+        },
+        {
+          "title": "Robo-Cortex",
+          "url": "https://arxiv.org/abs/2605.18729",
+          "why": "Maintains long-term principle memory distilled from past trajectories in a continuous reflection-adaptation loop."
+        },
+        {
+          "title": "MemoryVLA",
+          "url": "https://iclr.cc/virtual/2026/poster/10011504",
+          "why": "Demonstrates memory-conditioned long-horizon robotic manipulation, supporting embodied memory as a real deployment substrate."
+        }
       ],
       "what_this_does_not_prove": "Persistent embodied memory is clearly real, but this creates novelty pressure: Paper B must defend the exact persistent-state fork and longitudinal identification standard, not generic long-term memory or self-evolution.",
       "strongest_escape": "If the committed-update vs frozen-preupdate fork cannot be reproduced exactly, or native retrieval transport is weak, existing multi-session memory evaluation may cover the practical question more simply."
@@ -85,9 +181,21 @@
     "3D": {
       "reality_verdict": "SUPPORTED_WITH_NOVELTY_BOUNDARY",
       "supporting_cases": [
-        {"title": "InstructScene", "url": "https://arxiv.org/abs/2402.04717", "why": "Uses a semantic graph prior and layout decoder for instruction-driven 3D scene synthesis, validating relational graph structure as a real generation interface."},
-        {"title": "SceneNAT", "url": "https://arxiv.org/abs/2601.07218", "why": "Uses explicit subject-predicate-object triplets to improve relational reasoning in language-guided indoor scene synthesis."},
-        {"title": "GeoSceneGraph", "url": "https://arxiv.org/abs/2511.14884", "why": "Leverages scene-graph structure and geometric symmetries for text-guided 3D indoor scene synthesis."}
+        {
+          "title": "InstructScene",
+          "url": "https://arxiv.org/abs/2402.04717",
+          "why": "Uses a semantic graph prior and layout decoder for instruction-driven 3D scene synthesis, validating relational graph structure as a real generation interface."
+        },
+        {
+          "title": "SceneNAT",
+          "url": "https://arxiv.org/abs/2601.07218",
+          "why": "Uses explicit subject-predicate-object triplets to improve relational reasoning in language-guided indoor scene synthesis."
+        },
+        {
+          "title": "GeoSceneGraph",
+          "url": "https://arxiv.org/abs/2511.14884",
+          "why": "Leverages scene-graph structure and geometric symmetries for text-guided 3D indoor scene synthesis."
+        }
       ],
       "what_this_does_not_prove": "These works establish that graph relations matter; they do not establish a fixed-count endpoint-sharing effect or locate it to text→graph versus graph→scene.",
       "strongest_escape": "Lexical repetition, hub-object salience/size, or predicate implication may explain Chain/Hub differences even after relation count is matched."

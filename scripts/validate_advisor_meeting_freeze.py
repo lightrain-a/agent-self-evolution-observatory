@@ -74,6 +74,21 @@ def main() -> int:
         if r.get("score_is_official_venue_score") is not False:
             errors.append(f"Stanford score incorrectly marked official: {pid}")
 
+    exact_review_count = 0
+    prior_review_count = 0
+    manifest_by_id = {p["paper_id"]: p for p in manifest.get("papers", [])}
+    for pid in ORDER:
+        r = load(G / f"stanford-{pid.lower()}-review.json")
+        m = manifest_by_id[pid]
+        if r.get("pdf_sha256") == m.get("pdf_sha256"):
+            exact_review_count += 1
+        else:
+            state = (m.get("stanford_review") or {}).get("status")
+            if state == "PRIOR_VERSION_REVIEW_AVAILABLE":
+                prior_review_count += 1
+            else:
+                errors.append(f"Stanford review SHA mismatch not explicitly labelled prior-version: {pid}")
+
     for p in manifest.get("papers", []):
         pid = p["paper_id"]
         pdf = PDF_DIR / p["filename"]
@@ -105,12 +120,17 @@ def main() -> int:
             if action.startswith("RUN_"):
                 errors.append(f"{pid} default action implies immediate provider execution without current authority: {action}")
         if pid == "G1":
-            if auth.get("api_units") not in (0, "0"):
-                errors.append("G1 must have zero committed provider calls before explicit Q0 authority")
-            if "AUTHORITY" not in str(c.get("default_action") or ""):
-                errors.append("G1 default action must explicitly bind Q0 authority")
-            if not any("authority" in str(x).lower() for x in c.get("dependencies") or []):
-                errors.append("G1 dependencies must include explicit Q0 authority")
+            if auth.get("api_units") not in (0, "0") or str(auth.get("gpu")) != "0":
+                errors.append("G1/ERTA must have zero committed provider/GPU calls for the current claim")
+            action = str(c.get("default_action") or "")
+            if "HUMAN" not in action or "ERTA" not in action:
+                errors.append("G1 default action must bind human semantic evidence and ERTA freeze, not MCTA execution")
+            deps = " ".join(str(x).lower() for x in c.get("dependencies") or [])
+            if "human" not in deps or "semantic" not in deps:
+                errors.append("G1 dependencies must include human semantic-label evidence")
+            route_text = (str(c.get("default_action") or "") + " " + str(c.get("next_closure") or "")).lower()
+            if "run_q0" in route_text or "execute_q0" in route_text or "run_mcta" in route_text or "execute_mcta" in route_text:
+                errors.append("G1 current execution route must not enter MCTA/Q0")
         if pid == "CONSTRAINT_EXTERNALITY":
             if auth.get("api_units") not in (0, "0"):
                 errors.append("Constraint must have zero committed provider calls after consumed readiness authority")
@@ -137,6 +157,7 @@ def main() -> int:
         G / "advisor-final-decision-sufficiency-review-attempt-20260905.json",
         *card_paths,
         *review_paths,
+        G / "stanford-g2-mcta-review.json",
     ]
     freeze_hash, source_hashes = canonical_hash(sources)
 
@@ -153,10 +174,13 @@ def main() -> int:
             "decision_cards_9_of_9": len(cards) == 9,
             "reality_support_9_of_9": len((reality.get("papers") or {})) == 9,
             "resource_ledger_9_of_9": len((resources.get("papers") or {})) == 9,
-            "stanford_reviews_9_of_9_ready": all((G / f"stanford-{pid.lower()}-review.json").exists() and load(G / f"stanford-{pid.lower()}-review.json").get("status") == "READY" for pid in ORDER),
+            "stanford_review_overlays_9_of_9_available": all((G / f"stanford-{pid.lower()}-review.json").exists() and load(G / f"stanford-{pid.lower()}-review.json").get("status") == "READY" for pid in ORDER),
+            "stanford_exact_current_review_count": exact_review_count,
+            "stanford_prior_version_review_count": prior_review_count,
             "pdf_sha_binding_9_of_9": all((PDF_DIR / p["filename"]).exists() and sha(PDF_DIR / p["filename"]) == p["pdf_sha256"] for p in manifest.get("papers", [])),
             "route_authority_cost_consistency": not any("route" in e.lower() or "authority" in e.lower() or "committed" in e.lower() for e in errors),
-            "prior_independent_reality_cost_review_valid": overlay.get("browser_evidence", {}).get("assistant_complete") is True,
+            "prior_independent_reality_cost_review_valid_for_unchanged_objects": False,
+            "lineage_correction_requires_reaudit_for": ["C1", "G1"],
             "prior_reality_cost_fixes_closed": overlay_fix.get("status") == "FIXES_APPLIED_DETERMINISTIC_PASS",
             "final_decision_sufficiency_attempt_fail_closed": final_attempt.get("valid_review_count") == 0,
         },

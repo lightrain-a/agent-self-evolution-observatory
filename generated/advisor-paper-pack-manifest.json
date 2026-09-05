@@ -29,27 +29,39 @@
     },
     {
       "paper_id": "C1",
-      "title": "Stage-Resolved Memory Transport",
+      "title": "From Feedback to Memory to Behavior: How Persistent Differences Are Written and Where Native Transport Breaks",
       "filename": "03-C1-Stage-Resolved-Memory-Transport.pdf",
-      "paper_candidate_ref": "C1 R7 post-Stanford repair PDF",
+      "paper_candidate_ref": "C1 unified feedback→persistent-state→native-transport meeting candidate rebuilt 2026-09-06",
       "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
-      "delta": "Sep4 first-action/collision/noise-floor audits postdate R7 PDF; do not silently fold into claims.",
+      "delta": "Unified framing now integrates the old feedback-to-state result with the stage-resolved native-transport result; later collision/noise-floor diagnostics remain separate unless explicitly integrated.",
       "paper_status": "PDF_READY",
       "pages": 14,
-      "bytes": 305587,
-      "pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167"
+      "bytes": 305944,
+      "pdf_sha256": "fb09cbb4811b7350097f7c4659aa08238105076197e9ed487524cb6d75dee937",
+      "stanford_review": {
+        "status": "PRIOR_VERSION_REVIEW_AVAILABLE",
+        "prior_pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167",
+        "prior_score": 5.2,
+        "note": "The 2026-09-05 Stanford review applies to the immediately preceding stage-resolved PDF, not this reframed unified candidate."
+      }
     },
     {
       "paper_id": "G1",
-      "title": "Separating Capability Unlock from Safety Drift in Persistent Browser Agents",
-      "filename": "04-G1-MCTA.pdf",
-      "paper_candidate_ref": "origin/paper/g1-mcta-paper-iteration-20260904@236d4efe",
+      "title": "Temporal Safety Conclusions Are Evaluator-Relative: A Controlled Audit of Persistent Web Agents",
+      "filename": "04-G1-ERTA.pdf",
+      "paper_candidate_ref": "G1 ERTA R8 exact candidate; same SHA as Stanford submission 2026-08-30",
       "scientific_canonical_ref": "origin/main@bb9b99d915de1141ac39654550dd91f81070ee00",
-      "delta": "Preconfirmatory MCTA manuscript: future safety outcome remains prospective.",
+      "delta": "MCTA capability-matching is a separate G2 candidate and remains STOP/HOLD; it is not the next revision of ERTA. ERTA remains the G1 empirical paper.",
       "paper_status": "PDF_READY",
-      "pages": 6,
-      "bytes": 147930,
-      "pdf_sha256": "4e9059f1f14fcb92c2b5911d4f90df40fc36e3d376ef8694eec3902acf800314"
+      "pages": 11,
+      "bytes": 234040,
+      "pdf_sha256": "77d746801d41298e588882821218b2654392243af0c3e9e8a85054212bc17fe0",
+      "stanford_review": {
+        "status": "READY",
+        "score": 6.3,
+        "review_date": "2026-08-30T09:10:34.034124",
+        "note": "Exact current PDF SHA already reviewed; exactly-once policy forbids duplicate upload of the identical artifact."
+      }
     },
     {
       "paper_id": "E2",

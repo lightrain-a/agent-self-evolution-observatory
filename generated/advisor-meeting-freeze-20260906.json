@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "meeting_id": "2026-09-06-advisor",
   "status": "MEETING_CANDIDATE_FROZEN",
-  "meeting_candidate_hash": "6d5e9cbc302dfcc7fbcb6ba5cdfff99a8352f4d3f350e5c658a2545374528733",
+  "meeting_candidate_hash": "58e21fc579519a0110bf802bf5f83f21391092360ef9b3475c93b5f2fbd2de81",
   "paper_count": 9,
   "paper_order": [
     "E1",
@@ -18,18 +18,24 @@
   "route_summary": {
     "EXECUTE_FROZEN": 2,
     "FORMALIZE_FIRST": 2,
-    "FREEZE_SUBMIT": 2,
-    "QUALIFY_FIRST": 3
+    "FREEZE_SUBMIT": 3,
+    "QUALIFY_FIRST": 2
   },
   "checks": {
     "paper_pack_9_of_9": true,
     "decision_cards_9_of_9": true,
     "reality_support_9_of_9": true,
     "resource_ledger_9_of_9": true,
-    "stanford_reviews_9_of_9_ready": true,
+    "stanford_review_overlays_9_of_9_available": true,
+    "stanford_exact_current_review_count": 8,
+    "stanford_prior_version_review_count": 1,
     "pdf_sha_binding_9_of_9": true,
     "route_authority_cost_consistency": true,
-    "prior_independent_reality_cost_review_valid": true,
+    "prior_independent_reality_cost_review_valid_for_unchanged_objects": false,
+    "lineage_correction_requires_reaudit_for": [
+      "C1",
+      "G1"
+    ],
     "prior_reality_cost_fixes_closed": true,
     "final_decision_sufficiency_attempt_fail_closed": true
   },
@@ -45,7 +51,7 @@
     },
     {
       "path": "generated/advisor-decision-cards/c1.json",
-      "sha256": "b635d9d22d167c3348297d5db0846da9ca66e9bd8dcf9eb06ba36c70e5a2e664"
+      "sha256": "2e70edfadb101129d0ddd14dc77945b14e46b6a6f0f638b91d2d1acd2b01d943"
     },
     {
       "path": "generated/advisor-decision-cards/constraint_externality.json",
@@ -61,7 +67,7 @@
     },
     {
       "path": "generated/advisor-decision-cards/g1.json",
-      "sha256": "70fe82aef7ccd028ff51b46932f3cdc2018236fcb56ff86fe71cb3f6002e3b09"
+      "sha256": "421e759dfa559ebc2786a758f4363d315a1ecc55a6a770b61eab1242678f3fff"
     },
     {
       "path": "generated/advisor-decision-cards/paper_a.json",
@@ -77,7 +83,7 @@
     },
     {
       "path": "generated/advisor-paper-pack-manifest.json",
-      "sha256": "2bfa40a06dafcff0b8633436cab921a84f82c7817c405f53707b3f17847c91a6"
+      "sha256": "60321e70b97e230748e6ce847cd08fe52fa0acc555387f299c2cffe47809532a"
     },
     {
       "path": "generated/advisor-reality-cost-fix-closure-20260905.json",
@@ -89,11 +95,11 @@
     },
     {
       "path": "generated/advisor-reality-support.json",
-      "sha256": "1436797b1f54667775529cc24820f0d65aa866327be3d4f54dd0d0daca9b53b8"
+      "sha256": "8d06715fecd913be711e42fc717903a10a4c2e7c67e4a44af17814d9e2d1b532"
     },
     {
       "path": "generated/advisor-resource-ledger.json",
-      "sha256": "cabe6fed6900bdb05dc305f47d8aaed8d3ffe235d6d1beab14eaec800730fe47"
+      "sha256": "ae84ef8a75c020115a789e94c7a557f2bde34aea8caf66a3c39007d4dffa897b"
     },
     {
       "path": "generated/stanford-3d-review.json",
@@ -121,7 +127,11 @@
     },
     {
       "path": "generated/stanford-g1-review.json",
-      "sha256": "f048287c84648ca3d5228ce14cbf0b5684229a47d9ec6f5c5e78430c9fe9b659"
+      "sha256": "5c13015d559184207a2303aec98b9094aadb3938af5efba9d60066547f84f5f4"
+    },
+    {
+      "path": "generated/stanford-g2-mcta-review.json",
+      "sha256": "aa80a634c1887ffc87af0448eb00178b0801dd17f47efc3bd012b669b033984a"
     },
     {
       "path": "generated/stanford-paper_a-review.json",

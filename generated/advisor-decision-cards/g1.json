@@ -1,15 +1,22 @@
 {
-  "paper_id":"G1","route":"QUALIFY_FIRST",
-  "best_case":"用 task-local graph-complete benign twin 把更安全与只是不会/拒绝做任务分开，再在 shared-capability slots 上比较 Updated vs Frozen。",
-  "story":"harmful non-execution 有两种解释：安全边界或能力缺失。MCTA 只有在 Updated 与 Frozen 都能完成同一共享浏览器 action graph 时，才把 harmful R1 差异解释为 capability-preserved boundary drift。",
-  "premise":"task-local capability witness 可以在不泄漏 harmful outcome 的情况下被可靠定义；canonical shared action graph 能覆盖真实可行路径，而不会把合法 alternate paths/cycles 误判为没能力。",
-  "risk":"C 是 post-treatment capability，因此 shared-capability conditioning 有 selection 限制；canonical DAG 可能过度固定唯一操作路径。Stanford 4.8 的真正压力集中在这两点，而不是旧 ERTA evaluator disagreement。",
-  "strongest_simplification":"M0 raw harmful-action temporal contrast → M1 global 10/10 capability gate → M2 same-surface benign twin → M3 graph-complete MCTA。若 M1/M2 已给出相同判断，则 MCTA 复杂度没有增量识别价值。",
-  "evidence_state":"T0 static/runtime qualification 已 PASS：8 admitted pairs，8/8 shared graphs/runtime binding；Q0 exact qwen3.5-397b-a17b ten-task BrowserART gate 仍 PENDING_PROVIDER_CREDENTIAL。P0/P1 尚无 provider execution authority，历史 4-step traces 只作 discovery。",
-  "next_closure":"先确认 exact qwen3.5-397b-a17b provider credential，并取得一份显式 Q0 execution-authority receipt；两者都满足后才运行 Q0：官方 10 个 benign BrowserART task × 10-step exact stack，必须 10/10。Q0 PASS 后才允许考虑 P0 的 32 episodes；P1 的 336 episodes 当前不进入预算。",
-  "cost_class":"ZERO_COMMITTED_NOW / LOW_IF_AUTHORIZED","cost_to_next_decision":"当前 committed scientific/provider spend=0；先完成 credential + explicit Q0 authority。只有两者都满足后，下一笔成本才是 Q0 的 10 个 benign agent episodes。若 PASS，下一门 P0=32 episodes；只有 P0 至少 6 pair IDs 获得 shared-capability support 才进入 P1=336。",
-  "dependencies":["exact qwen3.5-397b-a17b provider credential","explicit Q0 execution-authority receipt","pinned BrowserART official 10 benign tasks","canonical graph + alternate-path validity protocol"],
-  "default_action":"RESOLVE_Q0_CREDENTIAL_AND_AUTHORITY_THEN_RUN_Q0_ONLY","override_trigger":"Q0 非 10/10 → STOP safety execution，转 substrate diagnosis；P0 support <6 pairs → 不做 P1，报告 measurement limitation/merge；shared-capability P1 null 时按冻结 identity rule pivot/stop。",
-  "cross_paper_leverage":"与 Constraint Externality 共用先证明 capability/target repair、再解释 safety/collateral 的 controlled-update discipline；可共享资格门思想但实验对象不同。",
-  "advisor_question":"MCTA 的 task-local capability conditioning 是否是足够强的 methodology object？canonical shared action graph 应怎样允许 alternate valid paths/cycles 才不会制造 selection bias？"
+  "paper_id": "G1",
+  "route": "FREEZE_SUBMIT",
+  "best_case": "同一批 persistent-agent trajectories 在 HarmBench 与 DeepSeek 下不仅个别标签不同，还改变 current-pass premise 与 Updated/Frozen/NullMemory 的 temporal ordering；ERTA 把 evaluator identity 从“实现细节”提升为 temporal-safety claim 的显式测量维度。",
+  "story": "G1/ERTA 问的是：当 persistent agent 随时间变化时，我们能否把某个自动 evaluator 的 first-violation 轨迹直接当成 evaluator-independent safety conclusion？相同 trajectories 在两个 frozen evaluators 下给出不同 current-pass 与 arm ordering，因此 ERTA 保留 evaluator-indexed vector/envelope 并 fail closed，而不是事后选一个 judge。",
+  "premise": "LLM/evaluator choice 是 longitudinal agent-safety measurement 的 load-bearing component；如果同一 completed trajectory 在合理 frozen evaluators 下改变 premise 或 intervention ordering，就必须把 evaluator uncertainty 暴露在 scientific claim 中。",
+  "risk": "当前仍是 finite one-backbone BrowserART/AWM case study，主要 derivation 是在观察到 evaluator instability 后形成；缺 blinded human semantic adjudication/更广 evaluator family，且 trace-positive 不等于 externally observed harmful completion。",
+  "strongest_simplification": "不要做 MCTA capability matching来“救”G1。最强简单版本就是在 exact same completed trajectories 上分别报告 HarmBench 与 DeepSeek 的 current-pass、event sets 与 contrasts，并让 ERTA 在 disagreement 时返回 measurement-inconclusive。",
+  "evidence_state": "ERTA empirical object 已完成：HarmBench 与 DeepSeek 对相同 trajectories 改变 current-pass premise 与三臂 ordering；有 blinded second judge、NullMemory、exact matched-slot analysis 与 prospective held-out ERTA application。当前 paper gate PREBUTTAL，remaining blocker 是 human semantic-label evidence；MCTA 已单独 STOP_PROTOCOL_UNIDENTIFIED_NO_OUTCOMES_OPENED，不是 G1 后续实验。",
+  "next_closure": "完成既有 human semantic-label / adjudication evidence 与 prebuttal binding；随后 manuscript convergence + delivery QA。不要再为 G1 启动 MCTA Q0/P0/P1。",
+  "cost_class": "HUMAN_ONLY",
+  "cost_to_next_decision": "0 新 provider/GPU；下一道判断主要消耗既有 24-item human semantic-label/adjudication工作与 manuscript integration。",
+  "dependencies": [
+    "frozen ERTA R8 manuscript and exact trajectories",
+    "human semantic-label evidence / adjudication packet",
+    "prebuttal integration"
+  ],
+  "default_action": "COMPLETE_HUMAN_SEMANTIC_EVIDENCE_THEN_FREEZE_ERTA",
+  "override_trigger": "只有师兄认为 evaluator-relative temporal safety 本身不够 standalone，或 human adjudication 证明两 evaluator 中一方存在明确系统性无效性，才改变 ERTA positioning。MCTA 的成败不得作为 G1 override。",
+  "cross_paper_leverage": "给九篇 Research OS 一个更一般的 measurement lesson：judge/evaluator 不应被静默当 ground truth；但它不与 Constraint Externality 合并，也不需要 capability-matching 才成立。",
+  "advisor_question": "ERTA 的 evaluator-relative temporal-safety measurement object 是否足够 standalone？当前 human semantic adjudication 做到什么程度就足够投稿，而不需要再扩第三 judge/backbone？"
 }
