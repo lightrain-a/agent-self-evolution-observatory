@@ -1,0 +1,55 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-async-checkpoint-resource-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:40:00Z",
+  "status": "PI05_ASYNC_CHECKPOINT_RESOURCE_PATH_CLOSED",
+  "decision": "STOP_MEMORYMAX_ONLY_REPAIR_AND_TEST_SOURCE_NATIVE_SYNCHRONOUS_CHECKPOINTING",
+  "evidence": {
+    "async_40g": {
+      "authority_sha256": "db430009a9b52eca764bd8eb9c214550f477cb402df9cc62acd3c0b8a9f66fb1",
+      "partial_receipt_sha256": "e788173d21008df2b0e1643dbc5421b139a94c04dbde1d4cf5ec478b0256f162",
+      "systemd_result": "oom-kill",
+      "memory_max_bytes": 42949672960,
+      "memory_peak_bytes": 42949672960,
+      "checkpoint_save_completed": false,
+      "checkpoint_restore_completed": false,
+      "real_scientific_optimizer_updates": 0
+    },
+    "async_64g": {
+      "authority_sha256": "f5b7f40cf0dd16efa78925b6366a7171a8761b37a0a5ecf8b7a3602bc9671c49",
+      "partial_receipt_sha256": "242983c577f9be174e5aebe46e7e18349db185694cab196e10eb0a3116b6178d",
+      "systemd_result": "oom-kill",
+      "memory_max_bytes": 68719476736,
+      "memory_peak_bytes": 68719476736,
+      "checkpoint_save_completed": false,
+      "checkpoint_restore_completed": false,
+      "real_scientific_optimizer_updates": 0
+    }
+  },
+  "source_audit": {
+    "orbax_checkpoint_version": "0.11.13",
+    "orbax_checkpoint_manager_source_sha256": "6dcc485669fb2ac0e52929dd7353f7d662da465f1f492c5a86058cea959dc2ba",
+    "openpi_checkpoints_py_sha256": "9e8782f0171eec4b5623728204f975a976d5f89defa7b317100db6395990dd13",
+    "checkpoint_manager_options_default_enable_async_checkpointing": true,
+    "openpi_initialize_checkpoint_dir_explicitly_sets_enable_async_checkpointing": false,
+    "resolved_current_behavior": "AsyncCheckpointer-backed CheckpointManager",
+    "source_native_alternative": "CheckpointManagerOptions(enable_async_checkpointing=False) resolves to synchronous Checkpointer-backed saving while retaining the same item handlers and checkpoint schema."
+  },
+  "interpretation": {
+    "supported": "The asynchronous checkpoint-save implementation is not viable for this single-GPU practical π0.5 state under either 40 GiB or 64 GiB no-swap cgroup limits on the clean 125 GiB host. Both failures occur with fresh step-0 state and zero real training updates.",
+    "not_supported": "The evidence does not justify unlimited host-memory escalation, a different checkpoint format, reduced checkpoint content, or a change to scientific training variables.",
+    "why_sync_is_next": "Orbax 0.11.13 exposes a source-native synchronous mode. Testing that implementation changes checkpoint scheduling/lifetime only and directly targets the observed host-memory staging failure."
+  },
+  "next_repair": {
+    "name": "SOURCE_NATIVE_SYNCHRONOUS_CHECKPOINT_SAVE",
+    "frozen_memory_ladder_gib": [40, 64],
+    "rule": "Run synchronous 40 GiB first. Only if it fails specifically by cgroup OOM before completed save/restore may synchronous 64 GiB be authorized. Stop at the first PASS. No memory ceiling above 64 GiB is authorized by this adjudication.",
+    "checkpoint_items_unchanged": true,
+    "checkpoint_format_unchanged": true,
+    "checkpoint_labels_unchanged": true,
+    "scientific_training_variables_unchanged": true,
+    "formal_run3_authorized": false,
+    "policy_evaluation_authorized": false
+  }
+}

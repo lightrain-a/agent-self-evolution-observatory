@@ -1,0 +1,107 @@
+{
+  "adjudication_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-40g-failure-adjudication-20260905.json",
+  "adjudication_sha256": "cce25065be0725e651c70b014b21835cf04158bdc6cf3701a7631bcdcf3bbb27",
+  "authority_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-64g-repair1-qualification-authority-20260905.json",
+  "authority_sha256": "f5b7f40cf0dd16efa78925b6366a7171a8761b37a0a5ecf8b7a3602bc9671c49",
+  "backward_pass_executed": false,
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "batch_size_configured": 16,
+  "checkpoint_restore_completed": false,
+  "checkpoint_save_completed": false,
+  "checkpoint_save_started": true,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "dataset_accessed": false,
+  "formal_training_authorized": false,
+  "forward_pass_executed": false,
+  "generated_at": "2026-09-05T03:35:19.025854+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host": "67",
+  "host_before": {
+    "MemAvailable_kib": 120085212,
+    "MemFree_kib": 35398348,
+    "MemTotal_kib": 131739372,
+    "SwapFree_kib": 19460092,
+    "SwapTotal_kib": 19531772,
+    "process_rss_kib": 14864
+  },
+  "loss_values_read_or_reported": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_executed": false,
+  "policy_outcomes_read": false,
+  "portable_openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "portable_openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "real_scientific_optimizer_updates": 0,
+  "resource_scope_before": {
+    "cpu_affinity": "0-63",
+    "memory_current_bytes": 12473761792,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_max_bytes": 68719476736,
+    "memory_peak_bytes": 12490440704,
+    "memory_swap_max_bytes": 0,
+    "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-step0-checkpoint-save-64g-repair1-67-20260905.service"
+  },
+  "runner_sha256": "52de8e6c135a85f7e6fceecc3b93aedcbb5297714009a68b647a82095d69efa8",
+  "save_label": 10000,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-64g-repair1-qualification-v1",
+  "seed": 42,
+  "snapshots": {
+    "after_state": {
+      "cgroup": {
+        "cpu_affinity": "0-63",
+        "memory_current_bytes": 21497577472,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_max_bytes": 68719476736,
+        "memory_peak_bytes": 39002181632,
+        "memory_swap_max_bytes": 0,
+        "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-step0-checkpoint-save-64g-repair1-67-20260905.service"
+      },
+      "gpu": {
+        "gpus": [
+          {
+            "index": 0,
+            "memory_total_mib": 81920,
+            "memory_used_mib": 73493,
+            "name": "NVIDIA A100-SXM4-80GB",
+            "utilization_gpu_percent": 0
+          }
+        ]
+      },
+      "host": {
+        "MemAvailable_kib": 110872828,
+        "MemFree_kib": 25633528,
+        "MemTotal_kib": 131739372,
+        "SwapFree_kib": 19460092,
+        "SwapTotal_kib": 19531772,
+        "process_rss_kib": 8309208
+      }
+    }
+  },
+  "status": "PI05_STEP0_CHECKPOINT_SAVE_64G_REPAIR1_SAVE_STARTED",
+  "train_state_ready": true
+}

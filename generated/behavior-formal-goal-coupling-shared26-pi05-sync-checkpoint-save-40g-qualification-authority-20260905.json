@@ -1,0 +1,73 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-40g-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:42:00Z",
+  "status": "AUTHORIZED_PI05_SYNC_CHECKPOINT_SAVE_QUALIFICATION",
+  "scope": "Stage 1 of the preregistered source-native synchronous checkpoint repair. Test only enable_async_checkpointing=False under the original 40 GiB no-swap ceiling. No real data, optimizer update, loss read, policy outcome, or formal run3 is authorized.",
+  "parent_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-async-checkpoint-resource-adjudication-20260905.json",
+  "adjudication_sha256": "9907427fdf7c90364cf25247f6a46a56173907ab12ef0ba58347a20d8962ef20",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_sync_checkpoint_save_qualification.py",
+  "runner_sha256": "5a8c9143b3a9d95650b315af8bdcf0a929550eda894364c4c71f9056d693e8a1",
+  "launcher_path": "scripts/run_behavior_formal_goal_pi05_sync_checkpoint_save_40g_qualification_67.sh",
+  "launcher_sha256": "2b5dd25078b83489e89a8e0c6c3398abcd646f6f8bfac3fc8d0daefbd15e36b7",
+  "host": "67",
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "checkpoint_implementation": {
+    "orbax_checkpoint_version": "0.11.13",
+    "enable_async_checkpointing": false,
+    "resolved_checkpointer_must_not_be": "AsyncCheckpointer",
+    "item_handlers_unchanged": ["assets: CallbackHandler", "train_state: PyTreeCheckpointHandler", "params: PyTreeCheckpointHandler"],
+    "max_to_keep": 1,
+    "keep_period": "source cfg.keep_period",
+    "checkpoint_format_changed": false,
+    "checkpoint_content_changed": false,
+    "save_label": 10000,
+    "completion_barrier": "manager.wait_until_finished() before restore or any subsequent model operation"
+  },
+  "scientific_invariants": {
+    "practical_batch": 16,
+    "seed": 42,
+    "base_checkpoint_unchanged": true,
+    "optimizer_unchanged": true,
+    "lr_schedule_unchanged": true,
+    "ema_unchanged": true,
+    "normalization_unchanged": true,
+    "action_horizon": 32,
+    "target_training_updates": 50000,
+    "terminal_scientific_checkpoint_label": 49999,
+    "policy_outcome_protocol_unchanged": true
+  },
+  "qualification": {
+    "initial_state": "fresh step-0 practical-batch16 train state",
+    "output_root": "/data/wyt/formal-goal-checkpoint-save-qualification-67-20260905/sync-save-40g",
+    "receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync-checkpoint-save-40g-qualification-result-67-20260905.json",
+    "behavior_dataset_access": false,
+    "forward_pass": false,
+    "backward_pass": false,
+    "optimizer_update": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_read": false,
+    "policy_outcome_read": false
+  },
+  "pass_gate": {
+    "required_status": "PI05_SYNC_CHECKPOINT_SAVE_40G_PASS",
+    "resolved_checkpointer_must_be_synchronous": true,
+    "checkpoint_save_completed": true,
+    "checkpoint_restore_completed": true,
+    "manager_contains_label_10000": true
+  },
+  "if_pass": "Stop the memory ladder. A separate formal-run3 authority may be designed using synchronous checkpointing and a checkpoint completion barrier; no automatic run3 launch.",
+  "if_cgroup_oom_before_pass": "Only synchronous 64 GiB stage 2 may be separately authorized, because [40,64] was frozen before stage 1. No higher memory ceiling is allowed.",
+  "if_other_failure": "HOLD and adjudicate; do not escalate memory automatically.",
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false
+}
