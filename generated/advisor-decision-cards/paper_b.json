@@ -1,15 +1,24 @@
 {
-  "paper_id":"PAPER_B","route":"FORMALIZE_FIRST",
-  "best_case":"用 exact persistent-state fork（Committed-Update vs Frozen-Preupdate）和 disjoint source/verification/future episodes，定义真正跨 episode 的 embodied self-evolution。",
-  "story":"看过 memory 后动作变了不是 persistent learning。Paper B 要证明一个经过治理的 committed update 从 source episode 存入后，能在独立 future episode 被原生检索并相对 exact pre-update state 造成 durable benefit。",
-  "premise":"persistent-state fork 可在 simulator/RNG/memory service 下做到可审计；native retrieval failure 应作为 total effect 的一部分；source/verification/future 分工可以避免未来 outcome 泄漏。",
-  "risk":"当前没有 longitudinal causal result；potential-outcome/SCM estimand、unit/clustering、exact object identity 与 stochastic fork 还未完全形式化。若只是 carrier influence，它与 Paper A/C1 没有足够 distinctness。",
-  "strongest_simplification":"Primary 是 COMMITTED_UPDATE vs exact FROZEN_PREUPDATE；NullMemory 只作依赖诊断，wrong/sham 控 extra context；只有要声称 governance superiority 才必须增加 ALWAYS_WRITE。",
-  "evidence_state":"PRECONFIRMATORY：MemoryVLA carrier/local influence 已知，但 persistent commit→native retrieval→future utility 链没有 confirmatory outcome。Stanford 5.6 主要要求 formal causal estimand、fork reproducibility、hash identity、randomization unit/power。",
-  "next_closure":"先冻结 causal estimand/SCM、stream-level randomization、exact persistent-state/hash/RNG fork qualification。通过后只启动 Phase A semantic sensitivity 32×4=128；Phase B 24 streams×3=72 只有 Phase A PASS 才开，完整 base=200 runs。",
-  "cost_class":"LOW_NOW / MEDIUM_HIGH_IF_QUALIFIED","cost_to_next_decision":"当前 formalization + fork qualification 接近零 GPU；Phase A 才需要 128 local VLA runs。不要现在把 Phase B 72 runs 也当成承诺成本。",
-  "dependencies":["MemoryVLA/LIBERO persistent store snapshot","immutable committed-object identity/hash","source/verification/future split","native retrieval rule","deterministic snapshot/RNG policy"],
-  "default_action":"FREEZE_CAUSAL_FORK_THEN_PHASE_A_ONLY","override_trigger":"fork 不可精确复现、Phase A semantic sensitivity fail、或师兄决定与 Paper A 合并 → 不进入 Phase B；governance superiority 未执行 ALWAYS_WRITE 时不得写方法优越性。",
-  "cross_paper_leverage":"Paper A 可作为 future-episode influence/fidelity mechanism readout；C1 提供 transport vocabulary；B1 提供 provenance control，但 Paper B 的主 claim 必须保持 longitudinal utility。",
-  "advisor_question":"longitudinal persistent-state fork 是否足够构成独立 embodied self-evolution paper？Paper A 应作为它的 measurement module，还是保持两篇？"
+  "paper_id": "PAPER_B",
+  "route": "FORMALIZE_FIRST",
+  "best_case": "用 exact persistent-state fork（Committed-Update vs Frozen-Preupdate）和 disjoint source/verification/future episodes，定义真正跨 episode 的 embodied self-evolution。",
+  "story": "看过 memory 后动作变了不是 persistent learning。Paper B 要证明一个经过治理的 committed update 从 source episode 存入后，能在独立 future episode 被原生检索并相对 exact pre-update state 造成 durable benefit。",
+  "premise": "persistent-state fork 可在 simulator/RNG/memory service 下做到可审计；native retrieval failure 应作为 total effect 的一部分；source/verification/future 分工可以避免未来 outcome 泄漏。",
+  "risk": "当前没有 longitudinal causal result；potential-outcome/SCM estimand、unit/clustering、exact object identity 与 stochastic fork 还未完全形式化。若只是 carrier influence，它与 Paper A/C1 没有足够 distinctness。",
+  "strongest_simplification": "Primary 是 COMMITTED_UPDATE vs exact FROZEN_PREUPDATE；NullMemory 只作依赖诊断，wrong/sham 控 extra context；只有要声称 governance superiority 才必须增加 ALWAYS_WRITE。",
+  "evidence_state": "PRECONFIRMATORY：MemoryVLA carrier/local influence 已知，但 persistent commit→native retrieval→future utility 链没有 confirmatory outcome。Stanford 5.6 主要要求 formal causal estimand、fork reproducibility、hash identity、randomization unit/power。",
+  "next_closure": "先冻结 causal estimand/SCM、stream-level randomization、exact persistent-state/hash/RNG fork qualification。通过后只启动 Phase A semantic sensitivity 32×4=128；Phase B 24 streams×3=72 只有 Phase A PASS 才开，完整 base=200 runs。",
+  "cost_class": "LOW_NOW / MEDIUM_HIGH_IF_QUALIFIED",
+  "cost_to_next_decision": "当前 formalization + fork qualification 接近零 GPU；Phase A 才需要 128 local VLA runs。不要现在把 Phase B 72 runs 也当成承诺成本。",
+  "dependencies": [
+    "MemoryVLA/LIBERO persistent store snapshot",
+    "immutable committed-object identity/hash",
+    "source/verification/future split",
+    "native retrieval rule",
+    "deterministic snapshot/RNG policy"
+  ],
+  "default_action": "FREEZE_CAUSAL_FORK_THEN_PHASE_A_ONLY",
+  "override_trigger": "fork 不可精确复现、Phase A semantic sensitivity fail、或师兄决定与 Paper A 合并 → 不进入 Phase B；governance superiority 未执行 ALWAYS_WRITE 时不得写方法优越性。",
+  "cross_paper_leverage": "Paper A 可作为 future-episode influence/fidelity mechanism readout；C1 提供 transport vocabulary；B1 提供 provenance control，但 Paper B 的主 claim 必须保持 longitudinal utility。",
+  "advisor_question": "Is the longitudinal committed-update lifecycle effect a distinct standalone causal object from Paper A’s source-fidelity effect?"
 }

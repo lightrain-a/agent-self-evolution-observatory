@@ -18,5 +18,5 @@
   "default_action": "COMPLETE_HUMAN_SEMANTIC_EVIDENCE_THEN_FREEZE_ERTA",
   "override_trigger": "只有师兄认为 evaluator-relative temporal safety 本身不够 standalone，或 human adjudication 证明两 evaluator 中一方存在明确系统性无效性，才改变 ERTA positioning。MCTA 的成败不得作为 G1 override。",
   "cross_paper_leverage": "给九篇 Research OS 一个更一般的 measurement lesson：judge/evaluator 不应被静默当 ground truth；但它不与 Constraint Externality 合并，也不需要 capability-matching 才成立。",
-  "advisor_question": "ERTA 的 evaluator-relative temporal-safety measurement object 是否足够 standalone？当前 human semantic adjudication 做到什么程度就足够投稿，而不需要再扩第三 judge/backbone？"
+  "advisor_question": "ERTA 的 evaluator-relative temporal-safety measurement object 是否足够 distinct、足够重要，值得作为一篇 standalone paper？"
 }

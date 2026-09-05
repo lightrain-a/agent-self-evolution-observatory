@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "generated_at": "2026-09-05T22:52:00+08:00",
   "pricing_basis": {
     "source": "generated/provider-price-comparison-snapshot-20260903.json",
@@ -26,7 +26,10 @@
     "conditional_later_is_not_commitment": true,
     "api_cash_is_separate_from_gpu_opportunity_cost": true,
     "zero_cost_science_work_can_run_in_parallel": true,
-    "do_not_preempt_running_frozen_experiments_for_unqualified_work": true
+    "do_not_preempt_running_frozen_experiments_for_unqualified_work": true,
+    "post_meeting_human_hours_are_not_meeting_minutes": true,
+    "cost_to_stop_must_be_visible": true,
+    "future_conditional_envelopes_are_visually_separate": true
   },
   "papers": {
     "E1": {
@@ -39,7 +42,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "0",
-        "human_time": "1–3 h",
+        "post_meeting_execution_human_hours": "1–3 h",
         "provider_credential_dependency": "N/A",
         "calendar_latency": "human signoff only; not compute-bound"
       },
@@ -47,7 +50,9 @@
       "conditional_envelope": "Optional V4 first gate: approximately 12–24 hosted-agent trajectories; later stages remain conditional.",
       "human_effort_estimate": "1–3 h advisor/author positioning + submission signoff",
       "parallelization": "Fully parallel; no scarce compute dependency.",
-      "priority_note": "High scheduling priority because closure is cheap and submission-near."
+      "priority_note": "High scheduling priority because closure is cheap and submission-near.",
+      "current_decision_cost": "¥0 + 0 GPU; author/advisor positioning and submission signoff only.",
+      "cost_to_stop": "No new compute: if advisor rejects the standalone reality/abstraction premise, freeze the narrow result or merge without opening optional expansion."
     },
     "B1": {
       "authorized_now": {
@@ -59,7 +64,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "1×A100-80GB; frozen Qwen 189 stage",
-        "human_time": "<1 h active monitoring",
+        "post_meeting_execution_human_hours": "<1 h active monitoring",
         "provider_credential_dependency": "N/A",
         "calendar_latency": "roughly 6.4 h remaining at the 22:55 observed average; operational estimate only; throughput-sensitive"
       },
@@ -75,7 +80,9 @@
       "conditional_envelope": "After Qwen+Llama seals, analysis authority is separate. Strong-scale Qwen2.5-32B check is 4D only if future discordant-task count D is nonzero and separately authorized.",
       "human_effort_estimate": "<1 h runtime oversight now; later analysis/review is separate",
       "parallelization": "Runs independently from 3D because it uses a different local GPU resource pool.",
-      "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work."
+      "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work.",
+      "current_decision_cost": "Already-authorized 1×A100-80GB Qwen stage is running; no additional compute commitment is requested in the advisor meeting.",
+      "cost_to_stop": "Finish the already-authorized Qwen stage and seal it; do not open Llama or later scale checks without successor authority or if the frozen gate fails."
     },
     "C1": {
       "authorized_now": {
@@ -87,7 +94,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "0",
-        "human_time": "2–4 h",
+        "post_meeting_execution_human_hours": "2–4 h",
         "provider_credential_dependency": "N/A",
         "calendar_latency": "human/editorial only; not compute-bound"
       },
@@ -95,7 +102,9 @@
       "conditional_envelope": "Method-extension reopen only with a new independently qualified semantic-validity asset.",
       "human_effort_estimate": "2–4 h manuscript/advisor boundary work",
       "parallelization": "Fully parallel.",
-      "priority_note": "Cheap closure; should advance while GPU/API-heavy papers run."
+      "priority_note": "Cheap closure; should advance while GPU/API-heavy papers run.",
+      "current_decision_cost": "¥0 + 0 GPU; unified-story manuscript convergence, PDF QA, and human/advisor review only.",
+      "cost_to_stop": "No new compute: if advisor rejects the unified two-act feedback→memory→behavior story, split/reframe using current frozen evidence rather than reopening experiments."
     },
     "G1": {
       "authorized_now": {
@@ -107,7 +116,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "0",
-        "human_time": "bounded human semantic-label/adjudication + 2–4 h manuscript/prebuttal work",
+        "post_meeting_execution_human_hours": "bounded human semantic-label/adjudication + 2–4 h manuscript/prebuttal work",
         "provider_credential_dependency": "N/A for current G1/ERTA",
         "calendar_latency": "human-review bound, not compute-bound"
       },
@@ -115,7 +124,9 @@
       "conditional_envelope": "Any third evaluator, cross-backbone replication, or MCTA capability-matching program is optional/new science and is not required for the current ERTA claim.",
       "human_effort_estimate": "existing 24-item semantic-label/adjudication packet plus manuscript integration",
       "parallelization": "Fully parallel with GPU/API experiments on other papers.",
-      "priority_note": "Cheap high-leverage closure; do not spend provider budget on MCTA under the G1 label."
+      "priority_note": "Cheap high-leverage closure; do not spend provider budget on MCTA under the G1 label.",
+      "current_decision_cost": "¥0 + 0 GPU/provider calls; existing human semantic-label/adjudication plus manuscript/prebuttal integration only.",
+      "cost_to_stop": "No new provider/GPU work: complete the existing human semantic adjudication. If evaluator-relative temporal safety is not judged standalone, narrow/merge ERTA without adding a third judge/backbone for appearance."
     },
     "E2": {
       "authorized_now": {
@@ -127,7 +138,7 @@
       "resource_dimensions": {
         "api_cash": "~¥0.02 planning order for the single identity request; route-dependent",
         "local_gpu_occupancy": "0",
-        "human_time": "<1 h",
+        "post_meeting_execution_human_hours": "<1 h",
         "provider_credential_dependency": "Ark/provider availability + exact resolved DeepSeek identity",
         "calendar_latency": "one request once provider is available"
       },
@@ -136,7 +147,9 @@
       "conditional_envelope": "If future calls resemble the recent actor-token average, 720 calls are roughly ¥11.5 token-route order; Ark AFP billing can differ materially.",
       "human_effort_estimate": "<1 h qualification/preflight now",
       "parallelization": "Provider-limited rather than GPU-limited; can run alongside local GPU work if quota/priority permits.",
-      "priority_note": "Current spend should stop at one identity gate; do not reserve the 720-call envelope before qualification."
+      "priority_note": "Current spend should stop at one identity gate; do not reserve the 720-call envelope before qualification.",
+      "current_decision_cost": "One non-scientific model-identity qualification request only; planning order ~¥0.02 if token-routed, route-dependent.",
+      "cost_to_stop": "Stop after the single identity/route qualification if exact model identity cannot be established; do not open the 72-unit M3R4 block."
     },
     "PAPER_A": {
       "authorized_now": {
@@ -148,7 +161,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "0 committed now; contingent Phase A GPU type/count and GPU-hours are UNKNOWN until frozen carrier/A0 runtime preflight",
-        "human_time": "2–5 h scientific formalization",
+        "post_meeting_execution_human_hours": "2–5 h scientific formalization",
         "provider_credential_dependency": "N/A for current formalization",
         "calendar_latency": "formalization first; later 128-run wall-clock UNKNOWN until frozen runtime preflight"
       },
@@ -156,7 +169,10 @@
       "conditional_envelope": "Expansion to 64 units is allowed only by a predeclared precision rule; no automatic second-carrier expansion.",
       "human_effort_estimate": "2–5 h scientific formalization before any GPU run",
       "parallelization": "Formalization is fully parallel. Later VLA runs should use an idle eligible GPU and must not preempt frozen B1/3D work.",
-      "priority_note": "High information-per-cost now because the next gate is essentially zero-compute."
+      "priority_note": "High information-per-cost now because the next gate is essentially zero-compute.",
+      "current_decision_cost": "¥0 + 0 GPU; causal/fidelity formalization only. The 128-run VLA block is a future conditional envelope.",
+      "cost_to_stop": "Stop before 128 VLA runs if the fidelity signature, no-op tolerance, endpoints, or same-condition replay contract cannot be frozen cleanly.",
+      "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment"
     },
     "CONSTRAINT_EXTERNALITY": {
       "authorized_now": {
@@ -168,7 +184,7 @@
       "resource_dimensions": {
         "api_cash": "¥0 committed now; credit restoration is account funding, not a scientific-call budget",
         "local_gpu_occupancy": "0",
-        "human_time": "<1 h operational recovery",
+        "post_meeting_execution_human_hours": "<1 h operational recovery",
         "provider_credential_dependency": "same provider credit/interface restored + NEW explicit one-request readiness authority",
         "calendar_latency": "UNKNOWN until credit/interface restoration"
       },
@@ -177,7 +193,9 @@
       "conditional_envelope": "Mechanism block was planned at roughly 192 probes + ~32 sham probes, but this is not a committed cost until all source/repair gates pass.",
       "human_effort_estimate": "<1 h operational recovery now; later protocol review is conditional",
       "parallelization": "API/provider-limited; can proceed independently of GPU work after credit recovery.",
-      "priority_note": "Do not budget the 192+32 mechanism block until the source phenomenon is qualified."
+      "priority_note": "Do not budget the 192+32 mechanism block until the source phenomenon is qualified.",
+      "current_decision_cost": "¥0 + 0 provider calls committed; restore provider credit/interface only. A readiness request needs fresh authority.",
+      "cost_to_stop": "Stop before source/mechanism blocks if provider readiness cannot be restored and freshly authorized, or if the one-request readiness gate fails."
     },
     "PAPER_B": {
       "authorized_now": {
@@ -189,7 +207,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "0 committed now; contingent Phase A GPU type/count and GPU-hours are UNKNOWN until exact fork/runtime preflight",
-        "human_time": "2–5 h SCM/fork formalization",
+        "post_meeting_execution_human_hours": "2–5 h SCM/fork formalization",
         "provider_credential_dependency": "N/A for current formalization",
         "calendar_latency": "formalization first; later 128-run wall-clock UNKNOWN until frozen runtime preflight"
       },
@@ -197,7 +215,10 @@
       "conditional_envelope": "Phase B: 24 streams × 3 branches = 72 local VLA runs only after Phase A PASS; full base program = 200 runs.",
       "human_effort_estimate": "2–5 h SCM/fork formalization before compute",
       "parallelization": "Formalization is fully parallel. Later VLA phases must wait for their own gates and available local GPU.",
-      "priority_note": "Do not treat 200 runs as current budget; only formalization is authorized now."
+      "priority_note": "Do not treat 200 runs as current budget; only formalization is authorized now.",
+      "current_decision_cost": "¥0 + 0 GPU; causal estimand and exact-fork formalization only. The 128-run VLA block is a future conditional envelope.",
+      "cost_to_stop": "Stop before Phase A if the exact persistent-state fork/SCM cannot be made reproducible; if Phase A semantic sensitivity fails, do not open Phase B.",
+      "conditional_envelope_label": "FUTURE CONDITIONAL ENVELOPE — not current commitment"
     },
     "3D": {
       "authorized_now": {
@@ -209,7 +230,7 @@
       "resource_dimensions": {
         "api_cash": "¥0",
         "local_gpu_occupancy": "2×RTX 3090 live; SGP-14 + shared decoder",
-        "human_time": "low active monitoring",
+        "post_meeting_execution_human_hours": "low active monitoring",
         "provider_credential_dependency": "N/A",
         "calendar_latency": "rough remaining ~11.6 / ~7.5 GPU-days at 22:55 observed averages; operational estimate only"
       },
@@ -228,7 +249,9 @@
       "conditional_envelope": "If P1 GO later justifies replication, additional seeds require a fresh compute authority; they are not part of the current committed budget.",
       "human_effort_estimate": "Low active human time while training; checkpoint/resource monitoring only",
       "parallelization": "Keep the two running 3090 jobs isolated. Other zero-compute/API work can proceed in parallel.",
-      "priority_note": "High opportunity cost but already committed; stopping early without a frozen mechanical failure wastes sunk compute and violates the protocol."
+      "priority_note": "High opportunity cost but already committed; stopping early without a frozen mechanical failure wastes sunk compute and violates the protocol.",
+      "current_decision_cost": "Already-authorized 2×RTX3090 developmental training continues; no new P1/replication compute commitment is requested today.",
+      "cost_to_stop": "Continue only the already-authorized training to seal. After seal, lexical/salience manipulation checks plus P1 validation are the first scientific stop gate; P1 fail stops extra seeds/relations."
     }
   },
   "portfolio_schedule": [

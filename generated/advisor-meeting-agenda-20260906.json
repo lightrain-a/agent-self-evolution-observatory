@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "meeting_id": "2026-09-06-advisor",
+  "review_route": "exception-and-boundary-review",
+  "claim_ownership_map": {
+    "B1": {
+      "primary_claim_owner": "provenance-field incremental decision value",
+      "relationship": "Digital-agent provenance audit; can supply antecedent controls/evidence to Paper A/B, but does not own source-fidelity transport or longitudinal utility."
+    },
+    "PAPER_A": {
+      "primary_claim_owner": "source-faithful causal transport from source outcome to later policy use",
+      "relationship": "Embodied influence/fidelity identification object; may serve as a mechanism readout inside Paper B if both remain standalone."
+    },
+    "PAPER_B": {
+      "primary_claim_owner": "longitudinal committed-update causal lifecycle across episodes",
+      "relationship": "Owns commit → native retrieval → future closed-loop utility; Paper A fidelity is subordinate mechanism evidence rather than the primary longitudinal estimand."
+    },
+    "C1": {
+      "primary_claim_owner": "feedback → persistent-state creation → native behavioral transport lifecycle",
+      "relationship": "Owns the unified two-act write-then-transport evidence chain; do not reduce it to a measurement module unless advisor explicitly splits it."
+    },
+    "E2": {
+      "primary_claim_owner": "same-evidence state-regeneration instability",
+      "relationship": "Owns evidence→state-generation instability; distinct from C1 writer/transport lifecycle unless the same state-identity premise is shown load-bearing."
+    },
+    "G1": {
+      "primary_claim_owner": "evaluator-relative temporal-safety measurement",
+      "relationship": "ERTA remains the G1 paper. MCTA is a separate stopped/held G2 candidate and must not be used to reopen G1."
+    },
+    "boundary_note": "Default is separate ownership with explicit support relations. Merge/split only when the advisor changes one of these primary scientific objects, not merely because papers share memory vocabulary."
+  },
+  "shared_risks": [
+    {
+      "id": "persistent-memory-object",
+      "label": "Persistent-memory object / state semantics",
+      "papers": [
+        "B1",
+        "C1",
+        "E2",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "question": "这些论文是否共享了一个 load-bearing persistent-state / memory semantics 前提？",
+      "reopen_rule": "Only reopen a paper when the failed memory/state definition or identity primitive is load-bearing for that paper’s frozen claim; never reopen the whole memory family by association."
+    },
+    {
+      "id": "provenance-fidelity",
+      "label": "Provenance / source-fidelity / longitudinal ownership",
+      "papers": [
+        "B1",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "question": "请批准或修改显式 claim ownership：B1=provenance-field incremental value；Paper A=source-faithful causal transport；Paper B=longitudinal committed-update lifecycle。",
+      "reopen_rule": "A collision reopens only the overlapping owner boundary; C1/E2 remain unchanged unless their own load-bearing state semantics are implicated."
+    },
+    {
+      "id": "measurement-validity",
+      "label": "Measurement / evaluator validity",
+      "papers": [
+        "G1",
+        "C1",
+        "B1"
+      ],
+      "question": "这些论文都区分 observed measurement surface 与真正 scientific property；是否存在一个共享 measurement assumption 会同时改变多篇结论？",
+      "reopen_rule": "G1 is directly sensitive to evaluator validity. C1/B1 reopen only if the same measurement assumption is explicitly load-bearing for their frozen estimand; no automatic contagion from G1."
+    },
+    {
+      "id": "representation-support",
+      "label": "Representation / identity support",
+      "papers": [
+        "E1",
+        "E2",
+        "C1"
+      ],
+      "question": "identity/representation changes 是否只是各自 substrate artifact，还是 self-evolution control surface 的共同系统问题？",
+      "reopen_rule": "A skill-access/representation premise failure directly reopens E1; E2/C1 reopen only if the same identity/access mechanism is explicitly load-bearing for their claim."
+    }
+  ],
+  "shared_risk_reopen_rules": [
+    {
+      "premise": "skill-access / representation invariance",
+      "directly_affected": [
+        "E1"
+      ],
+      "conditionally_affected": [
+        "E2",
+        "C1"
+      ],
+      "reopen_threshold": "Reopen E2/C1 only if the failed identity/access mechanism appears on their frozen causal path; otherwise E1 only."
+    },
+    {
+      "premise": "persistent-memory object / state semantics",
+      "directly_affected": [
+        "B1",
+        "C1",
+        "E2",
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "conditionally_affected": [],
+      "reopen_threshold": "Reopen only papers whose exact state identity, write/retrieval semantics, provenance object, or commit semantics depend on the failed primitive; no family-wide automatic reopen."
+    },
+    {
+      "premise": "measurement / evaluator validity",
+      "directly_affected": [
+        "G1"
+      ],
+      "conditionally_affected": [
+        "C1",
+        "B1"
+      ],
+      "reopen_threshold": "Reopen C1/B1 only if the same invalid measurement/evaluator assumption appears in their own load-bearing endpoint; otherwise G1 only."
+    }
+  ],
+  "meeting_outputs": [
+    "Nine-paper disposition ledger: continue state | claim scope | next closure | advisor confidence.",
+    "Claim-ownership map: especially B1 / Paper A / Paper B, while C1/E2/G1 ownership remains explicit and non-overlapping by default.",
+    "Shared-risk reopen table: premise → directly affected papers → conditional papers → reopen threshold.",
+    "Resource sequence: cheap closure / already-running compute / qualification-first / formalize-first; change order only for a real scarce-resource collision.",
+    "Every unresolved decision has one named owner and one concrete follow-up output; no generic “think more” item."
+  ],
+  "schedule": [
+    {
+      "start": "14:00",
+      "end": "14:15",
+      "label": "Portfolio Dashboard + Common-Cause Risk Scan"
+    },
+    {
+      "start": "14:15",
+      "end": "14:28",
+      "label": "E1 · standalone premise / abstraction only"
+    },
+    {
+      "start": "14:28",
+      "end": "15:28",
+      "label": "Memory / Provenance / Evolution · ownership + boundaries"
+    },
+    {
+      "start": "15:28",
+      "end": "15:53",
+      "label": "G1 ERTA + Constraint Externality"
+    },
+    {
+      "start": "15:53",
+      "end": "16:08",
+      "label": "3D · topology premise only"
+    },
+    {
+      "start": "16:08",
+      "end": "16:28",
+      "label": "Unresolved exceptions + claim ownership conflicts only"
+    },
+    {
+      "start": "16:28",
+      "end": "16:40",
+      "label": "Cross-paper scarce-resource conflict check"
+    },
+    {
+      "start": "16:40",
+      "end": "16:53",
+      "label": "Lock disposition ledger + shared-risk reopen table + named follow-ups"
+    },
+    {
+      "start": "16:53",
+      "end": "17:00",
+      "label": "Read-back / confirm receipts"
+    }
+  ],
+  "do_not_spend_advisor_time_on": [
+    "Stanford numerical scores",
+    "prose polishing/title wording/section order unless paper identity or claim ownership changes",
+    "provider/API implementation details unless feasibility or scheduling order changes",
+    "B1/3D live progress or interim scientific outcomes",
+    "exact GPU/API arithmetic already in the resource ledger",
+    "reviewer objections that do not change claim scope, next closure, ownership, or stop condition"
+  ]
+}
