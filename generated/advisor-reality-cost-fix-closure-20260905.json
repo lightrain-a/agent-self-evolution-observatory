@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "object": "advisor-reality-cost-overlay-post-independent-review-fix-closure",
+  "review_receipt": "generated/advisor-reality-cost-independent-review-20260905.json",
+  "independent_review_verdict": "REVISE_REALITY_COST_OVERLAY",
+  "status": "FIXES_APPLIED_DETERMINISTIC_PASS",
+  "checks": {
+    "c1_memorylake_wording_is_distinct_but_bundled": true,
+    "c1_no_separable_component_claim": true,
+    "g1_current_committed_api_calls_zero_without_explicit_q0_authority_receipt": true,
+    "constraint_current_committed_api_calls_zero_after_consumed_r2_readiness_authority": true,
+    "paper_a_contingent_gpu_occupancy_unknown_until_frozen_preflight": true,
+    "paper_b_contingent_gpu_occupancy_unknown_until_frozen_preflight": true,
+    "all_nine_share_resource_dimension_order": [
+      "api_cash",
+      "local_gpu_occupancy",
+      "human_time",
+      "provider_credential_dependency",
+      "calendar_latency"
+    ],
+    "b1_live_progress_remains_operational_only": true,
+    "3d_live_progress_remains_operational_only": true,
+    "new_scientific_authority_created": false,
+    "new_experiment_authority_created": false
+  },
+  "postfix_verification_path": "DETERMINISTIC_SCHEMA_AND_EXACT_TEXT_GUARDS",
+  "second_gpt_review_required": false,
+  "reason_no_second_gpt": "The independent reviewer requested narrow overlay wording/accounting corrections only. Exact deterministic checks verify those requested changes without reopening the same verification path or creating a redundant reviewer loop.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_overlay_only": true
+  }
+}

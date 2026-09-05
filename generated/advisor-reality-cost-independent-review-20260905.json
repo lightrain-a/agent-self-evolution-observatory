@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "review_object": "2026-09-06 advisor meeting reality-support and staged-resource overlay",
+  "reviewed_at": "2026-09-05",
+  "review_mode": "fresh_temporary_chat_independent_overlay_audit",
+  "browser_evidence": {
+    "fresh_user_turns_before_submit": 0,
+    "temporary_chat": true,
+    "extra_high_visible": true,
+    "message_model_slug": "gpt-5-6-thinking",
+    "submitted_user_turn_chars_dom": 10764,
+    "assistant_final_chars_dom": 6317,
+    "assistant_complete": true,
+    "rate_limited_at_final": false
+  },
+  "packet": {
+    "source_file": "generated/advisor-reality-cost-independent-review-packet.md",
+    "sha256": "2bd5e2c406d63cc98c7a2d5f26a7396502d21979fdc98e705c148a363dbfdc2f",
+    "bytes": 10794
+  },
+  "response": {
+    "sha256": "d7e08f65b7aac012a0663fe12498d7fdc48106ef578200a9abc1325114825f2f",
+    "bytes": 6369,
+    "final_verdict": "REVISE_REALITY_COST_OVERLAY"
+  },
+  "paper_verdicts": {
+    "E1": {"reality_support": "PASS", "resource_ledger": "PASS", "required_fix": "NONE"},
+    "B1": {"reality_support": "PASS", "resource_ledger": "PASS", "required_fix": "NONE"},
+    "C1": {"reality_support": "NARROW", "resource_ledger": "PASS", "required_fix": "Replace separable backend components with distinct but bundled backend operations; MemoryLake does not causally isolate components."},
+    "G1": {"reality_support": "PASS", "resource_ledger": "FIX", "required_fix": "Do not count Q0 as AUTHORIZED NOW unless current execution authority is explicitly evidenced; separate credential blocking from authority blocking."},
+    "E2": {"reality_support": "PASS", "resource_ledger": "PASS", "required_fix": "NONE"},
+    "PAPER_A": {"reality_support": "PASS", "resource_ledger": "FIX", "required_fix": "Expose contingent local-GPU type/count, GPU-hours/days, and wall-clock occupancy; keep unknown until frozen runtime preflight if not measured."},
+    "CONSTRAINT_EXTERNALITY": {"reality_support": "PASS", "resource_ledger": "FIX", "required_fix": "The prior one-request readiness authority was consumed; credit restoration is current work, while a new readiness call is contingent on fresh explicit authority."},
+    "PAPER_B": {"reality_support": "PASS", "resource_ledger": "FIX", "required_fix": "Expose contingent Phase-A local-GPU type/count, GPU-hours/days, and wall-clock occupancy; keep Phase B conditional."},
+    "3D": {"reality_support": "PASS", "resource_ledger": "PASS", "required_fix": "NONE"}
+  },
+  "portfolio_reality_issue": "Repeated memory citations validate persistent memory/retrieval/updating/provenance as real operations but do not independently validate the distinct causal decompositions of B1/C1/E2/Paper A/Paper B. Existing Does NOT prove clauses handle this except the original C1 separable wording.",
+  "portfolio_resource_issue": "Pending authorization is not equivalent to an authorized-but-blocked resource. Present commitments must be separated from credential/authority-gated next actions.",
+  "meeting_surface_fixes": [
+    "Resolve G1 and Constraint authorization language before the meeting.",
+    "Narrow C1 MemoryLake wording to distinct but bundled backend operations.",
+    "For Paper A and Paper B, expose contingent local-compute envelope; unknown fields remain unknown until frozen preflight.",
+    "Display the same five resource dimensions for every paper: API cash, local-GPU occupancy, human time, provider/credential dependency, calendar latency.",
+    "Keep B1 and 3D live progress strictly operational; do not use it to inspect or interrupt scientific outcomes."
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_overlay_only": true
+  }
+}

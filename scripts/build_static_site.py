@@ -161,6 +161,15 @@ def build() -> Path:
         cwd=ROOT,
         check=True,
     )
+    # Rebuild the advisor-meeting projection from the committed nine-paper
+    # decision cards plus the reality-support and staged resource ledgers.
+    # This is a zero-authority frontend projection: it may summarize current
+    # commitments but cannot grant scientific or experiment authority.
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "build_advisor_meeting_frontend.py")],
+        cwd=ROOT,
+        check=True,
+    )
     # Timeline history is authored by the research host, not reconstructed on
     # a GitHub runner that lacks the server-side Research Memory DB. Rebuild
     # only the current dashboard from the committed read-only timeline.
@@ -345,6 +354,8 @@ def build() -> Path:
         OUTPUT / "advisor-review.js",
         OUTPUT / "generated" / "advisor-meeting-data.js",
         OUTPUT / "generated" / "advisor-paper-pack-manifest.json",
+        OUTPUT / "generated" / "advisor-reality-support.json",
+        OUTPUT / "generated" / "advisor-resource-ledger.json",
         OUTPUT / "app.js",
         OUTPUT / "experiment-terminal-view.js",
         OUTPUT / "experiment-page-view.js",

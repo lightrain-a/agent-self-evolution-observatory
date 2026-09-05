@@ -6,6 +6,10 @@ ROOT=Path(__file__).resolve().parents[1]
 GENERATED=ROOT/'generated'
 OUT=GENERATED/'advisor-meeting-data.js'
 manifest=json.loads((GENERATED/'advisor-paper-pack-manifest.json').read_text())
+reality_bundle=json.loads((GENERATED/'advisor-reality-support.json').read_text())
+resource_bundle=json.loads((GENERATED/'advisor-resource-ledger.json').read_text())
+overlay_review=json.loads((GENERATED/'advisor-reality-cost-independent-review-20260905.json').read_text())
+overlay_fix=json.loads((GENERATED/'advisor-reality-cost-fix-closure-20260905.json').read_text())
 
 order=['E1','B1','C1','G1','E2','PAPER_A','CONSTRAINT_EXTERNALITY','PAPER_B','3D']
 decision_fields={}
@@ -21,11 +25,17 @@ for d in manifest['papers']:
     review_path=GENERATED/f"stanford-{pid.lower()}-review.json"
     review=json.loads(review_path.read_text()) if review_path.exists() else None
     public_pdf='downloads/advisor-20260906/'+d['filename']
+    if pid not in reality_bundle.get('papers',{}):
+        raise RuntimeError(f'missing reality support for {pid}')
+    if pid not in resource_bundle.get('papers',{}):
+        raise RuntimeError(f'missing resource ledger for {pid}')
     row={
       'paper_id':pid,'order':order.index(pid)+1,'title':d['title'],'paper_status':d['paper_status'],
       'pages':d['pages'],'pdf_sha256':d['pdf_sha256'],'pdf':public_pdf,
       'paper_candidate_ref':d['paper_candidate_ref'],'scientific_canonical_ref':d['scientific_canonical_ref'],
       'science_delta':d['delta'],**decision_fields[pid],
+      'reality_support':reality_bundle['papers'][pid],
+      'resource_plan':resource_bundle['papers'][pid],
       'stanford':{'status':'PROCESSING'}
     }
     if review:
@@ -41,7 +51,7 @@ shared=[
 
 schedule=[['14:00','14:15','Portfolio Dashboard + Common-Cause Risk Scan'],['14:15','14:40','E1'],['14:40','15:30','Memory / Provenance / Evolution family'],['15:30','15:55','G1 + Constraint Externality'],['15:55','16:10','3D'],['16:10','16:35','Exception-based nine-paper closure sweep'],['16:35','16:53','Cost / Dependencies / Scheduling'],['16:53','17:00','Read-back']]
 route_summary={route:sum(p.get('route')==route for p in papers) for route in ['FREEZE_SUBMIT','EXECUTE_FROZEN','QUALIFY_FIRST','FORMALIZE_FIRST']}
-data={'schema_version':'2.0','generated_at':'2026-09-05','meeting':{'id':'2026-09-06-advisor','main_ref':manifest['meeting_candidate_main'],'status':manifest.get('paper_pack_status'),'review_route':'exception-and-boundary-review'},'route_summary':route_summary,'papers':papers,'shared_risks':shared,'schedule':[{'start':a,'end':b,'label':c} for a,b,c in schedule]}
+data={'schema_version':'3.0','generated_at':'2026-09-05','meeting':{'id':'2026-09-06-advisor','main_ref':manifest['meeting_candidate_main'],'status':manifest.get('paper_pack_status'),'review_route':'exception-and-boundary-review'},'route_summary':route_summary,'papers':papers,'shared_risks':shared,'resource_pricing_basis':resource_bundle.get('pricing_basis',{}),'portfolio_schedule':resource_bundle.get('portfolio_schedule',[]),'overlay_audit':{'independent_verdict':overlay_review.get('response',{}).get('final_verdict'),'postfix_status':overlay_fix.get('status'),'verification_path':overlay_fix.get('postfix_verification_path'),'model_slug':overlay_review.get('browser_evidence',{}).get('message_model_slug'),'extra_high':overlay_review.get('browser_evidence',{}).get('extra_high_visible'),'authority':overlay_review.get('authority',{})},'schedule':[{'start':a,'end':b,'label':c} for a,b,c in schedule]}
 OUT.write_text('window.ADVISOR_MEETING_DATA = '+json.dumps(data,ensure_ascii=False,indent=2)+';\n')
 print(OUT)
 print('papers',len(papers),'review_ready',sum((p['stanford'].get('status')=='READY') for p in papers))

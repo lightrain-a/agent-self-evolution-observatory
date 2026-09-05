@@ -1,5 +1,5 @@
 window.ADVISOR_MEETING_DATA = {
-  "schema_version": "2.0",
+  "schema_version": "3.0",
   "generated_at": "2026-09-05",
   "meeting": {
     "id": "2026-09-06-advisor",
@@ -43,6 +43,48 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "只有师兄认为 package-identity abstraction 在真实 skill ecosystem 中缺乏意义，或明确授权一个与当前投稿解耦的 V4 扩展，才改变默认路线。",
       "cross_paper_leverage": "可为 E2/C1 提供 representation/state identity 不是中性工程细节的系统级语言，但不需要与它们合并。",
       "advisor_question": "这个 abstraction 在真实 Agent skill ecosystem 中是否足够常见、足够重要，值得 standalone paper？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED_WITH_BOUNDARY",
+        "supporting_cases": [
+          {
+            "title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents",
+            "url": "https://arxiv.org/abs/2608.11079",
+            "why": "Explicitly models self-evolving agents that continually accumulate reusable skills and failure fixes; supports the premise that skill libraries grow and need maintenance."
+          },
+          {
+            "title": "SkillZip Pro: Execution-Aware Dynamic Compression of Progressively Loaded Skills",
+            "url": "https://arxiv.org/abs/2608.30785",
+            "why": "Treats production skills as directory bundles with progressive loading and routing boundaries; directly supports selective access to parts of a skill bundle rather than loading everything."
+          },
+          {
+            "title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",
+            "url": "https://arxiv.org/abs/2608.16114",
+            "why": "Uses structured skill memory, retrieval ranking, pruning, and merging; supports dynamic skill-memory organization and finite retrieval as real system operations."
+          }
+        ],
+        "what_this_does_not_prove": "These systems establish dynamic skill libraries, routing, retrieval, and maintenance; they do not establish that package identity or finite access budget causes the specific STRI instability observed in E1.",
+        "strongest_escape": "Semantic deduplication/canonical IDs or semantic-first retrieval may make package identity largely irrelevant in well-designed systems."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "0",
+          "api_units": 0,
+          "work": "human paper/signoff only"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0",
+          "local_gpu_occupancy": "0",
+          "human_time": "1–3 h",
+          "provider_credential_dependency": "N/A",
+          "calendar_latency": "human signoff only; not compute-bound"
+        },
+        "next_if_pass": "None for the narrow paper. Optional V4 only if explicitly opened by advisor/human authority.",
+        "conditional_envelope": "Optional V4 first gate: approximately 12–24 hosted-agent trajectories; later stages remain conditional.",
+        "human_effort_estimate": "1–3 h advisor/author positioning + submission signoff",
+        "parallelization": "Fully parallel; no scarce compute dependency.",
+        "priority_note": "High scheduling priority because closure is cheap and submission-near."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 6.5,
@@ -88,6 +130,56 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "若执行完整性或 technical seal 失败则 fail closed；若最终 semantic-control 结果不支持独立 provenance 信息价值，或师兄判断与 Paper A scientific object 重叠过高，再考虑 merge/narrow。",
       "cross_paper_leverage": "与 Paper A 共用 provenance/source-fidelity 边界；B1 可提供数字 Agent 上的 format/provenance control 经验，Paper A 必须避免重复造同一 scientific object。",
       "advisor_question": "在 executor-specific、terminal effect 稀疏的边界下，provenance audit 是否仍值得 standalone，还是应成为 Paper A 的数字-Agent机制证据？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED_WITH_BOUNDARY",
+        "supporting_cases": [
+          {
+            "title": "From Agent Traces to Trust: Evidence Tracing and Execution Provenance in LLM Agents",
+            "url": "https://arxiv.org/abs/2606.04990",
+            "why": "Explicitly argues that evidence and execution provenance, including provenance-bearing memory, are needed to explain how memory influenced later decisions."
+          },
+          {
+            "title": "MemoryArena: Benchmarking Agent Memory in Interdependent Multi-Session Agentic Tasks",
+            "url": "https://arxiv.org/abs/2602.16313",
+            "why": "Implements memory-agent-environment loops where actions, observations, feedback, and memory are reused across sessions; supports provenance-bearing historical context as a realistic object."
+          },
+          {
+            "title": "Agentic Memory: Learning Unified Long-Term and Short-Term Memory Management",
+            "url": "https://aclanthology.org/2026.acl-long.981/",
+            "why": "Lets an agent actively store, retrieve, update, summarize, and discard memory, supporting memory metadata/control as a real decision surface."
+          }
+        ],
+        "what_this_does_not_prove": "Prior work supports provenance and memory-management relevance, not that an explicit truthful source-outcome field has standalone terminal value beyond identical content.",
+        "strongest_escape": "Observed action shifts may be explained by prompt-surface sensitivity, implicit failure wording already present in memory text, or executor-specific decision boundaries."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "1×A100-80GB local",
+          "api_units": 0,
+          "work": "Qwen semantic-control stage, 189 trajectories"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0",
+          "local_gpu_occupancy": "1×A100-80GB; frozen Qwen 189 stage",
+          "human_time": "<1 h active monitoring",
+          "provider_credential_dependency": "N/A",
+          "calendar_latency": "roughly 6.4 h remaining at the 22:55 observed average; operational estimate only; throughput-sensitive"
+        },
+        "operational_snapshot": {
+          "observed_at": "2026-09-05T22:55:00+08:00",
+          "completed_trajectories": 39,
+          "target_trajectories": 189,
+          "elapsed_seconds": 5948,
+          "rough_remaining_hours_if_current_average_holds": 6.4,
+          "note": "Operational estimate only; no interim scientific analysis. Remaining-time estimates are throughput-sensitive and may move non-monotonically."
+        },
+        "next_if_pass": "Llama 132 trajectories require separate successor authority after Qwen stage seal.",
+        "conditional_envelope": "After Qwen+Llama seals, analysis authority is separate. Strong-scale Qwen2.5-32B check is 4D only if future discordant-task count D is nonzero and separately authorized.",
+        "human_effort_estimate": "<1 h runtime oversight now; later analysis/review is separate",
+        "parallelization": "Runs independently from 3D because it uses a different local GPU resource pool.",
+        "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 6.1,
@@ -130,6 +222,48 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "只有出现新的、独立资格化 outcome-independent semantic validity asset，或师兄明确认为 standalone measurement value 不足并要求 merge，才改变路线。",
       "cross_paper_leverage": "为 Paper A/B/E2 提供写入≠使用≠终端效果的 stage vocabulary；可复用测量思想，但不要共享同一 scientific claim。",
       "advisor_question": "stage-resolved diagnosis 本身是否足够构成 paper-level contribution，还是更适合作为 Paper A/B 的测量组件？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED",
+        "supporting_cases": [
+          {
+            "title": "MemoryArena",
+            "url": "https://arxiv.org/abs/2602.16313",
+            "why": "Directly evaluates whether memory acquired in earlier interaction is used to guide later actions, supporting the need to distinguish memorization from action."
+          },
+          {
+            "title": "MemoryLake on MemoryArena: A Matched Study of Agent Memory Backends",
+            "url": "https://arxiv.org/abs/2608.13883",
+            "why": "Distinguishes write, retrieval, consolidation, budgeting, and prompt assembly as different but still bundled backend operations; this supports stage-aware concern without claiming that MemoryLake causally isolates those components."
+          },
+          {
+            "title": "From Agent Traces to Trust",
+            "url": "https://arxiv.org/abs/2606.04990",
+            "why": "Motivates process-level provenance and failure localization rather than final-answer accuracy alone."
+          }
+        ],
+        "what_this_does_not_prove": "These works motivate stage-aware diagnosis but do not prove that C1's exact write→exposure→uptake→endpoint ladder is the uniquely right decomposition or sufficient as a standalone contribution.",
+        "strongest_escape": "A simpler end-to-end matched intervention plus forced-exposure diagnostic may answer most practical questions without a full stage taxonomy."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "0",
+          "api_units": 0,
+          "work": "manuscript convergence only"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0",
+          "local_gpu_occupancy": "0",
+          "human_time": "2–4 h",
+          "provider_credential_dependency": "N/A",
+          "calendar_latency": "human/editorial only; not compute-bound"
+        },
+        "next_if_pass": "No new experiment for the current claim.",
+        "conditional_envelope": "Method-extension reopen only with a new independently qualified semantic-validity asset.",
+        "human_effort_estimate": "2–4 h manuscript/advisor boundary work",
+        "parallelization": "Fully parallel.",
+        "priority_note": "Cheap closure; should advance while GPU/API-heavy papers run."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 5.2,
@@ -173,6 +307,49 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "Q0 非 10/10 → STOP safety execution，转 substrate diagnosis；P0 support <6 pairs → 不做 P1，报告 measurement limitation/merge；shared-capability P1 null 时按冻结 identity rule pivot/stop。",
       "cross_paper_leverage": "与 Constraint Externality 共用先证明 capability/target repair、再解释 safety/collateral 的 controlled-update discipline；可共享资格门思想但实验对象不同。",
       "advisor_question": "MCTA 的 task-local capability conditioning 是否是足够强的 methodology object？canonical shared action graph 应怎样允许 alternate valid paths/cycles 才不会制造 selection bias？",
+      "reality_support": {
+        "reality_verdict": "STRONGLY_SUPPORTED",
+        "supporting_cases": [
+          {
+            "title": "ST-WebAgentBench",
+            "url": "https://arxiv.org/abs/2410.06703",
+            "why": "Separates task completion from policy compliance and shows large gaps between nominal completion and completion-under-policy in realistic web agents."
+          },
+          {
+            "title": "BrowserART",
+            "url": "https://github.com/scaleapi/browser-art",
+            "why": "Shows refusal-trained LLMs that refuse harmful chat requests can still pursue harmful behavior as browser agents, demonstrating that capability/action surface and safety behavior can diverge."
+          },
+          {
+            "title": "Safety in Self-Evolving LLM Agent Systems",
+            "url": "https://arxiv.org/abs/2606.23075",
+            "why": "Argues that persistent updates can amplify and preserve safety failures, supporting longitudinal safety evaluation as a real system concern."
+          }
+        ],
+        "what_this_does_not_prove": "The literature supports separating task competence and policy compliance; it does not prove that post-treatment shared-capability conditioning with one canonical action graph is unbiased or necessary.",
+        "strongest_escape": "A simpler benign-twin capability gate may be sufficient; over-constrained canonical graphs can misclassify alternative valid paths as incapability."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "0",
+          "api_units": 0,
+          "work": "credential + authority verification only; Q0 is not counted as a current commitment until an explicit Q0 execution-authority receipt is present"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0 committed now",
+          "local_gpu_occupancy": "0",
+          "human_time": "1–3 h graph/alternate-path protocol + credential handling",
+          "provider_credential_dependency": "exact qwen3.5-397b-a17b credential AND explicit Q0 execution authority must both be confirmed",
+          "calendar_latency": "UNKNOWN until credential/authority are both available"
+        },
+        "planning_cost_reference": "Historical prospective token budget was ~2.8M input + 0.28M output for the much larger program. If Q0 has comparable per-episode usage and every call remains in the first qwen3.5-397b-a17b tier, 10 episodes are roughly ¥0.2 order-of-magnitude, not a billing guarantee.",
+        "next_if_pass": "After exact provider credential AND explicit Q0 execution authority are both confirmed: run Q0 only, 10 benign episodes. If Q0 is 10/10, P0=32 episodes still requires its next authority; P1=336 remains conditional on P0 support >=6 pair IDs and fresh authority.",
+        "conditional_envelope": "First-tier planning reference for the historical 2.8M/0.28M token envelope is ~¥5.4; exact future cost requires per-call receipts and actual route.",
+        "human_effort_estimate": "1–3 h graph/alternate-path protocol + credential handling",
+        "parallelization": "Can proceed in parallel once provider credential exists; does not need local GPU.",
+        "priority_note": "Spend only the 10-episode qualification budget before considering larger safety runs."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 4.8,
@@ -217,6 +394,49 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "resolved identity drift 或 qualification fail → HOLD，无自动替代模型；M3R4 primary generator result fail → STOP automatic state-generation-method story，不用第二 backbone/benchmark rescue。",
       "cross_paper_leverage": "与 E1/C1 共享 persistent representation/state identity 不能当中性实现细节的上层问题；与 Paper B 的长期 memory lifecycle 不同，E2 聚焦 state realization。",
       "advisor_question": "state-regeneration instability 是否是 self-evolving agent 中足够基础的 scientific object，还是当前 evidence 仍太像一个 selected-case implementation instability？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED_CONTEXT_ONLY",
+        "supporting_cases": [
+          {
+            "title": "Agentic Memory",
+            "url": "https://aclanthology.org/2026.acl-long.981/",
+            "why": "Makes memory state generation and update an explicit learned operation rather than a passive store."
+          },
+          {
+            "title": "HyperSkill",
+            "url": "https://arxiv.org/abs/2608.16114",
+            "why": "Periodically prunes, merges, and restructures skill memory, showing that the evidence→persistent-state transformation is an active system component."
+          },
+          {
+            "title": "Robo-Cortex",
+            "url": "https://arxiv.org/abs/2605.18729",
+            "why": "Distills trajectories into reusable heuristics and long-term principle memory, supporting experience-to-state synthesis as a realistic self-evolution step."
+          }
+        ],
+        "what_this_does_not_prove": "These systems establish that persistent state is synthesized from evidence, but they do not report same-evidence regeneration instability or show that generator variance dominates actor/runtime variance.",
+        "strongest_escape": "If frozen-state actor repeats or generic canonicalization explain the observed disagreement, state-generation instability may be implementation noise rather than a standalone scientific object."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": "approximately ¥0.02 token-route order for one typical identity request; exact route may be AFP",
+          "gpu": "0",
+          "api_units": "1 non-scientific model-identity qualification",
+          "work": "identity/route qualification only"
+        },
+        "resource_dimensions": {
+          "api_cash": "~¥0.02 planning order for the single identity request; route-dependent",
+          "local_gpu_occupancy": "0",
+          "human_time": "<1 h",
+          "provider_credential_dependency": "Ark/provider availability + exact resolved DeepSeek identity",
+          "calendar_latency": "one request once provider is available"
+        },
+        "planning_cost_reference": "Recent DeepSeek actor tranche averaged ~2991 input + ~188 output tokens/call. At the token-route reference rate this is ~¥0.016/call.",
+        "next_if_pass": "M3R4: 72 logical actor units with a structural hard cap of 720 provider calls; requires separate frozen execution authority.",
+        "conditional_envelope": "If future calls resemble the recent actor-token average, 720 calls are roughly ¥11.5 token-route order; Ark AFP billing can differ materially.",
+        "human_effort_estimate": "<1 h qualification/preflight now",
+        "parallelization": "Provider-limited rather than GPU-limited; can run alongside local GPU work if quota/priority permits.",
+        "priority_note": "Current spend should stop at one identity gate; do not reserve the 720-call envelope before qualification."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 5.4,
@@ -261,6 +481,48 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "若 signature 无法 outcome-independently 冻结、no-op gate fail、或师兄判断与 B1/Paper B scientific object 重合，应 MERGE/NARROW 而不是用更多 rollouts rescue。",
       "cross_paper_leverage": "直接承接 B1 的 provenance-control lessons，并可成为 Paper B future-episode mechanism readout；周日需要明确它是 standalone identification paper 还是 family-level measurement module。",
       "advisor_question": "Influence–Fidelity 是否应该独立成 embodied-memory identification paper，还是并入 Paper B，并把 B1 当数字-Agent对照证据？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED_WITH_BOUNDARY",
+        "supporting_cases": [
+          {
+            "title": "MemoryVLA",
+            "url": "https://iclr.cc/virtual/2026/poster/10011504",
+            "why": "Uses a memory bank to retrieve decision-relevant perceptual/cognitive entries for long-horizon robotic action, directly validating memory-conditioned VLA behavior as a real carrier."
+          },
+          {
+            "title": "From Agent Traces to Trust",
+            "url": "https://arxiv.org/abs/2606.04990",
+            "why": "Motivates tracing how memory and evidence support later actions rather than treating influence alone as sufficient explanation."
+          },
+          {
+            "title": "MemoryArena",
+            "url": "https://arxiv.org/abs/2602.16313",
+            "why": "Explicitly tests whether experience distilled into memory guides later decisions across sessions."
+          }
+        ],
+        "what_this_does_not_prove": "Memory-conditioned action is real, but prior work does not establish that source fidelity is separable from generic memory influence under Paper A's proposed controls.",
+        "strongest_escape": "If no-op or unrelated-content edits cause comparable action changes, the proposed fidelity interpretation collapses to generic memory/prompt sensitivity."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "0",
+          "api_units": 0,
+          "work": "formalize fidelity signatures, endpoints, no-op tolerance, replay contract"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0",
+          "local_gpu_occupancy": "0 committed now; contingent Phase A GPU type/count and GPU-hours are UNKNOWN until frozen carrier/A0 runtime preflight",
+          "human_time": "2–5 h scientific formalization",
+          "provider_credential_dependency": "N/A for current formalization",
+          "calendar_latency": "formalization first; later 128-run wall-clock UNKNOWN until frozen runtime preflight"
+        },
+        "next_if_pass": "Base confirmatory: 32 units × 4 conditions = 128 local VLA downstream runs. Before authorization, freeze GPU type/count, measured per-run throughput, resulting GPU-hours and wall-clock occupancy in the A0/runtime preflight.",
+        "conditional_envelope": "Expansion to 64 units is allowed only by a predeclared precision rule; no automatic second-carrier expansion.",
+        "human_effort_estimate": "2–5 h scientific formalization before any GPU run",
+        "parallelization": "Formalization is fully parallel. Later VLA runs should use an idle eligible GPU and must not preempt frozen B1/3D work.",
+        "priority_note": "High information-per-cost now because the next gate is essentially zero-compute."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 5.7,
@@ -306,6 +568,44 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "readiness 仍 fail → STOP，无 scientific dispatch；未来 Gate 0 / SFQ 若不通过也按各自 frozen rule fail closed，不得通过换 provider、topology 或扩大 workload 制造现象。",
       "cross_paper_leverage": "与 G1 共享先证明 capability/repair、再解释 safety/collateral 的资格顺序；若两篇都成立，可形成 controlled-update family，但不应共享 outcome。",
       "advisor_question": "constraint externality 最终应该把贡献落在 measurement、topology prediction，还是 mitigation/control？在现象尚未确认前，哪一层值得优先保留？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED_AS_ENGINEERING_RISK",
+        "supporting_cases": [
+          {
+            "title": "AgentDevel: Reframing Self-Evolving LLM Agents as Release Engineering",
+            "url": "https://arxiv.org/abs/2601.04620",
+            "why": "Treats pass→fail regressions as first-class evidence in agent updates and promotes changes through explicit non-regression gating, directly supporting collateral regression as a practical update risk."
+          },
+          {
+            "title": "Safety in Self-Evolving LLM Agent Systems",
+            "url": "https://arxiv.org/abs/2606.23075",
+            "why": "Shows persistent updates can activate cross-cutting threats and amplify failures across lifecycle stages, supporting the premise that local updates can have non-local consequences."
+          }
+        ],
+        "what_this_does_not_prove": "The engineering risk of regression is real, but no cited work establishes that graph coupling topology causally moderates collateral regression under an identical local repair.",
+        "strongest_escape": "Strong regression testing and target-local update interfaces may already control most collateral effects without a new topology-based mechanism."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "0",
+          "api_units": 0,
+          "work": "restore the same provider credit/interface only; the prior one-request readiness authority was consumed and the failed request cannot be retried without new explicit authority"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0 committed now; credit restoration is account funding, not a scientific-call budget",
+          "local_gpu_occupancy": "0",
+          "human_time": "<1 h operational recovery",
+          "provider_credential_dependency": "same provider credit/interface restored + NEW explicit one-request readiness authority",
+          "calendar_latency": "UNKNOWN until credit/interface restoration"
+        },
+        "planning_cost_reference": "Historical full-plan token envelope was ~8–16M input + 0.5–1M output. At qwen3.7-plus first-tier rates that corresponds to roughly ¥19–39 for the full envelope, not current authorized spend.",
+        "next_if_pass": "After credit/interface restoration AND a new explicit provider-readiness authority: exactly one non-scientific readiness request. Only a fresh readiness PASS can lead to separately authorized Gate 0 / Direct-SFQ-A0; a 12-case source-qualification stage is later still.",
+        "conditional_envelope": "Mechanism block was planned at roughly 192 probes + ~32 sham probes, but this is not a committed cost until all source/repair gates pass.",
+        "human_effort_estimate": "<1 h operational recovery now; later protocol review is conditional",
+        "parallelization": "API/provider-limited; can proceed independently of GPU work after credit recovery.",
+        "priority_note": "Do not budget the 192+32 mechanism block until the source phenomenon is qualified."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 6.2,
@@ -351,6 +651,53 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "fork 不可精确复现、Phase A semantic sensitivity fail、或师兄决定与 Paper A 合并 → 不进入 Phase B；governance superiority 未执行 ALWAYS_WRITE 时不得写方法优越性。",
       "cross_paper_leverage": "Paper A 可作为 future-episode influence/fidelity mechanism readout；C1 提供 transport vocabulary；B1 提供 provenance control，但 Paper B 的主 claim 必须保持 longitudinal utility。",
       "advisor_question": "longitudinal persistent-state fork 是否足够构成独立 embodied self-evolution paper？Paper A 应作为它的 measurement module，还是保持两篇？",
+      "reality_support": {
+        "reality_verdict": "STRONGLY_SUPPORTED_WITH_NOVELTY_PRESSURE",
+        "supporting_cases": [
+          {
+            "title": "MemoryArena",
+            "url": "https://arxiv.org/abs/2602.16313",
+            "why": "Directly defines multi-session loops where agents learn from earlier actions/feedback and use memory on later tasks."
+          },
+          {
+            "title": "Agentic Memory",
+            "url": "https://aclanthology.org/2026.acl-long.981/",
+            "why": "Provides explicit long-term memory store/retrieve/update/discard operations across long-horizon agent tasks."
+          },
+          {
+            "title": "Robo-Cortex",
+            "url": "https://arxiv.org/abs/2605.18729",
+            "why": "Maintains long-term principle memory distilled from past trajectories in a continuous reflection-adaptation loop."
+          },
+          {
+            "title": "MemoryVLA",
+            "url": "https://iclr.cc/virtual/2026/poster/10011504",
+            "why": "Demonstrates memory-conditioned long-horizon robotic manipulation, supporting embodied memory as a real deployment substrate."
+          }
+        ],
+        "what_this_does_not_prove": "Persistent embodied memory is clearly real, but this creates novelty pressure: Paper B must defend the exact persistent-state fork and longitudinal identification standard, not generic long-term memory or self-evolution.",
+        "strongest_escape": "If the committed-update vs frozen-preupdate fork cannot be reproduced exactly, or native retrieval transport is weak, existing multi-session memory evaluation may cover the practical question more simply."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "0",
+          "api_units": 0,
+          "work": "formalize causal estimand, randomization unit, exact state/hash/RNG fork"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0",
+          "local_gpu_occupancy": "0 committed now; contingent Phase A GPU type/count and GPU-hours are UNKNOWN until exact fork/runtime preflight",
+          "human_time": "2–5 h SCM/fork formalization",
+          "provider_credential_dependency": "N/A for current formalization",
+          "calendar_latency": "formalization first; later 128-run wall-clock UNKNOWN until frozen runtime preflight"
+        },
+        "next_if_pass": "Phase A: 32 units × 4 semantic conditions = 128 local VLA runs. Before authorization, freeze GPU type/count, measured throughput, GPU-hours and wall-clock occupancy for the exact persistent-state fork.",
+        "conditional_envelope": "Phase B: 24 streams × 3 branches = 72 local VLA runs only after Phase A PASS; full base program = 200 runs.",
+        "human_effort_estimate": "2–5 h SCM/fork formalization before compute",
+        "parallelization": "Formalization is fully parallel. Later VLA phases must wait for their own gates and available local GPU.",
+        "priority_note": "Do not treat 200 runs as current budget; only formalization is authorized now."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 5.6,
@@ -396,6 +743,59 @@ window.ADVISOR_MEETING_DATA = {
       "override_trigger": "只因机械/resource failure 才暂停/修复训练；不能因 training loss 或开发观察改 topology/predicate/panel。P1 若不支持 count-matched topology residual，则按 frozen STOP，不加 5/6 relations rescue。",
       "cross_paper_leverage": "方法学上与全 portfolio 共用 matched-counterfactual / strongest-simplification discipline，但科学对象独立，几乎没有 merge 风险。",
       "advisor_question": "endpoint-sharing topology 是真实 3D instruction complexity 的关键变量，还是 controlled benchmark 中才突出的分析轴？P1 前最必须补哪一个 confound control？",
+      "reality_support": {
+        "reality_verdict": "SUPPORTED_WITH_NOVELTY_BOUNDARY",
+        "supporting_cases": [
+          {
+            "title": "InstructScene",
+            "url": "https://arxiv.org/abs/2402.04717",
+            "why": "Uses a semantic graph prior and layout decoder for instruction-driven 3D scene synthesis, validating relational graph structure as a real generation interface."
+          },
+          {
+            "title": "SceneNAT",
+            "url": "https://arxiv.org/abs/2601.07218",
+            "why": "Uses explicit subject-predicate-object triplets to improve relational reasoning in language-guided indoor scene synthesis."
+          },
+          {
+            "title": "GeoSceneGraph",
+            "url": "https://arxiv.org/abs/2511.14884",
+            "why": "Leverages scene-graph structure and geometric symmetries for text-guided 3D indoor scene synthesis."
+          }
+        ],
+        "what_this_does_not_prove": "These works establish that graph relations matter; they do not establish a fixed-count endpoint-sharing effect or locate it to text→graph versus graph→scene.",
+        "strongest_escape": "Lexical repetition, hub-object salience/size, or predicate implication may explain Chain/Hub differences even after relation count is matched."
+      },
+      "resource_plan": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "2×RTX 3090 local",
+          "api_units": 0,
+          "work": "developmental SGP-14 + shared SG2SC training to 1,000,000 optimizer steps each"
+        },
+        "resource_dimensions": {
+          "api_cash": "¥0",
+          "local_gpu_occupancy": "2×RTX 3090 live; SGP-14 + shared decoder",
+          "human_time": "low active monitoring",
+          "provider_credential_dependency": "N/A",
+          "calendar_latency": "rough remaining ~11.6 / ~7.5 GPU-days at 22:55 observed averages; operational estimate only"
+        },
+        "operational_snapshot": {
+          "observed_at": "2026-09-05T22:55:10+08:00",
+          "sgp14_step": 31281,
+          "shared_decoder_step": 279572,
+          "target_step_each": 1000000,
+          "rough_remaining_gpu_days_if_current_average_holds": {
+            "sgp14": 11.6,
+            "shared_decoder": 7.5
+          },
+          "note": "Derived from current process elapsed time and heartbeat step counts; operational estimate only, not a scientific result or guarantee."
+        },
+        "next_if_pass": "After both training seals, P1 validation needs separate authority. No validation/test/topology metrics are opened during training.",
+        "conditional_envelope": "If P1 GO later justifies replication, additional seeds require a fresh compute authority; they are not part of the current committed budget.",
+        "human_effort_estimate": "Low active human time while training; checkpoint/resource monitoring only",
+        "parallelization": "Keep the two running 3090 jobs isolated. Other zero-compute/API work can proceed in parallel.",
+        "priority_note": "High opportunity cost but already committed; stopping early without a frozen mechanical failure wastes sunk compute and violates the protocol."
+      },
       "stanford": {
         "status": "READY",
         "numerical_score": 4.1,
@@ -453,6 +853,74 @@ window.ADVISOR_MEETING_DATA = {
       "question": "identity/representation changes 是否只是各自 substrate artifact，还是 self-evolution control surface 的共同系统问题？"
     }
   ],
+  "resource_pricing_basis": {
+    "source": "generated/provider-price-comparison-snapshot-20260903.json",
+    "rule": "API estimates are planning references only. Exact billing must be summed call-by-call using the actual provider route and per-call context tier.",
+    "reference_rates_cny_per_million_tokens": {
+      "qwen3.5-397b-a17b_first_tier": {
+        "input": 1.204,
+        "output": 7.224,
+        "context": "<=128K"
+      },
+      "qwen3.7-plus_first_tier": {
+        "input": 1.932,
+        "output": 7.707,
+        "context": "<=256K"
+      },
+      "deepseek-v4-pro_token_route_reference": {
+        "input": 4.5,
+        "output": 13.5
+      }
+    }
+  },
+  "portfolio_schedule": [
+    {
+      "lane": "A · cheap closure",
+      "papers": [
+        "E1",
+        "C1"
+      ],
+      "action": "Finish manuscript/advisor decisions immediately; no scarce compute."
+    },
+    {
+      "lane": "B · already-running compute",
+      "papers": [
+        "B1",
+        "3D"
+      ],
+      "action": "Let frozen jobs run uninterrupted; collect only operational receipts, no interim science."
+    },
+    {
+      "lane": "C · near-zero qualification",
+      "papers": [
+        "G1",
+        "E2",
+        "CONSTRAINT_EXTERNALITY"
+      ],
+      "action": "Resolve credential/identity/credit gates one at a time; spend only the next-gate budget."
+    },
+    {
+      "lane": "D · formalize before compute",
+      "papers": [
+        "PAPER_A",
+        "PAPER_B"
+      ],
+      "action": "Use Web GPT + human review to freeze the causal objects before allocating VLA GPU runs."
+    }
+  ],
+  "overlay_audit": {
+    "independent_verdict": "REVISE_REALITY_COST_OVERLAY",
+    "postfix_status": "FIXES_APPLIED_DETERMINISTIC_PASS",
+    "verification_path": "DETERMINISTIC_SCHEMA_AND_EXACT_TEXT_GUARDS",
+    "model_slug": "gpt-5-6-thinking",
+    "extra_high": true,
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "submission": false,
+      "advisor_overlay_only": true
+    }
+  },
   "schedule": [
     {
       "start": "14:00",
