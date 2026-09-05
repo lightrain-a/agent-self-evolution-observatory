@@ -1,0 +1,103 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-throttled-sync-checkpoint-save-4gb-40g-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T12:41:00+08:00",
+  "status": "PI05_THROTTLED_SYNC_CHECKPOINT_SAVE_4GB_40G_REPRODUCED_CGROUP_OOM",
+  "decision": "STOP_CHECKPOINT_RESOURCE_REPAIR_FORMAL_RUN3_NOT_AUTHORIZED",
+  "parent_design": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-sync64-and-limiter-source-adjudication-20260905.json",
+    "sha256": "a8838ee71435dc08e173f54351ffbf0e0c16690090614b30f8341adc55b108bc"
+  },
+  "authority": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-throttled-sync-checkpoint-save-4gb-40g-qualification-authority-20260905.json",
+    "sha256": "6323b3fd3db90fe816082cfc59795acbfd0d86a28944bb38d075d89864f229bb",
+    "frozen_if_fail_rule": "STOP checkpoint resource repair. Do not change limiter, memory ceiling, checkpoint content/format/frequency, or scientific training variables without a new independently reviewed design."
+  },
+  "partial_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-throttled-sync-checkpoint-save-4gb-40g-qualification-result-67-20260905.json",
+    "sha256": "4068b27806a853a01a32c66759e035213523312f6ba58c9205f8ede9e876d913",
+    "status": "PI05_THROTTLED_SYNC_CHECKPOINT_SAVE_4GB_40G_SAVE_STARTED",
+    "train_state_ready": true,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "checkpoint_restore_completed": false,
+    "dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false
+  },
+  "execution": {
+    "host": "67",
+    "unit": "pi05-throttled-sync-checkpoint-save-4gb-40g-qual-67-20260905.service",
+    "systemd_result": "oom-kill",
+    "exec_main_code": "killed",
+    "exec_main_signal": 9,
+    "memory_max_bytes": 42949672960,
+    "memory_peak_bytes": 42949672960,
+    "memory_swap_max_bytes": 0,
+    "duration_seconds_approx": 133,
+    "gpu_state_before_save_mib": 73499,
+    "source_native_checkpoint_mode": "synchronous",
+    "pytree_save_concurrent_gb_per_item": 4,
+    "pytree_restore_concurrent_gb_per_item": 4
+  },
+  "closed_resource_ladder": {
+    "async_40g": "OOM",
+    "async_64g": "OOM",
+    "sync_40g": "OOM",
+    "sync_64g": "OOM",
+    "throttled_sync_4gb_per_item_40g": "OOM",
+    "additional_limiter_values_authorized": false,
+    "additional_memory_ceiling_values_authorized": false
+  },
+  "scientific_interpretation": {
+    "supported": "The prospectively bounded checkpoint-resource repair program is exhausted. Even source-native synchronous saving with a single preregistered 4 GB per-PyTree serialization limiter reaches the exact 40 GiB no-swap cgroup ceiling before a complete checkpoint is produced.",
+    "not_supported": "This does not show that checkpointing the model is physically impossible on all hosts or implementations. It shows that the currently authorized single-GPU practical child has no qualified checkpoint-save implementation under the closed repair ladder.",
+    "run2_disposition": "Run2 remains closed at 10001 completed optimizer updates with no exact-state recovery checkpoint and no terminal scientific model.",
+    "outcome_boundary": "No BEHAVIOR policy Q, effect size, p-value, validation loss, or policy outcome has been opened."
+  },
+  "scientific_disposition": {
+    "current_pi05_training_child": "SUBSTRATE_BLOCKED_AT_CHECKPOINT_SERIALIZATION",
+    "formal_run3_authorized": false,
+    "resume_from_run2_authorized": false,
+    "policy_evaluation_authorized": false,
+    "terminal_checkpoint_49999_exists": false,
+    "intermediate_partial_checkpoint_scientifically_usable": false,
+    "scientific_claim_updated_by_training_progress": false
+  },
+  "next_gate": {
+    "status": "INDEPENDENT_REDESIGN_REVIEW_REQUIRED",
+    "allowed": "Design and independently review a new checkpoint implementation/resource child without accessing BEHAVIOR outcomes or changing frozen scientific variables.",
+    "must_preserve": [
+      "26-task / 13-pair frozen panel",
+      "5200 frozen demo episodes",
+      "pi0.5 base checkpoint",
+      "batch16 practical recipe",
+      "seed42",
+      "AdamW",
+      "learning-rate schedule",
+      "EMA=0.99",
+      "normalization",
+      "action horizon32",
+      "50000 optimizer updates",
+      "recovery labels 10000/20000/30000/40000",
+      "scientific terminal label 49999",
+      "no loss-based selection",
+      "no policy-outcome access"
+    ],
+    "forbidden_without_independent_review": [
+      "formal run3",
+      "new save_concurrent_gb value",
+      "new MemoryMax continuation",
+      "checkpoint content reduction",
+      "checkpoint format substitution",
+      "checkpoint frequency change",
+      "dropping recovery checkpoints",
+      "resume from the run2 temporary checkpoint"
+    ]
+  }
+}
