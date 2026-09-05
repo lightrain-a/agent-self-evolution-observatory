@@ -1,0 +1,77 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-64g-repair1-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:34:00Z",
+  "status": "AUTHORIZED_PI05_STEP0_CHECKPOINT_SAVE_64G_REPAIR1_QUALIFICATION",
+  "scope": "One outcome-blind checkpoint-save resource repair qualification after direct reproduction of a 40 GiB cgroup OOM. This authority changes only the host-memory ceiling from 40 GiB to 64 GiB and requires a synchronous Orbax completion barrier. It does not authorize formal run3.",
+  "parent_40g_failure_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-40g-failure-adjudication-20260905.json",
+  "adjudication_sha256": "cce25065be0725e651c70b014b21835cf04158bdc6cf3701a7631bcdcf3bbb27",
+  "parent_40g_partial_receipt_sha256": "e788173d21008df2b0e1643dbc5421b139a94c04dbde1d4cf5ec478b0256f162",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_step0_checkpoint_save_64g_repair1_qualification.py",
+  "runner_sha256": "52de8e6c135a85f7e6fceecc3b93aedcbb5297714009a68b647a82095d69efa8",
+  "launcher_path": "scripts/run_behavior_formal_goal_pi05_step0_checkpoint_save_64g_repair1_qualification_67.sh",
+  "launcher_sha256": "1a1083dc12f81fe6a1bdf13c7920947abbe3ef6a618e234dab9b523cb3671540",
+  "host": "67",
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 64,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "scientific_invariants": {
+    "practical_batch": 16,
+    "seed": 42,
+    "base_checkpoint_unchanged": true,
+    "optimizer_unchanged": true,
+    "lr_schedule_unchanged": true,
+    "ema_unchanged": true,
+    "normalization_unchanged": true,
+    "action_horizon": 32,
+    "target_training_updates": 50000,
+    "terminal_scientific_checkpoint_label": 49999,
+    "policy_outcome_protocol_unchanged": true
+  },
+  "qualification": {
+    "initial_state": "fresh step-0 practical-batch16 train state",
+    "save_label": 10000,
+    "output_root": "/data/wyt/formal-goal-checkpoint-save-qualification-67-20260905/stage-a-save-only-64g-repair1",
+    "receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-64g-repair1-qualification-result-67-20260905.json",
+    "sequence": [
+      "direct-device fresh step-0 state restore",
+      "source checkpoints.save_state(label=10000)",
+      "immediate manager.wait_until_finished() before any further model operation",
+      "require completed manager label 10000",
+      "restore label 10000 and require restored state.step == 0"
+    ],
+    "behavior_dataset_access": false,
+    "forward_pass": false,
+    "backward_pass": false,
+    "optimizer_update": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_read": false,
+    "policy_outcome_read": false
+  },
+  "pass_gate": {
+    "required_status": "PI05_STEP0_CHECKPOINT_SAVE_64G_REPAIR1_PASS",
+    "checkpoint_save_completed": true,
+    "checkpoint_restore_completed": true,
+    "manager_contains_label_10000": true,
+    "systemd_result_must_not_be_oom_kill": true
+  },
+  "if_pass": "Checkpoint save/restore is resource-qualified at 64 GiB with a synchronous barrier. A separate formal-run3 authority may then be designed that starts fresh from step 0, uses the same scientific training recipe, raises only the host MemoryMax to 64 GiB, and waits after each checkpoint save before continuing. No automatic run3 launch from this authority.",
+  "if_fail": "Stop. No automatic MemoryMax increase, alternative checkpoint format, checkpoint-frequency change, or formal restart is authorized.",
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false,
+  "forbidden": [
+    "automatic MemoryMax escalation beyond 64 GiB",
+    "formal run3 from this authority",
+    "resume from run2 partial checkpoint",
+    "BEHAVIOR Q or policy outcome access",
+    "loss inspection",
+    "scientific batch/seed/optimizer/LR/EMA/action-horizon/training-horizon changes"
+  ]
+}

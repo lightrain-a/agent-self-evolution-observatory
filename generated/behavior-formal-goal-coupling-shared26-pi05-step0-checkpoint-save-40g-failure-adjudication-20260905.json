@@ -1,0 +1,59 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-40g-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:32:00Z",
+  "status": "PI05_STEP0_CHECKPOINT_SAVE_40G_REPRODUCED_CGROUP_OOM",
+  "decision": "40G_CHECKPOINT_SAVE_RESOURCE_SCOPE_INSUFFICIENT",
+  "authority_sha256": "db430009a9b52eca764bd8eb9c214550f477cb402df9cc62acd3c0b8a9f66fb1",
+  "partial_receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-40g-qualification-result-67-20260905.json",
+  "partial_receipt_sha256": "e788173d21008df2b0e1643dbc5421b139a94c04dbde1d4cf5ec478b0256f162",
+  "execution": {
+    "host": "67",
+    "unit": "pi05-step0-checkpoint-save-40g-qual-67-20260905-r1.service",
+    "duration_seconds_approx": 194,
+    "systemd_result": "oom-kill",
+    "exec_main_code": "killed",
+    "exec_main_signal": 9,
+    "memory_max_bytes": 42949672960,
+    "memory_peak_bytes": 42949672960,
+    "memory_swap_max_bytes": 0,
+    "systemd_evidence": "A process of this unit has been killed by the OOM killer; main process exited status=9/KILL; 40.0G memory peak; 0B swap peak."
+  },
+  "qualification_state": {
+    "fresh_step0_state_ready": true,
+    "gpu_memory_after_state_mib": 73499,
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "checkpoint_restore_completed": false,
+    "partial_checkpoint_size_approx_gib": 9.9,
+    "real_scientific_optimizer_updates": 0,
+    "behavior_dataset_accessed": false,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update_executed": false,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false
+  },
+  "scientific_interpretation": {
+    "supported": "The same 40 GiB no-swap host-memory ceiling used by formal run2 is insufficient for an isolated Orbax save of the fresh practical-batch16 train state, even when no real batch, no train step, and no asynchronous next-step overlap is present.",
+    "run2_link": "Run2 disappeared in the first checkpoint-10000 save window with an incomplete Orbax temporary checkpoint and no result receipt. The isolated 40G reproduction supplies a direct resource mechanism consistent with that hard-exit pattern.",
+    "not_claimed": "The collected run2 transient unit itself is no longer available, so this adjudication does not claim a recovered historical OOM counter from run2; it establishes a reproducible incompatibility of the frozen 40G scope with the exact checkpoint-save operation."
+  },
+  "next_gate": {
+    "name": "STEP0_CHECKPOINT_SAVE_64G_SYNCHRONOUS_REPAIR1_QUALIFICATION",
+    "host": "67",
+    "memory_max_gib": 64,
+    "memory_swap_max_gib": 0,
+    "rationale": "64 GiB adds bounded engineering headroom above the reproduced 40 GiB ceiling while leaving substantial reserve on the clean 125 GiB host. It changes no scientific variable. One attempt only; no automatic larger-memory ladder is authorized.",
+    "required_behavior": "Save fresh step-0 state, immediately wait for Orbax completion, require completed manager label 10000, then restore it successfully.",
+    "formal_run3_authorized": false
+  },
+  "forbidden": [
+    "formal run3 before repair1 PASS and separate authority",
+    "resume from run2 partial checkpoint",
+    "policy outcome or Q access",
+    "loss-based recipe changes",
+    "automatic MemoryMax escalation beyond 64 GiB"
+  ]
+}
