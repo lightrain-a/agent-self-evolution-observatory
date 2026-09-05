@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R77-M3-BRANCH-RESPONSE-MEDIATION-RESULT",
+  "status": "R77_M3_BRANCH_RESPONSE_MEDIATION_COMPLETE",
+  "role": "POST_HOC_BRANCH_RESPONSE_MEDIATION_NOT_PRIMARY_INFERENCE",
+  "plan_receipt_sha256": "26f91395241965281ca2b3170cda771d9a2fbd91059362763d84c2cfd79a470e",
+  "arm_runs": 8,
+  "task_rows": [
+    {
+      "task_id": "125",
+      "A_prompt_force_B_terminal": false,
+      "B_prompt_force_A_terminal": true,
+      "historical_A_B": [
+        true,
+        false
+      ],
+      "both_cross_forced_terminals_match_opposite_historical_branches": true,
+      "cross_forcing_changes_terminal_both_directions": true
+    },
+    {
+      "task_id": "136",
+      "A_prompt_force_B_terminal": true,
+      "B_prompt_force_A_terminal": false,
+      "historical_A_B": [
+        false,
+        true
+      ],
+      "both_cross_forced_terminals_match_opposite_historical_branches": true,
+      "cross_forcing_changes_terminal_both_directions": true
+    },
+    {
+      "task_id": "193",
+      "A_prompt_force_B_terminal": true,
+      "B_prompt_force_A_terminal": true,
+      "historical_A_B": [
+        false,
+        true
+      ],
+      "both_cross_forced_terminals_match_opposite_historical_branches": false,
+      "cross_forcing_changes_terminal_both_directions": false
+    },
+    {
+      "task_id": "327",
+      "A_prompt_force_B_terminal": true,
+      "B_prompt_force_A_terminal": true,
+      "historical_A_B": [
+        true,
+        false
+      ],
+      "both_cross_forced_terminals_match_opposite_historical_branches": false,
+      "cross_forcing_changes_terminal_both_directions": false
+    }
+  ],
+  "full_bidirectional_terminal_swap_count": 2,
+  "interpretation_boundary": "A successful swap shows the first divergent full assistant branch response is sufficient, conditional on the replayed native prefix and original system prompt, to redirect the subsequent closed-loop outcome. It does not isolate action from contemporaneous reasoning text and is post-hoc selected.",
+  "changes_R72_R73_primary_inference": false,
+  "new_model_trajectories": 8,
+  "receipt_sha256": "893c189eb09832d7a9eee539303ce64621290ac68e9df2bfb01caadd00809ac0"
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R77-MECHANISM-CLOSEOUT",
+  "recorded_date": "2026-09-05",
+  "status": "R77_POST_HOC_MECHANISM_DIAGNOSTIC_COMPLETE_PRIMARY_UNCHANGED",
+  "role": "POST_HOC_MECHANISM_CLOSEOUT_NOT_PRIMARY_INFERENCE",
+  "bindings": {
+    "R76_repeatability_file_sha256": "6d310cb2f841598a0f38c24b809dac334def69d5f0b8f42edfd32b0c4641f98a",
+    "R76_repeatability_receipt_sha256": "092e480513a590d6f13b3afc76546a05590d9d3b36b3c91bfde8bca2f3d7fc13",
+    "R77_M1_file_sha256": "11b409cf611e3684810a4eb94c59049f365940162ee098f825c100013a8c72ba",
+    "R77_M1_receipt_sha256": "5345bbb8a433f6978325446036a6fb4273d47db50b952366116bc08ef02a644a",
+    "R77_M2_states_file_sha256": "f89542dab1ef48f32c548e8a1f3efdbafc339410b56ca36023f943d1e6f61a10",
+    "R77_M2A_file_sha256": "37cf5909f97e017835e48cb21a287d0ef8462118b5f11eb415ddafa2325be8f5",
+    "R77_M2A_receipt_sha256": "b385725fc635dfafac632627929ad7ee033491fa0f798df191f3098e08665fcc",
+    "R77_M2B_file_sha256": "a319749c5405c9a41c2f581d9e8f9b3bde266902275fb8c496d26341109b17b1",
+    "R77_M2B_receipt_sha256": "bf433e87b4c7a30661a7d9346bc8b5d9e1b54b2b5e1fcc8be36c947ca71dc150",
+    "R77_M3_plan_file_sha256": "f812a70e6f1d8ebae5f109d088af38922784516396fbef5b42875e08c5a569bc",
+    "R77_M3_result_file_sha256": "168a75fefa1dc47fa1e8d035637480bf42ccfc6070f2f1878c20b6c811c194b8",
+    "R77_M3_result_receipt_sha256": "893c189eb09832d7a9eee539303ce64621290ac68e9df2bfb01caadd00809ac0",
+    "R77_M4_file_sha256": "aff99a066346f8c9031aa28142d7bae0cc75288a2cc5282cd7ca3b1e1363a607",
+    "R77_M4_receipt_sha256": "32ed70a65c944c62c360db5392bc4be0b3f306fc1a16f935b4199df4b7de2166"
+  },
+  "mechanism_summary": {
+    "temperature_sampling_as_primary_explanation": "disfavored: historical R61 and R76 use temperature=0, do_sample=false, and all 4 selected terminal-flip pair patterns reproduced exactly",
+    "task_125": {
+      "classification": "FRAGILE_DIRECT_DECISION_BOUNDARY_PLUS_BIDIRECTIONAL_BRANCH_MEDIATION",
+      "pre_divergence_external_transitions_identical": 5,
+      "A_prompt_branch_logodds_B_minus_A": -0.015625,
+      "B_prompt_branch_logodds_B_minus_A": 0.015625,
+      "prompt_swap_flips_candidate_preference": true,
+      "M3_bidirectional_terminal_swap": true,
+      "temperature_0p2_pairwise_B_probability_shift": 0.03904264390418588
+    },
+    "task_136": {
+      "classification": "SELF_CONDITIONING_HISTORY_MEDIATION_PLUS_BIDIRECTIONAL_BRANCH_MEDIATION",
+      "pre_divergence_external_transitions_identical": 1,
+      "A_history_branch_logodds_under_A_B_prompts": [-1.03125, -1.015625],
+      "B_history_branch_logodds_under_A_B_prompts": [3.34375, 3.28125],
+      "prompt_swap_flips_candidate_preference": false,
+      "M3_bidirectional_terminal_swap": true,
+      "temperature_0p2_prompt_probability_shift_near_zero": true
+    },
+    "task_193": {
+      "classification": "ROBUST_DIRECT_DECISION_BOUNDARY_WITH_ASYMMETRIC_RECOVERY",
+      "pre_divergence_external_transitions_identical": 0,
+      "A_prompt_branch_logodds_B_minus_A": -0.0625,
+      "B_prompt_branch_logodds_B_minus_A": 0.5625000596046448,
+      "prompt_swap_flips_candidate_preference": true,
+      "M3_A_force_B_changes_FAIL_to_SUCCESS": true,
+      "M3_B_force_A_remains_SUCCESS": true,
+      "temperature_0p2_pairwise_B_probability_shift": 0.5208429558050696
+    },
+    "task_327": {
+      "classification": "HISTORY_ANCHOR_SENSITIVITY_FIRST_BRANCH_NOT_TERMINALLY_SUFFICIENT",
+      "pre_divergence_external_transitions_identical": 1,
+      "A_history_branch_logodds_under_A_B_prompts": [-0.140625, -0.171875],
+      "B_history_branch_logodds_under_A_B_prompts": [0.046875, 0.09375],
+      "prompt_swap_flips_candidate_preference": false,
+      "M3_cross_forced_terminals": [true, true],
+      "first_divergent_branch_alone_explains_historical_B_failure": false
+    }
+  },
+  "mechanism_chain_supported": "Explicit provenance can alter local policy either directly at a narrow decision boundary or indirectly through self-conditioned transcript differences; branch changes can then be amplified, recovered from, or overridden by later closed-loop interaction depending on the task.",
+  "capability_boundary_hypothesis": "compatible with the observed syntax/recovery errors but not isolated by R77; a stronger-backbone comparison would be required to make this a causal capability claim",
+  "temperature_followup": "Do not run a broad temperature grid. If stochastic validation is later desired, prioritize task 125 and task 193 only; R77 M4 predicts 125 is sampling-fragile while 193 retains a much larger provenance-induced branch probability shift.",
+  "interpretation_limits": [
+    "The four tasks were selected post hoc because they were terminally discordant.",
+    "R77 does not estimate prevalence or the average treatment effect over the task population.",
+    "M3 swaps the full assistant branch response (reasoning plus action), so it is not an action-only mediation estimate.",
+    "R77 does not alter R72/R73 primary statistics, 321-run schedule, or execution authority."
+  ],
+  "R77_new_environment_trajectories": 8,
+  "R77_open_loop_greedy_replays": 8,
+  "R77_same_state_forward_conditions": 12,
+  "R77_temperature_analytic_model_calls": 0,
+  "changes_R72_R73_primary_inference": false,
+  "changes_R72_R73_execution_schedule": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "c468292e70d26e3423ed28196f3d336e3fd32404d50519b15d09c617146c50f0"
+}

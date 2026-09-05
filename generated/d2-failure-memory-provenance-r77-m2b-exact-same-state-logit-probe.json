@@ -1,0 +1,966 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R77-M2B-EXACT-SAME-STATE-LOGIT-PROBE",
+  "status": "R77_M2B_EXACT_SAME_STATE_LOGIT_PROBE_COMPLETE",
+  "role": "POST_HOC_MECHANISM_DIAGNOSTIC_NOT_PRIMARY_INFERENCE",
+  "bindings": {
+    "M2A_replay_receipt_sha256": "b385725fc635dfafac632627929ad7ee033491fa0f798df191f3098e08665fcc",
+    "probe_states_receipt_sha256": "d4179af3300599123665ac2d24f016135c1bb1621140b2fc684c82276985e6a5",
+    "model_identity_receipt_sha256": "60811d80b379c1beabc7e48287bc4e1380801df0aea00a25ce2a1b934072a5c1"
+  },
+  "execution": {
+    "same_state_anchors": 6,
+    "forward_conditions": 12,
+    "environment_interactions": 0,
+    "new_task_trajectories": 0,
+    "dtype": "float16"
+  },
+  "rows": [
+    {
+      "task_id": "125",
+      "anchor": "common",
+      "target_action_index": 5,
+      "candidate_replay_token_counts": {
+        "A": 103,
+        "B": 89,
+        "common_prefix": 51
+      },
+      "first_differing_native_replay_token": {
+        "A_id": 89,
+        "A_text": "z",
+        "B_id": 87,
+        "B_text": "x"
+      },
+      "conditions": {
+        "A": {
+          "base_prompt_tokens": 12639,
+          "score_A_replay": {
+            "token_count": 103,
+            "total_logprob": -8.132569313049316,
+            "mean_logprob": -0.0789569839835167
+          },
+          "score_B_replay": {
+            "token_count": 89,
+            "total_logprob": -8.11941909790039,
+            "mean_logprob": -0.09122943133115768
+          },
+          "mean_logprob_branch_preference_B_minus_A": -0.012272447347640991,
+          "branchpoint_logprob_A_token": -0.7244676351547241,
+          "branchpoint_logprob_B_token": -0.7400926351547241,
+          "branchpoint_logodds_B_minus_A": -0.015625,
+          "branchpoint_argmax_token_id": 89,
+          "branchpoint_argmax_text": "z",
+          "branchpoint_top8": [
+            {
+              "token_id": 89,
+              "token": "z",
+              "logprob": -0.7244676351547241
+            },
+            {
+              "token_id": 87,
+              "token": "x",
+              "logprob": -0.7400926351547241
+            },
+            {
+              "token_id": 85,
+              "token": "v",
+              "logprob": -4.099467754364014
+            },
+            {
+              "token_id": 68,
+              "token": "e",
+              "logprob": -4.161967754364014
+            },
+            {
+              "token_id": 69,
+              "token": "f",
+              "logprob": -5.568217754364014
+            },
+            {
+              "token_id": 66,
+              "token": "c",
+              "logprob": -6.615092754364014
+            },
+            {
+              "token_id": 77,
+              "token": "n",
+              "logprob": -7.208842754364014
+            },
+            {
+              "token_id": 82,
+              "token": "s",
+              "logprob": -9.810404777526855
+            }
+          ]
+        },
+        "B": {
+          "base_prompt_tokens": 12674,
+          "score_A_replay": {
+            "token_count": 103,
+            "total_logprob": -8.227095603942871,
+            "mean_logprob": -0.07987471669912338
+          },
+          "score_B_replay": {
+            "token_count": 89,
+            "total_logprob": -8.132448196411133,
+            "mean_logprob": -0.09137582033872604
+          },
+          "mean_logprob_branch_preference_B_minus_A": -0.011501103639602661,
+          "branchpoint_logprob_A_token": -0.7390689849853516,
+          "branchpoint_logprob_B_token": -0.7234439849853516,
+          "branchpoint_logodds_B_minus_A": 0.015625,
+          "branchpoint_argmax_token_id": 87,
+          "branchpoint_argmax_text": "x",
+          "branchpoint_top8": [
+            {
+              "token_id": 87,
+              "token": "x",
+              "logprob": -0.7234439849853516
+            },
+            {
+              "token_id": 89,
+              "token": "z",
+              "logprob": -0.7390689849853516
+            },
+            {
+              "token_id": 68,
+              "token": "e",
+              "logprob": -4.160943984985352
+            },
+            {
+              "token_id": 85,
+              "token": "v",
+              "logprob": -4.176568984985352
+            },
+            {
+              "token_id": 69,
+              "token": "f",
+              "logprob": -5.551568984985352
+            },
+            {
+              "token_id": 66,
+              "token": "c",
+              "logprob": -6.551568984985352
+            },
+            {
+              "token_id": 77,
+              "token": "n",
+              "logprob": -7.114068984985352
+            },
+            {
+              "token_id": 82,
+              "token": "s",
+              "logprob": -9.785943984985352
+            }
+          ]
+        }
+      },
+      "natural_greedy_consistency": {
+        "A_natural_branch_token_is_argmax": true,
+        "B_natural_branch_token_is_argmax": true
+      },
+      "branchpoint_JS_A_vs_B_prompt": 4.3104286305606365e-05,
+      "treatment_shift_branchpoint_logodds_toward_B": 0.03125,
+      "treatment_shift_mean_replay_preference_toward_B": 0.0007713437080383301,
+      "prompt_swap_flips_A_vs_B_candidate_token_preference": true
+    },
+    {
+      "task_id": "136",
+      "anchor": "A_history",
+      "target_action_index": 1,
+      "candidate_replay_token_counts": {
+        "A": 162,
+        "B": 184,
+        "common_prefix": 31
+      },
+      "first_differing_native_replay_token": {
+        "A_id": 2380,
+        "A_text": " three",
+        "B_id": 6205,
+        "B_text": " sample"
+      },
+      "conditions": {
+        "A": {
+          "base_prompt_tokens": 9348,
+          "score_A_replay": {
+            "token_count": 162,
+            "total_logprob": -9.614471435546875,
+            "mean_logprob": -0.059348590672016144
+          },
+          "score_B_replay": {
+            "token_count": 184,
+            "total_logprob": -7.8209428787231445,
+            "mean_logprob": -0.04250512644648552
+          },
+          "mean_logprob_branch_preference_B_minus_A": 0.016843464225530624,
+          "branchpoint_logprob_A_token": -0.33341819047927856,
+          "branchpoint_logprob_B_token": -1.3646681308746338,
+          "branchpoint_logodds_B_minus_A": -1.03125,
+          "branchpoint_argmax_token_id": 2380,
+          "branchpoint_argmax_text": " three",
+          "branchpoint_top8": [
+            {
+              "token_id": 2380,
+              "token": " three",
+              "logprob": -0.33341819047927856
+            },
+            {
+              "token_id": 6205,
+              "token": " sample",
+              "logprob": -1.3646681308746338
+            },
+            {
+              "token_id": 1515,
+              "token": " log",
+              "logprob": -3.583418130874634
+            },
+            {
+              "token_id": 1403,
+              "token": " two",
+              "logprob": -8.755292892456055
+            },
+            {
+              "token_id": 2631,
+              "token": " required",
+              "logprob": -10.161542892456055
+            },
+            {
+              "token_id": 5995,
+              "token": " necessary",
+              "logprob": -11.083417892456055
+            },
+            {
+              "token_id": 3116,
+              "token": " four",
+              "logprob": -11.583417892456055
+            },
+            {
+              "token_id": 18929,
+              "token": " logs",
+              "logprob": -11.958417892456055
+            }
+          ]
+        },
+        "B": {
+          "base_prompt_tokens": 9383,
+          "score_A_replay": {
+            "token_count": 162,
+            "total_logprob": -10.012760162353516,
+            "mean_logprob": -0.061807163059711456
+          },
+          "score_B_replay": {
+            "token_count": 184,
+            "total_logprob": -8.03176498413086,
+            "mean_logprob": -0.043650899082422256
+          },
+          "mean_logprob_branch_preference_B_minus_A": 0.0181562639772892,
+          "branchpoint_logprob_A_token": -0.3383350968360901,
+          "branchpoint_logprob_B_token": -1.3539600372314453,
+          "branchpoint_logodds_B_minus_A": -1.015625,
+          "branchpoint_argmax_token_id": 2380,
+          "branchpoint_argmax_text": " three",
+          "branchpoint_top8": [
+            {
+              "token_id": 2380,
+              "token": " three",
+              "logprob": -0.3383350968360901
+            },
+            {
+              "token_id": 6205,
+              "token": " sample",
+              "logprob": -1.3539600372314453
+            },
+            {
+              "token_id": 1515,
+              "token": " log",
+              "logprob": -3.5570850372314453
+            },
+            {
+              "token_id": 1403,
+              "token": " two",
+              "logprob": -8.682085037231445
+            },
+            {
+              "token_id": 2631,
+              "token": " required",
+              "logprob": -10.135210037231445
+            },
+            {
+              "token_id": 5995,
+              "token": " necessary",
+              "logprob": -11.041460037231445
+            },
+            {
+              "token_id": 3116,
+              "token": " four",
+              "logprob": -11.447710037231445
+            },
+            {
+              "token_id": 18929,
+              "token": " logs",
+              "logprob": -11.916460037231445
+            }
+          ]
+        }
+      },
+      "natural_greedy_consistency": {
+        "A_natural_branch_token_is_argmax": true
+      },
+      "branchpoint_JS_A_vs_B_prompt": 8.515597073710524e-06,
+      "treatment_shift_branchpoint_logodds_toward_B": 0.015625,
+      "treatment_shift_mean_replay_preference_toward_B": 0.0013127997517585754,
+      "prompt_swap_flips_A_vs_B_candidate_token_preference": false
+    },
+    {
+      "task_id": "136",
+      "anchor": "B_history",
+      "target_action_index": 1,
+      "candidate_replay_token_counts": {
+        "A": 162,
+        "B": 184,
+        "common_prefix": 31
+      },
+      "first_differing_native_replay_token": {
+        "A_id": 2380,
+        "A_text": " three",
+        "B_id": 6205,
+        "B_text": " sample"
+      },
+      "conditions": {
+        "A": {
+          "base_prompt_tokens": 9311,
+          "score_A_replay": {
+            "token_count": 162,
+            "total_logprob": -17.089942932128906,
+            "mean_logprob": -0.10549347847700119
+          },
+          "score_B_replay": {
+            "token_count": 184,
+            "total_logprob": -7.824604034423828,
+            "mean_logprob": -0.042525023221969604
+          },
+          "mean_logprob_branch_preference_B_minus_A": 0.06296845525503159,
+          "branchpoint_logprob_A_token": -3.3796191215515137,
+          "branchpoint_logprob_B_token": -0.03586906939744949,
+          "branchpoint_logodds_B_minus_A": 3.34375,
+          "branchpoint_argmax_token_id": 6205,
+          "branchpoint_argmax_text": " sample",
+          "branchpoint_top8": [
+            {
+              "token_id": 6205,
+              "token": " sample",
+              "logprob": -0.03586906939744949
+            },
+            {
+              "token_id": 2380,
+              "token": " three",
+              "logprob": -3.3796191215515137
+            },
+            {
+              "token_id": 1515,
+              "token": " log",
+              "logprob": -7.051494121551514
+            },
+            {
+              "token_id": 1403,
+              "token": " two",
+              "logprob": -8.285868644714355
+            },
+            {
+              "token_id": 2631,
+              "token": " required",
+              "logprob": -10.613993644714355
+            },
+            {
+              "token_id": 5995,
+              "token": " necessary",
+              "logprob": -12.035868644714355
+            },
+            {
+              "token_id": 10688,
+              "token": " samples",
+              "logprob": -13.051493644714355
+            },
+            {
+              "token_id": 3116,
+              "token": " four",
+              "logprob": -13.082743644714355
+            }
+          ]
+        },
+        "B": {
+          "base_prompt_tokens": 9346,
+          "score_A_replay": {
+            "token_count": 162,
+            "total_logprob": -16.816247940063477,
+            "mean_logprob": -0.10380399972200394
+          },
+          "score_B_replay": {
+            "token_count": 184,
+            "total_logprob": -7.761728763580322,
+            "mean_logprob": -0.04218330979347229
+          },
+          "mean_logprob_branch_preference_B_minus_A": 0.06162068992853165,
+          "branchpoint_logprob_A_token": -3.319429397583008,
+          "branchpoint_logprob_B_token": -0.038179345428943634,
+          "branchpoint_logodds_B_minus_A": 3.28125,
+          "branchpoint_argmax_token_id": 6205,
+          "branchpoint_argmax_text": " sample",
+          "branchpoint_top8": [
+            {
+              "token_id": 6205,
+              "token": " sample",
+              "logprob": -0.038179345428943634
+            },
+            {
+              "token_id": 2380,
+              "token": " three",
+              "logprob": -3.319429397583008
+            },
+            {
+              "token_id": 1515,
+              "token": " log",
+              "logprob": -6.975679397583008
+            },
+            {
+              "token_id": 1403,
+              "token": " two",
+              "logprob": -8.147554397583008
+            },
+            {
+              "token_id": 2631,
+              "token": " required",
+              "logprob": -10.506929397583008
+            },
+            {
+              "token_id": 5995,
+              "token": " necessary",
+              "logprob": -11.928804397583008
+            },
+            {
+              "token_id": 3116,
+              "token": " four",
+              "logprob": -12.928804397583008
+            },
+            {
+              "token_id": 10688,
+              "token": " samples",
+              "logprob": -12.960054397583008
+            }
+          ]
+        }
+      },
+      "natural_greedy_consistency": {
+        "B_natural_branch_token_is_argmax": true
+      },
+      "branchpoint_JS_A_vs_B_prompt": 1.7975378796109e-05,
+      "treatment_shift_branchpoint_logodds_toward_B": -0.0625,
+      "treatment_shift_mean_replay_preference_toward_B": -0.001347765326499939,
+      "prompt_swap_flips_A_vs_B_candidate_token_preference": false
+    },
+    {
+      "task_id": "193",
+      "anchor": "common",
+      "target_action_index": 0,
+      "candidate_replay_token_counts": {
+        "A": 512,
+        "B": 448,
+        "common_prefix": 50
+      },
+      "first_differing_native_replay_token": {
+        "A_id": 10487,
+        "A_text": " installed",
+        "B_id": 10212,
+        "B_text": " listed"
+      },
+      "conditions": {
+        "A": {
+          "base_prompt_tokens": 9207,
+          "score_A_replay": {
+            "token_count": 512,
+            "total_logprob": -28.15077781677246,
+            "mean_logprob": -0.05498198792338371
+          },
+          "score_B_replay": {
+            "token_count": 448,
+            "total_logprob": -14.364372253417969,
+            "mean_logprob": -0.032063331454992294
+          },
+          "mean_logprob_branch_preference_B_minus_A": 0.02291865646839142,
+          "branchpoint_logprob_A_token": -0.7233244776725769,
+          "branchpoint_logprob_B_token": -0.7858244776725769,
+          "branchpoint_logodds_B_minus_A": -0.0625,
+          "branchpoint_argmax_token_id": 10487,
+          "branchpoint_argmax_text": " installed",
+          "branchpoint_top8": [
+            {
+              "token_id": 10487,
+              "token": " installed",
+              "logprob": -0.7233244776725769
+            },
+            {
+              "token_id": 10212,
+              "token": " listed",
+              "logprob": -0.7858244776725769
+            },
+            {
+              "token_id": 2561,
+              "token": " available",
+              "logprob": -3.7076995372772217
+            },
+            {
+              "token_id": 2736,
+              "token": " already",
+              "logprob": -3.9108245372772217
+            },
+            {
+              "token_id": 264,
+              "token": " a",
+              "logprob": -4.988949298858643
+            },
+            {
+              "token_id": 304,
+              "token": " in",
+              "logprob": -5.207699298858643
+            },
+            {
+              "token_id": 459,
+              "token": " an",
+              "logprob": -7.692074298858643
+            },
+            {
+              "token_id": 279,
+              "token": " the",
+              "logprob": -7.738949298858643
+            }
+          ]
+        },
+        "B": {
+          "base_prompt_tokens": 9242,
+          "score_A_replay": {
+            "token_count": 512,
+            "total_logprob": -28.813488006591797,
+            "mean_logprob": -0.0562763437628746
+          },
+          "score_B_replay": {
+            "token_count": 448,
+            "total_logprob": -14.03822135925293,
+            "mean_logprob": -0.031335316598415375
+          },
+          "mean_logprob_branch_preference_B_minus_A": 0.02494102716445923,
+          "branchpoint_logprob_A_token": -1.0715200901031494,
+          "branchpoint_logprob_B_token": -0.5090200304985046,
+          "branchpoint_logodds_B_minus_A": 0.5625000596046448,
+          "branchpoint_argmax_token_id": 10212,
+          "branchpoint_argmax_text": " listed",
+          "branchpoint_top8": [
+            {
+              "token_id": 10212,
+              "token": " listed",
+              "logprob": -0.5090200304985046
+            },
+            {
+              "token_id": 10487,
+              "token": " installed",
+              "logprob": -1.0715200901031494
+            },
+            {
+              "token_id": 2561,
+              "token": " available",
+              "logprob": -3.8996450901031494
+            },
+            {
+              "token_id": 2736,
+              "token": " already",
+              "logprob": -4.00901985168457
+            },
+            {
+              "token_id": 304,
+              "token": " in",
+              "logprob": -4.80589485168457
+            },
+            {
+              "token_id": 264,
+              "token": " a",
+              "logprob": -4.89964485168457
+            },
+            {
+              "token_id": 15324,
+              "token": " recognized",
+              "logprob": -7.47776985168457
+            },
+            {
+              "token_id": 459,
+              "token": " an",
+              "logprob": -7.63401985168457
+            }
+          ]
+        }
+      },
+      "natural_greedy_consistency": {
+        "A_natural_branch_token_is_argmax": true,
+        "B_natural_branch_token_is_argmax": true
+      },
+      "branchpoint_JS_A_vs_B_prompt": 0.011473136022686958,
+      "treatment_shift_branchpoint_logodds_toward_B": 0.6250000596046448,
+      "treatment_shift_mean_replay_preference_toward_B": 0.00202237069606781,
+      "prompt_swap_flips_A_vs_B_candidate_token_preference": true
+    },
+    {
+      "task_id": "327",
+      "anchor": "A_history",
+      "target_action_index": 1,
+      "candidate_replay_token_counts": {
+        "A": 52,
+        "B": 57,
+        "common_prefix": 50
+      },
+      "first_differing_native_replay_token": {
+        "A_id": 74694,
+        "A_text": "```",
+        "B_id": 3123,
+        "B_text": "echo"
+      },
+      "conditions": {
+        "A": {
+          "base_prompt_tokens": 12082,
+          "score_A_replay": {
+            "token_count": 52,
+            "total_logprob": -5.621076583862305,
+            "mean_logprob": -0.1080976277589798
+          },
+          "score_B_replay": {
+            "token_count": 57,
+            "total_logprob": -7.349410533905029,
+            "mean_logprob": -0.1289370208978653
+          },
+          "mean_logprob_branch_preference_B_minus_A": -0.020839393138885498,
+          "branchpoint_logprob_A_token": -1.2992372512817383,
+          "branchpoint_logprob_B_token": -1.4398622512817383,
+          "branchpoint_logodds_B_minus_A": -0.140625,
+          "branchpoint_argmax_token_id": 74694,
+          "branchpoint_argmax_text": "```",
+          "branchpoint_top8": [
+            {
+              "token_id": 74694,
+              "token": "```",
+              "logprob": -1.2992372512817383
+            },
+            {
+              "token_id": 3123,
+              "token": "echo",
+              "logprob": -1.4398622512817383
+            },
+            {
+              "token_id": 4835,
+              "token": "ls",
+              "logprob": -2.0179872512817383
+            },
+            {
+              "token_id": 331,
+              "token": "ch",
+              "logprob": -2.2679872512817383
+            },
+            {
+              "token_id": 14196,
+              "token": "``",
+              "logprob": -2.3304872512817383
+            },
+            {
+              "token_id": 456,
+              "token": "get",
+              "logprob": -2.6742372512817383
+            },
+            {
+              "token_id": 307,
+              "token": "id",
+              "logprob": -3.4711122512817383
+            },
+            {
+              "token_id": 4719,
+              "token": "cat",
+              "logprob": -4.721112251281738
+            }
+          ]
+        },
+        "B": {
+          "base_prompt_tokens": 12117,
+          "score_A_replay": {
+            "token_count": 52,
+            "total_logprob": -5.696195602416992,
+            "mean_logprob": -0.10954222828149796
+          },
+          "score_B_replay": {
+            "token_count": 57,
+            "total_logprob": -7.402090072631836,
+            "mean_logprob": -0.1298612356185913
+          },
+          "mean_logprob_branch_preference_B_minus_A": -0.020319007337093353,
+          "branchpoint_logprob_A_token": -1.3030543327331543,
+          "branchpoint_logprob_B_token": -1.4749293327331543,
+          "branchpoint_logodds_B_minus_A": -0.171875,
+          "branchpoint_argmax_token_id": 74694,
+          "branchpoint_argmax_text": "```",
+          "branchpoint_top8": [
+            {
+              "token_id": 74694,
+              "token": "```",
+              "logprob": -1.3030543327331543
+            },
+            {
+              "token_id": 3123,
+              "token": "echo",
+              "logprob": -1.4749293327331543
+            },
+            {
+              "token_id": 4835,
+              "token": "ls",
+              "logprob": -2.0218043327331543
+            },
+            {
+              "token_id": 331,
+              "token": "ch",
+              "logprob": -2.2405543327331543
+            },
+            {
+              "token_id": 14196,
+              "token": "``",
+              "logprob": -2.2718043327331543
+            },
+            {
+              "token_id": 456,
+              "token": "get",
+              "logprob": -2.6311793327331543
+            },
+            {
+              "token_id": 307,
+              "token": "id",
+              "logprob": -3.5061793327331543
+            },
+            {
+              "token_id": 4719,
+              "token": "cat",
+              "logprob": -4.685866832733154
+            }
+          ]
+        }
+      },
+      "natural_greedy_consistency": {
+        "A_natural_branch_token_is_argmax": true
+      },
+      "branchpoint_JS_A_vs_B_prompt": 0.00013649649918079376,
+      "treatment_shift_branchpoint_logodds_toward_B": -0.03125,
+      "treatment_shift_mean_replay_preference_toward_B": 0.0005203858017921448,
+      "prompt_swap_flips_A_vs_B_candidate_token_preference": false
+    },
+    {
+      "task_id": "327",
+      "anchor": "B_history",
+      "target_action_index": 1,
+      "candidate_replay_token_counts": {
+        "A": 52,
+        "B": 57,
+        "common_prefix": 50
+      },
+      "first_differing_native_replay_token": {
+        "A_id": 74694,
+        "A_text": "```",
+        "B_id": 3123,
+        "B_text": "echo"
+      },
+      "conditions": {
+        "A": {
+          "base_prompt_tokens": 12083,
+          "score_A_replay": {
+            "token_count": 52,
+            "total_logprob": -5.898225784301758,
+            "mean_logprob": -0.11342742294073105
+          },
+          "score_B_replay": {
+            "token_count": 57,
+            "total_logprob": -7.26439094543457,
+            "mean_logprob": -0.12744545936584473
+          },
+          "mean_logprob_branch_preference_B_minus_A": -0.014018036425113678,
+          "branchpoint_logprob_A_token": -1.6148449182510376,
+          "branchpoint_logprob_B_token": -1.5679699182510376,
+          "branchpoint_logodds_B_minus_A": 0.046875,
+          "branchpoint_argmax_token_id": 3123,
+          "branchpoint_argmax_text": "echo",
+          "branchpoint_top8": [
+            {
+              "token_id": 3123,
+              "token": "echo",
+              "logprob": -1.5679699182510376
+            },
+            {
+              "token_id": 74694,
+              "token": "```",
+              "logprob": -1.6148449182510376
+            },
+            {
+              "token_id": 4835,
+              "token": "ls",
+              "logprob": -1.8804699182510376
+            },
+            {
+              "token_id": 331,
+              "token": "ch",
+              "logprob": -1.9117199182510376
+            },
+            {
+              "token_id": 14196,
+              "token": "``",
+              "logprob": -2.036719799041748
+            },
+            {
+              "token_id": 456,
+              "token": "get",
+              "logprob": -2.380469799041748
+            },
+            {
+              "token_id": 307,
+              "token": "id",
+              "logprob": -4.130469799041748
+            },
+            {
+              "token_id": 4719,
+              "token": "cat",
+              "logprob": -4.935157299041748
+            }
+          ]
+        },
+        "B": {
+          "base_prompt_tokens": 12118,
+          "score_A_replay": {
+            "token_count": 52,
+            "total_logprob": -6.302421569824219,
+            "mean_logprob": -0.12120041996240616
+          },
+          "score_B_replay": {
+            "token_count": 57,
+            "total_logprob": -7.591312885284424,
+            "mean_logprob": -0.13318093121051788
+          },
+          "mean_logprob_branch_preference_B_minus_A": -0.011980511248111725,
+          "branchpoint_logprob_A_token": -1.6682251691818237,
+          "branchpoint_logprob_B_token": -1.5744751691818237,
+          "branchpoint_logodds_B_minus_A": 0.09375,
+          "branchpoint_argmax_token_id": 3123,
+          "branchpoint_argmax_text": "echo",
+          "branchpoint_top8": [
+            {
+              "token_id": 3123,
+              "token": "echo",
+              "logprob": -1.5744751691818237
+            },
+            {
+              "token_id": 74694,
+              "token": "```",
+              "logprob": -1.6682251691818237
+            },
+            {
+              "token_id": 331,
+              "token": "ch",
+              "logprob": -1.8088501691818237
+            },
+            {
+              "token_id": 4835,
+              "token": "ls",
+              "logprob": -1.9026001691818237
+            },
+            {
+              "token_id": 14196,
+              "token": "``",
+              "logprob": -2.0276002883911133
+            },
+            {
+              "token_id": 456,
+              "token": "get",
+              "logprob": -2.3869752883911133
+            },
+            {
+              "token_id": 307,
+              "token": "id",
+              "logprob": -4.121350288391113
+            },
+            {
+              "token_id": 4719,
+              "token": "cat",
+              "logprob": -4.886975288391113
+            }
+          ]
+        }
+      },
+      "natural_greedy_consistency": {
+        "B_natural_branch_token_is_argmax": true
+      },
+      "branchpoint_JS_A_vs_B_prompt": 0.0003235529293306172,
+      "treatment_shift_branchpoint_logodds_toward_B": 0.046875,
+      "treatment_shift_mean_replay_preference_toward_B": 0.002037525177001953,
+      "prompt_swap_flips_A_vs_B_candidate_token_preference": false
+    }
+  ],
+  "task_summary": [
+    {
+      "task_id": "125",
+      "anchors": 1,
+      "branchpoint_shift_values": [
+        0.03125
+      ],
+      "all_anchor_branchpoint_shifts_toward_B": true,
+      "candidate_preference_flip_count": 1,
+      "mean_replay_preference_shift_values": [
+        0.0007713437080383301
+      ],
+      "all_anchor_mean_replay_shifts_toward_B": true
+    },
+    {
+      "task_id": "136",
+      "anchors": 2,
+      "branchpoint_shift_values": [
+        0.015625,
+        -0.0625
+      ],
+      "all_anchor_branchpoint_shifts_toward_B": false,
+      "candidate_preference_flip_count": 0,
+      "mean_replay_preference_shift_values": [
+        0.0013127997517585754,
+        -0.001347765326499939
+      ],
+      "all_anchor_mean_replay_shifts_toward_B": false
+    },
+    {
+      "task_id": "193",
+      "anchors": 1,
+      "branchpoint_shift_values": [
+        0.6250000596046448
+      ],
+      "all_anchor_branchpoint_shifts_toward_B": true,
+      "candidate_preference_flip_count": 1,
+      "mean_replay_preference_shift_values": [
+        0.00202237069606781
+      ],
+      "all_anchor_mean_replay_shifts_toward_B": true
+    },
+    {
+      "task_id": "327",
+      "anchors": 2,
+      "branchpoint_shift_values": [
+        -0.03125,
+        0.046875
+      ],
+      "all_anchor_branchpoint_shifts_toward_B": false,
+      "candidate_preference_flip_count": 0,
+      "mean_replay_preference_shift_values": [
+        0.0005203858017921448,
+        0.002037525177001953
+      ],
+      "all_anchor_mean_replay_shifts_toward_B": true
+    }
+  ],
+  "interpretation_boundary": "Measures local prompt-conditioned probability shifts between faithfully replayed historical branch actions/responses at frozen transcript states. Does not estimate population effect or mediation of terminal outcome.",
+  "changes_R72_R73_primary_inference": false,
+  "receipt_sha256": "bf433e87b4c7a30661a7d9346bc8b5d9e1b54b2b5e1fcc8be36c947ca71dc150"
+}

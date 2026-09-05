@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R77-M3-BRANCH-RESPONSE-MEDIATION-PLAN",
+  "status": "R77_M3_BRANCH_RESPONSE_MEDIATION_FROZEN_PRE_EXECUTION",
+  "role": "POST_HOC_BRANCH_RESPONSE_MEDIATION_NOT_PRIMARY_INFERENCE",
+  "bindings": {
+    "M1_file_sha256": "11b409cf611e3684810a4eb94c59049f365940162ee098f825c100013a8c72ba",
+    "M1_receipt_sha256": "5345bbb8a433f6978325446036a6fb4273d47db50b952366116bc08ef02a644a",
+    "M2A_file_sha256": "37cf5909f97e017835e48cb21a287d0ef8462118b5f11eb415ddafa2325be8f5",
+    "M2A_receipt_sha256": "b385725fc635dfafac632627929ad7ee033491fa0f798df191f3098e08665fcc",
+    "M2B_file_sha256": "a319749c5405c9a41c2f581d9e8f9b3bde266902275fb8c496d26341109b17b1",
+    "M2B_receipt_sha256": "bf433e87b4c7a30661a7d9346bc8b5d9e1b54b2b5e1fcc8be36c947ca71dc150",
+    "manifest_file_sha256": "2add9259f78d5d8a63aad10fc15c9d7cfaf7a14f58b670e61279930b79c81340",
+    "historical_completed_file_sha256": "34747ca158bf33a354516b3480975483b6214e3c00fc97e78325ae663f04af38"
+  },
+  "clean_source_commit": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+  "runtime_image_id": "sha256:02c5cb67fff7bfddda09ca63e5318628d02d943767e6cd59069ece755253f036",
+  "temperature": 0.0,
+  "do_sample": false,
+  "intervention": "Replay the native historical pre-divergence assistant responses on a fresh environment, require actual OS observations to match the historical native prefix, then inject the opposite arm exact-greedy natural branch response at the first normalized-action divergence and resume freely under the original native system prompt. This swaps branch response (reasoning+action), not action alone.",
+  "planned_runs": 8,
+  "plan": [
+    {
+      "ordinal": 0,
+      "task_id": "125",
+      "native_arm": "A_content_only",
+      "forced_branch_arm": "B_raw_provenance",
+      "target_action_index": 5,
+      "native_prompt_sha256": "01a7a8bff28344a2a4d003ff79a8b16f2dab4288c3083aaa05c85527b7d6f492",
+      "forced_response_sha256": "15f6b7205781996b33385ba29084c376a8737b5fdcd5d5ddb3b7b5e91e9e83ad",
+      "historical_native_terminal": true,
+      "historical_forced_branch_terminal": false
+    },
+    {
+      "ordinal": 1,
+      "task_id": "125",
+      "native_arm": "B_raw_provenance",
+      "forced_branch_arm": "A_content_only",
+      "target_action_index": 5,
+      "native_prompt_sha256": "3cb07749d3f28262c8b4f4e6ddcc380b24e6a35114db98ee88f4c975be43eaec",
+      "forced_response_sha256": "7b3f4dd5c75ff3a357d05485d03f917ab365bcb6500c43b0fd76944256f9b714",
+      "historical_native_terminal": false,
+      "historical_forced_branch_terminal": true
+    },
+    {
+      "ordinal": 2,
+      "task_id": "136",
+      "native_arm": "A_content_only",
+      "forced_branch_arm": "B_raw_provenance",
+      "target_action_index": 1,
+      "native_prompt_sha256": "269ac509e8472e14d89977b90321f589d5446c59aae4bc71c897311cc4fcdcff",
+      "forced_response_sha256": "a5475f0d92c8745870a8075f9227543d0af58d2b80d38d895f7e3ff9079c8d69",
+      "historical_native_terminal": false,
+      "historical_forced_branch_terminal": true
+    },
+    {
+      "ordinal": 3,
+      "task_id": "136",
+      "native_arm": "B_raw_provenance",
+      "forced_branch_arm": "A_content_only",
+      "target_action_index": 1,
+      "native_prompt_sha256": "8a591f617a32c89991eb2fedda9e1f8471fa7996e4023bf1ff6217a8b8837e00",
+      "forced_response_sha256": "95e884dfaa51925503a59266c54245914abd079a7a99452045f3b5fe86deeb7f",
+      "historical_native_terminal": true,
+      "historical_forced_branch_terminal": false
+    },
+    {
+      "ordinal": 4,
+      "task_id": "193",
+      "native_arm": "A_content_only",
+      "forced_branch_arm": "B_raw_provenance",
+      "target_action_index": 0,
+      "native_prompt_sha256": "b7144318d1ccc3862dfcbbe35b98c89c183d75705cce820e2810764dbdb8bef2",
+      "forced_response_sha256": "01be797f2dda45d313f3ca3532ae1c44dbf0f5e4f7f4455e04cbb051a6c3aa34",
+      "historical_native_terminal": false,
+      "historical_forced_branch_terminal": true
+    },
+    {
+      "ordinal": 5,
+      "task_id": "193",
+      "native_arm": "B_raw_provenance",
+      "forced_branch_arm": "A_content_only",
+      "target_action_index": 0,
+      "native_prompt_sha256": "477ac69287fd42b821fa725a13e82f8559572d8fc160516cffba8c32424f8b8f",
+      "forced_response_sha256": "e4bda1be80aff97dc967d926bebb79cc311ef65d97239ff3694aa4925d3fda05",
+      "historical_native_terminal": true,
+      "historical_forced_branch_terminal": false
+    },
+    {
+      "ordinal": 6,
+      "task_id": "327",
+      "native_arm": "A_content_only",
+      "forced_branch_arm": "B_raw_provenance",
+      "target_action_index": 1,
+      "native_prompt_sha256": "9a4dfdb0bf57cfb555f16bcacd294bc096b27b056c552d94a67d30709e1ab7bf",
+      "forced_response_sha256": "0431cfefe823c678f98309bfc64e757e4c9412536ad8bfa4d8f7531c05f3d7b6",
+      "historical_native_terminal": true,
+      "historical_forced_branch_terminal": false
+    },
+    {
+      "ordinal": 7,
+      "task_id": "327",
+      "native_arm": "B_raw_provenance",
+      "forced_branch_arm": "A_content_only",
+      "target_action_index": 1,
+      "native_prompt_sha256": "2a63bd2f1ac367a3b889466b2d85232e44862fa88305b6e54b8aa1dc35503e05",
+      "forced_response_sha256": "16f21d329c4f74f743e2e901bc71abe7c33a88bce19554169a4445d382912063",
+      "historical_native_terminal": false,
+      "historical_forced_branch_terminal": true
+    }
+  ],
+  "changes_R72_R73_primary_inference": false,
+  "receipt_sha256": "26f91395241965281ca2b3170cda771d9a2fbd91059362763d84c2cfd79a470e"
+}

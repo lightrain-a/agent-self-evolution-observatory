@@ -1,0 +1,298 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R77-M4-ANALYTIC-TEMPERATURE-SENSITIVITY",
+  "status": "R77_M4_ANALYTIC_TEMPERATURE_SENSITIVITY_COMPLETE_ZERO_MODEL",
+  "role": "POST_HOC_BRANCHPOINT_TEMPERATURE_DIAGNOSTIC_NOT_PRIMARY_INFERENCE",
+  "bindings": {
+    "M2B_receipt_sha256": "bf433e87b4c7a30661a7d9346bc8b5d9e1b54b2b5e1fcc8be36c947ca71dc150"
+  },
+  "definition": "For each frozen branchpoint, treat only the two faithfully replayed A/B candidate next tokens as the choice set. Given raw log-odds d=z_B-z_A, pairwise P(B|{A,B},temperature T)=sigmoid(d/T). This is analytic branchpoint sensitivity, not full-vocabulary or full-response sampling.",
+  "temperatures": [
+    0.05,
+    0.1,
+    0.2,
+    0.5,
+    1.0
+  ],
+  "rows": [
+    {
+      "task_id": "125",
+      "anchor": "common",
+      "A_prompt_logodds_B_minus_A": -0.015625,
+      "B_prompt_logodds_B_minus_A": 0.015625,
+      "prompt_swap_flips_candidate_preference": true,
+      "temperatures": [
+        {
+          "temperature": 0.05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.42250463481418826,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.5774953651858118,
+          "provenance_probability_shift_BminusA_prompt": 0.15499073037162353
+        },
+        {
+          "temperature": 0.1,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.4610167793123159,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.5389832206876841,
+          "provenance_probability_shift_BminusA_prompt": 0.07796644137536823
+        },
+        {
+          "temperature": 0.2,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.480478678047907,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.5195213219520929,
+          "provenance_probability_shift_BminusA_prompt": 0.03904264390418588
+        },
+        {
+          "temperature": 0.5,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.49218813572079556,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.5078118642792044,
+          "provenance_probability_shift_BminusA_prompt": 0.015623728558408878
+        },
+        {
+          "temperature": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.4960938294709195,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.5039061705290805,
+          "provenance_probability_shift_BminusA_prompt": 0.0078123410581609765
+        }
+      ]
+    },
+    {
+      "task_id": "136",
+      "anchor": "A_history",
+      "A_prompt_logodds_B_minus_A": -1.03125,
+      "B_prompt_logodds_B_minus_A": -1.015625,
+      "prompt_swap_flips_candidate_preference": false,
+      "temperatures": [
+        {
+          "temperature": 0.05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 1.1032560311263802e-09,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 1.5079722015620545e-09,
+          "provenance_probability_shift_BminusA_prompt": 4.047161704356743e-10
+        },
+        {
+          "temperature": 0.1,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 3.321419494792514e-05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 3.883110986877899e-05,
+          "provenance_probability_shift_BminusA_prompt": 5.616914920853856e-06
+        },
+        {
+          "temperature": 0.2,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.005730246514992079,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.006192990157855187,
+          "provenance_probability_shift_BminusA_prompt": 0.00046274364286310807
+        },
+        {
+          "temperature": 0.5,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.11279540628289324,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.11596071825396677,
+          "provenance_probability_shift_BminusA_prompt": 0.003165311971073531
+        },
+        {
+          "temperature": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.26284183737131667,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.2658804730998169,
+          "provenance_probability_shift_BminusA_prompt": 0.0030386357285002163
+        }
+      ]
+    },
+    {
+      "task_id": "136",
+      "anchor": "B_history",
+      "A_prompt_logodds_B_minus_A": 3.34375,
+      "B_prompt_logodds_B_minus_A": 3.28125,
+      "prompt_swap_flips_candidate_preference": false,
+      "temperatures": [
+        {
+          "temperature": 0.05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 1.0,
+          "provenance_probability_shift_BminusA_prompt": 0.0
+        },
+        {
+          "temperature": 0.1,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.9999999999999969,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.9999999999999944,
+          "provenance_probability_shift_BminusA_prompt": -2.4424906541753444e-15
+        },
+        {
+          "temperature": 0.2,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.9999999451547391,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.999999925035418,
+          "provenance_probability_shift_BminusA_prompt": -2.011932109802217e-08
+        },
+        {
+          "temperature": 0.5,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.9987551566979116,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.9985896415033819,
+          "provenance_probability_shift_BminusA_prompt": -0.00016551519452967511
+        },
+        {
+          "temperature": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.9658995742876885,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.9637799441350253,
+          "provenance_probability_shift_BminusA_prompt": -0.0021196301526631434
+        }
+      ]
+    },
+    {
+      "task_id": "193",
+      "anchor": "common",
+      "A_prompt_logodds_B_minus_A": -0.0625,
+      "B_prompt_logodds_B_minus_A": 0.5625000596046448,
+      "prompt_swap_flips_candidate_preference": true,
+      "temperatures": [
+        {
+          "temperature": 0.05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.22270013882530884,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.999986992887039,
+          "provenance_probability_shift_BminusA_prompt": 0.7772868540617301
+        },
+        {
+          "temperature": 0.1,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.34864513533394575,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.996406399552836,
+          "provenance_probability_shift_BminusA_prompt": 0.6477612642188904
+        },
+        {
+          "temperature": 0.2,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.42250463481418826,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.9433475906192578,
+          "provenance_probability_shift_BminusA_prompt": 0.5208429558050696
+        },
+        {
+          "temperature": 0.5,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.46879062662624377,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.7549150089235336,
+          "provenance_probability_shift_BminusA_prompt": 0.2861243822972898
+        },
+        {
+          "temperature": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.48438008427698437,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.6370308082623217,
+          "provenance_probability_shift_BminusA_prompt": 0.15265072398533736
+        }
+      ]
+    },
+    {
+      "task_id": "327",
+      "anchor": "A_history",
+      "A_prompt_logodds_B_minus_A": -0.140625,
+      "B_prompt_logodds_B_minus_A": -0.171875,
+      "prompt_swap_flips_candidate_preference": false,
+      "temperatures": [
+        {
+          "temperature": 0.05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.05665242530797383,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.031143830534778462,
+          "provenance_probability_shift_BminusA_prompt": -0.02550859477319537
+        },
+        {
+          "temperature": 0.1,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.1968262036430985,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.15203224162217424,
+          "provenance_probability_shift_BminusA_prompt": -0.044793962020924255
+        },
+        {
+          "temperature": 0.2,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.3311197396289915,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.2974699426047947,
+          "provenance_probability_shift_BminusA_prompt": -0.03364979702419679
+        },
+        {
+          "temperature": 0.5,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.4301473485858429,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.41489884579676883,
+          "provenance_probability_shift_BminusA_prompt": -0.015248502789074081
+        },
+        {
+          "temperature": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.46490157137338844,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.45713671682749485,
+          "provenance_probability_shift_BminusA_prompt": -0.007764854545893596
+        }
+      ]
+    },
+    {
+      "task_id": "327",
+      "anchor": "B_history",
+      "A_prompt_logodds_B_minus_A": 0.046875,
+      "B_prompt_logodds_B_minus_A": 0.09375,
+      "prompt_swap_flips_candidate_preference": false,
+      "temperatures": [
+        {
+          "temperature": 0.05,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.7185943925708561,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.8670357598021706,
+          "provenance_probability_shift_BminusA_prompt": 0.1484413672313145
+        },
+        {
+          "temperature": 0.1,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.6150878555160665,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.7185943925708561,
+          "provenance_probability_shift_BminusA_prompt": 0.10350653705478963
+        },
+        {
+          "temperature": 0.2,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.5583269943353745,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.6150878555160665,
+          "provenance_probability_shift_BminusA_prompt": 0.05676086118069201
+        },
+        {
+          "temperature": 0.5,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.523420348936324,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.5467381519846138,
+          "provenance_probability_shift_BminusA_prompt": 0.023317803048289787
+        },
+        {
+          "temperature": 1.0,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_A_prompt": 0.5117166047041654,
+          "pairwise_P_B_branch_given_A_or_B_candidate_under_B_prompt": 0.523420348936324,
+          "provenance_probability_shift_BminusA_prompt": 0.011703744232158697
+        }
+      ]
+    }
+  ],
+  "task_summary": [
+    {
+      "task_id": "125",
+      "mechanism_temperature_type": "DIRECT_PROMPT_BOUNDARY_FLIP_ALL_ANCHORS",
+      "anchors": 1,
+      "max_abs_prompt_logodds_shift": 0.03125,
+      "temperature_0p2_probability_shifts": [
+        0.03904264390418588
+      ]
+    },
+    {
+      "task_id": "136",
+      "mechanism_temperature_type": "HISTORY_ANCHOR_DOMINANT_SIGN_WITHIN_ANCHOR",
+      "anchors": 2,
+      "max_abs_prompt_logodds_shift": 0.0625,
+      "temperature_0p2_probability_shifts": [
+        0.00046274364286310807,
+        -2.011932109802217e-08
+      ]
+    },
+    {
+      "task_id": "193",
+      "mechanism_temperature_type": "DIRECT_PROMPT_BOUNDARY_FLIP_ALL_ANCHORS",
+      "anchors": 1,
+      "max_abs_prompt_logodds_shift": 0.6250000596046448,
+      "temperature_0p2_probability_shifts": [
+        0.5208429558050696
+      ]
+    },
+    {
+      "task_id": "327",
+      "mechanism_temperature_type": "HISTORY_ANCHOR_DOMINANT_SIGN_WITHIN_ANCHOR",
+      "anchors": 2,
+      "max_abs_prompt_logodds_shift": 0.046875,
+      "temperature_0p2_probability_shifts": [
+        -0.03364979702419679,
+        0.05676086118069201
+      ]
+    }
+  ],
+  "new_model_calls": 0,
+  "new_environment_trajectories": 0,
+  "changes_R72_R73_primary_inference": false,
+  "receipt_sha256": "32ed70a65c944c62c360db5392bc4be0b3f306fc1a16f935b4199df4b7de2166"
+}
