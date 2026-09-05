@@ -1,0 +1,44 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v3-fresh-model-identity-adjudication",
+  "authority": {
+    "mint_stage_a_authorization": false,
+    "paper_promotion": false,
+    "preexecution_identity_evidence": true,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "checks": {
+    "benchmark_data_unread": true,
+    "exact_resolved_identity": true,
+    "hidden_provider_retry_unused": true,
+    "provider_retry_zero": true,
+    "qualification_after_contract_freeze": true,
+    "qualification_pass": true,
+    "scientific_outcome_unread": true,
+    "single_deepseek_identity_call_only": true,
+    "thinking_disabled": true
+  },
+  "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json",
+  "contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+  "created_at_utc": "2026-09-05T13:08:29+00:00",
+  "note": "This artifact normalizes one fresh DeepSeek-only Ark Plan identity qualification into the exact schema consumed by the frozen V3 Stage-A authorizer. It grants no provider authority by itself.",
+  "private_credentials_included": false,
+  "qualification_path": "generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-deepseek-identity-qualification-20260903.json",
+  "qualification_sha256": "fafb9606edc436823876ec5b9c4e2a1fe9628a12968b14099d29407a5f2f0a0a",
+  "raw_response_ids_included": false,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "provider_retry_limit": 0,
+      "qualification_benchmark_data_accessed": false,
+      "qualification_scientific_outcome": false,
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "source_qualification_sha256": "fafb9606edc436823876ec5b9c4e2a1fe9628a12968b14099d29407a5f2f0a0a",
+      "thinking": "disabled"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "status": "PASS_CURRENT_REVIEW_TRANCHE"
+}
