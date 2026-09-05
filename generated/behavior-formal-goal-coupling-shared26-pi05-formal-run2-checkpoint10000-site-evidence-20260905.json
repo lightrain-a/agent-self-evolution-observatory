@@ -1,0 +1,125 @@
+{
+  "checkpoint_entries": [
+    "10000.orbax-checkpoint-tmp-0"
+  ],
+  "checkpoint_helpers_sha256": "9e8782f0171eec4b5623728204f975a976d5f89defa7b317100db6395990dd13",
+  "checkpoint_root": "/data/wyt/formal-goal-portable-openpi-child-231-20260903/outputs/checkpoints/pi05_b1k_shared26_frozen/shared26-seed42-practical-b16-run2-fdlimit",
+  "formal_process_matches": [],
+  "generated_at": "2026-09-05T03:15:39.591196+00:00",
+  "hard_exit_exact_cause": "UNRESOLVED_AT_SITE_CAPTURE",
+  "kernel_or_user_unit_exit_evidence_available": false,
+  "loss_values_read_or_reported": false,
+  "params_temp_nonempty": false,
+  "policy_outcomes_read": false,
+  "progress": {
+    "authority_sha256": "9628130eecba6456595ef4dfc8d7b1cfbe822baca8d4b4f94b09fefa4cd2cf18",
+    "batch_size": 16,
+    "checkpoint_labels_present": [],
+    "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+    "completed_optimizer_updates": 10001,
+    "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+    "exp_name": "shared26-seed42-practical-b16-run2-fdlimit",
+    "fd_qualification_canonical_sha256": "d24b7076a90a4d3c5e6dbc34403accb332f46a00ff7bf508d615bd4996a66dfd",
+    "fd_qualification_source_sha256": "fa2cd4d9c94c3c82d93b40905aa7a5efe8eb4ad762f12c03951177efb7d174a5",
+    "ffmpeg_runtime_qualification_sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+    "formal_training_authorized": true,
+    "generated_at": "2026-09-04T14:52:23.790319+00:00",
+    "gpu_before": {
+      "gpus": [
+        {
+          "index": 0,
+          "memory_total_mib": 81920,
+          "memory_used_mib": 14,
+          "name": "NVIDIA A100-SXM4-80GB",
+          "utilization_gpu_percent": 0
+        }
+      ]
+    },
+    "host_before": {
+      "MemAvailable_kib": 48139320,
+      "MemFree_kib": 23633500,
+      "MemTotal_kib": 65664136,
+      "SwapFree_kib": 2304008,
+      "SwapTotal_kib": 9765884,
+      "process_rss_kib": 24972
+    },
+    "last_completed_loop_label": 10000,
+    "loss_values_read_or_reported": false,
+    "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+    "policy_outcomes_read": false,
+    "portable_openpi": {
+      "changed_paths": [
+        "src/openpi/training/config.py"
+      ],
+      "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+      "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60"
+    },
+    "real_data_smoke_sha256": "57d92cbf081237fd21d3ec8775c4113132b150edc13dc8096300780c59e57cc4",
+    "resource_scope": {
+      "cgroup": "/sys/fs/cgroup/user.slice/user-1003.slice/user@1003.service/app.slice/pi05-practical-batch16-formal-run2-fdlimit-231-20260904-r1.service",
+      "cpu_affinity": "0-63",
+      "memory_max_bytes": 42949672960,
+      "memory_swap_max_bytes": 0
+    },
+    "rlimit_nofile_hard": 1048576,
+    "rlimit_nofile_soft": 65536,
+    "run1_failure_adjudication_sha256": "7f100fa01223b3db365d48a79fb8b94af1443b5a9e6044475851d5d64da54e4c",
+    "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-progress-v1",
+    "scientific_training_started": true,
+    "seed": 42,
+    "status": "PI05_PRACTICAL_BATCH16_FORMAL_RUN2_FDLIMIT_RUNNING",
+    "target_optimizer_updates": 50000,
+    "terminal_checkpoint_label_for_scientific_evaluation": 49999
+  },
+  "progress_path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-fdlimit-progress-20260904.json",
+  "progress_sha256": "f5efbd8439a34086f5624db5046a53b969ce2164d16e40267ed82d823680e535",
+  "result_exists": false,
+  "result_path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-fdlimit-result-20260904.json",
+  "root_filesystem": {
+    "bytes_free_total": 53513113600,
+    "bytes_free_user": 4042608640,
+    "bytes_total": 972395630592,
+    "inodes_free": 56539921
+  },
+  "runner_sha256": "2ee4f9cef1731136fdaa9f34240843287a74d903b9039b40b37a73e0c7f030bb",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-formal-run2-checkpoint10000-site-evidence-v1",
+  "source_observation": {
+    "checkpoint_manager_async_options_timeout_secs": 7200,
+    "progress_written_before_save_at_label_10000": true,
+    "runner_train_step_donates_state_arg": true,
+    "runner_wait_until_finished_only_after_training_loop": true,
+    "save_state_returns_after_checkpoint_manager_save_without_wait": true
+  },
+  "target_filesystem": {
+    "bytes_free_total": 1753977970688,
+    "bytes_free_user": 1353883156480,
+    "bytes_total": 7937301327872,
+    "inodes_free": 241289820
+  },
+  "temp_checkpoint": {
+    "dirs": [
+      "assets.orbax-checkpoint-tmp-1",
+      "assets.orbax-checkpoint-tmp-1/b1k_shared26_frozen",
+      "params.orbax-checkpoint-tmp-2",
+      "train_state.orbax-checkpoint-tmp-3"
+    ],
+    "exists": true,
+    "files": [
+      {
+        "mtime_ns": 1788533543854137636,
+        "path": "_CHECKPOINT_METADATA",
+        "sha256": "11712331ad1e8cdd32c0c4914247034c97fbd108e8e98d0f78ac51da4fe99ec8",
+        "size": 165
+      },
+      {
+        "mtime_ns": 1788533543874639117,
+        "path": "assets.orbax-checkpoint-tmp-1/b1k_shared26_frozen/norm_stats.json",
+        "sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+        "size": 2962
+      }
+    ],
+    "path": "/data/wyt/formal-goal-portable-openpi-child-231-20260903/outputs/checkpoints/pi05_b1k_shared26_frozen/shared26-seed42-practical-b16-run2-fdlimit/10000.orbax-checkpoint-tmp-0",
+    "total_file_bytes": 3127
+  },
+  "train_state_temp_nonempty": false
+}

@@ -1,0 +1,60 @@
+{
+  "authority_sha256": "9628130eecba6456595ef4dfc8d7b1cfbe822baca8d4b4f94b09fefa4cd2cf18",
+  "batch_size": 16,
+  "checkpoint_labels_present": [],
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "completed_optimizer_updates": 10001,
+  "dataset_seal_sha256": "0538097f09aae41f407f1a923cd1d6249366566a2592b38ad30dcbe40d5de8a3",
+  "exp_name": "shared26-seed42-practical-b16-run2-fdlimit",
+  "fd_qualification_canonical_sha256": "d24b7076a90a4d3c5e6dbc34403accb332f46a00ff7bf508d615bd4996a66dfd",
+  "fd_qualification_source_sha256": "fa2cd4d9c94c3c82d93b40905aa7a5efe8eb4ad762f12c03951177efb7d174a5",
+  "ffmpeg_runtime_qualification_sha256": "25e744ac85ce7811ce78483e353d68da651cd3d3149f24d8c64fd263c32561ca",
+  "formal_training_authorized": true,
+  "generated_at": "2026-09-04T14:52:23.790319+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host_before": {
+    "MemAvailable_kib": 48139320,
+    "MemFree_kib": 23633500,
+    "MemTotal_kib": 65664136,
+    "SwapFree_kib": 2304008,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 24972
+  },
+  "last_completed_loop_label": 10000,
+  "loss_values_read_or_reported": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "policy_outcomes_read": false,
+  "portable_openpi": {
+    "changed_paths": [
+      "src/openpi/training/config.py"
+    ],
+    "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60"
+  },
+  "real_data_smoke_sha256": "57d92cbf081237fd21d3ec8775c4113132b150edc13dc8096300780c59e57cc4",
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1003.slice/user@1003.service/app.slice/pi05-practical-batch16-formal-run2-fdlimit-231-20260904-r1.service",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 42949672960,
+    "memory_swap_max_bytes": 0
+  },
+  "rlimit_nofile_hard": 1048576,
+  "rlimit_nofile_soft": 65536,
+  "run1_failure_adjudication_sha256": "7f100fa01223b3db365d48a79fb8b94af1443b5a9e6044475851d5d64da54e4c",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-progress-v1",
+  "scientific_training_started": true,
+  "seed": 42,
+  "status": "PI05_PRACTICAL_BATCH16_FORMAL_RUN2_FDLIMIT_RUNNING",
+  "target_optimizer_updates": 50000,
+  "terminal_checkpoint_label_for_scientific_evaluation": 49999
+}

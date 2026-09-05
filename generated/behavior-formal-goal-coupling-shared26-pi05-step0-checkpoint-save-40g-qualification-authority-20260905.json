@@ -1,0 +1,79 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-40g-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:23:17Z",
+  "status": "AUTHORIZED_PI05_STEP0_CHECKPOINT_SAVE_40G_QUALIFICATION",
+  "scope": "Outcome-blind infrastructure diagnostic after formal run2 hard exit in the first checkpoint-save window. This authority permits one fresh step-0 checkpoint save/restore qualification only; it does not authorize formal run3 or policy evaluation.",
+  "run2_adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-formal-run2-checkpoint10000-failure-adjudication-20260905.json",
+  "adjudication_sha256": "47e5024008d496576a44b845a5875ead98df1eef99193f9e506cc11f6e96eb65",
+  "run2_site_evidence_sha256": "e3e889e2afc81380c338fe9223167809a3b00a2028a59973a099cb44350f1957",
+  "run2_progress_sha256": "f5efbd8439a34086f5624db5046a53b969ce2164d16e40267ed82d823680e535",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_step0_checkpoint_save_qualification.py",
+  "runner_sha256": "e1cb7336167ba82f094edaa7eb722398a71cc8edf5728d195b8ccf5b15bc3ec4",
+  "launcher_path": "scripts/run_behavior_formal_goal_pi05_step0_checkpoint_save_qualification_67.sh",
+  "launcher_sha256": "6907e8b387167af7cc1863202966b13da7a2b21e3397136c69a75b11d7052977",
+  "host": "67",
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 40,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "portable_openpi": {
+    "parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "changed_paths": ["src/openpi/training/config.py"],
+    "config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99"
+  },
+  "base_checkpoint": {
+    "receipt_path": "generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+    "receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+    "object_count": 20,
+    "bytes": 12441721931,
+    "restore_mode": "direct-device jax.Array"
+  },
+  "qualification": {
+    "initial_state": "fresh step-0 train state with practical batch16 config",
+    "save_label": 10000,
+    "checkpoint_output_root": "/data/wyt/formal-goal-checkpoint-save-qualification-67-20260905/stage-a-save-only-40g",
+    "receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-step0-checkpoint-save-40g-qualification-result-67-20260905.json",
+    "sequence": [
+      "initialize fresh direct-device step-0 state",
+      "create fresh Orbax CheckpointManager",
+      "call source checkpoints.save_state at label 10000",
+      "immediately call manager.wait_until_finished before any other model operation",
+      "require label 10000 to be manager-visible",
+      "restore label 10000 into the same step-0 state template",
+      "require restored state.step == 0"
+    ],
+    "behavior_dataset_access": false,
+    "tokenizer_execution": false,
+    "forward_pass": false,
+    "backward_pass": false,
+    "optimizer_update": false,
+    "real_scientific_optimizer_updates": 0,
+    "loss_read": false,
+    "policy_outcome_read": false
+  },
+  "pass_gate": {
+    "required_status": "PI05_STEP0_CHECKPOINT_SAVE_40G_PASS",
+    "checkpoint_save_completed": true,
+    "checkpoint_restore_completed": true,
+    "manager_contains_label_10000": true,
+    "real_scientific_optimizer_updates": 0
+  },
+  "if_pass": "No automatic formal restart. Adjudicate whether synchronous checkpoint barrier is the minimum sufficient run3 repair; an async-overlap synthetic diagnostic may be run only under a separately frozen authority if it changes that decision.",
+  "if_fail": "No automatic retry or MemoryMax increase. Record the resource failure and adjudicate a prospectively frozen checkpoint-save resource repair before any formal run3 decision.",
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false,
+  "forbidden": [
+    "read BEHAVIOR Q or policy outcomes",
+    "read/report loss",
+    "use run2 partial checkpoint for resume",
+    "change batch16, seed42, optimizer, LR, EMA, action horizon, training horizon, or terminal checkpoint rule",
+    "launch formal run3 from this authority"
+  ]
+}

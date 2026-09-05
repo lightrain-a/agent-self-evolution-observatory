@@ -1,0 +1,89 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-formal-run2-checkpoint10000-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T03:25:00Z",
+  "status": "PI05_FORMAL_RUN2_CHECKPOINT10000_HARD_EXIT_NO_EXACT_STATE_RECOVERY",
+  "decision": "CLOSE_RUN2_AS_PRETERMINAL_INFRASTRUCTURE_FAILURE_NO_RESUME_AUTHORITY",
+  "run2": {
+    "authority_sha256": "9628130eecba6456595ef4dfc8d7b1cfbe822baca8d4b4f94b09fefa4cd2cf18",
+    "progress_path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-formal-run2-fdlimit-progress-20260904.json",
+    "progress_sha256": "f5efbd8439a34086f5624db5046a53b969ce2164d16e40267ed82d823680e535",
+    "completed_optimizer_updates": 10001,
+    "last_completed_loop_label": 10000,
+    "target_optimizer_updates": 50000,
+    "result_receipt_exists": false,
+    "live_formal_process_exists_at_adjudication": false,
+    "loss_values_read_or_reported": false,
+    "policy_outcomes_read": false
+  },
+  "site_evidence": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-formal-run2-checkpoint10000-site-evidence-20260905.json",
+    "sha256": "e3e889e2afc81380c338fe9223167809a3b00a2028a59973a099cb44350f1957"
+  },
+  "checkpoint10000": {
+    "path": "/data/wyt/formal-goal-portable-openpi-child-231-20260903/outputs/checkpoints/pi05_b1k_shared26_frozen/shared26-seed42-practical-b16-run2-fdlimit/10000.orbax-checkpoint-tmp-0",
+    "manager_visible_complete_steps": [],
+    "only_top_level_entry": "10000.orbax-checkpoint-tmp-0",
+    "captured_file_bytes": 3127,
+    "captured_files": [
+      "_CHECKPOINT_METADATA",
+      "assets.orbax-checkpoint-tmp-1/b1k_shared26_frozen/norm_stats.json"
+    ],
+    "params_temp_directory_exists": true,
+    "params_temp_contains_files": false,
+    "train_state_temp_directory_exists": true,
+    "train_state_temp_contains_files": false,
+    "exact_state_recoverable": false,
+    "scientific_checkpoint_qualified": false,
+    "reason": "The Orbax temporary checkpoint contains no serialized params or train_state payload and is not visible as a completed manager step. It cannot represent the optimizer/model state after 10001 updates."
+  },
+  "failure_localization": {
+    "lower_bound": "The durable progress receipt for label 10000 was written after optimizer update 10001 completed.",
+    "upper_bound": "The checkpoint save did not reach a completed Orbax step and the Python process disappeared before its finally/result receipt ran.",
+    "localized_window": "checkpoint label 10000 save window",
+    "hard_exit": true,
+    "python_exception_receipt_available": false,
+    "kernel_oom_or_enospc_record_found": false,
+    "transient_systemd_unit_exit_record_available": false,
+    "exact_hard_exit_cause": "UNRESOLVED"
+  },
+  "source_level_checkpoint_hazard": {
+    "checkpoint_manager_is_async": true,
+    "async_timeout_secs": 7200,
+    "runner_calls_save_state_without_immediate_wait_until_finished": true,
+    "runner_wait_until_finished_occurs_only_after_the_full_training_loop": true,
+    "next_train_step_donates_state_argument": true,
+    "risk": "The checkpoint writer may still serialize the current state while the next iteration starts and donates/reuses that state. This creates an avoidable checkpoint-lifetime and memory-overlap hazard. It is a source-level engineering hazard, but the present evidence does not prove it was the sole cause of the hard exit."
+  },
+  "filesystem_observation": {
+    "checkpoint_target_data_filesystem_free_user_bytes": 1353886384128,
+    "checkpoint_target_has_large_free_space": true,
+    "root_filesystem_free_user_bytes": 4034076672,
+    "root_filesystem_nearly_full": true,
+    "interpretation": "The /data target was not space-exhausted. The nearly-full root filesystem is an infrastructure risk, but no ENOSPC evidence ties it causally to this hard exit, so it is not declared the root cause."
+  },
+  "scientific_disposition": {
+    "run2_terminal_model_exists": false,
+    "run2_may_be_served_or_evaluated": false,
+    "run2_partial_training_progress_may_support_scientific_claim": false,
+    "run2_partial_checkpoint_may_be_used_for_resume": false,
+    "run2_partial_checkpoint_may_be_repaired_into_a_resume_state": false,
+    "run3_formal_training_authorized": false,
+    "policy_evaluation_authorized": false
+  },
+  "next_gate": {
+    "status": "AUTHORIZED_TO_DESIGN_ONLY_UNTIL_SEPARATE_AUTHORITY_IS_FROZEN",
+    "name": "STEP0_CHECKPOINT_SAVE_RESOURCE_AND_LIFETIME_QUALIFICATION",
+    "purpose": "Test checkpoint serialization independently of scientific training on a clean A100 host using a fresh step-0 state and no BEHAVIOR data or policy outcome access.",
+    "stage_a": "Save a fresh step-0 state under the same 40 GiB host cgroup ceiling and wait synchronously for Orbax completion.",
+    "stage_b": "Only if stage A passes, separately test the unsafe async-overlap pattern with a synthetic batch16 step to determine whether overlap/donation creates an additional failure. Stage B is diagnostic only and cannot authorize formal training by itself.",
+    "forbidden_before_gate_closes": [
+      "formal run3 launch",
+      "reuse or resume from 10000.orbax-checkpoint-tmp-0",
+      "policy rollout or Q access",
+      "loss-based recipe changes",
+      "scientific batch/optimizer/LR/EMA/seed changes"
+    ]
+  }
+}
