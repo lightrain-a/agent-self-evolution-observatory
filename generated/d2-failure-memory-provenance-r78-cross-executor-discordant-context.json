@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R78-CROSS-EXECUTOR-DISCORDANT-CONTEXT",
+  "recorded_date": "2026-09-05",
+  "status": "R78_ZERO_MODEL_CROSS_EXECUTOR_CONTEXT_COMPLETE",
+  "role": "POST_HOC_CROSS_EXECUTOR_CONTEXT_NOT_PRIMARY_INFERENCE",
+  "bindings": {
+    "qwen_r56_completed_ab_arms_file_sha256": "b96f350ba4006055d4c090ddfe677dec6aea14507ecb4cf2a15a0540667f318c",
+    "llama_r61_completed_ab_arms_file_sha256": "34747ca158bf33a354516b3480975483b6214e3c00fc97e78325ae663f04af38",
+    "r77_mechanism_closeout_receipt_sha256": "c468292e70d26e3423ed28196f3d336e3fd32404d50519b15d09c617146c50f0"
+  },
+  "selected_task_ids": ["125", "136", "193", "327"],
+  "rows": [
+    {
+      "task_id": "125",
+      "Qwen_A_B": [true, true],
+      "Llama_A_B": [true, false],
+      "Qwen_terminal_discordant": false,
+      "Llama_terminal_discordant": true,
+      "Qwen_steps_A_B": [4, 4],
+      "Llama_steps_A_B": [10, 16],
+      "cross_executor_first_action_same_A": false,
+      "cross_executor_first_action_same_B": false
+    },
+    {
+      "task_id": "136",
+      "Qwen_A_B": [false, false],
+      "Llama_A_B": [false, true],
+      "Qwen_terminal_discordant": false,
+      "Llama_terminal_discordant": true,
+      "Qwen_steps_A_B": [7, 7],
+      "Llama_steps_A_B": [6, 6],
+      "cross_executor_first_action_same_A": true,
+      "cross_executor_first_action_same_B": true
+    },
+    {
+      "task_id": "193",
+      "Qwen_A_B": [true, true],
+      "Llama_A_B": [false, true],
+      "Qwen_terminal_discordant": false,
+      "Llama_terminal_discordant": true,
+      "Qwen_steps_A_B": [3, 3],
+      "Llama_steps_A_B": [10, 6],
+      "cross_executor_first_action_same_A": false,
+      "cross_executor_first_action_same_B": false
+    },
+    {
+      "task_id": "327",
+      "Qwen_A_B": [false, false],
+      "Llama_A_B": [true, false],
+      "Qwen_terminal_discordant": false,
+      "Llama_terminal_discordant": true,
+      "Qwen_steps_A_B": [9, 7],
+      "Llama_steps_A_B": [16, 4],
+      "cross_executor_first_action_same_A": false,
+      "cross_executor_first_action_same_B": false
+    }
+  ],
+  "summary": {
+    "Llama_discordant_tasks": 4,
+    "Qwen_discordant_among_same_four_tasks": 0,
+    "Qwen_both_success_task_ids": ["125", "193"],
+    "Qwen_both_fail_task_ids": ["136", "327"],
+    "scalar_model_strength_explanation_supported": false,
+    "executor_specific_decision_geometry_compatible": true
+  },
+  "interpretation": "The four Llama-discordant tasks are all terminally concordant under Qwen, but Qwen is not uniformly stronger: it succeeds in both arms on 125/193 and fails in both arms on 136/327. This supports executor-specific policy/capability geometry rather than a simple scalar-strength story. The comparison is post hoc and cannot causally identify model capability as the moderator.",
+  "new_model_calls": 0,
+  "new_environment_trajectories": 0,
+  "changes_R72_R73_primary_inference": false,
+  "changes_R72_R73_execution_schedule": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "e3473c955d3cbd9472fe34f9fb6558bf24a44af6f006b2205c6f7a0f84bf8abf"
+}
