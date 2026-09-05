@@ -1,0 +1,52 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-checkpoint-resource-independent-review-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T12:46:11+08:00",
+  "reviewer": {
+    "kind": "independent_codexflow_codex_read_only_review",
+    "session_id": "01a06fe3-4b15-7462-b85e-26d358ad8c65",
+    "tools_or_file_edits_authorized": false
+  },
+  "verbatim_compact_response": "VERDICT=APPROVE_ORDERED_A_THEN_B; A=OK; B=FALLBACK; BARRIER=YES; GATE=one fresh-step0 synchronous save completes under 96GiB, then exact restore/content verification; RUN3_NOW=NO; FORBID=Run3, async saves, swap, or scientific/checkpoint changes before qualification; WHY=~68GiB baseline-plus-staging fits 96GiB with margin; limiter cannot prevent whole-request D2H staging, so B is justified only if A fails.",
+  "verdict": "APPROVE_ORDERED_A_THEN_B",
+  "scientific_invariants_preserved": true,
+  "candidate_a": {
+    "decision": "APPROVED_FIRST_FOR_QUALIFICATION_ONLY",
+    "memory_max_gib": 96,
+    "memory_swap_max_gib": 0,
+    "enable_async_checkpointing": false,
+    "pytree_save_concurrent_gb": 4,
+    "pytree_restore_concurrent_gb": 4,
+    "checkpoint_completion_barrier_required": true,
+    "scientific_variables_changed": false
+  },
+  "candidate_b": {
+    "decision": "FALLBACK_ONLY_IF_A_FAILS",
+    "description": "Chunk device-to-host staging itself rather than relying on the post-D2H write limiter.",
+    "separate_review_required_before_execution": true
+  },
+  "qualification_gate": {
+    "fresh_step0_state_only": true,
+    "behavior_dataset_accessed": false,
+    "forward_backward_or_optimizer_update": false,
+    "required": [
+      "synchronous checkpoint save completes under MemoryMax=96GiB and swap=0",
+      "manager exposes completed label 10000",
+      "no temporary checkpoint remains as the only step artifact",
+      "checkpoint restore completes",
+      "restored PyTree structure, leaf shapes, leaf dtypes, and state.step match the pre-save step0 state"
+    ]
+  },
+  "run3_authorized_now": false,
+  "forbidden_before_qualification_pass": [
+    "formal run3",
+    "asynchronous checkpointing",
+    "swap",
+    "resume from run2 partial checkpoint",
+    "scientific variable changes",
+    "checkpoint content, format, label, or frequency changes",
+    "policy outcome, Q, effect, p-value, or loss access"
+  ],
+  "rationale": "Existing receipts and Orbax source localize the unresolved peak to whole-request D2H staging before the write limiter. The approximately 49.97GiB JAX state plus roughly 18GiB pre-save cgroup footprint explains failure above 64GiB; 96GiB is a single prospectively reviewed resource ceiling with bounded host reserve on host67."
+}
