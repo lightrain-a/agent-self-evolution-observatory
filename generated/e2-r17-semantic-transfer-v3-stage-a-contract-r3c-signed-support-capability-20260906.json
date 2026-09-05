@@ -69,7 +69,7 @@
     },
     "post_terminal_support_tests": {
       "path": "research_pipeline/test_e2_r17_semantic_transfer_v3_r3_support_read_control.py",
-      "sha256": "ffed33cbfebe1333f139266fb94834138348ad68b0fc67c4928209ab95ad4a61"
+      "sha256": "34ba48994eb8c9c208b6c16a1bc8be7aa7e41fa730f317cee98bcf3513852749"
     },
     "preflight": {
       "path": "scripts/preflight_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
@@ -105,7 +105,7 @@
     },
     "r3c_signed_capability_verifier": {
       "path": "research_pipeline/e2_r17_r3c_signed_support_capability.py",
-      "sha256": "e82e40ef5205149afa4a22dd301498abe638e3fa2c40160eec6163718fa158ce"
+      "sha256": "20b589917ea2ae8b8e00fb40cc008f11ce6d1f3853816fb30eb3cc56928f269a"
     },
     "stage_a_runner": {
       "path": "scripts/run_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
@@ -125,7 +125,7 @@
     "provider_calls_per_rollout_limit": 10
   },
   "control_plane_revision": "R3C_EXTERNAL_SIGNED_SUPPORT_CAPABILITY",
-  "created_at_utc": "2026-09-05T16:52:52+00:00",
+  "created_at_utc": "2026-09-05T16:55:43+00:00",
   "env_file_path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
   "equal_dose_support": {
     "all_158_provider_pools_must_be_sealed_before_support_read": true,

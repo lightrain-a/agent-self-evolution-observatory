@@ -8,10 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
-
-from .e2_r17_r3c_signed_support_capability import HARD_PROVIDER_NOT_BEFORE, sign_document
+from .e2_r17_r3c_signed_support_capability import HARD_PROVIDER_NOT_BEFORE, OPENSSL, sign_document
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
@@ -37,18 +34,11 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         self.addCleanup(td.cleanup)
         root = Path(td.name)
         run = root / "run"
-        private_key = Ed25519PrivateKey.generate()
         private_key_path = root / "test-signing-private.pem"
         public_key_path = root / "test-signing-public.pem"
-        private_key_path.write_bytes(private_key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption(),
-        ))
-        public_key_path.write_bytes(private_key.public_key().public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo,
-        ))
+        subprocess.run([OPENSSL, "genpkey", "-algorithm", "ED25519", "-out", str(private_key_path)], check=True, capture_output=True)
+        with public_key_path.open("wb") as handle:
+            subprocess.run([OPENSSL, "pkey", "-in", str(private_key_path), "-pubout"], check=True, stdout=handle, stderr=subprocess.PIPE)
         claims = run / "checkpoints/stage_a_task_claims"
         claims.mkdir(parents=True)
         completed = run / "checkpoints/completed_streams.jsonl"
@@ -410,18 +400,11 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
             "submission": False,
             "scientific_authority": False,
         }
-        wrong_private = Ed25519PrivateKey.generate()
         wrong_private_path = fixture["root"] / "attacker-private.pem"
         wrong_public_path = fixture["root"] / "attacker-public.pem"
-        wrong_private_path.write_bytes(wrong_private.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption(),
-        ))
-        wrong_public_path.write_bytes(wrong_private.public_key().public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo,
-        ))
+        subprocess.run([OPENSSL, "genpkey", "-algorithm", "ED25519", "-out", str(wrong_private_path)], check=True, capture_output=True)
+        with wrong_public_path.open("wb") as handle:
+            subprocess.run([OPENSSL, "pkey", "-in", str(wrong_private_path), "-pubout"], check=True, stdout=handle, stderr=subprocess.PIPE)
         forged_capability = sign_document(payload=payload, private_key_path=wrong_private_path, public_key_path=wrong_public_path)
         # The attacker can copy every public metadata field, including the trusted
         # public-key fingerprint, but cannot create a signature verifiable by it.
