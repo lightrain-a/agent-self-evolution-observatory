@@ -1,0 +1,2761 @@
+{
+  "authority_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-qualification-authority-20260905.json",
+  "authority_sha256": "11aeac407c39ae3d9c2a8469f0043d804210e50249d2ce56d0ec6423e4d36ea8",
+  "backward_pass_executed": false,
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "batch_size_configured": 16,
+  "checkpoint_restore_completed": false,
+  "checkpoint_save_completed": false,
+  "checkpoint_save_started": true,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "dataset_accessed": false,
+  "enable_async_checkpointing": false,
+  "expected_memory_max_gib": 96,
+  "fingerprints": {
+    "params": {
+      "leaf_count": 51,
+      "leaves": [
+        {
+          "dtype": "float32",
+          "index": 0,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoder_norm']['bias'].value",
+          "sha256": "c3b34c748571bd992dc337b89436653eef1ca41b7350b67fd7e05c3ad57fc272",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 1,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoder_norm']['scale'].value",
+          "sha256": "3c2a49b86d3e95f2689230890fe6d35c44e0cba98b646d6542ba3a277d015536",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 2,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['bias'].value",
+          "sha256": "9f707c6ad5c4a5aa2e2daa2e1df3c2fdb1cc875f27c56bee9da504f592528c38",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 3,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['scale'].value",
+          "sha256": "cc4c3a09b6e71aaa2692c5cea440e66e526a0e5f76ea9a89c96b512f54082392",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 4,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['bias'].value",
+          "sha256": "d97e8fe678c94bfcd6b975c17e7d15020560e012644f4c720ca37def51cbd5f0",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 5,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['scale'].value",
+          "sha256": "2c32cdeaeabdae804f3ea65f40a9b7536f1f9ffcf05b1e9473275506100347aa",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 6,
+          "kind": "array",
+          "nbytes": 464832,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['bias'].value",
+          "sha256": "625960c43834c2b285f82c4cb63ad1c6551f8baa9cd9aacfa8a0be25bbbe30f8",
+          "shape": [
+            27,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 7,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['kernel'].value",
+          "sha256": "d49582c79229a0a3deb690813a663ea17428857a3546cdcce10ab2f32db18a3b",
+          "shape": [
+            27,
+            1152,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 8,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['bias'].value",
+          "sha256": "769c8042798902dea5ba38d19e400351877e73645990315a9e350342a0fb9b86",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 9,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['kernel'].value",
+          "sha256": "765706e8edc7f0cdebe6f706df3cd094637fbd82e66d5a17c1bdf2074abd2f9c",
+          "shape": [
+            27,
+            4304,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 10,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['bias'].value",
+          "sha256": "7f6762147122c143f2b85d5896dc46302539d0de24a22962b3e46a19a6ddaf56",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 11,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['kernel'].value",
+          "sha256": "b9bf0b1c401171ef9075c1edaa803d65d47f0559e4dc908ca11f5a85c2d89081",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 12,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['bias'].value",
+          "sha256": "1c1132f814cef21a70bf15cab8063e13dc476c687121b1ae95a1bbb82e22da42",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 13,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['kernel'].value",
+          "sha256": "058139836db74e0cd8d4239036b39903dfabed966c95e83990d1dc4cdbd6ad7a",
+          "shape": [
+            27,
+            16,
+            72,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 14,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['bias'].value",
+          "sha256": "96e213bac1088fadcfb4a4fe33a60d00a7be93f6d24aa3cc90849eb053a60a39",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 15,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['kernel'].value",
+          "sha256": "ceafe84eabaeae79b24433c7c8be1560c89c86504db39614e3b8b0dcd1794906",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 16,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['bias'].value",
+          "sha256": "1117c0a714215022757680c7dea7827c06b2d9c460fb0a331a253e75bc345917",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 17,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['kernel'].value",
+          "sha256": "680afc25bf93ced101f3040b0f0e77e60423822324776a0dfc830db290ccc244",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 18,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['params']['PaliGemma']['img']['embedding']['bias'].value",
+          "sha256": "ea23a107dcee87a77e6def55e159cd41d05e0528a654be61dda2697a8440c29c",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 19,
+          "kind": "array",
+          "nbytes": 2709504,
+          "path": "['params']['PaliGemma']['img']['embedding']['kernel'].value",
+          "sha256": "7a52c045f164dcc4a9817d397dce9e9de5d8ee8526efbf8a917a0aa7083b8628",
+          "shape": [
+            14,
+            14,
+            3,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 20,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['params']['PaliGemma']['img']['head']['bias'].value",
+          "sha256": "3c6219d347bb0fe1347d3bbb3eb5c1b53c9f3471a926b4233348f951fe2b2d15",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 21,
+          "kind": "array",
+          "nbytes": 9437184,
+          "path": "['params']['PaliGemma']['img']['head']['kernel'].value",
+          "sha256": "b913d7f8b8d30b87702afa846d1c9dfa70483e2601759d5ce82f27881c9bfb66",
+          "shape": [
+            1152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 22,
+          "kind": "array",
+          "nbytes": 1179648,
+          "path": "['params']['PaliGemma']['img']['pos_embedding'].value",
+          "sha256": "621b8ef05daf7826f580f8148b99ba09a2acfa68d5ae77eca245c51e1e9882a0",
+          "shape": [
+            1,
+            256,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 23,
+          "kind": "array",
+          "nbytes": 2106589184,
+          "path": "['params']['PaliGemma']['llm']['embedder']['input_embedding'].value",
+          "sha256": "be92a43984f5697aec15c33b8f57b986405970022b3fed53d63ec232fd23873f",
+          "shape": [
+            257152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 24,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['params']['PaliGemma']['llm']['final_norm']['scale'].value",
+          "sha256": "335e10ccda1eec96e439d7340ba79520a9fa67bf7cc2253b00141d10e04cfc49",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 25,
+          "kind": "array",
+          "nbytes": 12288,
+          "path": "['params']['PaliGemma']['llm']['final_norm_1']['Dense_0']['bias'].value",
+          "sha256": "38a98d62a6b5b7c779924ccaa930effb717532d15c67c277b8e4b6a0ae36da9c",
+          "shape": [
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 26,
+          "kind": "array",
+          "nbytes": 12582912,
+          "path": "['params']['PaliGemma']['llm']['final_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "06a956020503d5b5de578316c9e5e6d172950cd8133630433dee2362748b9515",
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 27,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum']['w'].value",
+          "sha256": "f33350755695e796e1293ddd1d7b10cc0a3656037be331cdb26799c059e51627",
+          "shape": [
+            18,
+            8,
+            256,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 28,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum_1']['w'].value",
+          "sha256": "60fec629012cd9d0894d60632b9d27f6d95475dfe7b9a9c84025d67dcf54e7f7",
+          "shape": [
+            18,
+            8,
+            256,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 29,
+          "kind": "array",
+          "nbytes": 75497472,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['kv_einsum']['w'].value",
+          "sha256": "6947349535024e4d9ae7ef412e91f47cbefd4d2f4ddb621b3947f975dc905cf8",
+          "shape": [
+            18,
+            2,
+            1,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 30,
+          "kind": "array",
+          "nbytes": 37748736,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['kv_einsum_1']['w'].value",
+          "sha256": "49412746d1d458405f96b1b5bb12266429669e8c3a056666ecadd18f96632f97",
+          "shape": [
+            18,
+            2,
+            1,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 31,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['q_einsum']['w'].value",
+          "sha256": "2449f7d264dfd08c490564e3ed2a9a72797dca79ff5283713b773cb5dab24d19",
+          "shape": [
+            18,
+            8,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 32,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['q_einsum_1']['w'].value",
+          "sha256": "216c1ca32f50b1cdad28c68eb3bb0946fe53b58602adc152ce4a026252bd646c",
+          "shape": [
+            18,
+            8,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 33,
+          "kind": "array",
+          "nbytes": 4831838208,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp']['gating_einsum'].value",
+          "sha256": "128ef14dff543e725e6bc2f3047975040624dad0ca98f47ea648149acfc99e1f",
+          "shape": [
+            18,
+            2,
+            2048,
+            16384
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 34,
+          "kind": "array",
+          "nbytes": 2415919104,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp']['linear'].value",
+          "sha256": "91c7d02d45290d6301d7f9dfd9a9b84ea3d7a0edc71d8ba514e8d3874e448cf4",
+          "shape": [
+            18,
+            16384,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 35,
+          "kind": "array",
+          "nbytes": 603979776,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp_1']['gating_einsum'].value",
+          "sha256": "cb8a43620c4003e43abf21d98d2c205c05c7451e52b81ba82ba148da2363e9cb",
+          "shape": [
+            18,
+            2,
+            1024,
+            4096
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 36,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp_1']['linear'].value",
+          "sha256": "e04d447df1e42aacc9a5dbccd8e2174612c7e0cc227cde36b4634be109f69acd",
+          "shape": [
+            18,
+            4096,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 37,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_attention_norm']['scale'].value",
+          "sha256": "06539acebf26c57524d5cf1bac64a9e760a10b2010da619b8d66374898730690",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 38,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['bias'].value",
+          "sha256": "537bb42e238c0774119cadac167144d9e27b28c1be313eca9af328c9c8d84a00",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 39,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "9dbcc2bc26f5939e3fbbad1ce1aeff2daf7b0665d2c84a8f96430a689ec9ad9c",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 40,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_ffw_norm']['scale'].value",
+          "sha256": "fc9c543be1fbfa4a5589c5b7a8496b88b323a77e56a8654eb81ea24b9cc48fa9",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 41,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['bias'].value",
+          "sha256": "747ea8cdd973f701eef269a57bab87218ff3336a95cd70fa7bcae0c18c50f769",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 42,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "d3513fff609054445db10d4cc94364c8aef07b22955eb3f795a447f095115e6f",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 43,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['params']['action_in_proj']['bias'].value",
+          "sha256": "38915805ec4de76d8126775f9177f5edd5ae9dbe46dc4cd28b1c001975133740",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 44,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['params']['action_in_proj']['kernel'].value",
+          "sha256": "7beaa208e342a2937fcfc7efea42d5239c1fdbf01b23b011f3e90a5364e37fd0",
+          "shape": [
+            32,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 45,
+          "kind": "array",
+          "nbytes": 128,
+          "path": "['params']['action_out_proj']['bias'].value",
+          "sha256": "5b63d1c9d6a3f4958a34e11c200c4d89a1eb72b2d93cc940b5940deb6d48f16f",
+          "shape": [
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 46,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['params']['action_out_proj']['kernel'].value",
+          "sha256": "c85c7fa1f7ae79a1a9c5b13cf2e460a136cd6dceecf1966935078116a8faed12",
+          "shape": [
+            1024,
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 47,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['params']['time_mlp_in']['bias'].value",
+          "sha256": "6565214681b0c3b6858e8555ab900ef7ec4df1771470f8a9f5ecf0bb3c0c70b9",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 48,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['params']['time_mlp_in']['kernel'].value",
+          "sha256": "0d465c9a54cb45151a801848107afbf6665ccf5cf1f77d1f3582cc0d91406796",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 49,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['params']['time_mlp_out']['bias'].value",
+          "sha256": "e420e85e0c02d5f7f4ae7ac0f3fedc823f1dadfab73e1751a1127e7302cf124a",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 50,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['params']['time_mlp_out']['kernel'].value",
+          "sha256": "6dea9fbce0859370501ecd676a8b68d177acaf1e5dcb1182fa6468c0bddb1bd1",
+          "shape": [
+            1024,
+            1024
+          ]
+        }
+      ],
+      "treedef": "PyTreeDef({'params': CustomNode(State[('PaliGemma', 'action_in_proj', 'action_out_proj', 'time_mlp_in', 'time_mlp_out')], [{'img': {'Transformer': {'encoder_norm': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'encoderblock': {'LayerNorm_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'LayerNorm_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'MlpBlock_0': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'Dense_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'MultiHeadDotProductAttention_0': {'key': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'out': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'query': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'value': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}, 'embedding': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'head': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pos_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'llm': {'embedder': {'input_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'layers': {'attn': {'attn_vec_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'attn_vec_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'mlp': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'mlp_1': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'pre_ffw_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_ffw_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}])})"
+    },
+    "train_state": {
+      "leaf_count": 156,
+      "leaves": [
+        {
+          "dtype": "int32",
+          "index": 0,
+          "kind": "array",
+          "nbytes": 4,
+          "path": "['opt_state']['1']['0']['count']",
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+          "shape": [
+            1
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 1,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoder_norm']['bias'].value",
+          "sha256": "606f558e014930f9c1669f03c71c28945c4631568e39cd308c6c7f4077c7bfb9",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 2,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoder_norm']['scale'].value",
+          "sha256": "606f558e014930f9c1669f03c71c28945c4631568e39cd308c6c7f4077c7bfb9",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 3,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 4,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['scale'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 5,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 6,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['scale'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 7,
+          "kind": "array",
+          "nbytes": 464832,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['bias'].value",
+          "sha256": "72f7750edf2b495ff66262c32b8fa800c9f5260a5aec53755efdd9e785007423",
+          "shape": [
+            27,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 8,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['kernel'].value",
+          "sha256": "5068ff73529858ee4ffd1b8a3bd74351be4f0e68e7ec3923b96c0d2f177fdf6b",
+          "shape": [
+            27,
+            1152,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 9,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 10,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['kernel'].value",
+          "sha256": "5068ff73529858ee4ffd1b8a3bd74351be4f0e68e7ec3923b96c0d2f177fdf6b",
+          "shape": [
+            27,
+            4304,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 11,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 12,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 13,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 14,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            16,
+            72,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 15,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 16,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 17,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 18,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 19,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['embedding']['bias'].value",
+          "sha256": "606f558e014930f9c1669f03c71c28945c4631568e39cd308c6c7f4077c7bfb9",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 20,
+          "kind": "array",
+          "nbytes": 2709504,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['embedding']['kernel'].value",
+          "sha256": "0b0b60d87a55c346762276bc5c12b8b0cdb0d50027159687f3745a0d3abc290b",
+          "shape": [
+            14,
+            14,
+            3,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 21,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['head']['bias'].value",
+          "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 22,
+          "kind": "array",
+          "nbytes": 9437184,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['head']['kernel'].value",
+          "sha256": "d2ee4703cd9698945ca7b9fe1689ea3095597eac1a0afd8dba00cac7894fdc43",
+          "shape": [
+            1152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 23,
+          "kind": "array",
+          "nbytes": 1179648,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['img']['pos_embedding'].value",
+          "sha256": "a76c77fe203db862b48214c88fbdc1d5560655ccba2f7a2c7166baf6f846e856",
+          "shape": [
+            1,
+            256,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 24,
+          "kind": "array",
+          "nbytes": 2106589184,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['embedder']['input_embedding'].value",
+          "sha256": "e360aad955c2063f12b40ed70ed28859d8ca8d7392df2109af239b4355e7ad0f",
+          "shape": [
+            257152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 25,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['final_norm']['scale'].value",
+          "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 26,
+          "kind": "array",
+          "nbytes": 12288,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['final_norm_1']['Dense_0']['bias'].value",
+          "sha256": "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a",
+          "shape": [
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 27,
+          "kind": "array",
+          "nbytes": 12582912,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['final_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "cfadd44a103cbd6d5726fa07b27d7aad2f67ed3930ff96901c486a5beaf7e723",
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 28,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum']['w'].value",
+          "sha256": "8dde49f4732ef43a4c732f5a41912ac47441abc2688aca07c55c611e8877e215",
+          "shape": [
+            18,
+            8,
+            256,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 29,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum_1']['w'].value",
+          "sha256": "2ca8f698096c926a0ed939656eb5e7a81f2635b99b6889bd815a84ab811eb4f5",
+          "shape": [
+            18,
+            8,
+            256,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 30,
+          "kind": "array",
+          "nbytes": 75497472,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['attn']['kv_einsum']['w'].value",
+          "sha256": "3db0cafd8b4f62b468524b2b975318814b193dd89edfa89bfd4ee86c2a39a4af",
+          "shape": [
+            18,
+            2,
+            1,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 31,
+          "kind": "array",
+          "nbytes": 37748736,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['attn']['kv_einsum_1']['w'].value",
+          "sha256": "d4d77915154843d612e41c6a72645b31766b8f0d9d53c4980d8b31bacb90c8f3",
+          "shape": [
+            18,
+            2,
+            1,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 32,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['attn']['q_einsum']['w'].value",
+          "sha256": "8dde49f4732ef43a4c732f5a41912ac47441abc2688aca07c55c611e8877e215",
+          "shape": [
+            18,
+            8,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 33,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['attn']['q_einsum_1']['w'].value",
+          "sha256": "2ca8f698096c926a0ed939656eb5e7a81f2635b99b6889bd815a84ab811eb4f5",
+          "shape": [
+            18,
+            8,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 34,
+          "kind": "array",
+          "nbytes": 4831838208,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['mlp']['gating_einsum'].value",
+          "sha256": "4a106567656aef43130523c2c13d109f772dd3cd4e5330e9c589e387b347a7dd",
+          "shape": [
+            18,
+            2,
+            2048,
+            16384
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 35,
+          "kind": "array",
+          "nbytes": 2415919104,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['mlp']['linear'].value",
+          "sha256": "0e5acb6dfe745bb3aac4fe5526a9766684008bc934d83335760da59ed5ddd4ff",
+          "shape": [
+            18,
+            16384,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 36,
+          "kind": "array",
+          "nbytes": 603979776,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['mlp_1']['gating_einsum'].value",
+          "sha256": "07081ab506eb0f2e10d0fdf35c376d456d74eaf2840ea3ea391f2cfe3295799c",
+          "shape": [
+            18,
+            2,
+            1024,
+            4096
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 37,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['mlp_1']['linear'].value",
+          "sha256": "8dde49f4732ef43a4c732f5a41912ac47441abc2688aca07c55c611e8877e215",
+          "shape": [
+            18,
+            4096,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 38,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['pre_attention_norm']['scale'].value",
+          "sha256": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 39,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['bias'].value",
+          "sha256": "ee961e92ad4f21f2180e880c05620c4c651170bd8d906a75b56b3b3f3c2d4182",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 40,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "f4756b909d8046c5c10152c138486dafc2af8678ec6d9172d23dcc1cd54988e8",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 41,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['pre_ffw_norm']['scale'].value",
+          "sha256": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 42,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['bias'].value",
+          "sha256": "ee961e92ad4f21f2180e880c05620c4c651170bd8d906a75b56b3b3f3c2d4182",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 43,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['opt_state']['1']['0']['mu']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "f4756b909d8046c5c10152c138486dafc2af8678ec6d9172d23dcc1cd54988e8",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 44,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['opt_state']['1']['0']['mu']['action_in_proj']['bias'].value",
+          "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 45,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['opt_state']['1']['0']['mu']['action_in_proj']['kernel'].value",
+          "sha256": "fa43239bcee7b97ca62f007cc68487560a39e19f74f3dde7486db3f98df8e471",
+          "shape": [
+            32,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 46,
+          "kind": "array",
+          "nbytes": 128,
+          "path": "['opt_state']['1']['0']['mu']['action_out_proj']['bias'].value",
+          "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+          "shape": [
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 47,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['opt_state']['1']['0']['mu']['action_out_proj']['kernel'].value",
+          "sha256": "fa43239bcee7b97ca62f007cc68487560a39e19f74f3dde7486db3f98df8e471",
+          "shape": [
+            1024,
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 48,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['opt_state']['1']['0']['mu']['time_mlp_in']['bias'].value",
+          "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 49,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['opt_state']['1']['0']['mu']['time_mlp_in']['kernel'].value",
+          "sha256": "bb9f8df61474d25e71fa00722318cd387396ca1736605e1248821cc0de3d3af8",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 50,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['opt_state']['1']['0']['mu']['time_mlp_out']['bias'].value",
+          "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 51,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['opt_state']['1']['0']['mu']['time_mlp_out']['kernel'].value",
+          "sha256": "bb9f8df61474d25e71fa00722318cd387396ca1736605e1248821cc0de3d3af8",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 52,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoder_norm']['bias'].value",
+          "sha256": "606f558e014930f9c1669f03c71c28945c4631568e39cd308c6c7f4077c7bfb9",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 53,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoder_norm']['scale'].value",
+          "sha256": "606f558e014930f9c1669f03c71c28945c4631568e39cd308c6c7f4077c7bfb9",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 54,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 55,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['scale'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 56,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 57,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['scale'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 58,
+          "kind": "array",
+          "nbytes": 464832,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['bias'].value",
+          "sha256": "72f7750edf2b495ff66262c32b8fa800c9f5260a5aec53755efdd9e785007423",
+          "shape": [
+            27,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 59,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['kernel'].value",
+          "sha256": "5068ff73529858ee4ffd1b8a3bd74351be4f0e68e7ec3923b96c0d2f177fdf6b",
+          "shape": [
+            27,
+            1152,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 60,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 61,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['kernel'].value",
+          "sha256": "5068ff73529858ee4ffd1b8a3bd74351be4f0e68e7ec3923b96c0d2f177fdf6b",
+          "shape": [
+            27,
+            4304,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 62,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 63,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 64,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 65,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            16,
+            72,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 66,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 67,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 68,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['bias'].value",
+          "sha256": "f86265fabe1716d2b1c158e806e28f101a9abe81d4650b05678cfc03e2c150b2",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 69,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['kernel'].value",
+          "sha256": "3462eee435c0b279304de00db4021ddf4f1f3d38a502781f488c6f9a380a348b",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 70,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['embedding']['bias'].value",
+          "sha256": "606f558e014930f9c1669f03c71c28945c4631568e39cd308c6c7f4077c7bfb9",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 71,
+          "kind": "array",
+          "nbytes": 2709504,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['embedding']['kernel'].value",
+          "sha256": "0b0b60d87a55c346762276bc5c12b8b0cdb0d50027159687f3745a0d3abc290b",
+          "shape": [
+            14,
+            14,
+            3,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 72,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['head']['bias'].value",
+          "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 73,
+          "kind": "array",
+          "nbytes": 9437184,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['head']['kernel'].value",
+          "sha256": "d2ee4703cd9698945ca7b9fe1689ea3095597eac1a0afd8dba00cac7894fdc43",
+          "shape": [
+            1152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 74,
+          "kind": "array",
+          "nbytes": 1179648,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['img']['pos_embedding'].value",
+          "sha256": "a76c77fe203db862b48214c88fbdc1d5560655ccba2f7a2c7166baf6f846e856",
+          "shape": [
+            1,
+            256,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 75,
+          "kind": "array",
+          "nbytes": 2106589184,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['embedder']['input_embedding'].value",
+          "sha256": "e360aad955c2063f12b40ed70ed28859d8ca8d7392df2109af239b4355e7ad0f",
+          "shape": [
+            257152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 76,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['final_norm']['scale'].value",
+          "sha256": "9f1dcbc35c350d6027f98be0f5c8b43b42ca52b7604459c0c42be3aa88913d47",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 77,
+          "kind": "array",
+          "nbytes": 12288,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['final_norm_1']['Dense_0']['bias'].value",
+          "sha256": "f3cc103136423a57975750907ebc1d367e2985ac6338976d4d5a439f50323f4a",
+          "shape": [
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 78,
+          "kind": "array",
+          "nbytes": 12582912,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['final_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "cfadd44a103cbd6d5726fa07b27d7aad2f67ed3930ff96901c486a5beaf7e723",
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 79,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum']['w'].value",
+          "sha256": "8dde49f4732ef43a4c732f5a41912ac47441abc2688aca07c55c611e8877e215",
+          "shape": [
+            18,
+            8,
+            256,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 80,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum_1']['w'].value",
+          "sha256": "2ca8f698096c926a0ed939656eb5e7a81f2635b99b6889bd815a84ab811eb4f5",
+          "shape": [
+            18,
+            8,
+            256,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 81,
+          "kind": "array",
+          "nbytes": 75497472,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['attn']['kv_einsum']['w'].value",
+          "sha256": "3db0cafd8b4f62b468524b2b975318814b193dd89edfa89bfd4ee86c2a39a4af",
+          "shape": [
+            18,
+            2,
+            1,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 82,
+          "kind": "array",
+          "nbytes": 37748736,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['attn']['kv_einsum_1']['w'].value",
+          "sha256": "d4d77915154843d612e41c6a72645b31766b8f0d9d53c4980d8b31bacb90c8f3",
+          "shape": [
+            18,
+            2,
+            1,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 83,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['attn']['q_einsum']['w'].value",
+          "sha256": "8dde49f4732ef43a4c732f5a41912ac47441abc2688aca07c55c611e8877e215",
+          "shape": [
+            18,
+            8,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 84,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['attn']['q_einsum_1']['w'].value",
+          "sha256": "2ca8f698096c926a0ed939656eb5e7a81f2635b99b6889bd815a84ab811eb4f5",
+          "shape": [
+            18,
+            8,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 85,
+          "kind": "array",
+          "nbytes": 4831838208,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['mlp']['gating_einsum'].value",
+          "sha256": "4a106567656aef43130523c2c13d109f772dd3cd4e5330e9c589e387b347a7dd",
+          "shape": [
+            18,
+            2,
+            2048,
+            16384
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 86,
+          "kind": "array",
+          "nbytes": 2415919104,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['mlp']['linear'].value",
+          "sha256": "0e5acb6dfe745bb3aac4fe5526a9766684008bc934d83335760da59ed5ddd4ff",
+          "shape": [
+            18,
+            16384,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 87,
+          "kind": "array",
+          "nbytes": 603979776,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['mlp_1']['gating_einsum'].value",
+          "sha256": "07081ab506eb0f2e10d0fdf35c376d456d74eaf2840ea3ea391f2cfe3295799c",
+          "shape": [
+            18,
+            2,
+            1024,
+            4096
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 88,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['mlp_1']['linear'].value",
+          "sha256": "8dde49f4732ef43a4c732f5a41912ac47441abc2688aca07c55c611e8877e215",
+          "shape": [
+            18,
+            4096,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 89,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['pre_attention_norm']['scale'].value",
+          "sha256": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 90,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['bias'].value",
+          "sha256": "ee961e92ad4f21f2180e880c05620c4c651170bd8d906a75b56b3b3f3c2d4182",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 91,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "f4756b909d8046c5c10152c138486dafc2af8678ec6d9172d23dcc1cd54988e8",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 92,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['pre_ffw_norm']['scale'].value",
+          "sha256": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 93,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['bias'].value",
+          "sha256": "ee961e92ad4f21f2180e880c05620c4c651170bd8d906a75b56b3b3f3c2d4182",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 94,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['opt_state']['1']['0']['nu']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "f4756b909d8046c5c10152c138486dafc2af8678ec6d9172d23dcc1cd54988e8",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 95,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['opt_state']['1']['0']['nu']['action_in_proj']['bias'].value",
+          "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 96,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['opt_state']['1']['0']['nu']['action_in_proj']['kernel'].value",
+          "sha256": "fa43239bcee7b97ca62f007cc68487560a39e19f74f3dde7486db3f98df8e471",
+          "shape": [
+            32,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 97,
+          "kind": "array",
+          "nbytes": 128,
+          "path": "['opt_state']['1']['0']['nu']['action_out_proj']['bias'].value",
+          "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+          "shape": [
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 98,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['opt_state']['1']['0']['nu']['action_out_proj']['kernel'].value",
+          "sha256": "fa43239bcee7b97ca62f007cc68487560a39e19f74f3dde7486db3f98df8e471",
+          "shape": [
+            1024,
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 99,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['opt_state']['1']['0']['nu']['time_mlp_in']['bias'].value",
+          "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 100,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['opt_state']['1']['0']['nu']['time_mlp_in']['kernel'].value",
+          "sha256": "bb9f8df61474d25e71fa00722318cd387396ca1736605e1248821cc0de3d3af8",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 101,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['opt_state']['1']['0']['nu']['time_mlp_out']['bias'].value",
+          "sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 102,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['opt_state']['1']['0']['nu']['time_mlp_out']['kernel'].value",
+          "sha256": "bb9f8df61474d25e71fa00722318cd387396ca1736605e1248821cc0de3d3af8",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "int32",
+          "index": 103,
+          "kind": "array",
+          "nbytes": 4,
+          "path": "['opt_state']['1']['2']['count']",
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+          "shape": [
+            1
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 104,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoder_norm']['bias'].value",
+          "sha256": "c3b34c748571bd992dc337b89436653eef1ca41b7350b67fd7e05c3ad57fc272",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 105,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoder_norm']['scale'].value",
+          "sha256": "3c2a49b86d3e95f2689230890fe6d35c44e0cba98b646d6542ba3a277d015536",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 106,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['bias'].value",
+          "sha256": "9f707c6ad5c4a5aa2e2daa2e1df3c2fdb1cc875f27c56bee9da504f592528c38",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 107,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_0']['scale'].value",
+          "sha256": "cc4c3a09b6e71aaa2692c5cea440e66e526a0e5f76ea9a89c96b512f54082392",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 108,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['bias'].value",
+          "sha256": "d97e8fe678c94bfcd6b975c17e7d15020560e012644f4c720ca37def51cbd5f0",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 109,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['LayerNorm_1']['scale'].value",
+          "sha256": "2c32cdeaeabdae804f3ea65f40a9b7536f1f9ffcf05b1e9473275506100347aa",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 110,
+          "kind": "array",
+          "nbytes": 464832,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['bias'].value",
+          "sha256": "625960c43834c2b285f82c4cb63ad1c6551f8baa9cd9aacfa8a0be25bbbe30f8",
+          "shape": [
+            27,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 111,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_0']['kernel'].value",
+          "sha256": "d49582c79229a0a3deb690813a663ea17428857a3546cdcce10ab2f32db18a3b",
+          "shape": [
+            27,
+            1152,
+            4304
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 112,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['bias'].value",
+          "sha256": "769c8042798902dea5ba38d19e400351877e73645990315a9e350342a0fb9b86",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 113,
+          "kind": "array",
+          "nbytes": 535486464,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MlpBlock_0']['Dense_1']['kernel'].value",
+          "sha256": "765706e8edc7f0cdebe6f706df3cd094637fbd82e66d5a17c1bdf2074abd2f9c",
+          "shape": [
+            27,
+            4304,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 114,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['bias'].value",
+          "sha256": "7f6762147122c143f2b85d5896dc46302539d0de24a22962b3e46a19a6ddaf56",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 115,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['key']['kernel'].value",
+          "sha256": "b9bf0b1c401171ef9075c1edaa803d65d47f0559e4dc908ca11f5a85c2d89081",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 116,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['bias'].value",
+          "sha256": "1c1132f814cef21a70bf15cab8063e13dc476c687121b1ae95a1bbb82e22da42",
+          "shape": [
+            27,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 117,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['out']['kernel'].value",
+          "sha256": "058139836db74e0cd8d4239036b39903dfabed966c95e83990d1dc4cdbd6ad7a",
+          "shape": [
+            27,
+            16,
+            72,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 118,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['bias'].value",
+          "sha256": "96e213bac1088fadcfb4a4fe33a60d00a7be93f6d24aa3cc90849eb053a60a39",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 119,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['query']['kernel'].value",
+          "sha256": "ceafe84eabaeae79b24433c7c8be1560c89c86504db39614e3b8b0dcd1794906",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 120,
+          "kind": "array",
+          "nbytes": 124416,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['bias'].value",
+          "sha256": "1117c0a714215022757680c7dea7827c06b2d9c460fb0a331a253e75bc345917",
+          "shape": [
+            27,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 121,
+          "kind": "array",
+          "nbytes": 143327232,
+          "path": "['params']['PaliGemma']['img']['Transformer']['encoderblock']['MultiHeadDotProductAttention_0']['value']['kernel'].value",
+          "sha256": "680afc25bf93ced101f3040b0f0e77e60423822324776a0dfc830db290ccc244",
+          "shape": [
+            27,
+            1152,
+            16,
+            72
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 122,
+          "kind": "array",
+          "nbytes": 4608,
+          "path": "['params']['PaliGemma']['img']['embedding']['bias'].value",
+          "sha256": "ea23a107dcee87a77e6def55e159cd41d05e0528a654be61dda2697a8440c29c",
+          "shape": [
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 123,
+          "kind": "array",
+          "nbytes": 2709504,
+          "path": "['params']['PaliGemma']['img']['embedding']['kernel'].value",
+          "sha256": "7a52c045f164dcc4a9817d397dce9e9de5d8ee8526efbf8a917a0aa7083b8628",
+          "shape": [
+            14,
+            14,
+            3,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 124,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['params']['PaliGemma']['img']['head']['bias'].value",
+          "sha256": "3c6219d347bb0fe1347d3bbb3eb5c1b53c9f3471a926b4233348f951fe2b2d15",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 125,
+          "kind": "array",
+          "nbytes": 9437184,
+          "path": "['params']['PaliGemma']['img']['head']['kernel'].value",
+          "sha256": "b913d7f8b8d30b87702afa846d1c9dfa70483e2601759d5ce82f27881c9bfb66",
+          "shape": [
+            1152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 126,
+          "kind": "array",
+          "nbytes": 1179648,
+          "path": "['params']['PaliGemma']['img']['pos_embedding'].value",
+          "sha256": "621b8ef05daf7826f580f8148b99ba09a2acfa68d5ae77eca245c51e1e9882a0",
+          "shape": [
+            1,
+            256,
+            1152
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 127,
+          "kind": "array",
+          "nbytes": 2106589184,
+          "path": "['params']['PaliGemma']['llm']['embedder']['input_embedding'].value",
+          "sha256": "be92a43984f5697aec15c33b8f57b986405970022b3fed53d63ec232fd23873f",
+          "shape": [
+            257152,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 128,
+          "kind": "array",
+          "nbytes": 8192,
+          "path": "['params']['PaliGemma']['llm']['final_norm']['scale'].value",
+          "sha256": "335e10ccda1eec96e439d7340ba79520a9fa67bf7cc2253b00141d10e04cfc49",
+          "shape": [
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 129,
+          "kind": "array",
+          "nbytes": 12288,
+          "path": "['params']['PaliGemma']['llm']['final_norm_1']['Dense_0']['bias'].value",
+          "sha256": "38a98d62a6b5b7c779924ccaa930effb717532d15c67c277b8e4b6a0ae36da9c",
+          "shape": [
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 130,
+          "kind": "array",
+          "nbytes": 12582912,
+          "path": "['params']['PaliGemma']['llm']['final_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "06a956020503d5b5de578316c9e5e6d172950cd8133630433dee2362748b9515",
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 131,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum']['w'].value",
+          "sha256": "f33350755695e796e1293ddd1d7b10cc0a3656037be331cdb26799c059e51627",
+          "shape": [
+            18,
+            8,
+            256,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 132,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['attn_vec_einsum_1']['w'].value",
+          "sha256": "60fec629012cd9d0894d60632b9d27f6d95475dfe7b9a9c84025d67dcf54e7f7",
+          "shape": [
+            18,
+            8,
+            256,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 133,
+          "kind": "array",
+          "nbytes": 75497472,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['kv_einsum']['w'].value",
+          "sha256": "6947349535024e4d9ae7ef412e91f47cbefd4d2f4ddb621b3947f975dc905cf8",
+          "shape": [
+            18,
+            2,
+            1,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 134,
+          "kind": "array",
+          "nbytes": 37748736,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['kv_einsum_1']['w'].value",
+          "sha256": "49412746d1d458405f96b1b5bb12266429669e8c3a056666ecadd18f96632f97",
+          "shape": [
+            18,
+            2,
+            1,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 135,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['q_einsum']['w'].value",
+          "sha256": "2449f7d264dfd08c490564e3ed2a9a72797dca79ff5283713b773cb5dab24d19",
+          "shape": [
+            18,
+            8,
+            2048,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 136,
+          "kind": "array",
+          "nbytes": 150994944,
+          "path": "['params']['PaliGemma']['llm']['layers']['attn']['q_einsum_1']['w'].value",
+          "sha256": "216c1ca32f50b1cdad28c68eb3bb0946fe53b58602adc152ce4a026252bd646c",
+          "shape": [
+            18,
+            8,
+            1024,
+            256
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 137,
+          "kind": "array",
+          "nbytes": 4831838208,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp']['gating_einsum'].value",
+          "sha256": "128ef14dff543e725e6bc2f3047975040624dad0ca98f47ea648149acfc99e1f",
+          "shape": [
+            18,
+            2,
+            2048,
+            16384
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 138,
+          "kind": "array",
+          "nbytes": 2415919104,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp']['linear'].value",
+          "sha256": "91c7d02d45290d6301d7f9dfd9a9b84ea3d7a0edc71d8ba514e8d3874e448cf4",
+          "shape": [
+            18,
+            16384,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 139,
+          "kind": "array",
+          "nbytes": 603979776,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp_1']['gating_einsum'].value",
+          "sha256": "cb8a43620c4003e43abf21d98d2c205c05c7451e52b81ba82ba148da2363e9cb",
+          "shape": [
+            18,
+            2,
+            1024,
+            4096
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 140,
+          "kind": "array",
+          "nbytes": 301989888,
+          "path": "['params']['PaliGemma']['llm']['layers']['mlp_1']['linear'].value",
+          "sha256": "e04d447df1e42aacc9a5dbccd8e2174612c7e0cc227cde36b4634be109f69acd",
+          "shape": [
+            18,
+            4096,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 141,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_attention_norm']['scale'].value",
+          "sha256": "06539acebf26c57524d5cf1bac64a9e760a10b2010da619b8d66374898730690",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 142,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['bias'].value",
+          "sha256": "537bb42e238c0774119cadac167144d9e27b28c1be313eca9af328c9c8d84a00",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 143,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_attention_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "9dbcc2bc26f5939e3fbbad1ce1aeff2daf7b0665d2c84a8f96430a689ec9ad9c",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 144,
+          "kind": "array",
+          "nbytes": 147456,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_ffw_norm']['scale'].value",
+          "sha256": "fc9c543be1fbfa4a5589c5b7a8496b88b323a77e56a8654eb81ea24b9cc48fa9",
+          "shape": [
+            18,
+            2048
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 145,
+          "kind": "array",
+          "nbytes": 221184,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['bias'].value",
+          "sha256": "747ea8cdd973f701eef269a57bab87218ff3336a95cd70fa7bcae0c18c50f769",
+          "shape": [
+            18,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 146,
+          "kind": "array",
+          "nbytes": 226492416,
+          "path": "['params']['PaliGemma']['llm']['layers']['pre_ffw_norm_1']['Dense_0']['kernel'].value",
+          "sha256": "d3513fff609054445db10d4cc94364c8aef07b22955eb3f795a447f095115e6f",
+          "shape": [
+            18,
+            1024,
+            3072
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 147,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['params']['action_in_proj']['bias'].value",
+          "sha256": "38915805ec4de76d8126775f9177f5edd5ae9dbe46dc4cd28b1c001975133740",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 148,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['params']['action_in_proj']['kernel'].value",
+          "sha256": "7beaa208e342a2937fcfc7efea42d5239c1fdbf01b23b011f3e90a5364e37fd0",
+          "shape": [
+            32,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 149,
+          "kind": "array",
+          "nbytes": 128,
+          "path": "['params']['action_out_proj']['bias'].value",
+          "sha256": "5b63d1c9d6a3f4958a34e11c200c4d89a1eb72b2d93cc940b5940deb6d48f16f",
+          "shape": [
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 150,
+          "kind": "array",
+          "nbytes": 131072,
+          "path": "['params']['action_out_proj']['kernel'].value",
+          "sha256": "c85c7fa1f7ae79a1a9c5b13cf2e460a136cd6dceecf1966935078116a8faed12",
+          "shape": [
+            1024,
+            32
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 151,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['params']['time_mlp_in']['bias'].value",
+          "sha256": "6565214681b0c3b6858e8555ab900ef7ec4df1771470f8a9f5ecf0bb3c0c70b9",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 152,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['params']['time_mlp_in']['kernel'].value",
+          "sha256": "0d465c9a54cb45151a801848107afbf6665ccf5cf1f77d1f3582cc0d91406796",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 153,
+          "kind": "array",
+          "nbytes": 4096,
+          "path": "['params']['time_mlp_out']['bias'].value",
+          "sha256": "e420e85e0c02d5f7f4ae7ac0f3fedc823f1dadfab73e1751a1127e7302cf124a",
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "dtype": "float32",
+          "index": 154,
+          "kind": "array",
+          "nbytes": 4194304,
+          "path": "['params']['time_mlp_out']['kernel'].value",
+          "sha256": "6dea9fbce0859370501ecd676a8b68d177acaf1e5dcb1182fa6468c0bddb1bd1",
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "dtype": "int32",
+          "index": 155,
+          "kind": "array",
+          "nbytes": 4,
+          "path": "['step']",
+          "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+          "shape": [
+            1
+          ]
+        }
+      ],
+      "treedef": "PyTreeDef({'ema_params': None, 'model_def': CustomNode(NodeDef[NodeDef(\n  type=Pi0,\n  index=0,\n  attributes=('PaliGemma', 'action_dim', 'action_horizon', 'action_in_proj', 'action_out_proj', 'deterministic', 'max_token_len', 'pi05', 'time_mlp_in', 'time_mlp_out'),\n  subgraphs={\n    'PaliGemma': NodeDef(\n      type=Dict,\n      index=1,\n      attributes=('img', 'llm'),\n      subgraphs={\n        'img': NodeDef(\n          type=ToNNX,\n          index=2,\n          attributes=('Transformer', 'embedding', 'head', 'linen_attributes', 'module', 'pos_embedding', 'rngs'),\n          subgraphs={\n            'Transformer': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('encoder_norm', 'encoderblock'),\n              subgraphs={\n                'encoder_norm': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('bias', 'scale'),\n                  subgraphs={},\n                  static_fields={},\n                  leaves={\n                    'bias': VariableDef(\n                      type=Param,\n                      index=3,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    ),\n                    'scale': VariableDef(\n                      type=Param,\n                      index=4,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    )\n                  },\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'encoderblock': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('LayerNorm_0', 'LayerNorm_1', 'MlpBlock_0', 'MultiHeadDotProductAttention_0'),\n                  subgraphs={\n                    'LayerNorm_0': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('bias', 'scale'),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'bias': VariableDef(\n                          type=Param,\n                          index=5,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        ),\n                        'scale': VariableDef(\n                          type=Param,\n                          index=6,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'LayerNorm_1': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('bias', 'scale'),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'bias': VariableDef(\n                          type=Param,\n                          index=7,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        ),\n                        'scale': VariableDef(\n                          type=Param,\n                          index=8,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'MlpBlock_0': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('Dense_0', 'Dense_1'),\n                      subgraphs={\n                        'Dense_0': NodeDef(\n                          type=dict,\n                          index=-1,\n                          attributes=('bias', 'kernel'),\n                          subgraphs={},\n                          static_fields={},\n                          leaves={\n                            'bias': VariableDef(\n                              type=Param,\n                              index=9,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            ),\n                            'kernel': VariableDef(\n                              type=Param,\n                              index=10,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            )\n                          },\n                          metadata=None,\n                          index_mapping=None\n                        ),\n                        'Dense_1': NodeDef(\n                          type=dict,\n                          index=-1,\n                          attributes=('bias', 'kernel'),\n                          subgraphs={},\n                          static_fields={},\n                          leaves={\n                            'bias': VariableDef(\n                              type=Param,\n                              index=11,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            ),\n                            'kernel': VariableDef(\n                              type=Param,\n                              index=12,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            )\n                          },\n                          metadata=None,\n                          index_mapping=None\n                        )\n                      },\n                      static_fields={},\n                      leaves={},\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'MultiHeadDotProductAttention_0': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('key', 'out', 'query', 'value'),\n                      subgraphs={\n                        'key': NodeDef(\n                          type=dict,\n                          index=-1,\n                          attributes=('bias', 'kernel'),\n                          subgraphs={},\n                          static_fields={},\n                          leaves={\n                            'bias': VariableDef(\n                              type=Param,\n                              index=13,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            ),\n                            'kernel': VariableDef(\n                              type=Param,\n                              index=14,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            )\n                          },\n                          metadata=None,\n                          index_mapping=None\n                        ),\n                        'out': NodeDef(\n                          type=dict,\n                          index=-1,\n                          attributes=('bias', 'kernel'),\n                          subgraphs={},\n                          static_fields={},\n                          leaves={\n                            'bias': VariableDef(\n                              type=Param,\n                              index=15,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            ),\n                            'kernel': VariableDef(\n                              type=Param,\n                              index=16,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            )\n                          },\n                          metadata=None,\n                          index_mapping=None\n                        ),\n                        'query': NodeDef(\n                          type=dict,\n                          index=-1,\n                          attributes=('bias', 'kernel'),\n                          subgraphs={},\n                          static_fields={},\n                          leaves={\n                            'bias': VariableDef(\n                              type=Param,\n                              index=17,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            ),\n                            'kernel': VariableDef(\n                              type=Param,\n                              index=18,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            )\n                          },\n                          metadata=None,\n                          index_mapping=None\n                        ),\n                        'value': NodeDef(\n                          type=dict,\n                          index=-1,\n                          attributes=('bias', 'kernel'),\n                          subgraphs={},\n                          static_fields={},\n                          leaves={\n                            'bias': VariableDef(\n                              type=Param,\n                              index=19,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            ),\n                            'kernel': VariableDef(\n                              type=Param,\n                              index=20,\n                              metadata={\n                                'get_value_hooks': (),\n                                'set_value_hooks': (),\n                                'create_value_hooks': (),\n                                'add_axis_hooks': (),\n                                'remove_axis_hooks': ()\n                              }\n                            )\n                          },\n                          metadata=None,\n                          index_mapping=None\n                        )\n                      },\n                      static_fields={},\n                      leaves={},\n                      metadata=None,\n                      index_mapping=None\n                    )\n                  },\n                  static_fields={},\n                  leaves={},\n                  metadata=None,\n                  index_mapping=None\n                )\n              },\n              static_fields={},\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            ),\n            'embedding': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('bias', 'kernel'),\n              subgraphs={},\n              static_fields={},\n              leaves={\n                'bias': VariableDef(\n                  type=Param,\n                  index=21,\n                  metadata={\n                    'get_value_hooks': (),\n                    'set_value_hooks': (),\n                    'create_value_hooks': (),\n                    'add_axis_hooks': (),\n                    'remove_axis_hooks': ()\n                  }\n                ),\n                'kernel': VariableDef(\n                  type=Param,\n                  index=22,\n                  metadata={\n                    'get_value_hooks': (),\n                    'set_value_hooks': (),\n                    'create_value_hooks': (),\n                    'add_axis_hooks': (),\n                    'remove_axis_hooks': ()\n                  }\n                )\n              },\n              metadata=None,\n              index_mapping=None\n            ),\n            'head': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('bias', 'kernel'),\n              subgraphs={},\n              static_fields={},\n              leaves={\n                'bias': VariableDef(\n                  type=Param,\n                  index=23,\n                  metadata={\n                    'get_value_hooks': (),\n                    'set_value_hooks': (),\n                    'create_value_hooks': (),\n                    'add_axis_hooks': (),\n                    'remove_axis_hooks': ()\n                  }\n                ),\n                'kernel': VariableDef(\n                  type=Param,\n                  index=24,\n                  metadata={\n                    'get_value_hooks': (),\n                    'set_value_hooks': (),\n                    'create_value_hooks': (),\n                    'add_axis_hooks': (),\n                    'remove_axis_hooks': ()\n                  }\n                )\n              },\n              metadata=None,\n              index_mapping=None\n            ),\n            'linen_attributes': NodeDef(\n              type=tuple,\n              index=-1,\n              attributes=(0, 1, 2, 3),\n              subgraphs={},\n              static_fields={\n                0: Transformer,\n                1: embedding,\n                2: head,\n                3: pos_embedding\n              },\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            ),\n            'rngs': NodeDef(\n              type=NoneType,\n              index=-1,\n              attributes=(),\n              subgraphs={},\n              static_fields={},\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            )\n          },\n          static_fields={\n            'module': _Module(\n                # attributes\n                num_classes = 2048\n                patch_size = (14, 14)\n                width = 1152\n                depth = 27\n                mlp_dim = 4304\n                num_heads = 16\n                posemb = 'learn'\n                rep_size = False\n                dropout = 0.0\n                pool_type = 'none'\n                head_zeroinit = True\n                scan = True\n                remat_policy = 'nothing_saveable'\n                dtype_mm = 'bfloat16'\n            )\n          },\n          leaves={\n            'pos_embedding': VariableDef(\n              type=Param,\n              index=25,\n              metadata={\n                'get_value_hooks': (),\n                'set_value_hooks': (),\n                'create_value_hooks': (),\n                'add_axis_hooks': (),\n                'remove_axis_hooks': ()\n              }\n            )\n          },\n          metadata=(<class 'flax.nnx.bridge.wrappers.ToNNX'>, False),\n          index_mapping=None\n        ),\n        'llm': NodeDef(\n          type=ToNNX,\n          index=26,\n          attributes=('embedder', 'final_norm', 'final_norm_1', 'layers', 'linen_attributes', 'module', 'rngs'),\n          subgraphs={\n            'embedder': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('input_embedding',),\n              subgraphs={},\n              static_fields={},\n              leaves={\n                'input_embedding': VariableDef(\n                  type=Param,\n                  index=27,\n                  metadata={\n                    'get_value_hooks': (),\n                    'set_value_hooks': (),\n                    'create_value_hooks': (),\n                    'add_axis_hooks': (),\n                    'remove_axis_hooks': ()\n                  }\n                )\n              },\n              metadata=None,\n              index_mapping=None\n            ),\n            'final_norm': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('scale',),\n              subgraphs={},\n              static_fields={},\n              leaves={\n                'scale': VariableDef(\n                  type=Param,\n                  index=28,\n                  metadata={\n                    'get_value_hooks': (),\n                    'set_value_hooks': (),\n                    'create_value_hooks': (),\n                    'add_axis_hooks': (),\n                    'remove_axis_hooks': ()\n                  }\n                )\n              },\n              metadata=None,\n              index_mapping=None\n            ),\n            'final_norm_1': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('Dense_0',),\n              subgraphs={\n                'Dense_0': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('bias', 'kernel'),\n                  subgraphs={},\n                  static_fields={},\n                  leaves={\n                    'bias': VariableDef(\n                      type=Param,\n                      index=29,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    ),\n                    'kernel': VariableDef(\n                      type=Param,\n                      index=30,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    )\n                  },\n                  metadata=None,\n                  index_mapping=None\n                )\n              },\n              static_fields={},\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            ),\n            'layers': NodeDef(\n              type=dict,\n              index=-1,\n              attributes=('attn', 'mlp', 'mlp_1', 'pre_attention_norm', 'pre_attention_norm_1', 'pre_ffw_norm', 'pre_ffw_norm_1'),\n              subgraphs={\n                'attn': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('attn_vec_einsum', 'attn_vec_einsum_1', 'kv_einsum', 'kv_einsum_1', 'q_einsum', 'q_einsum_1'),\n                  subgraphs={\n                    'attn_vec_einsum': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('w',),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'w': VariableDef(\n                          type=Param,\n                          index=31,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'attn_vec_einsum_1': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('w',),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'w': VariableDef(\n                          type=Param,\n                          index=32,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'kv_einsum': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('w',),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'w': VariableDef(\n                          type=Param,\n                          index=33,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'kv_einsum_1': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('w',),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'w': VariableDef(\n                          type=Param,\n                          index=34,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'q_einsum': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('w',),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'w': VariableDef(\n                          type=Param,\n                          index=35,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    ),\n                    'q_einsum_1': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('w',),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'w': VariableDef(\n                          type=Param,\n                          index=36,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    )\n                  },\n                  static_fields={},\n                  leaves={},\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'mlp': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('gating_einsum', 'linear'),\n                  subgraphs={},\n                  static_fields={},\n                  leaves={\n                    'gating_einsum': VariableDef(\n                      type=Param,\n                      index=37,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    ),\n                    'linear': VariableDef(\n                      type=Param,\n                      index=38,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    )\n                  },\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'mlp_1': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('gating_einsum', 'linear'),\n                  subgraphs={},\n                  static_fields={},\n                  leaves={\n                    'gating_einsum': VariableDef(\n                      type=Param,\n                      index=39,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    ),\n                    'linear': VariableDef(\n                      type=Param,\n                      index=40,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    )\n                  },\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'pre_attention_norm': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('scale',),\n                  subgraphs={},\n                  static_fields={},\n                  leaves={\n                    'scale': VariableDef(\n                      type=Param,\n                      index=41,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    )\n                  },\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'pre_attention_norm_1': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('Dense_0',),\n                  subgraphs={\n                    'Dense_0': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('bias', 'kernel'),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'bias': VariableDef(\n                          type=Param,\n                          index=42,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        ),\n                        'kernel': VariableDef(\n                          type=Param,\n                          index=43,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    )\n                  },\n                  static_fields={},\n                  leaves={},\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'pre_ffw_norm': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('scale',),\n                  subgraphs={},\n                  static_fields={},\n                  leaves={\n                    'scale': VariableDef(\n                      type=Param,\n                      index=44,\n                      metadata={\n                        'get_value_hooks': (),\n                        'set_value_hooks': (),\n                        'create_value_hooks': (),\n                        'add_axis_hooks': (),\n                        'remove_axis_hooks': ()\n                      }\n                    )\n                  },\n                  metadata=None,\n                  index_mapping=None\n                ),\n                'pre_ffw_norm_1': NodeDef(\n                  type=dict,\n                  index=-1,\n                  attributes=('Dense_0',),\n                  subgraphs={\n                    'Dense_0': NodeDef(\n                      type=dict,\n                      index=-1,\n                      attributes=('bias', 'kernel'),\n                      subgraphs={},\n                      static_fields={},\n                      leaves={\n                        'bias': VariableDef(\n                          type=Param,\n                          index=45,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        ),\n                        'kernel': VariableDef(\n                          type=Param,\n                          index=46,\n                          metadata={\n                            'get_value_hooks': (),\n                            'set_value_hooks': (),\n                            'create_value_hooks': (),\n                            'add_axis_hooks': (),\n                            'remove_axis_hooks': ()\n                          }\n                        )\n                      },\n                      metadata=None,\n                      index_mapping=None\n                    )\n                  },\n                  static_fields={},\n                  leaves={},\n                  metadata=None,\n                  index_mapping=None\n                )\n              },\n              static_fields={},\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            ),\n            'linen_attributes': NodeDef(\n              type=tuple,\n              index=-1,\n              attributes=(0, 1, 2, 3),\n              subgraphs={},\n              static_fields={\n                0: final_norm_1,\n                1: final_norm,\n                2: layers,\n                3: embedder\n              },\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            ),\n            'rngs': NodeDef(\n              type=NoneType,\n              index=-1,\n              attributes=(),\n              subgraphs={},\n              static_fields={},\n              leaves={},\n              metadata=None,\n              index_mapping=None\n            )\n          },\n          static_fields={\n            'module': Module(\n                # attributes\n                configs = [Config(width=2048, depth=18, mlp_dim=16384, num_heads=8, num_kv_heads=1, head_dim=256, lora_configs={}), Config(width=1024, depth=18, mlp_dim=4096, num_heads=8, num_kv_heads=1, head_dim=256, lora_configs={})]\n                embed_dtype = 'bfloat16'\n                dropout = 0.0\n                dropout_bdims = ()\n                adarms = True\n            )\n          },\n          leaves={},\n          metadata=(<class 'flax.nnx.bridge.wrappers.ToNNX'>, False),\n          index_mapping=None\n        )\n      },\n      static_fields={},\n      leaves={},\n      metadata=(<class 'flax.nnx.helpers.Dict'>, False),\n      index_mapping=None\n    ),\n    'action_in_proj': NodeDef(\n      type=Linear,\n      index=47,\n      attributes=('bias', 'bias_init', 'dot_general', 'dtype', 'in_features', 'kernel', 'kernel_init', 'out_features', 'param_dtype', 'precision', 'use_bias'),\n      subgraphs={\n        'dtype': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        ),\n        'precision': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        )\n      },\n      static_fields={\n        'bias_init': <function zeros at 0x7b038cba2340>,\n        'dot_general': <function dot_general at 0x7b038d5f8900>,\n        'in_features': 32,\n        'kernel_init': <function variance_scaling.<locals>.init at 0x7b038be0f880>,\n        'out_features': 1024,\n        'param_dtype': <class 'jax.numpy.float32'>,\n        'use_bias': True\n      },\n      leaves={\n        'bias': VariableDef(\n          type=Param,\n          index=48,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        ),\n        'kernel': VariableDef(\n          type=Param,\n          index=49,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        )\n      },\n      metadata=(<class 'flax.nnx.nn.linear.Linear'>, False),\n      index_mapping=None\n    ),\n    'action_out_proj': NodeDef(\n      type=Linear,\n      index=50,\n      attributes=('bias', 'bias_init', 'dot_general', 'dtype', 'in_features', 'kernel', 'kernel_init', 'out_features', 'param_dtype', 'precision', 'use_bias'),\n      subgraphs={\n        'dtype': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        ),\n        'precision': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        )\n      },\n      static_fields={\n        'bias_init': <function zeros at 0x7b038cba2340>,\n        'dot_general': <function dot_general at 0x7b038d5f8900>,\n        'in_features': 1024,\n        'kernel_init': <function variance_scaling.<locals>.init at 0x7b038be0f880>,\n        'out_features': 32,\n        'param_dtype': <class 'jax.numpy.float32'>,\n        'use_bias': True\n      },\n      leaves={\n        'bias': VariableDef(\n          type=Param,\n          index=51,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        ),\n        'kernel': VariableDef(\n          type=Param,\n          index=52,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        )\n      },\n      metadata=(<class 'flax.nnx.nn.linear.Linear'>, False),\n      index_mapping=None\n    ),\n    'time_mlp_in': NodeDef(\n      type=Linear,\n      index=53,\n      attributes=('bias', 'bias_init', 'dot_general', 'dtype', 'in_features', 'kernel', 'kernel_init', 'out_features', 'param_dtype', 'precision', 'use_bias'),\n      subgraphs={\n        'dtype': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        ),\n        'precision': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        )\n      },\n      static_fields={\n        'bias_init': <function zeros at 0x7b038cba2340>,\n        'dot_general': <function dot_general at 0x7b038d5f8900>,\n        'in_features': 1024,\n        'kernel_init': <function variance_scaling.<locals>.init at 0x7b038be0f880>,\n        'out_features': 1024,\n        'param_dtype': <class 'jax.numpy.float32'>,\n        'use_bias': True\n      },\n      leaves={\n        'bias': VariableDef(\n          type=Param,\n          index=54,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        ),\n        'kernel': VariableDef(\n          type=Param,\n          index=55,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        )\n      },\n      metadata=(<class 'flax.nnx.nn.linear.Linear'>, False),\n      index_mapping=None\n    ),\n    'time_mlp_out': NodeDef(\n      type=Linear,\n      index=56,\n      attributes=('bias', 'bias_init', 'dot_general', 'dtype', 'in_features', 'kernel', 'kernel_init', 'out_features', 'param_dtype', 'precision', 'use_bias'),\n      subgraphs={\n        'dtype': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        ),\n        'precision': NodeDef(\n          type=NoneType,\n          index=-1,\n          attributes=(),\n          subgraphs={},\n          static_fields={},\n          leaves={},\n          metadata=None,\n          index_mapping=None\n        )\n      },\n      static_fields={\n        'bias_init': <function zeros at 0x7b038cba2340>,\n        'dot_general': <function dot_general at 0x7b038d5f8900>,\n        'in_features': 1024,\n        'kernel_init': <function variance_scaling.<locals>.init at 0x7b038be0f880>,\n        'out_features': 1024,\n        'param_dtype': <class 'jax.numpy.float32'>,\n        'use_bias': True\n      },\n      leaves={\n        'bias': VariableDef(\n          type=Param,\n          index=57,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        ),\n        'kernel': VariableDef(\n          type=Param,\n          index=58,\n          metadata={\n            'get_value_hooks': (),\n            'set_value_hooks': (),\n            'create_value_hooks': (),\n            'add_axis_hooks': (),\n            'remove_axis_hooks': ()\n          }\n        )\n      },\n      metadata=(<class 'flax.nnx.nn.linear.Linear'>, False),\n      index_mapping=None\n    )\n  },\n  static_fields={\n    'action_dim': 32,\n    'action_horizon': 32,\n    'deterministic': True,\n    'max_token_len': 200,\n    'pi05': True\n  },\n  leaves={},\n  metadata=(<class 'openpi.models.pi0.Pi0'>, False),\n  index_mapping=None\n)], []), 'opt_state': {'0': {}, '1': {'0': {'count': *, 'mu': CustomNode(State[('PaliGemma', 'action_in_proj', 'action_out_proj', 'time_mlp_in', 'time_mlp_out')], [{'img': {'Transformer': {'encoder_norm': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'encoderblock': {'LayerNorm_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'LayerNorm_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'MlpBlock_0': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'Dense_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'MultiHeadDotProductAttention_0': {'key': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'out': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'query': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'value': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}, 'embedding': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'head': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pos_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'llm': {'embedder': {'input_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'layers': {'attn': {'attn_vec_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'attn_vec_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'mlp': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'mlp_1': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'pre_ffw_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_ffw_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}]), 'nu': CustomNode(State[('PaliGemma', 'action_in_proj', 'action_out_proj', 'time_mlp_in', 'time_mlp_out')], [{'img': {'Transformer': {'encoder_norm': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'encoderblock': {'LayerNorm_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'LayerNorm_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'MlpBlock_0': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'Dense_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'MultiHeadDotProductAttention_0': {'key': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'out': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'query': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'value': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}, 'embedding': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'head': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pos_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'llm': {'embedder': {'input_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'layers': {'attn': {'attn_vec_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'attn_vec_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'mlp': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'mlp_1': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'pre_ffw_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_ffw_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}])}, '1': {}, '2': {'count': *}}}, 'params': CustomNode(State[('PaliGemma', 'action_in_proj', 'action_out_proj', 'time_mlp_in', 'time_mlp_out')], [{'img': {'Transformer': {'encoder_norm': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'encoderblock': {'LayerNorm_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'LayerNorm_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'MlpBlock_0': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'Dense_1': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'MultiHeadDotProductAttention_0': {'key': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'out': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'query': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'value': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}, 'embedding': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'head': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pos_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'llm': {'embedder': {'input_embedding': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'final_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'layers': {'attn': {'attn_vec_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'attn_vec_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'kv_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'q_einsum_1': {'w': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'mlp': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'mlp_1': {'gating_einsum': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'linear': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_attention_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}, 'pre_ffw_norm': {'scale': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, 'pre_ffw_norm_1': {'Dense_0': {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}}}}}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}, {'bias': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*]), 'kernel': CustomNode(VariableState[(<class 'flax.nnx.variablelib.Param'>, (('get_value_hooks', ()), ('set_value_hooks', ()), ('create_value_hooks', ()), ('add_axis_hooks', ()), ('remove_axis_hooks', ())))], [*])}]), 'step': *})"
+    }
+  },
+  "formal_training_authorized": false,
+  "forward_pass_executed": false,
+  "generated_at": "2026-09-05T05:14:39.279010+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "host": "67",
+  "host_before": {
+    "MemAvailable_kib": 122137924,
+    "MemFree_kib": 50018696,
+    "MemTotal_kib": 131739372,
+    "SwapFree_kib": 17239548,
+    "SwapTotal_kib": 19531772,
+    "process_rss_kib": 21208
+  },
+  "independent_review_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-independent-review-20260905.json",
+  "independent_review_sha256": "fa75f42c86d0cc27948e57711f0fab59381c4f0b10227a19c7eead85215d69a5",
+  "loss_values_read_or_reported": false,
+  "norm_stats_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_executed": false,
+  "parent_failure_adjudication_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-checkpoint-save-96g-resource-failure-adjudication-20260905.json",
+  "parent_failure_adjudication_sha256": "27463804b533421a887d9c4c6d443bd80b90276b7e70d40e6aba21cddcbb72ba",
+  "policy_outcomes_read": false,
+  "portable_openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "portable_openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "pytree_restore_concurrent_gb": 8,
+  "pytree_save_concurrent_gb": 8,
+  "real_scientific_optimizer_updates": 0,
+  "resource_scope_before": {
+    "cpu_affinity": "0-63",
+    "memory_current_bytes": 12311412736,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_max_bytes": 103079215104,
+    "memory_peak_bytes": 12328095744,
+    "memory_swap_max_bytes": 0,
+    "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-b1-serial-item-checkpoint-qual-67-20260905.service"
+  },
+  "runner_sha256": "56970bbb1168b7caa1e0821c5063a89a09286941eba1a99b04b5aef9bb0e9f2a",
+  "save_label": 10000,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-save-stage-v1",
+  "seed": 42,
+  "serial_large_items": true,
+  "snapshots": {
+    "after_fingerprint": {
+      "cgroup": {
+        "cpu_affinity": "0-63",
+        "memory_current_bytes": 61878231040,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_max_bytes": 103079215104,
+        "memory_peak_bytes": 61878231040,
+        "memory_swap_max_bytes": 0,
+        "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-b1-serial-item-checkpoint-qual-67-20260905.service"
+      },
+      "gpu": {
+        "gpus": [
+          {
+            "index": 0,
+            "memory_total_mib": 81920,
+            "memory_used_mib": 73489,
+            "name": "NVIDIA A100-SXM4-80GB",
+            "utilization_gpu_percent": 0
+          }
+        ]
+      },
+      "host": {
+        "MemAvailable_kib": 64118848,
+        "MemFree_kib": 6846456,
+        "MemTotal_kib": 131739372,
+        "SwapFree_kib": 17240060,
+        "SwapTotal_kib": 19531772,
+        "process_rss_kib": 58552888
+      }
+    },
+    "after_state": {
+      "cgroup": {
+        "cpu_affinity": "0-63",
+        "memory_current_bytes": 18050392064,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_max_bytes": 103079215104,
+        "memory_peak_bytes": 34162991104,
+        "memory_swap_max_bytes": 0,
+        "path": "/sys/fs/cgroup/user.slice/user-1008.slice/user@1008.service/app.slice/pi05-b1-serial-item-checkpoint-qual-67-20260905.service"
+      },
+      "gpu": {
+        "gpus": [
+          {
+            "index": 0,
+            "memory_total_mib": 81920,
+            "memory_used_mib": 73489,
+            "name": "NVIDIA A100-SXM4-80GB",
+            "utilization_gpu_percent": 0
+          }
+        ]
+      },
+      "host": {
+        "MemAvailable_kib": 115387928,
+        "MemFree_kib": 43226968,
+        "MemTotal_kib": 131739372,
+        "SwapFree_kib": 17239804,
+        "SwapTotal_kib": 19531772,
+        "process_rss_kib": 6171192
+      }
+    }
+  },
+  "source_adjudication_path": "/data/wyt/formal-goal-pi05-resource-repair-canonical-20260904/generated/behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-source-adjudication-20260905.json",
+  "source_adjudication_sha256": "f2d38a4a1abf61a0a9c363027cc5e103b36c9426bef23b74d6a6b861390c5213",
+  "status": "PI05_B1_SERIAL_ITEM_CHECKPOINT_SAVE_STAGE_SAVE_STARTED",
+  "train_state_ready": true
+}

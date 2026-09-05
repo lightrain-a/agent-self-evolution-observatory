@@ -1,0 +1,82 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-fingerprint-lifetime-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T13:22:00+08:00",
+  "status": "PI05_B1_QUALIFICATION_HARNESS_FINGERPRINT_LIFETIME_OOM",
+  "decision": "B1_CHECKPOINT_MECHANISM_NOT_ADJUDICATED_REPAIR_QUALIFICATION_HARNESS_ONLY",
+  "authority_sha256": "11aeac407c39ae3d9c2a8469f0043d804210e50249d2ce56d0ec6423e4d36ea8",
+  "save_stage": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-b1-serial-item-checkpoint-save-stage-result-67-20260905.json",
+    "sha256": "acd2295215ce62d3509853d299414027d24bccb718e39d45c8d5098b276ee976",
+    "status": "PI05_B1_SERIAL_ITEM_CHECKPOINT_SAVE_STAGE_SAVE_STARTED",
+    "fingerprint_leaf_counts": {"train_state": 156, "params": 51},
+    "checkpoint_save_started": true,
+    "checkpoint_save_completed": false,
+    "manager_steps": null,
+    "final_result_receipt_exists": false
+  },
+  "systemd": {
+    "unit": "pi05-b1-serial-item-checkpoint-qual-67-20260905.service",
+    "result": "oom-kill",
+    "exec_main_code": "killed",
+    "exec_main_signal": 15,
+    "memory_max_bytes": 103079215104,
+    "memory_peak_bytes": 103079215104,
+    "memory_swap_peak_bytes": 0
+  },
+  "measurement_self_contamination": {
+    "after_state_cgroup_current_bytes": 18050392064,
+    "after_state_cgroup_current_gib": 16.81,
+    "after_state_process_rss_kib": 6171192,
+    "after_state_process_rss_gib": 5.89,
+    "after_fingerprint_cgroup_current_bytes": 61878231040,
+    "after_fingerprint_cgroup_current_gib": 57.63,
+    "after_fingerprint_process_rss_kib": 58552888,
+    "after_fingerprint_process_rss_gib": 55.84,
+    "fingerprint_added_cgroup_bytes": 43827838976,
+    "fingerprint_added_cgroup_gib": 40.82,
+    "fingerprint_added_process_rss_kib": 52381696,
+    "fingerprint_added_process_rss_gib": 49.96,
+    "gpu_memory_mib_after_state": 73489,
+    "gpu_memory_mib_after_fingerprint": 73489,
+    "interpretation": "The exact-value fingerprint procedure D2H-copied/cached the live step0 state into host memory before checkpoint saving. It therefore changed the host-memory condition being measured while leaving the GPU state unchanged."
+  },
+  "partial_checkpoint_observation": {
+    "params_temp_files": 17,
+    "params_temp_bytes": 12441726695,
+    "train_state_temp_files": 0,
+    "train_state_temp_bytes": 0,
+    "complete_checkpoint_exists": false,
+    "restore_authorized": false,
+    "scientifically_usable": false
+  },
+  "mechanistic_interpretation": {
+    "supported": "The first B1 qualification is invalid for adjudicating serial-item checkpoint feasibility because its pre-save exact-value measurement materially inflated the same host-memory resource endpoint under test.",
+    "not_supported": "Do not infer that serial-item B1 itself requires more than 96GiB or that the train_state item fails after params completion. The qualification was already at the cgroup ceiling due to measurement-induced host residency before the train_state item produced bytes.",
+    "b1_scientific_treatment_changed": false,
+    "real_scientific_optimizer_updates": 0,
+    "behavior_dataset_accessed": false,
+    "policy_outcomes_read": false,
+    "loss_values_read_or_reported": false
+  },
+  "prospective_harness_repair": {
+    "description": "Move pre-save exact-value fingerprinting into a separate fresh-step0 process that exits before the checkpoint-save process starts. Then start a second fresh deterministic step0 process for the unchanged B1 serial-item save. After it exits, use the existing CPU/NumPy verifier to compare restored values against the separately generated reference fingerprints.",
+    "why_same_state": "Both reference-fingerprint and save processes are fresh step0 initializations from the same content-addressed pi0.5 base checkpoint, seed42, optimizer initialization, EMA initialization, config, and no data/update path.",
+    "checkpoint_implementation_changed": false,
+    "memory_max_gib": 96,
+    "limiter_gb": 8,
+    "serial_item_scheduling_changed": false,
+    "run3_authorized": false,
+    "repair_execution_authorized": false
+  },
+  "next_gate": "INDEPENDENT_REVIEW_OF_SPLIT_FINGERPRINT_QUALIFICATION_HARNESS_REPAIR",
+  "forbidden": [
+    "replay the contaminated B1 qualification",
+    "change B1 checkpoint implementation while repairing fingerprint lifetime",
+    "change MemoryMax or 8GB limiter",
+    "formal run3",
+    "resume from any partial qualification checkpoint",
+    "BEHAVIOR outcome/loss access"
+  ]
+}

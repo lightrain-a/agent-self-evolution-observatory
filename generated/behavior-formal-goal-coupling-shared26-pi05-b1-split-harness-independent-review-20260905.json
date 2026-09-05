@@ -1,0 +1,25 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b1-split-harness-independent-review-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T13:26:00+08:00",
+  "reviewer": {
+    "kind": "independent_codexflow_codex_read_only_review",
+    "session_id": "01a07002-fcf4-7211-913a-347719666d3b",
+    "tools_or_file_edits_authorized": false
+  },
+  "verbatim_compact_response": "VERDICT=APPROVE_SPLIT_HARNESS; SAME_B1=YES; DETERMINISTIC_BINDING=OK; REQUIRED=bind F/S/V to immutable base/config/code hashes, seed, runtime/device/dtype, tree metadata and unique run ID; require clean exits, save barrier, exact V path/shape/dtype/nbytes/SHA256 match; RUN3_NOW=NO; FORBID=outcomes, training/update, S fingerprinting, B1 changes; WHY=F residency is isolated and deterministic identity supports exact expectations.",
+  "verdict": "APPROVE_SPLIT_HARNESS",
+  "same_b1_checkpoint_implementation": true,
+  "deterministic_binding": "APPROVED",
+  "formal_run3_authorized_now": false,
+  "required": [
+    "F/S/V bind the same immutable base/config/code hashes, seed42, runtime, device class, dtypes, tree metadata, and unique qualification run id",
+    "F exits completely after reference fingerprint generation",
+    "S starts from a fresh deterministic step0 state and performs no value fingerprinting before B1 save",
+    "S retains B1 MemoryMax96GiB, swap0, sync mode, serial train_state/params, fixed 8GB limiter, and completion barrier",
+    "S exits before V",
+    "V restores on CPU/NumPy and exactly matches reference path/shape/dtype/nbytes/per-leaf SHA256",
+    "no data, forward, backward, optimizer update, loss, Q, policy outcome, effect, or p-value access"
+  ]
+}
