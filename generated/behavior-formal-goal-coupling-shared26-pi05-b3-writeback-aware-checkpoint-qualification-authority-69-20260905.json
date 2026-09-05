@@ -1,0 +1,147 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-b3-writeback-aware-checkpoint-qualification-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "generated_at": "2026-09-05T23:02:00+08:00",
+  "status": "AUTHORIZED_PI05_B3_WRITEBACK_AWARE_CHECKPOINT_QUALIFICATION_69",
+  "decision": "ONE_HOST69_B3_STEP0_SAVE_DIRECT_SHA_STANDARD_RESTORE_QUALIFICATION_ONLY",
+  "source_commit": "9ad3f561714faef61c395ac41a535048fdf25f4f",
+  "host": {
+    "name": "69",
+    "machine_id": "c4046d3ca4454a958f5de081aac4dc2e",
+    "required_gpu": "one NVIDIA A100-SXM4-80GB",
+    "host67_forbidden": true
+  },
+  "bindings": {
+    "review": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-model-qualification-independent-review-20260905.json",
+      "sha256": "9dc250a30f9612a47e798ee044cbe697495cba3c446bf63ee8ef3f9b9c9b1da8"
+    },
+    "d0d1d3": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-d0-d1-d3-v2-result-20260905.json",
+      "sha256": "e0afbf9ac08b85404b97f49d91083db0a4887b913c763a32537b419e9ae171ee"
+    },
+    "d2_result": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-d2-cache-accounting-result-20260905.json",
+      "sha256": "eac37f960477f109c3282420300690dc02a47de68a661db6f67175876039549b"
+    },
+    "b2_terminal_adjudication": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b2-host69-repair1-save-oom-failure-adjudication-20260905.json",
+      "sha256": "febf6a6967b3869173418766c79ace56aba50149239f3d5d0101b0ab730910c5"
+    },
+    "host67_revocation": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-host67-user-exclusion-and-authority-revocation-20260905.json",
+      "sha256": "5a9d8a9daf20e526916438cb12d58d8b2a44fc42545a0d321dba54ac3570cff8"
+    },
+    "serializer": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_writeback_aware_orbax.py",
+      "sha256": "f79e3b5c0e74bb37e2e16dae8a7c2921340f9a20e722b9901e2502f8c60047e9"
+    },
+    "cache": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_writeback_cache.py",
+      "sha256": "88495d244613ed7ddc8ac163ccb0e5f66d978facdedf2c7ee6e918e709d25a42"
+    },
+    "save_runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_checkpoint_save_qualification_69.py",
+      "sha256": "f2d04ec74931c681b2c54dfb27afef771e76b31c2cc3a73cc327a39eab5cefbc"
+    },
+    "verify_runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_b3_checkpoint_verify_69.py",
+      "sha256": "0287d0b4a26e8c4fe0750c37e1fc639e12b726c36e4ffe85f8b8a4ba26d43dd7"
+    },
+    "phase_launcher": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/scripts/run_behavior_formal_goal_pi05_b3_checkpoint_phase_69.sh",
+      "sha256": "fb109ca9dad36b6b5ac6757d60e620c5279767eea15c73ca4d5e59b700e921de"
+    },
+    "chain_controller": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/scripts/run_behavior_formal_goal_pi05_b3_chain_69.sh",
+      "sha256": "7d62f68780c0c29e17995d0544da99f93b3128f4e378b8eb484f7e23616ac789"
+    },
+    "base_receipt": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+      "sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed"
+    },
+    "norm_stats": {
+      "path": "/data/wyt/behavior-formal-goal-shared26-norm-v1/norm_stats.json",
+      "sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce"
+    }
+  },
+  "resource_scope": {
+    "memory_max_gib": 52,
+    "memory_swap_max_gib": 0,
+    "d2h_batch_bytes": 8000000000,
+    "pytree_save_concurrent_gb": 8,
+    "pytree_restore_concurrent_gb": 8,
+    "serial_large_items": ["train_state", "params"],
+    "enable_async_checkpointing": false,
+    "cpu_affinity": "0-63",
+    "stable_gpu_gate": "3 consecutive checks separated by 30 seconds after all expensive base/config validation",
+    "min_host_mem_available_kib": 104857600,
+    "max_gpu_used_mib_before_model": 1024,
+    "no_resource_ladder": true
+  },
+  "checkpoint_contract": {
+    "format": "unchanged Orbax PyTree + TensorStore/OCDBT",
+    "save_label": 10000,
+    "item_names": ["_CHECKPOINT_METADATA", "assets", "params", "train_state"],
+    "checkpoint_content_changed": false,
+    "checkpoint_format_changed": false,
+    "checkpoint_label_changed": false,
+    "checkpoint_frequency_changed": false,
+    "normalization_asset_unchanged": true,
+    "leaf_d2h_order": "deterministic original PyTree leaf order grouped greedily under 8,000,000,000 bytes",
+    "post_write_mechanism": "after each completed TensorStore batch and sharding commit, fsync then POSIX_FADV_DONTNEED only newly materialized current-item ocdbt.process_0/d/<32hex> regular blobs"
+  },
+  "output_paths": {
+    "checkpoint_root": "/data/wyt/formal-goal-checkpoint-save-qualification-69-20260905/b3-writeback-aware-8gb-52g",
+    "save_result": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-checkpoint-save-result-69-20260905.json",
+    "disk_result": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-disk-verify-result-69-20260905.json",
+    "restore_result": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-b3-standard-restore-result-69-20260905.json"
+  },
+  "phase_contract": {
+    "S": "one fresh deterministic step0 save only; stable GPU gate after expensive rehash; exact B3 writeback-aware serializer; record cgroup memory.stat; no BEHAVIOR data or model update",
+    "V1": "only after terminal S PASS; CPU-only bounded direct TensorStore read of all 207 leaves, one leaf at a time, exact path/shape/dtype/nbytes/SHA256 against S fingerprints",
+    "V2": "only after V1 PASS and a new 3x30s stable GPU gate; fresh standard Orbax restore with restore_concurrent_gb=8; require aggregate invariants and state.step=0"
+  },
+  "required_pass": [
+    "S runs only on machine-id c4046d3ca4454a958f5de081aac4dc2e and consumes qualification only after the frozen stable GPU gate",
+    "S cgroup MemoryMax exactly 52GiB, swap0, observed peak strictly below 52GiB",
+    "S exposes exactly label10000, exact item names, and no orbax tmp path remains",
+    "S train_state fingerprints exactly 156 leaves / 40241206476 bytes and params exactly 51 leaves / 13413735488 bytes",
+    "every S D2H batch <=8000000000 bytes",
+    "S executes at least one eligible OCDBT fsync->POSIX_FADV_DONTNEED reclamation event and records memory.stat",
+    "V1 verifies all 207 leaves / 53654941964 serialized array bytes exactly by SHA256",
+    "V2 uses standard Orbax restore handlers and returns state.step=0",
+    "no BEHAVIOR data, forward, backward, optimizer update, loss, Q, policy outcome, effect, or p-value access"
+  ],
+  "scientific_invariants": {
+    "panel": "26 frozen tasks / 13 matched pairs",
+    "model": "pi0.5 shared26 multitask policy",
+    "physical_batch": 16,
+    "seed": 42,
+    "optimizer": "same frozen AdamW",
+    "lr_schedule": "same frozen schedule",
+    "ema": 0.99,
+    "normalization": "same frozen shared26 normalization",
+    "action_horizon": 32,
+    "optimizer_updates_target": 50000,
+    "recovery_labels": [10000, 20000, 30000, 40000],
+    "scientific_terminal_label": 49999,
+    "scientific_variables_changed": false
+  },
+  "if_fail": "Stop B3. Do not retry, raise MemoryMax, change D2H batch, change cache-advice policy, change checkpoint semantics, or run another checkpoint child without a new independent review.",
+  "if_pass": "Stop at qualification PASS. Formal run3 remains unauthorized; any run3 requires a separate prospective authority.",
+  "forbidden": [
+    "host67 execution",
+    "formal run3",
+    "BEHAVIOR data or policy outcome access",
+    "forward/backward/optimizer update",
+    "loss/Q/effect/p-value access",
+    "reuse of the partial B2 checkpoint",
+    "MemoryMax/D2H/cache-advice ladder",
+    "checkpoint semantic changes"
+  ],
+  "host67_authorized": false,
+  "formal_run3_authorized": false,
+  "policy_evaluation_authorized": false
+}
