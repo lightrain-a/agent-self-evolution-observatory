@@ -22,6 +22,7 @@ from research_pipeline.behavior_formal_goal_coupling_shared26_pi05_b3_writeback_
 )
 
 OBJECT_ID = "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL"
+EXPECTED_MACHINE_ID = "c4046d3ca4454a958f5de081aac4dc2e"
 SYNTHETIC_SEED = 20260905
 LEAF_COUNT = 6
 LEAF_ELEMENTS = 16_777_216
@@ -108,6 +109,8 @@ def main() -> int:
     d0d1d3_path = args.d0d1d3.resolve()
     root = args.work_root.resolve()
     result = args.result.resolve()
+    if Path("/etc/machine-id").read_text().strip() != EXPECTED_MACHINE_ID:
+        raise RuntimeError("D2 may run only on host69 machine-id")
 
     authority = json.loads(authority_path.read_text())
     if authority.get("status") != "AUTHORIZED_PI05_B3_D2_OFFLINE_CACHE_ACCOUNTING":
@@ -133,6 +136,8 @@ def main() -> int:
         "min_single_file_drop_bytes": MIN_SINGLE_FILE_DROP_BYTES,
         "min_total_file_drop_bytes": MIN_TOTAL_FILE_DROP_BYTES,
     }
+    if authority.get("work_root") != str(root) or authority.get("result") != str(result):
+        raise RuntimeError("D2 authority output-path drift")
     if frozen != expected:
         raise RuntimeError(f"D2 frozen contract drift: {frozen}")
 
