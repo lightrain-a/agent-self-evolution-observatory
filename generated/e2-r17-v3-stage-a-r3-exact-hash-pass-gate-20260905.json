@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-stage-a-r3-exact-hash-pass-gate",
+  "created_at_utc": "2026-09-05T14:02:00+00:00",
+  "status": "PASS_R3_PREEXECUTION_REVIEW_WAIT_PROVIDER_RESET_THEN_FRESH_IDENTITY",
+  "review_receipt_path": "generated/e2-r17-v3-stage-a-r3-exact-hash-gpt56-review-20260905.json",
+  "review_verdict": "PASS_TO_SEPARATE_R3_RECOVERY_AUTHORIZATION",
+  "contract_sha256": "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
+  "preflight_sha256": "56208e171b2524a01ec429618c7b018a4fee1a9a785028f024fee5a40bd10df2",
+  "provider_reset_not_before": "2026-09-07T00:00:00+08:00",
+  "allowed_before_reset": [
+    "zero-provider static audits",
+    "frontend/status synchronization",
+    "paper/experiment planning that does not inspect Stage-A support"
+  ],
+  "forbidden_before_reset": [
+    "fresh DeepSeek identity provider call",
+    "R3 recovery authorization",
+    "R3 provider execution",
+    "Stage-A support read",
+    "Stage-B execution"
+  ],
+  "post_reset_sequence": [
+    "exactly one fresh DeepSeek identity qualification bound to R3",
+    "local exact-identity adjudication",
+    "if identity PASS, separately mint single-use R3 recovery authorization",
+    "execute only the frozen 158-task R3 provider universe"
+  ],
+  "r2_burned_task_replay_allowed": false,
+  "matched_censor_provider_execution_allowed": false,
+  "stage_b_authority": false,
+  "scientific_execution_authority_now": false
+}
