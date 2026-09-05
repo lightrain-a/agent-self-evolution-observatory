@@ -1,0 +1,663 @@
+{
+  "additional_exception_policy": "STOP",
+  "artifact_type": "e2-r17-v3-stage-a-r3-recovery-opportunity-manifest",
+  "created_at_utc": "2026-09-05T13:55:43+00:00",
+  "eligible_opportunity_count_by_stream": {
+    "stv3-cgwb-00": 7,
+    "stv3-cgwb-01": 8,
+    "stv3-cgwp-00": 7,
+    "stv3-cgwp-01": 8,
+    "stv3-cjlb-00": 8,
+    "stv3-cjlb-01": 8,
+    "stv3-cjlp-00": 8,
+    "stv3-cjlp-01": 8,
+    "stv3-clrb-00": 8,
+    "stv3-clrb-01": 8,
+    "stv3-clrp-00": 8,
+    "stv3-clrp-01": 8,
+    "stv3-cmpb-00": 8,
+    "stv3-cmpb-01": 8,
+    "stv3-cmpp-00": 8,
+    "stv3-cmpp-01": 8,
+    "stv3-csbb-00": 8,
+    "stv3-csbb-01": 8,
+    "stv3-csbp-00": 8,
+    "stv3-csbp-01": 8
+  },
+  "excluded_units": {
+    "matched_no_provider_censor": "r17-b21-cgwp-p0",
+    "terminal_technical_missing": "r17-b21-cgwb-p0"
+  },
+  "future_stage_b_eligible_task_ids_by_stream": {
+    "stv3-cgwb-00": [
+      "r17-b21-cgwb-p1",
+      "r17-b21-cgwb-p2",
+      "r17-b21-cgwb-p3",
+      "r17-b21-cgwb-p5",
+      "r17-b21-cgwb-p6",
+      "r17-b21-cgwb-p7",
+      "r17-b21-cgwb-p8"
+    ],
+    "stv3-cgwb-01": [
+      "r17-b22-cgwb-p0",
+      "r17-b22-cgwb-p2",
+      "r17-b22-cgwb-p3",
+      "r17-b22-cgwb-p4",
+      "r17-b22-cgwb-p5",
+      "r17-b22-cgwb-p6",
+      "r17-b22-cgwb-p7",
+      "r17-b22-cgwb-p8"
+    ],
+    "stv3-cgwp-00": [
+      "r17-b21-cgwp-p1",
+      "r17-b21-cgwp-p2",
+      "r17-b21-cgwp-p3",
+      "r17-b21-cgwp-p5",
+      "r17-b21-cgwp-p6",
+      "r17-b21-cgwp-p7",
+      "r17-b21-cgwp-p8"
+    ],
+    "stv3-cgwp-01": [
+      "r17-b22-cgwp-p0",
+      "r17-b22-cgwp-p2",
+      "r17-b22-cgwp-p3",
+      "r17-b22-cgwp-p4",
+      "r17-b22-cgwp-p5",
+      "r17-b22-cgwp-p6",
+      "r17-b22-cgwp-p7",
+      "r17-b22-cgwp-p8"
+    ],
+    "stv3-cjlb-00": [
+      "r17-b21-cjlb-p0",
+      "r17-b21-cjlb-p1",
+      "r17-b21-cjlb-p2",
+      "r17-b21-cjlb-p4",
+      "r17-b21-cjlb-p5",
+      "r17-b21-cjlb-p6",
+      "r17-b21-cjlb-p7",
+      "r17-b21-cjlb-p8"
+    ],
+    "stv3-cjlb-01": [
+      "r17-b22-cjlb-p0",
+      "r17-b22-cjlb-p1",
+      "r17-b22-cjlb-p2",
+      "r17-b22-cjlb-p3",
+      "r17-b22-cjlb-p4",
+      "r17-b22-cjlb-p6",
+      "r17-b22-cjlb-p7",
+      "r17-b22-cjlb-p8"
+    ],
+    "stv3-cjlp-00": [
+      "r17-b21-cjlp-p0",
+      "r17-b21-cjlp-p1",
+      "r17-b21-cjlp-p2",
+      "r17-b21-cjlp-p4",
+      "r17-b21-cjlp-p5",
+      "r17-b21-cjlp-p6",
+      "r17-b21-cjlp-p7",
+      "r17-b21-cjlp-p8"
+    ],
+    "stv3-cjlp-01": [
+      "r17-b22-cjlp-p0",
+      "r17-b22-cjlp-p1",
+      "r17-b22-cjlp-p2",
+      "r17-b22-cjlp-p3",
+      "r17-b22-cjlp-p4",
+      "r17-b22-cjlp-p6",
+      "r17-b22-cjlp-p7",
+      "r17-b22-cjlp-p8"
+    ],
+    "stv3-clrb-00": [
+      "r17-b21-clrb-p1",
+      "r17-b21-clrb-p2",
+      "r17-b21-clrb-p3",
+      "r17-b21-clrb-p4",
+      "r17-b21-clrb-p5",
+      "r17-b21-clrb-p6",
+      "r17-b21-clrb-p7",
+      "r17-b21-clrb-p8"
+    ],
+    "stv3-clrb-01": [
+      "r17-b22-clrb-p1",
+      "r17-b22-clrb-p2",
+      "r17-b22-clrb-p3",
+      "r17-b22-clrb-p4",
+      "r17-b22-clrb-p5",
+      "r17-b22-clrb-p6",
+      "r17-b22-clrb-p7",
+      "r17-b22-clrb-p8"
+    ],
+    "stv3-clrp-00": [
+      "r17-b21-clrp-p1",
+      "r17-b21-clrp-p2",
+      "r17-b21-clrp-p3",
+      "r17-b21-clrp-p4",
+      "r17-b21-clrp-p5",
+      "r17-b21-clrp-p6",
+      "r17-b21-clrp-p7",
+      "r17-b21-clrp-p8"
+    ],
+    "stv3-clrp-01": [
+      "r17-b22-clrp-p1",
+      "r17-b22-clrp-p2",
+      "r17-b22-clrp-p3",
+      "r17-b22-clrp-p4",
+      "r17-b22-clrp-p5",
+      "r17-b22-clrp-p6",
+      "r17-b22-clrp-p7",
+      "r17-b22-clrp-p8"
+    ],
+    "stv3-cmpb-00": [
+      "r17-b21-cmpb-p0",
+      "r17-b21-cmpb-p1",
+      "r17-b21-cmpb-p2",
+      "r17-b21-cmpb-p3",
+      "r17-b21-cmpb-p5",
+      "r17-b21-cmpb-p6",
+      "r17-b21-cmpb-p7",
+      "r17-b21-cmpb-p8"
+    ],
+    "stv3-cmpb-01": [
+      "r17-b22-cmpb-p0",
+      "r17-b22-cmpb-p2",
+      "r17-b22-cmpb-p3",
+      "r17-b22-cmpb-p4",
+      "r17-b22-cmpb-p5",
+      "r17-b22-cmpb-p6",
+      "r17-b22-cmpb-p7",
+      "r17-b22-cmpb-p8"
+    ],
+    "stv3-cmpp-00": [
+      "r17-b21-cmpp-p0",
+      "r17-b21-cmpp-p1",
+      "r17-b21-cmpp-p2",
+      "r17-b21-cmpp-p3",
+      "r17-b21-cmpp-p5",
+      "r17-b21-cmpp-p6",
+      "r17-b21-cmpp-p7",
+      "r17-b21-cmpp-p8"
+    ],
+    "stv3-cmpp-01": [
+      "r17-b22-cmpp-p0",
+      "r17-b22-cmpp-p2",
+      "r17-b22-cmpp-p3",
+      "r17-b22-cmpp-p4",
+      "r17-b22-cmpp-p5",
+      "r17-b22-cmpp-p6",
+      "r17-b22-cmpp-p7",
+      "r17-b22-cmpp-p8"
+    ],
+    "stv3-csbb-00": [
+      "r17-b21-csbb-p0",
+      "r17-b21-csbb-p1",
+      "r17-b21-csbb-p2",
+      "r17-b21-csbb-p4",
+      "r17-b21-csbb-p5",
+      "r17-b21-csbb-p6",
+      "r17-b21-csbb-p7",
+      "r17-b21-csbb-p8"
+    ],
+    "stv3-csbb-01": [
+      "r17-b22-csbb-p0",
+      "r17-b22-csbb-p1",
+      "r17-b22-csbb-p3",
+      "r17-b22-csbb-p4",
+      "r17-b22-csbb-p5",
+      "r17-b22-csbb-p6",
+      "r17-b22-csbb-p7",
+      "r17-b22-csbb-p8"
+    ],
+    "stv3-csbp-00": [
+      "r17-b21-csbp-p0",
+      "r17-b21-csbp-p1",
+      "r17-b21-csbp-p2",
+      "r17-b21-csbp-p4",
+      "r17-b21-csbp-p5",
+      "r17-b21-csbp-p6",
+      "r17-b21-csbp-p7",
+      "r17-b21-csbp-p8"
+    ],
+    "stv3-csbp-01": [
+      "r17-b22-csbp-p0",
+      "r17-b22-csbp-p1",
+      "r17-b22-csbp-p3",
+      "r17-b22-csbp-p4",
+      "r17-b22-csbp-p5",
+      "r17-b22-csbp-p6",
+      "r17-b22-csbp-p7",
+      "r17-b22-csbp-p8"
+    ]
+  },
+  "ordered_stream_ids": [
+    "stv3-cgwb-00",
+    "stv3-cgwb-01",
+    "stv3-cgwp-00",
+    "stv3-cgwp-01",
+    "stv3-cjlb-00",
+    "stv3-cjlb-01",
+    "stv3-cjlp-00",
+    "stv3-cjlp-01",
+    "stv3-clrb-00",
+    "stv3-clrb-01",
+    "stv3-clrp-00",
+    "stv3-clrp-01",
+    "stv3-cmpb-00",
+    "stv3-cmpb-01",
+    "stv3-cmpp-00",
+    "stv3-cmpp-01",
+    "stv3-csbb-00",
+    "stv3-csbb-01",
+    "stv3-csbp-00",
+    "stv3-csbp-01"
+  ],
+  "provider_task_ids_by_stream": {
+    "stv3-cgwb-00": [
+      "r17-b21-cgwb-p1",
+      "r17-b21-cgwb-p2",
+      "r17-b21-cgwb-p3",
+      "r17-b21-cgwb-p5",
+      "r17-b21-cgwb-p6",
+      "r17-b21-cgwb-p7",
+      "r17-b21-cgwb-p8"
+    ],
+    "stv3-cgwb-01": [
+      "r17-b22-cgwb-p0",
+      "r17-b22-cgwb-p2",
+      "r17-b22-cgwb-p3",
+      "r17-b22-cgwb-p4",
+      "r17-b22-cgwb-p5",
+      "r17-b22-cgwb-p6",
+      "r17-b22-cgwb-p7",
+      "r17-b22-cgwb-p8"
+    ],
+    "stv3-cgwp-00": [
+      "r17-b21-cgwp-p1",
+      "r17-b21-cgwp-p2",
+      "r17-b21-cgwp-p3",
+      "r17-b21-cgwp-p5",
+      "r17-b21-cgwp-p6",
+      "r17-b21-cgwp-p7",
+      "r17-b21-cgwp-p8"
+    ],
+    "stv3-cgwp-01": [
+      "r17-b22-cgwp-p0",
+      "r17-b22-cgwp-p2",
+      "r17-b22-cgwp-p3",
+      "r17-b22-cgwp-p4",
+      "r17-b22-cgwp-p5",
+      "r17-b22-cgwp-p6",
+      "r17-b22-cgwp-p7",
+      "r17-b22-cgwp-p8"
+    ],
+    "stv3-cjlb-00": [
+      "r17-b21-cjlb-p0",
+      "r17-b21-cjlb-p1",
+      "r17-b21-cjlb-p2",
+      "r17-b21-cjlb-p4",
+      "r17-b21-cjlb-p5",
+      "r17-b21-cjlb-p6",
+      "r17-b21-cjlb-p7",
+      "r17-b21-cjlb-p8"
+    ],
+    "stv3-cjlb-01": [
+      "r17-b22-cjlb-p0",
+      "r17-b22-cjlb-p1",
+      "r17-b22-cjlb-p2",
+      "r17-b22-cjlb-p3",
+      "r17-b22-cjlb-p4",
+      "r17-b22-cjlb-p6",
+      "r17-b22-cjlb-p7",
+      "r17-b22-cjlb-p8"
+    ],
+    "stv3-cjlp-00": [
+      "r17-b21-cjlp-p0",
+      "r17-b21-cjlp-p1",
+      "r17-b21-cjlp-p2",
+      "r17-b21-cjlp-p4",
+      "r17-b21-cjlp-p5",
+      "r17-b21-cjlp-p6",
+      "r17-b21-cjlp-p7",
+      "r17-b21-cjlp-p8"
+    ],
+    "stv3-cjlp-01": [
+      "r17-b22-cjlp-p0",
+      "r17-b22-cjlp-p1",
+      "r17-b22-cjlp-p2",
+      "r17-b22-cjlp-p3",
+      "r17-b22-cjlp-p4",
+      "r17-b22-cjlp-p6",
+      "r17-b22-cjlp-p7",
+      "r17-b22-cjlp-p8"
+    ],
+    "stv3-clrb-00": [
+      "r17-b21-clrb-p1",
+      "r17-b21-clrb-p2",
+      "r17-b21-clrb-p3",
+      "r17-b21-clrb-p4",
+      "r17-b21-clrb-p5",
+      "r17-b21-clrb-p6",
+      "r17-b21-clrb-p7",
+      "r17-b21-clrb-p8"
+    ],
+    "stv3-clrb-01": [
+      "r17-b22-clrb-p1",
+      "r17-b22-clrb-p2",
+      "r17-b22-clrb-p3",
+      "r17-b22-clrb-p4",
+      "r17-b22-clrb-p5",
+      "r17-b22-clrb-p6",
+      "r17-b22-clrb-p7",
+      "r17-b22-clrb-p8"
+    ],
+    "stv3-clrp-00": [
+      "r17-b21-clrp-p1",
+      "r17-b21-clrp-p2",
+      "r17-b21-clrp-p3",
+      "r17-b21-clrp-p4",
+      "r17-b21-clrp-p5",
+      "r17-b21-clrp-p6",
+      "r17-b21-clrp-p7",
+      "r17-b21-clrp-p8"
+    ],
+    "stv3-clrp-01": [
+      "r17-b22-clrp-p1",
+      "r17-b22-clrp-p2",
+      "r17-b22-clrp-p3",
+      "r17-b22-clrp-p4",
+      "r17-b22-clrp-p5",
+      "r17-b22-clrp-p6",
+      "r17-b22-clrp-p7",
+      "r17-b22-clrp-p8"
+    ],
+    "stv3-cmpb-00": [
+      "r17-b21-cmpb-p0",
+      "r17-b21-cmpb-p1",
+      "r17-b21-cmpb-p2",
+      "r17-b21-cmpb-p3",
+      "r17-b21-cmpb-p5",
+      "r17-b21-cmpb-p6",
+      "r17-b21-cmpb-p7",
+      "r17-b21-cmpb-p8"
+    ],
+    "stv3-cmpb-01": [
+      "r17-b22-cmpb-p0",
+      "r17-b22-cmpb-p2",
+      "r17-b22-cmpb-p3",
+      "r17-b22-cmpb-p4",
+      "r17-b22-cmpb-p5",
+      "r17-b22-cmpb-p6",
+      "r17-b22-cmpb-p7",
+      "r17-b22-cmpb-p8"
+    ],
+    "stv3-cmpp-00": [
+      "r17-b21-cmpp-p0",
+      "r17-b21-cmpp-p1",
+      "r17-b21-cmpp-p2",
+      "r17-b21-cmpp-p3",
+      "r17-b21-cmpp-p5",
+      "r17-b21-cmpp-p6",
+      "r17-b21-cmpp-p7",
+      "r17-b21-cmpp-p8"
+    ],
+    "stv3-cmpp-01": [
+      "r17-b22-cmpp-p0",
+      "r17-b22-cmpp-p2",
+      "r17-b22-cmpp-p3",
+      "r17-b22-cmpp-p4",
+      "r17-b22-cmpp-p5",
+      "r17-b22-cmpp-p6",
+      "r17-b22-cmpp-p7",
+      "r17-b22-cmpp-p8"
+    ],
+    "stv3-csbb-00": [
+      "r17-b21-csbb-p0",
+      "r17-b21-csbb-p1",
+      "r17-b21-csbb-p2",
+      "r17-b21-csbb-p4",
+      "r17-b21-csbb-p5",
+      "r17-b21-csbb-p6",
+      "r17-b21-csbb-p7",
+      "r17-b21-csbb-p8"
+    ],
+    "stv3-csbb-01": [
+      "r17-b22-csbb-p0",
+      "r17-b22-csbb-p1",
+      "r17-b22-csbb-p3",
+      "r17-b22-csbb-p4",
+      "r17-b22-csbb-p5",
+      "r17-b22-csbb-p6",
+      "r17-b22-csbb-p7",
+      "r17-b22-csbb-p8"
+    ],
+    "stv3-csbp-00": [
+      "r17-b21-csbp-p0",
+      "r17-b21-csbp-p1",
+      "r17-b21-csbp-p2",
+      "r17-b21-csbp-p4",
+      "r17-b21-csbp-p5",
+      "r17-b21-csbp-p6",
+      "r17-b21-csbp-p7",
+      "r17-b21-csbp-p8"
+    ],
+    "stv3-csbp-01": [
+      "r17-b22-csbp-p0",
+      "r17-b22-csbp-p1",
+      "r17-b22-csbp-p3",
+      "r17-b22-csbp-p4",
+      "r17-b22-csbp-p5",
+      "r17-b22-csbp-p6",
+      "r17-b22-csbp-p7",
+      "r17-b22-csbp-p8"
+    ]
+  },
+  "raw_count_secondary_router_scores_forbidden": true,
+  "schema_version": "1.0",
+  "secondary_router_score_policy": {
+    "difficulty_only": "successful rollout rate over eligible opportunities",
+    "mixedness_only": "mixed-pool rate over eligible opportunities"
+  },
+  "status": "FROZEN_MATCHED_CENSOR_7_7_8_GEOMETRY",
+  "support_eligible_task_ids_by_stream": {
+    "stv3-cgwb-00": [
+      "r17-b21-cgwb-p1",
+      "r17-b21-cgwb-p2",
+      "r17-b21-cgwb-p3",
+      "r17-b21-cgwb-p5",
+      "r17-b21-cgwb-p6",
+      "r17-b21-cgwb-p7",
+      "r17-b21-cgwb-p8"
+    ],
+    "stv3-cgwb-01": [
+      "r17-b22-cgwb-p0",
+      "r17-b22-cgwb-p2",
+      "r17-b22-cgwb-p3",
+      "r17-b22-cgwb-p4",
+      "r17-b22-cgwb-p5",
+      "r17-b22-cgwb-p6",
+      "r17-b22-cgwb-p7",
+      "r17-b22-cgwb-p8"
+    ],
+    "stv3-cgwp-00": [
+      "r17-b21-cgwp-p1",
+      "r17-b21-cgwp-p2",
+      "r17-b21-cgwp-p3",
+      "r17-b21-cgwp-p5",
+      "r17-b21-cgwp-p6",
+      "r17-b21-cgwp-p7",
+      "r17-b21-cgwp-p8"
+    ],
+    "stv3-cgwp-01": [
+      "r17-b22-cgwp-p0",
+      "r17-b22-cgwp-p2",
+      "r17-b22-cgwp-p3",
+      "r17-b22-cgwp-p4",
+      "r17-b22-cgwp-p5",
+      "r17-b22-cgwp-p6",
+      "r17-b22-cgwp-p7",
+      "r17-b22-cgwp-p8"
+    ],
+    "stv3-cjlb-00": [
+      "r17-b21-cjlb-p0",
+      "r17-b21-cjlb-p1",
+      "r17-b21-cjlb-p2",
+      "r17-b21-cjlb-p4",
+      "r17-b21-cjlb-p5",
+      "r17-b21-cjlb-p6",
+      "r17-b21-cjlb-p7",
+      "r17-b21-cjlb-p8"
+    ],
+    "stv3-cjlb-01": [
+      "r17-b22-cjlb-p0",
+      "r17-b22-cjlb-p1",
+      "r17-b22-cjlb-p2",
+      "r17-b22-cjlb-p3",
+      "r17-b22-cjlb-p4",
+      "r17-b22-cjlb-p6",
+      "r17-b22-cjlb-p7",
+      "r17-b22-cjlb-p8"
+    ],
+    "stv3-cjlp-00": [
+      "r17-b21-cjlp-p0",
+      "r17-b21-cjlp-p1",
+      "r17-b21-cjlp-p2",
+      "r17-b21-cjlp-p4",
+      "r17-b21-cjlp-p5",
+      "r17-b21-cjlp-p6",
+      "r17-b21-cjlp-p7",
+      "r17-b21-cjlp-p8"
+    ],
+    "stv3-cjlp-01": [
+      "r17-b22-cjlp-p0",
+      "r17-b22-cjlp-p1",
+      "r17-b22-cjlp-p2",
+      "r17-b22-cjlp-p3",
+      "r17-b22-cjlp-p4",
+      "r17-b22-cjlp-p6",
+      "r17-b22-cjlp-p7",
+      "r17-b22-cjlp-p8"
+    ],
+    "stv3-clrb-00": [
+      "r17-b21-clrb-p1",
+      "r17-b21-clrb-p2",
+      "r17-b21-clrb-p3",
+      "r17-b21-clrb-p4",
+      "r17-b21-clrb-p5",
+      "r17-b21-clrb-p6",
+      "r17-b21-clrb-p7",
+      "r17-b21-clrb-p8"
+    ],
+    "stv3-clrb-01": [
+      "r17-b22-clrb-p1",
+      "r17-b22-clrb-p2",
+      "r17-b22-clrb-p3",
+      "r17-b22-clrb-p4",
+      "r17-b22-clrb-p5",
+      "r17-b22-clrb-p6",
+      "r17-b22-clrb-p7",
+      "r17-b22-clrb-p8"
+    ],
+    "stv3-clrp-00": [
+      "r17-b21-clrp-p1",
+      "r17-b21-clrp-p2",
+      "r17-b21-clrp-p3",
+      "r17-b21-clrp-p4",
+      "r17-b21-clrp-p5",
+      "r17-b21-clrp-p6",
+      "r17-b21-clrp-p7",
+      "r17-b21-clrp-p8"
+    ],
+    "stv3-clrp-01": [
+      "r17-b22-clrp-p1",
+      "r17-b22-clrp-p2",
+      "r17-b22-clrp-p3",
+      "r17-b22-clrp-p4",
+      "r17-b22-clrp-p5",
+      "r17-b22-clrp-p6",
+      "r17-b22-clrp-p7",
+      "r17-b22-clrp-p8"
+    ],
+    "stv3-cmpb-00": [
+      "r17-b21-cmpb-p0",
+      "r17-b21-cmpb-p1",
+      "r17-b21-cmpb-p2",
+      "r17-b21-cmpb-p3",
+      "r17-b21-cmpb-p5",
+      "r17-b21-cmpb-p6",
+      "r17-b21-cmpb-p7",
+      "r17-b21-cmpb-p8"
+    ],
+    "stv3-cmpb-01": [
+      "r17-b22-cmpb-p0",
+      "r17-b22-cmpb-p2",
+      "r17-b22-cmpb-p3",
+      "r17-b22-cmpb-p4",
+      "r17-b22-cmpb-p5",
+      "r17-b22-cmpb-p6",
+      "r17-b22-cmpb-p7",
+      "r17-b22-cmpb-p8"
+    ],
+    "stv3-cmpp-00": [
+      "r17-b21-cmpp-p0",
+      "r17-b21-cmpp-p1",
+      "r17-b21-cmpp-p2",
+      "r17-b21-cmpp-p3",
+      "r17-b21-cmpp-p5",
+      "r17-b21-cmpp-p6",
+      "r17-b21-cmpp-p7",
+      "r17-b21-cmpp-p8"
+    ],
+    "stv3-cmpp-01": [
+      "r17-b22-cmpp-p0",
+      "r17-b22-cmpp-p2",
+      "r17-b22-cmpp-p3",
+      "r17-b22-cmpp-p4",
+      "r17-b22-cmpp-p5",
+      "r17-b22-cmpp-p6",
+      "r17-b22-cmpp-p7",
+      "r17-b22-cmpp-p8"
+    ],
+    "stv3-csbb-00": [
+      "r17-b21-csbb-p0",
+      "r17-b21-csbb-p1",
+      "r17-b21-csbb-p2",
+      "r17-b21-csbb-p4",
+      "r17-b21-csbb-p5",
+      "r17-b21-csbb-p6",
+      "r17-b21-csbb-p7",
+      "r17-b21-csbb-p8"
+    ],
+    "stv3-csbb-01": [
+      "r17-b22-csbb-p0",
+      "r17-b22-csbb-p1",
+      "r17-b22-csbb-p3",
+      "r17-b22-csbb-p4",
+      "r17-b22-csbb-p5",
+      "r17-b22-csbb-p6",
+      "r17-b22-csbb-p7",
+      "r17-b22-csbb-p8"
+    ],
+    "stv3-csbp-00": [
+      "r17-b21-csbp-p0",
+      "r17-b21-csbp-p1",
+      "r17-b21-csbp-p2",
+      "r17-b21-csbp-p4",
+      "r17-b21-csbp-p5",
+      "r17-b21-csbp-p6",
+      "r17-b21-csbp-p7",
+      "r17-b21-csbp-p8"
+    ],
+    "stv3-csbp-01": [
+      "r17-b22-csbp-p0",
+      "r17-b22-csbp-p1",
+      "r17-b22-csbp-p3",
+      "r17-b22-csbp-p4",
+      "r17-b22-csbp-p5",
+      "r17-b22-csbp-p6",
+      "r17-b22-csbp-p7",
+      "r17-b22-csbp-p8"
+    ]
+  },
+  "support_required_mixed_per_stream": 4,
+  "treated_mixed_pools_per_stream_if_support_passes": 4,
+  "treated_pool_total_if_support_passes": 80
+}

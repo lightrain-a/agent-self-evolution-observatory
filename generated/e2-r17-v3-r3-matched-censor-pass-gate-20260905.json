@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-r3-matched-censor-pass-gate",
+  "created_at_utc": "2026-09-05T13:46:00+00:00",
+  "status": "PASS_TO_FREEZE_R3_MATCHED_CENSOR_RECOVERY_OBJECTS_ONLY",
+  "review_receipt_path": "generated/e2-r17-v3-r3-matched-censor-gpt56-review-20260905.json",
+  "review_verdict": "PASS_R3_MATCHED_CENSOR_RECOVERY",
+  "recovery_geometry": {
+    "original_planned_tasks": 160,
+    "terminal_technical_missing": 1,
+    "prospective_matched_no_provider_censor": 1,
+    "provider_executable_original_tasks": 158,
+    "replacement_tasks": 0,
+    "replayed_tasks": 0,
+    "affected_streams": {
+      "stv3-cgwb-00": 7,
+      "stv3-cgwp-00": 7
+    },
+    "other_streams": 8,
+    "required_mixed_pools_per_stream": 4,
+    "treated_mixed_pools_per_stream_if_support_passes": 4,
+    "treated_pool_total_if_support_passes": 80
+  },
+  "allowed_next_actions": [
+    "freeze burn receipt",
+    "freeze matched-censor receipt",
+    "freeze exact 158-task recovery execution manifest",
+    "freeze per-stream support and future Stage-B opportunity manifest",
+    "prepare versioned R3 recovery contract and code",
+    "run zero-provider preflight and tests",
+    "obtain exact-hash independent R3 pre-execution review"
+  ],
+  "forbidden_until_separate_recovery_authorization": [
+    "any new provider execution",
+    "burned-task replay or continuation",
+    "matched-censor task provider execution",
+    "task replacement",
+    "support or mixedness read",
+    "updater execution",
+    "heldout evaluation",
+    "Stage-B execution",
+    "public benchmark execution"
+  ],
+  "fresh_identity_required_before_recovery_authorization": true,
+  "additional_attempted_but_unsealed_recovery_unit_policy": "STOP",
+  "stage_b_authority": false,
+  "scientific_execution_authority": false
+}

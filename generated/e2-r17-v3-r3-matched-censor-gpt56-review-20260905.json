@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-r3-matched-censor-independent-review",
+  "created_at_utc": "2026-09-05T13:45:00+00:00",
+  "status": "COMPLETED",
+  "surface": "ChatGPT web",
+  "model": "GPT-5.6 Sol",
+  "thinking_level": "Extra High 4/5",
+  "conversation_url": "https://chatgpt.com/c/6a9c1c47-0194-83ee-b706-35f5d832acaf",
+  "session_slug": "e2-r17-r3-matched-censor",
+  "prompt_packet_path": "oracle_briefs/E2_R17_V3_R3_MATCHED_CENSOR_RECOVERY_REVIEW_INLINE_20260905.md",
+  "prompt_packet_sha256": "dbac105ae0f9f2ee9da1846ec905efb6f28c691d9083de39e7d039362ce3fabd",
+  "prompt_submissions": 1,
+  "response_sha256": "3b9247539251ba8387210d2726ad59ab30cdc4f0d0b0897e8325f36257c7c610",
+  "oracle_transcript_sha256": "6f09ceb23f64050f14305728c50d5c2affdc4e5a78eba08998a2b138e806d494",
+  "model_selection_verified": true,
+  "verdict": "PASS_R3_MATCHED_CENSOR_RECOVERY",
+  "synthesis": {
+    "stage_b_exposure_confound_assessment": "MATERIAL_UNDER_LITERAL_159",
+    "matched_censor_validity": "VALID_OUTCOME_BLIND_DETERMINISTIC_MATCHED_CENSOR",
+    "provider_execution_unit_count": 158,
+    "support_opportunity_rule": {
+      "stv3-cgwb-00": {"eligible_opportunities": 7, "required_mixed": 4},
+      "stv3-cgwp-00": {"eligible_opportunities": 7, "required_mixed": 4},
+      "all_other_streams": {"eligible_opportunities": 8, "required_mixed": 4}
+    },
+    "stage_b_update_opportunity_rule": "affected matched streams use 7 eligible pools in both arms; all other streams use 8; within-stream arm pool IDs/order remain identical",
+    "treated_dose_preservation": {"pools_per_stream": 4, "total": 80},
+    "researcher_degrees_of_freedom_assessment": "LOW_CONTROLLED",
+    "r2_burned_task_replay_allowed": false,
+    "stage_b_authority": false,
+    "fresh_identity_required": true,
+    "immediate_action": "Freeze an R3 recovery contract with the exact matched censor, 158 provider-executable units, and 7/7 affected-pair opportunity geometry before any resumed provider call."
+  },
+  "fixed_exceptions": {
+    "terminal_technical_missing": "r17-b21-cgwb-p0",
+    "matched_no_provider_censor": "r17-b21-cgwp-p0",
+    "matched_pair_key": "semantic-transfer-v3-pair|b21|cross_group_window|p0",
+    "initial_xlsx_sha256": "66e26351d4f79e022d0988a20f8409a0364d0eead932f8c7e6f81698c8a1cd7d",
+    "replacement_count": 0,
+    "replay_count": 0,
+    "additional_exception_allowed": false
+  },
+  "authority": {
+    "resume_provider_execution": false,
+    "stage_a_support_read": false,
+    "stage_b_learning_execution": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  }
+}

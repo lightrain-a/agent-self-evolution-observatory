@@ -1,0 +1,38 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-r3-recovery-zero-provider-preflight",
+  "authority": {
+    "mint_recovery_authorization": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "support_read": false
+  },
+  "checks": {
+    "actor_compile_pass": true,
+    "actor_scope_guards_pass": true,
+    "adjudicator_compile_pass": true,
+    "authorizer_compile_pass": true,
+    "matched_censor_binding_pass": true,
+    "opportunity_geometry_pass": true,
+    "parent_incident_binding_pass": true,
+    "provider_manifest_pass": true,
+    "runner_compile_pass": true,
+    "stage_b_order_7_8_pass": true,
+    "stage_b_order_compile_pass": true
+  },
+  "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r3-recovery-20260905.json",
+  "contract_sha256": "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
+  "created_at_utc": "2026-09-05T13:56:10+00:00",
+  "fresh_identity_qualified": false,
+  "fresh_identity_required_after_exact_hash_review": true,
+  "heldout_forbidden_count": 20,
+  "matched_no_provider_censor_count": 1,
+  "next_gate": "FRESH_GPT56_SOL_EXTRA_HIGH_EXACT_HASH_R3_PREEXECUTION_REVIEW_THEN_FRESH_IDENTITY_THEN_SEPARATE_RECOVERY_AUTHORIZATION",
+  "planned_task_count": 160,
+  "provider_calls": 0,
+  "provider_execution_task_count": 158,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_V3_STAGE_A_R3_RECOVERY_PREFLIGHT",
+  "support_inspected": false,
+  "terminal_technical_missing_count": 1
+}

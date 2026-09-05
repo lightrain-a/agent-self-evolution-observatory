@@ -1,0 +1,46 @@
+{
+  "artifact_type": "e2-r17-v3-stage-a-r3-terminal-technical-missing-receipt",
+  "block": 21,
+  "cause": "Ark AccountQuotaExceeded after provider dispatch",
+  "complete_k8_pool_exists": false,
+  "continuation_allowed": false,
+  "created_at_utc": "2026-09-05T13:55:43+00:00",
+  "incident_artifacts": {
+    "burned_attempt": {
+      "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/stage_a_task_claims/4d2bb0107f8fadaac6de979d1efcb6b52b4acb00b08b8b3497955c5b92f31d92.attempt.json",
+      "sha256": "db658bd5e13995f534987d7703c7f22dd874b96d9bbffcd6cc042295829c0092"
+    },
+    "failure_receipt": {
+      "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/failures/stv3-cgwb-00.json",
+      "sha256": "fc7dfd6ba7a95e00aceddc0fdc16699ca4db0bafb91826b826978fa55dfd16af"
+    },
+    "partial_failure_artifact": {
+      "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/cases/r17-b21-cgwb-p0/rollout_0/r17_technical_failure.json",
+      "sha256": "cca6c7de70db97c82fc650af00bc3972b1aa568dccbc7ca37eab57323aa4a6b0"
+    },
+    "provider_budget_ledger": {
+      "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/provider_budget.sqlite3",
+      "sha256": "1b033c1012ab46a63d0eab3e1e2b8930d054499968d5db5d90761c8b4d5d4a15"
+    },
+    "r2_global_lease": {
+      "path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v3-stage-a-r2.json",
+      "sha256": "dc9471b2b9986967c66fa74be17e7bfec3afb30541a57c72847daa0a01c25a2d"
+    },
+    "r2_local_lock": {
+      "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/.exclusive.lock",
+      "sha256": "9ce9907141564d200883db7af4a836724ce7dddffe24e8a780da3178a14e42d4"
+    }
+  },
+  "pair_key": "semantic-transfer-v3-pair|b21|cross_group_window|p0",
+  "partial_content_scientific_use": false,
+  "profile_index": 0,
+  "provider_reset_time": "2026-09-07 00:00:00 +0800",
+  "replacement_allowed": false,
+  "replay_allowed": false,
+  "schema_version": "1.0",
+  "semantic_type": "INSTANCE_BINDING_LOCALIZATION",
+  "status": "TERMINAL_TECHNICAL_MISSING_POST_DISPATCH",
+  "stream_id": "stv3-cgwb-00",
+  "support_read": false,
+  "task_id": "r17-b21-cgwb-p0"
+}

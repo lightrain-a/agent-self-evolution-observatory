@@ -1,0 +1,374 @@
+{
+  "actor": {
+    "concurrency": 1,
+    "hidden_semantic_or_skeleton_metadata_in_prompt": false,
+    "k": 8,
+    "legacy_failure_family_metadata": false,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "prefix_ks": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "analysis_boundary": {
+    "heldout_access": false,
+    "partial_learning_effect_read": false,
+    "scientific_learning_effect_read": false,
+    "stage_a_support_only": true,
+    "stage_b_effect_inference": false,
+    "support_read_before_terminal_recovery": false
+  },
+  "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-contract-r3-matched-censor-recovery",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "submission": false,
+    "updater": false
+  },
+  "bound_code": {
+    "actor": {
+      "path": "scripts/run_e2_r17_semantic_transfer_v3_actor_pool_r3_recovery.py",
+      "sha256": "1bffcc3c24e2240a918efa062d8cf6c0262503ce3358ed1265cdbce53736a1f6"
+    },
+    "authorization_minter": {
+      "path": "scripts/authorize_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
+      "sha256": "9866bcffb09b4d6a6f31c5c8e947c6107a8bf35e09b8ddc81a6ef6350d6278df"
+    },
+    "control_tests": {
+      "path": "research_pipeline/test_e2_r17_semantic_transfer_v3_r3_recovery.py",
+      "sha256": "17d13bfe6852c9d51cf6be5f91752900c9cd32f54c046f463a563ab4024a4605"
+    },
+    "equal_dose_adjudicator": {
+      "path": "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
+      "sha256": "e326ee92f7765aa68856c6fe09610996209d4aa3d3ad464a65d391a88a4cbae4"
+    },
+    "legacy_stream_verifier": {
+      "path": "scripts/run_e2_r17_e1_a_pool_support.py",
+      "sha256": "24ea070b08399d48af99294615a508874f851af941f5bb0efabe341b0854617d"
+    },
+    "preflight": {
+      "path": "scripts/preflight_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
+      "sha256": "320462d4e0b5033d1c97fb2575b883a377255ac558515018ae2b016caf3d463c"
+    },
+    "r2_actor_base": {
+      "path": "scripts/run_e2_r17_semantic_transfer_v3_actor_pool.py",
+      "sha256": "28a21f55c5f641d555eecf66f146fd1414720b19e1a5affbb422a0229a543500"
+    },
+    "r2_runner_base": {
+      "path": "scripts/run_e2_r17_semantic_transfer_v3_stage_a.py",
+      "sha256": "267d9dd31e197d6c1d4e7c7bebbbbf0127571a2d209c9e722ebfefbe7c1bcc96"
+    },
+    "stage_a_runner": {
+      "path": "scripts/run_e2_r17_semantic_transfer_v3_stage_a_r3_recovery.py",
+      "sha256": "491b2ae6e53fcfe732f15ef263cc365ce61846b3219d7a13fe70e3834f6d3c89"
+    },
+    "stage_b_order_helper": {
+      "path": "research_pipeline/e2_r17_semantic_transfer_v3_stage_b_order_r3_recovery.py",
+      "sha256": "9593d9abd69ff2198b7958f98f0191a0c886343d20dcdaa4ffe40620f1b793cf"
+    }
+  },
+  "budget": {
+    "actor_rollouts": 1264,
+    "combined_claim_upper_bound_if_r3_maxed": 12644,
+    "failed_r2_pre_io_claims_bound": 4,
+    "max_provider_calls": 12640,
+    "original_r2_max_provider_calls": 12800,
+    "provider_calls_per_rollout_limit": 10
+  },
+  "created_at_utc": "2026-09-05T13:55:43+00:00",
+  "env_file_path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "equal_dose_support": {
+    "all_158_provider_pools_must_be_sealed_before_support_read": true,
+    "candidate_domain": "mixed K8 pools inside prospectively frozen Stage-B-eligible opportunity set",
+    "eligible_opportunity_count_by_stream": {
+      "stv3-cgwb-00": 7,
+      "stv3-cgwb-01": 8,
+      "stv3-cgwp-00": 7,
+      "stv3-cgwp-01": 8,
+      "stv3-cjlb-00": 8,
+      "stv3-cjlb-01": 8,
+      "stv3-cjlp-00": 8,
+      "stv3-cjlp-01": 8,
+      "stv3-clrb-00": 8,
+      "stv3-clrb-01": 8,
+      "stv3-clrp-00": 8,
+      "stv3-clrp-01": 8,
+      "stv3-cmpb-00": 8,
+      "stv3-cmpb-01": 8,
+      "stv3-cmpp-00": 8,
+      "stv3-cmpp-01": 8,
+      "stv3-csbb-00": 8,
+      "stv3-csbb-01": 8,
+      "stv3-csbp-00": 8,
+      "stv3-csbp-01": 8
+    },
+    "failure_status": "HOLD_SEMANTIC_TRANSFER_V3_R3_INSUFFICIENT_EQUAL_DOSE_SUPPORT",
+    "hash_rank_applied_only_within_candidate_domain": true,
+    "required_mixed_pools_per_stream": 4,
+    "streams_required": 20,
+    "support_read_excludes_burned_and_matched_censor": true,
+    "treated_mixed_pools_per_stream": 4,
+    "treated_pool_total_if_pass": 80,
+    "unmixed_pool_eligible": false
+  },
+  "exact_once_acquisition": {
+    "additional_attempted_but_unsealed_policy": "STOP",
+    "ambiguous_recollection_allowed": false,
+    "attempt_before_any_provider_io": true,
+    "attempt_marker_creation": "O_CREAT|O_EXCL + file fsync before provider I/O",
+    "attempt_marker_immutable": true,
+    "claim_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r3-matched-censor-20260905/checkpoints/stage_a_task_claims",
+    "replacement_sampling_allowed": false,
+    "replay_allowed": false,
+    "required": true,
+    "sealed_receipt_after_frozen_k8_pool": true,
+    "terminal_summary_requires_matched_no_provider_censor": 1,
+    "terminal_summary_requires_provider_attempted_units": 158,
+    "terminal_summary_requires_provider_sealed_units": 158,
+    "terminal_summary_requires_terminal_technical_missing": 1,
+    "unit_count": 158,
+    "unit_manifest_path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-execution-units-20260905.json",
+    "unit_manifest_sha256": "e3ba3eba68523c087f475511e3b639721743fb63ee88e5ccdc5a13e06447ea86"
+  },
+  "exactly_once": {
+    "additional_attempted_but_unsealed_policy": "STOP",
+    "authorized_runs": 1,
+    "automatic_retry": false,
+    "completed_rollout_replay": false,
+    "failure_preserves_running_global_lease": true,
+    "first_run_only_recovery_runner": true,
+    "matched_no_provider_censor_units": 1,
+    "provider_execution_units": 158,
+    "replacement_sampling": false,
+    "terminal_technical_missing_units": 1
+  },
+  "failed_r2_parent": {
+    "completed_streams": 0,
+    "global_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v3-stage-a-r2.json",
+    "immutable_files": {
+      "burned_attempt": {
+        "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/stage_a_task_claims/4d2bb0107f8fadaac6de979d1efcb6b52b4acb00b08b8b3497955c5b92f31d92.attempt.json",
+        "sha256": "db658bd5e13995f534987d7703c7f22dd874b96d9bbffcd6cc042295829c0092"
+      },
+      "failure_receipt": {
+        "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/failures/stv3-cgwb-00.json",
+        "sha256": "fc7dfd6ba7a95e00aceddc0fdc16699ca4db0bafb91826b826978fa55dfd16af"
+      },
+      "partial_failure_artifact": {
+        "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/cases/r17-b21-cgwb-p0/rollout_0/r17_technical_failure.json",
+        "sha256": "cca6c7de70db97c82fc650af00bc3972b1aa568dccbc7ca37eab57323aa4a6b0"
+      },
+      "provider_budget_ledger": {
+        "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/provider_budget.sqlite3",
+        "sha256": "1b033c1012ab46a63d0eab3e1e2b8930d054499968d5db5d90761c8b4d5d4a15"
+      },
+      "r2_global_lease": {
+        "path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v3-stage-a-r2.json",
+        "sha256": "dc9471b2b9986967c66fa74be17e7bfec3afb30541a57c72847daa0a01c25a2d"
+      },
+      "r2_local_lock": {
+        "path": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/.exclusive.lock",
+        "sha256": "9ce9907141564d200883db7af4a836724ce7dddffe24e8a780da3178a14e42d4"
+      }
+    },
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903",
+    "sealed_k8_pools": 0,
+    "support_inspected": false
+  },
+  "global_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v3-stage-a-r3-matched-censor.json",
+  "mindmemos": {
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "initial_skill_path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity_policy": {
+    "fresh_requalification_required_after_exact_hash_r3_review": true,
+    "fresh_requalification_required_before_authorization": true,
+    "historical_identity_receipts_non_authoritative": true,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "thinking": "disabled"
+  },
+  "next_gate": "ZERO_PROVIDER_R3_PREFLIGHT_THEN_FRESH_GPT56_SOL_EXTRA_HIGH_EXACT_HASH_REVIEW_THEN_FRESH_MODEL_IDENTITY_THEN_SEPARATE_R3_RECOVERY_AUTHORIZATION",
+  "parent_r2_contract": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json",
+    "sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+    "status": "FROZEN_SEMANTIC_TRANSFER_V3_STAGE_A"
+  },
+  "prelearning_baseline_router_policy": {
+    "difficulty_only": "ascending successful-rollout RATE over eligible opportunities; SHA256(semantic-transfer-difficulty-v3-r3-rate|stream_id) tie-break; lowest 10 -> MRW4",
+    "extra_provider_calls": 0,
+    "freeze_before_stage_b_outcomes": true,
+    "freeze_only_after_terminal_158_pool_recovery": true,
+    "mixedness_only": "descending mixed-pool RATE over eligible opportunities; SHA256(semantic-transfer-mixedness-v3-r3-rate|stream_id) tie-break; highest 10 -> MRW4",
+    "raw_count_scoring_forbidden_due_7_7_8_geometry": true
+  },
+  "provider_route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "recovery_exceptions": {
+    "additional_attempted_but_unsealed_policy": "STOP",
+    "additional_matched_censor_allowed": false,
+    "burn_receipt": {
+      "path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-burn-receipt-20260905.json",
+      "sha256": "7a0628f2a28b4adaf82c81622d94abaaa2e7fc0a93dd88cdb98e6d6ba9f51d04"
+    },
+    "matched_censor_receipt": {
+      "path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-matched-censor-receipt-20260905.json",
+      "sha256": "653fe649dc21e08d056467c6cd0d7008d969d980378811c9adca2107f0104d92"
+    },
+    "matched_initial_xlsx_sha256": "66e26351d4f79e022d0988a20f8409a0364d0eead932f8c7e6f81698c8a1cd7d",
+    "matched_no_provider_censor": "r17-b21-cgwp-p0",
+    "pair_key": "semantic-transfer-v3-pair|b21|cross_group_window|p0",
+    "replacement_allowed": false,
+    "replay_allowed": false,
+    "terminal_technical_missing": "r17-b21-cgwb-p0"
+  },
+  "recovery_execution_manifest": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-execution-units-20260905.json",
+    "sha256": "e3ba3eba68523c087f475511e3b639721743fb63ee88e5ccdc5a13e06447ea86",
+    "unit_count": 158
+  },
+  "recovery_opportunity_manifest": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-r3-opportunity-manifest-20260905.json",
+    "sha256": "2a63142123afe631e8a919de05c2cbec3be2b2b78c5b46cf3857ee13841d56f9"
+  },
+  "recovery_reviews": {
+    "matched_censor": {
+      "path": "generated/e2-r17-v3-r3-matched-censor-gpt56-review-20260905.json",
+      "sha256": "160fc58517be215be56a0401d1198e7b6d8727ba4188bd63a04726c51cddfbf4",
+      "verdict": "PASS_R3_MATCHED_CENSOR_RECOVERY"
+    },
+    "one_missing": {
+      "path": "generated/e2-r17-v3-stage-a-technical-missing-recovery-gpt56-review-20260905.json",
+      "sha256": "1317a1a4d3891150848cb8236e164e2a2012c49b9973c2dd701b449360d64edb",
+      "verdict": "PASS_RECOVER_WITH_ONE_TERMINAL_TECHNICAL_MISSING"
+    }
+  },
+  "review_policy": {
+    "fresh_exact_hash_review_after_contract_freeze": true,
+    "model": "GPT-5.6 Sol",
+    "paper_claim_authority": false,
+    "required_execution_recommendation": "ALLOW_SEPARATE_R3_RECOVERY_AUTHORIZATION",
+    "required_verdict": "PASS_TO_SEPARATE_R3_RECOVERY_AUTHORIZATION",
+    "stage_b_authority": false,
+    "surface": "ChatGPT web",
+    "thinking_level": "Extra High 4/5"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r3-matched-censor-20260905",
+  "runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "schema_version": "1.0",
+  "scientific_role": "versioned fail-closed Stage-A recovery only; one terminal post-dispatch missing plus one deterministic matched no-provider censor; support remains closed until terminal recovery",
+  "stage_b_plan_no_authority": {
+    "affected_matched_streams": [
+      "stv3-cgwb-00",
+      "stv3-cgwp-00"
+    ],
+    "common_heldout_tasks": 20,
+    "execution_authority": false,
+    "heldout_evaluations": 3200,
+    "learned_states": 160,
+    "paired_stream_replicate_units": 80,
+    "primary_independent_mechanism_units": 5,
+    "primary_unit": "matched_skeleton_interaction I_h",
+    "replicates_per_stream": 4,
+    "treated_pool_total": 80,
+    "treated_pools_per_stream": 4,
+    "update_pool_count_by_stream": {
+      "stv3-cgwb-00": 7,
+      "stv3-cgwb-01": 8,
+      "stv3-cgwp-00": 7,
+      "stv3-cgwp-01": 8,
+      "stv3-cjlb-00": 8,
+      "stv3-cjlb-01": 8,
+      "stv3-cjlp-00": 8,
+      "stv3-cjlp-01": 8,
+      "stv3-clrb-00": 8,
+      "stv3-clrb-01": 8,
+      "stv3-clrp-00": 8,
+      "stv3-clrp-01": 8,
+      "stv3-cmpb-00": 8,
+      "stv3-cmpb-01": 8,
+      "stv3-cmpp-00": 8,
+      "stv3-cmpp-01": 8,
+      "stv3-csbb-00": 8,
+      "stv3-csbb-01": 8,
+      "stv3-csbp-00": 8,
+      "stv3-csbp-01": 8
+    },
+    "update_pool_order": {
+      "arm_in_key": false,
+      "expected_task_count_is_contract_bound_7_or_8": true,
+      "identical_across_win_c_and_mrw4": true,
+      "key": "SHA256(semantic-transfer-v3-update-order|stream_id|replicate_index|task_id)",
+      "task_id_in_key": true
+    }
+  },
+  "status": "FROZEN_SEMANTIC_TRANSFER_V3_STAGE_A_R3_MATCHED_CENSOR_RECOVERY",
+  "suite": {
+    "core_semantic_split_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3/r17_semantic_transfer_v3_split_manifest.json",
+    "core_semantic_split_sha256": "815977e908214b66a1106d623ca68f4707d56b117fb01740cadbd1edeab3679e",
+    "crossed_skeletons": 5,
+    "dataset_sha256": "be84cca6d75359b713a1d6f914c002f7f2be95bcef5f4b745e61908ac7d56b10",
+    "generation_runtime": {
+      "openpyxl_version": "3.1.5",
+      "python_implementation": "CPython",
+      "python_version": "3.12.3",
+      "zlib_compile_version": "1.3",
+      "zlib_runtime_version": "1.3"
+    },
+    "heldout_tasks_forbidden": 20,
+    "metadata_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3/r17_controlled_metadata.json",
+    "metadata_sha256": "1cd8fbe40ab84d9db32a6b4877a6aeb3949b4db0772cba04bf9d60ca901b612f",
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3",
+    "semantic_cells_per_skeleton": 2,
+    "split_manifest_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3/r17_split_manifest.json",
+    "split_manifest_sha256": "a19a57cf1ee71a9af440b56cdf884faeac2ed27990e4fd72e54061be72094fe7",
+    "stream_count": 20,
+    "streams": [
+      "stv3-cgwb-00",
+      "stv3-cgwb-01",
+      "stv3-cgwp-00",
+      "stv3-cgwp-01",
+      "stv3-cjlb-00",
+      "stv3-cjlb-01",
+      "stv3-cjlp-00",
+      "stv3-cjlp-01",
+      "stv3-clrb-00",
+      "stv3-clrb-01",
+      "stv3-clrp-00",
+      "stv3-clrp-01",
+      "stv3-cmpb-00",
+      "stv3-cmpb-01",
+      "stv3-cmpp-00",
+      "stv3-cmpp-01",
+      "stv3-csbb-00",
+      "stv3-csbb-01",
+      "stv3-csbp-00",
+      "stv3-csbp-01"
+    ],
+    "streams_per_semantic_cell": 2,
+    "suite_manifest_sha256": "9d57c0abc51758e3657484048e9a132a531ff2758d724b7be5cc6d14ae262338",
+    "update_tasks": 160
+  }
+}
