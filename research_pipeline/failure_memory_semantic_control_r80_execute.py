@@ -90,6 +90,7 @@ def main() -> None:
     p.add_argument("--model", choices=["qwen", "llama"], required=True)
     p.add_argument("--resume", action="store_true")
     p.add_argument("--validate-only", action="store_true")
+    p.add_argument("--max-new-terminal-items", type=int, default=0, help="Outcome-blind operational chunk size; truncates only at frozen schedule item boundaries.")
     a = p.parse_args()
 
     protocol, panel, hold, ta, rv, r2, qm, lm, r54, auth = map(
@@ -119,16 +120,27 @@ def main() -> None:
         return
 
     records = r73.runtime_records(protocol, panel, r54)
+    run_protocol = json.loads(json.dumps(protocol))
+    full_schedule = r73.stage_schedule(protocol, a.model)
+    terminal_path = a.output_dir.resolve() / a.model / "terminal-arms.jsonl"
+    already_terminal = len(r73.rows(terminal_path))
+    if a.max_new_terminal_items < 0:
+        raise RuntimeError("max-new-terminal-items-must-be-nonnegative")
+    if a.max_new_terminal_items:
+        stop = min(len(full_schedule), already_terminal + a.max_new_terminal_items)
+        stage_key = "Qwen" if a.model == "qwen" else "Llama"
+        run_protocol["staging"][stage_key]["schedule"] = full_schedule[:stop]
     r73.execute_stage(
         a.model,
-        protocol,
+        run_protocol,
         panel,
         manifests[a.model],
         records,
         a.output_dir.resolve(),
         a.resume,
     )
-    print(json.dumps({"status": "R80_DELEGATED_R73_STAGE_TERMINAL", "model": a.model}, sort_keys=True))
+    now_terminal = len(r73.rows(terminal_path))
+    print(json.dumps({"status": "R80_DELEGATED_R73_CLEAN_CHUNK_TERMINAL", "model": a.model, "terminal_items_before": already_terminal, "terminal_items_after": now_terminal, "full_stage_items": len(full_schedule), "chunking_is_outcome_blind": True}, sort_keys=True))
 
 
 if __name__ == "__main__":

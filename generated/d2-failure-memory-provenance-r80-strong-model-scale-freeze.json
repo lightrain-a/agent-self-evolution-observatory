@@ -2,13 +2,13 @@
   "schema_version": "1.0",
   "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
   "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R80-STRONG-MODEL-SCALE-FREEZE",
-  "recorded_at": "2026-09-05T09:18:49+00:00",
+  "recorded_at": "2026-09-05T09:32:22+00:00",
   "status": "R80_TARGETED_SCALE_MODEL_AND_MATCHING_RULE_FROZEN_PRE_QWEN_OUTCOME",
   "role": "PROSPECTIVE_CAPABILITY_BOUNDARY_EXTERNAL_VALIDITY_FREEZE_ZERO_MODEL",
   "bindings": {
     "r72_protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
-    "matching_rule_receipt_sha256": "8a24950538a82b9af0b28d09055b7a4b4b48ad57eea38c930d9ca6d1a785f869",
-    "matching_rule_file_sha256": "fa717fb30943b8c61770cb803ef3fb8aac07a7f9c507512f12b37efd1f40e253"
+    "matching_rule_receipt_sha256": "085c0c4def455ed2d7c8076986bc8c8af66a83eee4921fe424c3c6f12fc2f2af",
+    "matching_rule_file_sha256": "e32952170eac86ea47aaa33d4f58a6be295d788cb554ef37b08451663cc74984"
   },
   "strong_model": {
     "schema_version": "1.0",
@@ -295,5 +295,5 @@
   "scientific_authority": false,
   "experiment_authority": false,
   "gpu_authority": false,
-  "receipt_sha256": "e9e46a1e845c17b170dcdc93aa57e9f6193e99ba97a0aa73cf12138fd86de6a7"
+  "receipt_sha256": "87b42781309d1d296eed4e5ebf83e574f61eac15bfc0d63a160e2d31498552f3"
 }

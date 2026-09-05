@@ -81,7 +81,7 @@ It keeps closed:
 - paper claim changes;
 - Qwen3.5-27B scale execution.
 
-Execution order is Qwen 189 first, then Llama 132, with no effect inspection before a separate analysis authority is generated after the required stage seals.
+Execution order is Qwen 189 first, then Llama 132, with no effect inspection before a separate analysis authority is generated after the required stage seals. Operationally, R80 may execute the frozen schedule in fixed-size chunks that stop only after terminal ledger items; chunk boundaries are chosen without inspecting outcomes and never alter schedule order, retry policy, or treatment realization.
 
 ## Validation
 

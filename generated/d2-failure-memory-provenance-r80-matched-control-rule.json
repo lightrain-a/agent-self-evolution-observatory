@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
   "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R80-MATCHED-CONTROL-RULE",
-  "recorded_at": "2026-09-05T09:18:49+00:00",
+  "recorded_at": "2026-09-05T09:32:22+00:00",
   "status": "R80_QWEN_OUTCOME_BLIND_MATCHING_RULE_FROZEN_PRE_EXECUTION",
   "role": "FUTURE_TARGETED_SCALE_CONTROL_SELECTION_RULE_ZERO_MODEL",
   "bindings": {
@@ -61464,5 +61464,5 @@
   "scientific_authority": false,
   "experiment_authority": false,
   "gpu_authority": false,
-  "receipt_sha256": "8a24950538a82b9af0b28d09055b7a4b4b48ad57eea38c930d9ca6d1a785f869"
+  "receipt_sha256": "085c0c4def455ed2d7c8076986bc8c8af66a83eee4921fe424c3c6f12fc2f2af"
 }

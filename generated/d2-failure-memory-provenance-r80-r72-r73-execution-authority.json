@@ -2,16 +2,16 @@
   "schema_version": "1.0",
   "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
   "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R80-R72-R73-EXECUTION-AUTHORITY",
-  "recorded_at": "2026-09-05T09:18:49+00:00",
+  "recorded_at": "2026-09-05T09:32:22+00:00",
   "status": "R80_R72_R73_EXECUTION_AUTHORITY_USER_GRANTED_PATH_EQUIVALENT_SOURCE",
   "role": "USER_AUTHORIZED_EXECUTION_ONLY_FOR_ALREADY_R3_PASSED_321_TRAJECTORY_PROTOCOL",
   "protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
   "bindings": {
     "r74_independent_r3_review_receipt_sha256": "7aaabc3c854098615ba7aacb11012d4b6feafa503d7c6ae5bf36f9e750aa6b38",
     "r74_design_closeout_receipt_sha256": "bca2052dbdd6b5c8416490c2c7dd65a7c01ebb1eec9b241b667eb048afc2067a",
-    "r80_scale_freeze_receipt_sha256": "e9e46a1e845c17b170dcdc93aa57e9f6193e99ba97a0aa73cf12138fd86de6a7",
-    "r80_execute_runner_sha256": "6edf1995f55e81302c32a29a01e32e39f90c491115866095a4da3860832a54e9",
-    "r80_scale_freeze_file_sha256": "d7f1b8f497772867282f9649c2d71b760c6888b46e04bca2e9cba0b37294cde8"
+    "r80_scale_freeze_receipt_sha256": "87b42781309d1d296eed4e5ebf83e574f61eac15bfc0d63a160e2d31498552f3",
+    "r80_execute_runner_sha256": "54e10e7690f69ce2ec24e6dbfc5b9e8b86bab9daf0c0268f014b51ab69fc80a1",
+    "r80_scale_freeze_file_sha256": "6a63a49439b588623df03cd4e5c62cac6f8c8425068403f22536ce8259f81c47"
   },
   "user_authorization": "Explicit continuation request after the assistant stated the next action would freeze the strong-model rule and start the R72/R73 321-run experiment.",
   "execution_realization": {
@@ -35,5 +35,5 @@
   "scientific_authority": true,
   "experiment_authority": true,
   "gpu_authority": true,
-  "receipt_sha256": "2a9c0b48a98bc95532de125d30ce09de7825c390a8a035e28cca61ac777ea5aa"
+  "receipt_sha256": "8627e71acec67500ff6f5143155f2f289091b92be0de611a54ab453286a22ffd"
 }
