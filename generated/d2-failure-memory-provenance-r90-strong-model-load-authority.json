@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R90-STRONG-MODEL-LOAD-PREFLIGHT-AUTHORITY",
+  "recorded_date": "2026-09-06",
+  "status": "R90_STRONG_MODEL_GPU_LOAD_AND_ROUTE_PREFLIGHT_ONLY_EXECUTION_CLOSED",
+  "role": "LOAD_ONLY_NO_TASK_EXPOSURE_AUTHORITY",
+  "r87_protocol_receipt_sha256": "78a858ec2c70b155a4d72db292543a48d2678c54c8871763f64448d480539c25",
+  "runtime_manifest_receipt_sha256": "12e0bb0cd603c32a7f263b160ff059c99a969755438ea9c4709ecbffade36b78",
+  "r89_materialization_receipt_sha256": "97312ff1ff63e38447b1675a94eee7af8e4e83a0cab5eaeb0687b0e57afe07e7",
+  "authority": {
+    "strong_model_load": true,
+    "route_preflight": true,
+    "gpu": true,
+    "strong_model_execution": false,
+    "analysis": false,
+    "qwen_execution": false,
+    "llama_execution": false,
+    "paper_claim_change": false,
+    "PSMG": false,
+    "L3": false
+  },
+  "allowed_action": "start R88 loopback server and verify /models/health only; do not send benchmark prompts",
+  "strong_model_outcomes_observed_when_created": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": true,
+  "receipt_sha256": "23deaafaa8face33773aca373822a263b9fa9ee82c0d8872734d1d3abf5e6a40"
+}
