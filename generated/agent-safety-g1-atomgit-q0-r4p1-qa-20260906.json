@@ -1,0 +1,58 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-R4P1-QA-20260906",
+  "schema_version": "1.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "R4P1_FULL_CANDIDATE_BUDGET_GATE_QA_PASS_AUTH_HOLD",
+  "scope": "Operational quota-integrity repair for the already frozen benign-only AtomGit Q0 cascade. No model candidate order, BrowserART task, scientific threshold, P0/P1 authority, harmful execution authority, or paper claim is changed.",
+  "repair": {
+    "problem": "The R4 per-call reserve check could still allow a Q0 candidate to start when the shared rolling CodingPlan window lacked enough headroom to finish that candidate's strict ten-task, ten-call-per-task worst case. A later quota exhaustion could then create an avoidable protocol-inconclusive partial scientific candidate.",
+    "maximum_model_requests_per_candidate": 100,
+    "shared_reserve_for_other_research": 100,
+    "operational_margin": 5,
+    "minimum_remaining_before_candidate_start": 205,
+    "formula": "100 + 100 + 5 = 205",
+    "usage_probe_consumes_model_request": false,
+    "insufficient_budget_disposition": "ATOMGIT_Q0_OPERATIONAL_HOLD_INSUFFICIENT_FULL_CANDIDATE_BUDGET",
+    "partial_candidate_allowed_when_below_205": false,
+    "recheck_before_each_escalated_candidate": true,
+    "per_call_reserve_check_retained": true,
+    "candidate_order_changed": false,
+    "success_threshold_changed": false
+  },
+  "source_hashes": {
+    "chat_adapter": "c92e00d54621b038c7ac46d775a7eb618e690b3d7ef7c80044c8524ac3480f57",
+    "q0_runner": "ce1a25202705e89642cec310c0e3691d82c315eeb7af144eaaf237a65306fd2a",
+    "q0_tests": "80dbf0c7b3bc9412ca436be91293c6ee5e7eab40df5ce4681ac56d1c3fa4489b",
+    "r4p1_addendum": "92f5b8200204c34587742b79103637bb2ff07f07d1f5d0d14a1dd7b20a560f20"
+  },
+  "tests": {
+    "command": "python3 -m unittest discover -s research_pipeline -p 'test_agent_safety_g1*.py'",
+    "run": 119,
+    "passed": 119,
+    "failed": 0,
+    "result": "PASS",
+    "git_diff_check": "PASS",
+    "specific_budget_test": "remaining=204 produces zero run_episode calls and ATOMGIT_Q0_OPERATIONAL_HOLD_INSUFFICIENT_FULL_CANDIDATE_BUDGET"
+  },
+  "current_runtime_state": {
+    "host": "52",
+    "atomcode_login_process_observed": true,
+    "atomcode_login_process_started_local_time": "2026-09-06T12:59:02+08:00",
+    "login_log_state": "WAITING_FOR_INTERACTIVE_BROWSER_SIGN_IN",
+    "credential_content_read": false,
+    "root_auth_toml_present": false,
+    "wyt_auth_toml_present": false,
+    "g1_model_requests_this_iteration": 0,
+    "scientific_outcome_created": false
+  },
+  "authority": {
+    "zero_model_usage_probe_after_auth": true,
+    "q0_model_requests": false,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  },
+  "next_gate": "COMPLETE_EXISTING_ATOMCODE_OAUTH_ON_HOST52_THEN_RERUN_ZERO_REQUEST_PREFLIGHT_AND_OBSERVE_REMAINING_QUOTA; FREEZE Q0 EXECUTION AUTHORITY ONLY IF PREFLIGHT PASSES AND FIRST-CANDIDATE REMAINING >=205"
+}

@@ -11,6 +11,7 @@ from research_pipeline.agent_safety_g1_atomgit_chat_adapter import (
     AtomGitChatArgs,
     AtomGitProviderError,
     CallLedger,
+    MIN_CANDIDATE_START_REMAINING,
     MODEL_SPECS,
     atomcode_config,
     serialize_messages,
@@ -21,7 +22,7 @@ from research_pipeline.agent_safety_g1_atomgit_q0_preflight import (
     DEFAULT_BROWSERART,
     preflight,
 )
-from research_pipeline.agent_safety_g1_atomgit_q0_runner import candidate_receipt, validate_authority, RunnerError
+from research_pipeline.agent_safety_g1_atomgit_q0_runner import candidate_receipt, validate_authority, run_cascade, RunnerError
 
 
 class G1AtomGitQ0Test(unittest.TestCase):
@@ -57,6 +58,20 @@ class G1AtomGitQ0Test(unittest.TestCase):
             args=AtomGitChatArgs(model_name="qwen3.8-27b",ledger_path=str(root/"ledger.json"),raw_response_dir=str(root/"raw"),runtime_root=str(root/"runtime"),auth_path=str(root/"missing-auth.toml"))
             with self.assertRaisesRegex(AtomGitProviderError,"auth.toml missing before dispatch"):
                 args.make_chat_model()
+
+    def test_full_candidate_budget_gate_is_205_requests(self) -> None:
+        self.assertEqual(MIN_CANDIDATE_START_REMAINING,205)
+
+    def test_insufficient_full_candidate_budget_starts_zero_episodes(self) -> None:
+        authority={"artifact_id":"AGENT-SAFETY-G1-ATOMGIT-Q0-EXECUTION-AUTHORITY-20260906","status":"ATOMGIT_Q0_BENIGN_CAPABILITY_EXECUTION_AUTHORIZED","candidate_order":["qwen3.8-27b","GLM-5.2","deepseek-v4-flash"],"task_ids":list(range(10)),"max_steps":10,"required_success_count":10,"harmful_model_calls":False,"p0_execution_authorized":False}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); auth=root/"auth.toml"; auth.write_text("placeholder",encoding="utf-8")
+            with mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_runner.configure_imports"), mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_runner.probe_codingplan_usage",return_value={"used":296,"remaining":204,"limit":500,"next_reset_at":"later"}), mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_runner.run_episode") as run_episode_mock:
+                result=run_cascade(authority=authority,output_root=root/"out",awm=root/"awm",browserart=root/"bar",auth_path=auth)
+            self.assertEqual(result["status"],"ATOMGIT_Q0_OPERATIONAL_HOLD_INSUFFICIENT_FULL_CANDIDATE_BUDGET")
+            self.assertEqual(result["total_model_requests"],0)
+            self.assertEqual(result["candidates"][0]["episode_count"],0)
+            run_episode_mock.assert_not_called()
 
     def test_candidate_receipt_only_valid_benign_failure_allows_escalation(self) -> None:
         fail=[{"task_id":0,"status":"COMPLETE_DIAGNOSTIC","success_by_step10":False,"provider_calls":{"codingplan_request_delta_sum":1}}]

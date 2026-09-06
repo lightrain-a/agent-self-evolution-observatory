@@ -1,0 +1,43 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-CANDIDATE-BUDGET-ADDENDUM-R4P1-20260906",
+  "schema_version": "4.1",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "FROZEN_ZERO_MODEL_REQUEST_OPERATIONAL_ADDENDUM_NO_Q0_AUTHORITY",
+  "parent": "generated/agent-safety-g1-atomgit-cost-aware-q0-amendment-r4-20260906.json",
+  "purpose": "Prevent a shared rolling CodingPlan quota from truncating a Q0 candidate after scientific execution has started.",
+  "quota_contract": {
+    "rolling_window_limit": 500,
+    "maximum_browserart_model_calls_per_task": 10,
+    "official_q0_tasks_per_candidate": 10,
+    "maximum_model_requests_per_candidate": 100,
+    "reserve_for_other_research": 100,
+    "operational_margin": 5,
+    "minimum_remaining_before_starting_any_candidate": 205,
+    "formula": "100 worst-case candidate requests + 100 shared reserve + 5 operational margin",
+    "usage_probe_consumes_model_request": false,
+    "insufficient_budget_disposition": "ATOMGIT_Q0_OPERATIONAL_HOLD_INSUFFICIENT_FULL_CANDIDATE_BUDGET",
+    "insufficient_budget_is_model_failure": false,
+    "insufficient_budget_allows_partial_candidate": false,
+    "recheck_before_every_escalated_candidate": true,
+    "per_call_reserve_check_remains_active": true,
+    "cooperative_file_lock_can_be_used_but_is_not_claimed_as_exclusive_reservation": true,
+    "reason": "Other papers may not obey the same lock. Scientific validity therefore relies on the observed full-candidate headroom gate plus fail-closed per-call checks, not on an unenforceable reservation claim."
+  },
+  "scientific_invariance": {
+    "candidate_order_changed": false,
+    "browserart_tasks_changed": false,
+    "success_threshold_changed": false,
+    "max_steps_changed": false,
+    "model_selection_uses_safety_outcomes": false,
+    "p0_or_p1_opened": false,
+    "harmful_calls_opened": false
+  },
+  "authority": {
+    "zero_model_usage_probe": true,
+    "q0_model_requests": false,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false
+  }
+}

@@ -9,7 +9,14 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from research_pipeline.agent_safety_g1_atomgit_chat_adapter import AtomGitChatArgs, CallLedger, MAX_CALLS, MODEL_SPECS
+from research_pipeline.agent_safety_g1_atomgit_chat_adapter import (
+    AtomGitChatArgs,
+    CallLedger,
+    MAX_CALLS,
+    MIN_CANDIDATE_START_REMAINING,
+    MODEL_SPECS,
+    probe_codingplan_usage,
+)
 from research_pipeline.agent_safety_g1_qwen397_benign_runner import TextServer, atomic_json, configure_imports, counts
 from research_pipeline.agent_safety_g1_qwen397_benign_verifier import evaluate_benign_success, install_page_instrumentation, page_measurement_snapshot
 from research_pipeline.paper_first_agent_safety_r9_gemma4_benign_protocol import verify_external_effect
@@ -111,6 +118,20 @@ def run_cascade(*,authority:dict[str,Any],output_root:Path,awm:Path,browserart:P
     candidates=[]; selected=None; terminal="ATOMGIT_Q0_ALL_CANDIDATES_VALID_BENIGN_FAIL"
     for model_id in authority["candidate_order"]:
         model_root=output_root/model_id.replace("/","_")
+        model_root.mkdir(parents=True,exist_ok=False)
+        quota=probe_codingplan_usage(model_id=model_id,auth_path=auth_path,runtime_root=model_root/"quota-probe")
+        atomic_json(model_root/"candidate-quota-admission.json",{
+            "schema_version":"g1-atomgit-q0-candidate-quota-admission-v1",
+            "model_id":model_id,
+            "usage":quota,
+            "minimum_remaining_required":MIN_CANDIDATE_START_REMAINING,
+            "model_request_dispatched":False,
+            "admitted":isinstance(quota.get("remaining"),int) and quota["remaining"]>=MIN_CANDIDATE_START_REMAINING,
+        })
+        if not isinstance(quota.get("remaining"),int) or quota["remaining"]<MIN_CANDIDATE_START_REMAINING:
+            candidates.append({"model_id":model_id,"status":"ATOMGIT_Q0_CANDIDATE_NOT_STARTED_INSUFFICIENT_FULL_BUDGET","episode_count":0,"success_count":0,"model_requests":0,"quota_admission":quota,"minimum_remaining_required":MIN_CANDIDATE_START_REMAINING,"safety_executed":False,"harmful_calls":0,"episodes":[]})
+            terminal="ATOMGIT_Q0_OPERATIONAL_HOLD_INSUFFICIENT_FULL_CANDIDATE_BUDGET"
+            break
         episodes=[]
         for task_id in TASK_IDS:
             row=run_episode(task_id,model_id=model_id,out=model_root,awm=awm,browserart=browserart,auth_path=auth_path); episodes.append(row)
