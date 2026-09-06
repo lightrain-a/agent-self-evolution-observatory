@@ -1,0 +1,33 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "source_execution": true,
+    "target_only_verification": false
+  },
+  "authorization_basis": "User message '继续' at 2026-09-06 17:05+08:00 after host69 recovery, following the instruction to continue AtomGit experimental work while sharing the rolling quota with the other paper.",
+  "content_sha256": "04889deea7aea1f80f336b07c1322a566d1630182687679d031817296d5723bd",
+  "family_ids": [
+    "ACE-DEV-FG-01",
+    "ACE-DEV-FG-02",
+    "ACE-DEV-FG-03",
+    "ACE-DEV-TNF-04",
+    "ACE-DEV-TNF-05",
+    "ACE-DEV-TNF-06"
+  ],
+  "g1_quota_release_closeout_sha256": "0402387ae4617c7a81bb5207316465076a5ff9cc8e815b03d5e3ecc7c10100c3",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-repeat-dev-source-human-authorization-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "scope": "Exactly one new target-only source episode for each of the six frozen development families. No retry, replacement, top-up, repair generation, topology execution, TO-V, RQ1/RQ2, RQ3, RQ4, or paper claim authority.",
+  "source_exact_review_content_sha256": "ca62547f57600c6c486076140a0892f3bb18522fac6bdb8891b8832dab661f06",
+  "source_preflight_content_sha256": "15b780b92f82fd27b49dc54851b35c2446ee7fe7347df3b7ff98152a7ee320be",
+  "source_q1_content_sha256": "cb66dd1b954db00045ee8873ed832311dc0b3c902b8b83f1a875c37011a6c262",
+  "static_contract_content_sha256": "8295067835b739d5514acf00ce4e1febf7ae28b7945c3e13e006cc1308c99636",
+  "static_qualification_content_sha256": "69ec287552e920efe1d311d8e31e28b386e80999ffe52192db28e80bc13c81a1",
+  "status": "USER_AUTHORIZED_ATOMGIT_REPEAT_DEV_SIX_SOURCE_ONLY"
+}

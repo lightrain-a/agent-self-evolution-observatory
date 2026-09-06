@@ -1,0 +1,56 @@
+{
+  "schema_version": "ace-repeat-dev-source-exact-review-v1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "status": "ATOMGIT_REPEAT_DEV_SOURCE_EXACT_REVIEW_PASS_2_OF_2",
+  "reviewed_git_commit": "85faf887fa0133d806e140c4cba0c8aca01bb93d",
+  "review_packet_sha256": "57df28dbf1b99ac4a6c494476e8028ad793750382a5ad76ef6c7a5e8aeda306e",
+  "runner_sha256": "768343df4c40517d05743d6873b31174f182c57c91135bc2214bf5678a8f5ed7",
+  "bridge_sha256": "8f06c1ed5b56c0cac28df1a6c683678e96b8d3aa42600d1c03d2b5cbe3d70ae4",
+  "authorizer_sha256": "928556fb6eb7203fc0d87f4e5c1911efedfa7c20d042d3b636fb6d3f497fa6bf",
+  "protected_bundle_sha256": "c1bc001b7d7fce0766d2ebc802211728f745013e8b0a4d863024830bb09b646b",
+  "reviewers": [
+    {
+      "provider": "AtomGit",
+      "model_id": "qwen3.8-27b",
+      "verdict": "PASS_PREEXEC_REVIEW",
+      "must_fix": [],
+      "return_code": 0,
+      "raw_output_sha256": "cefcdbcb1d99eb2cddaad676dc0508118b5cecfe726ec74786a29b80c3e7859b",
+      "exactly_once_pass": true,
+      "trajectory_pass": true,
+      "quota_pass": true,
+      "authority_pass": true,
+      "self_binding_pass": true
+    },
+    {
+      "provider": "AtomGit",
+      "model_id": "GLM-5.2",
+      "verdict": "PASS_PREEXEC_REVIEW",
+      "must_fix": [],
+      "return_code": 0,
+      "raw_output_sha256": "ecef50dc86ef1f8b0a1987574eb14d2e6ffad12ba3a334f79ed3c8e913b53d9f",
+      "exactly_once_pass": true,
+      "trajectory_pass": true,
+      "quota_pass": true,
+      "authority_pass": true,
+      "self_binding_pass": true
+    }
+  ],
+  "review_count": 2,
+  "pass_count": 2,
+  "must_fix": [],
+  "review_provider_call_count": 2,
+  "scientific_source_calls_created_by_review": 0,
+  "scientific_topology_outcomes_observed": 0,
+  "authority": {
+    "source_execution": false,
+    "repair_generation": false,
+    "development_repeat_qualification": false,
+    "target_only_verification": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "paper_claim": false
+  },
+  "content_sha256": "ca62547f57600c6c486076140a0892f3bb18522fac6bdb8891b8832dab661f06"
+}

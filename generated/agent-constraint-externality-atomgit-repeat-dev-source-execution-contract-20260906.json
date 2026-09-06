@@ -1,0 +1,74 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "source_execution": true,
+    "target_only_verification": false
+  },
+  "authorizer_sha256": "928556fb6eb7203fc0d87f4e5c1911efedfa7c20d042d3b636fb6d3f497fa6bf",
+  "bridge_sha256": "8f06c1ed5b56c0cac28df1a6c683678e96b8d3aa42600d1c03d2b5cbe3d70ae4",
+  "content_sha256": "f52b23069e6dfc02493c0c879c3b7847ecc8daa5cd79a7925905cb746cc9dd1a",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-SOURCE-20260906",
+  "execution_policy": {
+    "partial_source_outcomes_cannot_change_family_order_or_replace_units": true,
+    "repair_generation": false,
+    "source_only": true,
+    "target_success_is_terminal_support_failure_for_this_six-family development set": true,
+    "topology_execution": false
+  },
+  "harness": {
+    "durable_source_dispatch_before_model_request": true,
+    "durable_tool_dispatch_before_appworld_tool_execution": true,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "minimum_rolling_window_remaining_before_dispatch": 61,
+    "model_round_cap_per_source": 56,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "tool_call_cap": 80,
+    "tool_completion_required_before_repair_eligibility": true,
+    "top_up_allowed": false
+  },
+  "human_authorization_content_sha256": "04889deea7aea1f80f336b07c1322a566d1630182687679d031817296d5723bd",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "all_six_must_be_semantic_target_failures": true,
+    "confirmatory_reuse": false,
+    "family_ids": [
+      "ACE-DEV-FG-01",
+      "ACE-DEV-FG-02",
+      "ACE-DEV-FG-03",
+      "ACE-DEV-TNF-04",
+      "ACE-DEV-TNF-05",
+      "ACE-DEV-TNF-06"
+    ],
+    "first_target_success_stops_without_replacement": true,
+    "one_episode_per_family": true,
+    "source_count": 6
+  },
+  "protected_bundle_sha256": "c1bc001b7d7fce0766d2ebc802211728f745013e8b0a4d863024830bb09b646b",
+  "quota": {
+    "g1_release_bound_by_closeout_sha256": "0402387ae4617c7a81bb5207316465076a5ff9cc8e815b03d5e3ecc7c10100c3",
+    "g1_reserved_requests": 0,
+    "post_dispatch_retry_is_forbidden": true,
+    "pre_dispatch_quota_hold_is_resumable": true,
+    "rolling_window_limit": 500
+  },
+  "runner_sha256": "768343df4c40517d05743d6873b31174f182c57c91135bc2214bf5678a8f5ed7",
+  "schema_version": "ace-repeat-dev-source-execution-contract-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "source_exact_review_content_sha256": "ca62547f57600c6c486076140a0892f3bb18522fac6bdb8891b8832dab661f06",
+  "source_preflight_content_sha256": "15b780b92f82fd27b49dc54851b35c2446ee7fe7347df3b7ff98152a7ee320be",
+  "source_q1_content_sha256": "cb66dd1b954db00045ee8873ed832311dc0b3c902b8b83f1a875c37011a6c262",
+  "static_contract_content_sha256": "8295067835b739d5514acf00ce4e1febf7ae28b7945c3e13e006cc1308c99636",
+  "static_qualification_content_sha256": "69ec287552e920efe1d311d8e31e28b386e80999ffe52192db28e80bc13c81a1",
+  "status": "ATOMGIT_REPEAT_DEV_SIX_SOURCE_EXECUTION_AUTHORIZED"
+}
