@@ -1,0 +1,27 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "repair_generation": false,
+    "source_execution": false
+  },
+  "bundle_sha256": "c1bc001b7d7fce0766d2ebc802211728f745013e8b0a4d863024830bb09b646b",
+  "content_sha256": "826af78948ffff42d2f81c60878a92da428be72da9525c89cdb3e6cb7000f2d3",
+  "family_ids": [
+    "ACE-DEV-FG-01",
+    "ACE-DEV-FG-02",
+    "ACE-DEV-FG-03",
+    "ACE-DEV-TNF-04",
+    "ACE-DEV-TNF-05",
+    "ACE-DEV-TNF-06"
+  ],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_requests_created": 0,
+  "q1_content_sha256": "3ab732a403536e5f736087f80163bf3966d31bde4ad8804c0f47bcd37f057b6b",
+  "replacement_or_top_up": false,
+  "review_closeout_sha256": "74d81f19e7c0ca1749c72d675196d1a8ba65c75fcb0be7001d56f7ff540422a6",
+  "schema_version": "ace-repeat-dev-source-preflight-v1",
+  "source_count": 6,
+  "static_contract_content_sha256": "8295067835b739d5514acf00ce4e1febf7ae28b7945c3e13e006cc1308c99636",
+  "static_qualification_content_sha256": "69ec287552e920efe1d311d8e31e28b386e80999ffe52192db28e80bc13c81a1",
+  "status": "ATOMGIT_REPEAT_DEV_SOURCE_PREFLIGHT_PASS_AUTHORITY_CLOSED"
+}

@@ -1,0 +1,21 @@
+{
+  "bridge_sha256": "8f06c1ed5b56c0cac28df1a6c683678e96b8d3aa42600d1c03d2b5cbe3d70ae4",
+  "bundle_sha256": "c1bc001b7d7fce0766d2ebc802211728f745013e8b0a4d863024830bb09b646b",
+  "codingplan_model_requests": 0,
+  "codingplan_usage": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T18:04:58",
+    "remaining": 294,
+    "used": 206
+  },
+  "content_sha256": "3ab732a403536e5f736087f80163bf3966d31bde4ad8804c0f47bcd37f057b6b",
+  "family_id": "ACE-DEV-FG-01",
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "runner_sha256": "8c95e738fdb00beb012ea8d77865f4169aefa7a399674628d5b236a06e43c56e",
+  "schema_version": "ace-repeat-dev-source-q1-v1",
+  "scientific_dispatch_sent": false,
+  "scientific_outcomes_observed": 0,
+  "status": "ATOMGIT_REPEAT_DEV_SOURCE_MCP_PREDISPATCH_PASS"
+}
