@@ -38,3 +38,17 @@ body[data-page="advisor-review"] .content{max-width:1360px;padding:40px 42px 96p
 .advisor-ownership-grid b{font-size:11px}.advisor-ownership-grid strong{font-size:14px}.advisor-ownership-grid p{font-size:12.5px;line-height:1.6}.advisor-output-grid p{font-size:12px;line-height:1.6}
 .advisor-reality-cases b{font-size:11.5px}.advisor-reality-cases span{font-size:11.5px;line-height:1.55}.advisor-reality-boundary b{font-size:11px}.advisor-reality-boundary p{font-size:11.5px;line-height:1.55}
 .advisor-readback-status b{font-size:13px}.advisor-readback-status p{font-size:12.5px;line-height:1.6}
+
+/* Advisor readability v6 · Chinese-first + no horizontal table scrolling */
+.advisor-table-wrap{overflow:visible;max-width:100%;border-radius:14px}
+.advisor-table,.advisor-cost-table,.advisor-ledger-table,.advisor-reopen-table{width:100%;min-width:0!important;table-layout:fixed}
+.advisor-table th,.advisor-table td,.advisor-cost-table th,.advisor-cost-table td,.advisor-ledger-table th,.advisor-ledger-table td,.advisor-reopen-table th,.advisor-reopen-table td{white-space:normal;word-break:break-word;overflow-wrap:anywhere;vertical-align:top}
+.advisor-decision-table th:nth-child(1){width:19%}.advisor-decision-table th:nth-child(2){width:13%}.advisor-decision-table th:nth-child(3){width:17%}.advisor-decision-table th:nth-child(4){width:16%}.advisor-decision-table th:nth-child(5){width:14%}.advisor-decision-table th:nth-child(6){width:9%}.advisor-decision-table th:nth-child(7){width:12%}
+.advisor-cost-table th:nth-child(1){width:12%}.advisor-cost-table th:nth-child(2){width:16%}.advisor-cost-table th:nth-child(3){width:10%}.advisor-cost-table th:nth-child(4){width:13%}.advisor-cost-table th:nth-child(5){width:9%}.advisor-cost-table th:nth-child(6){width:12%}.advisor-cost-table th:nth-child(7){width:28%}
+.advisor-reopen-table th:nth-child(1){width:24%}.advisor-reopen-table th:nth-child(2){width:18%}.advisor-reopen-table th:nth-child(3){width:18%}.advisor-reopen-table th:nth-child(4){width:40%}
+.advisor-ledger-table th:nth-child(1){width:13%}.advisor-ledger-table th:nth-child(2){width:15%}.advisor-ledger-table th:nth-child(3){width:17%}.advisor-ledger-table th:nth-child(4){width:22%}.advisor-ledger-table th:nth-child(5){width:33%}
+.advisor-table td,.advisor-cost-table td,.advisor-ledger-table td,.advisor-reopen-table td{font-size:11.5px;line-height:1.55}.advisor-table th,.advisor-cost-table th,.advisor-ledger-table th,.advisor-reopen-table th{font-size:11px;line-height:1.35;padding:10px 8px}
+.advisor-paper-name{min-width:0}.advisor-paper-name b{font-size:13px;line-height:1.45}.advisor-paper-name small,.advisor-paper-name a{line-height:1.45}
+@media(max-width:980px){.advisor-table td,.advisor-cost-table td,.advisor-ledger-table td,.advisor-reopen-table td{font-size:10.5px;padding:8px 6px}.advisor-table th,.advisor-cost-table th,.advisor-ledger-table th,.advisor-reopen-table th{font-size:10px;padding:8px 5px}.advisor-paper-name b{font-size:11.5px}}
+.advisor-decision-table th:nth-child(1){width:16%}.advisor-decision-table th:nth-child(2){width:24%}.advisor-decision-table th:nth-child(3){width:12%}.advisor-decision-table th:nth-child(4){width:22%}.advisor-decision-table th:nth-child(5){width:10%}.advisor-decision-table th:nth-child(6){width:16%}
+.advisor-cost-table th:nth-child(1){width:13%}.advisor-cost-table th:nth-child(2){width:22%}.advisor-cost-table th:nth-child(3){width:11%}.advisor-cost-table th:nth-child(4){width:17%}.advisor-cost-table th:nth-child(5){width:18%}.advisor-cost-table th:nth-child(6){width:19%}
