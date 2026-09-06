@@ -1,0 +1,40 @@
+{
+  "artifact_type": "e2-r17-v3-stage-a-r3d-pinned-support-capability-zero-provider-preflight",
+  "authority": {
+    "heldout": false,
+    "paper_claim": false,
+    "provider_recovery": false,
+    "stage_a_support_read": false,
+    "stage_b_execution": false
+  },
+  "checks": {
+    "all_bound_code_hashes_match": true,
+    "fresh_r3d_recovery_lineage_absent": true,
+    "point_of_use_production_trust_root_pinned": true,
+    "provider_recovery_runner_and_authorizer_unchanged": true,
+    "signed_capability_absent": true,
+    "substituted_contract_attacker_key_full_chain_negative_test_present": true,
+    "support_control_tests_10_of_10_pass": true
+  },
+  "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r3d-pinned-support-capability-20260906.json",
+  "contract_sha256": "21f7a50f4e14f48a139ecfa122f7c8a443d4195a1ade0267ccececcb6e424717",
+  "created_at_utc": "2026-09-06T04:08:26+00:00",
+  "fresh_identity_qualified": false,
+  "hard_provider_time_gate": "NO_PROVIDER_CALL_BEFORE_2026-09-07 00:00:00 +0800",
+  "next_gate": "FRESH_GPT56_SOL_EXTRA_HIGH_R3D_EXACT_CODE_REVIEW_THEN_PROVIDER_RESET_THEN_FRESH_IDENTITY_THEN_SEPARATE_RECOVERY_AUTHORIZATION",
+  "parent_r3_contract_sha256": "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
+  "parent_r3c_contract_sha256": "03b2608872424da2bdf78408266a69b28ff565bc9d84bf929aa82ba7bc11e030",
+  "provider_calls": 0,
+  "r3c_review_sha256": "e8b1aab5a0c84e802c1f4b04aaa5af1ca0378acaf5293a22de56d130b47eb402",
+  "r3d_recovery_authorization_minted": false,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "stage_b_authority": false,
+  "status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_V3_STAGE_A_R3D_PINNED_SUPPORT_CAPABILITY_PREFLIGHT",
+  "support_inspected": false,
+  "trusted_public_key_sha256": "f4b73b89716bee28902feb699d9ab81822a986ac8b89235cf768407c3e01fda0",
+  "unit_tests": {
+    "passed": 10,
+    "total": 10
+  }
+}

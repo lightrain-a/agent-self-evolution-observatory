@@ -24,6 +24,9 @@ SUPPORT_AUTH_STATUS = "AUTHORIZED_E2_R17_V3_R3_POST_TERMINAL_SUPPORT_READ"
 CONTROL_REVIEW_VERDICT = "PASS_R3_POST_TERMINAL_SUPPORT_CONTROL_PLANE"
 CONSUMPTION_NAME = "post_terminal_support_read_authorization.consumed.json"
 COMPLETION_NAME = "post_terminal_support_read_adjudication.completed.json"
+PRODUCTION_TRUSTED_PUBLIC_KEY_RELATIVE = "generated/e2-r17-r3c-support-signing-public-key-20260906.pem"
+PRODUCTION_TRUSTED_PUBLIC_KEY_PATH = ROOT / PRODUCTION_TRUSTED_PUBLIC_KEY_RELATIVE
+PRODUCTION_TRUSTED_PUBLIC_KEY_SHA256 = "f4b73b89716bee28902feb699d9ab81822a986ac8b89235cf768407c3e01fda0"
 
 
 def sha(path: Path) -> str:
@@ -116,11 +119,17 @@ def validate_support_read_gate(*, contract: dict[str,Any], contract_path: Path, 
     run_root=Path(str(scope.get("required_run_root") or "")); req(run_root.resolve()==Path(contract["run_root"]).resolve(),"R3C support-read run-root drift")
 
     trusted=((contract.get("post_terminal_support_read_control") or {}).get("trusted_external_signer") or {})
-    req(trusted.get("algorithm")=="Ed25519","R3C trusted signer algorithm drift")
-    pub_path=bound(str(trusted.get("public_key_path") or ""))
-    expected_pub_sha=str(trusted.get("public_key_sha256") or "")
-    req(pub_path.is_file() and sha(pub_path)==expected_pub_sha,"R3C trusted signer public-key binding drift")
-    req(trusted.get("private_key_in_repository") is False,"R3C trusted signer private key must remain external")
+    req(trusted.get("algorithm")=="Ed25519","R3D trusted signer algorithm drift")
+    # R3D point-of-use trust root: never derive the sole expected signer from a
+    # caller-supplied contract. The production key path and fingerprint are
+    # immutable adjudicator constants. A substituted contract may copy these
+    # public values but cannot replace them with an attacker-controlled key.
+    req(str(trusted.get("public_key_path") or "")==PRODUCTION_TRUSTED_PUBLIC_KEY_RELATIVE,"R3D contract signer path is not production trust root")
+    req(str(trusted.get("public_key_sha256") or "")==PRODUCTION_TRUSTED_PUBLIC_KEY_SHA256,"R3D contract signer fingerprint is not production trust root")
+    pub_path=PRODUCTION_TRUSTED_PUBLIC_KEY_PATH
+    expected_pub_sha=PRODUCTION_TRUSTED_PUBLIC_KEY_SHA256
+    req(pub_path.is_file() and sha(pub_path)==expected_pub_sha,"R3D production trusted signer public-key binding drift")
+    req(trusted.get("private_key_in_repository") is False,"R3D trusted signer private key must remain external")
     req(signed_capability_path.is_file(),"R3C externally signed support capability absent")
     capability_doc=load(signed_capability_path)
     expected_capability={

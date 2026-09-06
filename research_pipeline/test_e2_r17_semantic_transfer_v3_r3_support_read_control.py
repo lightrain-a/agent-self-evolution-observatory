@@ -400,15 +400,16 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
             "submission": False,
             "scientific_authority": False,
         }
-        wrong_private_path = fixture["root"] / "attacker-private.pem"
-        wrong_public_path = fixture["root"] / "attacker-public.pem"
-        subprocess.run([OPENSSL, "genpkey", "-algorithm", "ED25519", "-out", str(wrong_private_path)], check=True, capture_output=True)
-        with wrong_public_path.open("wb") as handle:
-            subprocess.run([OPENSSL, "pkey", "-in", str(wrong_private_path), "-pubout"], check=True, stdout=handle, stderr=subprocess.PIPE)
-        forged_capability = sign_document(payload=payload, private_key_path=wrong_private_path, public_key_path=wrong_public_path)
-        # The attacker can copy every public metadata field, including the trusted
-        # public-key fingerprint, but cannot create a signature verifiable by it.
-        forged_capability["signature"]["public_key_sha256"] = sha(fixture["public_key"])
+        # The fixture contract itself is a fully substituted attacker contract:
+        # its trusted signer is the fixture-local keypair, and every dependent
+        # contract/auth/summary/permit hash was built consistently from it. Sign
+        # with that matching attacker private key. R3D must reject this chain at
+        # the adjudicator's immutable production trust-root pin, before consume.
+        forged_capability = sign_document(
+            payload=payload,
+            private_key_path=fixture["private_key"],
+            public_key_path=fixture["public_key"],
+        )
         write_json(fixture["signed_capability"], forged_capability)
 
         command = [
@@ -423,7 +424,7 @@ class R3PostTerminalSupportReadControlTests(unittest.TestCase):
         ]
         result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, check=False)
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("signature verification failed", result.stderr)
+        self.assertIn("production trust root", result.stderr)
         self.assertFalse(fixture["adjudication_output"].exists())
         consumption = fixture["run"] / "checkpoints/post_terminal_support_read" / gate.CONSUMPTION_NAME
         self.assertFalse(consumption.exists())

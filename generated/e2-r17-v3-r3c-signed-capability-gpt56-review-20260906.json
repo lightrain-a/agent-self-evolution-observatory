@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-r3c-signed-capability-independent-review",
+  "created_at_utc": "2026-09-06T03:48:00+00:00",
+  "status": "COMPLETED_WITH_DUPLICATED_FINAL_DELIVERY_RETAINED_AS_REVISE_EVIDENCE_ONLY",
+  "surface": "ChatGPT web",
+  "model": "GPT-5.6 Sol",
+  "thinking_level": "Extra High 4/5",
+  "conversation_url": "https://chatgpt.com/c/6a9c4acc-4098-83ee-ae07-f8e422f0d25f",
+  "prompt_packet_path": "oracle_briefs/E2_R17_V3_STAGE_A_R3C_SIGNED_CAPABILITY_EXACT_CODE_REVIEW_20260906.md",
+  "prompt_packet_sha256": "0a5d7a4442e05be79f366bcb1facddeaff8361c2d6f1160baa321a17f6e502ed",
+  "multipart_parts": 8,
+  "parts_1_to_7_acknowledged_once": true,
+  "final_part_duplicated": true,
+  "response_sha256s": [
+    "508cc69aed1ec97453b6673b4f4c8722ba901f32b62e0d07043399412ffe65c8",
+    "f5aadb8a009f5e741818950cf79dbce35e3f0f968dcb48f0be77922afa1d4fb4"
+  ],
+  "responses_agree_on_verdict_and_blocker": true,
+  "accepted_as_pass_authority_receipt": false,
+  "verdict": "REVISE_R3C_BEFORE_PROVIDER_RECOVERY",
+  "scientific_equivalence_to_parent_r3": "PASS",
+  "external_trust_root_closed": "FAIL",
+  "full_forged_chain_closed": "FAIL",
+  "direct_bypass_closed": "FAIL",
+  "single_use_gate": "PASS",
+  "runtime_compatibility": "PASS",
+  "provider_recovery_authority_affected": false,
+  "r3_contract_redesign_required": false,
+  "new_scientific_experiment_required": false,
+  "stage_b_authority": false,
+  "scientific_authority": false,
+  "support_control_verdict": "FAIL_R3_POST_TERMINAL_SUPPORT_CONTROL_PLANE",
+  "execution_recommendation": "DO_NOT_AUTHORIZE_R3C_RECOVERY",
+  "remaining_blockers": [
+    "Point-of-use trust-root substitution remains possible because the adjudicator derives the expected Ed25519 public-key path and fingerprint from the caller-supplied contract. Hard-pin the production trust root at point of use and add a substituted-contract plus attacker-key full-chain negative regression."
+  ],
+  "hard_provider_time_gate": "NO_PROVIDER_CALL_BEFORE_2026-09-07 00:00:00 +0800"
+}
