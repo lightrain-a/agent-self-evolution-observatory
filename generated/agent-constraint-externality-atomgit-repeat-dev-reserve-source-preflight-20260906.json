@@ -1,0 +1,50 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "repair_generation": false,
+    "reserve_source_execution": false
+  },
+  "bridge_sha256": "42e427ea51e8cf51bab6bcef5c08e5e3d282e9f72e919be5e4c562434da571d4",
+  "bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+  "common_sha256": "81622f9fc56f6de61a85b070dc6c1f81648b2dcaa1e5d824638776bc1de92ba9",
+  "content_sha256": "6d38c931a8f85df12c7c1b3fdecac699de0a653efd0dac31f6ab343522f3ee02",
+  "executor_sha256": "d30261ca8d21a681dc4404bcdb2b8bfedd6690263b64d7cf229bf96e4f5fcf19",
+  "maximum_source_dispatches": 16,
+  "minimum_remaining_before_each_dispatch": 161,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protocol_audit_content_sha256": "0a8177cf835ebe0fb9f059a0c3ebf7637dc748a42961543d15d1bd16efc8e797",
+  "provider_requests_created": 0,
+  "q1_content_sha256": "d5b09fdd5722dd31e208923cbee98b3fd09f8793b892584960e46ea5ff099d62",
+  "ranked_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-103",
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-105",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-102",
+      "ACE-DEV-FG-106",
+      "ACE-DEV-FG-108",
+      "ACE-DEV-FG-107"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-113",
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111",
+      "ACE-DEV-TNF-116",
+      "ACE-DEV-TNF-109",
+      "ACE-DEV-TNF-114",
+      "ACE-DEV-TNF-112"
+    ]
+  },
+  "reserve_contract_content_sha256": "5b6acc59c918c93d56a78bea57970ea31b259511b062f5f78afd0f17c5933268",
+  "reserve_qualification_content_sha256": "12f7e183b8552feb60699cb143e4f56b5b7d8ccaa32766bfd9d9e10e990adcde",
+  "schema_version": "ace-repeat-dev-reserve-source-preflight-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "selected_needed": {
+    "FG": 3,
+    "TNF": 3
+  },
+  "shared_quota_reserve": 100,
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_PREFLIGHT_PASS_AUTHORITY_CLOSED"
+}

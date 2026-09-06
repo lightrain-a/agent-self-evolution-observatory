@@ -1,0 +1,27 @@
+{
+  "account_usage_delta_is_not_request_attribution": true,
+  "account_usage_delta_observed_unattributed": 0,
+  "atomcode_session_jsonl_count": 0,
+  "bridge_sha256": "42e427ea51e8cf51bab6bcef5c08e5e3d282e9f72e919be5e4c562434da571d4",
+  "bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+  "codingplan_model_requests": 0,
+  "codingplan_usage_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T23:04:58",
+    "remaining": 403,
+    "used": 97
+  },
+  "codingplan_usage_before_used": 97,
+  "common_sha256": "81622f9fc56f6de61a85b070dc6c1f81648b2dcaa1e5d824638776bc1de92ba9",
+  "content_sha256": "d5b09fdd5722dd31e208923cbee98b3fd09f8793b892584960e46ea5ff099d62",
+  "family_id": "ACE-DEV-FG-103",
+  "live_message_submit_count": 0,
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-repeat-dev-reserve-source-q1-v1",
+  "scientific_dispatch_sent": false,
+  "scientific_outcomes_observed": 0,
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_MCP_PREDISPATCH_PASS",
+  "trajectory_tool_event_count": 0
+}

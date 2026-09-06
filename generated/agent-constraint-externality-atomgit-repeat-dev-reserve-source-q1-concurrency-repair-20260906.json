@@ -1,0 +1,41 @@
+{
+  "schema_version": "ace-repeat-dev-reserve-source-q1-concurrency-repair-v1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_Q1_CONCURRENCY_ATTRIBUTION_REPAIR_PASS",
+  "failure_class": "ZERO_PROVIDER_PREFLIGHT_ACCOUNTING_ATTRIBUTION_DEFECT",
+  "failed_preflight_symptom": "The first reserve-source Q1 attempt rejected because global CodingPlan account used changed across the zero-message MCP preflight.",
+  "root_cause": "The CodingPlan usage endpoint is shared account state. Concurrent research can change global used/remaining while this Q1 submits no model message, so before==after is not a valid per-run request-attribution invariant.",
+  "scientific_provider_dispatch_in_failed_q1": false,
+  "reserve_source_dispatch_in_failed_q1": false,
+  "scientific_run_root_created": false,
+  "repair": {
+    "live_message_submit_count_must_equal": 0,
+    "atomcode_session_jsonl_count_must_equal": 0,
+    "trajectory_tool_event_count_must_equal": 0,
+    "mcp_progress_must_reach": "TOOLS_LISTED",
+    "global_account_delta_recorded_but_not_used_for_request_attribution": true,
+    "scientific_variables_changed": false,
+    "reserve_order_changed": false,
+    "family_instances_changed": false,
+    "model_changed": false
+  },
+  "repaired_q1": {
+    "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_MCP_PREDISPATCH_PASS",
+    "codingplan_model_requests": 0,
+    "live_message_submit_count": 0,
+    "atomcode_session_jsonl_count": 0,
+    "trajectory_tool_event_count": 0,
+    "account_usage_before_used": 97,
+    "account_usage_after_used": 97,
+    "account_usage_delta_observed_unattributed": 0,
+    "q1_content_sha256": "d5b09fdd5722dd31e208923cbee98b3fd09f8793b892584960e46ea5ff099d62"
+  },
+  "authority": {
+    "reserve_source_execution": false,
+    "repair_generation": false,
+    "development_repeat_qualification": false,
+    "paper_claim": false
+  },
+  "next_legal_action": "Commit the zero-request readiness artifacts; reserve source execution still requires separate human authority.",
+  "content_sha256": "5c2a80a1e0abc6d767006663423caf1e5e44803a1b48c238af3f1e228c76bfe1"
+}

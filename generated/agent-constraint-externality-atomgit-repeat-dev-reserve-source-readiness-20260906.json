@@ -1,0 +1,57 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "repair_generation": false,
+    "reserve_source_execution": false
+  },
+  "bridge_sha256": "42e427ea51e8cf51bab6bcef5c08e5e3d282e9f72e919be5e4c562434da571d4",
+  "bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+  "common_sha256": "81622f9fc56f6de61a85b070dc6c1f81648b2dcaa1e5d824638776bc1de92ba9",
+  "content_sha256": "937f641be701082e963122672ad70330e6c799dbb0b12e77628a7b74b163d284",
+  "executor_sha256": "d30261ca8d21a681dc4404bcdb2b8bfedd6690263b64d7cf229bf96e4f5fcf19",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "next_required_action": "Separate human authority for reserve source acquisition only.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preflight_content_sha256": "6d38c931a8f85df12c7c1b3fdecac699de0a653efd0dac31f6ab343522f3ee02",
+  "provider_requests_created": 0,
+  "quota": {
+    "minimum_remaining_before_dispatch": 161,
+    "rolling_limit": 500,
+    "shared_reserve": 100
+  },
+  "schema_version": "ace-repeat-dev-reserve-source-readiness-v1",
+  "source_selection": {
+    "needed_per_category": 3,
+    "outside_reserve_replacement": false,
+    "ranked_family_ids": {
+      "FG": [
+        "ACE-DEV-FG-103",
+        "ACE-DEV-FG-104",
+        "ACE-DEV-FG-105",
+        "ACE-DEV-FG-101",
+        "ACE-DEV-FG-102",
+        "ACE-DEV-FG-106",
+        "ACE-DEV-FG-108",
+        "ACE-DEV-FG-107"
+      ],
+      "TNF": [
+        "ACE-DEV-TNF-113",
+        "ACE-DEV-TNF-115",
+        "ACE-DEV-TNF-110",
+        "ACE-DEV-TNF-111",
+        "ACE-DEV-TNF-116",
+        "ACE-DEV-TNF-109",
+        "ACE-DEV-TNF-114",
+        "ACE-DEV-TNF-112"
+      ]
+    },
+    "semantic_failure": "eligible; select first three per category",
+    "target_success": "eligibility attrition; continue within frozen reserve",
+    "technical_invalidity_after_dispatch": "hard stop no replay no skip"
+  },
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_READY_AWAITING_SEPARATE_HUMAN_AUTHORITY"
+}
