@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-recovery2-v3-late-execution-quarantine",
+  "date": "2026-09-07",
+  "status": "QUARANTINE_SUPERSEDED_V3_LATE_EXECUTION_NO_SCIENTIFIC_USE",
+  "reason": "Recovery V3 authority had already been superseded outcome-blind by the V4 runtime-gate repair before the V3 child run was created. The later V3 execution therefore used a superseded control-plane authority and is quarantined regardless of its outcomes. No score/effect field was consulted for this disposition.",
+  "timeline": {
+    "v4_supersession_commit": "6012bd7f",
+    "v3_runtime_gate_supersession_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-runtime-gate-supersession-20260906.json",
+    "v3_runtime_gate_supersession_sha256": "1a416d8af5c3e9222ace18baf7a1ab15933c31a9aa52c8ad20dc1ac2b53901f5",
+    "v3_lease_created_at_utc": "2026-09-06T16:10:33+00:00",
+    "v3_lease_sealed_at_utc": "2026-09-06T16:20:35+00:00",
+    "frozen_reset_boundary": "2026-09-07T00:00:00+08:00"
+  },
+  "quarantined_objects": {
+    "v3_contract_sha256": "6fe178467d8fb726adf1986fa6be2a294f1da736998ce36f6f92ecd25e805877",
+    "v3_authorization_sha256": "ad235772b0a204ffb33b281c90fc5d5e0c4a56fb6de7a30c16bd4b85d431e26b",
+    "v3_run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery2-v3-20260903",
+    "v3_lineage_lease": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-recovery2-v3.json",
+    "v3_summary_sha256": "d184d20678cb1f5c2c3aefcbf4c34033af00e3a2cc670fd392cfbb29c77d9442"
+  },
+  "outcome_blindness": {
+    "score_fields_read_for_disposition": false,
+    "effect_fields_read_for_disposition": false,
+    "partial_effect_read": false,
+    "v3_scientific_inclusion": false,
+    "v3_calls_reusable_as_v4_measurements": false
+  },
+  "v4_policy": {
+    "v4_contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v4-contract-20260906.json",
+    "v4_contract_sha256": "242261d46878d42826189d0c821761bddb8dc2691de603a01ac1b105626c68d4",
+    "v4_authorization_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v4-authorization-20260906.json",
+    "v4_authorization_sha256": "08d0782389b0da9c2c656059b8fbc1fcd130a243bfff22d2b625facb6506e1d8",
+    "v4_must_execute_its_own_exact_27_unit_sequence": true,
+    "v4_completed_unit_replay_from_quarantined_v3": false,
+    "v4_provider_execution_allowed_only_after_v4_actual_path_preflight_pass": true
+  },
+  "authority": {
+    "analyzer": false,
+    "paper_promotion": false,
+    "m3r4": false,
+    "bridge": false
+  }
+}

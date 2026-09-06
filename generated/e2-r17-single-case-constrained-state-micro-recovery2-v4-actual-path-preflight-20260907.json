@@ -1,0 +1,58 @@
+{
+  "arms": [
+    {
+      "arm": "g0_base",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflights/recovery2-v4-actual-path-20260907/g0_base/pre-provider-stop.json",
+      "artifact_sha256": "86ecd68ec499c5e443b6246a836c3a9a6e1b1a8c2dbc6c5bc906b6c3550bc3ca",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "none_initial_skill",
+      "skill_pre_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    },
+    {
+      "arm": "g1_verify",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflights/recovery2-v4-actual-path-20260907/g1_verify/pre-provider-stop.json",
+      "artifact_sha256": "c9619fb4877625782176db959008027f37e19275648fced7630dbdd8072dc003",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "deterministic_bound_receipt",
+      "skill_pre_sha256": "b8f51458daa28672dbe078c293f29d37c42eb5b2305199d92ccd7600ac078997",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    },
+    {
+      "arm": "g2_complete",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflights/recovery2-v4-actual-path-20260907/g2_complete/pre-provider-stop.json",
+      "artifact_sha256": "d00c9ea49e1778b0d99f82a55e2203ffbd20653041eb043d8015577bbd7d129f",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "deterministic_bound_receipt",
+      "skill_pre_sha256": "248f1f7c3429c99d98c8d58584048efe2f989050116f507cea895484f8c80289",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflights/recovery2-v4-actual-path-20260907/g3_complete_recover/pre-provider-stop.json",
+      "artifact_sha256": "0c8222afe74a8501db47150bcbd1e67bff96116390225ea018126a906c3b12fb",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "deterministic_bound_receipt",
+      "skill_pre_sha256": "a89cbbd46a01aecb7e3c7f9e5cda964ce7c584492eef0aa6d78a9b422192ceb2",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    }
+  ],
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-v4-actual-path-preflight",
+  "authorization_sha256": "08d0782389b0da9c2c656059b8fbc1fcd130a243bfff22d2b625facb6506e1d8",
+  "contract_sha256": "242261d46878d42826189d0c821761bddb8dc2691de603a01ac1b105626c68d4",
+  "created_at_utc": "2026-09-06T16:40:30+00:00",
+  "execution_not_before": "2026-09-07T00:00:00+08:00",
+  "next_gate": "EXECUTE_RECOVERY2_V4_EXACT_27_UNIT_SEQUENCE",
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "remaining_execution_order_sha256": "4219490a820e4551afaf11fee159d3ea15bc3ea88bd8aabf98f7f48a82a7db61",
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_RECOVERY2_V4_ACTUAL_ACTOR_PATH_4_OF_4_ZERO_PROVIDER",
+  "task_id": "r17-b4-ska-p4"
+}
