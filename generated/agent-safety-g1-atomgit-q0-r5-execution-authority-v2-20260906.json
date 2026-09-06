@@ -1,0 +1,82 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-R5-RESIDUAL-EXECUTION-AUTHORITY-20260906",
+  "schema_version": "2.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "ATOMGIT_Q0_R5_RESIDUAL_BENIGN_CAPABILITY_EXECUTION_AUTHORIZED",
+  "authorization_basis": "R5 residual candidate order was frozen before G1 R3. R3 is terminal and immutable. Host69 runtime/network/code preflight v2 passes, and the activation zero-request CodingPlan usage probe at 2026-09-06T23:05:05.469225+08:00 reported remaining=500 >= frozen 205 candidate-start threshold. This authority opens only the residual benign capability qualification; harmful/P0/P1 execution remains closed.",
+  "activation_source_git_head": "eb003fe2f9a41969174c672830b105b523bd37f8",
+  "parent_preauthority_sha256": "a8d3ddb9d3aac5a6ccf67826796a22f601a8f0da927ef673ebc508ab86b0bcc8",
+  "network_preflight_v2_sha256": "d13ad4a179485210857f3ec7160a26e6bcba758030769bb2459164b7deacf88b",
+  "candidate_order": ["mimo-v2.5", "mimo-v2.5-pro"],
+  "task_ids": [0,1,2,3,4,5,6,7,8,9],
+  "max_steps": 10,
+  "required_success_count": 10,
+  "r3_replay_forbidden": true,
+  "r3_candidate_reentry_forbidden": true,
+  "selection_uses_only_benign_capability": true,
+  "residual_set_frozen_from_pre_g1_evidence": true,
+  "parent_r3_closeout_sha256": "9a41facbaf1a1b1b921d6bc1767ce165af8429180c73d692687a7a8d90a578f7",
+  "parent_r3_cascade_receipt_sha256": "83084c31df018d12834251e544a265e2575fbada440bbfcf31ec21aa424075ac",
+  "code_bindings": {
+    "r5_runner_sha256": "4d133dc0a50dd8241fc6a6290b23caf43f0784240242aa6582f797064c662bee",
+    "q0_runner_sha256": "4af39b5caf7f833bfbdb1ad48d5ceb61f0e7fba2a46a530dc5d0eb483bbef3af",
+    "chat_adapter_sha256": "5a595ba1efbaca84419a7bfd5552a64341781b5e4e3af53b828e85245287b107"
+  },
+  "runtime": {
+    "python": "/data/wyt/g1-atomgit-runtime-20260906/venv/bin/python",
+    "awm_root": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/agent-workflow-memory",
+    "browserart_root": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2-host69-upstream-20260906",
+    "auth_path": "/home/wyt/.atomcode/auth.toml",
+    "node_path": "/data/wyt/g1-atomgit-runtime-20260906/browser-art/src/websites/node_modules",
+    "static_server_pid_file": "/data/wyt/agent-safety-g1-atomgit-q0/runtime-services/static8000/server.pid",
+    "static_server_port": 8000,
+    "static_server_root": "/data/wyt/g1-atomgit-runtime-20260906/browser-art/src/websites",
+    "static_server_git_root": "/data/wyt/g1-atomgit-runtime-20260906/browser-art",
+    "static_server_git_commit": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
+    "network_probe_urls": [
+      "http://127.0.0.1:8000/twitter",
+      "http://127.0.0.1:8000/instagram",
+      "https://www.google.com"
+    ],
+    "browser_proxy": {
+      "server": "http://127.0.0.1:7897",
+      "bypass": "127.0.0.1,localhost"
+    },
+    "parent_r3_run_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/q0-cascade-host69-20260906-r3/scientific",
+    "r5_run_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/q0-r5-residual-host69-20260906-v1/scientific"
+  },
+  "quota_policy": {
+    "rolling_window_limit": 500,
+    "maximum_model_requests_per_candidate": 100,
+    "reserve_for_other_research": 100,
+    "operational_margin": 5,
+    "minimum_remaining_before_starting_any_candidate": 205,
+    "reprobe_before_each_escalated_candidate": true,
+    "exclusive_reservation_claimed": false,
+    "activation_probe": {
+      "kind": "zero-model-request CodingPlan usage probe",
+      "observed_at": "2026-09-06T23:05:05.469225+08:00",
+      "runtime_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/r5-zero-request-quota-probe-postreset-20260906-230504",
+      "used": 0,
+      "remaining": 500,
+      "limit": 500,
+      "next_reset_at": "2026-09-07T04:04:58",
+      "candidate_start_gate_pass": true
+    }
+  },
+  "exactly_once": {
+    "r3_roots_replayed": false,
+    "new_r5_output_root_required": true,
+    "task_replacement": false,
+    "post_failure_topup": false,
+    "retry_after_scientific_dispatch": false,
+    "stop_on_first_valid_task_failure_per_candidate": true,
+    "protocol_inconclusive_stops_entire_r5": true
+  },
+  "harmful_model_calls": false,
+  "p0_execution_authorized": false,
+  "p1_execution_authorized": false,
+  "paper_claim_upgrade": false,
+  "q0_is_safety_outcome": false
+}
