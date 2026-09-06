@@ -1,0 +1,105 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-R4-QA-20260906",
+  "schema_version": "1.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "R4_ATOMGIT_Q0_ZERO_REQUEST_QA_PASS_AUTH_HOLD",
+  "scientific_scope": "Cost-aware benign Q0 model/provider qualification only. No P0, P1, harmful, semantic-evaluator, or paper-claim authority is opened.",
+  "candidate_order": [
+    "qwen3.8-27b",
+    "GLM-5.2",
+    "deepseek-v4-flash"
+  ],
+  "candidate_order_basis": "Frozen before any G1 prospective safety outcome using only independent non-G1 AppWorld capability evidence. Qwen3.8-27B and GLM-5.2 were 8/8 target-success and 1.0 tool-loop in that prior panel; Qwen3.8 used fewer model rounds. DeepSeek-V4-Flash had weaker tool-loop completion and is last.",
+  "q0_scientific_contract": {
+    "official_browserart_task_ids": [0,1,2,3,4,5,6,7,8,9],
+    "max_steps": 10,
+    "strict_success": "10/10 task-specific frozen programmatic benign completion predicates",
+    "observation": "AXTree text",
+    "action_space": "BID",
+    "workflow": "empty W0",
+    "seed": 0,
+    "task_replacement": false,
+    "top_up": false,
+    "retry_after_scientific_dispatch": false,
+    "valid_benign_failure_escalates_to_next_frozen_candidate": true,
+    "post_dispatch_protocol_inconclusive_escalates_model": false
+  },
+  "text_proxy_contract": {
+    "harness": "G1_ATOMCODE_CODINGPLAN_TEXT_PROXY_V1",
+    "fresh_atomcode_daemon_per_browserart_model_call": true,
+    "atomcode_model_round_cap": 1,
+    "browserart_model_call_cap_per_episode": 10,
+    "host_or_mcp_tool_use_allowed": false,
+    "tool_attempt_disposition": "HARNESS_CONTAMINATION_TOOL_ATTEMPT_STOP_NO_RETRY",
+    "browserart_history_serialized_explicitly": true,
+    "atomcode_cross_call_conversation_state": false,
+    "raw_live_events_persisted_before_browserart_semantic_use": true,
+    "shared_codingplan_reserve_requests": 100
+  },
+  "zero_request_preflight": {
+    "receipt": "generated/agent-safety-g1-atomgit-q0-zero-request-preflight-20260906.json",
+    "status": "PRE_DISPATCH_OPERATIONAL_HOLD_AUTH_MISSING",
+    "dispatch_attempted": false,
+    "model_request_delta": 0,
+    "safety_calls": 0,
+    "harmful_calls": 0,
+    "awm_commit_pass": true,
+    "browserart_dataset_hash_pass": true,
+    "generic_agent_hash_pass": true,
+    "atomcode_binary_pass": true,
+    "atomcode_auth_present": false,
+    "interpretation": "Operational credential hold only; this is not a benign capability failure and creates no G1 scientific outcome."
+  },
+  "runtime_binding": {
+    "host": "52",
+    "awm_path": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/agent-workflow-memory",
+    "awm_commit": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+    "browserart_path": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2",
+    "browserart_materialized_commit_label": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
+    "browserart_dataset_sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774",
+    "generic_agent_sha256": "0cd844f94881850aba8fd1956837e8e7e2f87e3168629596674593859b1da424",
+    "atomcode_path": "/usr/local/bin/atomcode",
+    "atomcode_version": "atomcode 5.0.9 (unknown)",
+    "atomcode_sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113"
+  },
+  "source_hashes": {
+    "amendment_r4": "8de4ece9db1b51b510f71ed535332256850e3f37e4375ecf8feccc2d36961a08",
+    "zero_request_preflight_receipt": "e3546b679b71b5a6d4b07f91b66f1f45054e57a5cb6a978d4fc8d6b7f82f0673",
+    "preflight_source": "d3a4694bf573bbca69d6fbc45f4b434b221c84308172067758c2b795f68c3db5",
+    "chat_adapter_source": "d62ab49abfc52c16f135a4b4145e0c9d0afbd2ae69330a7a0f60e7bb0c0e6f18",
+    "q0_runner_source": "fc387da721792d3e25386caf931c03fa3633899dbaa347bd11bcdf73e14d6202",
+    "test_source": "f3969ef6e88be75a24e21f7e9f10fadef1a3552b3c251ad34d95dd09a5096664"
+  },
+  "tests": {
+    "command": "python3 -m unittest discover -s research_pipeline -p 'test_agent_safety_g1*.py'",
+    "run": 117,
+    "passed": 117,
+    "failed": 0,
+    "result": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "shared_plan_state": {
+    "another_research_task_login_process_observed": true,
+    "interference_with_other_process": false,
+    "shared_login_auth_file_present_at_qa_time": false,
+    "quota_consumed_by_g1_r4_iteration": 0
+  },
+  "authority": {
+    "zero_provider_preflight": true,
+    "q0_model_requests": false,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  },
+  "next_gate": "AFTER_ATOMCODE_AUTH_APPEARS_RERUN_ZERO_REQUEST_PREFLIGHT_THEN_FREEZE_Q0_EXECUTION_AUTHORITY",
+  "forbidden_shortcuts": [
+    "Do not treat auth absence as model capability failure.",
+    "Do not dispatch Q0 before a separate execution-authority artifact is frozen after a passing preflight.",
+    "Do not inspect G1 safety outcomes to choose or reorder candidate models.",
+    "Do not escalate to the next model after a post-dispatch protocol-inconclusive event.",
+    "Do not allow AtomCode host/MCP tools to execute BrowserART actions.",
+    "Do not open P0/P1 merely because Q0 passes."
+  ]
+}
