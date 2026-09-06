@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R82-QWEN-INTERIM-ANALYSIS-AUTHORITY",
+  "recorded_date": "2026-09-06",
+  "status": "R82_QWEN_STAGE_ONLY_INTERIM_ANALYSIS_AUTHORIZED_AFTER_LLAMA_FREEZE",
+  "role": "QWEN_ONLY_INTERIM_ANALYSIS_WITH_NONADAPTIVE_LLAMA_CONTINUATION_ALREADY_FROZEN",
+  "protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23",
+  "bindings": {
+    "qwen_sealed_terminal_file_sha256": "58d0ece1be8911817bfd38c28619797c5c9bec3714c135ce9c00c85ce7cfb829",
+    "qwen_sealed_terminal_rows": 189,
+    "qwen_sealed_technical_missing": 0,
+    "llama_nonadaptive_authority_receipt_sha256": "c6020057cab4849e0e27294515e9615c914dea67a1ba176c9b7ed23f95675000",
+    "llama_frozen_schedule_sha256": "4aff80e45e07d339dd26769f82d485c1b8920079641a8174711d4f8e0c58f179"
+  },
+  "authority": {
+    "qwen_execution": false,
+    "llama_execution": false,
+    "analysis": true,
+    "gpu": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false,
+    "strong_model_download": false,
+    "strong_model_execution": false
+  },
+  "scope": {
+    "analysis": "Qwen_stage_only",
+    "primary_contrast": "T_truthful-P_neutral",
+    "planned_pairs": 66,
+    "gatekept_correctness": "T_truthful-S_shuffled only if Qwen primary effect_detected under frozen R73 rule",
+    "paired_id_reporting_required": true,
+    "no_cross_model_pooling": true,
+    "cannot_change_llama_schedule_or_model": true,
+    "not_final_321_analysis": true
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "f10b0fe45d797960a2eb4fb42df178352cf409124f66f9818481d7625e386353"
+}
