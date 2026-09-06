@@ -145,6 +145,56 @@ def materialize_appworld_measurement_state(
     return manifest
 
 
+def _is_exact_email_target(constraint: dict[str, Any]) -> bool:
+    binding = constraint.get("evaluator_binding", {})
+    return (
+        constraint.get("role") == "TARGET"
+        and binding.get("app") == "gmail"
+        and binding.get("semantic_kind") == "EMAIL_EXACT_RECIPIENT_BODY_ATTACHMENTS_V1"
+    )
+
+
+def _evaluate_exact_email_target(
+    *, constraint: dict[str, Any], connections: dict[str, sqlite3.Connection]
+) -> bool:
+    binding = constraint["evaluator_binding"]
+    expected = binding.get("semantic_expected")
+    if not isinstance(expected, dict):
+        raise MeasurementInterfaceError(
+            f"{MEASUREMENT_FAILURE_CLASS}: exact-email semantic expectation missing"
+        )
+    gmail = connections["gmail"]
+    if not evaluate_binding(gmail, binding):
+        return False
+    rows = gmail.execute(
+        "SELECT id, recipient_ids, subject, body FROM emails WHERE sender_id = ? AND subject = ?",
+        (binding["where"]["sender_id"], binding["where"]["subject"]),
+    ).fetchall()
+    if len(rows) != 1:
+        return False
+    email_id, recipient_ids_raw, subject, body = rows[0]
+    recipient = gmail.execute(
+        "SELECT id FROM users WHERE email = ?", (expected.get("recipient"),)
+    ).fetchone()
+    if recipient is None:
+        return False
+    try:
+        recipient_ids = json.loads(recipient_ids_raw)
+    except (TypeError, json.JSONDecodeError):
+        return False
+    if recipient_ids != [int(recipient[0])]:
+        return False
+    if str(subject) != str(expected.get("subject")) or str(body) != str(expected.get("body")):
+        return False
+    attachments = gmail.execute(
+        "SELECT file_name, file_content FROM attachments WHERE email_id = ? ORDER BY file_name",
+        (email_id,),
+    ).fetchall()
+    observed = {str(name): str(content) for name, content in attachments}
+    wanted = {str(name): str(content) for name, content in expected.get("attachment_contents", {}).items()}
+    return len(attachments) == len(wanted) and observed == wanted
+
+
 def _is_file_gmail_target(constraint: dict[str, Any]) -> bool:
     return (
         constraint.get("role") == "TARGET"
@@ -235,7 +285,11 @@ def evaluate_arm_from_materialized_state(
     for constraint in arm["constraints"]:
         binding = constraint["evaluator_binding"]
         required_tables_by_app.setdefault(binding["app"], set()).add(binding["table"])
-        if _is_file_gmail_target(constraint):
+        if _is_exact_email_target(constraint):
+            required_tables_by_app.setdefault("gmail", set()).update(
+                {"emails", "attachments", "users"}
+            )
+        elif _is_file_gmail_target(constraint):
             required_tables_by_app.setdefault("gmail", set()).update(
                 {"emails", "attachments", "users"}
             )
@@ -258,7 +312,16 @@ def evaluate_arm_from_materialized_state(
                     measurement_db_root / f"{app}.db",
                     required_tables=required_tables_by_app[app],
                 )
-            if _is_file_gmail_target(constraint):
+            if _is_exact_email_target(constraint):
+                if "gmail" not in connections:
+                    connections["gmail"], _ = _sqlite_inventory(
+                        measurement_db_root / "gmail.db",
+                        required_tables=required_tables_by_app["gmail"],
+                    )
+                passed = _evaluate_exact_email_target(
+                    constraint=constraint, connections=connections
+                )
+            elif _is_file_gmail_target(constraint):
                 for required_app in ("gmail", "file_system"):
                     if required_app not in connections:
                         connections[required_app], _ = _sqlite_inventory(
