@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-execution-preparation",
+  "date": "2026-09-06",
+  "status": "PASS_ZERO_PROVIDER_BRIDGE_V4R2_EXECUTION_PREPARATION_NO_AUTHORITY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "base_design_commit": "7c01efd275d9d9a0b68b8f832e7dc610a325b552",
+  "design_protocol": {
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r2-20260903.md",
+    "sha256": "1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7"
+  },
+  "independent_preexecution_review": {
+    "path": "generated/e2-r17-state-compiler-bridge-v4r2-preexecution-rereview-20260904.json",
+    "verdict": "PASS_PREEXECUTION_DESIGN"
+  },
+  "frozen_execution_plan": {
+    "path": "generated/e2-r17-bridge-v4r2-zero-provider-execution-plan-20260906.json",
+    "file_sha256": "3b6a299cec98188878a65c3e085796b81e513a0b9b02a933a1dad5605300a65b",
+    "canonical_plan_sha256": "aa33275ef3fad2e69d634bb52388ba609f0983f295bc7942a4f591ab82bf73c3"
+  },
+  "execution_geometry": {
+    "screen": {
+      "streams": 6,
+      "update_tasks_per_stream": 8,
+      "search_k": 8,
+      "search_rollout_units": 384,
+      "provider_free_state_units": 12,
+      "deterministic_state_units": 24,
+      "heldout_k": 1,
+      "heldout_actor_rep1_units_pre_alias": 72,
+      "heldout_actor_rep2_units_pre_alias": 0,
+      "structural_pre_alias_provider_call_ceiling": 4692
+    },
+    "validation": {
+      "streams": 6,
+      "update_tasks_per_stream": 8,
+      "search_k": 8,
+      "search_rollout_units": 384,
+      "provider_free_state_units": 18,
+      "deterministic_state_units": 24,
+      "heldout_k": 1,
+      "heldout_actor_rep1_units_pre_alias": 84,
+      "heldout_actor_rep2_units_pre_alias": 36,
+      "structural_pre_alias_provider_call_ceiling": 5238
+    },
+    "state_sha_aliasing": "universal-before-actor-evaluation; can only reduce actor calls; removed calls are not reallocatable",
+    "validation_order_prefrozen_before_screen_outcomes": true,
+    "validation_provider_io_before_separate_raw_screen_pass_authority": false
+  },
+  "tests": {
+    "command": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python -m unittest research_pipeline.test_e2_r17_bridge_v4r2_execution_plan research_pipeline.test_e2_r17_state_compiler_bridge_v4r2_review_repair research_pipeline.test_e2_r17_state_compiler_bridge_v4_analysis research_pipeline.test_e2_r17_state_compiler_bridge_suite research_pipeline.test_e2_r17_state_compiler_bridge",
+    "result": "46/46 PASS"
+  },
+  "atomgit_shadow_reviews": {
+    "scientific_role": "non-scientific engineering review only",
+    "models": {
+      "qwen3.8-27b": {
+        "content_verdict": "PASS",
+        "issues": [],
+        "serialization_note": "returned PASS JSON inside a markdown json fence"
+      },
+      "GLM-5.2": {
+        "content_verdict": "PASS",
+        "issues": [],
+        "serialization_note": "returned PASS JSON inside a markdown json fence"
+      },
+      "deepseek-v4-flash": {
+        "content_verdict": "PASS",
+        "issues": [],
+        "serialization_note": "returned strict bare JSON"
+      }
+    },
+    "earlier_review_feedback_used_for_engineering_clarity": [
+      "make heldout_k=1 explicit so K=8 search cannot be confused with heldout evaluation",
+      "split validation actor rep1 and Q3 rep2 structural ceilings",
+      "label all call totals as structural pre-alias ceilings rather than expected spend"
+    ]
+  },
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "updater_execution": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "e3": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "scientific_outcomes_read": false,
+  "scientific_provider_calls": 0,
+  "next_gate": "SEPARATE_BRIDGE_STAGE_A_CONTRACT_AND_PREEXECUTION_AUTHORITY_AFTER_M3R4_ADJUDICATION",
+  "interpretation_boundary": "This receipt freezes only Bridge V4-R2 execution geometry, ordering, budgets, and zero-authority engineering preparation. It does not authorize SCREEN or VALIDATION scientific execution and does not create any Bridge outcome."
+}
