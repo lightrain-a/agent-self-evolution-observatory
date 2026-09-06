@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-evidence-package-preparation",
+  "date": "2026-09-06",
+  "status": "PASS_ZERO_PROVIDER_BRIDGE_V4R2_W_FF4_EVIDENCE_PACKAGE_PREPARATION_NO_AUTHORITY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "frozen_protocol_rule": {
+    "source_protocol_path": "generated/e2-r17-state-compiler-bridge-protocol-20260903.md",
+    "selection_rule": "Choose exactly four mixed-eligible pools with the lowest SHA256(E2-R17-BRIDGE-FF4-v1|stream_id|pool_id).",
+    "allocation_salt": "E2-R17-BRIDGE-FF4-v1",
+    "replacement_trajectory": "deterministic first_failed_nonwinner",
+    "unchanged_pool_trajectory": "served winner",
+    "support_requirement": ">=4 mixed pools per frozen stream",
+    "replacement_count": 4
+  },
+  "implementation": {
+    "path": "research_pipeline/e2_r17_bridge_v4r2_evidence_package.py",
+    "sha256": "14bde9c0994321ba1356db5bf9b2fbe8042589e59ea2184327fbb554f8a10b56",
+    "test_path": "research_pipeline/test_e2_r17_bridge_v4r2_evidence_package.py",
+    "test_sha256": "61b0397d131e09191a5526cb20c60850944c85fa411f7c8b54aed693baaca900"
+  },
+  "invariants": {
+    "exact_eight_sealed_pools_per_stream": true,
+    "pool_k_equals_8": true,
+    "duplicate_pool_or_task_rejected": true,
+    "mixed_eligibility_only_uses_binary_success_failure_presence": true,
+    "ff4_pool_selection_uses_only_frozen_stream_id_and_content_addressed_pool_id_after_eligibility": true,
+    "exactly_four_replacements_for_any_eligible_stream_with_4_to_8_mixed_pools": true,
+    "first_failed_nonwinner_is_deterministic": true,
+    "other_four_pools_retain_winner_evidence": true,
+    "served_winner_identity_unchanged_between_winner_and_ff4": true,
+    "unchanged_winner_can_have_score_zero_in_all_failure_pool": true,
+    "winner_and_ff4_packages_are_content_addressed": true,
+    "frozen_eight_pool_aggregation_order_is_preserved": true,
+    "no_stream_task_model_k_replacement": true
+  },
+  "verification": {
+    "new_evidence_package_tests": "8/8 PASS",
+    "state_materialization_tests": "6/6 PASS",
+    "compiler_tests": "15/15 PASS",
+    "bridge_execution_plan_tests": "7/7 PASS",
+    "v4r2_review_repair_tests": "7/7 PASS",
+    "combined": "43/43 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "next_zero_provider_step": "Bind Winner and FF4 selected trajectory refs to one common canonical evidence renderer so FREE and COMP receive byte-identical evidence packages before any state-generation provider call.",
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "free_updater": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "paper_promotion": false
+  },
+  "interpretation_boundary": "This checkpoint implements only the preregistered deterministic W/FF4 learner-evidence projection over already sealed pools. It does not acquire pools, inspect real Bridge support, call an updater, evaluate an actor, or create any Bridge outcome."
+}
