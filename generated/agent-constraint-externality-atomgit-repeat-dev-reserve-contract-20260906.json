@@ -1,0 +1,1057 @@
+{
+  "appworld_source": {
+    "appworld_repo_sha": "a072b7a86e7c1d5b1d7175659d750ebb9b79f10a",
+    "base_db_sha256": {
+      "file_system": "6073413135b14fff3ea3a289574d04d9815ea257ebbc3083db25eb97b634846a",
+      "gmail": "069221ea55688e2e454840ac4915b7920848be1958ec2a8d45e0743f7bc48cef",
+      "simple_note": "58bfe70a5272be257a07bac3508d17c1d657c431c9628038c21a7e955e9827ed",
+      "todoist": "5470d42bbc9ba39467b279ac2eab62b1978efa3b48d116274438d7031f54fdbb"
+    },
+    "data_version": "0.2.0",
+    "data_version_sha256": "911fc0c48cb0c70601db5775a9bef1b740dc4cc9f9b46389b9f0563fe7eb94d7",
+    "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "protected_bundle_sha256": {
+      "generate/.source/data.bundle": "42c2a3c929c60cc891c94e8924d8ce39c2ffd779bd51ca819b26944483de6106",
+      "generate/.source/tasks.bundle": "471f225cf4d85db1ba61d24e2fef881afb68f4f9ca0b8bf76cde712745d60433",
+      "src/appworld/.source/apps.bundle": "88d21fc526c1655bb3eee4adfca78ccac793921e4506f28f734ecdb19af77a62",
+      "src/appworld/.source/tests.bundle": "04aa898cb015c53468c355d5ded662757c5234835a4de5cf4f7d7947bef159ec"
+    }
+  },
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "reserve_source_execution": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "content_sha256": "5b6acc59c918c93d56a78bea57970ea31b259511b062f5f78afd0f17c5933268",
+  "family_summaries": [
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-101-high": "91890b9e926f8d088548a32a3f4c903b51a016a568981cd1067798640fa00807",
+        "ACE-DEV-FG-101-independent": "c25483efce8f78dfe3eb5eb7cbce24fc214cdd24583e1924b26277ffd59da799",
+        "ACE-DEV-FG-101-low": "8947ba674e9e75f56324775d4ff1fc7eb78f08054ee9bf2b2a6687122af7d638"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-101-high": "bebbc846a43f1fc66371737a6509d6fc1b455778be5e909d12969a81e4d01a9d",
+        "ACE-DEV-FG-101-independent": "5b690e706036cee5693866b16973a5b45797b4d7fb64f74dae201581371178d3",
+        "ACE-DEV-FG-101-low": "0f054d83d93cfd89d8e050bd8ff010de61f90273353ebf54f513ad6753efebc3"
+      },
+      "family_id": "ACE-DEV-FG-101",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-101-high": "72b9b28fa9d71cd986789a72ca400f7064116aad948c71e84a260aae1df2ea13",
+        "ACE-DEV-FG-101-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-101-low": "d53c2a58424dea98e65c8a41dd9fbc020a302a7fbc606c7ea00822960df7f3f3"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "9261943cb83ba70db315c4e6f85f9e14e79704742c535e176c364812cf5afcfc",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "31d977276816fe8772125c90b7fdf21d6e2870db4bab1bc50cbf5c89e5b4b884",
+      "target_instruction_sha256": "52e5e6fb146291ccfb4f80b2e1b8ee2e0cea052224ce7ce9ba6781a0a8a50036",
+      "target_resource_footprint_sha256": "7c39fe878f224a67097c6ba4153f349fa1a17d01852d4c2d971452674ca4c2a8",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-102-high": "e40490b212d02d9e29b1debd963d4bcb185c995d431998b67b3ce4bc1f50fc1e",
+        "ACE-DEV-FG-102-independent": "546730887956e40c565273b4d0f5c89086871673e64df27425d702873d3eb139",
+        "ACE-DEV-FG-102-low": "b5521fd43d96dda3457fcf8bb0357814254bf97553ba44da8973862fdd17050e"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-102-high": "a63dbbaddb7f8e51c4ff995023d25463a28abb9c208b5c28c76b6b0eedf2a1de",
+        "ACE-DEV-FG-102-independent": "2cb8a4a8eea595605ba77f5f692fc36b577aa595b162bdf1def2da84da9fa5d4",
+        "ACE-DEV-FG-102-low": "5f96cafc7766b15863749e0649b273547e5bd4309e6601812128e35f56ce5ec9"
+      },
+      "family_id": "ACE-DEV-FG-102",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-102-high": "028f1b8ba9762f298038fd0899d19aa002b1b8ad177cda1bed610526d3687580",
+        "ACE-DEV-FG-102-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-102-low": "c71f4d40e09d7a3f038ad35d9edf121dbf69b55cf6cb72e15851c1514bb13895"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "ebf306e753fbca234ac0ea99b3bf4b88aad90a1408d260b052ed8d74247710cf",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "111e3ef3b5be409782d9299506d368e8906ceed33a0b040dde55960ee3832872",
+      "target_instruction_sha256": "331ef568117afb26b41cb91032236988625ea3a73f8df50ee87ecc093ea7d475",
+      "target_resource_footprint_sha256": "7487c416668a32d37c6917e28f4a60e093facd8554f6c5e451e62bf1db40291e",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-103-high": "ae5d42a7e60a56665ac42441ec214477e8f492f67509bff21f521994e960f924",
+        "ACE-DEV-FG-103-independent": "5ed48d7df60be45419d29ed123b3035e8fea0f8da9a690ee48c474685c48e8ac",
+        "ACE-DEV-FG-103-low": "3b219e7680177c96cf980e93a3ad657d01f20ab2d0278a886c28e3c57131d4e0"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-103-high": "5fb1aeb4d03a1d931d39a19357f6fe5c9d054a156f800b64ec16fe293fa5c244",
+        "ACE-DEV-FG-103-independent": "3d96324822ed14230134d17ce43fcb1c4d64c4dcf8d82b43a2dae942c0e6b186",
+        "ACE-DEV-FG-103-low": "ab08ebed0dba4d4f8f9be125e70ad96c392ee8dd7b3f4e53b542692f62367028"
+      },
+      "family_id": "ACE-DEV-FG-103",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-103-high": "3a5adecf9cc182dca7b292cafd30d25adedf7ed3e29d846e6d5a24446af5a2f0",
+        "ACE-DEV-FG-103-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-103-low": "63378e1660e87fe5740fcb8e680ae8810b605f8ba41f48bcfa27d96c6e04ce90"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "d7abf4eac900a283b38ce843545dffe164fd5470dd046577dfec624e41692bc3",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "d0c733e0abb6086e91e1b6b8406cccb86a8b1101bc4578c5acc6337a80b33ada",
+      "target_instruction_sha256": "ac9cbe290d7f155446c18b1166d8799a8fd2cfb8235b34b1836d2b370d3c0766",
+      "target_resource_footprint_sha256": "990fa196dd5ca78f30cf8801de385a49edccd0d5890f5a6f9dfefb1f953ff783",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-104-high": "59564b8f673ed8638b9cc18f33cf7f2eedae62228ced2109220a0dc2b901be53",
+        "ACE-DEV-FG-104-independent": "a33b10d4a360986a8057ded927fb126cef4cb5cc0f5bfced85411dd2bd1b0258",
+        "ACE-DEV-FG-104-low": "aaa49219c1691bd86813f3dc73f6e5b4a2c12fd7c101b7f0f6b151da0bd0d3eb"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-104-high": "9875c36412445d789e776b040afe0c5af3ec063a9003fbd36214fcbd1dd17a70",
+        "ACE-DEV-FG-104-independent": "d122906d7cb11a8fccd95f8dc241873f180e4a1623213eaaf606021dac819613",
+        "ACE-DEV-FG-104-low": "c679b6713c08780e30f31cc7f482bd0ac741430f4d19e0fe6ace1e6966e0d9bf"
+      },
+      "family_id": "ACE-DEV-FG-104",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-104-high": "1c3abc6b093fcb066411f7700356bfd986a0974f206d28ce784e491cdb47c5a5",
+        "ACE-DEV-FG-104-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-104-low": "b8b51768b159ba39066d7128fef49d5a4a7e98480a72842761f050a5851de50c"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "0332183fca56607ad2fb2d4e2c7091b1f6cc1b250ce14a59544dba2843ac6d2a",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "8010c41d04b98c204fa7adabb4c7da3fdcaedb6ff90265be20ae29bac25a7ba5",
+      "target_instruction_sha256": "3cfc6461931f23cb14110d62046addcaf5233395a3f73f6092faf9f7b7bd0461",
+      "target_resource_footprint_sha256": "d4b55efe637db856e9fed50de860cb670f096c2ae90a3122f681304a3d771d92",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-105-high": "38e26d3745219b88e47fb85a9f3a129ea18da9db4d9c8bd5f3b8a4cd5761ee9a",
+        "ACE-DEV-FG-105-independent": "59472abfa927f66462fa54b8030a36828643414f80c373225566ddc187634132",
+        "ACE-DEV-FG-105-low": "006ac7e6724c74db48bb6224ddf2cbf65b9fca2f1ffb3fa379e88e496304d9a3"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-105-high": "df0d00adc7222d28f456ac4291907f4c9eb24c8ac22cb32a20d5fbc3f2930b4d",
+        "ACE-DEV-FG-105-independent": "8b65cd2254d7bf7477ed36da98f495255562bfee4e44432290b7832d1403ea1d",
+        "ACE-DEV-FG-105-low": "d36c95a8d1cd574c66f13ee2f831e66d5f2f6ced56d192fe415523dc0727f35a"
+      },
+      "family_id": "ACE-DEV-FG-105",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-105-high": "7d91a7625cf0d6f60d1c0a96b8cfb9616ec378cee68ecd515eae087ca2e8f719",
+        "ACE-DEV-FG-105-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-105-low": "618115e0e79dcfeaebc34573f10f4a9d95c5a4ab09f3384f1018bbddcea24301"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "2c913a4e1522d978b3e7fb84740459a1b3cc22d4851a76bb82bf9dcde00b37a2",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "60dafb66daa35463c66a41f3a7a18652fbf65d428463cb81d31254f0adf952d3",
+      "target_instruction_sha256": "484e304b216fb70dc5708c1b3b0696b341813080315b22c4492335fe9568b533",
+      "target_resource_footprint_sha256": "7cc44267abab8d7e90769584c9d23b3734167cd670906c7b51cb9491b2d3fbb8",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-106-high": "9c3c78180dd599c059436048342debaf8ea6726d0c9fea7cf1cf4e0027715e39",
+        "ACE-DEV-FG-106-independent": "4701b5aacc53c8447ce08348d036fdc3aacd2c21aa62a166fc6f935ed4776d62",
+        "ACE-DEV-FG-106-low": "feca7ec89e7ba3c1feda2a2f90667c57e370444bcc43afb4dea01de453a88554"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-106-high": "b332f66b2460d8a089fe6df5e7ce3ed98a4097faa222ef1e4a1c77ef523199c0",
+        "ACE-DEV-FG-106-independent": "2c1e5b28c878481b0b24c3bf1b39a01326d107b257c7107cf6b9d478a9197046",
+        "ACE-DEV-FG-106-low": "3fb621a3c00c1075f652600d0752fa8f338b4bd8883591dc37a9b96ed963d09f"
+      },
+      "family_id": "ACE-DEV-FG-106",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-106-high": "8feed0eb9bdad8de966fd617d02b1d756ec730d819b6d8b33cf4e4806db97e2e",
+        "ACE-DEV-FG-106-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-106-low": "5a72dc545c6956ede905136c48699bbb2214bf18ee8b4c2d7f9c90e55c125b16"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "56c6d2c02e4e209c1fa963a36d4651b37a56235288273f7c671ee233b68b7a71",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "6fec651ee6962fcdd361e1b6ed3f3cbc81e627604ad80c2b7ffe683334c6cbda",
+      "target_instruction_sha256": "4affb571f8c30e75c598309f99f601562095d421ca85390e2d69a3428bfe5ce5",
+      "target_resource_footprint_sha256": "558a7d9b53f3c8e655e91dbd885afb4ddc7613d17dc852176be388d59b8749ae",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-107-high": "b6856752eb3ca29f37cc84264e3d234591b1f8a4e9d2988ce5b8ce4b449036bd",
+        "ACE-DEV-FG-107-independent": "a661161cb53c0c6720fa191923b50a01f1c07742fc4d94cbb4bcf7b1e1960ccd",
+        "ACE-DEV-FG-107-low": "f40dd3e8ae3f453fff6cbf347ff1ad5f125f889db94782dc4fcf2290235a70ab"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-107-high": "acacddd2cb63c4a6a9de1df329132d9cbf43f26dee979c96f56129e0a77be45c",
+        "ACE-DEV-FG-107-independent": "095b801e07fe5ee6e02e51f2d0b0f55e97aa7a17d919a6af88eefca2dc2b99c8",
+        "ACE-DEV-FG-107-low": "fbfdd9b81ad4975e894483d098b38e912194dfe3d148dc893f45cc0ba68a05c1"
+      },
+      "family_id": "ACE-DEV-FG-107",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-107-high": "bcbec5a7b064bfd136e177f1df1e021ecd0890079fcfd8dd5195576198ac523a",
+        "ACE-DEV-FG-107-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-107-low": "f61f0ee503fe4a7d5f3e739aec8a3de511e2d8e39529a9e73bcce2492712e89c"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "b7e16fd1f8ab4adecbe1e7e0f815c486f722c504eef8d4c5dabd1484bda59076",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "54539f4ba22b3af9ed4fc5031b629a6bdc3a7dae3c57b90e892e42dc56d2e3a3",
+      "target_instruction_sha256": "16d4472efb89e9bd1f94d1d82a94822bc9c3b3a05e16a86000be2c21f179e9c6",
+      "target_resource_footprint_sha256": "41d1bcab7ad56bbc1a1ef055b8d3d2ef1225cb40ba39f486c8af8ceb2f9db3db",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-FG-108-high": "e4a9b66bd3837eb858fb201f30264930bebec6fd2185ff86bf4b88fdcbecb8e1",
+        "ACE-DEV-FG-108-independent": "73f8e7b132770c7b4d6f0ce07e9829256319f113ab6bd2490286f779bceab7c7",
+        "ACE-DEV-FG-108-low": "ed2c16879bfeb167b6ce4f02e48ab83bbbb1672882bc8e2174cae78ef2a5b7b6"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-FG-108-high": "07f33e2cd408c98894303490893d9d7379f263f1ae2ac4a79bbd683770656d47",
+        "ACE-DEV-FG-108-independent": "acc39917a7e79cf43e757524d1965c4f11f9e91b745bbafab5f53de2de9cafff",
+        "ACE-DEV-FG-108-low": "179dc74fa44f97e3d37345bb518d5cb8b19833db35e578891c44099ccb592929"
+      },
+      "family_id": "ACE-DEV-FG-108",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-FG-108-high": "9f2355cc0fd20f4881a37cfd5b3646d1d3cbe95ef10fe6666a8786a156a812ca",
+        "ACE-DEV-FG-108-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-FG-108-low": "40f3e4c2ea043a3f830dd2f5bea213dc77cc0579a9202f3c7219717ac70473b4"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "d9c3d2b579454bd5eb882adaf35894c932e34050ab7e96e14fe0b15366c4b451",
+      "instruction_byte_length": 424,
+      "instruction_word_count": 41,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "c7b3668c7b245211003ea032cd597c11455059c9ebfa193e2e9c4899a3855e05",
+      "target_instruction_sha256": "4d59585d7d2be423cc44b0ef9740f3ef6bdd3c692a1472bd5cfe924269984beb",
+      "target_resource_footprint_sha256": "76c07433b603ab2c9d4902f44427bc384b7cf3710014669677245a2b2aee7b50",
+      "target_semantics_sha256": "fca32945cf4861d596d8584b0e264aa2547f7220ce4efe8eb980cb05a2e2de67",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-109-high": "ef86636cdf2f6e379a627e75dc90ab66503b72a1824535dc4e285726e5cb8765",
+        "ACE-DEV-TNF-109-independent": "8fd550dde9d82397ea8ef36e3d672a47ac3410395521ec3c1689453258369464",
+        "ACE-DEV-TNF-109-low": "6c98bb8ba7ca640d98930a45f7fbc61edfdb231ca6e168d32e40c0fd4e7c3ab7"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-109-high": "ad0229833d4a7d7d8f8c85665bd0b5080c22e8e4eecc291a9987f612d4042bc0",
+        "ACE-DEV-TNF-109-independent": "3443b73bb8ba1b679ca29a0941bcea0b5bd99d8bb5b84a0ae45d1653a74178e6",
+        "ACE-DEV-TNF-109-low": "2066d5a76ee2727f2e99366dead465cdd6ce259b25c582e7b694e2a2f2c83da1"
+      },
+      "family_id": "ACE-DEV-TNF-109",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-109-high": "46bf16fa9a85a23445e05775c80036b8667bbaf61505e54eb0ed5ac94d1a7053",
+        "ACE-DEV-TNF-109-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-109-low": "9e4c5e1d6b8a1b78197344bf1c32a9fb56131cf013615819f12e19fff968b6a4"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "8ab49064c6400ee80192102d26a6d040e850d1fe5bd1186e4cdce31d2c9b5118",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "425d19a845f0ed6376f23eb2d5d7a4aa8aae04fd450bf78b8d6bc6c7480bc658",
+      "target_instruction_sha256": "eaf034502e052f2f9a7c40178834ec1c2773df29e9c0c79510feddf4c5f1713c",
+      "target_resource_footprint_sha256": "71fca98634f80fa0ffb064a2ed95fe06e3312e4c0f557d16b8ba8f668f341082",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-110-high": "edfaa3484022d3d21bea464bfe20a1adb62dae04e7545075dc6e3973c525121b",
+        "ACE-DEV-TNF-110-independent": "d71fa59cd5293396605ed00d5cc918f3b34026d45e681db528dd62425a6bdc99",
+        "ACE-DEV-TNF-110-low": "628fad09aa382815d7a099b44fcc851605adb4458e6159634cc7456615c4c9df"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-110-high": "4b5e91854ea211f500514c1ecee0a9ed662d6a0ac19bb80032ab6a203d636e84",
+        "ACE-DEV-TNF-110-independent": "8bfb4bad1e67db8456670c36686211ccdff55e0e48b837a5da42af85cbcb1851",
+        "ACE-DEV-TNF-110-low": "3cb152bc983ac7eec3ee351314be913a1b152399e1eb98c0874aaa4f0c5eb7a6"
+      },
+      "family_id": "ACE-DEV-TNF-110",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-110-high": "acd579986ec58a6afe28a786d6ba61af655ba800922b399b7c8631b5cc7e97e4",
+        "ACE-DEV-TNF-110-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-110-low": "1500bbed19c58b1be00f4e28cb31eaf5360415aa3123a76b36834dbe27b073fc"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "7f69a0626dd7f775977cdab816865447a00a491fb7135908d5cba4272f9a2147",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "21d787c0fc464e41e76442e0f9541560d5f2dbf02bd31a05e68df1126eecccad",
+      "target_instruction_sha256": "801fc716203977b59f3e684206eb40d8cd5c7054d4525c20a4fcf4efdd0db0e8",
+      "target_resource_footprint_sha256": "e39fe63fc6658583265e585072f0dbee00cee03769dd17b4129006f0d8fbf82c",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-111-high": "ed8a8fb56fa5e0279437dc62afb294b9dcc80bdc698d50701204ad930e52fce2",
+        "ACE-DEV-TNF-111-independent": "eb5c14d4dbe249a702a907968d8aa756d3e2c3106cce8a77641f6196eada8077",
+        "ACE-DEV-TNF-111-low": "ca22fc3ad0bf4a0c82cf5ebe755361e3ae96d9d89232aad31febf74ace5d5b31"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-111-high": "ca2062f8ac416a9ecb614bd14c35f57b2ff4bf87e445e340f5926a7afe48bfcb",
+        "ACE-DEV-TNF-111-independent": "97414bc08f9cbdd46714b7c3fccbd0e650b579b0bbd4cac42282edfc6f4778c1",
+        "ACE-DEV-TNF-111-low": "b6d4887eeb6230eebfa9723230a93cc473d62af2493229f8f5dcc8c4816288e9"
+      },
+      "family_id": "ACE-DEV-TNF-111",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-111-high": "72cda9c0d053c1a50876b0c3bce51b35a45ac5a4a58c9a42ab1cc488c1fe068e",
+        "ACE-DEV-TNF-111-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-111-low": "37fcd35f69cf901ab1f92772381d8e32c943b7412e3afacf3a7192c1f45bc3af"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "04884b3a7d48df6840afe6a828a1ef827ed8dace53999c357d3013c1e9147780",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "c8028e59e057e88a284ce02f29dd9da410546ad47a9611cefed9243782d4ce9e",
+      "target_instruction_sha256": "28ecafe7a3144e90708199aebcc3adea929f598a522546ec400eac2a993146e7",
+      "target_resource_footprint_sha256": "b9f49e360ad72481d909501e831752c3bb8efb4be4d0e6d4c763a2f119b10ac3",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-112-high": "3142ea008195c35d7dc76a4df2aa0e74533d8895e8ae992b19cd590b7db2f17f",
+        "ACE-DEV-TNF-112-independent": "8c4d02b665c5d829919df11004e4db293585453b261ac26ab92bce30e2c14400",
+        "ACE-DEV-TNF-112-low": "f845f8e79234ac91263d8a3ffa36e314a9c953f1905f4c8caa57e80c999a4405"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-112-high": "ae2e3ff71a6da2dd65cdf780c586c4780863d01fa5db1b76a51ce8b901182233",
+        "ACE-DEV-TNF-112-independent": "3f8c4aa54a8506a4bf6a425110b850fad0dd8efc01fec4efb8459c126d06e3a0",
+        "ACE-DEV-TNF-112-low": "26d7572c3935ce96780afc1b5451e740ce6b1156a88a8a4fde40896996424cc0"
+      },
+      "family_id": "ACE-DEV-TNF-112",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-112-high": "a12c848efc80bb5f44ed2552d374c2a78e865e63805213ae5d20c0d70e6f7453",
+        "ACE-DEV-TNF-112-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-112-low": "90f3e6c6a9806d76a90b225d8da42dd8c59a13c55ffa005c98118e02211cb892"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "ea367b9f42c9442b95de0531363f497d19f90372fc55fc82f1273e1f8f0151cd",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "d7392a6c14dfae87794535b101a2e19728ffb967759dfa94143699bbb65a85d0",
+      "target_instruction_sha256": "52a7ad950bee336ce72f953f048ca5e344f36221282068a29a85d1623fd1d020",
+      "target_resource_footprint_sha256": "3524a82f210b50a108c8e20d22de5ce62189162f1a5ac87efb4ebcc02615aca6",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-113-high": "b1ff59f5b263351d4551f4c661fe33c92a910a98e484204c7633beace0d8092f",
+        "ACE-DEV-TNF-113-independent": "96a2738261425737db448ea5f768a5c2b5ab9203e83982de17e9f4e8e4d97036",
+        "ACE-DEV-TNF-113-low": "7814af0322b3bd09600c976c020a2c32100873a6368e64cff59055e116043f70"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-113-high": "a444642e46cb1e66a24594a5828e18a7831df6e04c25c4ec9b679f28eecaff39",
+        "ACE-DEV-TNF-113-independent": "b3a1413273da3266cb23e5ba3965f4ce720428bb7a87a05fa262671927ea439e",
+        "ACE-DEV-TNF-113-low": "47a981240cc5881812eb349d3cefdc7dd80dacc795346895bee3b7ddd104e8cd"
+      },
+      "family_id": "ACE-DEV-TNF-113",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-113-high": "dc78e7d3cc7fc5f0573290b7ca9ed698036d72ae25790db53fecbcde45db95ec",
+        "ACE-DEV-TNF-113-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-113-low": "7dfa48f2a80d6efd095ddca9c14ed1763e59f7bb56afed47ad792b905437ce82"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "3a56d185294c638ecfccf4ba4c49963691cdaec655932da798e923c22821a12c",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "e6598eb678022c91f0f69f3ec7ab92fcc2386db3bc891a6856bb3d8e62e4fbd0",
+      "target_instruction_sha256": "9f3990688028e1dc045ebe3ca9a548511a538c7efc8cbbc0dd31b551fc77d859",
+      "target_resource_footprint_sha256": "13582024a28019bd13ca530a6322f5b4f9b4056f8a5dd44c72918299cc238872",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-114-high": "69bcf454151b031257256e9638955e4311fb7ae0c896603297ee433be040cea9",
+        "ACE-DEV-TNF-114-independent": "1a9a678a75fccc4ce37247ed8c053df4e64717c05c1b266c9cb27f1e360cea7d",
+        "ACE-DEV-TNF-114-low": "b32250eb6b90a35b6dee205c4db3f9057557126fbe1a6e48ba17ff8b25dbe50e"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-114-high": "c9b2dad2de5b051dd3c26cf71c99d3c7e3e2688a5f95f31f16b0c41a4bb682b9",
+        "ACE-DEV-TNF-114-independent": "a8a227ee690322b0231f3957b2417fa0b002aee139f003fcd3672c18aa2fd670",
+        "ACE-DEV-TNF-114-low": "e92af3f45835a3f48565e21ab9ec2c6cc8c11e00bb911cf9efd87ffb23a0a578"
+      },
+      "family_id": "ACE-DEV-TNF-114",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-114-high": "6930acc42649c4a5d430b856bfc3af4615cd88f39636987750495840c0ff041f",
+        "ACE-DEV-TNF-114-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-114-low": "828a2bc269fecfce75173e6cf2a7506bec9c2acd8e7ead12630dc534fda0cf3b"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "7dc3dd9c4f160922a5a569eff9dd51c81f5483e177af14917010b688186b26f6",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "b35357202b61f31ce0370c321ae4a270c2a0633425dee2470ceb8bfa56388896",
+      "target_instruction_sha256": "db39bb04f9e2829bdff026c271c5818c0ba2f8e931ccefca4586bb918e5f5fa5",
+      "target_resource_footprint_sha256": "8560b0e70cc81872e17bb71ce6501cbe1b836b9e1ec9450c1f17f531b7a7b3ae",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-115-high": "61a38b1f2ad834886b203e5d628325e026e3b8af8bc36bea075d66c847e1e4d8",
+        "ACE-DEV-TNF-115-independent": "7eb973bacec959c7c545e3c7e0a085422d0ac1552430e0067e8387b0d05088ed",
+        "ACE-DEV-TNF-115-low": "7fe3df0f121ceea440ea4f1ab2eb4a933b60bc99f81a0a592b1e2bb7bd91dde0"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-115-high": "b67b894867ffb64c6aa07a9544bbb41db5670188a53656c037b50f8fece4f5fc",
+        "ACE-DEV-TNF-115-independent": "6e681b6f8157cc1369cc586a138f2d2b8808b4c48c5cee582ae8661549421941",
+        "ACE-DEV-TNF-115-low": "19a4d38d82dcd70adf88f11bc0fe82467fc4a6ffc54968e0b03fd8381eaec0bf"
+      },
+      "family_id": "ACE-DEV-TNF-115",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-115-high": "f1f2dc17250bfdfb039e66b0eb7a9752413704dd71cab96e977b09fe52fc8cd3",
+        "ACE-DEV-TNF-115-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-115-low": "66101a6ec41fe67176607c5b1cbd89716b20a035fd410db8956290ce3f5dceeb"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "c448cf6f7fdb3e677f5bba5918045ba5d5fc4bb68121263d07d0cd6a873efcda",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "9b4331d29897c627abcee747a472018ae82bec34379280b80e89d97328f296d5",
+      "target_instruction_sha256": "268e2a1f3d9915383b803a4997b352f951d25a689cc274d57f5e71cae6b85e4a",
+      "target_resource_footprint_sha256": "06d5708aaa223e90b7c60c0ec1e0317a0bb642d7f3b74e52a694e964fddcaa5a",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-DEV-TNF-116-high": "b4c35270c015d97751e99c61d29c46bec36932f343a42668e54015e0d79e94b3",
+        "ACE-DEV-TNF-116-independent": "1baa7070dd2082610a6702ba5796a5031fa566f861239f6c2504e45c4e9edae4",
+        "ACE-DEV-TNF-116-low": "e315b44998b45386837c7b5de1c50e8ce32c29548aee6ab195841ac907eeb5d6"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-DEV-TNF-116-high": "b3b51adbc611fbb4137520f086acb7ad0951af4b77f162de3a7bd006f80263ad",
+        "ACE-DEV-TNF-116-independent": "7192d930fb4e57a607db1cb595fb057da027554cf9d340d63ad316c2f6fa57e1",
+        "ACE-DEV-TNF-116-low": "93cca3a12cb1fa01aa8bef29d735fd5244d761357e9ffde780f63552617c217c"
+      },
+      "family_id": "ACE-DEV-TNF-116",
+      "graph_sha256_by_arm": {
+        "ACE-DEV-TNF-116-high": "cefc21a20a5667e2b08c5fa32a2a9620fc6670c3a22c4c789f5717a4f07f7b97",
+        "ACE-DEV-TNF-116-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-DEV-TNF-116-low": "86003e1be17b2f3e268dd270e0cf3e22bb39d50833e72258eef3b8e8d159eb72"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "561b973c1de7f1d91bc4e84dfb83a51e20079b0ee4faacc79eeb21d2a9e26bcd",
+      "instruction_byte_length": 478,
+      "instruction_word_count": 50,
+      "matching_sha256": "abaa7041492987ed8b1e22b20ad2ec8e4837cc1da3e2aae73c87b9bf560a6c62",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_preserve_entity_identity"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "0610857b426a200af391f06b08301b43671f9ecd0db92301190cc7542fccd4e7",
+      "target_instruction_sha256": "a990c2dfd62d5b2382470227d789d5418d715739dc5a15e7fa829961dc908d94",
+      "target_resource_footprint_sha256": "ceb099b29e0535625fded373e1d4f1e01d711ee7ef97807833baefd84dd7d03c",
+      "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
+      "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
+    }
+  ],
+  "freshness": {
+    "case_id_overlap_count": 0,
+    "fixture_hash_overlap_count": 0,
+    "instruction_hash_overlap_count": 0,
+    "prior_direct_sfq_cases_checked": 12,
+    "prior_fixed_six_cases_checked": 6,
+    "source_case_ids_unique": true,
+    "source_fixture_hashes_unique": true,
+    "source_instruction_hashes_unique": true,
+    "target_local_resource_hash_overlap_count": 0
+  },
+  "max_public_tool_calls": 48,
+  "minimum_public_tool_headroom": 32,
+  "next_required_action": "ZERO_PROVIDER adversarial protocol review; then separate human execution authority if review passes.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_fixed_six_closeout_content_sha256": "c5c89a15c70c9d4eaba0ddcf44ef5e76732098e239d495821da58bb477b97d6c",
+  "parent_fixed_six_completed_failures_carried_forward": false,
+  "parent_fixed_six_reuse": false,
+  "protected_bundle": {
+    "path": "generated/agent-constraint-externality-atomgit-repeat-dev-reserve-protected-20260906.bundle",
+    "sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb"
+  },
+  "provider_requests_created": 0,
+  "public_source_oracles": [
+    {
+      "case_id": "ACE-DEV-FG-101-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "1f3cbc5def2ed87aa25548b4fbdb6c0e1fff8392bb61c96c000c5b62288c7532",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-102-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "c2f888e5c462bf322947e16491bc222d59d491c719f7ffc9b1083df9e15337da",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-103-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "311ade9e17f50f5a69f29240ca839f8b38fe2682dea3dce26133ce0b42a90a98",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-104-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "b857144334777cd65471fa2811daf55180aa1b12238beccc4f507a091d172706",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-105-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "98bf151d0b723d97a84b89878f90c4c65ce7538102fc3b33c883f860cc133955",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-106-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "3bdb2ad6c7dae00d72c10cce8026fe652fa2f569246545eaf2e963de6f5e25fc",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-107-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "c0848715a1388b0dfcd6537e1c3149fc6d3f8c89b5f60db6fb6abc07d1d507b8",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-FG-108-SOURCE",
+      "headroom": 54,
+      "initial_snapshot_sha256": "c7902885b8df418e93ac466a4f8579fb91bbacc0fc0dfbc8731d1238006d034b",
+      "kind": "FG_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 26,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-109-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "35a11be6037cdd74347f2b7aa828e7a19cc6a4485af5126cd84b2868b9dc1e35",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-110-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "2b9de41358b9f9fcfae059f2693354b30556b9ae37ba5f7da247fc984c4ff8aa",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-111-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "3023edacb4a2b2abf919b74290ebfb7ae8876745ff58c7153688c11f86d2854b",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-112-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "a59f5912a8ccd68ff2d1d8d546f39a671c96d078529d7c216fb75b87bfa55406",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-113-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "b0cc6c71e8f0c3eb82973185161f2f780cf2f68fe749df1f56f6d7f3528ee746",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-114-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "04b1cec106d9c8390882df8ca1274cc849f7de237dc9621673baa34c469799ed",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-115-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "1e645645b7a8545d5bd099e1893be5cfcfaba8c47f75c5eae8b78b65cf55e2f1",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    },
+    {
+      "case_id": "ACE-DEV-TNF-116-SOURCE",
+      "headroom": 32,
+      "initial_snapshot_sha256": "85b00ced63c1207ba1e3bd921b72e55673bc7a4ef8e03abee3b131a5e65db8dd",
+      "kind": "TNF_ATOMGIT_REPEAT_DEV_SOURCE_V1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 48,
+      "target_success": true,
+      "tool_call_cap": 80
+    }
+  ],
+  "reason": "The fixed-six development set made any single normally completed target success terminal even though source-failure status is a pre-topology eligibility fact. The reserve moves that eligibility rule before topology execution without using repair, collateral, or topology outcomes.",
+  "repair_class": "QUALIFICATION_SUPPORT_DESIGN_REPAIR_NO_MECHANISM_OUTCOME_READ",
+  "reserve": {
+    "categories": [
+      "FG",
+      "TNF"
+    ],
+    "challenge_recipe_change_after_first_dispatch": false,
+    "family_count": 16,
+    "maximum_source_dispatches": 16,
+    "needed_per_category": 3,
+    "order_salt": "ACE-REPEAT-DEV-RESERVE-ORDER-20260906-V1",
+    "per_category": 8,
+    "pre_dispatch_operational_hold": "RESUMABLE_WITHOUT_BURNING_UNIT",
+    "ranked_source_order_by_category": {
+      "FG": [
+        {
+          "family_id": "ACE-DEV-FG-103",
+          "rank_sha256": "02dc373628ff006d5f451e8195b633acc60466bbcd3fe742618c00903bb2f062"
+        },
+        {
+          "family_id": "ACE-DEV-FG-104",
+          "rank_sha256": "3315ee77aedfbc5ed3ebf0c2b0a0ef33925e6de6becc18bd43ff8e4195106ff8"
+        },
+        {
+          "family_id": "ACE-DEV-FG-105",
+          "rank_sha256": "369acdc14cd7551c3c13ee054399bbaf3bba08c06a792f88df1615be18743e0e"
+        },
+        {
+          "family_id": "ACE-DEV-FG-101",
+          "rank_sha256": "41e86d317c227c7c0b88a9fd8f8e1c6e46c45466af5693b0b1fecd6c59a348bd"
+        },
+        {
+          "family_id": "ACE-DEV-FG-102",
+          "rank_sha256": "8f529e9fb8f5db885e03e69885c25be31d55460b76a3ebc1f2e4e5d011641b64"
+        },
+        {
+          "family_id": "ACE-DEV-FG-106",
+          "rank_sha256": "b41cab798b3bdc097212368dc1ff65b7c327855d662fdfdf974e0c93ffd5ab1e"
+        },
+        {
+          "family_id": "ACE-DEV-FG-108",
+          "rank_sha256": "d727290d93fc2433b1635ac0b85db58e8700e2d52607b3605b1eabbfe565ab67"
+        },
+        {
+          "family_id": "ACE-DEV-FG-107",
+          "rank_sha256": "f76f8a62b597a9c935334145c865f3d7ab343563debf2794ecf9bec97d342435"
+        }
+      ],
+      "TNF": [
+        {
+          "family_id": "ACE-DEV-TNF-113",
+          "rank_sha256": "1f7aadc5cbe298f6befd3798f7bbca46dd1eb8d93343cff899f1c5fd9c6042a7"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-115",
+          "rank_sha256": "27a6fd32c179a7eb53c6e098095eb55c733a4e557a466566dd75e519a51efffa"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-110",
+          "rank_sha256": "924498fe062c6e9ca27f4d1696a9a5bfe8f591e43f1cf9993c241c3ab003c6fa"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-111",
+          "rank_sha256": "a3984bad1803dc834971f6408c37b39f3f1a6f2418e6abd3580d54fa133fdc37"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-116",
+          "rank_sha256": "d1b70771a1d820e1d727fe4849ac2014217279b0231bf8eb3b32498460110db0"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-109",
+          "rank_sha256": "df106e84aa4cc59ae636c11a765119cba22adbdc09ff26e285e030be09ea47b2"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-114",
+          "rank_sha256": "ea48012cb81373cf6f4a77d6c4180d1e9c32191041be391035118054b9f2e0ab"
+        },
+        {
+          "family_id": "ACE-DEV-TNF-112",
+          "rank_sha256": "ed73e1903551e7a6184c78e77ac27890830b8b539820a25a9f8660c9b33d956c"
+        }
+      ]
+    },
+    "replacement_outside_frozen_reserve": false,
+    "retry": false,
+    "selection_rule": "Within each category, dispatch fresh source families in frozen rank order. Target success is pre-topology ineligibility; continue to the next never-dispatched reserve family. Freeze the first three normally completed semantic target failures in each category. Stop once 3 FG + 3 TNF failures are frozen.",
+    "technical_invalidity_after_dispatch": "HARD_STOP_NO_REPLAY_NO_SKIP"
+  },
+  "reserve_id": "ACE-ATOMGIT-REPEAT-DEV-RESERVE-V1-20260906",
+  "schema_version": "ace-repeat-dev-reserve-contract-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "selected_development_panel_after_source": {
+    "category_balance": {
+      "FG": 3,
+      "TNF": 3
+    },
+    "family_count": 6,
+    "permanently_excluded_from_confirmatory": true,
+    "repair_generation_only_after_panel_freeze": true,
+    "same_exact_repair_bytes_for_all_later_topology_replays": true
+  },
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_STATIC_READY_EXECUTION_CLOSED"
+}

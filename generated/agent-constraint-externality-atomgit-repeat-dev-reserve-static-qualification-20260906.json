@@ -1,0 +1,25 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "repair_generation": false,
+    "reserve_source_execution": false
+  },
+  "category_counts": {
+    "FILE_GMAIL": 8,
+    "TODO_NOTE_FILE": 8
+  },
+  "content_sha256": "12f7e183b8552feb60699cb143e4f56b5b7d8ccaa32766bfd9d9e10e990adcde",
+  "contract_content_sha256": "5b6acc59c918c93d56a78bea57970ea31b259511b062f5f78afd0f17c5933268",
+  "family_count": 16,
+  "freshness_pass": true,
+  "initial_non_target_satisfaction_pass": true,
+  "matched_topology_pass": true,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protected_bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+  "provider_requests_created": 0,
+  "public_oracle_pass": true,
+  "reserve_id": "ACE-ATOMGIT-REPEAT-DEV-RESERVE-V1-20260906",
+  "schema_version": "ace-repeat-dev-reserve-static-qualification-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_STATIC_QUALIFICATION_PASS_AUTHORITY_CLOSED"
+}

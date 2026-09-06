@@ -1,0 +1,69 @@
+{
+  "appworld_tool_call_total": 88,
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "source_execution_consumed": true,
+    "target_only_verification": false
+  },
+  "completed_family_count": 3,
+  "completed_units": [
+    {
+      "appworld_tool_call_count": 30,
+      "case_id": "ACE-DEV-FG-01-SOURCE",
+      "family_id": "ACE-DEV-FG-01",
+      "model_round_count": 11,
+      "target_success": false,
+      "trajectory_sha256": "07d66545c813603e0f51a542316a4d4960e394bbac2ee92507d975db43fad097",
+      "usable_semantic_failure": true
+    },
+    {
+      "appworld_tool_call_count": 28,
+      "case_id": "ACE-DEV-FG-02-SOURCE",
+      "family_id": "ACE-DEV-FG-02",
+      "model_round_count": 10,
+      "target_success": false,
+      "trajectory_sha256": "ac39aca50b72454804ca40619a1b3c6a9ec478b48e1f2d1ffbc92ef41dbc162a",
+      "usable_semantic_failure": true
+    },
+    {
+      "appworld_tool_call_count": 30,
+      "case_id": "ACE-DEV-FG-03-SOURCE",
+      "family_id": "ACE-DEV-FG-03",
+      "model_round_count": 9,
+      "target_success": true,
+      "trajectory_sha256": "6bf092b5620192f568bdfeca165208b9544ff1b95baa9edf86ae114bbefe5e51",
+      "usable_semantic_failure": false
+    }
+  ],
+  "content_sha256": "c5c89a15c70c9d4eaba0ddcf44ef5e76732098e239d495821da58bb477b97d6c",
+  "current_fixed_six_reusable_for_repeat_panel": false,
+  "dispatched_family_count": 3,
+  "execution_contract_content_sha256": "f52b23069e6dfc02493c0c879c3b7847ecc8daa5cd79a7925905cb746cc9dd1a",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-SOURCE-20260906",
+  "interpretation": "Qualification-layer support failure only. It does not test repair uptake, collateral externality, or topology dependence.",
+  "ledger_sha256": "8d750bb0bcc33190d693b1807b3bd524a790efa51af92f6d70b1915bc282570a",
+  "never_dispatched_family_ids": [
+    "ACE-DEV-TNF-04",
+    "ACE-DEV-TNF-05",
+    "ACE-DEV-TNF-06"
+  ],
+  "next_legal_action": "ZERO_PROVIDER development-reserve protocol repair only; any fresh provider dispatch requires a new reviewed contract and separate human execution authority.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "planned_family_count": 6,
+  "repair_generation_executed": false,
+  "replacement_or_top_up_allowed_under_consumed_contract": false,
+  "schema_version": "ace-repeat-dev-source-closeout-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "scientific_model_round_count": 30,
+  "semantic_target_failure_count": 2,
+  "status": "ATOMGIT_REPEAT_DEV_FIXED_SIX_SOURCE_SUPPORT_FAIL_STOP_NO_REPAIR",
+  "support_stop_family_id": "ACE-DEV-FG-03",
+  "support_stop_reason": "Frozen fixed-six contract requires every development family to have a semantic target failure; the third normally completed source succeeded. Replacement/top-up is forbidden.",
+  "target_success_count": 1,
+  "topology_execution_executed": false
+}

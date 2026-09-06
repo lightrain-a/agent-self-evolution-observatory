@@ -1,0 +1,53 @@
+{
+  "schema_version": "ace-repeat-dev-reserve-protocol-audit-v1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_PROTOCOL_AUDIT_PASS_EXECUTION_CLOSED",
+  "fixed_six_closeout_content_sha256": "c5c89a15c70c9d4eaba0ddcf44ef5e76732098e239d495821da58bb477b97d6c",
+  "reserve_contract_content_sha256": "5b6acc59c918c93d56a78bea57970ea31b259511b062f5f78afd0f17c5933268",
+  "reserve_static_qualification_content_sha256": "12f7e183b8552feb60699cb143e4f56b5b7d8ccaa32766bfd9d9e10e990adcde",
+  "reserve_bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+  "audit": {
+    "fixed_six_terminal_stop_preserved": true,
+    "fixed_six_first_two_failures_not_salvaged": true,
+    "fixed_six_success_not_replayed": true,
+    "fixed_six_never_dispatched_units_remain_unburned_but_not_reused": true,
+    "reserve_frozen_before_any_reserve_provider_dispatch": true,
+    "reserve_family_count": 16,
+    "reserve_category_balance": "8 FG + 8 TNF",
+    "selection_population": "pre-topology normally-completed semantic source failures only",
+    "selection_rule": "first three eligible failures per category under frozen stable-hash order",
+    "target_success_role": "pre-topology eligibility attrition only",
+    "technical_invalidity_after_dispatch": "hard stop; no replay or skip",
+    "replacement_outside_reserve": false,
+    "challenge_recipe_change_after_dispatch": false,
+    "repair_or_topology_outcome_used_for_reserve_selection": false,
+    "selected_panel_size_after_source": 6,
+    "selected_panel_permanently_excluded_from_confirmatory": true,
+    "public_oracle_count": 16,
+    "public_oracle_pass_count": 16,
+    "minimum_public_tool_headroom": 32,
+    "matched_topology_static_pass": true,
+    "freshness_overlap_counts_all_zero": true
+  },
+  "tests": {
+    "run": 18,
+    "passed": 18,
+    "failed": 0,
+    "bundle_sha_before": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+    "bundle_sha_after": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+    "git_diff_check": "PASS"
+  },
+  "interpretation": "This repair changes only how six development-only repeat/precision families are obtained before repair/topology outcomes. It does not repair, rerun, reinterpret, or rescue any RQ1/RQ2/RQ3/RQ4 result because none exists.",
+  "authority": {
+    "reserve_source_execution": false,
+    "repair_generation": false,
+    "development_repeat_qualification": false,
+    "target_only_verification": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "paper_claim": false
+  },
+  "next_legal_action": "Separate human authority may authorize only the frozen reserve source-acquisition stage.",
+  "content_sha256": "0a8177cf835ebe0fb9f059a0c3ebf7637dc748a42961543d15d1bd16efc8e797"
+}
