@@ -87,7 +87,11 @@ class G1AtomGitQ0Test(unittest.TestCase):
 
     def test_current_preflight_missing_auth_is_zero_request_hold(self) -> None:
         with mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_preflight.find_auth",return_value=(None,["/nonexistent/auth.toml"])):
-            result=preflight(amendment=DEFAULT_AMENDMENT,awm_root=DEFAULT_AWM,browserart_root=DEFAULT_BROWSERART)
+            result=preflight(
+                amendment=DEFAULT_AMENDMENT,
+                awm_root=DEFAULT_AWM,
+                browserart_root=Path("/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2-host69-upstream-20260906"),
+            )
         self.assertEqual(result["status"],"PRE_DISPATCH_OPERATIONAL_HOLD_AUTH_MISSING")
         self.assertFalse(result["dispatch_attempted"])
         self.assertEqual(result["model_request_delta"],0)
