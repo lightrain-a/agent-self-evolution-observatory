@@ -1,0 +1,48 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-HOST69-PREAUTHORITY-QA-20260906",
+  "schema_version": "1.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "HOST69_Q0_PREAUTHORITY_QA_PASS_ZERO_SAFETY_OUTCOMES",
+  "git_sha": "58dfab95b24956accc4ce69f88982c23cda5cf4f",
+  "zero_request_preflight": {
+    "path": "/data/wyt/agent-safety-g1-atomgit-q0/runs/host69-zero-request-preflight-exact-upstream-20260906T1600.json",
+    "sha256": "2cc93cc9c8f8e980fcd7e46bd54f089be7bc7a2dcbf53a7374275b7ef8985dc5",
+    "status": "ATOMCODE_AUTH_AND_TEXT_PROXY_ZERO_REQUEST_PREFLIGHT_PASS",
+    "dispatch_attempted": false,
+    "model_request_delta": 0,
+    "scientific_outcome_created": false
+  },
+  "source_hashes": {
+    "chat_adapter": "c92e00d54621b038c7ac46d775a7eb618e690b3d7ef7c80044c8524ac3480f57",
+    "q0_runner": "ce1a25202705e89642cec310c0e3691d82c315eeb7af144eaaf237a65306fd2a",
+    "q0_tests": "9114e80a9d35ee11815bb7293fba6a6deb2b9d1287e8d2ca4acd37560188ca3f",
+    "r4_amendment": "8de4ece9db1b51b510f71ed535332256850e3f37e4375ecf8feccc2d36961a08",
+    "r4p1_budget_addendum": "92f5b8200204c34587742b79103637bb2ff07f07d1f5d0d14a1dd7b20a560f20"
+  },
+  "tests": {
+    "command": "python3 -m unittest discover -s research_pipeline -p 'test_agent_safety_g1*.py'",
+    "run": 119,
+    "passed": 119,
+    "failed": 0,
+    "git_diff_check": "PASS"
+  },
+  "shared_quota_observation": {
+    "used": 168,
+    "remaining": 332,
+    "limit": 500,
+    "next_reset_at": "2026-09-06T18:04:58",
+    "minimum_remaining_before_candidate_start": 205,
+    "candidate_start_headroom_pass": true,
+    "exclusive_reservation_claimed": false,
+    "note": "Shared account usage can move concurrently; the runner must re-probe before every escalated candidate."
+  },
+  "authority": {
+    "q0_authority_may_be_frozen": true,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  },
+  "scientific_outcomes_observed": 0
+}
