@@ -72,7 +72,7 @@ def build_authorization(
 
     require(review.get("status") == "COMPLETED", "Bridge Stage-A independent review receipt incomplete")
     require(review.get("surface") == "ChatGPT web", "Bridge Stage-A independent review surface drift")
-    require(review.get("model") == "GPT-5.6 Sol", "Bridge Stage-A independent review model drift")
+    require(review.get("model") == "GPT-6 Pro", "Bridge Stage-A independent review model drift")
     require(review.get("verdict") == REVIEW_VERDICT, "Bridge Stage-A independent review did not PASS")
     require(review.get("control_plane_revision") == CONTROL_PLANE_REVISION, "Bridge Stage-A independent review control-plane revision drift")
     require(review.get("contract_sha256_acknowledged") == contract_sha, "Bridge Stage-A review contract acknowledgement drift")

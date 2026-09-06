@@ -75,7 +75,7 @@ class BridgeStageAAuthorityProvenanceTests(unittest.TestCase):
         review_payload = {
             "status": "COMPLETED",
             "surface": "ChatGPT web",
-            "model": "GPT-5.6 Sol",
+            "model": "GPT-6 Pro",
             "verdict": "PASS_TO_SEPARATE_BRIDGE_V4R2_STAGE_A_AUTHORIZATION",
             "control_plane_revision": CONTROL_PLANE_REVISION,
             "contract_sha256_acknowledged": contract_sha,

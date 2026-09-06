@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-stage-a-r3-reviewer-availability-supersession",
+  "date": "2026-09-07",
+  "status": "PASS_STAGE_A_R3B_SUPERSEDES_UNREVIEWED_R3_CURRENT_REVIEWER_AVAILABILITY_MIGRATION",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "superseded_r3": {
+    "executable_object_commit": "da519c675bb32f92f5f5882f923022bd7e68aca9",
+    "contract_path": "generated/e2-r17-bridge-v4r2-stage-a-contract-r3-20260907.json",
+    "contract_sha256": "fef57d88fcaece2b1cb2e4d3915dd4ca011ca4518b66cc2d1cf288dff9d256af",
+    "preflight_path": "generated/e2-r17-bridge-v4r2-stage-a-preflight-r3-20260907.json",
+    "preflight_sha256": "74b08914016c28f48042c3e408d9de39c2ed56314a1215b71e7fe83f83b3d042",
+    "review_packet_path": "oracle_briefs/E2_R17_BRIDGE_V4R2_STAGE_A_R3_EXECUTION_REVIEW_PACKET_COMPACT_20260907.md",
+    "review_packet_sha256": "2e6ee42b915d6888012631022acf063eff2fe1fceca63fa5584315275f9b3a19",
+    "independent_reviewer_user_turns_submitted": 0,
+    "independent_review_verdict": null,
+    "structural_authorization_minted": false,
+    "signed_execution_capability_minted": false,
+    "capability_consumed": false,
+    "provider_io": false,
+    "run_root_created": false,
+    "lineage_lease_created": false
+  },
+  "reviewer_availability_observation": {
+    "host": "host52",
+    "surface": "ChatGPT web current model picker",
+    "old_required_configuration": "GPT-5.6 Sol + Extra High",
+    "old_configuration_currently_exposed": false,
+    "legacy_5_6_currently_exposed_as": "GPT-5.6 Instant",
+    "legacy_5_6_extra_high_selector_present": false,
+    "current_highest_capability_independent_configuration_selected": "GPT-6 Pro",
+    "observation_provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "replacement_r3b": {
+    "contract_path": "generated/e2-r17-bridge-v4r2-stage-a-contract-r3b-20260907.json",
+    "contract_sha256": "4b24829abe80956008e76271e2e2df956f64f9693c9a3b47423690418bfbdc31",
+    "preflight_path": "generated/e2-r17-bridge-v4r2-stage-a-preflight-r3b-20260907.json",
+    "preflight_sha256": "506f4fd8bed6eec3c02dc829e9566b66560fa38974da5301b751a46445fa4a0c",
+    "review_model": "GPT-6 Pro",
+    "review_surface": "ChatGPT web",
+    "fresh_conversation_required": true,
+    "review_packet_science_changed": false,
+    "stage_a_scientific_geometry_changed": false,
+    "authority_provenance_changed": false,
+    "controller_trust_root_changed": false
+  },
+  "repair_scope": {
+    "scientific_geometry_changed": false,
+    "streams_changed": false,
+    "tasks_changed": false,
+    "search_k_changed": false,
+    "support_threshold_changed": false,
+    "scientific_model_identity_changed": false,
+    "provider_budget_changed": false,
+    "stage_separation_changed": false,
+    "external_signed_capability_changed": false,
+    "only_independent_reviewer_configuration_changed": true
+  },
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "free_updater": false,
+    "actor_evaluation": false,
+    "analysis": false,
+    "paper_promotion": false
+  },
+  "interpretation_boundary": "The old GPT-5.6 Sol + Extra High browser configuration is no longer exposed by the current ChatGPT model picker. R3B prospectively substitutes the currently exposed higher-capability GPT-6 Pro as the fresh independent reviewer before any review turn, authorization, signed capability, or Bridge scientific provider call. No scientific object or execution authority changes.",
+  "next_gate": "REGENERATE_R3B_CONTRACT_PREFLIGHT_BOUND_TO_GPT6_PRO_REVIEW_MINTER_THEN_FREEZE_FRESH_REVIEW_PACKET"
+}
