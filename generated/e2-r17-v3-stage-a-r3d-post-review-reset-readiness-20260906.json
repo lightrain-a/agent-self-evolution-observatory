@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-stage-a-r3d-post-review-reset-readiness",
+  "created_at_utc": "2026-09-06T07:31:46Z",
+  "status": "PASS_ZERO_PROVIDER_R3D_CODE_REPLAY_READY_WAIT_HARD_PROVIDER_RESET",
+  "hard_provider_not_before": "2026-09-07T00:00:00+08:00",
+  "provider_reset_reached": false,
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "support_inspected": false,
+  "stage_b_authority": false,
+  "scientific_authority": false,
+  "r3d_contract_sha256": "21f7a50f4e14f48a139ecfa122f7c8a443d4195a1ade0267ccececcb6e424717",
+  "r3d_preflight_sha256": "8894bf0e76d4f1b0a8f101ca55df0ff8728696bc29bf888e6287ab2046c724fa",
+  "r3d_support_review_receipt_sha256": "f97071244451d8e0f7ea1d30f31689948e03858665eeed983802670d38a522fb",
+  "adapter_review_r4_receipt_path": "generated/e2-r17-v3-r3d-recovery-authorization-adapter-gpt56-review-r4-20260906.json",
+  "adapter_review_r4_receipt_sha256": "55f0ce8f513624cb6b9c3fdab3dc6de1af47992000b5362970246cd0bba0e09a",
+  "adapter_pass_gate_path": "generated/e2-r17-v3-r3d-recovery-authorization-adapter-pass-gate-r4-20260906.json",
+  "adapter_pass_gate_sha256": "1e67ff6c3590b35af00c1408ab657f84a8f31e022923f77b8beae16adb9282e2",
+  "adapter_sha256": "0ffded7b9d3800b8a4d04f09bade84effebec51739f591c4e91091fbee148e41",
+  "adapter_tests_sha256": "577337fb6662da15378230ec4ef9a6f908ac685d6ecf773a6a0016fb8418e2f2",
+  "runtime_replay_attestation_verifier_sha256": "f1bead80594273f175a999a0dbdef323c0b06f77e55ff98aeaba2b494e8ab3a4",
+  "runtime_replay_tool_sha256": "054121ecee12ca45e41a4fc924f81a7f2f8fbc5a93d6fffbcc2f0a02e8919548",
+  "provider_runner_sha256": "491b2ae6e53fcfe732f15ef263cc365ce61846b3219d7a13fe70e3834f6d3c89",
+  "host69_runtime_replay_public_key_sha256": "cc454f52d82b28c7eb33e0f938d3328b65427b3192d1a4992e96333298c1f270",
+  "host69_runtime_replay_attestation_path": "generated/e2-r17-v3-stage-a-r3d-recovery-authorization-adapter-host69-runtime-replay-attestation-20260906.json",
+  "host69_runtime_replay_attestation_sha256": "ff5a8e2efa90760120b011bb49f6beb9437cd2931ccff0755b8f58e750409fe9",
+  "host69_frozen_runtime_tests": {
+    "passed": 8,
+    "total": 8,
+    "compile_pass": true,
+    "point_of_use_verify_pass": true,
+    "provider_calls": 0
+  },
+  "execution_artifacts_absent": {
+    "r3d_run_root": true,
+    "r3d_global_lease": true,
+    "fresh_post_reset_identity": true,
+    "fresh_identity_adjudication": true,
+    "r3d_recovery_authorization": true
+  },
+  "host69_replay_private_key": {
+    "in_repository": false,
+    "directory_mode": "0700",
+    "private_key_mode": "0600",
+    "owner": "wyt",
+    "public_key_only_tracked": true
+  },
+  "authority": {
+    "fresh_identity_provider_call": false,
+    "r3d_recovery_authorization": false,
+    "stage_a_provider_execution": false,
+    "stage_a_support_read": false,
+    "stage_b_learning_execution": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "public_benchmark": false,
+    "paper_claim": false
+  },
+  "next_sequence_after_hard_reset": [
+    "exactly one fresh DeepSeek identity qualification",
+    "local identity adjudication; require PASS_CURRENT_REVIEW_TRANCHE and resolved deepseek-v4-pro-ga-260813 with thinking disabled and retry limit 0",
+    "only on PASS invoke the independently reviewed R3D authorization adapter once",
+    "mint one single-use narrow R3D recovery authorization",
+    "execute only the frozen 158-task provider universe under the unchanged provider runner",
+    "support read remains separately gated after terminal recovery; Stage B remains closed"
+  ]
+}

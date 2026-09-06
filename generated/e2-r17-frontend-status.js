@@ -1,14 +1,14 @@
 window.E2_R17_FRONTEND_STATUS = {
   schema_version: "1.0",
-  as_of_date: "2026-09-05",
+  as_of_date: "2026-09-06",
   project_track: "E2-R17",
   title: {
     zh: "解耦 Test-Time Search 的 Serving 与 Persistent Learning",
     en: "Decoupling Serving and Persistent Learning over Test-Time Search"
   },
   subtitle: {
-    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · R3 matched-censor recovery 已通过 exact-hash 审查并完成 reset-readiness；2026-09-07 00:00 +0800 前禁止 provider call",
-    en: "Exact-same-pool causal identification · Search-Projection Censoring · R3 matched-censor recovery passed exact-hash review and reset-readiness; provider calls are forbidden before 2026-09-07 00:00 +0800"
+    zh: "Exact-Same-Pool 因果识别 · Search-Projection Censoring · R3D control-plane 与 host69 signed runtime replay 已通过独立审查；2026-09-07 00:00 +0800 前仍禁止 provider call",
+    en: "Exact-same-pool causal identification · Search-Projection Censoring · the R3D control plane and host69-signed runtime replay passed independent review; provider calls remain forbidden before 2026-09-07 00:00 +0800"
   },
   paper_identity: "CAUSAL_SYSTEMS_INTERFACE_PAPER",
   scientific_object: {
@@ -39,6 +39,8 @@ window.E2_R17_FRONTEND_STATUS = {
     fresh_identity_qualification_permitted: false,
     fresh_identity_called: true,
     r3_fresh_identity_required_after_reset: true,
+    r3d_runtime_replay_complete: true,
+    r3d_adapter_review_pass: true,
     r3_recovery_authorized: false,
     stage_a: false,
     stage_b: false,
@@ -50,7 +52,7 @@ window.E2_R17_FRONTEND_STATUS = {
     support_inspected: false
   },
   stage_a_incident: {
-    status: "R3_RECOVERY_READY_WAIT_PROVIDER_RESET",
+    status: "R3D_CONTROL_PLANE_PASS_WAIT_PROVIDER_RESET",
     cause: "Ark AccountQuotaExceeded",
     provider_reset_time: "2026-09-07 00:00:00 +0800",
     burned_task_id: "r17-b21-cgwb-p0",
@@ -64,27 +66,29 @@ window.E2_R17_FRONTEND_STATUS = {
     heldout_access: 0,
     replay_allowed: false,
     replacement_allowed: false,
-    proposed_recovery_zh: "R3 matched-censor recovery 已冻结并通过 exact-hash 独立审查：burned task 永久 technical-missing，其 exact semantic counterpart 作为 0-provider matched censor；reset 后只执行其余 158 个原始 task（1264 actor rollouts），保持 7/7/8 opportunity geometry 与每 stream >=4 mixed pools 的绝对阈值。",
-    proposed_recovery_en: "The R3 matched-censor recovery is frozen and independently exact-hash reviewed: the burned task remains terminal technical-missing, its exact semantic counterpart is a zero-provider matched censor, and only the other 158 original tasks (1264 actor rollouts) may execute after reset while preserving 7/7/8 opportunity geometry and the absolute >=4 mixed-pools threshold per stream."
+    proposed_recovery_zh: "R3D 保留 R3 matched-censor 科学几何，并已关闭 support-control 与 recovery-authorization adapter 的 provenance 漏洞。真实 host69 frozen runtime 已 8/8 PASS 并用 host69 本机 Ed25519 私钥签署 attestation；adapter point-of-use 验签 PASS。reset 后仍只允许冻结的 158 个原始 task（1264 actor rollouts）。",
+    proposed_recovery_en: "R3D preserves the R3 matched-censor scientific geometry and closes the support-control and recovery-authorization-adapter provenance gaps. The real host69 frozen runtime passed 8/8 and signed the replay attestation with a host69-local Ed25519 key; adapter point-of-use verification passed. After reset, only the frozen 158 original tasks (1264 actor rollouts) may execute."
   },
   r3_recovery: {
-    status: "PASS_ZERO_PROVIDER_R3_RESET_READINESS_WAIT_PROVIDER_RESET",
-    contract_sha256: "3d0db7078c073613a27bc643675aa8755c7b2f241345ef6371570be48f2dd085",
-    preflight_sha256: "56208e171b2524a01ec429618c7b018a4fee1a9a785028f024fee5a40bd10df2",
-    exact_hash_review_verdict: "PASS_TO_SEPARATE_R3_RECOVERY_AUTHORIZATION",
+    status: "PASS_R3D_CONTROL_PLANE_AND_HOST69_REPLAY_WAIT_PROVIDER_RESET",
+    contract_sha256: "21f7a50f4e14f48a139ecfa122f7c8a443d4195a1ade0267ccececcb6e424717",
+    preflight_sha256: "8894bf0e76d4f1b0a8f101ca55df0ff8728696bc29bf888e6287ab2046c724fa",
+    exact_hash_review_verdict: "PASS_R3D_RECOVERY_AUTHORIZATION_ADAPTER",
+    runtime_replay_attestation_sha256: "ff5a8e2efa90760120b011bb49f6beb9437cd2931ccff0755b8f58e750409fe9",
+    runtime_replay_public_key_sha256: "cc454f52d82b28c7eb33e0f938d3328b65427b3192d1a4992e96333298c1f270",
     provider_execution_tasks: 158,
     actor_rollouts: 1264,
     max_provider_interactions: 12640,
     run_root_exists: false,
     lease_exists: false,
-    control_tests: "3/3 PASS",
+    control_tests: "R3D support 10/10 PASS · adapter host69 frozen runtime 8/8 PASS",
     stale_r2_identity_rejected: true,
     support_inspected: false
   },
   next_gate: {
-    code: "WAIT_PROVIDER_RESET_THEN_FRESH_R3_IDENTITY_THEN_SEPARATE_RECOVERY_AUTHORIZATION",
-    zh: "当前硬门：2026-09-07 00:00 +0800 前不做 provider call。reset 后恰好 1 次 fresh DeepSeek R3 identity → 本地 adjudication → PASS 才单独 mint R3 recovery authorization → 只跑冻结的 158 个原始 task。",
-    en: "Hard gate now: no provider call before 2026-09-07 00:00 +0800. After reset: exactly one fresh DeepSeek R3 identity → local adjudication → only on PASS mint a separate R3 recovery authorization → run only the frozen 158 original tasks."
+    code: "WAIT_PROVIDER_RESET_THEN_FRESH_R3D_IDENTITY_THEN_SINGLE_USE_RECOVERY_AUTHORIZATION",
+    zh: "R3D code/replay 已 PASS，但当前仍没有 provider authority。2026-09-07 00:00 +0800 后才允许恰好 1 次 fresh DeepSeek identity → 本地 adjudication → PASS 后用已审 adapter mint 单次 R3D recovery authorization → 只跑冻结的 158 个原始 task。",
+    en: "R3D code/replay has PASSed, but provider authority is still absent. Only after 2026-09-07 00:00 +0800 may exactly one fresh DeepSeek identity run → local adjudication → on PASS the reviewed adapter may mint one single-use R3D recovery authorization → execute only the frozen 158 original tasks."
   },
   completed_evidence: [
     {
@@ -111,8 +115,8 @@ window.E2_R17_FRONTEND_STATUS = {
   mandatory_controlled: [
     {
       id: "B0",
-      title_zh: "Model identity gate · R3 requalification",
-      title_en: "Model identity gate · R3 requalification",
+      title_zh: "Model identity gate · R3D post-reset requalification",
+      title_en: "Model identity gate · R3D post-reset requalification",
       status: "R3_REQUALIFICATION_WAIT_PROVIDER_RESET",
       scale_zh: "首次 identity 已 PASS 并被 fail-closed Stage-A run 消费；R3 要求 reset 后重新做恰好 1 次 fresh identity，旧 identity 已验证会被 authorizer 拒绝。",
       scale_en: "The first identity PASS was consumed by the fail-closed Stage-A run. R3 requires exactly one fresh post-reset identity; the authorizer has been verified to reject the stale R2 identity.",
@@ -121,13 +125,13 @@ window.E2_R17_FRONTEND_STATUS = {
     },
     {
       id: "B1",
-      title_zh: "V3 Stage A · R3 matched-censor recovery",
-      title_en: "V3 Stage A · R3 matched-censor recovery",
-      status: "R3_RECOVERY_READY_WAIT_PROVIDER_RESET",
+      title_zh: "V3 Stage A · R3D pinned-attestation matched-censor recovery",
+      title_en: "V3 Stage A · R3D pinned-attestation matched-censor recovery",
+      status: "R3D_CONTROL_PLANE_PASS_WAIT_PROVIDER_RESET",
       scale_zh: "160 原始 opportunities = 1 terminal technical missing + 1 matched 0-provider censor + 158 provider tasks；K=8 → 1264 actor rollouts；R3 run root/lease 尚未创建。",
       scale_en: "160 original opportunities = 1 terminal technical missing + 1 matched zero-provider censor + 158 provider tasks; K=8 gives 1264 actor rollouts; the R3 run root/lease do not yet exist.",
-      gate_zh: "exact-hash review 与 reset-readiness 均 PASS；reset 后 fresh R3 identity PASS + separate authorization 才能执行。support 仍未读取，Stage B 仍关闭。",
-      gate_en: "Exact-hash review and reset-readiness both PASS; execution still requires a fresh post-reset R3 identity PASS plus separate authorization. Support remains unread and Stage B remains closed."
+      gate_zh: "R3D support-control、authorization adapter 与真实 host69 signed runtime replay 均 PASS；但 provider authority 仍为 false。reset 后 fresh identity PASS + single-use authorization 才能执行；support 未读取，Stage B 仍关闭。",
+      gate_en: "R3D support control, the authorization adapter, and the real host69-signed runtime replay all PASS; provider authority is still false. Execution still requires a fresh post-reset identity PASS plus a single-use authorization; support remains unread and Stage B remains closed."
     },
     {
       id: "B2",
@@ -198,6 +202,9 @@ window.E2_R17_FRONTEND_STATUS = {
     paper_outline: "paper_drafts/e2-r17-paper-outline-skillzip-iteration-20260903.md",
     scope_calibration: "consultations/e2-r17-premise-scope-calibration-frontend-20260905.md",
     r3_reset_readiness: "consultations/e2-r17-v3-stage-a-r3-reset-readiness-audit-20260905.md",
+    r3d_adapter_review_r4: "consultations/e2-r17-v3-r3d-recovery-authorization-adapter-gpt56-review-r4-20260906.md",
+    r3d_adapter_pass_gate_r4: "generated/e2-r17-v3-r3d-recovery-authorization-adapter-pass-gate-r4-20260906.json",
+    r3d_runtime_replay_attestation: "generated/e2-r17-v3-stage-a-r3d-recovery-authorization-adapter-host69-runtime-replay-attestation-20260906.json",
     plan_revision: "1e3db1ec2d25addddde2112f7871223f1e3d0728"
   }
 };

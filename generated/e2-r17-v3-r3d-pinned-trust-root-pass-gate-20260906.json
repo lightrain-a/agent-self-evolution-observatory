@@ -1,0 +1,19 @@
+{
+  "artifact_type": "e2-r17-v3-r3d-pinned-trust-root-pass-gate",
+  "contract_sha256": "21f7a50f4e14f48a139ecfa122f7c8a443d4195a1ade0267ccececcb6e424717",
+  "date": "2026-09-06",
+  "hard_provider_time_gate": "NO_PROVIDER_CALL_BEFORE_2026-09-07 00:00:00 +0800",
+  "next_gate": "AFTER_2026-09-07_00_00_00_PLUS0800_EXACTLY_ONE_FRESH_DEEPSEEK_IDENTITY_THEN_LOCAL_ADJUDICATION_THEN_SEPARATE_R3D_RECOVERY_AUTHORIZATION",
+  "preflight_sha256": "8894bf0e76d4f1b0a8f101ca55df0ff8728696bc29bf888e6287ab2046c724fa",
+  "prompt_packet_sha256": "c410d829801a8d6f8a35fb77ea18a9bea2f0108dec9b9f2e54859fc8dc964c56",
+  "provider_calls": 0,
+  "remaining_blockers": [],
+  "review_path": "generated/e2-r17-v3-r3d-pinned-trust-root-gpt56-review-20260906.json",
+  "review_sha256": "f97071244451d8e0f7ea1d30f31689948e03858665eeed983802670d38a522fb",
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "stage_b_authority": false,
+  "status": "PASS_R3D_EXACT_CODE_REVIEW_TO_SEPARATE_RECOVERY_AUTHORIZATION_BOUNDARY",
+  "support_control_verdict": "PASS_R3_POST_TERMINAL_SUPPORT_CONTROL_PLANE",
+  "verdict": "PASS_TO_SEPARATE_R3_RECOVERY_AUTHORIZATION"
+}

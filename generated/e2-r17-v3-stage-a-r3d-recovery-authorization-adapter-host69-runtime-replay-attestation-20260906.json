@@ -1,0 +1,39 @@
+{
+  "artifact_type": "e2-r17-v3-stage-a-r3d-recovery-authorization-adapter-host69-runtime-replay-attestation",
+  "payload": {
+    "adapter_sha256": "0ffded7b9d3800b8a4d04f09bade84effebec51739f591c4e91091fbee148e41",
+    "adapter_tests_sha256": "577337fb6662da15378230ec4ef9a6f908ac685d6ecf773a6a0016fb8418e2f2",
+    "artifact_type": "e2-r17-v3-stage-a-r3d-recovery-authorization-adapter-frozen-runtime-replay",
+    "compile_pass": true,
+    "contract_sha256": "21f7a50f4e14f48a139ecfa122f7c8a443d4195a1ade0267ccececcb6e424717",
+    "created_at_utc": "2026-09-06T06:18:23+00:00",
+    "execution_host_ipv4": "222.20.126.69",
+    "execution_host_origin": "HOST69_LOCAL_ED25519_PRIVATE_KEY",
+    "execution_host_role": "HOST69_FROZEN_RUNTIME",
+    "host69_public_key_sha256": "cc454f52d82b28c7eb33e0f938d3328b65427b3192d1a4992e96333298c1f270",
+    "hostname": "ubuntu",
+    "preflight_sha256": "8894bf0e76d4f1b0a8f101ca55df0ff8728696bc29bf888e6287ab2046c724fa",
+    "provider_calls": 0,
+    "provider_runner_sha256": "491b2ae6e53fcfe732f15ef263cc365ce61846b3219d7a13fe70e3834f6d3c89",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "python_freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "python_freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "r3d_review_sha256": "f97071244451d8e0f7ea1d30f31689948e03858665eeed983802670d38a522fb",
+    "runtime_replay_tool_sha256": "054121ecee12ca45e41a4fc924f81a7f2f8fbc5a93d6fffbcc2f0a02e8919548",
+    "schema_version": "1.0",
+    "scientific_execution": false,
+    "stage_b_authority": false,
+    "status": "PASS_R3D_RECOVERY_AUTHORIZATION_ADAPTER_FROZEN_RUNTIME_REPLAY",
+    "support_inspected": false,
+    "test_module": "research_pipeline.test_e2_r17_semantic_transfer_v3_r3d_recovery_authorization_adapter",
+    "unit_tests_failed": 0,
+    "unit_tests_pass": true
+  },
+  "schema_version": "1.0",
+  "signature": {
+    "algorithm": "Ed25519",
+    "context": "E2-R17-R3D-HOST69-AUTH-ADAPTER-RUNTIME-REPLAY-V1",
+    "public_key_sha256": "cc454f52d82b28c7eb33e0f938d3328b65427b3192d1a4992e96333298c1f270",
+    "signature_base64": "7IPDh5V9FJwNs8UMvdWznvXRt3Fg4x6ocnXFBxth+vdiA2gkYhkMFZvanOJbF07l7U6pYgRxzvEHFhe1Ko6FAw=="
+  }
+}
