@@ -1,5 +1,6 @@
 (() => {
   const DATA = window.ADVISOR_MEETING_DATA || {papers:[],shared_risks:[],schedule:[],meeting:{}};
+  const HISTORY = window.ADVISOR_STANFORD_HISTORY || {papers:[],spinoffs:[]};
   const LANG_KEY = 'advisor-review-language';
   let lang = localStorage.getItem(LANG_KEY) || 'zh';
   let filter = 'all';
@@ -117,7 +118,7 @@
   function renderToc(){
     const toc=$('#page-toc'); if(!toc)return;
     const paperLinks=orderedPapers().map(p=>`<a href="#${esc(paperAnchor(p))}">${paperSeq(p)} ${esc(shortPaperName(p))}</a>`).join('');
-    toc.innerHTML=`<div class="toc-title">${zh('会议导航 · 14:00–17:00','Meeting path · 14:00–17:00')}</div><div class="toc-links"><a href="#meeting-path">${zh('3 小时单一路线','3-hour single route')}</a><a href="#portfolio">${zh('九篇总览','Portfolio')}</a>${paperLinks}<a href="#shared-risks">${zh('跨论文风险 / 共用前提','Cross-paper exceptions / shared risks')}</a><a href="#cost-dependencies">${zh('资源与权限','Resources & authority')}</a><a href="#decision-ledger">${zh('锁定决策记录','Lock decision ledger')}</a><a href="#readback">${zh('最后逐项确认','Final read-back')}</a><a href="#spinoffs">${zh('会后分叉候选','Post-meeting spinoffs')}</a></div>`;
+    toc.innerHTML=`<div class="toc-title">${zh('会议导航 · 14:00–17:00','Meeting path · 14:00–17:00')}</div><div class="toc-links"><a href="#stanford-history">${zh('历史 Stanford 评分','Stanford score history')}</a><a href="#meeting-path">${zh('3 小时单一路线','3-hour single route')}</a><a href="#portfolio">${zh('九篇总览','Portfolio')}</a>${paperLinks}<a href="#shared-risks">${zh('跨论文风险 / 共用前提','Cross-paper exceptions / shared risks')}</a><a href="#cost-dependencies">${zh('资源与权限','Resources & authority')}</a><a href="#decision-ledger">${zh('锁定决策记录','Lock decision ledger')}</a><a href="#readback">${zh('最后逐项确认','Final read-back')}</a><a href="#spinoffs">${zh('会后分叉候选','Post-meeting spinoffs')}</a></div>`;
   }
   function renderHero(){
     const ready=DATA.papers.filter(p=>p.stanford?.status==='READY').length;
@@ -127,6 +128,21 @@
     const auditLabel=(oa.stale_for_papers||[]).length ? `${zh('现实依据/成本审查需按当前版本理解','Reality/Cost prior audit partially stale')} · ${(oa.stale_for_papers||[]).join('/')}` : (oa.postfix_status==='FIXES_APPLIED_DETERMINISTIC_PASS' ? zh('现实依据/成本独立审查 · 已修正','Reality/Cost independent audit · REVISE→FIXED') : zh('现实依据/成本审查待收口','Reality/Cost audit pending closure'));
     const freezeLabel=DATA.meeting.freeze_status==='MEETING_CANDIDATE_FROZEN' ? `${zh('会议候选已冻结','Meeting candidate frozen')} · ${(DATA.meeting.candidate_hash||'').slice(0,12)}…` : zh('会议候选尚未冻结','Meeting candidate not frozen');
     return `<section class="advisor-hero"><div><div class="eyebrow">师兄审阅 · 2026-09-06</div><h1>${zh('九篇论文决策驾驶舱','Nine-paper advisor decision cockpit')}</h1><p>${zh('这不是淘汰赛。九篇都继续，但推进方式不同。现场只回答几类关键问题：论文前提是否成立、边界有没有说过头、是否依赖别的论文、下一步最小要补什么、有没有理由改变当前路线。外审只作为参考，而且严格对应具体 PDF 版本。','This is not a paper-elimination contest. All nine advance, but through different routes. Senior time is reserved for premise, boundary, shared dependency, next closure, and overrides; exact current reviews are SHA-bound; materially changed manuscripts show prior-version reviews explicitly rather than reusing them as current evidence.')}</p><div class="advisor-hero-meta"><span>${zh('主分支','main')} · ${esc((DATA.meeting.main_ref||'').slice(0,12))}…</span><span>${zh('九篇论文包','Paper Pack')} · ${esc(DATA.meeting.status||'')}</span><span>${esc(freezeLabel)}</span><span>${zh('外审仅供参考','External review advisory only')}</span><span>${esc(auditLabel)}</span></div></div><div class="advisor-kpis"><article><b>9/9</b><span>${zh('论文可直接打开','papers directly readable')}</span></article><article><b>${ready}/9</b><span>${zh('当前版本外审已返回','exact-current reviews')}</span></article><article><b>${prior}</b><span>${zh('上一版外审参考','prior-version review')}</span></article><article><b>${rs.FREEZE_SUBMIT||0}</b><span>${zh('冻结 / 投稿','freeze / submit')}</span></article><article><b>${rs.EXECUTE_FROZEN||0}</b><span>${zh('按冻结协议执行','execute frozen')}</span></article><article><b>${rs.QUALIFY_FIRST||0}</b><span>${zh('先过资格门','qualify first')}</span></article><article><b>${rs.FORMALIZE_FIRST||0}</b><span>${zh('先把科学问题定义清楚','formalize first')}</span></article></div></section>`;
+  }
+  function renderStanfordHistory(){
+    const order=new Map(MEETING_ORDER.map((id,i)=>[id,i]));
+    const rows=[...(HISTORY.papers||[])].sort((a,b)=>(order.get(a.paper_id)??99)-(order.get(b.paper_id)??99)).map(p=>{
+      const h=p.history||[];
+      const current=[...h].reverse().find(x=>x.lineage==='current')||h[h.length-1]||{};
+      const chips=h.map(x=>{
+        const cls=x.lineage==='current'?'current':x.lineage==='old'?'old':'prior';
+        const date=String(x.date||'').replace('2026-','').replace('-','/');
+        return `<span class="advisor-score-chip ${cls}" title="${esc(x.label_zh||'')}"><small>${esc(date)} · ${esc(x.round||'')}</small><b>${esc(x.score??'–')}</b></span>`;
+      }).join('<span class="advisor-score-arrow">→</span>');
+      return `<tr><td><b>${esc(p.name_zh||p.paper_id)}</b></td><td><div class="advisor-score-history-line">${chips}</div></td><td><strong class="advisor-latest-score">${esc(current.score??'–')}</strong><small>${esc(current.date||'')} · ${esc(current.round||'')}</small></td><td>${esc(p.note_zh||'')}</td></tr>`;
+    }).join('');
+    const sp=(HISTORY.spinoffs||[]).map(x=>`${esc(x.paper_id)} · ${esc(x.date)} · ${esc(x.score)} · ${esc(x.label_zh||'')}（${esc(x.note_zh||'')}）`).join('；');
+    return `<section class="advisor-section advisor-stanford-history" id="stanford-history"><header><div><div class="eyebrow">${zh('先看全局 · 30 秒建立印象','START HERE · 30-SECOND PORTFOLIO SIGNAL')}</div><h2>${zh('九篇论文 · Stanford AI 外审历史评分','Nine papers · Stanford AI review score history')}</h2><p>${esc(lang==='zh'?(HISTORY.disclaimer_zh||''):(HISTORY.disclaimer_en||''))}</p></div><span class="advisor-history-badge">${zh('历史分数仅作参考','AI review reference')}</span></header><div class="advisor-table-wrap"><table class="matrix advisor-history-table"><thead><tr><th>${zh('论文','Paper')}</th><th>${zh('历史轨迹（日期 · 轮次 · 分数）','History (date · round · score)')}</th><th>${zh('当前 / 最新','Current / latest')}</th><th>${zh('版本说明','Lineage note')}</th></tr></thead><tbody>${rows}</tbody></table></div><div class="advisor-history-notes"><p><b>${zh('日期说明','Date note')}</b> · ${esc(lang==='zh'?(HISTORY.date_note_zh||''):(HISTORY.date_note_en||''))}</p><p><b>${zh('读分数时最重要的一点','Most important reading rule')}</b> · ${zh('C1、G1、E2 中存在 scientific-object / lineage 变化，不能把所有数字画成一条“论文质量升降”曲线。','C1, G1, and E2 include scientific-object / lineage changes; do not read every number as a single manuscript quality trajectory.')}</p>${sp?`<p><b>${zh('独立分叉','Separate spinoff')}</b> · ${sp}</p>`:''}</div></section>`;
   }
   function renderMeetingPath(){
     const paperChip=p=>`<a class="advisor-path-paper" href="#${esc(paperAnchor(p))}"><span>${paperSeq(p)}</span><b>${esc(shortPaperName(p))}</b><small>${esc(routeLabel(p.route))}</small></a>`;
@@ -272,7 +288,7 @@
     document.documentElement.lang=lang==='zh'?'zh-CN':'en';
     renderNav(); renderToc();
     const root=$('#advisor-page');
-    root.innerHTML=`${renderHero()}${renderMeetingPath()}${renderSchedule()}${renderPortfolio()}${renderCards()}${renderRisks()}${renderMeetingOutputs()}${renderCostDependencies()}${renderDecisionLedger()}${renderReadback()}${renderSpinoffs()}<div class="advisor-note"><strong>${zh('阅读规则','Reading rule')}</strong> · ${zh('本页优先服务现场讲述：主屏用中文讲结论和决策，技术细节需要时再展开。预确证草稿仍有关键实验尚未完成；论文 PDF 之后新增的科学结果必须单独标明，不能默认已经写进稿件。现场决策只是师兄意见，不会自动改变 Research OS 的科学结论或实验权限。','PDF_READY is an integrated candidate. ADVISOR_DRAFT_PRECONFIRMATORY is a complete readable draft whose decisive evidence is still prospective. Post-PDF science deltas remain separate. Decision Cards and the live Decision Ledger are advisory projections and cannot change Research OS scientific or experiment authority.')}</div>`;
+    root.innerHTML=`${renderHero()}${renderStanfordHistory()}${renderMeetingPath()}${renderSchedule()}${renderPortfolio()}${renderCards()}${renderRisks()}${renderMeetingOutputs()}${renderCostDependencies()}${renderDecisionLedger()}${renderReadback()}${renderSpinoffs()}<div class="advisor-note"><strong>${zh('阅读规则','Reading rule')}</strong> · ${zh('本页优先服务现场讲述：主屏用中文讲结论和决策，技术细节需要时再展开。预确证草稿仍有关键实验尚未完成；论文 PDF 之后新增的科学结果必须单独标明，不能默认已经写进稿件。现场决策只是师兄意见，不会自动改变 Research OS 的科学结论或实验权限。','PDF_READY is an integrated candidate. ADVISOR_DRAFT_PRECONFIRMATORY is a complete readable draft whose decisive evidence is still prospective. Post-PDF science deltas remain separate. Decision Cards and the live Decision Ledger are advisory projections and cannot change Research OS scientific or experiment authority.')}</div>`;
     const b=$('#advisor-lang'); if(b)b.textContent=lang==='zh'?'EN':'中文';
     bind(); applyFilter(); refreshDecisionSurfaces();
   }
