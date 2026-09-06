@@ -10,14 +10,18 @@ from research_pipeline.agent_safety_g1_atomgit_chat_adapter import MODEL_SPECS, 
 from research_pipeline.agent_safety_g1_atomgit_q0_r5_runner import (
     AUTH_ID,
     AUTH_STATUS,
+    CHAT_ADAPTER_PATH,
     EXPECTED_BROWSER_ART_COMMIT,
     EXPECTED_BROWSER_PROXY,
     EXPECTED_SHA256,
     NETWORK_PROBE_URLS,
+    Q0_RUNNER_PATH,
     R3_CLOSEOUT,
     R5_CANDIDATES,
+    R5_RUNNER_PATH,
     RunnerError,
     run_r5_cascade,
+    sha256_file,
     validate_authority,
     validate_static_provenance,
     _network_http_status_ready,
@@ -43,6 +47,11 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
             "residual_set_frozen_from_pre_g1_evidence": True,
             "parent_r3_closeout_sha256": EXPECTED_SHA256[R3_CLOSEOUT.name],
             "parent_r3_cascade_receipt_sha256": "a" * 64,
+            "code_bindings": {
+                "r5_runner_sha256": sha256_file(R5_RUNNER_PATH),
+                "q0_runner_sha256": sha256_file(Q0_RUNNER_PATH),
+                "chat_adapter_sha256": sha256_file(CHAT_ADAPTER_PATH),
+            },
             "harmful_model_calls": False,
             "p0_execution_authorized": False,
             "p1_execution_authorized": False,
@@ -118,6 +127,9 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
                 validate_authority(bad)
             bad = dict(auth); bad["runtime"] = dict(auth["runtime"]); bad["runtime"]["browser_proxy"] = {"server": "http://127.0.0.1:9999", "bypass": "127.0.0.1,localhost"}
             with self.assertRaisesRegex(RunnerError, "browser proxy binding drift"):
+                validate_authority(bad)
+            bad = dict(auth); bad["code_bindings"] = dict(auth["code_bindings"]); bad["code_bindings"]["q0_runner_sha256"] = "0" * 64
+            with self.assertRaisesRegex(RunnerError, "execution code binding drift:q0_runner_sha256"):
                 validate_authority(bad)
 
     def test_network_readiness_rejects_http_error_statuses(self) -> None:

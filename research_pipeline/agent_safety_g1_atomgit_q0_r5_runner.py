@@ -27,6 +27,9 @@ from research_pipeline.agent_safety_g1_atomgit_q0_runner import (
 from research_pipeline.agent_safety_g1_qwen397_benign_runner import atomic_json
 
 ROOT = Path(__file__).resolve().parents[1]
+R5_RUNNER_PATH = Path(__file__).resolve()
+Q0_RUNNER_PATH = ROOT / "research_pipeline/agent_safety_g1_atomgit_q0_runner.py"
+CHAT_ADAPTER_PATH = ROOT / "research_pipeline/agent_safety_g1_atomgit_chat_adapter.py"
 R5_CANDIDATES = ["mimo-v2.5", "mimo-v2.5-pro"]
 R3_CANDIDATES = ["qwen3.8-27b", "GLM-5.2", "deepseek-v4-flash"]
 R3_CLOSEOUT = ROOT / "generated/agent-safety-g1-atomgit-q0-r3-closeout-20260906.json"
@@ -119,6 +122,15 @@ def validate_authority(authority: dict[str, Any]) -> None:
             raise RunnerError(f"R5 authority illegally opens {key}")
     if authority.get("parent_r3_closeout_sha256") != EXPECTED_SHA256[R3_CLOSEOUT.name]:
         raise RunnerError("R5 parent R3 binding drift")
+    code_bindings = authority.get("code_bindings") or {}
+    expected_code = {
+        "r5_runner_sha256": R5_RUNNER_PATH,
+        "q0_runner_sha256": Q0_RUNNER_PATH,
+        "chat_adapter_sha256": CHAT_ADAPTER_PATH,
+    }
+    for key, path in expected_code.items():
+        if code_bindings.get(key) != sha256_file(path):
+            raise RunnerError(f"R5 execution code binding drift:{key}")
     runtime = authority.get("runtime") or {}
     required_runtime = (
         "python",
