@@ -43,7 +43,11 @@ def build(root:pathlib.Path,authority:dict[str,Any])->dict[str,Any]:
  missing=[x for x in required if not (root/x).is_file()]
  if missing:raise RuntimeError(f"R89-required-files-missing:{missing}")
  optional=[x for x in ["chat_template.jinja","LICENSE","README.md"] if (root/x).is_file()]
- full_rows=[row(root,p) for p in all_files];payload_rows=[row(root,p) for p in payload];shard_rows=[row(root,p) for p in shards]
+ # Hash each physical file exactly once; derive all ledgers from that cache.
+ row_by_path={str(p.relative_to(root)):row(root,p) for p in all_files}
+ full_rows=[row_by_path[str(p.relative_to(root))] for p in all_files]
+ payload_rows=[row_by_path[str(p.relative_to(root))] for p in payload]
+ shard_rows=[row_by_path[str(p.relative_to(root))] for p in shards]
  index=json.loads((root/"model.safetensors.index.json").read_text(encoding="utf-8"));weight_map=index.get("weight_map") or {}
  referenced=sorted(set(str(x) for x in weight_map.values()))
  if referenced!=sorted(p.name for p in shards):raise RuntimeError("R89-index-shard-set-drift")
@@ -54,7 +58,7 @@ def build(root:pathlib.Path,authority:dict[str,Any])->dict[str,Any]:
   "tree":{"file_count":len(full_rows),"bytes":sum(x["bytes"] for x in full_rows),"rows":full_rows,"rows_sha256":digest(full_rows)},
   "payload":{"file_count":len(payload_rows),"bytes":sum(x["bytes"] for x in payload_rows),"rows":payload_rows,"rows_sha256":digest(payload_rows)},
   "safetensors":{"shard_count":len(shard_rows),"bytes":sum(x["bytes"] for x in shard_rows),"rows":shard_rows,"rows_sha256":digest(shard_rows),"index_sha256":sha(root/"model.safetensors.index.json"),"index_referenced_shards":referenced},
-  "critical_files":{x:sha(root/x) for x in required+optional},
+  "critical_files":{x:row_by_path[x]["sha256"] for x in required+optional},
   "model_loaded":False,"model_inference_calls":0,
   "authority":{"strong_model_execution":False,"analysis":False,"gpu":False,"paper_claim_change":False},
   "scientific_authority":False,"experiment_authority":False,"gpu_authority":False,
