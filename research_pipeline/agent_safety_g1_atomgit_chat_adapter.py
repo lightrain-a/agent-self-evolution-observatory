@@ -33,6 +33,12 @@ MODEL_SPECS = {
     "qwen3.8-27b": ("AtomGit-qwen3.8-27b", 262144, "xhigh"),
     "GLM-5.2": ("AtomGit-GLM-5.2", 200000, None),
     "deepseek-v4-flash": ("AtomGit-deepseek-v4-flash", 512000, None),
+    # Residual candidates were already present in the independently frozen
+    # 2026-09-03 CodingPlan account catalog and capability ladder before any
+    # G1 Q0 outcome. They are enabled only for the separate R5 benign-only
+    # qualification; the terminal R3 candidate order remains unchanged.
+    "mimo-v2.5": ("AtomGit-mimo-v2.5", 1000000, None),
+    "mimo-v2.5-pro": ("AtomGit-mimo-v2.5-pro", 1000000, None),
 }
 
 
