@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-state-consumption-cross-actor-shadow-v7",
+  "date": "2026-09-06",
+  "status": "COMPLETED_SHADOW_CROSS_ACTOR_FALSIFIER",
+  "raw_root": "/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v7-cross-actor",
+  "plan_sha256": "ac4f508f1cbb9994fcaacfe0c36514ff182ed8330106e4c5297552134546efd4",
+  "result_sha256": "552c10296acabfed443f992e4a090ee16a2edcbf9b964927bac4d154c67b463e",
+  "terminal_sha256": "1f5e909d198496be28b97fc1c2ae9004fd680d9cbd866de8ee80a20db1138e61",
+  "actors": ["GLM-5.2", "deepseek-v4-flash"],
+  "conditions_per_actor": 7,
+  "cli_invocations": 14,
+  "usage_rows": 14,
+  "transport_clean": "14/14",
+  "tool_calls": 0,
+  "retry_or_replacement": false,
+  "core_behavior": {
+    "GLM-5.2": "7/7 exact on verification, stale-sheet recovery, and completion gate",
+    "deepseek-v4-flash": "7/7 exact on verification, stale-sheet recovery, and completion gate"
+  },
+  "local_boundary_behavior": {
+    "deepseek-v4-flash": {
+      "explicit_free": "3/3 DO_NOT_TRANSFER",
+      "omitted_free": "3/3 UNKNOWN",
+      "typed_canonical": "1/1 DO_NOT_TRANSFER",
+      "replicates_qwen_v6_pattern": true
+    },
+    "GLM-5.2": {
+      "explicit_free": "0/3 DO_NOT_TRANSFER; 3/3 UNKNOWN",
+      "omitted_free": "3/3 UNKNOWN",
+      "typed_canonical": "0/1 DO_NOT_TRANSFER; 1/1 UNKNOWN",
+      "replicates_qwen_v6_pattern": false
+    }
+  },
+  "mechanism_revision": "V7 falsifies a universal cross-actor consumption claim. State serialization content is behaviorally consequential for Qwen and DeepSeek under the frozen state-only contract, but GLM consumes the local-boundary semantics more conservatively and returns UNKNOWN even when the boundary is explicitly encoded. Persistent-state reliability is therefore a producer-consumer interface problem, not a writer-only serialization problem.",
+  "strongest_safe_statement": "Typed state stabilizes the written representation on this synthetic package, but behaviorally equivalent use of that state is actor-dependent unless the consumer semantics are also specified or enforced.",
+  "method_implication": "Future typed-state methods should define both a writer schema and a schema-aware consumer contract. A typed writer alone does not guarantee cross-backbone behavioral equivalence.",
+  "no_further_model_matrix_needed_now": true,
+  "next_high_value_step": "Design a zero-provider schema-aware consumer contract or deterministic adapter, then prospectively test whether it closes the GLM consumption gap before any real E2 task or heldout use.",
+  "authority": {
+    "primary_e2": false,
+    "r3d_stage_a": false,
+    "r3d_stage_b": false,
+    "support_read": false,
+    "heldout_read": false,
+    "paper_claim_promotion": false,
+    "model_ranking": false
+  }
+}

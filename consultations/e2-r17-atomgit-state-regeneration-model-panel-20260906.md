@@ -192,10 +192,39 @@ Exact V6 provenance:
 - raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v6-actor-consumption`
 - terminal: 21 raw units / 21 usage rows
 
+## V7 cross-actor falsifier
+
+The cross-actor falsifier was then executed exactly as frozen: the same seven V6 state prompts were reused without modification, with one GLM-5.2 actor call and one DeepSeek-V4-Flash actor call per condition. Transport is 14/14 clean with 14 usage rows and zero tool calls.
+
+Both new actors preserve the three core procedural decisions in all seven conditions. The local-boundary result, however, is actor-dependent:
+
+| Actor | Explicit FREE boundary | Omitted FREE boundary | Canonical TYPED boundary | Core behaviors |
+|---|---:|---:|---:|---:|
+| Qwen3.8-27B (V6) | 9/9 `DO_NOT_TRANSFER` | 9/9 `UNKNOWN` | 3/3 `DO_NOT_TRANSFER` | 21/21 exact |
+| DeepSeek-V4-Flash | 3/3 `DO_NOT_TRANSFER` | 3/3 `UNKNOWN` | 1/1 `DO_NOT_TRANSFER` | 7/7 exact |
+| GLM-5.2 | **0/3 `DO_NOT_TRANSFER`; 3/3 `UNKNOWN`** | 3/3 `UNKNOWN` | **0/1 `DO_NOT_TRANSFER`; 1/1 `UNKNOWN`** | 7/7 exact |
+
+### V7 mechanism revision
+
+V7 falsifies the strongest cross-actor version of the V6 story. Qwen and DeepSeek consume an explicitly serialized non-transfer boundary as intended, but GLM remains conservative and returns `UNKNOWN` even when the FREE state explicitly says not to transfer instance facts and even when the TYPED state contains `local_fact_policy=exclude_from_cross_workbook_state`.
+
+The revised system-level conclusion is therefore:
+
+> Persistent-state reliability is a producer–consumer interface problem. A typed writer can stabilize what is written, but behaviorally equivalent use of that state is not guaranteed across actor backbones unless the consumer semantics are also specified or enforced.
+
+This does not erase V5: the typed writer still collapses all six draws of all three generators to one canonical semantic representation. It changes what that stabilization licenses. Stable storage is not the same as stable interpretation.
+
+Exact V7 provenance:
+
+- plan SHA-256: `ac4f508f1cbb9994fcaacfe0c36514ff182ed8330106e4c5297552134546efd4`
+- result SHA-256: `552c10296acabfed443f992e4a090ee16a2edcbf9b964927bac4d154c67b463e`
+- raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v7-cross-actor`
+- terminal: 14 raw units / 14 usage rows
+
 ## What AtomGit should be used for next
 
-The next high-value falsifier is now **cross-actor**, not more state draws. Reuse the same seven frozen V6 state conditions and the exact same four-task consumption contract, but run one outcome-blind repeat with GLM-5.2 and one with DeepSeek-V4-Flash as the fixed actor. This directly tests whether the explicit-boundary versus omitted-boundary behavior pattern is specific to Qwen's instruction-following style.
+Do **not** add another actor/model matrix now. V7 already changes the mechanism claim in a verdict-relevant way. The next step should be zero-provider system design: define a **typed writer + schema-aware consumer contract** (or deterministic adapter) that maps typed fields to an unambiguous consumption surface.
 
-If both additional actors preserve the same separation, the serialization-to-behavior mechanism becomes more credible across actor families. If they fill missing rules from their own world knowledge instead of returning `UNKNOWN`, the conclusion must narrow to actor-policy-dependent state consumption.
+Only after that consumer contract is frozen should a small prospective model panel test whether the GLM gap closes. If it does, the mechanism becomes an interface-contract result; if it does not, the remaining issue is model-specific consumption rather than free-form state serialization.
 
-The cross-actor panel remains shadow-only and may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.
+This entire AtomGit sequence remains shadow-only and may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.
