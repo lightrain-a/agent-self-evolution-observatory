@@ -1,0 +1,36 @@
+{
+  "codingplan_window_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T23:04:58",
+    "remaining": 157,
+    "used": 343
+  },
+  "codingplan_window_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T23:04:58",
+    "remaining": 158,
+    "used": 342
+  },
+  "content_sha256": "797183ad7f193c23c05f95184fb3e746f510c7014f262d377e5ffdf14f5563a4",
+  "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+  "family_id": "ACE-DEV-FG-104",
+  "generation_completion_tokens_total": 1456,
+  "generation_model_id": "mimo-v2.5-pro",
+  "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+  "generation_model_round_count": 1,
+  "generation_prompt_tokens_total": 21972,
+  "generation_request_sha256": "30a5001fff2c2d33a13711cfd03a6cd44951e32dec402a7e474c04d0958cdd8c",
+  "human_edited": false,
+  "injection_position": "AFTER_TASK_INSTRUCTION",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "projected_tool_trajectory_sha256": "b907613d300677e39ae3be97beeedcde724f81613277ae825f25c7540d551bce",
+  "raw_repair_byte_length": 1054,
+  "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-104-repair.raw.bin",
+  "raw_repair_sha256": "c5e5b0033e9ec623dea200ad920ac14701b1d66893133e56cc00b64a455455a1",
+  "repair_byte_length": 1054,
+  "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-104-repair.bin",
+  "repair_sha256": "c5e5b0033e9ec623dea200ad920ac14701b1d66893133e56cc00b64a455455a1",
+  "schema_version": "ace-repeat-dev-repair-record-v1",
+  "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+  "target_failure_slice_sha256": "28549455aba15e61086d2b6ad2335f376c7ed566dbd054b1344d1ef829082aa8"
+}

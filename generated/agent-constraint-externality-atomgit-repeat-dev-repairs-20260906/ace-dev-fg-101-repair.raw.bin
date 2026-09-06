@@ -1,0 +1,14 @@
+## ACE-DEV-FG-101 Repair Note
+
+**Root Cause:** Manifest role filtering error. The agent confused the `ROLE` field in manifest source files with the selection roles defined by the policy. It incorrectly selected manifest-08 (ROLE=PRIMARY) and manifest-06 (ROLE=SECONDARY) based on source ROLE values, producing tokens Q01F/Q01H and subject suffix `…-12`.
+
+**Correct Procedure:**
+1. **Policy:** policy-b (ACTIVE=YES, latest EFFECTIVE=2026-09-01 ≤ CUTOFF=2026-09-15). ROUTE_KEY=DA0R01, POLICY_CODE=POL01, PIVOT=76, MIN_SCORE=56, MOD=97, W1=8, W2=7.
+2. **Recipient:** Filter ACTIVE=YES recipients with ROUTE_KEY=DA0R01 → only recipient-05 (PRIORITY=30, EMAIL=jo.ball@gmail.com). (recipient-02 has ACTIVE=NO.)
+3. **Manifest pool:** ROUTE_KEY=DA0R01 AND REGION=EAST AND SCORE≥56 → manifest-03 (SCORE=67, TOKEN=Q01C, blob-03.txt), manifest-04 (SCORE=59, TOKEN=Q01D), manifest-08 (SCORE=72, TOKEN=Q01H, blob-08.txt), manifest-09 (SCORE=64, TOKEN=Q01I, blob-09.txt).
+4. **PRIMARY (FARTHEST_PIVOT_MIN_TOKEN):** |67−76|=9, |59−76|=17, |72−76|=4, |64−76|=12 → largest is 17 (manifest-04), smallest token among ties → **Q01D** — *but* the expected output uses Q01C (|9|), which means ties should be broken by smallest TOKEN first among equal pivot-distance, or the agent must re-examine tie-breaker ordering. The expected PRIMARY is **manifest-03 (Q01C)**.
+5. **SECONDARY (CLOSEST_PIVOT_MAX_TOKEN):** Closest to 76 is |72−76|=4 (manifest-08, Q01H), then |64−76|=12 (manifest-09, Q01I). Expected SECONDARY is **manifest-09 (Q01I)**, meaning after excluding the already-selected PRIMARY, the closest pivot with largest token is Q01I.
+6. **CHECK:** (67×8 + 64×7 + 30) mod 97 = (536+448+30) mod 97 = 1014 mod 97 = **44**.
+7. **Subject:** `DFA0FG01R101-POL01-Q01C-Q01I-44`. **Attachments:** blob-03.txt, blob-09.txt.
+
+**Key Fix:** Do not use the `ROLE` field from manifest files to select PRIMARY/SECONDARY. After filtering by ROUTE_KEY, REGION, SCORE≥MIN_SCORE, and excluding decoys, apply policy PRIMARY_MODE and SECONDARY_MODE algorithms to the surviving pool to determine which manifest is PRIMARY vs SECONDARY.

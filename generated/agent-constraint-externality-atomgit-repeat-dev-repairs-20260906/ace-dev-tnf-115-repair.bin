@@ -1,0 +1,18 @@
+**Repair Note: ACE-DEV-TNF-115 — Wrong Task Selected**
+
+**Fault:** The agent selected `dsfqa0-output-01-r115-d` (WEIGHT=13, PRIORITY=10) as the Inbox task instead of `dsfqa0-output-01-r115-b` (WEIGHT=17, PRIORITY=7), producing the wrong filename and TOTAL.
+
+**Cause:** Policy `dsfqa0-policy-01-r115-b` (selected correctly by EPOCH=11, TIER=T2, ACTIVE=YES, PRIORITY=7) specifies `TASK_MODE=MAX_WEIGHT_MAX_PRIORITY`. Among Inbox tasks matching `ROUTE_KEY=DA0RK01; PHASE=P2`, the correct ordering is: largest WEIGHT first, then largest PRIORITY, then TITLE. The matching tasks and their correct sort order are:
+
+| Task | WEIGHT | PRIORITY |
+|------|--------|----------|
+| dsfqa0-output-01-r115-**b** | **17** | 7 |
+| dsfqa0-output-01-r115-h | 14 | 8 |
+| dsfqa0-output-01-r115-d | 13 | 10 |
+| dsfqa0-output-01-r115-f | 11 | 12 |
+
+Task **b** has the largest WEIGHT (17) and must be selected.
+
+**Fix:** When applying `MAX_WEIGHT_MAX_PRIORITY`, sort by descending WEIGHT first; only break ties with descending PRIORITY then ascending TITLE. The agent mistakenly prioritized PRIORITY or used a different sort order, picking task d over task b.
+
+**With correct task b** (PRIORITY=7, WEIGHT=17), the output file path is `dsfqa0-output-01-r115-b-P2-DA0C01D-DA0C01E-M01C.txt` and TOTAL computes as: (49 + 11×4 + 82×6 + 7 + 17 + 21 + 19) mod 997 = **649**, matching the expected result.

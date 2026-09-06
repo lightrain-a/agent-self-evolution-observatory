@@ -1,0 +1,250 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation_closed": true,
+    "rq1_rq2": false
+  },
+  "content_sha256": "7994aeed0aafe9de3fd7579b225d57a20261b527d7131833ddac9dfee7e1f009",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-REPAIR-GENERATION-20260906",
+  "human_edits": 0,
+  "ledger_sha256": "98005c6283354f8bed5662eafcc965081d9e84f254e52555d332562a79fcaa20",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "projection_content_sha256": "f18cc61fdb40f5c14bb036b766c04f0445bb3a7bf36a09e463aabdeefcdf8e1d",
+  "raw_source_trajectory_visible_to_writer": false,
+  "repair_count": 6,
+  "repair_writer_model_round_count": 6,
+  "repairs": {
+    "ACE-DEV-FG-101": {
+      "codingplan_window_after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 156,
+        "used": 344
+      },
+      "codingplan_window_before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 157,
+        "used": 343
+      },
+      "content_sha256": "d57cbc226837d7a4ddf4664ecc1974dc578af7583ffc6886396aacaf0cc3527f",
+      "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+      "family_id": "ACE-DEV-FG-101",
+      "generation_completion_tokens_total": 1295,
+      "generation_model_id": "mimo-v2.5-pro",
+      "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+      "generation_model_round_count": 1,
+      "generation_prompt_tokens_total": 21971,
+      "generation_request_sha256": "98f72eb672860771579fe08c8101defcb43e7b1162b8b67ebf8688575f52d005",
+      "human_edited": false,
+      "injection_position": "AFTER_TASK_INSTRUCTION",
+      "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+      "projected_tool_trajectory_sha256": "9436aa2ce4bc10ef3c272ab7f3db1ae5dc9427312b4e95d4aad553baccb3aa58",
+      "raw_repair_byte_length": 2129,
+      "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-101-repair.raw.bin",
+      "raw_repair_sha256": "a08bac19ab6afc22971fb87602ef737ddd878f19347d4b017f0cadb769c1b3ff",
+      "repair_byte_length": 2129,
+      "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-101-repair.bin",
+      "repair_sha256": "a08bac19ab6afc22971fb87602ef737ddd878f19347d4b017f0cadb769c1b3ff",
+      "schema_version": "ace-repeat-dev-repair-record-v1",
+      "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "target_failure_slice_sha256": "4f7b6dde1a53b93e6bea31aa837e6df61f8ee7702d4b9f77fb9f878c8e693c0e"
+    },
+    "ACE-DEV-FG-104": {
+      "codingplan_window_after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 157,
+        "used": 343
+      },
+      "codingplan_window_before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 158,
+        "used": 342
+      },
+      "content_sha256": "797183ad7f193c23c05f95184fb3e746f510c7014f262d377e5ffdf14f5563a4",
+      "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+      "family_id": "ACE-DEV-FG-104",
+      "generation_completion_tokens_total": 1456,
+      "generation_model_id": "mimo-v2.5-pro",
+      "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+      "generation_model_round_count": 1,
+      "generation_prompt_tokens_total": 21972,
+      "generation_request_sha256": "30a5001fff2c2d33a13711cfd03a6cd44951e32dec402a7e474c04d0958cdd8c",
+      "human_edited": false,
+      "injection_position": "AFTER_TASK_INSTRUCTION",
+      "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+      "projected_tool_trajectory_sha256": "b907613d300677e39ae3be97beeedcde724f81613277ae825f25c7540d551bce",
+      "raw_repair_byte_length": 1054,
+      "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-104-repair.raw.bin",
+      "raw_repair_sha256": "c5e5b0033e9ec623dea200ad920ac14701b1d66893133e56cc00b64a455455a1",
+      "repair_byte_length": 1054,
+      "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-104-repair.bin",
+      "repair_sha256": "c5e5b0033e9ec623dea200ad920ac14701b1d66893133e56cc00b64a455455a1",
+      "schema_version": "ace-repeat-dev-repair-record-v1",
+      "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "target_failure_slice_sha256": "28549455aba15e61086d2b6ad2335f376c7ed566dbd054b1344d1ef829082aa8"
+    },
+    "ACE-DEV-FG-106": {
+      "codingplan_window_after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 155,
+        "used": 345
+      },
+      "codingplan_window_before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 156,
+        "used": 344
+      },
+      "content_sha256": "c55f9e442740c4d357c69aabb87b019db3444271c02f5392e3c44e4ff31cb36c",
+      "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+      "family_id": "ACE-DEV-FG-106",
+      "generation_completion_tokens_total": 1590,
+      "generation_model_id": "mimo-v2.5-pro",
+      "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+      "generation_model_round_count": 1,
+      "generation_prompt_tokens_total": 21979,
+      "generation_request_sha256": "20783406f2df941d11679dcd3ce88c64047719061d689d23205ed4b8e1e50602",
+      "human_edited": false,
+      "injection_position": "AFTER_TASK_INSTRUCTION",
+      "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+      "projected_tool_trajectory_sha256": "df5afe7fcf0118e42ba3806108deb4a7762e2572ef15bd1aa775d8cc359338db",
+      "raw_repair_byte_length": 1070,
+      "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-106-repair.raw.bin",
+      "raw_repair_sha256": "3179593a1e0b8d7c7f117c30bd7488f42d69f06520f8bd9aff912ed4c9178098",
+      "repair_byte_length": 1070,
+      "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-fg-106-repair.bin",
+      "repair_sha256": "3179593a1e0b8d7c7f117c30bd7488f42d69f06520f8bd9aff912ed4c9178098",
+      "schema_version": "ace-repeat-dev-repair-record-v1",
+      "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "target_failure_slice_sha256": "49a0680395c99ba945ee66238a594d128d0513a71fe12d70eda5e8873a3db526"
+    },
+    "ACE-DEV-TNF-110": {
+      "codingplan_window_after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 153,
+        "used": 347
+      },
+      "codingplan_window_before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 154,
+        "used": 346
+      },
+      "content_sha256": "bd330b7f8fadbb623661afec054217a52124f3282fd2aceb44545f9dc07d0a1f",
+      "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+      "family_id": "ACE-DEV-TNF-110",
+      "generation_completion_tokens_total": 723,
+      "generation_model_id": "mimo-v2.5-pro",
+      "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+      "generation_model_round_count": 1,
+      "generation_prompt_tokens_total": 25935,
+      "generation_request_sha256": "c656d6f9d138b81aba012d402c26c426adfa81a1c3ba67d99176ece7c4467d6c",
+      "human_edited": false,
+      "injection_position": "AFTER_TASK_INSTRUCTION",
+      "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+      "projected_tool_trajectory_sha256": "00f850ba28fc123fcff1c7c7c7f5aad42dec8a49988427ee1a49eb308fdae5b9",
+      "raw_repair_byte_length": 751,
+      "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-tnf-110-repair.raw.bin",
+      "raw_repair_sha256": "2f78a1c3ac55c5079b6dbdb12676fbfa629e32a521ca428da0e2594eb39bf3a6",
+      "repair_byte_length": 751,
+      "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-tnf-110-repair.bin",
+      "repair_sha256": "2f78a1c3ac55c5079b6dbdb12676fbfa629e32a521ca428da0e2594eb39bf3a6",
+      "schema_version": "ace-repeat-dev-repair-record-v1",
+      "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "target_failure_slice_sha256": "e3c0a1ea13a04f513accc1e34ca7130b350083a236ed21f783933062997a74a6"
+    },
+    "ACE-DEV-TNF-111": {
+      "codingplan_window_after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 152,
+        "used": 348
+      },
+      "codingplan_window_before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 153,
+        "used": 347
+      },
+      "content_sha256": "679fa67f95470f8d8e0d938366796c967aad44b087d6a222b1b0edadfb7bd9dc",
+      "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+      "family_id": "ACE-DEV-TNF-111",
+      "generation_completion_tokens_total": 1637,
+      "generation_model_id": "mimo-v2.5-pro",
+      "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+      "generation_model_round_count": 1,
+      "generation_prompt_tokens_total": 26261,
+      "generation_request_sha256": "c3b93439f9382596c643e51e7500e00e4c73350dec0ce593d39a2bf41214cfd1",
+      "human_edited": false,
+      "injection_position": "AFTER_TASK_INSTRUCTION",
+      "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+      "projected_tool_trajectory_sha256": "b069f793d3bf079b7a5119fb81a35760e5f461ca7af6069da60ad22ef26a2411",
+      "raw_repair_byte_length": 602,
+      "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-tnf-111-repair.raw.bin",
+      "raw_repair_sha256": "5dd1ada86d587a920ebf2e4022ff8ae59d3d845429c191f90dd98cb5054ab0ab",
+      "repair_byte_length": 602,
+      "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-tnf-111-repair.bin",
+      "repair_sha256": "5dd1ada86d587a920ebf2e4022ff8ae59d3d845429c191f90dd98cb5054ab0ab",
+      "schema_version": "ace-repeat-dev-repair-record-v1",
+      "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "target_failure_slice_sha256": "09f00e80a2a9876795fd86a67bf58af848ede9acd8a863d9e8659a64d134e1d1"
+    },
+    "ACE-DEV-TNF-115": {
+      "codingplan_window_after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 154,
+        "used": 346
+      },
+      "codingplan_window_before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-06T23:04:58",
+        "remaining": 155,
+        "used": 345
+      },
+      "content_sha256": "327ca86cd79d99a024cb10c4e7a6f83587ac00a9fef335ed8433d043f8cc1f3a",
+      "exposure_rule": "UPDATE_ONLY_EXACT_BYTES",
+      "family_id": "ACE-DEV-TNF-115",
+      "generation_completion_tokens_total": 2911,
+      "generation_model_id": "mimo-v2.5-pro",
+      "generation_model_profile": "AtomGit-mimo-v2.5-pro",
+      "generation_model_round_count": 1,
+      "generation_prompt_tokens_total": 27867,
+      "generation_request_sha256": "a3a7fad4bcb7cb8253685cc6a558fb78897f31f434189038030fb442c7cef778",
+      "human_edited": false,
+      "injection_position": "AFTER_TASK_INSTRUCTION",
+      "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+      "projected_tool_trajectory_sha256": "74bc0ac67e351e00941283f879449238c84ee20ad0b60562f4ad2524262b50ab",
+      "raw_repair_byte_length": 1377,
+      "raw_repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-tnf-115-repair.raw.bin",
+      "raw_repair_sha256": "52b384f65ffa1024a7eb3194ac7dd20fec1b70988232daba70e852b528de3d36",
+      "repair_byte_length": 1377,
+      "repair_path": "generated/agent-constraint-externality-atomgit-repeat-dev-repairs-20260906/ace-dev-tnf-115-repair.bin",
+      "repair_sha256": "52b384f65ffa1024a7eb3194ac7dd20fec1b70988232daba70e852b528de3d36",
+      "schema_version": "ace-repeat-dev-repair-record-v1",
+      "surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "target_failure_slice_sha256": "48c6c38510dd37c1f543b503e4364056d96a7df767f0d2248cc28d6c092421f8"
+    }
+  },
+  "schema_version": "ace-repeat-dev-repairs-manifest-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "selected_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ]
+  },
+  "status": "ATOMGIT_REPEAT_DEV_SIX_REPAIRS_FROZEN_REPEAT_AUTHORITY_CLOSED"
+}

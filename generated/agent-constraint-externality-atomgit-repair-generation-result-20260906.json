@@ -1,0 +1,22 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation_closed": true,
+    "rq1_rq2": false
+  },
+  "completion_count": 6,
+  "content_sha256": "442e62ce3199d9eb44ce8e4c3e925ad53187ee9d7f5669b770af370bea5d4ab5",
+  "dispatch_count": 6,
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-REPAIR-GENERATION-20260906",
+  "failure_count": 0,
+  "ledger_sha256": "98005c6283354f8bed5662eafcc965081d9e84f254e52555d332562a79fcaa20",
+  "manifest_content_sha256": "7994aeed0aafe9de3fd7579b225d57a20261b527d7131833ddac9dfee7e1f009",
+  "manifest_file_sha256": "b19fd0197a66f2768eb5c26aa0a7e4c726e2d816c60816d96f57a42e33ac7665",
+  "next_legal_action": "If and only if six repairs are frozen, build zero-provider R*=2 repeat-panel readiness and obtain a separate execution authority.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "repair_count": 6,
+  "schema_version": "ace-repeat-dev-repair-result-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "status": "ATOMGIT_REPEAT_DEV_SIX_REPAIRS_FROZEN_REPEAT_AUTHORITY_CLOSED"
+}
