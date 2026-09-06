@@ -1,0 +1,30 @@
+{
+  "analysis_output_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-e3-family-prediction-proposal-20260901/generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-analysis-20260907.json",
+  "analyzer_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-e3-family-prediction-proposal-20260901/scripts/analyze_e2_r17_constrained_state_micro.py",
+  "analyzer_sha256": "8e75a904fca4f4b34acf89886a42d3a9a48bbaaa7ec00acdb372697d9cfd1b08",
+  "artifact_type": "e2-r17-single-case-constrained-state-micro-analysis-authorization",
+  "authority": {
+    "analyzer": true,
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "read_complete_micro_effect_once": true,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "completion_audit_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-e3-family-prediction-proposal-20260901/generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-completion-audit-20260907.json",
+  "completion_audit_sha256": "2f23a6e6344f97dcf4252b515661cf6b2241b09270dda1bcb0084aa5d59cad9b",
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-e3-family-prediction-proposal-20260901/generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-contract-20260903.json",
+  "contract_sha256": "6fe178467d8fb726adf1986fa6be2a294f1da736998ce36f6f92ecd25e805877",
+  "created_at_utc": "2026-09-06T16:21:43+00:00",
+  "execution_authorization_sha256": "ad235772b0a204ffb33b281c90fc5d5e0c4a56fb6de7a30c16bd4b85d431e26b",
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery2-v3-20260903/summary/recovery2_summary.json",
+  "run_summary_sha256": "d184d20678cb1f5c2c3aefcbf4c34033af00e3a2cc670fd392cfbb29c77d9442",
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO_ANALYSIS"
+}
