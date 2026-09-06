@@ -1,0 +1,52 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": true,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "common_sha256": "5acadc60a02d05cf95055ff8742cc6ef1daa1d1657d6f05d201fc72b8f1a52eb",
+  "content_sha256": "d42617738e729496252efbede90fe3ea9f1223b1d29b8dce417ef065186a3029",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-REPAIR-GENERATION-20260906",
+  "g1_quota_release_file_sha256": "0402387ae4617c7a81bb5207316465076a5ff9cc8e815b03d5e3ecc7c10100c3",
+  "human_authorization_content_sha256": "29f3627ccffd14860242116c186e7a8a76b6ffd60efab7e7f713f41717bed79c",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preflight_content_sha256": "074deb61b23d1b224f1e0f10a46aa9dc9e190641dd814dbc8d181d323396bc77",
+  "projection_content_sha256": "f18cc61fdb40f5c14bb036b766c04f0445bb3a7bf36a09e463aabdeefcdf8e1d",
+  "quota": {
+    "g1_reserve": 0,
+    "operational_margin": 5,
+    "predispatch_remaining_rule": "remaining >= number_of_not_yet_dispatched_repairs + 5",
+    "release_basis_file_sha256": "0402387ae4617c7a81bb5207316465076a5ff9cc8e815b03d5e3ecc7c10100c3",
+    "stage_request_cap": 6
+  },
+  "runner_sha256": "33ef1a76cef03a85f47f5c2a79b80bbe216f2a3dcf62491a0db70f10c841bd89",
+  "schema_version": "ace-repeat-dev-repair-execution-contract-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "status": "ATOMGIT_REPEAT_DEV_REPAIR_GENERATION_EXECUTION_AUTHORIZED",
+  "writer": {
+    "family_ids": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106",
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ],
+    "human_edit_after_generation": false,
+    "model_round_cap_per_family": 1,
+    "one_request_per_family": true,
+    "raw_source_trajectory_visible": false,
+    "request_cap": 6,
+    "retry_after_dispatch": false,
+    "tools_allowed": false
+  }
+}

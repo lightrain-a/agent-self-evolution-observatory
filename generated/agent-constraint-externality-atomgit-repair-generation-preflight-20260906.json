@@ -1,0 +1,58 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "repair_generation": false,
+    "rq1_rq2": false
+  },
+  "common_sha256": "5acadc60a02d05cf95055ff8742cc6ef1daa1d1657d6f05d201fc72b8f1a52eb",
+  "content_sha256": "074deb61b23d1b224f1e0f10a46aa9dc9e190641dd814dbc8d181d323396bc77",
+  "g1_quota_release_file_sha256": "0402387ae4617c7a81bb5207316465076a5ff9cc8e815b03d5e3ecc7c10100c3",
+  "g1_reserve_requests_after_terminal_closeout": 0,
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "projection_content_sha256": "f18cc61fdb40f5c14bb036b766c04f0445bb3a7bf36a09e463aabdeefcdf8e1d",
+  "projection_file_sha256": "96456497ddd6335765b8d66869524f26a0c670cef5239ccce87a1ed3ca4ebba7",
+  "provider_requests_created": 0,
+  "quota": {
+    "g1_reserve": 0,
+    "minimum_remaining_to_start": 11,
+    "operational_margin": 5,
+    "stage_request_cap": 6,
+    "usage": {
+      "limit": 500,
+      "next_reset_at": "2026-09-06T23:04:58",
+      "remaining": 158,
+      "used": 342
+    }
+  },
+  "readiness_content_sha256": "e817fe40f712fecd2fac43795435870ff45518e76a41afa20e4dd750d86c2761",
+  "repair_writer_requests_created": 0,
+  "runner_sha256": "33ef1a76cef03a85f47f5c2a79b80bbe216f2a3dcf62491a0db70f10c841bd89",
+  "schema_version": "ace-repeat-dev-repair-preflight-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "selected_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ]
+  },
+  "status": "ATOMGIT_REPEAT_DEV_REPAIR_PREFLIGHT_PASS_AWAITING_HUMAN_AUTHORITY",
+  "writer": {
+    "human_edit_after_generation": false,
+    "model_round_cap_per_family": 1,
+    "raw_source_trajectory_visible": false,
+    "request_cap": 6,
+    "retry_after_dispatch": false,
+    "tools_allowed": false
+  }
+}

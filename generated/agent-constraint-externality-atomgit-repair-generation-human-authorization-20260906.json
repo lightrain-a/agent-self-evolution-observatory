@@ -1,0 +1,21 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": true,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "authorization_basis": "User message '继续' at 2026-09-06 20:27+08:00 after the assistant explicitly scoped the next provider action to target-evidence projection followed by repair-generation only, with repeat/topology execution remaining closed.",
+  "authorized_at": "2026-09-06T20:27:00+08:00",
+  "content_sha256": "29f3627ccffd14860242116c186e7a8a76b6ffd60efab7e7f713f41717bed79c",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preflight_content_sha256": "074deb61b23d1b224f1e0f10a46aa9dc9e190641dd814dbc8d181d323396bc77",
+  "projection_content_sha256": "f18cc61fdb40f5c14bb036b766c04f0445bb3a7bf36a09e463aabdeefcdf8e1d",
+  "schema_version": "ace-repeat-dev-repair-human-authorization-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "scope": "Exactly one target-only repair-writer request for each of the six frozen development families, using TARGET_EVIDENCE_PROJECTION_V1. No source replay, topology arm, repeat panel, RQ1/RQ2, RQ3, RQ4, or paper-claim authority.",
+  "status": "USER_AUTHORIZED_ATOMGIT_REPEAT_DEV_REPAIR_GENERATION_ONLY"
+}
