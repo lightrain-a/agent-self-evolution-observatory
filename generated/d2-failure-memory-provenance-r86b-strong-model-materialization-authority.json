@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R86B-STRONG-MODEL-MATERIALIZATION-HOST-SUBSTITUTION-AUTHORITY",
+  "recorded_date": "2026-09-06",
+  "status": "R86B_STRONG_MODEL_MATERIALIZATION_HOST_SUBSTITUTED_TO_231_EXECUTION_CLOSED",
+  "role": "ZERO_INFERENCE_OPERATIONAL_HOST_SUBSTITUTION_FOR_EXACT_FROZEN_MODEL_MATERIALIZATION",
+  "supersedes_operational_path_only": "R86 target_host=10.42.8.52",
+  "bindings": {
+    "r80_scale_freeze_receipt_sha256": "90cd06c3aba9190bdc8d3d87d5956398eed9571dd280f17bd333233f2dab3423",
+    "r85_final_pt_receipt_sha256": "67db7e5c8690ee40ea0fa42dababdee5e1c80b41c1f12e0c48c635dea0bd9def",
+    "r86_materialization_authority_receipt_sha256": "5a3c0700506a33f2afeefbf7f88e29354fe108af3e63968a0b89c6f4e9b45589",
+    "r87_protocol_receipt_sha256": "78a858ec2c70b155a4d72db292543a48d2678c54c8871763f64448d480539c25"
+  },
+  "scientific_invariants": {
+    "repository": "Qwen/Qwen2.5-32B-Instruct",
+    "revision": "c53f764956643a675cfff8ad85b3c9e9b3029e06",
+    "family": "Qwen2.5",
+    "parameter_scale": "32.5B",
+    "decoding": {"temperature": 0.0, "do_sample": false, "max_new_tokens": 512},
+    "quantization": "forbidden",
+    "strong_panel_task_ids": ["338", "185", "494", "148", "376", "390"],
+    "planned_trajectories": 12
+  },
+  "operational_change": {
+    "old_materialization_host": "10.42.8.52",
+    "new_materialization_host": "222.20.126.231",
+    "reason": "host231 can directly resolve the exact frozen Hugging Face revision; host52-to-host231 bulk transfer is unavailable, while execution is preferred on the original A100/OSInteraction host",
+    "old_partial_download_model_inference": 0,
+    "old_partial_download_scientific_outcomes_observed": 0,
+    "new_target_root": "/data/wyt/models/Qwen2.5-32B-Instruct-c53f76495664",
+    "requires_complete_recursive_sha256_manifest_before_execution": true,
+    "changes_model_identity": false,
+    "changes_revision": false,
+    "changes_panel": false,
+    "changes_protocol": false
+  },
+  "authority": {
+    "strong_model_download": true,
+    "strong_model_hash_manifest": true,
+    "strong_model_execution": false,
+    "analysis": false,
+    "gpu": false,
+    "qwen_execution": false,
+    "llama_execution": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false
+  },
+  "strong_model_outcomes_observed_when_created": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "4229e5fb697b6c850ce458c447f67b557f163a5ff1129a8041c608636d18c318"
+}
