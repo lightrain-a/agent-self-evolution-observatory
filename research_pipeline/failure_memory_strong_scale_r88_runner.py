@@ -43,7 +43,7 @@ def rows(p:pathlib.Path)->list[dict[str,Any]]:
 
 def runtime_preflight(manifest:dict[str,Any],r87:dict[str,Any])->None:
  if not valid(manifest) or not valid(r87):raise RuntimeError("R88-receipt-invalid")
- if manifest.get("status")!="R88_STRONG_RUNTIME_MANIFEST_MATERIALIZED_EXECUTION_STILL_CLOSED":raise RuntimeError("R88-manifest-status-drift")
+ if manifest.get("status")!="R90_STRONG_RUNTIME_MANIFEST_MATERIALIZED_EXECUTION_STILL_CLOSED":raise RuntimeError("R88-manifest-status-drift")
  b=manifest.get("bindings") or {}
  if b.get("r87_protocol_receipt_sha256")!=r87["receipt_sha256"]:raise RuntimeError("R88-R87-binding-drift")
  if b.get("r88_runner_sha256")!=sha(pathlib.Path(__file__).resolve()):raise RuntimeError("R88-runner-binding-drift")
@@ -58,7 +58,7 @@ def runtime_preflight(manifest:dict[str,Any],r87:dict[str,Any])->None:
  if image!=e["runtime_image"]["id"]:raise RuntimeError("runtime-image-drift")
  sm=manifest["strong_model_materialization"];model_root=pathlib.Path(sm["root"])
  if not model_root.is_dir():raise RuntimeError("strong-model-root-missing")
- if sm.get("artifact_manifest_receipt_sha256")!=b.get("strong_model_materialization_receipt_sha256"):raise RuntimeError("strong-model-receipt-binding-drift")
+ if sm.get("artifact_manifest_receipt_sha256")!=b.get("r89_materialization_receipt_sha256"):raise RuntimeError("strong-model-receipt-binding-drift")
  base=e["external_runtime_adapter"]["loopback_base_url"].rstrip("/")
  with urllib.request.urlopen(base+"/models",timeout=5) as resp:models={str(x.get("id")) for x in json.loads(resp.read().decode()).get("data") or []}
  if e["external_runtime_adapter"]["llm_model_id"] not in models:raise RuntimeError("loopback-route-drift")

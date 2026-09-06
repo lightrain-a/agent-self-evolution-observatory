@@ -15,6 +15,6 @@ class StrongScaleR87R88Tests(unittest.TestCase):
  def test_server_is_exact_float16_provider_path(self):
   s=SERVER.read_text();self.assertIn('Qwen2.5-32B-Instruct-c53f76495664',s);self.assertIn('LocalQwenProvider',s);self.assertNotIn('4bit',s.lower());self.assertNotIn('8bit',s.lower());self.assertIn('temperature=float(payload.get("temperature") or 0.0)',s)
  def test_runner_reuses_r73_execution_and_has_no_analysis(self):
-  s=RUNNER.read_text();self.assertIn('r73.run_attempt',s);self.assertIn('r72.render_contexts',s);self.assertIn('r73.prompt_for',s);self.assertIn('if a.validate_only:',s);self.assertNotIn('effect_detected',s);self.assertNotIn('paired_risk_difference',s)
+  s=RUNNER.read_text();self.assertIn('r73.run_attempt',s);self.assertIn('r72.render_contexts',s);self.assertIn('r73.prompt_for',s);self.assertIn('if a.validate_only:',s);self.assertNotIn('effect_detected',s);self.assertNotIn('paired_risk_difference',s);self.assertIn('R90_STRONG_RUNTIME_MANIFEST_MATERIALIZED_EXECUTION_STILL_CLOSED',s);self.assertIn('r89_materialization_receipt_sha256',s)
 
 if __name__=='__main__':unittest.main()
