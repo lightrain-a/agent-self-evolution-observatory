@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-stage-a-controller-keypair-qualification",
+  "created_at_utc": "2026-09-06T18:28:14Z",
+  "status": "PASS_HOST52_EXTERNAL_ED25519_CONTROLLER_KEYPAIR_QUALIFICATION",
+  "controller_host": "host52",
+  "algorithm": "Ed25519",
+  "production_public_key_sha256": "f4b73b89716bee28902feb699d9ab81822a986ac8b89235cf768407c3e01fda0",
+  "derived_public_key_sha256": "f4b73b89716bee28902feb699d9ab81822a986ac8b89235cf768407c3e01fda0",
+  "derived_public_equals_stored_public": true,
+  "private_key_owner": "root:root",
+  "private_key_mode": "600",
+  "private_key_root_only": true,
+  "public_key_owner": "root:root",
+  "public_key_mode": "644",
+  "private_key_content_included": false,
+  "private_key_path_included": false,
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "interpretation_boundary": "This receipt establishes only that the external host52 root-only Ed25519 controller private key derives the exact production public key pinned by Bridge Stage-A. It grants no scientific authority and contains no private-key material or private-key path."
+}

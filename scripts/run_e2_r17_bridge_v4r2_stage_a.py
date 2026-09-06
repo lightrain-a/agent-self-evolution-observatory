@@ -17,6 +17,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--contract", type=Path, required=True)
     parser.add_argument("--authorization", type=Path, required=True)
+    parser.add_argument("--signed-capability", type=Path, required=True)
     parser.add_argument("--env-file", type=Path, required=True)
     parser.add_argument("--stop-before-provider-io", action="store_true")
     parser.add_argument("--preflight-output", type=Path)
@@ -26,6 +27,7 @@ def main() -> int:
             root=ROOT,
             contract_path=args.contract,
             auth_path=args.authorization,
+            signed_capability_path=args.signed_capability,
             env_file=args.env_file,
             stop_before_provider_io=args.stop_before_provider_io,
             preflight_output=args.preflight_output,

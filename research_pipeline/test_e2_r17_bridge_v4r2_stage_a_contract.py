@@ -39,6 +39,18 @@ class BridgeV4R2StageAContractTests(unittest.TestCase):
         self.assertEqual(budget["updater_call_ceiling"], 0)
         self.assertEqual(budget["heldout_actor_call_ceiling"], 0)
 
+    def test_r3_external_signed_capability_is_load_bearing(self) -> None:
+        control = self.contract["signed_capability_control"]
+        self.assertEqual(control["algorithm"], "Ed25519")
+        self.assertEqual(control["signature_context"], "E2-R17-BRIDGE-V4R2-STAGE-A-EXECUTION-CAPABILITY-V1")
+        self.assertEqual(control["production_public_key_sha256"], "f4b73b89716bee28902feb699d9ab81822a986ac8b89235cf768407c3e01fda0")
+        self.assertTrue(control["structural_authorization_alone_is_insufficient"])
+        self.assertTrue(control["signed_capability_required_at_runner_point_of_use"])
+        self.assertTrue(control["capability_consumed_before_provider_io"])
+        self.assertIn("capability_verifier", self.contract["bound_code"])
+        self.assertIn("authorization_minter", self.contract["bound_code"])
+        self.assertIn("capability_signer", self.contract["bound_code"])
+
     def test_runner_source_has_no_state_generation_or_heldout_path(self) -> None:
         source = (ROOT / "research_pipeline/e2_r17_bridge_v4r2_stage_a_runtime.py").read_text(encoding="utf-8")
         self.assertNotIn("run_bridge_free_update", source)
