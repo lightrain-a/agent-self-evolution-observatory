@@ -147,12 +147,55 @@ Exact V5 provenance:
 - raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v5-typed`
 - terminal: 18 raw units / 18 state units / 18 usage rows
 
+## V6 downstream state-consumption propagation panel
+
+The proposed downstream falsifier was executed prospectively. For each V4 generator model, the two FREE states with minimum pairwise text similarity were selected before any V6 actor result. One canonical V5 TYPED state was added. This yields seven frozen state conditions. A fixed Qwen3.8-27B actor then evaluates four synthetic future situations three times per state, for 21 total invocations.
+
+The actor is deliberately state-bound: it must use only rules explicitly present in the supplied persistent state and return `UNKNOWN` when the state does not explicitly support a decision. This makes V6 a controlled state-entailment/consumption test rather than a test of the actor's own spreadsheet world knowledge.
+
+Transport and within-state repeatability are clean:
+
+- 21/21 transport-clean;
+- 21 usage rows;
+- zero tool calls;
+- zero retry/replacement;
+- zero state condition shows actor-response variability across its three repeats.
+
+The three core procedural behaviors are invariant across all seven states:
+
+- verification after save: 21/21 `RELOAD_VERIFY`;
+- stale-sheet recovery: 21/21 `REFRESH_REPAIR_RETRY_ONCE`;
+- completion before reload verification: 21/21 `NOT_COMPLETE`.
+
+The cross-workbook local-fact boundary, however, follows the actual state content exactly:
+
+| State content class | Actor responses |
+|---|---:|
+| FREE state explicitly says local instance facts must not transfer | **9/9 `DO_NOT_TRANSFER`** |
+| FREE state omits an explicit cross-workbook local-fact rule | **9/9 `UNKNOWN`** |
+| Canonical TYPED state has `local_fact_policy=exclude_from_cross_workbook_state` | **3/3 `DO_NOT_TRANSFER`** |
+
+### V6 mechanism judgment
+
+V6 rules out the weakest interpretation of the earlier state-SHA drift. At least for this controlled state-consumption task, free-form state realization is not merely cosmetic: whether a cross-instance boundary is explicitly serialized can change what the future actor is willing to conclude, while the core procedural behavior remains unchanged.
+
+The strongest safe statement is:
+
+> Under a frozen state-only consumption rule, omission versus explicit preservation of a local-fact boundary in free-form persistent state propagates into different future decisions; the canonical typed state preserves the boundary and yields stable behavior.
+
+This is still a synthetic state-entailment result, not downstream benchmark utility. The `UNKNOWN` policy is intentionally conservative, so V6 does not show that an unconstrained deployment actor would fail a real task, nor that typed state improves task success. It shows that persistent-state content variation can be behaviorally consequential under controlled consumption.
+
+Exact V6 provenance:
+
+- plan SHA-256: `4e4c6097aed6bd44b23924fd29c69c5f2e854823de81f06a1a4b99ba5ab39fc7`
+- result SHA-256: `0f55923718cd84de16f02ef3b23027d52c20edf2db36c237203c9b02c90e0847`
+- raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v6-actor-consumption`
+- terminal: 21 raw units / 21 usage rows
+
 ## What AtomGit should be used for next
 
-More FREE/TYPED draws now have low information value. The next decisive shadow falsifier should move one step downstream:
+The next high-value falsifier is now **cross-actor**, not more state draws. Reuse the same seven frozen V6 state conditions and the exact same four-task consumption contract, but run one outcome-blind repeat with GLM-5.2 and one with DeepSeek-V4-Flash as the fixed actor. This directly tests whether the explicit-boundary versus omitted-boundary behavior pattern is specific to Qwen's instruction-following style.
 
-> freeze one actor and a small synthetic future-task panel, then vary only the frozen persistent state supplied to that actor.
+If both additional actors preserve the same separation, the serialization-to-behavior mechanism becomes more credible across actor families. If they fill missing rules from their own world knowledge instead of returning `UNKNOWN`, the conclusion must narrow to actor-policy-dependent state consumption.
 
-Use the most textually separated V4 FREE realizations and the canonical V5 TYPED state, with identical actor model, prompt, task order, and evaluation. The key question becomes whether representational state variation actually propagates into behavioral disagreement. If actor behavior is invariant, byte/text regeneration drift is mostly representational noise; if FREE realizations induce materially different actions while the typed state is stable, the state-interface mechanism becomes substantially more consequential.
-
-That actor-consumption panel must be prospectively frozen before execution and remain shadow-only. It may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.
+The cross-actor panel remains shadow-only and may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.

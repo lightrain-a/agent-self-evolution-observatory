@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-state-consumption-propagation-shadow-v6",
+  "date": "2026-09-06",
+  "status": "COMPLETED_SHADOW_STATE_CONSUMPTION_PANEL",
+  "raw_root": "/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v6-actor-consumption",
+  "plan_sha256": "4e4c6097aed6bd44b23924fd29c69c5f2e854823de81f06a1a4b99ba5ab39fc7",
+  "result_sha256": "0f55923718cd84de16f02ef3b23027d52c20edf2db36c237203c9b02c90e0847",
+  "fixed_actor": "qwen3.8-27b",
+  "conditions": 7,
+  "actor_repeats_per_condition": 3,
+  "cli_invocations": 21,
+  "usage_rows": 21,
+  "transport_clean": "21/21",
+  "tool_calls": 0,
+  "retry_or_replacement": false,
+  "state_selection": "For each V4 generator, select the pair of free-form states with minimum text similarity before V6 actor execution; add one canonical V5 typed state.",
+  "core_behavior": {
+    "verify_after_save": "21/21 RELOAD_VERIFY",
+    "stale_sheet_failure": "21/21 REFRESH_REPAIR_RETRY_ONCE",
+    "completion_before_reload": "21/21 NOT_COMPLETE"
+  },
+  "local_boundary_behavior": {
+    "free_states_with_explicit_nontransfer_boundary": "9/9 DO_NOT_TRANSFER",
+    "free_states_without_explicit_nontransfer_boundary": "9/9 UNKNOWN",
+    "typed_canonical_state": "3/3 DO_NOT_TRANSFER",
+    "within_condition_actor_response_variability": "0/7 conditions"
+  },
+  "interpretation": "Under a frozen state-only actor rule, free-form serialization differences that omit versus explicitly preserve a cross-workbook local-fact boundary propagate into different future decisions, while core verification/recovery/completion behavior remains invariant. The canonical typed state preserves the explicit boundary and yields stable behavior.",
+  "important_limit": "This is a synthetic state-entailment behavioral probe. The actor is explicitly instructed to answer UNKNOWN when a rule is absent, so V6 demonstrates behavioral propagation of state content under controlled consumption, not real benchmark task-success improvement or an unconstrained deployment effect.",
+  "next_falsifier": "Repeat the seven frozen state conditions once each with GLM-5.2 and deepseek-v4-flash as fixed actors to test whether the explicit-boundary versus omitted-boundary behavior pattern is Qwen-specific.",
+  "authority": {
+    "primary_e2": false,
+    "r3d_stage_a": false,
+    "r3d_stage_b": false,
+    "support_read": false,
+    "heldout_read": false,
+    "paper_claim_promotion": false,
+    "model_ranking": false
+  }
+}
