@@ -10,11 +10,13 @@ from typing import Any
 
 from research_pipeline.agent_constraint_externality_appworld_runtime import AppWorldToolWorld
 from research_pipeline.agent_constraint_externality_direct_sfq_a0_build import load_cases
-from research_pipeline.agent_constraint_externality_runner_core import sha256_value
-from research_pipeline.agent_constraint_externality_sq0_build import materialize_case
+from research_pipeline.agent_constraint_externality_runner_core import sha256_file, sha256_value
+import research_pipeline.agent_constraint_externality_sq0_build as sq0_build
 
 MCP_PROTOCOL_VERSION = "2025-11-25"
 SCHEMA_VERSION = "ace-direct-sfq-atomgit-mcp-progress-v1"
+APPWORLD_SUBSTRATE = Path("/data/wyt/agent-self-evolution-observatory/worktrees/agent-constraint-externality-20260831/cache/substrates/appworld-official-20260831")
+APPWORLD_VERSION_SHA256 = "911fc0c48cb0c70601db5775a9bef1b740dc4cc9f9b46389b9f0563fe7eb94d7"
 
 
 def _write_atomic(path: Path, payload: dict[str, Any]) -> None:
@@ -54,7 +56,11 @@ def main() -> None:
     if case is None:
         raise SystemExit("Unknown Direct-SFQ-A0 case")
 
-    materialized = materialize_case(case, args.runtime_root, args.task_id)
+    version_path = APPWORLD_SUBSTRATE / "data" / "version.txt"
+    if not version_path.is_file() or sha256_file(version_path) != APPWORLD_VERSION_SHA256:
+        raise SystemExit("Frozen AppWorld substrate identity mismatch")
+    sq0_build.APPWORLD_ROOT = APPWORLD_SUBSTRATE
+    materialized = sq0_build.materialize_case(case, args.runtime_root, args.task_id)
     world = AppWorldToolWorld(
         runtime_root=args.runtime_root,
         task_id=args.task_id,
