@@ -1,0 +1,53 @@
+{
+  "authority": {
+    "development_lane_closed": true,
+    "direct_qwen37flash_gate1_satisfied": false,
+    "f0_r1_opened": false,
+    "paper_claim_opened": false,
+    "rq1_rq2_opened": false,
+    "rq3_opened": false,
+    "rq4_opened": false
+  },
+  "content_sha256": "3c5ebdc1f9e0d407429a91259e2e018764946551ab84a667ca7d243b1334f51e",
+  "cost": {
+    "appworld_tool_call_total": 440,
+    "codingplan_window_limit": 500,
+    "codingplan_window_remaining_terminal": 339,
+    "codingplan_window_used_terminal": 161,
+    "scientific_model_round_count": 155,
+    "shared_reserve_for_g1": 100
+  },
+  "execution_id": "DIRECT-SFQ-A0-ATOMGIT-MIMO25PRO-20260906",
+  "interpretation": "This PASS establishes only that the frozen fresh Direct-SFQ-A0 development panel has the preregistered usable semantic target-failure geometry for AtomGit MiMo-V2.5-Pro under the bound AppWorld MCP transport. It does not replace the qwen3.7-flash mainline Gate1 and creates no collateral-externality or topology outcome.",
+  "ledger": {
+    "completion_count": 12,
+    "dispatch_completion_unit_sets_equal": true,
+    "dispatch_count": 12,
+    "failure_count": 0,
+    "replacement_count": 0,
+    "replay_count": 0,
+    "row_count": 24,
+    "unique_completion_units": 12,
+    "unique_dispatch_units": 12
+  },
+  "ledger_sha256": "4b2e73ed85616e43ddc9243a7d130b1e5b71d2c67b702b9b7549a5949ec36249",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "operational_state_file_sha256": "640c83fa7fbffaf5611e9c68eff6df9223a0cdc5da7a96bd75d79a5595b93a8c",
+  "outcomes": {
+    "frozen_acceptable_failure_counts": [
+      9,
+      10
+    ],
+    "non_semantic_failure_count": 0,
+    "target_success_count": 3,
+    "usable_target_failure_count": 9,
+    "usable_target_failure_rate": 0.75,
+    "verdict": "DIRECT_SFQ_A0_ATOMGIT_TARGET_FAILURE_QUALIFICATION_PASS"
+  },
+  "prelaunch_git_sha": "91e67f75a70f83ccb51ab9a0921cb2e125e76c43",
+  "result_content_sha256": "71fa4fd8f22bd473d656d2d2a51396b57711caaf78c823bbb39b5af672b47108",
+  "result_file_sha256": "43d5896e2fe56b96f73ecb75884011dce6427d1e0aa37393ecc5c1f3e13f2bc9",
+  "run_root": "/data/wyt/agent-constraint-externality/runs/direct-sfq-a0-atomgit-mimo25pro-20260906-v1",
+  "schema_version": "ace-direct-sfq-a0-atomgit-mimo25pro-integrity-audit-v1",
+  "status": "PASS_COMPLETE_EXACTLY_ONCE_DEVELOPMENT_PANEL"
+}

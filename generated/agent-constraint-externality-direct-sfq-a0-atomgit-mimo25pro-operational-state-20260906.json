@@ -1,0 +1,21 @@
+{
+  "codingplan_usage": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T18:04:58",
+    "remaining": 339,
+    "used": 161
+  },
+  "completed_case_count": 12,
+  "content_sha256": "f3c0d665991dd6e62355b8c0f9bf5e284f91b803233346287c26874781ba91e4",
+  "downstream_authority_opened": false,
+  "execution_id": "DIRECT-SFQ-A0-ATOMGIT-MIMO25PRO-20260906",
+  "minimum_remaining_before_case": 161,
+  "next_undispatched_case": null,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-direct-sfq-a0-atomgit-operational-v1",
+  "scientific_effects_observed": 0,
+  "shared_reserve_for_g1": 100,
+  "status": "DIRECT_SFQ_A0_ATOMGIT_PANEL_TERMINAL_READY_FOR_ADJUDICATION",
+  "target_success_count": 3,
+  "usable_target_failure_count": 9
+}
