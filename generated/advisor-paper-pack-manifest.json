@@ -39,10 +39,11 @@
       "bytes": 305944,
       "pdf_sha256": "fb09cbb4811b7350097f7c4659aa08238105076197e9ed487524cb6d75dee937",
       "stanford_review": {
-        "status": "PRIOR_VERSION_REVIEW_AVAILABLE",
-        "prior_pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167",
-        "prior_score": 5.2,
-        "note": "The 2026-09-05 Stanford review applies to the immediately preceding stage-resolved PDF, not this reframed unified candidate."
+        "status": "READY",
+        "score": 5.6,
+        "review_date": "2026-09-06T03:55:12.082910",
+        "pdf_sha256": "fb09cbb4811b7350097f7c4659aa08238105076197e9ed487524cb6d75dee937",
+        "note": "Exact current unified-story PDF reviewed on 2026-09-06; supersedes the prior-version 5.2 reference."
       }
     },
     {

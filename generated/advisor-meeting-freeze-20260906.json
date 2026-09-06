@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "meeting_id": "2026-09-06-advisor",
   "status": "MEETING_CANDIDATE_FROZEN",
-  "meeting_candidate_hash": "58e21fc579519a0110bf802bf5f83f21391092360ef9b3475c93b5f2fbd2de81",
+  "meeting_candidate_hash": "13cc6ee7c94c1e62f1662c7258cc29d86c80d8c17bd8d10ec9af21e20e61df3c",
   "paper_count": 9,
   "paper_order": [
     "E1",
@@ -27,8 +27,8 @@
     "reality_support_9_of_9": true,
     "resource_ledger_9_of_9": true,
     "stanford_review_overlays_9_of_9_available": true,
-    "stanford_exact_current_review_count": 8,
-    "stanford_prior_version_review_count": 1,
+    "stanford_exact_current_review_count": 9,
+    "stanford_prior_version_review_count": 0,
     "pdf_sha_binding_9_of_9": true,
     "route_authority_cost_consistency": true,
     "prior_independent_reality_cost_review_valid_for_unchanged_objects": false,
@@ -83,7 +83,7 @@
     },
     {
       "path": "generated/advisor-paper-pack-manifest.json",
-      "sha256": "60321e70b97e230748e6ce847cd08fe52fa0acc555387f299c2cffe47809532a"
+      "sha256": "d984e33423ade0fb69535d8d082df3ca6328461a166324e83f79d6d6efd685a4"
     },
     {
       "path": "generated/advisor-reality-cost-fix-closure-20260905.json",
@@ -111,7 +111,7 @@
     },
     {
       "path": "generated/stanford-c1-review.json",
-      "sha256": "9bb97f584bbef065861e1cbefff7119f43e5966e58e77b99dfec1688e50666af"
+      "sha256": "e7eddbb3cb6036d18c1a026828c5a8ca4b436c581d16fa0fbae0c4854d395a86"
     },
     {
       "path": "generated/stanford-constraint_externality-review.json",
