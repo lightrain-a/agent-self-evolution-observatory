@@ -1,0 +1,1190 @@
+{
+  "artifact_type": "e2-r17-atomgit-shadow-model-qualification",
+  "created_at_utc": "2026-09-06T04:05:14+00:00",
+  "future_second_backbone_authority": false,
+  "m3r4_model_substitution_authority": false,
+  "models": [
+    "qwen3.8-27b",
+    "GLM-5.2",
+    "deepseek-v4-flash"
+  ],
+  "paper_claim_authority": false,
+  "provider": "AtomGit",
+  "rows": [
+    {
+      "case_id": "verify_save_only",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 9.58,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\"],\"confidence\":92}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 72,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.316,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\"],\"confidence\":72}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 8.689,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.693,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 86,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR",
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.646,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\",\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":86}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 78,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.001,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\"],\"confidence\":78}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 8.847,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":92}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 9.376,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 10.717,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":92}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 9.654,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":92}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 98,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 2.07,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":98}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "confidence": 95,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.674,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":95}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.616,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 8.104,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.246,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "qwen3.8-27b",
+      "parsed": null,
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": false,
+      "seconds": 7.0,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": false,
+      "text": "```json\n{\n  \"classification\": \"FAIL_CLOSED\"\n}\n```"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "classification": "FAIL_CLOSED_DIAGNOSTIC_GAP"
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 2.686,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED_DIAGNOSTIC_GAP\"}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "qwen3.8-27b",
+      "parsed": {
+        "classification": "FAIL_CLOSED"
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 1.603,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED\"}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.745,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.285,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 2.878,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 96,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 5.78,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":96}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 72,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR",
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 8.595,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\",\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":72}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 82,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR",
+          "VERIFY_OUTPUT"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.046,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\",\"VERIFY_OUTPUT\"],\"confidence\":82}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.621,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":92}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.49,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":92}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 95,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.467,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":95}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 97,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.044,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":97}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 98,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.432,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":98}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "GLM-5.2",
+      "parsed": {
+        "confidence": 98,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.47,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":98}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "GLM-5.2",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 2.931,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "GLM-5.2",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 2.939,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "GLM-5.2",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.554,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "GLM-5.2",
+      "parsed": {
+        "classification": "FAIL_CLOSED_DIAGNOSTIC_GAP"
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.01,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED_DIAGNOSTIC_GAP\"}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "GLM-5.2",
+      "parsed": {
+        "classification": "FAIL_CLOSED"
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.266,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED\"}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "GLM-5.2",
+      "parsed": {
+        "classification": "FAIL_CLOSED"
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.671,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED\"}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 82,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 5.512,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":82}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.965,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "verify_save_only",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 86,
+        "failure_family": "verification",
+        "repair_primitives": [
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.321,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"verification\",\"repair_primitives\":[\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":86}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 82,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR",
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 4.915,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\",\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":82}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "none",
+        "repair_primitives": [
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.596,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "tool_injection",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 92,
+        "failure_family": "tool_error",
+        "repair_primitives": [
+          "RECOVER_TOOL_ERROR",
+          "VERIFY_OUTPUT",
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 3.759,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"tool_error\",\"repair_primitives\":[\"RECOVER_TOOL_ERROR\",\"VERIFY_OUTPUT\",\"COMPLETE_WORKFLOW\"],\"confidence\":92}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 91,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 2.827,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":91}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.233,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "completion_read_only",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 88,
+        "failure_family": "completion",
+        "repair_primitives": [
+          "COMPLETE_WORKFLOW"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 8.039,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"completion\",\"repair_primitives\":[\"COMPLETE_WORKFLOW\"],\"confidence\":88}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 96,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 5.435,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":96}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 95,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.139,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":95}"
+    },
+    {
+      "case_id": "none_full",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "confidence": 97,
+        "failure_family": "none",
+        "repair_primitives": []
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.446,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"failure_family\":\"none\",\"repair_primitives\":[],\"confidence\":97}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.463,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 7.272,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "canonical_compile",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "ordered_steps": [
+          "inspect",
+          "read",
+          "compute",
+          "write",
+          "save",
+          "reload_verify"
+        ]
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 6.569,
+      "semantic_ok": true,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"ordered_steps\":[\"inspect\",\"read\",\"compute\",\"write\",\"save\",\"reload_verify\"]}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "deepseek-v4-flash",
+      "parsed": null,
+      "replicate": 1,
+      "return_code": 0,
+      "schema_ok": false,
+      "seconds": 23.024,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": false,
+      "text": "I need to understand the scenario carefully before classifying. Let me re-read the description and trace the failure semantics.\n\nThe scenario states:\n1. A runner checks `run_root/lease` is absent\n2. Acquires an exclusive RUNNING lease\n3. Creates `run_root` and ledger BEFORE entering try/except\n4. Exceptions inside try mark FAIL_CLOSED\n5. Setup failures before try leave the lease RUNNING\n6. The existing lease blocks automatic replay\n\nLet me trace the logic: Setup (creating run_root, ledger, acquiring lease) happens **before** try/except. If setup fails before try, the lease is left in RUNNING state, and the existing lease blocks automatic replay. This means when a setup failure occurs, the system cannot automatically replay — it's stuck in RUNNING. The runner checked lease absence first, so a left-over RUNNING lease from a failed setup blocks subsequent attempts. This is a **diagnostic gap** — the system is in a state where it neither fails open nor completes safely, but the failure mode leaves no clean path to diagnose or recover automatically. Exceptions inside try mark FAIL_CLOSED (good). But setup failures before try leave the lease RUNNING with no FAIL_CLOSED marking — that's the gap.\n\nThe key distinction: This isn't FAIL_OPEN (nothing is left open/unprotected). It isn't SAFE_COMPLETE (the scenario describes failure modes). The lease being stuck in RUNNING with automatic replay blocked is precisely a diagnostic gap — the system can't determine what happened or automatically recover.\n\n{\"classification\":\"FAIL_CLOSED_DIAGNOSTIC_GAP\"}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "classification": "FAIL_CLOSED"
+      },
+      "replicate": 2,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 5.806,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED\"}"
+    },
+    {
+      "case_id": "control_gap",
+      "model": "deepseek-v4-flash",
+      "parsed": {
+        "classification": "FAIL_CLOSED"
+      },
+      "replicate": 3,
+      "return_code": 0,
+      "schema_ok": true,
+      "seconds": 5.656,
+      "semantic_ok": false,
+      "stderr_tail": "",
+      "strict_json": true,
+      "text": "{\"classification\":\"FAIL_CLOSED\"}"
+    }
+  ],
+  "schema_version": "1.0",
+  "scientific_experiment": false,
+  "scientific_outcomes_read": false,
+  "serialization_guard": "CRITICAL SERIALIZATION RULE: Your first character MUST be { and your last character MUST be }. Do NOT use Markdown, backticks, code fences, commentary, or leading/trailing text. ",
+  "status": "COMPLETED_NON_SCIENTIFIC_SHADOW_QUALIFICATION",
+  "summary": {
+    "engineering_candidate_ranking": [
+      "qwen3.8-27b",
+      "GLM-5.2",
+      "deepseek-v4-flash"
+    ],
+    "models": {
+      "GLM-5.2": {
+        "by_case": {
+          "canonical_compile": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "completion_read_only": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "control_gap": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 1,
+            "strict_json": 3
+          },
+          "none_full": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "tool_injection": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 2,
+            "strict_json": 3
+          },
+          "verify_save_only": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 2,
+            "strict_json": 3
+          }
+        },
+        "case_count": 6,
+        "median_seconds": 4.155,
+        "repeat_consistency_cases": 1,
+        "repetitions": 3,
+        "schema_pass": 18,
+        "schema_rate": 1.0,
+        "semantic_pass": 14,
+        "semantic_rate": 0.7778,
+        "strict_json_pass": 18,
+        "strict_rate": 1.0,
+        "total": 18
+      },
+      "deepseek-v4-flash": {
+        "by_case": {
+          "canonical_compile": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "completion_read_only": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "control_gap": {
+            "n": 3,
+            "schema_ok": 2,
+            "semantic_ok": 0,
+            "strict_json": 2
+          },
+          "none_full": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "tool_injection": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 2,
+            "strict_json": 3
+          },
+          "verify_save_only": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 2,
+            "strict_json": 3
+          }
+        },
+        "case_count": 6,
+        "median_seconds": 6.188,
+        "repeat_consistency_cases": 1,
+        "repetitions": 3,
+        "schema_pass": 17,
+        "schema_rate": 0.9444,
+        "semantic_pass": 13,
+        "semantic_rate": 0.7222,
+        "strict_json_pass": 17,
+        "strict_rate": 0.9444,
+        "total": 18
+      },
+      "qwen3.8-27b": {
+        "by_case": {
+          "canonical_compile": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "completion_read_only": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "control_gap": {
+            "n": 3,
+            "schema_ok": 2,
+            "semantic_ok": 1,
+            "strict_json": 2
+          },
+          "none_full": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "tool_injection": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          },
+          "verify_save_only": {
+            "n": 3,
+            "schema_ok": 3,
+            "semantic_ok": 3,
+            "strict_json": 3
+          }
+        },
+        "case_count": 6,
+        "median_seconds": 6.823,
+        "repeat_consistency_cases": 1,
+        "repetitions": 3,
+        "schema_pass": 17,
+        "schema_rate": 0.9444,
+        "semantic_pass": 16,
+        "semantic_rate": 0.8889,
+        "strict_json_pass": 17,
+        "strict_rate": 0.9444,
+        "total": 18
+      }
+    }
+  },
+  "synthetic_cases_only": true
+}
