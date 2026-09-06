@@ -36,9 +36,24 @@ def rows(p:Path,key:str)->dict[str,dict[str,Any]]:
 def ordered(task:str)->list[str]:
     return sorted(ARMS,key=lambda arm:hashlib.sha256(f'{ORDER_SALT}|{task}|{arm}'.encode()).hexdigest())
 
+def _require_runtime_gate(c:dict[str,Any],a:dict[str,Any],*,now:datetime|None=None)->None:
+    raw=str((c.get('recovery2') or {}).get('quota_reset_not_before') or '')
+    req(bool(raw),'recovery2 quota reset gate missing')
+    gate=datetime.fromisoformat(raw); req(gate.tzinfo is not None,'recovery2 quota reset gate must be timezone-aware')
+    current=now if now is not None else datetime.now(gate.tzinfo); req(current.tzinfo is not None,'runtime gate current time must be timezone-aware')
+    req(current.astimezone(gate.tzinfo)>=gate,f'quota reset gate not reached: not before {raw}')
+    scope=a.get('execution_scope') or {}; req(scope.get('execution_not_before')==raw,'authorization/runtime not-before binding drift')
+
+def _require_bound_code(c:dict[str,Any])->None:
+    bound=c.get('bound_code') or {}; req(bool(bound),'recovery2 bound code missing')
+    for key,row in bound.items():
+        if not isinstance(row,dict) or 'path' not in row or 'sha256' not in row: continue
+        path=ROOT/str(row['path']); req(path.is_file() and sha(path)==row['sha256'],f'recovery2 bound-code drift {key}')
+
 def validate(cp:Path,ap:Path)->tuple[dict[str,Any],dict[str,Any],str,str]:
     c,a=load(cp),load(ap); cs,aus=sha(cp),sha(ap)
     req(c.get('status')==CONTRACT_STATUS,'recovery2 contract drift'); req(a.get('status')==AUTH_STATUS and a.get('contract_sha256')==cs,'recovery2 auth drift')
+    _require_bound_code(c); _require_runtime_gate(c,a)
     au=a.get('authority') or {}; req(au.get('scientific_experiment') is True and au.get('measurement_only') is True and au.get('updater') is False and au.get('analyzer') is False,'authority drift')
     rec=c['recovery2']; req(rec['inherited_completed_measurements']==45 and rec['new_measurements']==27 and rec['completed_unit_replay'] is False,'recovery2 cardinality drift')
     parent=Path(rec['parent_run_root']); lease=Path(rec['parent_lease_path']); req(parent.is_dir() and lease.is_file(),'parent recovery missing'); ld=load(lease); req(ld.get('status')=='FAIL_CLOSED_CONSTRAINED_STATE_MICRO','parent recovery not fail-closed')
