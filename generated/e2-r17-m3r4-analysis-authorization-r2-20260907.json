@@ -1,0 +1,55 @@
+{
+  "analysis_code": {
+    "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/scripts/analyze_e2_r17_m3r4.py",
+    "sha256": "b473a0eb4fbc6fbf43ebed5da0e58d5d0f6357b6097440ed5200c1fd2b0b77b3"
+  },
+  "artifact_type": "e2-r17-m3r4-analysis-authorization",
+  "authority": {
+    "actor_measurement": false,
+    "analysis": true,
+    "bridge": false,
+    "e3": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "scientific_experiment": false,
+    "submission": false,
+    "updater": false
+  },
+  "completed_manifest_path": "/data/wyt/e2-r17-search-projection/runs/m3r4-frozen-state-localization-20260904/completed_units.jsonl",
+  "completed_manifest_sha256": "2e78e2e0f225db4425b1328a720cdf2e06739c16612adc8dbda430e1ce321684",
+  "completion_audit_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/generated/e2-r17-m3r4-completion-audit-20260907.json",
+  "completion_audit_sha256": "d7e2fddb8968a5f9168c204fa48d38784b7d354e593b2433f52c165b22aae3bb",
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/generated/e2-r17-m3r4-execution-final-contract-20260907.json",
+  "contract_sha256": "5c7b6fc50bf00edff0db79131ee354cc2ac7470dbf18d3f28a65ff55c446971c",
+  "created_at_utc": "2026-09-06T17:36:23+00:00",
+  "forbidden": {
+    "automatic_rerun": true,
+    "bridge_execution": true,
+    "historical_actor_outcomes_in_gate": true,
+    "historical_ff_hist_in_gate": true,
+    "historical_win_common_in_gate": true,
+    "new_actor_measurement": true,
+    "paper_promotion": true,
+    "provider_io": true,
+    "updater": true
+  },
+  "frozen_metric": {
+    "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/research_pipeline/e2_r17_regeneration_metrics_v4.py",
+    "sha256": "998083d8e96254f634f609696fa3009792df9c198af8bffa3944a1229bf2620c"
+  },
+  "inference_assumptions": {
+    "cross_task_factorization_qualified": true,
+    "qualification_boundary": "No concrete coupling violation was detected in the frozen execution diagnostics. These flags license the preregistered model-based interpretation but do not claim that hidden provider independence was proven from logs.",
+    "within_task_iid_stationarity_qualified": true
+  },
+  "measurement_authorization_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/generated/e2-r17-m3r4-measurement-authorization-20260907.json",
+  "measurement_authorization_sha256": "688d6dbb7c9dad7bfd7b1f99e6a7d89bebfef35d9b9370babae7921228d8ad8e",
+  "next_gate": "RUN_EXACT_M3R4_ANALYZER_ONCE_ON_THE_72_SEALED_POST_FREEZE_SCORES",
+  "partial_effect_read_before_authorization": false,
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/m3r4-frozen-state-localization-20260904/run_summary.json",
+  "run_summary_sha256": "af08e33f009629ae2bb2c2a2423364956c04f0059aa7e866e4290aef805effed",
+  "schema_version": "1.0",
+  "scientific_outcomes_read_before_authorization": false,
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_M3R4_ANALYSIS_ONLY"
+}
