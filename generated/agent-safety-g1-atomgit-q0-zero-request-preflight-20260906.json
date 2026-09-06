@@ -1,0 +1,68 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-ZERO-REQUEST-PREFLIGHT-20260906",
+  "checks": {
+    "amendment": {
+      "candidate_order": [
+        "qwen3.8-27b",
+        "GLM-5.2",
+        "deepseek-v4-flash"
+      ],
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/g1-mcta-paper-iteration-20260904/generated/agent-safety-g1-atomgit-cost-aware-q0-amendment-r4-20260906.json",
+      "status": "FROZEN_ZERO_PROVIDER_Q0_MODEL_SELECTION_AMENDMENT_NO_HARMFUL_AUTHORITY"
+    },
+    "atomcode_auth": {
+      "checked_paths": [
+        "/root/.atomcode/auth.toml",
+        "/home/wyt/.atomcode/auth.toml"
+      ],
+      "credential_content_read": false,
+      "pass": false,
+      "present": false,
+      "selected_path": null
+    },
+    "atomcode_binary": {
+      "pass": true,
+      "path": "/usr/local/bin/atomcode",
+      "sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113",
+      "version": "atomcode 5.0.9 (unknown)"
+    },
+    "awm": {
+      "dirty": false,
+      "exists": true,
+      "expected_head": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+      "head": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+      "pass": true,
+      "path": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/agent-workflow-memory"
+    },
+    "browserart": {
+      "dataset_path": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2/src/datasets/behaviors/hbb_benign.json",
+      "dataset_sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774",
+      "expected_dataset_sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774",
+      "materialized_commit_label": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
+      "pass": true,
+      "path": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2"
+    },
+    "generic_agent": {
+      "expected_sha256": "0cd844f94881850aba8fd1956837e8e7e2f87e3168629596674593859b1da424",
+      "pass": true,
+      "path": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/agent-workflow-memory/webarena/agents/legacy/agent.py",
+      "sha256": "0cd844f94881850aba8fd1956837e8e7e2f87e3168629596674593859b1da424"
+    }
+  },
+  "dispatch_attempted": false,
+  "harmful_calls": 0,
+  "host": "admin01-NF5468M5",
+  "model_request_delta": 0,
+  "model_request_delta_basis": "No daemon live message or provider endpoint is called by this preflight; missing auth is checked before any possible scientific dispatch.",
+  "next_gate": "RESTORE_EXISTING_ATOMCODE_AUTH_WITHOUT_EXPOSING_SECRET",
+  "p0_execution_authorized": false,
+  "p1_execution_authorized": false,
+  "paper_id": "AGENT-SAFETY-R9",
+  "q0_execution_authorized": false,
+  "recorded_time_ns": 1788671221001613105,
+  "safety_calls": 0,
+  "schema_version": "g1-atomgit-q0-zero-request-preflight-v1",
+  "scientific_outcome_created": false,
+  "status": "PRE_DISPATCH_OPERATIONAL_HOLD_AUTH_MISSING"
+}
