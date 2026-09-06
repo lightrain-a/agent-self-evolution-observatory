@@ -28,6 +28,42 @@
   const shortPaperName = p => ({PAPER_A:'Paper A',PAPER_B:'Paper B',CONSTRAINT_EXTERNALITY:zh('Constraint Externality','Constraint Externality')})[p.paper_id] || p.paper_id;
   const decisionLabel = status => ({KEEP:zh('KEEP · 保持当前路线','KEEP · current route'),MODIFY:zh('MODIFY · 修改路线','MODIFY · change route'),FOLLOW_UP:zh('FOLLOW-UP · 会后补决策','FOLLOW-UP · post-meeting decision')})[status] || zh('待现场拍板','Pending');
   const saveDecisions = () => localStorage.setItem(DECISION_KEY, JSON.stringify(decisions));
+  const buildMeetingReceipt = () => ({
+    schema_version:'1.0',
+    receipt_type:'advisor-meeting-decision-receipt',
+    meeting_id:DATA.meeting?.id||'2026-09-06-advisor',
+    meeting_candidate_hash:DATA.meeting?.candidate_hash||'',
+    recorded_at:new Date().toISOString(),
+    decisions:orderedPapers().map(p=>({paper_id:p.paper_id,sequence:paperSeq(p),frozen_route:p.route,decision:(decisions[p.paper_id]||{}).status||'PENDING',note:(decisions[p.paper_id]||{}).note||'',next_closure:p.next_closure,advisor_question:p.advisor_question})),
+    claim_ownership_map:DATA.claim_ownership_map||{},
+    shared_risk_reopen_rules:DATA.shared_risk_reopen_rules||[],
+    resource_authority:orderedPapers().map(p=>({paper_id:p.paper_id,authorized_now:resource(p).authorized_now||{},cost_to_stop:resource(p).cost_to_stop||'',next_authority_gate:resource(p).next_authority_gate||'',future_conditional:resource(p).conditional_envelope||'',explicit_non_authority:resource(p).explicit_non_authority||''})),
+    operational_overlay:DATA.operational_overlay||{},
+    authority:{scientific:false,experiment:false,provider:false,gpu:false,submission:false,advisor_meeting_projection_only:true}
+  });
+  const mdCell = v => String(v||'').replace(/\|/g,'\\|').replace(/\s*\n\s*/g,' ');
+  const receiptMarkdown = () => {
+    const r=buildMeetingReceipt();
+    const rows=r.decisions.map(x=>`| ${x.sequence} ${mdCell(x.paper_id)} | ${mdCell(x.frozen_route)} | ${mdCell(x.decision)} | ${mdCell(x.note)||'—'} | ${mdCell(x.next_closure)} |`).join('\n');
+    const ownership=Object.entries(r.claim_ownership_map||{}).map(([k,v])=>`- **${mdCell(k)}**: ${mdCell(typeof v==='string'?v:JSON.stringify(v))}`).join('\n');
+    const reopen=(r.shared_risk_reopen_rules||[]).map(x=>`- **${mdCell(x.premise||x.primitive||'shared risk')}** → direct: ${mdCell((x.directly_affected||[]).join(', '))}; conditional: ${mdCell((x.conditional_papers||x.conditionally_affected||[]).join(', '))}; threshold: ${mdCell(x.reopen_threshold||'')}`).join('\n');
+    return `# Advisor Meeting Receipt · 2026-09-06\n\n- Candidate: \`${r.meeting_candidate_hash}\`\n- Recorded at: ${r.recorded_at}\n- Authority: advisory meeting record only; no scientific / experiment / provider / GPU / submission authority.\n\n## Nine-paper decisions\n\n| Paper | Frozen route | Live decision | Note | Next closure |\n|---|---|---|---|---|\n${rows}\n\n## Claim ownership\n${ownership||'- none'}\n\n## Shared-risk reopen rules\n${reopen||'- none'}\n`;
+  };
+  const copyReceiptMarkdown = async () => {
+    const text=receiptMarkdown();
+    try {
+      if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(text);return true;}
+    } catch (_) {}
+    const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const ok=document.execCommand('copy');ta.remove();return ok;
+  };
+  const downloadReceiptMarkdown = () => {
+    const blob=new Blob([receiptMarkdown()],{type:'text/markdown;charset=utf-8'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='advisor-meeting-receipt-20260906.md';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},0);
+  };
+  const downloadReceiptJson = () => {
+    const blob=new Blob([JSON.stringify(buildMeetingReceipt(),null,2)+'\n'],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='advisor-meeting-receipt-20260906.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},0);
+  };
   const authorizedText = p => {
     const a=resource(p).authorized_now||{};
     return [a.gpu?`GPU ${a.gpu}`:'',a.api_units!==undefined?`API ${a.api_units}`:'',a.cash_cny!==undefined?`cash ${a.cash_cny}`:'',a.work||''].filter(Boolean).join(' · ');
@@ -125,7 +161,7 @@
   function renderDecisionLedger(){
     const rows=orderedPapers().map(p=>{const d=decisions[p.paper_id]||{};return `<tr><td><b>${paperSeq(p)} ${esc(shortPaperName(p))}</b></td><td>${esc(routeLabel(p.route))}</td><td><strong data-ledger-status="${esc(p.paper_id)}">${esc(decisionLabel(d.status))}</strong></td><td data-ledger-note="${esc(p.paper_id)}">${esc(d.note||'—')}</td><td>${esc(compact(p.next_closure,220))}</td></tr>`}).join('');
     const done=orderedPapers().filter(p=>decisions[p.paper_id]?.status).length;
-    return `<section class="advisor-section" id="decision-ledger"><header><div><div class="eyebrow">16:40–16:53 · LOCK THE LEDGER</div><h2>${zh('九篇 disposition / override 现场账本','Nine-paper live disposition / override ledger')}</h2><p>${zh('卡片上的 KEEP / MODIFY / FOLLOW-UP 会保存在当前浏览器 localStorage，并同步到这里；它只是会议记录层，不会自动授予实验、GPU、provider 或投稿权限。','KEEP / MODIFY / FOLLOW-UP choices are stored in this browser localStorage and mirrored here. This is a meeting-record layer only; it never grants experiment, GPU, provider, or submission authority.')}</p></div><strong class="advisor-ledger-progress"><span id="advisor-decision-progress">${done}/9</span>${zh('已拍板','decided')}</strong></header><div class="advisor-table-wrap"><table class="matrix advisor-ledger-table"><thead><tr><th>Paper</th><th>${zh('冻结路线','Frozen route')}</th><th>${zh('现场决定','Live decision')}</th><th>${zh('一句话备注','One-line note')}</th><th>Next closure</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+    return `<section class="advisor-section" id="decision-ledger"><header><div><div class="eyebrow">16:40–16:53 · LOCK THE LEDGER</div><h2>${zh('九篇 disposition / override 现场账本','Nine-paper live disposition / override ledger')}</h2><p>${zh('卡片上的 KEEP / MODIFY / FOLLOW-UP 会保存在当前浏览器 localStorage，并同步到这里；结束前请导出 receipt，避免会议记录只留在单一浏览器。该层不会自动授予实验、GPU、provider 或投稿权限。','KEEP / MODIFY / FOLLOW-UP choices are stored in this browser localStorage and mirrored here. Export the receipt before the meeting ends so the record is not trapped in one browser. This layer never grants experiment, GPU, provider, or submission authority.')}</p></div><div class="advisor-ledger-tools"><strong class="advisor-ledger-progress"><span id="advisor-decision-progress">${done}/9</span>${zh('已拍板','decided')}</strong><div class="advisor-receipt-actions"><button type="button" id="advisor-copy-receipt">${zh('复制 Markdown','Copy Markdown')}</button><button type="button" id="advisor-download-md-receipt">${zh('下载 Markdown','Download Markdown')}</button><button type="button" id="advisor-download-receipt">${zh('导出 JSON','Download JSON')}</button></div></div></header><div class="advisor-table-wrap"><table class="matrix advisor-ledger-table"><thead><tr><th>Paper</th><th>${zh('冻结路线','Frozen route')}</th><th>${zh('现场决定','Live decision')}</th><th>${zh('一句话备注','One-line note')}</th><th>Next closure</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   }
   function renderReadback(){
     const unresolved=orderedPapers().filter(p=>!decisions[p.paper_id]?.status);
@@ -161,6 +197,9 @@
     document.querySelectorAll('.advisor-filter').forEach(btn=>{btn.onclick=()=>{filter=btn.dataset.filter;document.querySelectorAll('.advisor-filter').forEach(x=>x.classList.toggle('active',x===btn));applyFilter();};});
     document.querySelectorAll('[data-decision-choice]').forEach(btn=>{btn.onclick=()=>{const panel=btn.closest('[data-decision-paper]');if(!panel)return;const id=panel.dataset.decisionPaper;decisions[id]={...(decisions[id]||{}),status:btn.dataset.decisionChoice};saveDecisions();refreshDecisionSurfaces();};});
     document.querySelectorAll('[data-decision-note]').forEach(input=>{input.oninput=()=>{const panel=input.closest('[data-decision-paper]');if(!panel)return;const id=panel.dataset.decisionPaper;decisions[id]={...(decisions[id]||{}),note:input.value};saveDecisions();refreshDecisionSurfaces();};});
+    const copyReceipt=$('#advisor-copy-receipt'); if(copyReceipt) copyReceipt.onclick=async()=>{const original=copyReceipt.textContent;try{const ok=await copyReceiptMarkdown();copyReceipt.textContent=ok?zh('已复制 ✓','Copied ✓'):zh('复制受限，请下载','Copy blocked; download');setTimeout(()=>copyReceipt.textContent=original,1800);}catch(_){copyReceipt.textContent=zh('复制受限，请下载','Copy blocked; download');setTimeout(()=>copyReceipt.textContent=original,1800);}};
+    const downloadMd=$('#advisor-download-md-receipt'); if(downloadMd) downloadMd.onclick=downloadReceiptMarkdown;
+    const downloadReceipt=$('#advisor-download-receipt'); if(downloadReceipt) downloadReceipt.onclick=downloadReceiptJson;
     const langBtn=$('#advisor-lang'); if(langBtn) langBtn.onclick=()=>{lang=lang==='zh'?'en':'zh';localStorage.setItem(LANG_KEY,lang);document.documentElement.lang=lang==='zh'?'zh-CN':'en';render();};
     const sidebar=$('.sidebar');
     if(sidebar && !sidebar.querySelector('.sidebar-close')) sidebar.insertAdjacentHTML('afterbegin','<button class="sidebar-close" aria-label="Close navigation">×</button>');
