@@ -133,7 +133,45 @@ Two attempts on 2026-09-03 are not counted:
 1. model-picker automation failed before prompt submission;
 2. a retry verified GPT-5.6 Sol + Extra High and reported `promptSubmitted=true`, but the message never produced an assistant turn; harvest showed zero assistant turns.
 
-Therefore do **not** record `PASS_V4_R1_PREEXECUTION_DESIGN` or any other V4-R1 reviewer verdict unless a later independent session returns a complete answer.
+Therefore do **not** retroactively record `PASS_V4_R1_PREEXECUTION_DESIGN` for those failed V4-R1 sessions.
+
+## Superseding V4-R2 status
+
+The historical V4-R1 review gap above was subsequently superseded by the repaired **Bridge V4-R2** object on a separate branch. V4-R2 preserves the balanced generator-factor primary estimand and closes the remaining actor-disagreement/state-SHA issues without adding tasks, model families, or E3 authority.
+
+Current V4-R2 design status:
+
+- branch: `research/e2-r17-bridge-v4r2-execution-prep-20260906`;
+- independent review verdict: `PASS_PREEXECUTION_DESIGN`;
+- zero-provider execution preparation: `PASS_ZERO_PROVIDER_BRIDGE_V4R2_EXECUTION_PREPARATION_NO_AUTHORITY`;
+- protocol SHA-256: `1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7`;
+- execution-plan preparation commit before the post-AtomGit handoff addendum: `2305ecad`.
+
+This does not authorize Bridge provider execution. Its next gate remains a separate Stage-A contract and pre-execution authority after the upstream M3R4 adjudication.
+
+A post-review execution-faithfulness addendum has also been frozen at commit `cfcaaa89`. It does not modify V4-R2 science. It requires future deterministic compiler/control arms to materialize the exact bytes of `compile_skill(...).skill_markdown` as `SKILL.md`, verify them against `CompiledState.skill_sha256`, and pass only that SHA-bound Markdown skill through the standard actor `skill_source`. Raw typed diagnosis fields may not be actor-visible, and no second LLM/free-form renderer may intervene.
+
+Addendum SHA-256:
+
+`a6f75059b11e27ca5b019a79c87a99914e8e56902eb9a8cb4b253be2fa1c2d53`
+
+## AtomGit V3–V8 shadow diagnostics — non-claim-bearing
+
+A separate AtomGit model-subject line was run on synthetic evidence only. It did not read Bridge SCREEN/VALIDATION outcomes, R3D support, E3, or public-benchmark results and does not change the current scientific authority.
+
+The useful design lesson is a producer–consumer decomposition of persistent state:
+
+1. identical evidence can generate byte-distinct FREE state text;
+2. a fixed typed writer can collapse repeated generations to one canonical semantic representation;
+3. omission versus explicit preservation of one local boundary can propagate to a state-bound actor decision;
+4. raw typed-field interpretation can still vary across actor backbones;
+5. a deterministic schema-aware consumer mapping closed the observed GLM synthetic interpretation gap.
+
+The sequence is recorded in `consultations/e2-r17-atomgit-v3-v8-paper-integration-decision-20260906.md`. It is **not** counted as evidence that the formal typed compiler improves downstream utility, as evidence for the V4-R2 primary generator effect, or as cross-backbone/public generalization.
+
+The formal V4-R2 compiler is importantly narrower than the generic V5 typed-JSON shadow writer: `TypedDiagnosis` is internal, while `compile_skill()` renders canonical Markdown repair blocks. Therefore the AtomGit consumer heterogeneity result does not by itself reopen the V4-R2 protocol; it motivates the explicit compiler-to-actor handoff binding above.
+
+No additional AtomGit model matrix is planned before a new prospectively frozen paper-level evidence question exists.
 
 ## R3 static qualification
 
