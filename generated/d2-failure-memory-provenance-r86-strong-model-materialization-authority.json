@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R86-STRONG-MODEL-MATERIALIZATION-AUTHORITY",
+  "recorded_date": "2026-09-06",
+  "status": "R86_STRONG_MODEL_MATERIALIZATION_ONLY_AUTHORIZED_EXECUTION_CLOSED",
+  "role": "POST_R85_TRIGGERED_EXACT_MODEL_DOWNLOAD_AND_HASH_AUTHORITY",
+  "bindings": {
+    "r80_scale_freeze_receipt_sha256": "90cd06c3aba9190bdc8d3d87d5956398eed9571dd280f17bd333233f2dab3423",
+    "r85_final_pt_receipt_sha256": "67db7e5c8690ee40ea0fa42dababdee5e1c80b41c1f12e0c48c635dea0bd9def",
+    "D": 3,
+    "strong_panel_task_ids": ["338", "185", "494", "148", "376", "390"]
+  },
+  "strong_model": {
+    "repository": "Qwen/Qwen2.5-32B-Instruct",
+    "revision": "c53f764956643a675cfff8ad85b3c9e9b3029e06",
+    "family": "Qwen2.5",
+    "parameter_scale": "32.5B",
+    "target_host": "10.42.8.52",
+    "target_root": "/data/wyt/models/Qwen2.5-32B-Instruct-c53f76495664",
+    "required_post_download_artifacts": [
+      "complete recursive file SHA256 manifest",
+      "config.json SHA256",
+      "tokenizer/config/template SHA256s",
+      "model.safetensors.index.json SHA256",
+      "total bytes and file count"
+    ]
+  },
+  "authority": {
+    "strong_model_download": true,
+    "strong_model_hash_manifest": true,
+    "strong_model_execution": false,
+    "qwen_execution": false,
+    "llama_execution": false,
+    "analysis": false,
+    "gpu": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "5a3c0700506a33f2afeefbf7f88e29354fe108af3e63968a0b89c6f4e9b45589"
+}
