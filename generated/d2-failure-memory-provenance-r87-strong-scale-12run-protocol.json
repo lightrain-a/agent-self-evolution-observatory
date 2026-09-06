@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R87-STRONG-SCALE-12RUN-PROTOCOL",
+  "recorded_date": "2026-09-06",
+  "status": "R87_STRONG_SCALE_PROTOCOL_FROZEN_EXECUTION_CLOSED",
+  "role": "POST_R85_TRIGGERED_EXTERNAL_VALIDITY_DIAGNOSTIC_PROTOCOL",
+  "bindings": {
+    "r80_scale_freeze_receipt_sha256": "90cd06c3aba9190bdc8d3d87d5956398eed9571dd280f17bd333233f2dab3423",
+    "r85_final_pt_receipt_sha256": "67db7e5c8690ee40ea0fa42dababdee5e1c80b41c1f12e0c48c635dea0bd9def",
+    "r86_materialization_authority_receipt_sha256": "5a3c0700506a33f2afeefbf7f88e29354fe108af3e63968a0b89c6f4e9b45589",
+    "r68_panel_receipt_sha256": "bdfb80d67e353a755f8df6a43fe4889e81f8ff2b7ea902a2e07934a31b99be20",
+    "r72_protocol_receipt_sha256": "acd56a621e20e00aca9a65697b86034356f1083ee54b95419fb10c37c885dd23"
+  },
+  "scientific_scope": {
+    "question": "Do the three P/T terminal-discordant cases observed on the frozen 7B/8B executors remain P/T-discordant under a substantially stronger same-family Qwen2.5 executor?",
+    "inferential_role": "targeted external-validity / capability-boundary diagnostic only",
+    "population_effect_estimation": false,
+    "cross_model_pooling": false,
+    "primary_R72_R73_claim_change_allowed": false
+  },
+  "model": {
+    "repository": "Qwen/Qwen2.5-32B-Instruct",
+    "revision": "c53f764956643a675cfff8ad85b3c9e9b3029e06",
+    "family": "Qwen2.5",
+    "parameter_scale": "32.5B",
+    "decoding": {
+      "temperature": 0.0,
+      "do_sample": false,
+      "max_new_tokens": 512
+    },
+    "required_precision": "same released checkpoint dtype; no quantization",
+    "materialization_receipt_required_before_execution": true
+  },
+  "runtime": {
+    "preferred_host": "222.20.126.231",
+    "reason": "same A100/OSInteraction runtime host as the frozen R72/R73 primary stages; minimizes host/runtime variation",
+    "clean_memrl_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "docker_image_id": "sha256:02c5cb67fff7bfddda09ca63e5318628d02d943767e6cd59069ece755253f036",
+    "renderer": "reuse R72 P_neutral/T_truthful rendering byte-for-byte",
+    "fresh_container_per_arm": true,
+    "no_rerun_after_treatment_exposure": true,
+    "runtime_equivalence_preflight_required": true
+  },
+  "panel": {
+    "D": 3,
+    "discordant_task_ids": [
+      "338",
+      "494",
+      "376"
+    ],
+    "matched_controls": {
+      "338": "185",
+      "494": "148",
+      "376": "390"
+    },
+    "task_ids": [
+      "338",
+      "185",
+      "494",
+      "148",
+      "376",
+      "390"
+    ],
+    "task_count": 6,
+    "arms": [
+      "P_neutral",
+      "T_truthful"
+    ],
+    "trajectory_count": 12,
+    "arm_order_seed": "B1-R87-STRONG-PT-ORDER-20260906",
+    "schedule": [
+      {
+        "stage_ordinal": 0,
+        "task_id": "338",
+        "arm": "P_neutral",
+        "task_instruction_utf8_sha256": "0e486cf8ad36baf08c8cfe27165f5f6a08c374f9e6922fdab31b67aa85c0c50b",
+        "selected_content_sequence_sha256": "a7ea8e3dbf8540586dbcbe70bd15e4579f347c4cee20dcb972ec9ff97504dd51"
+      },
+      {
+        "stage_ordinal": 1,
+        "task_id": "338",
+        "arm": "T_truthful",
+        "task_instruction_utf8_sha256": "0e486cf8ad36baf08c8cfe27165f5f6a08c374f9e6922fdab31b67aa85c0c50b",
+        "selected_content_sequence_sha256": "a7ea8e3dbf8540586dbcbe70bd15e4579f347c4cee20dcb972ec9ff97504dd51"
+      },
+      {
+        "stage_ordinal": 2,
+        "task_id": "185",
+        "arm": "T_truthful",
+        "task_instruction_utf8_sha256": "6875299d81b1ee5ca6bef6a6201c5cd6d3e4e7101d72cd588b786cf561aa193f",
+        "selected_content_sequence_sha256": "5e8e842a9740834cd33baf76cd45ae115798511a09e713877734d9a31926e018"
+      },
+      {
+        "stage_ordinal": 3,
+        "task_id": "185",
+        "arm": "P_neutral",
+        "task_instruction_utf8_sha256": "6875299d81b1ee5ca6bef6a6201c5cd6d3e4e7101d72cd588b786cf561aa193f",
+        "selected_content_sequence_sha256": "5e8e842a9740834cd33baf76cd45ae115798511a09e713877734d9a31926e018"
+      },
+      {
+        "stage_ordinal": 4,
+        "task_id": "494",
+        "arm": "T_truthful",
+        "task_instruction_utf8_sha256": "0fe48b41792c5b52d051c5c6cce3e68b6da4112eb26c915e13dec85922520304",
+        "selected_content_sequence_sha256": "474d102dbb88456cd40ba1c0ef89d470ec3d9a19a5d870c54ebf00cbf031bfca"
+      },
+      {
+        "stage_ordinal": 5,
+        "task_id": "494",
+        "arm": "P_neutral",
+        "task_instruction_utf8_sha256": "0fe48b41792c5b52d051c5c6cce3e68b6da4112eb26c915e13dec85922520304",
+        "selected_content_sequence_sha256": "474d102dbb88456cd40ba1c0ef89d470ec3d9a19a5d870c54ebf00cbf031bfca"
+      },
+      {
+        "stage_ordinal": 6,
+        "task_id": "148",
+        "arm": "T_truthful",
+        "task_instruction_utf8_sha256": "7ebebfa8e55a92a033de7eb767a45565332520a85d4a42f4cc3290dc4198653e",
+        "selected_content_sequence_sha256": "bff7e601d5eb6d8dcbba195b846842b3c73878fcf8c55b9c7d63af86cd9bff6b"
+      },
+      {
+        "stage_ordinal": 7,
+        "task_id": "148",
+        "arm": "P_neutral",
+        "task_instruction_utf8_sha256": "7ebebfa8e55a92a033de7eb767a45565332520a85d4a42f4cc3290dc4198653e",
+        "selected_content_sequence_sha256": "bff7e601d5eb6d8dcbba195b846842b3c73878fcf8c55b9c7d63af86cd9bff6b"
+      },
+      {
+        "stage_ordinal": 8,
+        "task_id": "376",
+        "arm": "T_truthful",
+        "task_instruction_utf8_sha256": "f132c64c98c2c7b0b919425c16ad731a84b27a58c39c41bb59bb1b7844b81caf",
+        "selected_content_sequence_sha256": "2b9981756fe0e67f15055fd7a178a0d2080249a04e042983bdea4681e859dfb2"
+      },
+      {
+        "stage_ordinal": 9,
+        "task_id": "376",
+        "arm": "P_neutral",
+        "task_instruction_utf8_sha256": "f132c64c98c2c7b0b919425c16ad731a84b27a58c39c41bb59bb1b7844b81caf",
+        "selected_content_sequence_sha256": "2b9981756fe0e67f15055fd7a178a0d2080249a04e042983bdea4681e859dfb2"
+      },
+      {
+        "stage_ordinal": 10,
+        "task_id": "390",
+        "arm": "T_truthful",
+        "task_instruction_utf8_sha256": "22fdce509ae074539893d80b617943ba335e644a41a07dcf0028af493f366010",
+        "selected_content_sequence_sha256": "dc5f997a9a231b6ac52c36b3c7b62cd94d6b3197af2cc3ee449c1be194862bd3"
+      },
+      {
+        "stage_ordinal": 11,
+        "task_id": "390",
+        "arm": "P_neutral",
+        "task_instruction_utf8_sha256": "22fdce509ae074539893d80b617943ba335e644a41a07dcf0028af493f366010",
+        "selected_content_sequence_sha256": "dc5f997a9a231b6ac52c36b3c7b62cd94d6b3197af2cc3ee449c1be194862bd3"
+      }
+    ],
+    "schedule_sha256": "5d3feb8bb15b058d4e16a46c1aff88273efcbbfb62daba07fc31830000da3da3"
+  },
+  "analysis": {
+    "open_only_after_12_terminal_rows": true,
+    "primary_readout": "P/T terminal discordance persistence for each of Tasks 338, 494, 376",
+    "control_readout": "P/T terminal discordance among matched controls 185, 148, 390",
+    "first_action_and_step_diagnostics": "descriptive_only",
+    "interpretation": {
+      "discordant_cases_all_concordant_and_controls_concordant": "consistent with the observed 7B/8B flips being capability/recovery-boundary sensitive at this stronger executor; not proof that larger models are generally provenance-invariant",
+      "one_or_more_discordant_cases_persist_and_controls_concordant": "provenance-sensitive terminal branching persists on at least one case at 32B scale",
+      "matched_control_discordance_present": "strong-model background P/T instability is nonzero on matched controls; targeted persistence interpretation is weakened/inconclusive"
+    }
+  },
+  "authority": {
+    "strong_model_download": false,
+    "strong_model_execution": false,
+    "analysis": false,
+    "gpu": false,
+    "qwen_execution": false,
+    "llama_execution": false,
+    "PSMG": false,
+    "L3": false,
+    "paper_claim_change": false
+  },
+  "strong_model_outcomes_observed_during_freeze": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "78a858ec2c70b155a4d72db292543a48d2678c54c8871763f64448d480539c25"
+}
