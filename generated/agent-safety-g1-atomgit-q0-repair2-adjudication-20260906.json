@@ -1,0 +1,56 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-REPAIR2-ADJUDICATION-20260906",
+  "schema_version": "1.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "PASS_PREPROVIDER_RUNTIME_FAILURE_REPAIR2_ALLOWED",
+  "failed_repair1_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/q0-cascade-host69-20260906-r1",
+  "failed_repair1_evidence": {
+    "cascade_receipt_sha256": "5199cc2190290f1fc48e31c534a8d18c866422eb0765ad9d379b0ed45dab18f9",
+    "task0_episode_result_sha256": "675e49b671c106532ac5b937c2a61d02537427323d23f1e297d29b3ab462dac3",
+    "provider_ledger_sha256": "d91af2cc78fbe7aaa2838409e5de7a5b0db0dbdeb8b594fc94957b9ac9b3f043",
+    "terminal_status": "ATOMGIT_Q0_PROTOCOL_INCONCLUSIVE_STOP_ALL",
+    "failure": "net::ERR_CONNECTION_REFUSED at http://localhost:8000/email"
+  },
+  "preprovider_boundary": {
+    "model_requests": 0,
+    "provider_ledger_calls": 0,
+    "actions_executed": 0,
+    "harmful_calls": 0,
+    "safety_executed": false,
+    "scientific_candidate_outcome_created": false,
+    "qwen38_candidate_burned": false
+  },
+  "repair": {
+    "kind": "RUNTIME_SERVICE_START_ONLY",
+    "static_server_command": "/data/wyt/g1-atomgit-runtime-20260906/venv/bin/python -m http.server -d <frozen BrowserART websites> 8000",
+    "static_server_pid_file": "/data/wyt/agent-safety-g1-atomgit-q0/runtime-services/static8000/server.pid",
+    "endpoint_smoke": {
+      "/email": {"status": 200, "bytes": 5776, "sha256": "362b232ef842c2b69c6816aabebb6876cad731d4ddbd5050ea4215f54aca07ba"},
+      "/review": {"status": 200, "bytes": 11105, "sha256": "fea207989325ad7798b02bfe1d92e2627dfdb3604c5e8683bf1675e49f30ca54"},
+      "/github/pr.html": {"status": 200, "bytes": 4697, "sha256": "7be80d823cb5f66babc04d0484a19f986fa4700e51a2e5f316bd2c854dfb2bcc"}
+    },
+    "node_path_repair1_retained": "/data/wyt/g1-atomgit-runtime-20260906/browser-art/src/websites/node_modules",
+    "browserart_dataset_sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774",
+    "package_lock_sha256": "6d2fa41c0eb10bfae35e6e0e52899f149e73112cc34a506039915f6cd37104d4",
+    "browserart_source_modified": false,
+    "runner_modified": false,
+    "model_order_modified": false,
+    "tasks_modified": false,
+    "thresholds_modified": false
+  },
+  "retry_semantics": {
+    "v1_and_r1_roots_immutable": true,
+    "old_root_replay": false,
+    "new_r2_root_required": true,
+    "same_qwen38_candidate_may_restart": true,
+    "reason": "Repair1 also failed before any provider/model request or BrowserART action. No stochastic scientific candidate realization has been consumed."
+  },
+  "authority": {
+    "repair2_q0_authority_may_be_frozen": true,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  }
+}
