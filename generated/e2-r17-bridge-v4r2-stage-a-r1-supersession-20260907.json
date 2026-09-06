@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-stage-a-r1-supersession",
+  "date": "2026-09-07",
+  "status": "PASS_STAGE_A_R2_SUPERSEDES_UNUSED_R1_POINT_OF_USE_BINDING_REPAIR",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "superseded_r1": {
+    "contract_path": "generated/e2-r17-bridge-v4r2-stage-a-contract-20260907.json",
+    "contract_sha256": "69dff9178988dd76f6da68741c5de8a442217698e97c03fd42bba5211fd85bee",
+    "preflight_path": "generated/e2-r17-bridge-v4r2-stage-a-preflight-20260907.json",
+    "preflight_sha256": "cd543bbffce0fe715cb0ca5cd3d6e0dbecd31e82b95d3eebdefb948a465617cc",
+    "review_commit": "1b78c1873c158ae2ac0d09c8b86a525980df59dc",
+    "independent_review_started": false,
+    "scientific_authorization_minted": false,
+    "provider_io": false,
+    "run_root_created": false,
+    "lineage_lease_created": false
+  },
+  "replacement_r2": {
+    "contract_path": "generated/e2-r17-bridge-v4r2-stage-a-contract-r2-20260907.json",
+    "contract_sha256": "80fc7a9a85fbb7607d7744048886030a0b55bff15c7463617f5e8bd38253967c",
+    "preflight_path": "generated/e2-r17-bridge-v4r2-stage-a-preflight-r2-20260907.json",
+    "preflight_sha256": "5f38353025aa1837ce154f74c61143362a71f90d0ee9e9c4eb67924ec3e76a1e",
+    "runtime_sha256": "7de9e020d210c3b5f665f878cb44a42ed382bf791b34897816987da74506af0d"
+  },
+  "repair_scope": {
+    "scientific_geometry_changed": false,
+    "streams_changed": false,
+    "tasks_changed": false,
+    "search_k_changed": false,
+    "support_threshold_changed": false,
+    "model_identity_changed": false,
+    "provider_budget_changed": false,
+    "stage_separation_changed": false,
+    "new_point_of_use_runner_python_binding": true,
+    "new_exact_authorization_authority_surface_binding": true,
+    "new_exact_authorization_scope_binding": true,
+    "new_env_file_path_binding": true
+  },
+  "interpretation_boundary": "R2 is a control-plane-only repair performed before any independent Stage-A execution review, scientific authorization, run-root creation, or Bridge scientific provider call. It preserves the exact 6×8×K8 / 384-unit SCREEN search/support object and adds only point-of-use runtime and authorization binding.",
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "free_updater": false,
+    "actor_evaluation": false,
+    "validation_opening": false,
+    "analysis": false,
+    "paper_promotion": false
+  },
+  "next_gate": "FREEZE_R2_EXECUTION_REVIEW_PACKET_THEN_FRESH_INDEPENDENT_REVIEW"
+}

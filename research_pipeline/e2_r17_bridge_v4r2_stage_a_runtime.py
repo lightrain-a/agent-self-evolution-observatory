@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import hashlib, json, os, sqlite3, subprocess
+import hashlib, json, os, sqlite3, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -36,8 +36,7 @@ def rows(path:Path)->list[dict[str,Any]]:return [json.loads(x) for x in path.rea
 def validate(contract_path:Path,auth_path:Path,root:Path)->tuple[dict[str,Any],dict[str,Any],str,str,dict[str,Path]]:
     c,a=load(contract_path),load(auth_path); cs,ahs=sha(contract_path),sha(auth_path)
     req(c.get("status")==CONTRACT_STATUS,"Stage-A contract drift");req(a.get("status")==AUTH_STATUS,"Stage-A auth drift");req(a.get("contract_sha256")==cs,"Stage-A auth/contract drift")
-    au=a.get("authority") or {}; req(au.get("scientific_experiment") and au.get("provider_io") and au.get("search_pool_acquisition") and au.get("support_inspection"),"Stage-A authority missing")
-    for k in ("free_updater","deterministic_state_materialization","actor_evaluation","screen_outcome_opening","validation_opening","analysis","paper_promotion"):req(au.get(k) is False,f"Stage-A overreach:{k}")
+    au=a.get("authority") or {}; expected_authority={"scientific_experiment":True,"provider_io":True,"search_pool_acquisition":True,"support_inspection":True,"free_updater":False,"deterministic_state_materialization":False,"actor_evaluation":False,"screen_outcome_opening":False,"validation_opening":False,"analysis":False,"paper_promotion":False};req(au==expected_authority,"Stage-A authorization authority surface drift")
     for label,item in c["bound_code"].items():
         p=root/item["path"];req(p.is_file() and sha(p)==item["sha256"],f"bound code drift:{label}")
     for label,item in (("protocol",c["protocol"]),("m3r4",c["m3r4_eligibility"]),("identity",c["model_identity"])):
@@ -48,7 +47,9 @@ def validate(contract_path:Path,auth_path:Path,root:Path)->tuple[dict[str,Any],d
     for n,key in (("suite_manifest.json","suite_manifest_sha256"),("bridge_split_manifest.json","split_manifest_sha256"),("bridge_metadata.json","metadata_sha256")):req(sha(suite/n)==c["suite"][key],f"suite drift:{n}")
     mind=Path(c["mindmemos"]["root"]);head=subprocess.check_output(["git","-C",str(mind),"rev-parse","HEAD"],text=True).strip();req(head==c["mindmemos"]["commit"],"MindMemOS drift")
     skill=Path(c["initial_skill"]["path"]);req(skill.is_file() and sha(skill)==c["initial_skill"]["sha256"],"initial skill drift")
-    expected=[u.unit_id for u in search_units(SCREEN)];req(c["search"]["unit_ids"]==expected and len(expected)==384,"search order drift");req(a["execution_scope"]["allowed_unit_ids"]==expected,"auth unit scope drift");req(a["execution_scope"]["contract_sha256"]==cs,"scope contract drift")
+    expected=[u.unit_id for u in search_units(SCREEN)];req(c["search"]["unit_ids"]==expected and len(expected)==384,"search order drift")
+    scope=a.get("execution_scope") or {};required_scope_keys={"contract_sha256","allowed_unit_ids","allowed_task_ids","exact_k","required_resolved_model","identity_artifact_sha256","required_skill_pre_sha256","max_turns","max_output_tokens","automatic_retry","run_root","lineage_lease_path","provider_budget"};req(set(scope)==required_scope_keys,"Stage-A authorization execution-scope surface drift");req(a.get("single_use") is True,"Stage-A authorization must be single-use");req(scope.get("allowed_unit_ids")==expected,"auth unit scope drift");req(scope.get("allowed_task_ids")==c["search"]["task_ids"],"auth task scope drift");req(scope.get("contract_sha256")==cs,"scope contract drift");req(int(scope.get("exact_k",-1))==8,"auth K drift");req(scope.get("required_resolved_model")==c["actor"]["required_resolved_model"],"auth resolved-model drift");req(scope.get("identity_artifact_sha256")==c["model_identity"]["sha256"],"auth identity drift");req(scope.get("required_skill_pre_sha256")==c["initial_skill"]["sha256"],"auth initial-skill drift");req(int(scope.get("max_turns",-1))==c["actor"]["max_turns"],"auth max-turns drift");req(int(scope.get("max_output_tokens",-1))==c["actor"]["max_output_tokens"],"auth output-token drift");req(scope.get("automatic_retry") is False,"auth retry policy drift");req(scope.get("run_root")==c["run_root"] and scope.get("lineage_lease_path")==c["lineage_lease_path"],"auth lineage path drift")
+    pb=scope.get("provider_budget") or {};req(pb.get("required") is True,"auth provider budget missing");req(int(pb.get("total_limit",-1))==c["budget"]["search_provider_call_ceiling"],"auth total budget drift");req(int(pb.get("per_unit_limit",-1))==c["budget"]["per_search_unit_call_ceiling"],"auth per-unit budget drift")
     return c,a,cs,ahs,{"suite":suite,"mind":mind,"identity":root/c["model_identity"]["path"],"skill":skill}
 
 
@@ -60,8 +61,8 @@ def claim_count(path:Path)->int:
 
 
 async def run_stage_a(*,root:Path,contract_path:Path,auth_path:Path,env_file:Path,stop_before_provider_io:bool=False,preflight_output:Path|None=None)->int:
-    c,a,cs,ahs,s=validate(contract_path,auth_path,root); runtime_python,_=validate_runtime({"runtime":c["runtime"]})
-    load_env_file(env_file); src=ArkSettings.from_env(required=True);req(src.base_url.rstrip("/")==PLAN_BASE_URL,"non-Ark Plan route")
+    c,a,cs,ahs,s=validate(contract_path,auth_path,root); runtime_python,_=validate_runtime({"runtime":c["runtime"]});req(Path(sys.executable).resolve()==runtime_python.resolve(),"Stage-A runner must execute under the exact frozen actor runtime Python")
+    req(env_file.resolve()==Path(c["env_file"]).resolve(),"Stage-A env-file path drift");load_env_file(env_file); src=ArkSettings.from_env(required=True);req(src.base_url.rstrip("/")==PLAN_BASE_URL,"non-Ark Plan route")
     settings=ArkSettings(api_key=src.api_key,base_url=src.base_url,default_model=src.default_model,timeout_seconds=300,max_retries=0)
     if stop_before_provider_io:
         req(preflight_output is not None and not preflight_output.exists(),"preflight output not fresh")

@@ -47,6 +47,22 @@ class BridgeV4R2StageAContractTests(unittest.TestCase):
         self.assertIn('"updater_calls":0', source)
         self.assertIn('"heldout_actor_calls":0', source)
 
+    def test_point_of_use_binds_exact_runner_runtime_and_authorization_scope(self) -> None:
+        source = (ROOT / "research_pipeline/e2_r17_bridge_v4r2_stage_a_runtime.py").read_text(encoding="utf-8")
+        self.assertIn("Path(sys.executable).resolve()==runtime_python.resolve()", source)
+        for witness in (
+            'scope.get("allowed_task_ids")==c["search"]["task_ids"]',
+            'int(scope.get("exact_k",-1))==8',
+            'scope.get("identity_artifact_sha256")==c["model_identity"]["sha256"]',
+            'scope.get("required_skill_pre_sha256")==c["initial_skill"]["sha256"]',
+            'int(scope.get("max_turns",-1))==c["actor"]["max_turns"]',
+            'int(scope.get("max_output_tokens",-1))==c["actor"]["max_output_tokens"]',
+            'scope.get("automatic_retry") is False',
+            'scope.get("run_root")==c["run_root"]',
+            'pb.get("required") is True',
+        ):
+            self.assertIn(witness, source)
+
 
 if __name__ == "__main__":
     unittest.main()
