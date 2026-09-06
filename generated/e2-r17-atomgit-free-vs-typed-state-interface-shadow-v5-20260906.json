@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-free-vs-typed-state-interface-shadow-v5",
+  "date": "2026-09-06",
+  "status": "COMPLETED_SHADOW_TYPED_INTERFACE_PANEL",
+  "free_parent": {
+    "version": "V4",
+    "plan_sha256": "be7d7b0e7d0e62b53e614cd9ac5458781ff4d6a920c7b3d14d614f06215677b7",
+    "result_sha256": "70902f0fbf4a397ddc54d593ce8a8c12d6ea3eb5c15c28165ce10de97d37fca5",
+    "rerun": false
+  },
+  "typed_arm": {
+    "version": "V5",
+    "raw_root": "/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v5-typed",
+    "plan_sha256": "865937d6ce65823c8178401ae74cf37165fc5774ce4e344c75feabd7cdc8bdce",
+    "prompt_sha256": "f662bcd6d25b3c46ec0e26bcce189b661f40c2a698a839af9758fe4f0aa34216",
+    "config_sha256": "b9321f5f1b1c38c5068ba2f3ced697931b14f8136673dd21f49d634d4ea4c851",
+    "result_sha256": "fca858dea2931e012dbce7edf88d325754a35a8c2bdcedb8479552b790ae1e1f",
+    "terminal_sha256": "d219f8a9d225d20b68900f6cc807fc9090d0c123b91591c13b03304db473d725",
+    "cli_invocations": 18,
+    "usage_rows": 18,
+    "transport_clean": 18,
+    "transport_void": 0,
+    "tool_calls": 0,
+    "retry_or_replacement": false
+  },
+  "models": {
+    "qwen3.8-27b": {
+      "free_unique_state_sha256": 6,
+      "typed_raw_unique_state_sha256": 1,
+      "typed_canonical_json_unique": 1,
+      "typed_semantic_exact": "6/6",
+      "typed_schema_ok": "6/6",
+      "typed_carry_forward_errors": "0/6",
+      "typed_literal_identifier_leaks": "0/6"
+    },
+    "GLM-5.2": {
+      "free_unique_state_sha256": 6,
+      "typed_raw_unique_state_sha256": 2,
+      "typed_canonical_json_unique": 1,
+      "typed_semantic_exact": "6/6",
+      "typed_schema_ok": "6/6",
+      "typed_carry_forward_errors": "0/6",
+      "typed_literal_identifier_leaks": "0/6",
+      "raw_difference_interpretation": "pretty-printed JSON versus compact JSON only"
+    },
+    "deepseek-v4-flash": {
+      "free_unique_state_sha256": 6,
+      "typed_raw_unique_state_sha256": 2,
+      "typed_canonical_json_unique": 1,
+      "typed_semantic_exact": "6/6",
+      "typed_schema_ok": "6/6",
+      "typed_carry_forward_errors": "0/6",
+      "typed_literal_identifier_leaks": "0/6",
+      "raw_difference_interpretation": "JSON whitespace only"
+    }
+  },
+  "cross_model_observation": {
+    "free_form": "All three models produced six byte-distinct free-form states from the same evidence in V4.",
+    "typed": "All three models collapse to exactly one canonical JSON semantic state across six draws in V5; Qwen is also byte-identical across all six raw outputs, while GLM and DeepSeek differ only by JSON whitespace/pretty-printing.",
+    "semantic_boundary": "The corrected V4 free-form prompt already retained all three core reusable primitives and excluded P4_LOCAL_ONLY in 6/6 draws for all models. V5 therefore does not establish an additional coarse semantic-accuracy gain over V4; it establishes a large reduction in representational/state-realization variability under a typed interface on this synthetic package."
+  },
+  "mechanism_interpretation": "Supports state-interface/serialization sensitivity as a plausible contributor to regeneration variability. It does not establish downstream utility improvement, population variance reduction, or superiority of a typed compiler on real E2 tasks.",
+  "next_high_value_falsifier": "Hold a future actor and synthetic task panel fixed while varying only the frozen persistent state (maximally different V4 free-form realizations versus the canonical V5 typed state) to test whether representational state variation propagates into behavior. Freeze that actor-consumption panel prospectively before execution.",
+  "authority": {
+    "primary_e2": false,
+    "r3d_stage_a": false,
+    "r3d_stage_b": false,
+    "support_read": false,
+    "heldout_read": false,
+    "paper_claim_promotion": false,
+    "model_ranking": false
+  }
+}

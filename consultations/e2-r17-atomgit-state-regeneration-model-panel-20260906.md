@@ -113,8 +113,46 @@ Exact V4 provenance:
 - raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v4-salience`
 - offline raw/result SHA mismatch: `0/18`
 
+## V5 FREE vs TYPED state-interface panel
+
+The next proposed test was executed without rerunning the FREE arm. Frozen V4 remains the FREE parent; V5 adds only 18 TYPED draws (three models × six draws) using the same synthetic evidence, same model pool, same single-round/no-tools/no-retry transport, and the same 8192-token transport allowance.
+
+The typed interface compiles the evidence into six fixed fields: scope, verification rule, tool-recovery rule, completion gate, local-fact policy, and the reusable primitive set. The expected semantic state is therefore explicit, but the model still has to decide which allowed value belongs in each slot.
+
+Transport is fully clean: 18/18 requests, 18 usage rows, zero tool calls, zero retries/replacements.
+
+| Model | FREE V4 unique state SHA | TYPED raw unique SHA | TYPED canonical JSON unique | TYPED semantic exact | Carry-forward errors | Literal-ID leaks |
+|---|---:|---:|---:|---:|---:|---:|
+| Qwen3.8-27B | 6 | **1** | **1** | 6/6 | 0/6 | 0/6 |
+| GLM-5.2 | 6 | 2 | **1** | 6/6 | 0/6 | 0/6 |
+| DeepSeek-V4-Flash | 6 | 2 | **1** | 6/6 | 0/6 | 0/6 |
+
+For GLM and DeepSeek, the two raw SHA values are only formatting variants (pretty-printed versus compact JSON / whitespace). After canonical JSON serialization, every draw of every model maps to the same semantic state. Qwen is byte-identical even before canonicalization.
+
+### V5 mechanism judgment
+
+This is stronger evidence for **state-interface / serialization sensitivity**, but the claim must stay precise. Corrected FREE V4 was already semantically good at the coarse endpoints: all three models retained the three reusable primitives in 6/6 draws and selected the local-only P4 candidate in 0/6. Therefore V5 does **not** establish an additional coarse semantic-accuracy gain over V4.
+
+What V5 does establish in this shadow package is a large reduction in state-realization variability:
+
+> The same evidence generated six different free-form state texts per model, while the typed interface collapsed all six draws of all three models to one canonical semantic representation.
+
+This supports the hypothesis that persistent-state representation is partly a systems-interface object rather than only an intrinsic model-sampling object. It still does not show that typed state improves downstream task utility, and it does not estimate a population state-generation variance component.
+
+Exact V5 provenance:
+
+- plan SHA-256: `865937d6ce65823c8178401ae74cf37165fc5774ce4e344c75feabd7cdc8bdce`
+- prompt SHA-256: `f662bcd6d25b3c46ec0e26bcce189b661f40c2a698a839af9758fe4f0aa34216`
+- result SHA-256: `fca858dea2931e012dbce7edf88d325754a35a8c2bdcedb8479552b790ae1e1f`
+- raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v5-typed`
+- terminal: 18 raw units / 18 state units / 18 usage rows
+
 ## What AtomGit should be used for next
 
-At this point more repeats of the same free-form prompt have low value. The next useful AtomGit model experiment, if we spend another quota block, should compare **free-form state serialization versus a prospectively frozen typed state interface** on the same evidence. The question is not whether a rigid schema can mechanically make bytes identical; it is whether a typed interface reduces semantically consequential state variation (wrong primitive admission, omitted recovery/verification behavior, or invalid scope) while preserving useful procedural content.
+More FREE/TYPED draws now have low information value. The next decisive shadow falsifier should move one step downstream:
 
-That experiment should report semantic state equivalence and boundary errors, not merely compression or exact-string similarity. It remains shadow-only unless a separate paper-level claim gate is frozen before execution.
+> freeze one actor and a small synthetic future-task panel, then vary only the frozen persistent state supplied to that actor.
+
+Use the most textually separated V4 FREE realizations and the canonical V5 TYPED state, with identical actor model, prompt, task order, and evaluation. The key question becomes whether representational state variation actually propagates into behavioral disagreement. If actor behavior is invariant, byte/text regeneration drift is mostly representational noise; if FREE realizations induce materially different actions while the typed state is stable, the state-interface mechanism becomes substantially more consequential.
+
+That actor-consumption panel must be prospectively frozen before execution and remain shadow-only. It may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.
