@@ -1,0 +1,67 @@
+{
+  "artifact_type": "e2-r17-m3r4-actual-path-preflight-authorization",
+  "authority": {
+    "actor_measurement": false,
+    "analysis": false,
+    "provider_io": false,
+    "scientific_experiment": false,
+    "updater": false
+  },
+  "contract_sha256": "5c7b6fc50bf00edff0db79131ee354cc2ac7470dbf18d3f28a65ff55c446971c",
+  "created_at_utc": "2026-09-06T16:53:54+00:00",
+  "execution_scope": {
+    "actor_replicates": [
+      1,
+      2
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "automatic_retry": false,
+    "completed_unit_replay": false,
+    "logical_units": 72,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "partial_effect_read": false,
+    "provider_budget": {
+      "automatic_retry": false,
+      "claims_before_io": true,
+      "claims_never_released": true,
+      "derivation": "72 actor logical units x 10 max actor turns/calls; no updater calls",
+      "hard_max_provider_calls_structural": 720,
+      "logical_units": 72,
+      "max_provider_calls_per_logical_unit": 10,
+      "max_turns": 10,
+      "provider_retry_limit": 0,
+      "unused_budget_reallocation": false
+    },
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "scientific_object": "E2-R17-M3R4-FROZEN-STATE-ACTOR-LOCALIZATION-20260904",
+    "state_ids": [
+      "ff_r1",
+      "ff_r2"
+    ]
+  },
+  "measurement_authorization_created": false,
+  "next_gate": "RUN_REAL_ACTOR_PATH_WITH_STOP_BEFORE_PROVIDER_IO_ONLY",
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PREFLIGHT_ONLY_E2_R17_M3R4_EXECUTION"
+}

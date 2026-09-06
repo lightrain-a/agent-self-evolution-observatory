@@ -1,0 +1,47 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-completion-audit",
+  "authority": {
+    "heldout_evaluation": false,
+    "mint_single_use_analysis_authorization": true,
+    "paper_promotion": false,
+    "provider_io": false,
+    "updater": false
+  },
+  "child_claims_by_arm": {
+    "g0_base": 42,
+    "g1_verify": 55,
+    "g2_complete": 42,
+    "g3_complete_recover": 37
+  },
+  "completed_unit_replay": false,
+  "contract_sha256": "242261d46878d42826189d0c821761bddb8dc2691de603a01ac1b105626c68d4",
+  "created_at_utc": "2026-09-06T16:52:52+00:00",
+  "cumulative_claims_by_arm": {
+    "g0_base": 97,
+    "g1_verify": 115,
+    "g2_complete": 107,
+    "g3_complete_recover": 105
+  },
+  "execution_authorization_sha256": "08d0782389b0da9c2c656059b8fbc1fcd130a243bfff22d2b625facb6506e1d8",
+  "explicit_429_recovery_units": 1,
+  "heldout_rollout_units": 72,
+  "inherited_completed_measurements": 45,
+  "lineage_lease_sha256": "96fc03c2e44cda56f8246454d424ce47b23afbc6d06631b0503b53c4e0322222",
+  "new_measurements": 27,
+  "new_updater_calls": 0,
+  "original_failed_claims_g3": 3,
+  "parent_claims_by_arm": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 65
+  },
+  "partial_effect_read": false,
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery2-v4-20260906/summary/recovery2_summary.json",
+  "run_summary_sha256": "018d618c69ff64151c04081db42ccf809250f7087d67d21b17e3c4bbfea341c0",
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_CONSTRAINED_STATE_MICRO_FULL_INTEGRITY_READY_FOR_ANALYSIS",
+  "technical_failures": 0
+}

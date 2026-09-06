@@ -1,0 +1,21 @@
+{
+  "actor_factory_imported": true,
+  "actor_replicates_checked": 2,
+  "artifact_type": "e2-r17-m3r4-actual-path-zero-provider-preflight",
+  "authorization_status": "PREFLIGHT_ONLY_E2_R17_M3R4_EXECUTION",
+  "contract_sha256": "5c7b6fc50bf00edff0db79131ee354cc2ac7470dbf18d3f28a65ff55c446971c",
+  "created_at_utc": "2026-09-06T16:54:19+00:00",
+  "lineage_lease_created": false,
+  "logical_units_checked": 72,
+  "next_gate": "SEPARATE_MEASUREMENT_AUTHORIZATION_ONLY",
+  "provider_budget_ledger_created": false,
+  "provider_calls": 0,
+  "provider_io": false,
+  "run_root_created": false,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "spreadsheet_env_cases_resolved": true,
+  "states_checked": 2,
+  "status": "PASS_M3R4_ACTUAL_PATH_ZERO_PROVIDER_PREFLIGHT",
+  "tasks_checked": 18
+}

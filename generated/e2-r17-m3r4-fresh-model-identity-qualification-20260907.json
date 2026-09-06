@@ -1,0 +1,78 @@
+{
+  "artifact_type": "e2-r17-m3r4-scientific-tranche-model-identity-qualification",
+  "authority": {
+    "actor_measurement": false,
+    "analysis": false,
+    "e3": false,
+    "m4": false,
+    "paper_promotion": false,
+    "preexecution_identity_qualification": true,
+    "provider_scientific_io": false,
+    "scientific_experiment": false,
+    "submission": false,
+    "updater": false
+  },
+  "checks": {
+    "max_output_tokens_8192": true,
+    "provider_retry_zero": true,
+    "qualification_call_pass": true,
+    "requested_model_exact": true,
+    "resolved_model_exact": true,
+    "route_is_ark_plan": true,
+    "thinking_disabled": true
+  },
+  "created_at_utc": "2026-09-06T16:53:33+00:00",
+  "default_model": "ark-code-latest",
+  "drift_policy": "Any resolved-model, route, thinking, retry, or 8192-output compatibility drift is HOLD_REVIEW_REQUIRED; no automatic model substitution or repeated qualification until separately authorized.",
+  "max_output_tokens_smoke": 8192,
+  "private_credentials_included": false,
+  "provider_retry_limit": 0,
+  "qualification_call": {
+    "benchmark_data_accessed": false,
+    "checks": {
+      "provider_status_completed": true,
+      "resolved_model_exact": true,
+      "text_exact": true
+    },
+    "hidden_provider_retry_used": false,
+    "max_output_tokens": 8192,
+    "prompt_sha256": "2c8e546f31e22c362ad69e433f3241c171195e35086f564e84797a6e2708d3d8",
+    "provider_generation_attempts": 1,
+    "provider_retry_limit": 0,
+    "provider_status": "completed",
+    "raw_text": "M3R4_IDENTITY_OK",
+    "raw_text_sha256": "617b7810009ec08bbae76f955ee99bc970d6b1acefff030acbbd15af27313e6b",
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "response_id_sha256": "4bb1262a4c45e5dfabb8a848598588e591e3e3fe8031be26c3e7327896b1a42f",
+    "scientific_outcome": false,
+    "status": "PASS",
+    "temperature": 0,
+    "thinking_requested": "disabled",
+    "usage": {
+      "input_tokens": 40,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 7,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 47
+    }
+  },
+  "raw_response_ids_included": false,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "thinking_requested": "disabled"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_experiment": false,
+  "scientific_tranche": "E2-R17-M3R4",
+  "status": "PASS_M3R4_SCIENTIFIC_TRANCHE_MODEL_IDENTITY"
+}
