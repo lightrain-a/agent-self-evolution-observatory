@@ -1,0 +1,26 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-v3-runtime-gate-supersession",
+  "created_at_utc": "2026-09-06T14:41:11+00:00",
+  "parent_v3_authorization_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-authorization-20260903.json",
+  "parent_v3_authorization_sha256": "ad235772b0a204ffb33b281c90fc5d5e0c4a56fb6de7a30c16bd4b85d431e26b",
+  "parent_v3_contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-contract-20260903.json",
+  "parent_v3_contract_sha256": "6fe178467d8fb726adf1986fa6be2a294f1da736998ce36f6f92ecd25e805877",
+  "partial_effect_read": false,
+  "provider_io": false,
+  "reason": "V3 contract froze quota_reset_not_before=2026-09-07T00:00:00+08:00 but the old top-level runner and constrained actor wrapper did not enforce that hard gate at point of use. V4 adds point-of-use time and bound-code checks without changing the 27-unit scientific object.",
+  "runtime_guard_commit": "b060f448f2241636761e6bb6bd5274b4d35cf0db",
+  "schema_version": "1.0",
+  "scientific_geometry_changed": false,
+  "status": "PASS_RECOVERY2_V4_SUPERSEDES_UNUSED_V3_AUTHORITY_RUNTIME_GATE_REPAIR",
+  "technical_revocation_mechanism": [
+    "current orchestrator and actor-wrapper SHAs no longer match V3 bound_code",
+    "current authorization path additionally requires execution_not_before equal to the contract gate",
+    "old V3 authorization lacks execution_not_before and therefore cannot pass the repaired point-of-use gate"
+  ],
+  "v3_execution_authority_revoked": true,
+  "v3_lineage_lease_absent": true,
+  "v3_provider_calls": 0,
+  "v3_run_root_absent": true,
+  "v3_scientific_outcomes": 0
+}

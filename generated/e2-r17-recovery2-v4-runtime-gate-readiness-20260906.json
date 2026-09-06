@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-recovery2-v4-runtime-gate-readiness",
+  "date": "2026-09-06",
+  "status": "READY_AFTER_RESET_FOR_ZERO_PROVIDER_ACTUAL_PATH_THEN_RECOVERY2_V4_EXECUTION",
+  "scientific_object": "E2-R17-SINGLE-CASE-CONSTRAINED-STATE-MICRO",
+  "scientific_geometry": {
+    "inherited_completed_measurements": 45,
+    "new_measurements": 27,
+    "explicit_429_recovery_units": 1,
+    "never_started_measurements": 26,
+    "new_updater_calls": 0,
+    "completed_unit_replay": false,
+    "remaining_execution_order_sha256": "4219490a820e4551afaf11fee159d3ea15bc3ea88bd8aabf98f7f48a82a7db61",
+    "child_provider_total_limit": 123,
+    "per_unit_provider_limit": 11,
+    "scientific_geometry_changed_from_v3": false
+  },
+  "runtime_gate": {
+    "execution_not_before": "2026-09-07T00:00:00+08:00",
+    "orchestrator_point_of_use_check": true,
+    "actor_wrapper_point_of_use_check": true,
+    "authorization_binds_same_not_before": true,
+    "bound_code_verified_at_orchestrator_point_of_use": true,
+    "pre_reset_direct_v4_orchestrator_rejected": true,
+    "pre_reset_direct_actor_authority_rejected": true,
+    "pre_reset_actual_path_preflight_rejected_before_root_creation": true
+  },
+  "v3_supersession": {
+    "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-runtime-gate-supersession-20260906.json",
+    "sha256": "1a416d8af5c3e9222ace18baf7a1ab15933c31a9aa52c8ad20dc1ac2b53901f5",
+    "v3_provider_calls": 0,
+    "v3_scientific_outcomes": 0,
+    "v3_execution_authority_revoked": true
+  },
+  "v4_chain": {
+    "contract": {
+      "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v4-contract-20260906.json",
+      "sha256": "242261d46878d42826189d0c821761bddb8dc2691de603a01ac1b105626c68d4"
+    },
+    "preflight": {
+      "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v4-preflight-20260906.json",
+      "sha256": "4fbaee253e45f8acf8f6cf19b7c2f3fad4a65df161e3ea2a7f2bbd5838c049bc",
+      "status": "PASS_CONSTRAINED_STATE_MICRO_ZERO_PROVIDER_PREFLIGHT"
+    },
+    "authorization": {
+      "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v4-authorization-20260906.json",
+      "sha256": "08d0782389b0da9c2c656059b8fbc1fcd130a243bfff22d2b625facb6506e1d8",
+      "status": "AUTHORIZED_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO_MEASUREMENT",
+      "conditional_on_runtime_not_before": true
+    },
+    "actual_path_script": {
+      "path": "scripts/preflight_e2_r17_constrained_state_micro_recovery2_v4_actual_path.py",
+      "sha256": "b798b0a55d1b38a9d153258f544b7569a5961c7363131eea2004170c6d2b4cc9"
+    },
+    "artifact_tests": {
+      "path": "research_pipeline/test_e2_r17_constrained_state_recovery2_v4_runtime_gate.py",
+      "sha256": "df32b5ed49fd7a1a9ae32034e567af59aeddd57d089680991df08160c0fdc0fa"
+    }
+  },
+  "verification": {
+    "combined_runtime_gate_and_recovery_tests": "18/18 PASS",
+    "v4_preflight_provider_calls": 0,
+    "v4_preflight_provider_claims": 0,
+    "scientific_outcomes_read": false,
+    "partial_effect_read": false,
+    "analyzer_run": false,
+    "v4_run_root_absent": true,
+    "v4_lineage_lease_absent": true,
+    "actual_path_result_absent_before_reset": true
+  },
+  "post_reset_sequence": [
+    "run V4 four-arm actual-path preflight with --stop-before-provider-io",
+    "require PASS_RECOVERY2_V4_ACTUAL_ACTOR_PATH_4_OF_4_ZERO_PROVIDER and zero provider claims",
+    "execute the exact frozen 27-unit Recovery2 V4 sequence",
+    "freeze completion/integrity audit without opening partial effect",
+    "only then continue to fresh M3R4 DeepSeek identity qualification"
+  ],
+  "authority": {
+    "provider_io_now_before_reset": false,
+    "provider_io_after_reset_and_actual_path_pass": true,
+    "updater": false,
+    "analyzer": false,
+    "m3r4": false,
+    "bridge": false,
+    "paper_promotion": false
+  },
+  "interpretation_boundary": "V4 is a control-plane-only supersession of unused Recovery V3 authority. It adds runtime enforcement of the already-frozen reset boundary and code identity; it does not change tasks, states, order, budget, model, updater count, or scientific estimand."
+}

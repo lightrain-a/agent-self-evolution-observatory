@@ -1,0 +1,145 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-zero-provider-preflight",
+  "child_provider_total_limit": 123,
+  "contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v4-contract-20260906.json",
+  "contract_sha256": "242261d46878d42826189d0c821761bddb8dc2691de603a01ac1b105626c68d4",
+  "created_at_utc": "2026-09-06T14:41:30+00:00",
+  "cumulative_claims_before_child": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 68
+  },
+  "execution_not_before": "2026-09-07T00:00:00+08:00",
+  "explicit_429_recovery_units": 1,
+  "never_started_measurements": 26,
+  "new_measurements": 27,
+  "next_gate": "MINT_RECOVERY2_MEASUREMENT_AUTHORIZATION_THEN_WAIT_FOR_RUNTIME_GATE",
+  "original_failed_claims_g3": 3,
+  "parent_claims_by_arm": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 65
+  },
+  "parent_completed_measurements": 45,
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "remaining_execution_order": [
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-msp-p8"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-msp-p8"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-msp-p8"
+    },
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-ska-p4"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-ska-p4"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "task_id": "r17-b4-ska-p4"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-ska-p4"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-ska-p5"
+    },
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-ska-p5"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-ska-p5"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "task_id": "r17-b4-ska-p5"
+    },
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "g2_complete",
+      "task_id": "r17-b4-tsr-p8"
+    },
+    {
+      "arm": "g1_verify",
+      "task_id": "r17-b4-tsr-p8"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "task_id": "r17-b4-tsr-p8"
+    },
+    {
+      "arm": "g0_base",
+      "task_id": "r17-b4-tsr-p8"
+    }
+  ],
+  "remaining_execution_order_sha256": "4219490a820e4551afaf11fee159d3ea15bc3ea88bd8aabf98f7f48a82a7db61",
+  "runtime_gate_enforced_at_point_of_use": true,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_CONSTRAINED_STATE_MICRO_ZERO_PROVIDER_PREFLIGHT"
+}
