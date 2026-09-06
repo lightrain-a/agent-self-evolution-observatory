@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-m3r4-to-bridge-v4r2-eligibility-adjudication",
+  "date": "2026-09-07",
+  "status": "PASS_M3R4_NARROWS_MECHANISM_BUT_DOES_NOT_BLOCK_BRIDGE_V4R2_STAGE_A_ELIGIBILITY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "m3r4_result": {
+    "source_branch": "research/e2-r17-m3r4-atomgit-engineering-20260906",
+    "source_commit": "52de43a8",
+    "path": "generated/e2-r17-m3r4-analysis-result-r2-20260907.json",
+    "sha256": "7243e68343c0aa0e2da9d16c558a7d4f2fc1ccfd8fe68ae9a5726a79b3011c1a",
+    "status": "M3R4_OBSERVED_EXCESS_ONLY_NO_PROPENSITY_LOCALIZATION",
+    "e_real": 0.05555555555555555,
+    "exact_one_sided_p": 0.3333333333333333,
+    "bounded_localization_pass": false,
+    "automatic_rerun": false,
+    "population_generalization": false,
+    "variance_component_claim": false
+  },
+  "frozen_bridge_protocol": {
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r2-20260903.md",
+    "sha256": "1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7",
+    "independent_review_path": "generated/e2-r17-state-compiler-bridge-v4r2-preexecution-rereview-20260904.json",
+    "independent_review_verdict": "PASS_PREEXECUTION_DESIGN",
+    "frozen_logic": {
+      "q1_primary_complete_method": true,
+      "q3_realization_localization_secondary_mechanism": true,
+      "q3_does_not_gate_q1": true,
+      "raw_generator_screen_gate_uses_q1_not_realization_localization": true,
+      "q1_pass_q3_fail_policy": "retain complete-method result and remove realization/variance-centered mechanism language"
+    }
+  },
+  "adjudication": {
+    "m3r4_propensity_localization_supported": false,
+    "m3r4_observed_excess_descriptive_signal_present": true,
+    "m3r4_result_rewritten_as_bridge_q3_result": false,
+    "bridge_q3_remains_prospective_and_unobserved": true,
+    "bridge_q1_stage_a_design_eligibility": true,
+    "bridge_stage_a_execution_authority": false,
+    "bridge_screen_open": false,
+    "bridge_validation_open": false,
+    "bridge_protocol_redesign_required": false,
+    "additional_m3r4_actor_replicates_allowed": false,
+    "second_model_or_task_rescue_allowed": false,
+    "realization_variance_centered_claim_before_bridge_q3": false
+  },
+  "claim_boundary": "M3R4 supplies only a selected-case positive observed excess without exact propensity-localization support. Under the already-reviewed V4-R2 orthogonal decision table, this narrows prior mechanism language but does not veto the independent Q1 complete state-generation method experiment. Bridge Q3 must still be measured prospectively inside the Bridge object and cannot inherit a PASS or FAIL from M3R4.",
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "free_updater": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_gate": "COMPLETE_ZERO_PROVIDER_BRIDGE_V4R2_STAGE_A_IMPLEMENTATION_BINDINGS_THEN_FREEZE_SEPARATE_STAGE_A_CONTRACT_AND_PREEXECUTION_AUTHORITY"
+}
