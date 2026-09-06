@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-schema-aware-consumer-closure-shadow-v8",
+  "date": "2026-09-06",
+  "status": "COMPLETED_SHADOW_SCHEMA_AWARE_CONSUMER_CLOSURE",
+  "raw_root": "/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v8-schema-aware-glm",
+  "plan_sha256": "3c63dcc1a46cd7a0d26ff57824c104fb1e6e44aa116ea23a25a543b74a80fa61",
+  "result_sha256": "9d54aceaae93fdad38c67e246dace7b33a4e9b4ee899c2e5d45233004c1bab0f",
+  "terminal_sha256": "993559f7f5777ad81afbc35b6ae7f233baf73570876acd6b32885e0268d04bb0",
+  "consumer_contract": {
+    "artifact": "generated/e2-r17-typed-state-consumer-contract-v1-20260906.json",
+    "implementation": "research_pipeline/e2_r17_typed_state_consumer.py",
+    "implementation_sha256": "a768430b0e30236da5484b7341e1a32c454dd8daad5b1caf2c2a14310192ad2d",
+    "tests": "research_pipeline/test_e2_r17_typed_state_consumer.py",
+    "tests_sha256": "1d754478ce2892971e86e2755a1c06040ff689f8a25716d3e0fccadf6903d946",
+    "zero_provider_tests": "8/8 PASS"
+  },
+  "actor": "GLM-5.2",
+  "repeats": 3,
+  "transport_clean": "3/3",
+  "schema_exact": "3/3",
+  "semantic_exact": "3/3",
+  "cross_workbook_local_fact": "3/3 DO_NOT_TRANSFER",
+  "unique_response_sha256": 1,
+  "interpretation": "The V7 GLM gap closes when the typed state is first consumed through a deterministic schema-aware adapter that maps storage fields to explicit action directives. This supports missing/underspecified consumer semantics as the proximate explanation in this synthetic probe, rather than a general inability of GLM to execute the non-transfer boundary.",
+  "mechanism_chain": [
+    "V4/V5: state writer interface changes representation variability",
+    "V6: free-form omission versus explicit boundary can propagate to a fixed Qwen actor",
+    "V7: direct consumption is actor-dependent; GLM does not infer the local boundary even from the raw typed field",
+    "V8: deterministic schema-aware consumer mapping closes the GLM gap in 3/3 repeats"
+  ],
+  "strongest_safe_statement": "On this synthetic panel, persistent-state reliability depends on both write-time serialization and read-time consumer semantics. A typed writer plus a schema-aware consumer contract stabilizes the tested storage-to-action path across the observed GLM closure probe, but downstream benchmark utility remains untested.",
+  "stop_rule": "Do not add more AtomGit models or repetitions now. Reopen only for a prospectively frozen real-task or public-lane robustness question that changes a paper-level decision.",
+  "authority": {
+    "primary_e2": false,
+    "r3d_stage_a": false,
+    "r3d_stage_b": false,
+    "support_read": false,
+    "heldout_read": false,
+    "paper_claim_promotion": false,
+    "model_ranking": false
+  }
+}

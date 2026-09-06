@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-typed-state-consumer-contract-v1",
+  "date": "2026-09-06",
+  "status": "PASS_ZERO_PROVIDER_TYPED_CONSUMER_CONTRACT",
+  "purpose": "Define deterministic fail-closed consumption semantics for the V5 typed persistent-state schema so actor backbones do not have to infer field meanings independently.",
+  "implementation": {
+    "path": "research_pipeline/e2_r17_typed_state_consumer.py",
+    "sha256": "a768430b0e30236da5484b7341e1a32c454dd8daad5b1caf2c2a14310192ad2d"
+  },
+  "tests": {
+    "path": "research_pipeline/test_e2_r17_typed_state_consumer.py",
+    "sha256": "1d754478ce2892971e86e2755a1c06040ff689f8a25716d3e0fccadf6903d946",
+    "result": "8/8 PASS"
+  },
+  "valid_cross_workbook_mapping": {
+    "scope": "CROSS_WORKBOOK",
+    "verify_after_save": "RELOAD_VERIFY",
+    "stale_sheet_failure": "REFRESH_REPAIR_RETRY_ONCE",
+    "completion_before_reload": "NOT_COMPLETE",
+    "cross_workbook_local_fact": "DO_NOT_TRANSFER"
+  },
+  "fail_closed_checks": [
+    "exact input key set",
+    "known enum values only",
+    "no duplicate or unknown primitives",
+    "cross_workbook cannot carry forward instance-local facts",
+    "rule fields must agree with primitive membership"
+  ],
+  "interpretation_boundary": "This contract closes an interpretation surface by deterministic mapping. It does not itself establish model behavior, task utility, or E2 scientific effect.",
+  "authority": {
+    "primary_e2": false,
+    "r3d_stage_a": false,
+    "r3d_stage_b": false,
+    "support_read": false,
+    "heldout_read": false,
+    "paper_claim_promotion": false
+  }
+}

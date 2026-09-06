@@ -221,10 +221,63 @@ Exact V7 provenance:
 - raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v7-cross-actor`
 - terminal: 14 raw units / 14 usage rows
 
+## V8 schema-aware consumer closure
+
+V7 pointed to a consumer-semantics problem, so the next step was deliberately zero-provider first. A deterministic, fail-closed typed-state consumer adapter was added:
+
+- implementation: `research_pipeline/e2_r17_typed_state_consumer.py`;
+- implementation SHA-256: `a768430b0e30236da5484b7341e1a32c454dd8daad5b1caf2c2a14310192ad2d`;
+- tests: `research_pipeline/test_e2_r17_typed_state_consumer.py`;
+- tests SHA-256: `1d754478ce2892971e86e2755a1c06040ff689f8a25716d3e0fccadf6903d946`;
+- zero-provider result: **8/8 PASS**.
+
+The adapter does not ask the actor to infer typed-field meanings. It validates the storage schema and mechanically maps a valid cross-workbook state to explicit consumer directives:
+
+```text
+verify_after_save          -> RELOAD_VERIFY
+stale_sheet_failure        -> REFRESH_REPAIR_RETRY_ONCE
+completion_before_reload   -> NOT_COMPLETE
+cross_workbook_local_fact  -> DO_NOT_TRANSFER
+```
+
+It fails closed on missing/extra keys, unknown enums, duplicate/unknown primitives, rule–primitive mismatches, or a cross-workbook state that attempts to carry forward instance-local facts.
+
+After freezing this adapter, V8 reran only the unresolved GLM consumer path for three repeats. The result is exact:
+
+- 3/3 transport-clean;
+- 3/3 strict schema;
+- 3/3 exact four-action response;
+- 3/3 `DO_NOT_TRANSFER`;
+- one unique response SHA across all three repeats.
+
+### V8 mechanism closure
+
+The V7 GLM gap closes when the typed state is first compiled through explicit consumer semantics. The current shadow mechanism chain is therefore:
+
+1. **writer surface:** FREE serialization produces substantial representational variation from identical evidence;
+2. **storage schema:** TYPED serialization collapses the same evidence to one canonical semantic state across all three tested generators;
+3. **behavior propagation:** FREE omission versus explicit preservation of a local boundary changes a fixed Qwen actor's state-conditioned decision;
+4. **consumer heterogeneity:** raw state interpretation is actor-dependent — GLM does not infer the same local-boundary action directly;
+5. **consumer contract:** deterministic typed-field-to-action mapping closes that GLM gap in the V8 closure probe.
+
+The strongest safe systems statement is now:
+
+> On this synthetic panel, persistent-state reliability depends on both write-time serialization and read-time consumer semantics. A typed writer plus a schema-aware consumer contract stabilizes the tested storage-to-action path; real benchmark utility remains untested.
+
+Exact V8 provenance:
+
+- plan SHA-256: `3c63dcc1a46cd7a0d26ff57824c104fb1e6e44aa116ea23a25a543b74a80fa61`
+- result SHA-256: `9d54aceaae93fdad38c67e246dace7b33a4e9b4ee899c2e5d45233004c1bab0f`
+- raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v8-schema-aware-glm`
+- terminal: 3 raw units / 3 usage rows
+
 ## What AtomGit should be used for next
 
-Do **not** add another actor/model matrix now. V7 already changes the mechanism claim in a verdict-relevant way. The next step should be zero-provider system design: define a **typed writer + schema-aware consumer contract** (or deterministic adapter) that maps typed fields to an unambiguous consumption surface.
+**Stop expanding this shadow matrix now.** V3–V8 already produced a verdict-changing mechanism sequence and an explicit falsifier/repair loop. More models, draws, or synthetic cases would mostly add volume rather than a new evidence type.
 
-Only after that consumer contract is frozen should a small prospective model panel test whether the GLM gap closes. If it does, the mechanism becomes an interface-contract result; if it does not, the remaining issue is model-specific consumption rather than free-form state serialization.
+Reopen AtomGit only when a prospectively frozen experiment asks one of two paper-level questions:
 
-This entire AtomGit sequence remains shadow-only and may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.
+1. does the typed writer + schema-aware consumer contract improve a real downstream task outcome under the same evidence and actor budget; or
+2. after the primary controlled gate passes, does the mechanism transport to a clearly authorized second-backbone/public lane?
+
+Until then, this entire AtomGit sequence remains shadow-only and may not read R3D support, Stage-B heldout/effects, or be used to rescue/replace the primary E2 model.
