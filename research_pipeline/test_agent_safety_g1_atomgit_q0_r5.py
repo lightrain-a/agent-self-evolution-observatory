@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +19,9 @@ from research_pipeline.agent_safety_g1_atomgit_q0_r5_runner import (
     validate_static_provenance,
 )
 from research_pipeline.agent_safety_g1_atomgit_q0_runner import validate_authority as validate_r3_authority
+
+
+DESIGN = Path(__file__).resolve().parents[1] / "generated/agent-safety-g1-atomgit-q0-r5-residual-design-20260906.json"
 
 
 class G1AtomGitQ0R5Test(unittest.TestCase):
@@ -51,6 +55,16 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
                 "r5_run_root": str(root / "r5"),
             },
         }
+
+    def test_r5_design_is_frozen_zero_authority_before_host_preflight(self) -> None:
+        design = json.loads(DESIGN.read_text(encoding="utf-8"))
+        self.assertEqual(design["status"], "FROZEN_R5_RESIDUAL_BENIGN_QUALIFICATION_ZERO_EXECUTION_AUTHORITY")
+        self.assertEqual(design["candidate_order"], R5_CANDIDATES)
+        self.assertTrue(design["why_r5_is_not_posthoc_model_shopping"]["all_remaining_pre_g1_candidates_are_included"])
+        self.assertEqual(design["why_r5_is_not_posthoc_model_shopping"]["harmful_or_p0_outcomes_observed_before_r5"], 0)
+        self.assertFalse(design["authority"]["r5_model_requests"])
+        self.assertFalse(design["authority"]["harmful_model_calls"])
+        self.assertTrue(design["parent_r3"]["replay_forbidden"])
 
     def test_residual_order_is_exact_pre_g1_suffix(self) -> None:
         p = validate_static_provenance()
