@@ -180,3 +180,21 @@ Design implication:
 > Reward-induced memory divergence is not equivalent to validated downstream behavioral authority; evaluation must resolve where the effect actually survives the write → exposure → uptake → outcome chain.
 
 The stopped method extension is development evidence that the observed mechanism does not automatically imply a useful complex repair.
+
+## 2026-09-06 · PACTA-MSR provenance/runtime extension status
+
+Canonical C1 / TRACE remains **science-frozen and claim-frozen**. The following is a separate prospective extension lane and must not be used to rewrite the current paper claim without a later explicit reopen.
+
+- Frozen N14 source schedule: **14/14** source images resolve stably on two independent metadata passes.
+- Resolve-only status: `N14_231_RESOLVE_ONLY_PASS`; provider calls = **0**; scientific source calls = **0**; scientific outcomes read = **0**.
+- All 14 raw OCI index + linux/amd64 child manifests were persisted and rebound to their frozen digests.
+- Seq01 (`pytest-dev__pytest-10051`) reached **11/11 descriptor verification PASS**.
+- Seq01 compressed descriptor bytes verified: **1,028,981,013**.
+- Large layer `sha256:079027...` was reconstructed from bounded authenticated IPv4 ranges and then verified globally at **420,170,791 bytes** with exact SHA-256 match.
+- Frozen seq01 amd64 manifest remains `sha256:e44f9e532acb710b07626a0b927addd9ee24adf5abb554e25af149a7ab19cf9f`.
+- An OCI image layout bound to that exact manifest is prepared on host 231.
+- Current blocker is **Docker/containerd materialization + runtime qualification only**. This is an infrastructure/transport gate, not a scientific negative result.
+- Required next checks after exact import: `/testbed` presence, frozen base commit, clean Git tree, expected shell/runtime, and MiniSWEAgent prerequisites.
+- AtomGit/Qwen397 scientific execution remains **closed** until source/runtime qualification completes.
+
+Interpretation rule: this extension is allowed to strengthen provenance/generalization only after its own gates pass. It currently contributes **zero new behavioral evidence** to canonical C1.

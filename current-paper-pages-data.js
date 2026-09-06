@@ -88,3 +88,16 @@ window.CURRENT_PAPER_PAGES={
  }};
 window.PAGE_CONTENT=window.PAGE_CONTENT||{};
 Object.entries(window.CURRENT_PAPER_PAGES.papers).forEach(([pageId,p])=>{window.PAGE_CONTENT[pageId]={eyebrow:{en:`Current Research · Paper ${p.order} of 9`,zh:`当前科研 · 第 ${p.order}/9 篇`},title:p.title,lead:{en:"A single-paper reader page: quick overview, mechanism, models and datasets, experimental design, evidence, evolution history, claim boundary, and next gate.",zh:"单篇论文阅读页：先看速览版，再看机制、模型与数据集、实验思路、结果证据、详细演变、主张边界与下一道门。"},renderMode:"current-paper"};});
+
+(()=>{
+const p=window.CURRENT_PAPER_PAGES?.["paper-c1"];
+if(!p?.experiment)return;
+p.experiment.metrics=[
+ {k:{zh:"Claim Audit",en:"Claim Audit"},v:"35/35 PASS"},
+ {k:{zh:"核心状态",en:"Canonical state"},v:"SUBMISSION_READY · FROZEN"},
+ {k:{zh:"PACTA N14 provenance",en:"PACTA N14 provenance"},v:"14/14 RESOLVE PASS"},
+ {k:{zh:"Seq01 exact OCI",en:"Seq01 exact OCI"},v:"11/11 DESCRIPTORS PASS"}
+];
+p.experiment.now={zh:"PACTA-MSR 扩展已把旧的 fresh source bytes/hash 缺口推进到 runtime materialization：N14 14/14 source 两次稳定解析，14 份 raw OCI manifest 已 content-addressed 固化；seq01 的 11/11 descriptor 与 420,170,791-byte 大 layer 均通过 exact SHA。当前只剩 Docker/containerd materialization + /testbed/base-commit/clean-tree/runtime qualification。全程 0 provider/scientific calls，canonical C1 不改写。",en:"The PACTA-MSR extension has moved the old source-bytes/hash gap to the runtime-materialization gate: all 14 N14 sources resolve stably twice, raw OCI manifests are content-addressed, and seq01 passes all 11 descriptor checks including the 420,170,791-byte large layer at its exact SHA. Only Docker/containerd materialization and /testbed/base-commit/clean-tree/runtime qualification remain. Provider/scientific calls remain zero and canonical C1 is unchanged."};
+p.next={zh:"完成 exact Docker/containerd runtime qualification；只有该 gate PASS 后，才评估是否授权新的 AtomGit/Qwen397 行为实验。",en:"Complete exact Docker/containerd runtime qualification. Only after that gate passes should any new AtomGit/Qwen397 behavioral execution be considered."};
+})();
