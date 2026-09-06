@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-m3r4-analysis-authorization-r1-void",
+  "date": "2026-09-07",
+  "status": "VOID_PRE_OUTCOME_ANALYZER_IMPORT_FAILURE",
+  "superseded_authorization_path": "generated/e2-r17-m3r4-analysis-authorization-20260907.json",
+  "superseded_authorization_sha256": "9b69db1e6b8f67fa29c92c3aea8252d8df247e7e9c0a51857ceae1691750dd5d",
+  "superseded_analyzer_sha256": "a0063ab218b2024f6b8efc3fd483ee89d4cf410ff1ba73d041da2b95e625bfc9",
+  "failure_stage": "python_import_before_manifest_or_trajectory_access",
+  "failure_type": "ModuleNotFoundError",
+  "failure_message": "No module named 'research_pipeline'",
+  "analysis_output_created": false,
+  "scientific_outcomes_read": false,
+  "scores_read": 0,
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "new_actor_measurements": 0,
+  "repair_scope": "Add repository ROOT to sys.path before importing frozen M3R4 plan/metric modules. No metric, assumption, decision rule, score extraction, or scientific object change.",
+  "automatic_retry_under_old_authorization": false,
+  "next_gate": "FREEZE_REPAIRED_ANALYZER_SHA_THEN_MINT_SUPERSEDING_SINGLE_USE_ANALYSIS_AUTHORIZATION_R2"
+}

@@ -4,12 +4,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from research_pipeline.e2_r17_m3r4_execution_plan import TASK_IDS, logical_units, state_binding_map
 from research_pipeline.e2_r17_regeneration_metrics_v4 import compute_prospective_regeneration_metrics_v4
