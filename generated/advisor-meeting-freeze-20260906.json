@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "meeting_id": "2026-09-06-advisor",
   "status": "MEETING_CANDIDATE_FROZEN",
-  "meeting_candidate_hash": "13cc6ee7c94c1e62f1662c7258cc29d86c80d8c17bd8d10ec9af21e20e61df3c",
+  "meeting_candidate_hash": "e5a093b54081807e2f9f3654c5d3ad77d9688af360e71741c1e13fdc98ba89e0",
   "paper_count": 9,
   "paper_order": [
     "E1",
@@ -37,13 +37,18 @@
       "G1"
     ],
     "prior_reality_cost_fixes_closed": true,
-    "final_decision_sufficiency_attempt_fail_closed": true
+    "final_decision_sufficiency_attempt_fail_closed": true,
+    "final_decision_sufficiency_review_recorded": true,
+    "final_decision_sufficiency_fixes_postfix_closed": true,
+    "postfix_regression_content_pass": true,
+    "postfix_deterministic_guard_pass": true,
+    "paper_a_owns_memory_family_architecture_decision": true
   },
   "errors": [],
   "source_hashes": [
     {
       "path": "generated/advisor-decision-cards/3d.json",
-      "sha256": "136723f55381334963ad9d4647dd5a4aa6e39e4b2580925baa401e8c3b75dd56"
+      "sha256": "c548abb562ef74d10772be95c9d2b45d807d57a990f60fb7c663ddf87106993e"
     },
     {
       "path": "generated/advisor-decision-cards/b1.json",
@@ -67,7 +72,7 @@
     },
     {
       "path": "generated/advisor-decision-cards/g1.json",
-      "sha256": "421e759dfa559ebc2786a758f4363d315a1ecc55a6a770b61eab1242678f3fff"
+      "sha256": "be03f3849072b52d86e35f8e21574f3827298f05ca843cb7e802a3c7567fcd39"
     },
     {
       "path": "generated/advisor-decision-cards/paper_a.json",
@@ -75,11 +80,27 @@
     },
     {
       "path": "generated/advisor-decision-cards/paper_b.json",
-      "sha256": "d819d3b0b0642863968bd2644ad0899ff40830dc8dc46b33ef19a7775bc84924"
+      "sha256": "727d88ecacdf833667afdc5c17add9ec656be5dbd19aa8847a920663f83a62b1"
+    },
+    {
+      "path": "generated/advisor-final-decision-sufficiency-fix-closure-20260906.json",
+      "sha256": "b1faa3e313ff283393ac469d281e81bbabc10157a9596de124c701ecd3e1951f"
+    },
+    {
+      "path": "generated/advisor-final-decision-sufficiency-review-20260906.json",
+      "sha256": "50af31c6c59cb76dd728d093fabb6348b1b4485f51cfd073f60515320c23659f"
     },
     {
       "path": "generated/advisor-final-decision-sufficiency-review-attempt-20260905.json",
       "sha256": "1f2573490f7a030a419e7369ac61eb3007811de5ba047230b23b0c40fe372d5e"
+    },
+    {
+      "path": "generated/advisor-final-postfix-regression-review-20260906.json",
+      "sha256": "a76144131fa8ea62f70be0f9603c72778c62b1cb23c1468875a2ce90cd457edc"
+    },
+    {
+      "path": "generated/advisor-meeting-agenda-20260906.json",
+      "sha256": "0a06f258d045900b5c9d2d809aced017fd4dd597142622868dc97b4ef30e3ae5"
     },
     {
       "path": "generated/advisor-paper-pack-manifest.json",
@@ -99,7 +120,7 @@
     },
     {
       "path": "generated/advisor-resource-ledger.json",
-      "sha256": "ae84ef8a75c020115a789e94c7a557f2bde34aea8caf66a3c39007d4dffa897b"
+      "sha256": "7806be252124a0386c5f95f798fa28127330028e0258c009b2105ba37932d76a"
     },
     {
       "path": "generated/stanford-3d-review.json",

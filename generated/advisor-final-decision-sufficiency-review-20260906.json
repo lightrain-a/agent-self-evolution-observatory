@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "status": "VALID_INDEPENDENT_REVIEW",
+  "review_id": "advisor-final-source-sync-sufficiency-20260906",
+  "reviewed_decision_surface_hash": "d3e18b1df671420eced2834f4580ae9068e6f9fab9fe338eddb18bf5f03e1751",
+  "reviewer": {
+    "surface": "fresh ChatGPT web / Oracle Browser",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High",
+    "thinking_visible_level": "4/5",
+    "session_id": "advisor-final-source-sync-sufficienc",
+    "transcript_sha256": "e5e203de7ee7797344ff027c3d5410c69ed94ce8f70f0b3ff984c67f9189a57f",
+    "assistant_complete": true,
+    "fresh_conversation": true,
+    "valid_review_count": 1
+  },
+  "verdict": "REVISE_ADVISOR_MEETING_DECISION_SUFFICIENCY",
+  "overall": "REVISE",
+  "freeze_decision": "REVISE_AND_REFREEZE",
+  "top_defects": [
+    "Paper A and Paper B duplicated the family-level standalone-vs-merge decision; Paper A should own family architecture while Paper B asks for its minimum distinct longitudinal claim.",
+    "The persistent-memory reopen table marked the whole family directly affected even though the threshold requires primitive-specific applicability.",
+    "Resource surface needs explicit G1/3D post-meeting human-hour caps and a by-17:00 resource+authority ledger including current authority, stop cost, future envelope, next authority, and non-authority."
+  ],
+  "per_paper_ask": {
+    "E1": "KEEP",
+    "B1": "KEEP",
+    "C1": "KEEP",
+    "G1": "KEEP",
+    "E2": "KEEP",
+    "PAPER_A": "KEEP",
+    "CONSTRAINT_EXTERNALITY": "KEEP",
+    "PAPER_B": "REPLACE: Assuming Paper A remains the source-fidelity owner, is Paper B’s minimum standalone claim the exact COMMITTED_UPDATE-vs-FROZEN_PREUPDATE cross-episode total effect, with fidelity subordinate mechanism evidence and governance superiority out of scope unless separately identified?",
+    "3D": "KEEP"
+  },
+  "section_verdicts": {
+    "claim_ownership": "PASS",
+    "shared_reopen_rules": "REVISE",
+    "resource_surface": "REVISE",
+    "schedule": "PASS",
+    "by_17_00_outputs": "REVISE"
+  },
+  "do_not_reopen": [
+    "Stanford numerical-score ranking",
+    "obsolete C1 writer-only/transport-only scientific review except unified-vs-split advisor decision",
+    "G1 via MCTA/G2",
+    "B1/3D interim outcomes or live-progress interpretation",
+    "already-frozen experiment geometry for appearance/score chasing",
+    "provider/GPU arithmetic unless feasibility/authority/scarce-resource ordering changes"
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "submission": false,
+    "advisor_meeting_projection_only": true
+  }
+}

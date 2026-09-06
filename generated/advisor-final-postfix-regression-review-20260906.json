@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "status": "POSTFIX_CONTENT_PASS_WITH_DETERMINISTIC_GUARD",
+  "review_id": "advisor-postfix-decision-surface-20260906",
+  "verification_path": "POSTFIX_DECISION_SURFACE_REGRESSION",
+  "review_scope": "Only the three prior advisor-meeting decision-sufficiency blockers; no paper science, outcomes, Stanford-score ranking, experiment geometry, or authority reopening.",
+  "oracle_browser": {
+    "tool": "oracle 0.18.0",
+    "requested_model": "gpt-5.6-sol",
+    "run_label": "gpt-5.6-sol[browser]",
+    "requested_chatgpt_url": "https://chatgpt.com/?temporary-chat=true",
+    "thinking_mode": "Extra High",
+    "model_selection_status": "already-selected",
+    "resolved_label": null,
+    "model_picker_verified": false,
+    "ui_limitation": "The current Temporary Chat UI exposed Extra High but did not expose a readable model label; Oracle therefore reported resolvedLabel unavailable / verified=no even though the run was requested and reported as gpt-5.6-sol[browser].",
+    "strict_independent_review_valid": false,
+    "strict_valid_review_count": 0
+  },
+  "content_result": {
+    "A_paper_family_ownership": "PASS",
+    "B_shared_reopen_rules": "PASS",
+    "C_resource_authority_surface": "PASS",
+    "D_schedule_nonduplication": "PASS",
+    "E_authority_regression": "PASS",
+    "blocking_fixes": "NONE",
+    "final": "PASS_POSTFIX_DECISION_SURFACE"
+  },
+  "content_verdict": "PASS_POSTFIX_DECISION_SURFACE",
+  "deterministic_regression_pass": true,
+  "deterministic_guard_scope": [
+    "Paper A is the sole family-architecture decision owner and Paper B asks only for its minimum distinct longitudinal total-effect claim.",
+    "Shared-risk reopen rows are primitive-specific and include direct/conditional applicability plus an explicit reopen threshold.",
+    "All nine resource rows expose authorized-now work, post-meeting human effort, cost-to-stop, next authority gate, conditional future envelope, and explicit non-authority.",
+    "G1 post-meeting human work is capped/planned at 4–8 h and 3D monitoring at 3–6 h to current training seals.",
+    "No advisor overlay grants scientific, experiment, provider, GPU, or submission authority.",
+    "The 14:00–17:00 schedule assigns family architecture once and reserves later blocks for unresolved exceptions, resource conflict, and decision locking rather than duplicate paper review."
+  ],
+  "closure_rule": "Because strict UI model-label verification was unavailable, the Oracle content PASS is corroborative only. The meeting-surface closure is accepted on deterministic exact-field/schema guards; no scientific or execution authority is derived from this receipt.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false,
+    "advisor_meeting_projection_only": true
+  }
+}

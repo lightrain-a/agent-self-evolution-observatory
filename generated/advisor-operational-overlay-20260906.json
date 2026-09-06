@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "observed_at": "2026-09-06T12:15:01+08:00",
+  "meeting_id": "2026-09-06-advisor",
+  "scientific_outcomes_inspected": false,
+  "changes_meeting_candidate_hash": false,
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false,
+    "operational_projection_only": true
+  },
+  "papers": {
+    "B1": {
+      "resource_plan_patch": {
+        "authorized_now": {
+          "cash_cny": 0,
+          "gpu": "R82 Llama stage already has frozen GPU execution authority; no new meeting authority",
+          "api_units": 0,
+          "work": "Qwen 189 stage is sealed; Llama path-equivalent stage is frozen at 132 trajectories and already authorized before Qwen outcome opening"
+        },
+        "resource_dimensions": {
+          "local_gpu_occupancy": "host231 cuda:0 currently retains the prior local runtime (~50.3 GiB / 80 GiB); no Llama execution process detected at 12:14",
+          "calendar_latency": "Llama stage not started at this snapshot; wall-clock remains operationally unknown until launch"
+        },
+        "current_decision_cost": "Qwen 189 is already sealed. The next frozen execution object is the pre-authorized Llama 132-trajectory stage; this is not a new commitment created by the advisor meeting.",
+        "cost_to_stop": "No new experiment should be invented. If the pre-authorized Llama stage is not launched, no additional GPU run is consumed; if launched, follow its frozen technical-failure/stop rules.",
+        "next_authority_gate": "Llama execution authority already exists from R82. Any complete cross-model analysis, strong-model scale check, PSMG, L3, or paper-claim change remains a separate successor authority.",
+        "operational_snapshot": {
+          "observed_at": "2026-09-06T12:14:51+08:00",
+          "state": "QWEN_STAGE_SEALED_LLAMA_R82_AUTHORIZED_NOT_STARTED",
+          "qwen_sealed_rows": 189,
+          "qwen_sealed_technical_missing": 0,
+          "llama_frozen_schedule_rows": 132,
+          "llama_host": "231",
+          "llama_gpu_assignment": "cuda:0",
+          "llama_process_detected": false,
+          "note": "Operational/control-plane refresh only. No Qwen/Llama interim scientific result was read for this meeting overlay."
+        }
+      }
+    },
+    "3D": {
+      "resource_plan_patch": {
+        "resource_dimensions": {
+          "local_gpu_occupancy": "2×RTX3090 frozen training remains live on host52: shared decoder on GPU3 (~4.3 GiB) and SGP-14 on GPU4 (~5.7 GiB)",
+          "calendar_latency": "Both frozen training processes are still live at 12:15; ETA intentionally not recomputed from training/scientific logs in the meeting overlay"
+        },
+        "current_decision_cost": "Only the already-running SGP-14 + shared-decoder training is consuming compute; no P1 validation or replication budget is opened by this refresh.",
+        "operational_snapshot": {
+          "observed_at": "2026-09-06T12:15:01+08:00",
+          "state": "PRIMARY_DEVELOPMENTAL_TRAINING_RUNNING_NO_SCIENTIFIC_OUTCOMES",
+          "shared_decoder": {
+            "gpu": 3,
+            "pid": 3720792,
+            "process_alive": true
+          },
+          "sgp14": {
+            "gpu": 4,
+            "pid": 1859236,
+            "process_alive": true
+          },
+          "topology_metrics_opened": false,
+          "note": "Operational liveness/GPU refresh only. No validation/test/topology result was inspected."
+        }
+      }
+    }
+  }
+}

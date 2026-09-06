@@ -11,7 +11,7 @@ G = ROOT / "generated"
 PDF_DIR = ROOT / "downloads" / "advisor-20260906"
 ORDER = ["E1", "B1", "C1", "G1", "E2", "PAPER_A", "CONSTRAINT_EXTERNALITY", "PAPER_B", "3D"]
 ROUTES = {"FREEZE_SUBMIT", "EXECUTE_FROZEN", "QUALIFY_FIRST", "FORMALIZE_FIRST"}
-RESOURCE_DIMENSIONS = ["api_cash", "local_gpu_occupancy", "human_time", "provider_credential_dependency", "calendar_latency"]
+RESOURCE_DIMENSIONS = ["api_cash", "local_gpu_occupancy", "post_meeting_execution_human_hours", "provider_credential_dependency", "calendar_latency"]
 
 
 def load(path: Path):
@@ -41,6 +41,10 @@ def main() -> int:
     overlay = load(G / "advisor-reality-cost-independent-review-20260905.json")
     overlay_fix = load(G / "advisor-reality-cost-fix-closure-20260905.json")
     final_attempt = load(G / "advisor-final-decision-sufficiency-review-attempt-20260905.json")
+    final_review = load(G / "advisor-final-decision-sufficiency-review-20260906.json")
+    final_fix = load(G / "advisor-final-decision-sufficiency-fix-closure-20260906.json")
+    postfix_review = load(G / "advisor-final-postfix-regression-review-20260906.json")
+    agenda = load(G / "advisor-meeting-agenda-20260906.json")
 
     cards = {}
     card_paths = []
@@ -147,6 +151,30 @@ def main() -> int:
         errors.append("reality/cost fix closure is not PASS")
     if final_attempt.get("valid_review_count") != 0 or final_attempt.get("valid_review") is not False:
         errors.append("invalid final decision-sufficiency attempt must remain 0 valid reviews")
+    if final_review.get("verdict") != "REVISE_ADVISOR_MEETING_DECISION_SUFFICIENCY":
+        errors.append("unexpected final decision-sufficiency review verdict")
+    if final_fix.get("status") != "FIXES_APPLIED_DETERMINISTIC_POSTFIX_PASS":
+        errors.append("final decision-sufficiency fix closure is not postfix PASS")
+    if postfix_review.get("content_verdict") != "PASS_POSTFIX_DECISION_SURFACE":
+        errors.append("postfix regression content verdict is not PASS")
+    if postfix_review.get("deterministic_regression_pass") is not True:
+        errors.append("postfix deterministic regression guard is not PASS")
+    if agenda.get("claim_ownership_map", {}).get("memory_family_architecture_decision_owner") != "PAPER_A":
+        errors.append("Paper A must own the family-level architecture decision")
+    pbq = str(cards.get("PAPER_B", {}).get("advisor_question") or "")
+    if "COMMITTED_UPDATE-vs-FROZEN_PREUPDATE" not in pbq or "Paper A remains the source-fidelity owner" not in pbq:
+        errors.append("Paper B advisor ask is not narrowed to the minimum distinct longitudinal claim")
+    for row in agenda.get("shared_risk_reopen_rules") or []:
+        if not row.get("primitive") or not row.get("directly_affected") or not row.get("reopen_threshold"):
+            errors.append(f"shared-risk reopen row incomplete: {row.get('premise')} / {row.get('primitive')}")
+    for pid in ORDER:
+        rr = (resources.get("papers") or {}).get(pid, {})
+        for field in ["cost_to_stop", "next_authority_gate", "explicit_non_authority", "conditional_envelope"]:
+            if not str(rr.get(field) or "").strip():
+                errors.append(f"missing resource/authority field {pid}.{field}")
+        dims = rr.get("resource_dimensions") or {}
+        if not str(dims.get("post_meeting_execution_human_hours") or "").strip():
+            errors.append(f"missing post-meeting human-hour cap/estimate: {pid}")
 
     sources = [
         G / "advisor-paper-pack-manifest.json",
@@ -155,6 +183,10 @@ def main() -> int:
         G / "advisor-reality-cost-independent-review-20260905.json",
         G / "advisor-reality-cost-fix-closure-20260905.json",
         G / "advisor-final-decision-sufficiency-review-attempt-20260905.json",
+        G / "advisor-final-decision-sufficiency-review-20260906.json",
+        G / "advisor-final-decision-sufficiency-fix-closure-20260906.json",
+        G / "advisor-final-postfix-regression-review-20260906.json",
+        G / "advisor-meeting-agenda-20260906.json",
         *card_paths,
         *review_paths,
         G / "stanford-g2-mcta-review.json",
@@ -183,6 +215,11 @@ def main() -> int:
             "lineage_correction_requires_reaudit_for": ["C1", "G1"],
             "prior_reality_cost_fixes_closed": overlay_fix.get("status") == "FIXES_APPLIED_DETERMINISTIC_PASS",
             "final_decision_sufficiency_attempt_fail_closed": final_attempt.get("valid_review_count") == 0,
+            "final_decision_sufficiency_review_recorded": final_review.get("verdict") == "REVISE_ADVISOR_MEETING_DECISION_SUFFICIENCY",
+            "final_decision_sufficiency_fixes_postfix_closed": final_fix.get("status") == "FIXES_APPLIED_DETERMINISTIC_POSTFIX_PASS",
+            "postfix_regression_content_pass": postfix_review.get("content_verdict") == "PASS_POSTFIX_DECISION_SURFACE",
+            "postfix_deterministic_guard_pass": postfix_review.get("deterministic_regression_pass") is True,
+            "paper_a_owns_memory_family_architecture_decision": agenda.get("claim_ownership_map", {}).get("memory_family_architecture_decision_owner") == "PAPER_A",
         },
         "errors": errors,
         "source_hashes": source_hashes,
