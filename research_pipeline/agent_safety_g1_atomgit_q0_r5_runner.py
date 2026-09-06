@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import socket
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -46,6 +47,12 @@ EXPECTED_SHA256 = {
 
 AUTH_ID = "AGENT-SAFETY-G1-ATOMGIT-Q0-R5-RESIDUAL-EXECUTION-AUTHORITY-20260906"
 AUTH_STATUS = "ATOMGIT_Q0_R5_RESIDUAL_BENIGN_CAPABILITY_EXECUTION_AUTHORIZED"
+EXPECTED_BROWSER_ART_COMMIT = "0d72180042f2a076c68e1114e7494cb3fc7dd30b"
+NETWORK_PROBE_URLS = [
+    "http://127.0.0.1:8000/twitter",
+    "http://127.0.0.1:8000/instagram",
+    "https://www.google.com",
+]
 
 
 def sha256_file(path: Path) -> str:
@@ -109,9 +116,25 @@ def validate_authority(authority: dict[str, Any]) -> None:
     if authority.get("parent_r3_closeout_sha256") != EXPECTED_SHA256[R3_CLOSEOUT.name]:
         raise RunnerError("R5 parent R3 binding drift")
     runtime = authority.get("runtime") or {}
-    required_runtime = ("python", "awm_root", "browserart_root", "auth_path", "node_path", "static_server_pid_file", "parent_r3_run_root", "r5_run_root")
+    required_runtime = (
+        "python",
+        "awm_root",
+        "browserart_root",
+        "auth_path",
+        "node_path",
+        "static_server_pid_file",
+        "static_server_root",
+        "static_server_git_root",
+        "static_server_git_commit",
+        "parent_r3_run_root",
+        "r5_run_root",
+    )
     if any(not str(runtime.get(key) or "").strip() for key in required_runtime):
         raise RunnerError("R5 runtime binding incomplete")
+    if runtime.get("static_server_git_commit") != EXPECTED_BROWSER_ART_COMMIT:
+        raise RunnerError("R5 BrowserART commit binding drift")
+    if runtime.get("network_probe_urls") != NETWORK_PROBE_URLS:
+        raise RunnerError("R5 network readiness panel drift")
     if Path(runtime["r5_run_root"]).resolve() == Path(runtime["parent_r3_run_root"]).resolve():
         raise RunnerError("R5 run root collides with immutable R3 root")
 
@@ -133,6 +156,110 @@ def _port_open(host: str, port: int) -> bool:
         return False
 
 
+def _pid_from_file(path: Path) -> int:
+    try:
+        return int(path.read_text(encoding="utf-8").strip())
+    except Exception as exc:
+        raise RunnerError("R5 static server pid file unreadable") from exc
+
+
+def _proc_cmdline(pid: int) -> list[str]:
+    try:
+        raw = Path(f"/proc/{pid}/cmdline").read_bytes()
+    except OSError as exc:
+        raise RunnerError("R5 static server process unavailable") from exc
+    return [part.decode("utf-8", errors="strict") for part in raw.split(b"\0") if part]
+
+
+def _git_head(root: Path) -> str:
+    proc = subprocess.run(
+        ["git", "-C", str(root), "rev-parse", "HEAD"],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=5,
+    )
+    if proc.returncode != 0:
+        raise RunnerError(f"R5 BrowserART git identity unavailable:{root}")
+    return proc.stdout.strip()
+
+
+def _git_tracked_surface_clean(root: Path) -> bool:
+    proc = subprocess.run(
+        ["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no", "--", "src/websites"],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=5,
+    )
+    return proc.returncode == 0 and not proc.stdout.strip()
+
+
+def validate_live_static_server(runtime: dict[str, Any]) -> None:
+    pid_path = Path(runtime["static_server_pid_file"])
+    if not _pid_alive(pid_path):
+        raise RunnerError("R5 frozen BrowserART static server unavailable")
+    pid = _pid_from_file(pid_path)
+    args = _proc_cmdline(pid)
+    expected_python = Path(runtime["python"]).resolve()
+    if not args or Path(args[0]).resolve() != expected_python:
+        raise RunnerError("R5 static server python drift")
+    if len(args) < 3 or args[1:3] != ["-m", "http.server"]:
+        raise RunnerError("R5 static server launcher drift")
+    try:
+        root_index = args.index("-d") + 1
+        served_root = Path(args[root_index]).resolve()
+    except (ValueError, IndexError) as exc:
+        raise RunnerError("R5 static server root is not explicitly bound") from exc
+    expected_root = Path(runtime["static_server_root"]).resolve()
+    if served_root != expected_root:
+        raise RunnerError("R5 static server served-root drift")
+    port = int(runtime.get("static_server_port") or 8000)
+    if str(port) not in args or not _port_open("127.0.0.1", port):
+        raise RunnerError("R5 static server port drift or unavailable")
+    live_git_root = Path(runtime["static_server_git_root"]).resolve()
+    frozen_git_root = Path(runtime["browserart_root"]).resolve()
+    expected_commit = runtime["static_server_git_commit"]
+    if _git_head(live_git_root) != expected_commit or _git_head(frozen_git_root) != expected_commit:
+        raise RunnerError("R5 BrowserART live/frozen commit drift")
+    if not _git_tracked_surface_clean(live_git_root) or not _git_tracked_surface_clean(frozen_git_root):
+        raise RunnerError("R5 BrowserART tracked website surface is dirty")
+
+
+def validate_browser_network_readiness(urls: list[str]) -> dict[str, Any]:
+    try:
+        from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+        from playwright.sync_api import sync_playwright
+    except Exception as exc:
+        raise RunnerError("R5 Playwright network preflight unavailable") from exc
+    rows: list[dict[str, Any]] = []
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        try:
+            for url in urls:
+                page = browser.new_page()
+                try:
+                    response = page.goto(url, timeout=10_000)
+                    rows.append({
+                        "url": url,
+                        "status": "LOAD_PASS",
+                        "http_status": response.status if response is not None else None,
+                    })
+                except PlaywrightTimeoutError as exc:
+                    rows.append({"url": url, "status": "LOAD_TIMEOUT", "error_type": type(exc).__name__})
+                except Exception as exc:
+                    rows.append({"url": url, "status": "LOAD_ERROR", "error_type": type(exc).__name__})
+                finally:
+                    page.close()
+        finally:
+            browser.close()
+    failed = [row for row in rows if row["status"] != "LOAD_PASS"]
+    if failed:
+        failed_urls = ",".join(row["url"] for row in failed)
+        raise RunnerError(f"R5 browser network readiness failed:{failed_urls}")
+    return {"status": "R5_BROWSER_NETWORK_READINESS_PASS", "rows": rows}
+
+
 def validate_runtime(authority: dict[str, Any], *, output_root: Path, awm: Path, browserart: Path, auth_path: Path) -> None:
     runtime = authority["runtime"]
     if Path(sys.executable).resolve() != Path(runtime["python"]).resolve():
@@ -149,9 +276,8 @@ def validate_runtime(authority: dict[str, Any], *, output_root: Path, awm: Path,
         raise RunnerError("immutable R3 runtime receipt unavailable or drifted")
     if os.environ.get("NODE_PATH") != runtime["node_path"]:
         raise RunnerError("R5 NODE_PATH drift")
-    pid_path = Path(runtime["static_server_pid_file"])
-    if not _pid_alive(pid_path) or not _port_open("127.0.0.1", int(runtime.get("static_server_port") or 8000)):
-        raise RunnerError("R5 frozen BrowserART static server unavailable")
+    validate_live_static_server(runtime)
+    validate_browser_network_readiness(list(runtime["network_probe_urls"]))
 
 
 def run_r5_cascade(*, authority: dict[str, Any], output_root: Path, awm: Path, browserart: Path, auth_path: Path) -> dict[str, Any]:

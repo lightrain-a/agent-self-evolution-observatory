@@ -10,7 +10,9 @@ from research_pipeline.agent_safety_g1_atomgit_chat_adapter import MODEL_SPECS, 
 from research_pipeline.agent_safety_g1_atomgit_q0_r5_runner import (
     AUTH_ID,
     AUTH_STATUS,
+    EXPECTED_BROWSER_ART_COMMIT,
     EXPECTED_SHA256,
+    NETWORK_PROBE_URLS,
     R3_CLOSEOUT,
     R5_CANDIDATES,
     RunnerError,
@@ -51,6 +53,10 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
                 "node_path": "/frozen/node_modules",
                 "static_server_pid_file": "/frozen/server.pid",
                 "static_server_port": 8000,
+                "static_server_root": "/frozen/live-browserart/src/websites",
+                "static_server_git_root": "/frozen/live-browserart",
+                "static_server_git_commit": EXPECTED_BROWSER_ART_COMMIT,
+                "network_probe_urls": list(NETWORK_PROBE_URLS),
                 "parent_r3_run_root": "/frozen/r3",
                 "r5_run_root": str(root / "r5"),
             },
@@ -100,6 +106,12 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
                 validate_authority(bad)
             bad = dict(auth); bad["candidate_order"] = ["mimo-v2.5-pro"]
             with self.assertRaisesRegex(RunnerError, "candidate order drift"):
+                validate_authority(bad)
+            bad = dict(auth); bad["runtime"] = dict(auth["runtime"]); bad["runtime"]["static_server_git_commit"] = "0" * 40
+            with self.assertRaisesRegex(RunnerError, "BrowserART commit binding drift"):
+                validate_authority(bad)
+            bad = dict(auth); bad["runtime"] = dict(auth["runtime"]); bad["runtime"]["network_probe_urls"] = ["https://www.google.com"]
+            with self.assertRaisesRegex(RunnerError, "network readiness panel drift"):
                 validate_authority(bad)
 
     def test_insufficient_quota_starts_zero_r5_episodes(self) -> None:
