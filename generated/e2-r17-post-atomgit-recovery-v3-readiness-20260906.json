@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-post-atomgit-recovery-v3-readiness",
+  "created_at": "2026-09-06T20:35:49+08:00",
+  "status": "READY_BUT_HARD_TIME_GATE_CLOSED_ZERO_PROVIDER",
+  "purpose": "Freeze the exact next execution boundary after AtomGit V3-V8 shadow integration without creating new authority or provider I/O.",
+  "current_priority": "RECOVERY_V3_BEFORE_M3R4",
+  "recovery_v3": {
+    "contract": {
+      "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-contract-20260903.json",
+      "sha256": "6fe178467d8fb726adf1986fa6be2a294f1da736998ce36f6f92ecd25e805877",
+      "status": "FROZEN_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO"
+    },
+    "authorization": {
+      "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-authorization-20260903.json",
+      "sha256": "ad235772b0a204ffb33b281c90fc5d5e0c4a56fb6de7a30c16bd4b85d431e26b",
+      "status": "AUTHORIZED_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO_MEASUREMENT",
+      "single_use": true
+    },
+    "actual_path_preflight": {
+      "path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-actual-path-preflight-20260903.json",
+      "sha256": "3f8f5a8fa70efb0dc78d81275b2c7f36b528af92770a223cb2960d71edd96bbb",
+      "status": "PASS_RECOVERY2_V3_ACTUAL_ACTOR_PATH_4_OF_4_ZERO_PROVIDER"
+    },
+    "hard_gate": {
+      "quota_reset_not_before": "2026-09-07T00:00:00+08:00",
+      "checked_at": "2026-09-06T20:35:49+08:00",
+      "open": false,
+      "provider_execution_before_gate": "FORBIDDEN"
+    },
+    "remaining_geometry": {
+      "inherited_completed_measurements": 45,
+      "new_measurements": 27,
+      "explicit_429_recovery_units": 1,
+      "never_started_measurements": 26,
+      "new_updater_calls": 0,
+      "remaining_execution_order_sha256": "4219490a820e4551afaf11fee159d3ea15bc3ea88bd8aabf98f7f48a82a7db61",
+      "completed_unit_replay": false,
+      "max_provider_calls_per_unit": 11,
+      "child_provider_total_limit": 123
+    },
+    "bound_code_sha_check": "8/8 MATCH CURRENT FILES",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery2-v3-20260903",
+    "run_root_absent": true,
+    "lease": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-recovery2-v3.json",
+    "lease_absent": true,
+    "partial_effect_read": false,
+    "analyzer_authorized": false,
+    "post_gate_execution_command": "python scripts/run_e2_r17_constrained_state_micro_recovery2.py --contract generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-contract-20260903.json --authorization generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-authorization-20260903.json"
+  },
+  "after_recovery_v3_terminal_completion": {
+    "step_1": "Run and freeze the existing Recovery V3 completion/integrity audit; do not open partial scientific effect during recovery execution.",
+    "step_2": "Only after Recovery V3 resource priority is discharged, run exactly one fresh non-scientific M3R4 DeepSeek V4-Pro identity qualification.",
+    "step_3": "Require requested deepseek-v4-pro to resolve exactly to deepseek-v4-pro-ga-260813; any drift is HOLD_REVIEW_REQUIRED_NO_AUTOMATIC_MODEL_SUBSTITUTION.",
+    "step_4": "On exact identity PASS, mechanically freeze the final content-addressed M3R4 contract and zero-provider actual-path preflight authorization using the already-tested final-contract freezer.",
+    "step_5": "M3R4 actor measurement still requires separate explicit measurement authority; final contract/preflight alone does not execute 72 actor units.",
+    "step_6": "Bridge V4-R2 Stage-A remains downstream of M3R4 adjudication and requires a separate Stage-A contract/preexecution authority."
+  },
+  "bridge_v4r2_future_handoff_binding": {
+    "branch": "research/e2-r17-bridge-v4r2-execution-prep-20260906",
+    "commit": "cfcaaa89",
+    "artifact": "generated/e2-r17-bridge-v4r2-post-atomgit-consumer-handoff-addendum-20260906.json",
+    "sha256": "a6f75059b11e27ca5b019a79c87a99914e8e56902eb9a8cb4b253be2fa1c2d53",
+    "requirement": "Future COMP/control states must be exact compile_skill().skill_markdown bytes materialized as SHA-verified SKILL.md and consumed only through actor skill_source; raw typed diagnosis and second LLM rendering are forbidden."
+  },
+  "atomgit": {
+    "shadow_sequence_closed": true,
+    "latest_integration_commit": "87426082",
+    "more_shadow_model_matrix_now": false,
+    "scientific_model_substitution": false,
+    "primary_claim_authority": false
+  },
+  "authority": {
+    "new_authority_created_by_this_receipt": false,
+    "provider_io_now": false,
+    "m3r4_measurement_now": false,
+    "bridge_stage_a_now": false,
+    "analysis_now": false,
+    "e3": false,
+    "paper_promotion": false
+  }
+}
