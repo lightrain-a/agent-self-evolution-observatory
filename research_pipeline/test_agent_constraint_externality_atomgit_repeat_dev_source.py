@@ -54,6 +54,18 @@ class AtomGitRepeatDevSourceTest(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "trajectory"):
                 trajectory_audit(path, 1)
 
+    def test_trajectory_audit_rejects_duplicate_dispatch_id(self) -> None:
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "trajectory.jsonl"
+            rows = [
+                {"event":"TOOL_DISPATCH","tool_id":"x:1","index":1,"tool_name":"a","arguments":{}},
+                {"event":"TOOL_DISPATCH","tool_id":"x:1","index":1,"tool_name":"a","arguments":{}},
+                {"event":"TOOL_COMPLETION","tool_id":"x:1","index":1,"tool_name":"a","result":"ok"},
+            ]
+            path.write_text("".join(json.dumps(row)+"\n" for row in rows), encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError, "duplicate"):
+                trajectory_audit(path, 1)
+
     def test_trajectory_audit_rejects_cap_rejection(self) -> None:
         with tempfile.TemporaryDirectory() as d:
             path = Path(d) / "trajectory.jsonl"

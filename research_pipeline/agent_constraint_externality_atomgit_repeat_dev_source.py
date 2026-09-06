@@ -169,10 +169,19 @@ def trajectory_audit(path: Path, expected_calls: int) -> dict[str, Any]:
     if not path.is_file():
         raise Stop("source trajectory missing")
     rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
-    dispatch = {row["tool_id"]: row for row in rows if row.get("event") == "TOOL_DISPATCH"}
-    complete = {row["tool_id"]: row for row in rows if row.get("event") == "TOOL_COMPLETION"}
+    dispatch_rows = [row for row in rows if row.get("event") == "TOOL_DISPATCH"]
+    complete_rows = [row for row in rows if row.get("event") == "TOOL_COMPLETION"]
+    dispatch = {row["tool_id"]: row for row in dispatch_rows}
+    complete = {row["tool_id"]: row for row in complete_rows}
     rejected = [row for row in rows if row.get("event") == "TOOL_REJECTED"]
-    if rejected or len(dispatch) != expected_calls or len(complete) != expected_calls or set(dispatch) != set(complete):
+    if (
+        rejected
+        or len(dispatch_rows) != expected_calls
+        or len(complete_rows) != expected_calls
+        or len(dispatch) != expected_calls
+        or len(complete) != expected_calls
+        or set(dispatch) != set(complete)
+    ):
         raise Stop("source trajectory has rejected/dangling/duplicate tool unit")
     if sorted(int(row["index"]) for row in dispatch.values()) != list(range(1, expected_calls + 1)):
         raise Stop("source trajectory index geometry drift")
@@ -232,6 +241,18 @@ def preflight() -> dict[str, Any]:
 def execute() -> dict[str, Any]:
     patch_live(); auth = verified(AUTH_OUTPUT, "USER_AUTHORIZED_ATOMGIT_REPEAT_DEV_SIX_SOURCE_ONLY"); contract = verified(EXEC_CONTRACT, "ATOMGIT_REPEAT_DEV_SIX_SOURCE_EXECUTION_AUTHORIZED")
     if not auth["authority"]["source_execution"] or auth["authority"]["repair_generation"]: raise Stop("source authority scope drift")
+    if contract.get("human_authorization_content_sha256") != auth.get("content_sha256"):
+        raise Stop("source authorization binding drift")
+    if contract.get("runner_sha256") != sha256_file(Path(__file__)):
+        raise Stop("source runner SHA drift")
+    if contract.get("bridge_sha256") != sha256_file(BRIDGE):
+        raise Stop("source bridge SHA drift")
+    if contract.get("protected_bundle_sha256") != sha256_file(OUTPUT_BUNDLE):
+        raise Stop("source bundle SHA drift")
+    if contract.get("model", {}).get("id") != MODEL_ID or contract.get("model", {}).get("profile") != MODEL_PROFILE:
+        raise Stop("source model binding drift")
+    if contract.get("panel", {}).get("family_ids") != [row["family_id"] for row in families()]:
+        raise Stop("source family-order binding drift")
     RUN_ROOT.mkdir(parents=True, exist_ok=True); states = live.ledger_states(LEDGER)
     for family in families():
         uid = unit_id(family["family_id"]); state = states.get(uid)
@@ -260,8 +281,16 @@ def execute() -> dict[str, Any]:
                 live.append_jsonl(LEDGER, {"schema_version": "ace-repeat-dev-source-ledger-v1", "object_id": OBJECT_ID, "execution_id": EXECUTION_ID, "event": "FAILURE", "unit_id": uid, "family_id": family["family_id"], "failure_class": "SOURCE_INTERFACE_OR_AGENT_LOOP_INVALID", "message": str(result["prohibited_tool"] or result["error_message"] or result["stop_reason"])[:400], "codingplan_window_after": after, "retry_attempted": False, "time_ns": time.time_ns()}); return {"status": "ATOMGIT_REPEAT_DEV_SOURCE_INVALID_STOP", "family_id": family["family_id"]}
         finally:
             if proc is not None: live.terminate_process(proc)
-        state1 = readj(progress); calls = int(state1.get("tool_call_count", 0)); audit = trajectory_audit(trajectory, calls)
-        target_success = bool(evaluate_case_from_state(case, source_db_root=Path(state1["source_db_root"]), changes_db_root=Path(state1["changes_db_root"]), measurement_root=root / "measurement-full-dbs"))
+        state1 = readj(progress); calls = int(state1.get("tool_call_count", 0))
+        if calls <= 0:
+            live.append_jsonl(LEDGER, {"schema_version": "ace-repeat-dev-source-ledger-v1", "object_id": OBJECT_ID, "execution_id": EXECUTION_ID, "event": "FAILURE", "unit_id": uid, "family_id": family["family_id"], "failure_class": "SOURCE_ZERO_TOOL_NON_SEMANTIC_STOP", "message": "Target requires AppWorld state mutation but the agent executed zero AppWorld tools.", "retry_attempted": False, "time_ns": time.time_ns()})
+            return {"status": "ATOMGIT_REPEAT_DEV_SOURCE_INVALID_STOP", "family_id": family["family_id"]}
+        try:
+            audit = trajectory_audit(trajectory, calls)
+            target_success = bool(evaluate_case_from_state(case, source_db_root=Path(state1["source_db_root"]), changes_db_root=Path(state1["changes_db_root"]), measurement_root=root / "measurement-full-dbs"))
+        except Exception as exc:
+            live.append_jsonl(LEDGER, {"schema_version": "ace-repeat-dev-source-ledger-v1", "object_id": OBJECT_ID, "execution_id": EXECUTION_ID, "event": "FAILURE", "unit_id": uid, "family_id": family["family_id"], "failure_class": "SOURCE_TRAJECTORY_OR_EVALUATOR_INVALID", "message": f"{type(exc).__name__}: {exc}"[:400], "retry_attempted": False, "time_ns": time.time_ns()})
+            return {"status": "ATOMGIT_REPEAT_DEV_SOURCE_INVALID_STOP", "family_id": family["family_id"]}
         completion = {"schema_version": "ace-repeat-dev-source-ledger-v1", "object_id": OBJECT_ID, "execution_id": EXECUTION_ID, "event": "COMPLETION", "unit_id": uid, "family_id": family["family_id"], "case_id": case["case_id"], "target_success": target_success, "usable_semantic_failure": not target_success, "tool_loop_completed": True, "appworld_tool_call_count": calls, "model_round_count": int(result["model_round_count"]), "prompt_tokens_total": int(result["prompt_tokens_total"]), "completion_tokens_total": int(result["completion_tokens_total"]), "trajectory_sha256": audit["trajectory_sha256"], "trajectory_row_count": audit["row_count"], "all_tool_dispatches_closed": True, "bridge_progress_sha256": sha256_file(progress), "codingplan_window_after": after, "time_ns": time.time_ns()}
         live.append_jsonl(LEDGER, completion); states = live.ledger_states(LEDGER)
         if target_success:
