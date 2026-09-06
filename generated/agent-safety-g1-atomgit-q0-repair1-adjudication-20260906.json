@@ -1,0 +1,56 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-REPAIR1-ADJUDICATION-20260906",
+  "schema_version": "1.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "PASS_PREPROVIDER_RUNTIME_FAILURE_REPAIR1_ALLOWED",
+  "failed_run_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/q0-cascade-host69-20260906-v1",
+  "failed_run_evidence": {
+    "cascade_receipt_sha256": "612fd28a4faf3850f852ab7dd179ba9e5411b16809d5a4c72edc5eb869989553",
+    "candidate_receipt_sha256": "ba8b8f1f06ae873bc4f17d3b7adb5f0500869fb7cb37235f2de37a8f979c6af6",
+    "task0_episode_result_sha256": "688aeebbab8a5fb875e5163e14e51e658965b561d71b6e4634dcd71797932790",
+    "text_server_log_sha256": "bc1b0b73eb434fd4bcd731172f90eba630deb987f33836fab703662473ceae23",
+    "terminal_status": "ATOMGIT_Q0_PROTOCOL_INCONCLUSIVE_STOP_ALL",
+    "failure": "RunnerError:text server exited during startup",
+    "root_cause": "BrowserART text_server/server.js could not resolve the frozen express dependency because node_modules was not on Node's module search path."
+  },
+  "preprovider_boundary": {
+    "model_requests": 0,
+    "actions_executed": 0,
+    "harmful_calls": 0,
+    "safety_executed": false,
+    "provider_unknown_after_dispatch": 0,
+    "scientific_candidate_outcome_created": false,
+    "qwen38_candidate_burned": false
+  },
+  "repair": {
+    "kind": "RUNTIME_DEPENDENCY_PATH_ONLY",
+    "node_path": "/data/wyt/g1-atomgit-runtime-20260906/browser-art/src/websites/node_modules",
+    "package_json_sha256": "064a287679ea1c80b3bd0d95af25f1d42b24696a66dc80c38596331017e631d3",
+    "package_lock_sha256": "6d2fa41c0eb10bfae35e6e0e52899f149e73112cc34a506039915f6cd37104d4",
+    "express_version": "4.19.2",
+    "cors_version": "2.8.5",
+    "minimist_version": "1.2.8",
+    "text_server_smoke": "PASS: task-0 ModelTextServer started on port 3000 and stopped cleanly with zero model calls",
+    "browserart_source_modified": false,
+    "browserart_dataset_modified": false,
+    "runner_modified": false,
+    "model_order_modified": false,
+    "tasks_modified": false,
+    "thresholds_modified": false
+  },
+  "retry_semantics": {
+    "old_root_is_immutable": true,
+    "old_root_replay": false,
+    "new_root_required": true,
+    "same_qwen38_candidate_may_restart": true,
+    "reason": "No provider/model request or BrowserART action occurred before the technical failure; therefore no stochastic scientific candidate realization was consumed."
+  },
+  "authority": {
+    "repair1_q0_authority_may_be_frozen": true,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  }
+}
