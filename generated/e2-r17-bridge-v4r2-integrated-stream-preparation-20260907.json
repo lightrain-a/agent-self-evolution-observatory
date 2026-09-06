@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-integrated-six-arm-stream-preparation",
+  "date": "2026-09-07",
+  "status": "PASS_ZERO_PROVIDER_BRIDGE_V4R2_INTEGRATED_STREAM_PREPARATION_NO_AUTHORITY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "implementation": {
+    "path": "research_pipeline/e2_r17_bridge_v4r2_stream_preparation.py",
+    "sha256": "eba10ef731953f7f9135d4d726b430fef5513bb731feec80c3c8708eb3133d0b",
+    "test_path": "research_pipeline/test_e2_r17_bridge_v4r2_stream_preparation.py",
+    "test_sha256": "a587b8f0483248f8279b2d49342c973bd0b65b01a7d332ed9c01b94a91ed8b"
+  },
+  "integrated_arms": [
+    "W_FREE",
+    "W_COMP",
+    "FF4_FREE",
+    "FF4_COMP",
+    "SCORE_ONLY_GENERIC_MAX",
+    "SCOPE_MATCHED_GENERIC_MAX"
+  ],
+  "invariants": {
+    "one_stream_requires_exactly_eight_sealed_k8_pools": true,
+    "support_below_four_mixed_pools_holds_before_state_preparation": true,
+    "winner_and_ff4_keep_identical_served_winner_provenance": true,
+    "winner_free_and_winner_comp_receive_exact_same_rendered_bytes_and_selected_score": true,
+    "ff4_free_and_ff4_comp_receive_exact_same_rendered_bytes_and_selected_score": true,
+    "winner_and_ff4_rendered_token_budget_is_pair_matched": true,
+    "free_updater_projection_labels_are_scientific_bridge_labels_not_historical_mrw_enum": true,
+    "score_only_generic_receives_ff4_selected_scores_and_no_trajectory_text": true,
+    "scope_matched_generic_receives_ff4_selected_scores_plus_ff4_compiler_rendered_block_count_only": true,
+    "deterministic_compiler_states_are_content_addressed": true,
+    "no_post_compile_llm_renderer": true
+  },
+  "verification": {
+    "new_integrated_tests": "6/6 PASS",
+    "combined_bridge_preparation_tests": "63/63 PASS",
+    "runtime_python": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "required_tiktoken": "0.11.0",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "free_updater": false,
+    "deterministic_state_materialization_on_scientific_pools": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "paper_promotion": false
+  },
+  "interpretation_boundary": "This checkpoint proves only that, given eight already-sealed support-qualified pools, the preregistered six Bridge arms can be constructed through one content-addressed information-parity path. It does not acquire scientific pools, inspect Bridge support, execute a FREE updater, materialize scientific states, evaluate actors, or create outcomes.",
+  "next_gate": "FREEZE_SEPARATE_BRIDGE_V4R2_STAGE_A_SCREEN_SEARCH_ACQUISITION_AND_SUPPORT_CONTRACT"
+}
