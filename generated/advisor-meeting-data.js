@@ -165,33 +165,38 @@ window.ADVISOR_MEETING_DATA = {
           "cash_cny": 0,
           "gpu": "R82 Llama stage already has frozen GPU execution authority; no new meeting authority",
           "api_units": 0,
-          "work": "Qwen 189 stage is sealed; Llama path-equivalent stage is frozen at 132 trajectories and already authorized before Qwen outcome opening"
+          "work": "Qwen 189 stage is sealed; Llama path-equivalent stage is frozen at 132 trajectories, already authorized before Qwen outcome opening, and currently running"
         },
         "resource_dimensions": {
           "api_cash": "¥0",
-          "local_gpu_occupancy": "host231 cuda:0 currently retains the prior local runtime (~50.3 GiB / 80 GiB); no Llama execution process detected at 12:14",
+          "local_gpu_occupancy": "host231 cuda:0 A100 is actively serving the frozen Llama R82 stage; 47.8 GiB / 80 GiB used and 99% GPU utilization at the 12:58 snapshot",
           "post_meeting_execution_human_hours": "<1 h active monitoring",
           "provider_credential_dependency": "N/A",
-          "calendar_latency": "Llama stage not started at this snapshot; wall-clock remains operationally unknown until launch"
+          "calendar_latency": "Llama 132-trajectory stage is running; no remaining-time estimate is inferred from scientific/progress outputs in this operational overlay"
         },
         "operational_snapshot": {
-          "observed_at": "2026-09-06T12:14:51+08:00",
-          "state": "QWEN_STAGE_SEALED_LLAMA_R82_AUTHORIZED_NOT_STARTED",
+          "observed_at": "2026-09-06T12:58:09+08:00",
+          "state": "QWEN_STAGE_SEALED_LLAMA_R82_RUNNING",
           "qwen_sealed_rows": 189,
           "qwen_sealed_technical_missing": 0,
           "llama_frozen_schedule_rows": 132,
           "llama_host": "231",
           "llama_gpu_assignment": "cuda:0",
-          "llama_process_detected": false,
-          "note": "Operational/control-plane refresh only. No Qwen/Llama interim scientific result was read for this meeting overlay."
+          "llama_process_detected": true,
+          "llama_execution_pid": 1216569,
+          "llama_runtime_server_pid": 1204366,
+          "gpu_memory_used_mib": 47837,
+          "gpu_memory_total_mib": 81920,
+          "gpu_utilization_percent": 99,
+          "note": "Operational/control-plane refresh only. The frozen Llama R82 execution process is live; no Qwen/Llama interim scientific result was read for this meeting overlay."
         },
         "next_if_pass": "Llama 132 trajectories require separate successor authority after Qwen stage seal.",
         "conditional_envelope": "After Qwen+Llama seals, analysis authority is separate. Strong-scale Qwen2.5-32B check is 4D only if future discordant-task count D is nonzero and separately authorized.",
         "human_effort_estimate": "<1 h runtime oversight now; later analysis/review is separate",
         "parallelization": "Runs independently from 3D because it uses a different local GPU resource pool.",
         "priority_note": "Do not interrupt: frozen experiment is already running and has a short remaining wall-time relative to other compute work.",
-        "current_decision_cost": "Qwen 189 is already sealed. The next frozen execution object is the pre-authorized Llama 132-trajectory stage; this is not a new commitment created by the advisor meeting.",
-        "cost_to_stop": "No new experiment should be invented. If the pre-authorized Llama stage is not launched, no additional GPU run is consumed; if launched, follow its frozen technical-failure/stop rules.",
+        "current_decision_cost": "Qwen 189 is sealed and the pre-authorized Llama 132-trajectory stage is now running under existing R82 authority; this is not a new commitment created by the advisor meeting.",
+        "cost_to_stop": "Do not invent a new experiment or adapt the running Llama stage. Follow the frozen R82 technical-failure/stop rules; any later analysis or expansion still requires successor authority.",
         "next_authority_gate": "Llama execution authority already exists from R82. Any complete cross-model analysis, strong-model scale check, PSMG, L3, or paper-claim change remains a separate successor authority.",
         "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
@@ -828,23 +833,27 @@ window.ADVISOR_MEETING_DATA = {
         },
         "resource_dimensions": {
           "api_cash": "¥0",
-          "local_gpu_occupancy": "2×RTX3090 frozen training remains live on host52: shared decoder on GPU3 (~4.3 GiB) and SGP-14 on GPU4 (~5.7 GiB)",
+          "local_gpu_occupancy": "2×RTX3090 frozen training remains live on host52: shared decoder on GPU3 (4255 MiB) and SGP-14 on GPU4 (5721 MiB) at the 12:58 snapshot",
           "post_meeting_execution_human_hours": "3–6 h total monitoring budget to the current training seals (≈0.25–0.5 h/day under the current ETA); operational only.",
           "provider_credential_dependency": "N/A",
-          "calendar_latency": "Both frozen training processes are still live at 12:15; ETA intentionally not recomputed from training/scientific logs in the meeting overlay"
+          "calendar_latency": "Both frozen training processes are still live at 12:58; ETA intentionally not recomputed from training/scientific logs in the meeting overlay"
         },
         "operational_snapshot": {
-          "observed_at": "2026-09-06T12:15:01+08:00",
+          "observed_at": "2026-09-06T12:58:38+08:00",
           "state": "PRIMARY_DEVELOPMENTAL_TRAINING_RUNNING_NO_SCIENTIFIC_OUTCOMES",
           "shared_decoder": {
             "gpu": 3,
             "pid": 3720792,
-            "process_alive": true
+            "process_alive": true,
+            "gpu_memory_used_mib": 4255,
+            "gpu_utilization_percent": 0
           },
           "sgp14": {
             "gpu": 4,
             "pid": 1859236,
-            "process_alive": true
+            "process_alive": true,
+            "gpu_memory_used_mib": 5721,
+            "gpu_utilization_percent": 6
           },
           "topology_metrics_opened": false,
           "note": "Operational liveness/GPU refresh only. No validation/test/topology result was inspected."
@@ -1125,7 +1134,7 @@ window.ADVISOR_MEETING_DATA = {
     }
   ],
   "operational_overlay": {
-    "observed_at": "2026-09-06T12:15:01+08:00",
+    "observed_at": "2026-09-06T12:58:38+08:00",
     "scientific_outcomes_inspected": false,
     "changes_meeting_candidate_hash": false,
     "authority": {
