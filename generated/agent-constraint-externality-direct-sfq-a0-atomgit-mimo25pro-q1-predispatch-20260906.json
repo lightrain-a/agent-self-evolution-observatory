@@ -1,0 +1,18 @@
+{
+  "bridge_sha256": "3bdebe5ae818c19a16d1252b4fff2aa9df188d7bcce95e36989b5637266fc49a",
+  "bundle_sha256": "48603d972d80046ab5c6ca84483e52893ee52580a43325c6dbe6f0773de6bc59",
+  "codingplan_model_requests": 0,
+  "codingplan_usage": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T18:04:58",
+    "remaining": 500,
+    "used": 0
+  },
+  "content_sha256": "f08e919af4f3cde84080f40f82a803d2c5df2cd7e3e65697ef05416e5a5546e9",
+  "legacy_q1_sha256": "0f6b38a9657d3bdecc2d02aac5f15adb4b2e23196edb244863c56768bb4916b1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-direct-sfq-a0-atomgit-q1-v1",
+  "scientific_dispatch_sent": false,
+  "scientific_outcomes_observed": 0,
+  "status": "DIRECT_SFQ_A0_ATOMGIT_MIMO25PRO_MCP_PREDISPATCH_PASS"
+}

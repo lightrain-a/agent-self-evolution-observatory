@@ -1,0 +1,21 @@
+{
+  "authority": {
+    "direct_qwen37flash_gate1": false,
+    "direct_sfq_atomgit_mimo25pro_execution": true,
+    "f0_r1": false,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false
+  },
+  "authorization_basis": "User instructed continuation after AtomGit login/configuration and approved using the shared AtomGit plan for experiments on 2026-09-06.",
+  "content_sha256": "72ba65f0f91611fb8ed7202fa8df52d01feab234ab3141efffd8c41a64e6c261",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-direct-sfq-a0-atomgit-human-authorization-v1",
+  "scientific_outcomes_observed": 0,
+  "scope": "Exactly the never-executed 12 Direct-SFQ-A0 cases under selected MiMo-V2.5-Pro; does not replace or satisfy qwen3.7-flash mainline Gate1.",
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "static_contract_content_sha256": "67dab0637fe39c20cfd810cea65c465af80ef3359a669c9c6db536b541725a07",
+  "static_qualification_content_sha256": "1cd7d81c225a62803a49928b102f356bd9cda876be547c370e9310fe82576df6",
+  "status": "USER_AUTHORIZED_DIRECT_SFQ_A0_ATOMGIT_MIMO25PRO_DEVELOPMENT_ONLY"
+}

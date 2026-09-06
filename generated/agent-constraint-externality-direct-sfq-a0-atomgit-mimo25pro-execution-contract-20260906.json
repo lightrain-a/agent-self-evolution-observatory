@@ -1,0 +1,85 @@
+{
+  "authority": {
+    "direct_qwen37flash_gate1": false,
+    "direct_sfq_atomgit_mimo25pro_execution": true,
+    "f0_r1": false,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false
+  },
+  "content_sha256": "e0d721fc97738671e9fcce2c38eaafc7d7a471176efdc5c7dc5c6e564956f09b",
+  "execution_id": "DIRECT-SFQ-A0-ATOMGIT-MIMO25PRO-20260906",
+  "execution_policy": {
+    "durable_dispatch_before_model_request": true,
+    "futility_early_stop": {
+      "stop_too_easy_if_target_success_count_exceeds": 3,
+      "stop_too_hard_if_usable_failure_count_exceeds": 10
+    },
+    "partial_outcome_redesign": false,
+    "unknown_after_dispatch_replay": false
+  },
+  "gate": {
+    "acceptable_final_failure_counts": [
+      9,
+      10
+    ],
+    "non_semantic_failure_invalidates_qualification": true
+  },
+  "harness": {
+    "appworld_python": "/data/wyt/agent-self-evolution-observatory/worktrees/agent-constraint-externality-20260831/runtimes/appworld-constraint-externality-py312/bin/python",
+    "atomcode_binary_sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113",
+    "bridge_source_sha256": "3bdebe5ae818c19a16d1252b4fff2aa9df188d7bcce95e36989b5637266fc49a",
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_case": 56,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "runner_source_sha256": "801b4acc2f18d91814aa2fa48b8894aaf4da975e5749675308452d9bb3bfc3a4",
+    "tool_call_cap": 80
+  },
+  "human_authorization_content_sha256": "72ba65f0f91611fb8ed7202fa8df52d01feab234ab3141efffd8c41a64e6c261",
+  "inherited_transport_result_content_sha256": "349470c5efb8cffc27a0c33fb8fc5193885f75b01f60b334c91392e0d4664321",
+  "interpretation_boundary": "AtomGit/MiMo-Pro development evidence only; not interchangeable with qwen3.7-flash mainline Gate1.",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "case_count": 12,
+    "case_ids": [
+      "DIRECT-SFQ-A0-FG-01",
+      "DIRECT-SFQ-A0-FG-02",
+      "DIRECT-SFQ-A0-FG-03",
+      "DIRECT-SFQ-A0-FG-04",
+      "DIRECT-SFQ-A0-FG-05",
+      "DIRECT-SFQ-A0-FG-06",
+      "DIRECT-SFQ-A0-TNF-01",
+      "DIRECT-SFQ-A0-TNF-02",
+      "DIRECT-SFQ-A0-TNF-03",
+      "DIRECT-SFQ-A0-TNF-04",
+      "DIRECT-SFQ-A0-TNF-05",
+      "DIRECT-SFQ-A0-TNF-06"
+    ],
+    "confirmatory_reuse": false,
+    "one_episode_per_case": true
+  },
+  "purpose": "DEVELOPMENT_ONLY_SOURCE_FAILURE_QUALIFICATION_ON_FROZEN_DIRECT_SFQ_CASE_GEOMETRY",
+  "q1_content_sha256": "f08e919af4f3cde84080f40f82a803d2c5df2cd7e3e65697ef05416e5a5546e9",
+  "quota": {
+    "minimum_remaining_before_each_case": 161,
+    "operational_margin": 5,
+    "post_dispatch_retry_allowed": false,
+    "pre_dispatch_hold_is_resumable": true,
+    "rolling_window_limit": 500,
+    "shared_reserve_for_g1": 100
+  },
+  "schema_version": "ace-direct-sfq-a0-atomgit-mimo25pro-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "static_contract_content_sha256": "67dab0637fe39c20cfd810cea65c465af80ef3359a669c9c6db536b541725a07",
+  "static_qualification_content_sha256": "1cd7d81c225a62803a49928b102f356bd9cda876be547c370e9310fe82576df6",
+  "status": "DIRECT_SFQ_A0_ATOMGIT_MIMO25PRO_EXECUTION_AUTHORIZED",
+  "v5_final_closeout_content_sha256": "440fafef834c954897d6e213d47ea4033caae8339e9992f06486e3ac11889c8f"
+}
