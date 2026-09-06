@@ -1,0 +1,78 @@
+{
+  "artifact_type": "e2-r17-bridge-v4r2-stage-a-model-identity-qualification",
+  "authority": {
+    "actor_evaluation": false,
+    "analysis": false,
+    "free_updater": false,
+    "paper_promotion": false,
+    "preexecution_identity_qualification": true,
+    "provider_scientific_io": false,
+    "scientific_experiment": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "validation": false
+  },
+  "checks": {
+    "max_output_tokens_8192": true,
+    "provider_retry_zero": true,
+    "qualification_call_pass": true,
+    "requested_model_exact": true,
+    "resolved_model_exact": true,
+    "route_is_ark_plan": true,
+    "thinking_disabled": true
+  },
+  "created_at_utc": "2026-09-06T17:49:20+00:00",
+  "default_model": "ark-code-latest",
+  "drift_policy": "Any resolved-model, route, thinking, retry, or 8192-output compatibility drift is HOLD_REVIEW_REQUIRED; no automatic model substitution or repeated qualification until separately authorized.",
+  "max_output_tokens_smoke": 8192,
+  "private_credentials_included": false,
+  "provider_retry_limit": 0,
+  "qualification_call": {
+    "benchmark_data_accessed": false,
+    "checks": {
+      "provider_status_completed": true,
+      "resolved_model_exact": true,
+      "text_exact": true
+    },
+    "hidden_provider_retry_used": false,
+    "max_output_tokens": 8192,
+    "prompt_sha256": "01b804a33c42d8fc0c75e7c2564a140104807322ba83afdf60e4054499374da9",
+    "provider_generation_attempts": 1,
+    "provider_retry_limit": 0,
+    "provider_status": "completed",
+    "raw_text": "BRIDGE_V4R2_STAGE_A_IDENTITY_OK",
+    "raw_text_sha256": "649711d007044e61e50c097b7d3688da03b33abc3a42e53536beb6a132124836",
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "response_id_sha256": "bf383fd4bca85da89c2f2ac2e471a15ea889029489c21cdf911d2c3189dfd40b",
+    "scientific_outcome": false,
+    "status": "PASS",
+    "temperature": 0,
+    "thinking_requested": "disabled",
+    "usage": {
+      "input_tokens": 47,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 13,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 60
+    }
+  },
+  "raw_response_ids_included": false,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "thinking_requested": "disabled"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_experiment": false,
+  "scientific_tranche": "E2-R17-BRIDGE-V4R2-STAGE-A",
+  "status": "PASS_BRIDGE_V4R2_STAGE_A_MODEL_IDENTITY"
+}
