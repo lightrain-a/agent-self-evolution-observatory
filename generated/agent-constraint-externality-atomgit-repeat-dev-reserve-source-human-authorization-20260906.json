@@ -1,0 +1,24 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "reserve_source_execution": true,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "authorization_basis": "Current-session user message '继续' at 2026-09-06 19:05+08:00, continuing the already-directed AtomGit Constraint experiment. After discovering the old fixed-six source authority had already terminated, the continuation was narrowed to the repaired pre-topology reserve source-acquisition stage only.",
+  "authorized_at": "2026-09-06T19:05:00+08:00",
+  "content_sha256": "d4360c68177592747e5e9bb94acc1d85a3e4ca7114b45617dd4a18f876ca73db",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preflight_content_sha256": "6d38c931a8f85df12c7c1b3fdecac699de0a653efd0dac31f6ab343522f3ee02",
+  "q1_content_sha256": "d5b09fdd5722dd31e208923cbee98b3fd09f8793b892584960e46ea5ff099d62",
+  "readiness_content_sha256": "937f641be701082e963122672ad70330e6c799dbb0b12e77628a7b74b163d284",
+  "reserve_contract_content_sha256": "5b6acc59c918c93d56a78bea57970ea31b259511b062f5f78afd0f17c5933268",
+  "schema_version": "ace-repeat-dev-reserve-source-human-authorization-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "scope": "Only fresh target-only source acquisition inside the frozen 8-FG + 8-TNF development reserve until the first 3 semantic target failures per category are frozen, or a frozen stop/hold occurs.",
+  "status": "USER_AUTHORIZED_ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_ONLY"
+}

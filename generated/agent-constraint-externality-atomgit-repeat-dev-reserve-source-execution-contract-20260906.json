@@ -1,0 +1,78 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "reserve_source_execution": true,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "bridge_sha256": "42e427ea51e8cf51bab6bcef5c08e5e3d282e9f72e919be5e4c562434da571d4",
+  "code_parent_git_sha": "5ff7acab8b579336e0fab6862205214142aed95f",
+  "common_sha256": "81622f9fc56f6de61a85b070dc6c1f81648b2dcaa1e5d824638776bc1de92ba9",
+  "content_sha256": "3c637c10670280a3e8ad86ce1fc034867e337c9b3498ba75b0c5921e1c351879",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-RESERVE-SOURCE-20260906",
+  "executor_sha256": "d30261ca8d21a681dc4404bcdb2b8bfedd6690263b64d7cf229bf96e4f5fcf19",
+  "harness": {
+    "durable_source_dispatch_before_model_request": true,
+    "durable_tool_dispatch_before_appworld_tool_execution": true,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_source": 56,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "tool_call_cap": 80
+  },
+  "human_authorization_content_sha256": "d4360c68177592747e5e9bb94acc1d85a3e4ca7114b45617dd4a18f876ca73db",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preflight_content_sha256": "6d38c931a8f85df12c7c1b3fdecac699de0a653efd0dac31f6ab343522f3ee02",
+  "protected_bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+  "q1_content_sha256": "d5b09fdd5722dd31e208923cbee98b3fd09f8793b892584960e46ea5ff099d62",
+  "quota": {
+    "minimum_remaining_before_each_dispatch": 161,
+    "post_dispatch_retry_allowed": false,
+    "pre_dispatch_hold_resumable": true,
+    "rolling_window_limit": 500,
+    "shared_reserve": 100
+  },
+  "ranked_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-103",
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-105",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-102",
+      "ACE-DEV-FG-106",
+      "ACE-DEV-FG-108",
+      "ACE-DEV-FG-107"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-113",
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111",
+      "ACE-DEV-TNF-116",
+      "ACE-DEV-TNF-109",
+      "ACE-DEV-TNF-114",
+      "ACE-DEV-TNF-112"
+    ]
+  },
+  "readiness_content_sha256": "937f641be701082e963122672ad70330e6c799dbb0b12e77628a7b74b163d284",
+  "schema_version": "ace-repeat-dev-reserve-source-execution-contract-v1",
+  "scientific_topology_outcomes_observed": 0,
+  "selection": {
+    "maximum_source_dispatches": 16,
+    "needed_per_category": 3,
+    "outside_reserve_replacement": false,
+    "semantic_failure": "eligible; select first three per category",
+    "target_success": "pre-topology eligibility attrition; continue within frozen reserve",
+    "technical_invalidity_after_dispatch": "hard stop no replay no skip"
+  },
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_EXECUTION_AUTHORIZED"
+}
