@@ -1,0 +1,19 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "content_sha256": "f0476f591f7e4e46c05f9bd61cda55962b809e06e2c9fdcde36c9fb59a405d3f",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_requests_created": 0,
+  "q1_model_requests": 0,
+  "readiness_content_sha256": "12bbac216f18e35b6541efb7bbc25f01f3674291885fecefd1287638428eac9e",
+  "schema_version": "ace-repeat-dev-r2-preflight-v1",
+  "scientific_outcomes_created": 0,
+  "status": "ATOMGIT_REPEAT_DEV_R2_PREFLIGHT_PASS_AUTHORITY_CLOSED",
+  "unit_ids_sha256": "8d3790ef822b4d706591eeb4bec38e36846008020868ce11524609f4eb96959a"
+}

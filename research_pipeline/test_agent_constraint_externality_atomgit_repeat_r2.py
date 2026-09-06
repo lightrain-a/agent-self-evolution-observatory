@@ -5,6 +5,7 @@ from collections import Counter
 
 from research_pipeline import agent_constraint_externality_atomgit_repeat_common as c
 from research_pipeline import agent_constraint_externality_atomgit_repeat_mcp_bridge as b
+from research_pipeline import agent_constraint_externality_atomgit_repeat_adjudicate as adj
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
 
 class AtomGitRepeatR2Test(unittest.TestCase):
@@ -47,6 +48,22 @@ class AtomGitRepeatR2Test(unittest.TestCase):
             arms={a['coupling_level']:a for a in family['arms']}; self.assertEqual(set(c.ARMS),set(arms))
             self.assertEqual([0,1,2],[arms[x]['structure']['shared_resource_exposure_count'] for x in c.ARMS])
             for arm in arms.values(): self.assertEqual(2,sum(z['role']=='NON_TARGET' for z in arm['constraints']))
+
+    def _synthetic_rows(self):
+        rows=[]
+        for u in self.units:
+            pair=sha256_value([u['family_id'],u['arm'],u['repeat']])
+            rows.append({'family_id':u['family_id'],'arm':u['arm'],'branch':u['branch'],'repeat':u['repeat'],'valid':True,'target_success':True,'crr':0.0,'scientific_state_sha256':pair,'repair_sha256':c.repair_record(u['family_id'])['repair_sha256'] if u['branch']=='REAL_REPAIR' else None})
+        return rows
+
+    def test_direction_blind_adjudicator_accepts_exact_paired_matrix(self):
+        out=adj.adjudicate_rows(self._synthetic_rows()); self.assertEqual('ATOMGIT_REPEAT_DEV_R2_PASS_PRECISION_FROZEN_CONFIRMATORY_EXECUTION_CLOSED',out['status']); self.assertEqual(2,out['R_star']); self.assertEqual(12,out['precision_decision']['N_star'])
+
+    def test_adjudicator_rejects_pair_state_or_repair_drift(self):
+        rows=self._synthetic_rows(); rows[0]['scientific_state_sha256']='drift'
+        with self.assertRaises(adj.AdjudicationError): adj.adjudicate_rows(rows)
+        rows=self._synthetic_rows(); real=next(r for r in rows if r['branch']=='REAL_REPAIR'); real['repair_sha256']='0'*64
+        with self.assertRaises(adj.AdjudicationError): adj.adjudicate_rows(rows)
 
     def test_authority_is_still_closed_before_readiness(self):
         self.assertFalse(self.close['authority']['development_repeat_qualification']); self.assertFalse(self.close['authority']['rq1_rq2'])
