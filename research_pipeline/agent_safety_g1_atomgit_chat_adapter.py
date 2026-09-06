@@ -27,6 +27,8 @@ MAX_CALLS = 10
 MAX_NEW_TOKENS = 2000
 SHARED_RESERVE = 100
 MIN_HEADROOM = 5
+MAX_CANDIDATE_REQUESTS = 100
+MIN_CANDIDATE_START_REMAINING = MAX_CANDIDATE_REQUESTS + SHARED_RESERVE + MIN_HEADROOM
 MODEL_SPECS = {
     "qwen3.8-27b": ("AtomGit-qwen3.8-27b", 262144, "xhigh"),
     "GLM-5.2": ("AtomGit-GLM-5.2", 200000, None),
@@ -159,6 +161,18 @@ class AtomGitChatArgs:
     temperature: float = 0.1
     def make_chat_model(self): return AtomGitTextProxyChat(self)
     def has_vision(self) -> bool: return False
+
+
+def probe_codingplan_usage(*, model_id: str, auth_path: Path, runtime_root: Path) -> dict[str, Any]:
+    """Zero-model-request CodingPlan usage probe for candidate admission."""
+    args=AtomGitChatArgs(model_name=model_id,ledger_path=str(runtime_root/"probe-ledger.json"),raw_response_dir=str(runtime_root/"probe-raw"),runtime_root=str(runtime_root/"probe-runtime"),auth_path=str(auth_path))
+    chat=AtomGitTextProxyChat(args)
+    home,work=chat._runtime(1); proc=None
+    try:
+        proc,base,token=chat._daemon(home,work)
+        return codingplan_usage(base,token)
+    finally:
+        if proc is not None: terminate_process(proc)
 
 
 class AtomGitTextProxyChat:
