@@ -16,6 +16,7 @@ from research_pipeline.agent_constraint_externality_atomgit_repeat_dev_build imp
 )
 from research_pipeline.agent_constraint_externality_atomgit_repeat_dev_family import (
     SELECTION_SALT,
+    _tnf_selected_shared_names,
     family_from_case,
     select_case_ids,
 )
@@ -47,6 +48,12 @@ class AtomGitRepeatDevStaticTest(unittest.TestCase):
         self.assertEqual(sum("-FG-" in x for x in selected), 3)
         self.assertEqual(sum("-TNF-" in x for x in selected), 3)
         self.assertEqual(sum(bool(x["selected"]) for x in ranking), 6)
+
+    def test_tnf_shared_resources_are_actual_selected_prerequisites(self) -> None:
+        cases = {row["case_id"]: row for row in load_direct_cases(DIRECT_BUNDLE)}
+        self.assertEqual(_tnf_selected_shared_names(cases["DIRECT-SFQ-A0-TNF-02"]), ["adjust-04.txt", "modifier-01.txt"])
+        self.assertEqual(_tnf_selected_shared_names(cases["DIRECT-SFQ-A0-TNF-01"]), ["adjust-04.txt", "modifier-03.txt"])
+        self.assertEqual(_tnf_selected_shared_names(cases["DIRECT-SFQ-A0-TNF-05"]), ["adjust-04.txt", "modifier-01.txt"])
 
     def test_family_topology_and_matching_are_exact(self) -> None:
         cases = {row["case_id"]: row for row in load_direct_cases(DIRECT_BUNDLE)}
@@ -92,6 +99,11 @@ class AtomGitRepeatDevStaticTest(unittest.TestCase):
         self.assertEqual(qualification["provider_requests_created"], 0)
         self.assertTrue(contract["permanently_excluded_from_confirmatory"])
         self.assertFalse(contract["source_policy"]["old_direct_sfq_calls_count_as_new_source_units"])
+        self.assertEqual(
+            contract["static_repair_lineage"]["failure_class"],
+            "STATIC_TOPOLOGY_WITNESS_SEMANTIC_MISMATCH_ZERO_PROVIDER",
+        )
+        self.assertEqual(contract["static_repair_lineage"]["provider_requests_in_superseded_freeze"], 0)
         self.assertTrue(all(v is False for v in contract["authority"].values()))
         self.assertTrue(all(v is False for v in qualification["authority"].values()))
         replay = load_dev_spec()

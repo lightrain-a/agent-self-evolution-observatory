@@ -6,6 +6,8 @@ from pathlib import Path
 from typing import Any
 
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
+from research_pipeline.agent_constraint_externality_sq0_v3_cases import kv
+from research_pipeline.agent_constraint_externality_sq0_v4_cases import _choose_modifier
 
 SELECTION_SALT = "ACE-REPEAT-DEVELOPMENT-SELECTION-20260906-V1"
 DEV_PER_CATEGORY = 3
@@ -88,6 +90,60 @@ def _preserve(fid: str, suffix: str, row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _tnf_selected_shared_names(case: dict[str, Any]) -> list[str]:
+    rows = case["fixture"]["rows"]
+    route = next(
+        row for row in rows
+        if row["app"] == "simple_note"
+        and str(row["values"].get("title", "")).startswith("dsfqa0-route-tnf-")
+    )
+    route_spec = kv(str(route["values"]["content"]))
+    policies: list[dict[str, Any]] = []
+    for row in rows:
+        if row["app"] != "simple_note" or not str(row["values"].get("title", "")).startswith("dsfqa0-policy-"):
+            continue
+        item = kv(str(row["values"]["content"])); item["title"] = row["values"]["title"]
+        for key in ("EPOCH", "POLICY_PRIORITY", "PIVOT", "MODIFIER_PIVOT", "BASE", "WA", "WB", "MOD"):
+            item[key] = int(item[key])
+        policies.append(item)
+    policy = max(
+        (
+            item for item in policies
+            if item["ACTIVE"] == "YES"
+            and item["TIER"] == route_spec["REQUIRED_TIER"]
+            and item["EPOCH"] <= int(route_spec["CUTOFF_EPOCH"])
+        ),
+        key=lambda item: (item["EPOCH"], item["POLICY_PRIORITY"], item["title"]),
+    )
+    adjustments: list[dict[str, Any]] = []
+    modifiers: list[dict[str, Any]] = []
+    for row in rows:
+        if row["app"] != "file_system" or "content" not in row["values"]:
+            continue
+        name = Path(str(row["values"].get("tilde_path", ""))).name
+        if name.startswith("adjust-"):
+            item = kv(str(row["values"]["content"])); item["name"] = name
+            item["RANK"] = int(item["RANK"]); item["DELTA"] = int(item["DELTA"])
+            adjustments.append(item)
+        elif name.startswith("modifier-"):
+            item = kv(str(row["values"]["content"])); item["name"] = name
+            item["RANK"] = int(item["RANK"]); item["VALUE"] = int(item["VALUE"])
+            modifiers.append(item)
+    adjustment = max(
+        (
+            item for item in adjustments
+            if item["ADJUST_KEY"] == policy["ADJUST_KEY"] and item["ACTIVE"] == "YES"
+        ),
+        key=lambda item: item["RANK"],
+    )
+    modifier = _choose_modifier(
+        [item for item in modifiers if item["MOD_KEY"] == policy["MOD_KEY"] and item["ACTIVE"] == "YES"],
+        policy["MODIFIER_MODE"],
+        policy["MODIFIER_PIVOT"],
+    )
+    return [str(adjustment["name"]), str(modifier["name"])]
+
+
 def _target_binding(case: dict[str, Any]) -> dict[str, Any]:
     expected = case["expected"]
     if case["kind"].startswith("FG_"):
@@ -164,7 +220,7 @@ def family_from_case(case: dict[str, Any], ordinal: int) -> dict[str, Any]:
     fid = f"ACE-DEV-{kind}-{ordinal:02d}"
     case = copy.deepcopy(case)
     case["fixture"] = copy.deepcopy(case["fixture"])
-    target_names = ["dispatch-route.txt", "policy-b.txt"] if kind == "FG" else ["adjust-01.txt", "modifier-01.txt"]
+    target_names = ["dispatch-route.txt", "policy-b.txt"] if kind == "FG" else _tnf_selected_shared_names(case)
     target_rows = [_one_file(case, name) for name in target_names]
     directory = str(target_rows[0]["values"]["tilde_path"]).rsplit("/", 1)[0]
     absolute = str(target_rows[0]["values"]["path"]).rsplit("/", 1)[0]

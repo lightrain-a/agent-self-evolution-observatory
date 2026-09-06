@@ -31,7 +31,7 @@
     "FILE_GMAIL": 3,
     "TODO_NOTE_FILE": 3
   },
-  "content_sha256": "fd2b68543dee9323cc04f87832a2c7c13f87400e78c7233be271ab0b75df93b9",
+  "content_sha256": "8295067835b739d5514acf00ce4e1febf7ae28b7945c3e13e006cc1308c99636",
   "dev_id": "ACE-ATOMGIT-REPEAT-DEV-V1-20260906",
   "development_family_count": 6,
   "family_summaries": [
@@ -176,9 +176,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-DEV-TNF-04-high": "9ac11ddda1b64daddaf6078dc472691cd7a4344c9230447cbbe2232516503e08",
+        "ACE-DEV-TNF-04-high": "ea71086f004cd6878e2727541aaba7ec0c2846c2c91ca5e623d4d64f67b44d2f",
         "ACE-DEV-TNF-04-independent": "2d8b5654aa078a0b1dd5e23d2fa3c6251632cf195a9f5bd1c3826365d556e6a3",
-        "ACE-DEV-TNF-04-low": "8f74a1d8f15aa9065cf628c61f50229774050117d29e652be1caf6b2262a79bf"
+        "ACE-DEV-TNF-04-low": "fe7b6cec73f534c08192a5d04a57551082f76f4e179150f90a085857af83cd5b"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -188,15 +188,15 @@
         "HIGH"
       ],
       "evaluator_sha256_by_arm": {
-        "ACE-DEV-TNF-04-high": "b753c39483e3337ae29df8a0b3215eccf7e60adbbc4e9f579d5fa1cff162a051",
+        "ACE-DEV-TNF-04-high": "d1cd12806bd82274862ab262f3062131ad30a26acfd5f379ce633df3a9c5fdd1",
         "ACE-DEV-TNF-04-independent": "46147cf05979fd5bd2ae675e9fad006c52f3e82301daf57a6825363ef983dbea",
-        "ACE-DEV-TNF-04-low": "b1d516daa8a7671448063f65b2468a764e1c0aef35dd09cffcb55eb4584945eb"
+        "ACE-DEV-TNF-04-low": "19aca5d3f0adfbfec4148b932fce8e8595385d5d44e762966696f4cc4c332079"
       },
       "family_id": "ACE-DEV-TNF-04",
       "graph_sha256_by_arm": {
-        "ACE-DEV-TNF-04-high": "4b7864a60bd650fe8b99689958a099a30211533d7f62ffece2939e971dbf95e6",
+        "ACE-DEV-TNF-04-high": "64350de8f326d0f4388d7cd44ec3517676d72cbf9dfd3cf0517861797b070632",
         "ACE-DEV-TNF-04-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        "ACE-DEV-TNF-04-low": "476792a8452e52f277758188f97c5a80b5245e1d3faae436e76a69f019377c0d"
+        "ACE-DEV-TNF-04-low": "962919d45ff37db7a1bdae4b6ee6fb5fafc2982fa26d8198e413db1a9c39b01b"
       },
       "initial_non_target_constraints_satisfied": true,
       "initial_snapshot_sha256": "97f5a00902b1959b0e0f1e614fbcda0a105392cb5f76a0e4c0a269f49e976111",
@@ -215,16 +215,16 @@
       },
       "target_constraint_id_sha256": "3fbbaa80b854d12a35fc4f58db400409b075ae9529b8189e93e1a332bc7eb17a",
       "target_instruction_sha256": "f84a969368527ef16123671deeb0e1f17cabbff40dbcb9d4567c3a63b400ffa2",
-      "target_resource_footprint_sha256": "9cacec0c149f5cc1e808a074f8bb518cebe99a78c67bcb27ad01a19d57ac7592",
+      "target_resource_footprint_sha256": "f1c8947193c243855c024e9afbd0b45c3afc89775b79f48582a5cb35acd93947",
       "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
       "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
     },
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-DEV-TNF-05-high": "bbb50f7ff199d226b4204cef44809bf25882a45d76f16fca61faf0dbabbeffb2",
+        "ACE-DEV-TNF-05-high": "1191825a6fb234efb5576fe39c030de0d00f22409ab20b763c86d5dc98c3f0e6",
         "ACE-DEV-TNF-05-independent": "538f766e34a8e2dd81c34a9fceeea51da93147a38986cff406695fb040e4da4f",
-        "ACE-DEV-TNF-05-low": "e8e58b3ced8355d5ac867c33a6852d12a31e0b555163e060d3d0a9b4e91077d9"
+        "ACE-DEV-TNF-05-low": "b5da3ca09a7243703540dba5cf6aba14bf9fd852c17ba574ceced23758194660"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -234,15 +234,15 @@
         "HIGH"
       ],
       "evaluator_sha256_by_arm": {
-        "ACE-DEV-TNF-05-high": "d445a8338c91595f47793ade1cf188f0c20e49482fc910d74c49e8a47f5e0db7",
+        "ACE-DEV-TNF-05-high": "c2ba38815c5e0d7c2d7e44b5eb12e0ced146d4a7398240f7326c1483dbedc4a0",
         "ACE-DEV-TNF-05-independent": "95fa87acc09cb270562cb1c9cf633444e92d13cabc09b7babcc599e0ff7290d7",
-        "ACE-DEV-TNF-05-low": "f6a69f145f04eab78f981248667a8abb9bcb7a464f0c74bed64ea23712b66e03"
+        "ACE-DEV-TNF-05-low": "18dee5ab0b761c17f611cece153000558e116b3f07eab392785d817aae321c7b"
       },
       "family_id": "ACE-DEV-TNF-05",
       "graph_sha256_by_arm": {
-        "ACE-DEV-TNF-05-high": "9c031b38ab8354eebd04ae9db104b51921e7b4dad4424be3dde4489d63fac4c6",
+        "ACE-DEV-TNF-05-high": "70e82e184f216afe10a4408a66c951b4a12d46a652856d4c82365fce02e63d73",
         "ACE-DEV-TNF-05-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        "ACE-DEV-TNF-05-low": "cece9e74f13c2a205d4f5c8416a2807680a6ff762a0fb27b52e0c8ba2e9104ef"
+        "ACE-DEV-TNF-05-low": "52141d6c9c5e9f017368cc6f1012afff9c51e9551204047fa1d49298fefadb9f"
       },
       "initial_non_target_constraints_satisfied": true,
       "initial_snapshot_sha256": "90b40fc07f602767532291818a3c524e0fb62c9f1432fda7c7e906e836cfb627",
@@ -261,16 +261,16 @@
       },
       "target_constraint_id_sha256": "7569ad8de43d551eb1cf3db7fcbe400bf8f65eb5f929566c2a433bbaede60060",
       "target_instruction_sha256": "e179bf304bdc3f1cca19ebb7ee9b3f00cc30911bbcd7a4ea325b8692509f8a61",
-      "target_resource_footprint_sha256": "03338aaa117af1a24a82db6623fafa26e7d0e5910fc3f15fc9d0c500bc3c27e8",
+      "target_resource_footprint_sha256": "d4267122b3ee984239052d5c97536f77e84fb70104a64686aded83977a6bee98",
       "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
       "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
     },
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-DEV-TNF-06-high": "e22087b7f96a27e2b40a1be2ff087d8a2df07cb0d1408639d3645e4d661d1711",
+        "ACE-DEV-TNF-06-high": "764882dfc7dea621c80ca5ad6777d9c62c76390546779ac6d53e86fe21e6c45d",
         "ACE-DEV-TNF-06-independent": "a913ad1e876d72c071fcb8f7824823a8fa7846ef926bfe50cce8d4f057ba562f",
-        "ACE-DEV-TNF-06-low": "4392e7c42003f1de6f82e868cf8c0ff987d480be5424ec27d1ab0124330beae5"
+        "ACE-DEV-TNF-06-low": "3fc4f0937f3445b2084db515e4dd02748a9b7164762fbe2374881a17a082a45b"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -280,15 +280,15 @@
         "HIGH"
       ],
       "evaluator_sha256_by_arm": {
-        "ACE-DEV-TNF-06-high": "1d451cff42b04f990b0e281875222fd327fffbe6ee4a4be78f04c4b5931dc169",
+        "ACE-DEV-TNF-06-high": "ec3a09ddcfd409d03f085a550b8690294ec45f830805ba072905c0e980ffdf90",
         "ACE-DEV-TNF-06-independent": "d7962de6ce69030d6e017e3b48796d5f6dbbb8ab673e34f1f6b54b54e34b50f2",
-        "ACE-DEV-TNF-06-low": "eeee61258adf882e1d42fa0a0d3607984f4f83be77e3871af7a83d0e9d4710e3"
+        "ACE-DEV-TNF-06-low": "26d7d45da7b0fe51f5083e170948670fb6ca80e993d9ded76e4d36efe11374a4"
       },
       "family_id": "ACE-DEV-TNF-06",
       "graph_sha256_by_arm": {
-        "ACE-DEV-TNF-06-high": "809f9ab5086b75d2912e904e7e6ee9156b495cbbe8a746dc939adc4f6298903f",
+        "ACE-DEV-TNF-06-high": "2c226b3177fa24206099c416187416b148837e502ff6af31b869d17e2bd72757",
         "ACE-DEV-TNF-06-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        "ACE-DEV-TNF-06-low": "f3dd8136bde3367618719de0a01307ac60e6a66c2d7814944f7c2fbc14c8a483"
+        "ACE-DEV-TNF-06-low": "7a59bcb3fec1e400d326fd1b8684d7908c2079198224dd46397e004cf6596a10"
       },
       "initial_non_target_constraints_satisfied": true,
       "initial_snapshot_sha256": "e91fd97c37590e93a09d8b2a4e7a6b7849f53b644c19c02a340c75e9f089b52f",
@@ -307,7 +307,7 @@
       },
       "target_constraint_id_sha256": "be03949a915dc90963752fd950ac0f9aa000fd2373efa2c3777f6719e6ac8279",
       "target_instruction_sha256": "f10c38fc1194b32fc85b81eca804b2dfe943e2bfb39d02d9171ac5da913d64b4",
-      "target_resource_footprint_sha256": "aea09eb0657bb8f0a9bb668c1ae6d7050d0ce299788c303a5a312f6795ef45ad",
+      "target_resource_footprint_sha256": "f0ce809231f619ea8d4daf27259396ed2100910f6fab386f199426176fbe252c",
       "target_semantics_sha256": "6fd0dee268d5e4539b6bb5b99c95216d2810d294ee9abf9fc645e7e4993dce72",
       "update_interface_sha256": "7428344027ec580b685d1601b2c6ec6ff1167ac13678c426b019f9b16bf5efb7"
     }
@@ -318,7 +318,7 @@
   "permanently_excluded_from_confirmatory": true,
   "protected_bundle": {
     "path": "generated/agent-constraint-externality-atomgit-repeat-dev-protected-20260906.bundle",
-    "sha256": "edbed772435d58fb211acf97b57f250caf721f0662c5e510deccb5585d119a6d"
+    "sha256": "c1bc001b7d7fce0766d2ebc802211728f745013e8b0a4d863024830bb09b646b"
   },
   "provider_requests_created": 0,
   "purpose": "DEVELOPMENT_ONLY_REPEAT_AND_PRECISION_QUALIFICATION_PRE_CONFIRMATORY",
@@ -429,6 +429,15 @@
     "replacement_or_top_up": false,
     "trajectory_persistence_required_before_repair": true
   },
+  "static_repair_lineage": {
+    "defect": "TNF target-shared witnesses were fixed to adjust-01.txt/modifier-01.txt rather than the files actually selected by the frozen target routing rule.",
+    "failure_class": "STATIC_TOPOLOGY_WITNESS_SEMANTIC_MISMATCH_ZERO_PROVIDER",
+    "provider_requests_in_superseded_freeze": 0,
+    "repair": "Derive TNF shared-resource witnesses deterministically from the frozen route/policy/adjustment/modifier selection rule before topology construction.",
+    "scientific_topology_outcomes_in_superseded_freeze": 0,
+    "superseded_bundle_sha256": "edbed772435d58fb211acf97b57f250caf721f0662c5e510deccb5585d119a6d",
+    "superseded_git_commit": "23ffffbb99c80d5894bc76b7b95eaceb65bed8ce"
+  },
   "status": "ATOMGIT_REPEAT_DEV_STATIC_DESIGN_READY_ZERO_PROVIDER",
   "target_equivalence": {
     "ACE-DEV-FG-01": {
@@ -452,19 +461,19 @@
     "ACE-DEV-TNF-04": {
       "probe_target_instruction_sha256": "f84a969368527ef16123671deeb0e1f17cabbff40dbcb9d4567c3a63b400ffa2",
       "source_target_instruction_sha256": "f84a969368527ef16123671deeb0e1f17cabbff40dbcb9d4567c3a63b400ffa2",
-      "target_constraint_sha256": "0919c907c9519058a3bd79bb89c0d6d1bfe088d98bbe0db2adc72ad58a01fbb0",
+      "target_constraint_sha256": "ef199fa56e02b86a24199b2aa5fe44faafa56daa052ee2c76c93539c31aad81f",
       "template_case_id": "DIRECT-SFQ-A0-TNF-02"
     },
     "ACE-DEV-TNF-05": {
       "probe_target_instruction_sha256": "e179bf304bdc3f1cca19ebb7ee9b3f00cc30911bbcd7a4ea325b8692509f8a61",
       "source_target_instruction_sha256": "e179bf304bdc3f1cca19ebb7ee9b3f00cc30911bbcd7a4ea325b8692509f8a61",
-      "target_constraint_sha256": "347b4d6c83c586ac167554c70c987ff8f044e8f4cd4e29a34ba90c6277899983",
+      "target_constraint_sha256": "7008840584ebf60ae868ebea668ed40b1da9ede89de31ae8fbdc31f0727bf01f",
       "template_case_id": "DIRECT-SFQ-A0-TNF-01"
     },
     "ACE-DEV-TNF-06": {
       "probe_target_instruction_sha256": "f10c38fc1194b32fc85b81eca804b2dfe943e2bfb39d02d9171ac5da913d64b4",
       "source_target_instruction_sha256": "f10c38fc1194b32fc85b81eca804b2dfe943e2bfb39d02d9171ac5da913d64b4",
-      "target_constraint_sha256": "a0b7fa7d3007df4ddd9107733d3354724c42bc6441be705f3c10607e05803a4e",
+      "target_constraint_sha256": "901db32dc640c33fde0228785d535ce3419b1a3b3bfd6c5cbc5f21f6300c6400",
       "template_case_id": "DIRECT-SFQ-A0-TNF-05"
     }
   }
