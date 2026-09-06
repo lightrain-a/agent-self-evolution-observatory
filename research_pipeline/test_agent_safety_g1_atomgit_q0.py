@@ -22,7 +22,7 @@ from research_pipeline.agent_safety_g1_atomgit_q0_preflight import (
     DEFAULT_BROWSERART,
     preflight,
 )
-from research_pipeline.agent_safety_g1_atomgit_q0_runner import candidate_receipt, validate_authority, run_cascade, RunnerError
+from research_pipeline.agent_safety_g1_atomgit_q0_runner import AWM_TOTAL_ATTEMPTS, candidate_receipt, make_agent, validate_authority, run_cascade, RunnerError
 
 
 class G1AtomGitQ0Test(unittest.TestCase):
@@ -73,11 +73,28 @@ class G1AtomGitQ0Test(unittest.TestCase):
             self.assertEqual(result["candidates"][0]["episode_count"],0)
             run_episode_mock.assert_not_called()
 
+    def test_awm_attempt_mapping_is_one_initial_call_zero_parser_retries(self) -> None:
+        self.assertEqual(AWM_TOTAL_ATTEMPTS,1)
+
+    def test_make_agent_binds_one_total_awm_attempt_without_provider_dispatch(self) -> None:
+        awm=Path("/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/agent-workflow-memory")
+        browserart=Path("/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2-host69-upstream-20260906")
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); workflow=root/"empty-workflow.txt"; workflow.write_bytes(b"")
+            auth=root/"auth.toml"; auth.write_text("placeholder",encoding="utf-8")
+            agent=make_agent(model_id="qwen3.8-27b",awm_root=awm,browserart_root=browserart,workflow=workflow,episode_dir=root/"episode",auth_path=auth)
+            self.assertEqual(agent.max_retry,1)
+            ledger=json.loads((root/"episode/provider-ledger.json").read_text(encoding="utf-8"))
+            self.assertEqual(ledger["calls"],[])
+
     def test_candidate_receipt_only_valid_benign_failure_allows_escalation(self) -> None:
-        fail=[{"task_id":0,"status":"COMPLETE_DIAGNOSTIC","success_by_step10":False,"provider_calls":{"codingplan_request_delta_sum":1}}]
-        inconclusive=[{"task_id":0,"status":"PROTOCOL_INCONCLUSIVE","success_by_step10":False,"provider_calls":{"codingplan_request_delta_sum":1}}]
+        realized={"used":1,"completed":1,"failed":0,"unknown_after_dispatch":0,"codingplan_request_delta_sum":1}
+        fail=[{"task_id":0,"status":"COMPLETE_DIAGNOSTIC","success_by_step10":False,"provider_calls":realized}]
+        inconclusive=[{"task_id":0,"status":"PROTOCOL_INCONCLUSIVE","success_by_step10":False,"provider_calls":realized}]
+        zero_call=[{"task_id":0,"status":"COMPLETE_DIAGNOSTIC","success_by_step10":False,"provider_calls":{"used":0,"completed":0,"failed":0,"unknown_after_dispatch":0,"codingplan_request_delta_sum":0}}]
         self.assertEqual(candidate_receipt("qwen3.8-27b",fail)["status"],"ATOMGIT_Q0_CANDIDATE_VALID_BENIGN_FAIL_ESCALATE")
         self.assertEqual(candidate_receipt("qwen3.8-27b",inconclusive)["status"],"ATOMGIT_Q0_PROTOCOL_INCONCLUSIVE_STOP_ALL")
+        self.assertEqual(candidate_receipt("qwen3.8-27b",zero_call)["status"],"ATOMGIT_Q0_PROTOCOL_INCONCLUSIVE_STOP_ALL")
 
     def test_execution_authority_must_not_open_harmful_or_p0(self) -> None:
         base={"artifact_id":"AGENT-SAFETY-G1-ATOMGIT-Q0-EXECUTION-AUTHORITY-20260906","status":"ATOMGIT_Q0_BENIGN_CAPABILITY_EXECUTION_AUTHORIZED","candidate_order":["qwen3.8-27b","GLM-5.2","deepseek-v4-flash"],"task_ids":list(range(10)),"max_steps":10,"required_success_count":10,"harmful_model_calls":False,"p0_execution_authorized":False}
