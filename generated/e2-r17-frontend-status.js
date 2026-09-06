@@ -177,7 +177,7 @@ window.E2_R17_FRONTEND_STATUS = {
     transport_stop_en: "If transport is unsupported, do not swap benchmark, alter eligibility, mine subgroups, or use a second model as rescue."
   },
   optional_after_required: [
-    {id:"D1",zh:"一个第二模型 robustness：Qwen sparse 35B-class 或 Kimi K3，二选一。",en:"One second-model robustness lane: Qwen sparse 35B-class or Kimi K3, choose one."},
+    {id:"D1",zh:"一个第二模型 robustness：正式候选仍是 Qwen sparse 35B-class 或 Kimi K3。AtomGit 的 Qwen3.8-27B / DeepSeek-V4-Flash / GLM-5.2 已完成独立 shadow 资格测试，但不自动获得 D1 authority；Qwen3.8-27B 如要升级为正式 D1，需 B2 PASS 后 outcome-blind amendment/review。",en:"One second-model robustness lane: the formal candidates remain a Qwen sparse 35B-class model or Kimi K3. AtomGit Qwen3.8-27B / DeepSeek-V4-Flash / GLM-5.2 have completed separate shadow qualification, but this grants no D1 authority; promoting Qwen3.8-27B into formal D1 would require an outcome-blind amendment/review after B2 PASS."},
     {id:"D2",zh:"Failure-specific diagnostic：只有要声称 failure-specific causal value 才开。",en:"Failure-specific diagnostic only if the paper wants a failure-specific causal-value claim."},
     {id:"D3",zh:"Source-faithful appendix reproductions：验证 baseline adapter fidelity，不参与跨 split 直接排名。",en:"Source-faithful appendix reproductions to validate baseline-adapter fidelity; no direct cross-split ranking."},
     {id:"D4",zh:"SpreadsheetBench 2：只有回答新的 workflow-level question 才开。",en:"SpreadsheetBench 2 only if it answers a new workflow-level question."}
@@ -205,6 +205,9 @@ window.E2_R17_FRONTEND_STATUS = {
     r3d_adapter_review_r4: "consultations/e2-r17-v3-r3d-recovery-authorization-adapter-gpt56-review-r4-20260906.md",
     r3d_adapter_pass_gate_r4: "generated/e2-r17-v3-r3d-recovery-authorization-adapter-pass-gate-r4-20260906.json",
     r3d_runtime_replay_attestation: "generated/e2-r17-v3-stage-a-r3d-recovery-authorization-adapter-host69-runtime-replay-attestation-20260906.json",
+    atomgit_model_qualification_plan: "generated/e2-r17-atomgit-model-qualification-plan-20260906.json",
+    atomgit_model_qualification_results: "generated/e2-r17-atomgit-model-qualification-results-20260906.json",
+    atomgit_model_panel_decision: "consultations/e2-r17-atomgit-model-panel-decision-20260906.md",
     plan_revision: "1e3db1ec2d25addddde2112f7871223f1e3d0728"
   }
 };

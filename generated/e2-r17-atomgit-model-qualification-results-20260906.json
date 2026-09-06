@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-model-qualification-results",
+  "date": "2026-09-06",
+  "status": "COMPLETED_SEPARATE_MODEL_QUALIFICATION_NO_E2_SCIENTIFIC_OUTCOME",
+  "atomcode_version": "5.0.9",
+  "codingplan_observation": {
+    "official_quota_semantics": "request-count based over a rolling 5-hour window; official current CodingPlan page lists approximately 500 requests/5h for Pro and includes qwen3.8-27b, deepseek-v4-flash, and GLM-5.2",
+    "local_profiles_present": ["AtomGit-qwen3.8-27b", "AtomGit-GLM-5.2", "AtomGit-deepseek-v4-flash"],
+    "generic_models_endpoint_probe": "403 under CodingPlan OAuth; no attempt was made to bypass CodingPlan routing"
+  },
+  "transport_policy": {
+    "flags": ["--ephemeral", "--no-tools", "--no-telemetry", "--output-format=jsonl"],
+    "transport_clean_definition": "exactly one usage row, one round, zero tool calls, and no tool.started event",
+    "transport_void_definition": "any tool.started, tool_calls > 0, rounds > 1, or usage_rows != 1",
+    "known_atomcode_issue": "AtomCode 5.0.9 may expose internal schedule_wakeup even with --no-tools; observed once with GLM-5.2 and previously documented elsewhere in the project",
+    "void_replacement": false
+  },
+  "repeatability_smoke": {
+    "prompt_role": "fixed JSON-only transport/format smoke; no E2 data",
+    "qwen3.8-27b": {
+      "invocations": 5,
+      "transport_clean": 5,
+      "transport_void": 0,
+      "semantic_exact": 5,
+      "strict_json": 5,
+      "unique_output_sha256": 1,
+      "tool_leakage": 0,
+      "interpretation": "transport-clean and byte-stable on the fixed smoke prompt"
+    },
+    "GLM-5.2": {
+      "invocations": 5,
+      "transport_clean": 4,
+      "transport_void": 1,
+      "semantic_exact": 5,
+      "strict_json": 4,
+      "unique_output_sha256": 2,
+      "markdown_fence": 1,
+      "tool_leakage": 1,
+      "tool_leakage_detail": "One invocation attempted internal schedule_wakeup, which was rejected by AtomCode and caused a second model usage row; this invocation is TRANSPORT_VOID under the frozen rule.",
+      "interpretation": "semantically correct but transport/format discipline is less stable"
+    },
+    "deepseek-v4-flash": {
+      "invocations": 5,
+      "transport_clean": 5,
+      "transport_void": 0,
+      "semantic_exact": 5,
+      "strict_json": 5,
+      "unique_output_sha256": 1,
+      "tool_leakage": 0,
+      "interpretation": "transport-clean, byte-stable, and fastest among the three on the fixed smoke prompt"
+    }
+  },
+  "synthetic_relevance_panel": {
+    "plan_path": "generated/e2-r17-atomgit-synthetic-relevance-panel-plan-20260906.json",
+    "cases_per_model": 6,
+    "total_cli_invocations": 18,
+    "no_retry_or_replacement": true,
+    "cases_cover": ["procedural relevant", "procedural irrelevant", "same-instance binding relevant", "different-instance binding irrelevant"],
+    "qwen3.8-27b": {
+      "transport_clean": 6,
+      "transport_void": 0,
+      "semantic_exact": 6,
+      "strict_json": 6,
+      "verdict": "PASS_SYNTHETIC_RELEVANCE_6_OF_6"
+    },
+    "GLM-5.2": {
+      "transport_clean": 6,
+      "transport_void": 0,
+      "semantic_exact": 5,
+      "strict_json": 4,
+      "error_case": "B_CELL_SAME_INSTANCE",
+      "error": "Classified an explicitly instance-bound workbook/cell fact as procedural/RULE_REUSED instead of binding/SAME_INSTANCE_BINDING.",
+      "markdown_fence_count": 2,
+      "verdict": "PARTIAL_SYNTHETIC_RELEVANCE_5_OF_6"
+    },
+    "deepseek-v4-flash": {
+      "transport_clean": 6,
+      "transport_void": 0,
+      "semantic_exact": 6,
+      "strict_json": 6,
+      "verdict": "PASS_SYNTHETIC_RELEVANCE_6_OF_6"
+    }
+  },
+  "additional_harness_probe": {
+    "minimal_config_qwen_invocations": 1,
+    "finding": "Reducing user config, disabling subagents/todo/plugins, setting one round, and using a minimal system prompt did not materially reduce AtomCode's roughly 6k-token runtime context on the smoke request; the overhead is primarily runtime-internal.",
+    "quota_interpretation": "Official CodingPlan documentation describes the plan as request-count limited rather than total-token limited, so the fixed context overhead is primarily a latency/context concern; internal multi-round/tool leakage remains important because it can create additional model requests."
+  },
+  "observed_accounting": {
+    "qualification_cli_invocations": 34,
+    "observed_model_usage_rows": 35,
+    "reason_usage_rows_exceed_invocations": "one GLM smoke invocation created two model rounds after schedule_wakeup was rejected",
+    "e2_scientific_provider_calls": 0,
+    "e2_scientific_execution": false
+  },
+  "prospective_role_decision": {
+    "qwen3.8-27b": "Preferred AtomGit-pool candidate for a future cross-family shadow robustness pilot, based on family independence from the primary DeepSeek model plus clean runtime/stability qualification. It is NOT automatically the frozen official D1 backbone because the current D1 roadmap specifies a Qwen sparse 35B-class model or Kimi K3; promotion to formal D1 requires a prospective outcome-blind D1 eligibility amendment/review after the primary B2 gate.",
+    "deepseek-v4-flash": "Preferred fast shadow diagnostic / non-voting reviewer model; strong runtime qualification but less informative as the first cross-family D1 because the primary model is also DeepSeek-family.",
+    "GLM-5.2": "Useful as a third non-voting triangulation model under strict transport-VOID accounting; do not promote it to a formal robustness backbone without prospectively addressing the procedural/binding and schedule_wakeup transport instability.",
+    "primary_e2_model": "UNCHANGED",
+    "failure_rescue": "FORBIDDEN"
+  },
+  "claim_boundary": "These results establish only AtomGit transport/model qualification and synthetic evidence-relevance competence. They do not establish Search-Projection Censoring, learner-projection causal effects, structural moderation, natural transport, benchmark utility, or method superiority."
+}

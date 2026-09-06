@@ -1,0 +1,652 @@
+{
+  "artifact_type": "e2-r17-atomgit-synthetic-relevance-model-qualification-results",
+  "automatic_retry": false,
+  "claim_boundary": "Synthetic model relevance-gating competence only; no E2 causal/support/heldout/public outcome.",
+  "date": "2026-09-06",
+  "e2_scientific_execution": false,
+  "e2_scientific_provider_calls": 0,
+  "models": {
+    "GLM-5.2": {
+      "samples": [
+        {
+          "case_id": "P_FORMULA_RELEVANT",
+          "expected": {
+            "action": "use",
+            "case_id": "P_FORMULA_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "P_FORMULA_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-GLM-5.2",
+          "resolved_model": "GLM-5.2",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 35,
+              "elapsed_ms": 3198,
+              "prompt_tokens": 5188
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_FORMULA_IRRELEVANT",
+          "expected": {
+            "action": "ignore",
+            "case_id": "P_FORMULA_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "P_FORMULA_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "provider": "AtomGit-GLM-5.2",
+          "resolved_model": "GLM-5.2",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 36,
+              "elapsed_ms": 3009,
+              "prompt_tokens": 5184
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_DEPENDENCY_RELEVANT",
+          "expected": {
+            "action": "use",
+            "case_id": "P_DEPENDENCY_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "P_DEPENDENCY_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-GLM-5.2",
+          "resolved_model": "GLM-5.2",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 35,
+              "elapsed_ms": 3373,
+              "prompt_tokens": 5181
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_DEPENDENCY_IRRELEVANT",
+          "expected": {
+            "action": "ignore",
+            "case_id": "P_DEPENDENCY_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "P_DEPENDENCY_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "provider": "AtomGit-GLM-5.2",
+          "resolved_model": "GLM-5.2",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": false,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 40,
+              "elapsed_ms": 3690,
+              "prompt_tokens": 5182
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "B_CELL_SAME_INSTANCE",
+          "expected": {
+            "action": "use",
+            "case_id": "B_CELL_SAME_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "SAME_INSTANCE_BINDING",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "B_CELL_SAME_INSTANCE",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-GLM-5.2",
+          "resolved_model": "GLM-5.2",
+          "rounds": 1,
+          "semantic_exact": false,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 34,
+              "elapsed_ms": 3325,
+              "prompt_tokens": 5178
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "B_CELL_DIFFERENT_INSTANCE",
+          "expected": {
+            "action": "ignore",
+            "case_id": "B_CELL_DIFFERENT_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "DIFFERENT_INSTANCE_BINDING",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "B_CELL_DIFFERENT_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "DIFFERENT_INSTANCE_BINDING",
+            "relevant": false
+          },
+          "provider": "AtomGit-GLM-5.2",
+          "resolved_model": "GLM-5.2",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": false,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 39,
+              "elapsed_ms": 3178,
+              "prompt_tokens": 5184
+            }
+          ],
+          "usage_rows": 1
+        }
+      ],
+      "semantic_exact": 5,
+      "strict_raw_json": 4,
+      "transport_clean": 6,
+      "transport_void": 0
+    },
+    "deepseek-v4-flash": {
+      "samples": [
+        {
+          "case_id": "P_FORMULA_RELEVANT",
+          "expected": {
+            "action": "use",
+            "case_id": "P_FORMULA_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "P_FORMULA_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-deepseek-v4-flash",
+          "resolved_model": "deepseek-v4-flash",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 129,
+              "elapsed_ms": 2464,
+              "prompt_tokens": 6432
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_FORMULA_IRRELEVANT",
+          "expected": {
+            "action": "ignore",
+            "case_id": "P_FORMULA_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "P_FORMULA_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "provider": "AtomGit-deepseek-v4-flash",
+          "resolved_model": "deepseek-v4-flash",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 96,
+              "elapsed_ms": 1697,
+              "prompt_tokens": 6429
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_DEPENDENCY_RELEVANT",
+          "expected": {
+            "action": "use",
+            "case_id": "P_DEPENDENCY_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "P_DEPENDENCY_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-deepseek-v4-flash",
+          "resolved_model": "deepseek-v4-flash",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 275,
+              "elapsed_ms": 2903,
+              "prompt_tokens": 6428
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_DEPENDENCY_IRRELEVANT",
+          "expected": {
+            "action": "ignore",
+            "case_id": "P_DEPENDENCY_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "P_DEPENDENCY_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "provider": "AtomGit-deepseek-v4-flash",
+          "resolved_model": "deepseek-v4-flash",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 130,
+              "elapsed_ms": 2065,
+              "prompt_tokens": 6429
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "B_CELL_SAME_INSTANCE",
+          "expected": {
+            "action": "use",
+            "case_id": "B_CELL_SAME_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "SAME_INSTANCE_BINDING",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "B_CELL_SAME_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "SAME_INSTANCE_BINDING",
+            "relevant": true
+          },
+          "provider": "AtomGit-deepseek-v4-flash",
+          "resolved_model": "deepseek-v4-flash",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 319,
+              "elapsed_ms": 3154,
+              "prompt_tokens": 6424
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "B_CELL_DIFFERENT_INSTANCE",
+          "expected": {
+            "action": "ignore",
+            "case_id": "B_CELL_DIFFERENT_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "DIFFERENT_INSTANCE_BINDING",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "B_CELL_DIFFERENT_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "DIFFERENT_INSTANCE_BINDING",
+            "relevant": false
+          },
+          "provider": "AtomGit-deepseek-v4-flash",
+          "resolved_model": "deepseek-v4-flash",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 159,
+              "elapsed_ms": 1882,
+              "prompt_tokens": 6431
+            }
+          ],
+          "usage_rows": 1
+        }
+      ],
+      "semantic_exact": 6,
+      "strict_raw_json": 6,
+      "transport_clean": 6,
+      "transport_void": 0
+    },
+    "qwen3.8-27b": {
+      "samples": [
+        {
+          "case_id": "P_FORMULA_RELEVANT",
+          "expected": {
+            "action": "use",
+            "case_id": "P_FORMULA_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "P_FORMULA_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-qwen3.8-27b",
+          "resolved_model": "qwen3.8-27b",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 493,
+              "elapsed_ms": 5998,
+              "prompt_tokens": 6367
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_FORMULA_IRRELEVANT",
+          "expected": {
+            "action": "ignore",
+            "case_id": "P_FORMULA_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "P_FORMULA_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "provider": "AtomGit-qwen3.8-27b",
+          "resolved_model": "qwen3.8-27b",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 258,
+              "elapsed_ms": 3733,
+              "prompt_tokens": 6363
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_DEPENDENCY_RELEVANT",
+          "expected": {
+            "action": "use",
+            "case_id": "P_DEPENDENCY_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "P_DEPENDENCY_RELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "RULE_REUSED",
+            "relevant": true
+          },
+          "provider": "AtomGit-qwen3.8-27b",
+          "resolved_model": "qwen3.8-27b",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 742,
+              "elapsed_ms": 8756,
+              "prompt_tokens": 6359
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "P_DEPENDENCY_IRRELEVANT",
+          "expected": {
+            "action": "ignore",
+            "case_id": "P_DEPENDENCY_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "P_DEPENDENCY_IRRELEVANT",
+            "evidence_type": "procedural",
+            "reason_code": "TASK_UNRELATED",
+            "relevant": false
+          },
+          "provider": "AtomGit-qwen3.8-27b",
+          "resolved_model": "qwen3.8-27b",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 473,
+              "elapsed_ms": 6086,
+              "prompt_tokens": 6360
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "B_CELL_SAME_INSTANCE",
+          "expected": {
+            "action": "use",
+            "case_id": "B_CELL_SAME_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "SAME_INSTANCE_BINDING",
+            "relevant": true
+          },
+          "parsed": {
+            "action": "use",
+            "case_id": "B_CELL_SAME_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "SAME_INSTANCE_BINDING",
+            "relevant": true
+          },
+          "provider": "AtomGit-qwen3.8-27b",
+          "resolved_model": "qwen3.8-27b",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 419,
+              "elapsed_ms": 8767,
+              "prompt_tokens": 6358
+            }
+          ],
+          "usage_rows": 1
+        },
+        {
+          "case_id": "B_CELL_DIFFERENT_INSTANCE",
+          "expected": {
+            "action": "ignore",
+            "case_id": "B_CELL_DIFFERENT_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "DIFFERENT_INSTANCE_BINDING",
+            "relevant": false
+          },
+          "parsed": {
+            "action": "ignore",
+            "case_id": "B_CELL_DIFFERENT_INSTANCE",
+            "evidence_type": "binding",
+            "reason_code": "DIFFERENT_INSTANCE_BINDING",
+            "relevant": false
+          },
+          "provider": "AtomGit-qwen3.8-27b",
+          "resolved_model": "qwen3.8-27b",
+          "rounds": 1,
+          "semantic_exact": true,
+          "strict_raw_json": true,
+          "tool_calls": 0,
+          "tool_names": [],
+          "transport_clean": true,
+          "usage": [
+            {
+              "cached_input_tokens": null,
+              "completion_tokens": 218,
+              "elapsed_ms": 4126,
+              "prompt_tokens": 6364
+            }
+          ],
+          "usage_rows": 1
+        }
+      ],
+      "semantic_exact": 6,
+      "strict_raw_json": 6,
+      "transport_clean": 6,
+      "transport_void": 0
+    }
+  },
+  "plan_path": "generated/e2-r17-atomgit-synthetic-relevance-panel-plan-20260906.json",
+  "plan_status": "FROZEN_SEPARATE_SYNTHETIC_MODEL_QUALIFICATION_ONLY",
+  "replacement": false,
+  "schema_version": "1.0",
+  "status": "COMPLETED_SHADOW_MODEL_QUALIFICATION_ONLY",
+  "total_cli_invocations": 18
+}

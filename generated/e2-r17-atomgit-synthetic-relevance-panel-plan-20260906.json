@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-synthetic-relevance-model-qualification-plan",
+  "date": "2026-09-06",
+  "status": "FROZEN_SEPARATE_SYNTHETIC_MODEL_QUALIFICATION_ONLY",
+  "purpose": "Test whether AtomGit-hosted models can distinguish evidence relevance to a future task and procedural vs instance-binding evidence without touching any frozen E2-R17 scientific data or outcomes.",
+  "models": ["qwen3.8-27b", "GLM-5.2", "deepseek-v4-flash"],
+  "transport": {
+    "atomcode_version": "5.0.9",
+    "flags": ["--ephemeral", "--no-tools", "--no-telemetry", "--output-format=jsonl"],
+    "one_cli_invocation_per_case_model": true,
+    "automatic_retry": false,
+    "transport_void_rule": "Any invocation with tool.started, tool_calls > 0, rounds > 1, or usage_rows != 1 is TRANSPORT_VOID and is not replaced."
+  },
+  "output_schema": {
+    "case_id": "string",
+    "evidence_type": "procedural|binding",
+    "relevant": "boolean",
+    "action": "use|ignore",
+    "reason_code": "RULE_REUSED|TASK_UNRELATED|SAME_INSTANCE_BINDING|DIFFERENT_INSTANCE_BINDING"
+  },
+  "cases": [
+    {
+      "case_id": "P_FORMULA_RELEVANT",
+      "evidence": "When copying formulas to a shifted destination, preserve relative-reference semantics by applying the source-to-target row/column offset rather than copying the displayed references literally.",
+      "future_task": "In a new workbook, copy a block of formulas from B2:D8 to F5:H11 while preserving the same relative-reference behavior.",
+      "expected": {"evidence_type": "procedural", "relevant": true, "action": "use", "reason_code": "RULE_REUSED"}
+    },
+    {
+      "case_id": "P_FORMULA_IRRELEVANT",
+      "evidence": "When copying formulas to a shifted destination, preserve relative-reference semantics by applying the source-to-target row/column offset rather than copying the displayed references literally.",
+      "future_task": "In a new workbook, change the fill color of cells A1:A20 to yellow without changing formulas or values.",
+      "expected": {"evidence_type": "procedural", "relevant": false, "action": "ignore", "reason_code": "TASK_UNRELATED"}
+    },
+    {
+      "case_id": "P_DEPENDENCY_RELEVANT",
+      "evidence": "Before deleting or renaming a worksheet, inspect formulas in other sheets that reference it and preserve or repair those dependencies before committing the structural edit.",
+      "future_task": "Rename the sheet RawData to Archive in a different workbook while keeping formulas on Summary that currently reference RawData valid.",
+      "expected": {"evidence_type": "procedural", "relevant": true, "action": "use", "reason_code": "RULE_REUSED"}
+    },
+    {
+      "case_id": "P_DEPENDENCY_IRRELEVANT",
+      "evidence": "Before deleting or renaming a worksheet, inspect formulas in other sheets that reference it and preserve or repair those dependencies before committing the structural edit.",
+      "future_task": "Sort a standalone values-only table by its Amount column; no sheet is deleted or renamed and there are no formulas.",
+      "expected": {"evidence_type": "procedural", "relevant": false, "action": "ignore", "reason_code": "TASK_UNRELATED"}
+    },
+    {
+      "case_id": "B_CELL_SAME_INSTANCE",
+      "evidence": "In workbook Alpha.xlsx, Sheet3!B17 contains the text N/A and is the specific cell causing the current total formula to fail.",
+      "future_task": "Continue editing the same workbook Alpha.xlsx and repair the total formula that reads Sheet3!B17.",
+      "expected": {"evidence_type": "binding", "relevant": true, "action": "use", "reason_code": "SAME_INSTANCE_BINDING"}
+    },
+    {
+      "case_id": "B_CELL_DIFFERENT_INSTANCE",
+      "evidence": "In workbook Alpha.xlsx, Sheet3!B17 contains the text N/A and is the specific cell causing the current total formula to fail.",
+      "future_task": "Open an unrelated workbook Beta.xlsx and calculate a total from its Sheet3!B17, which contains a normal numeric value.",
+      "expected": {"evidence_type": "binding", "relevant": false, "action": "ignore", "reason_code": "DIFFERENT_INSTANCE_BINDING"}
+    }
+  ],
+  "planned_cli_invocations": 18,
+  "planned_scientific_units": 0,
+  "e2_authority": {
+    "stage_a": false,
+    "support_read": false,
+    "stage_b": false,
+    "heldout": false,
+    "public_p1": false,
+    "primary_model_selection_by_effect": false,
+    "paper_claim": false
+  },
+  "interpretation_boundary": "This panel qualifies model relevance-gating behavior only. It cannot establish Search-Projection Censoring, a causal learner-projection effect, structural moderation, natural transport, or method superiority."
+}

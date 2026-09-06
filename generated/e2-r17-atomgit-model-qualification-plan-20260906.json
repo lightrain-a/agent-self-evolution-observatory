@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-model-runtime-qualification-plan",
+  "date": "2026-09-06",
+  "status": "FROZEN_SEPARATE_ZERO_E2_SCIENTIFIC_OUTCOME_MODEL_QUALIFICATION",
+  "purpose": "Qualify AtomGit-hosted models as isolated experimental subjects for later optional robustness/reviewer panels; do not alter or execute the frozen E2-R17 R3D scientific lineage.",
+  "atomcode_version": "5.0.9",
+  "transport": {
+    "mode": "headless_ephemeral_no_tools",
+    "flags": ["--ephemeral", "--no-tools", "--no-telemetry", "--output-format=jsonl"],
+    "tool_access": false,
+    "session_persistence": false,
+    "retry_policy": "no automatic retry in qualification accounting"
+  },
+  "models": [
+    {"profile": "AtomGit-qwen3.8-27b", "model_id": "qwen3.8-27b", "configured_context_window": 262144},
+    {"profile": "AtomGit-GLM-5.2", "model_id": "GLM-5.2", "configured_context_window": 200000},
+    {"profile": "AtomGit-deepseek-v4-flash", "model_id": "deepseek-v4-flash", "configured_context_window": 512000}
+  ],
+  "phase_0_smoke": {
+    "calls_per_model": 1,
+    "total_planned_calls": 3,
+    "same_prompt": true,
+    "checks": ["transport_success", "exactly_one_usage_row", "model_route_metadata", "json_parseability", "instruction_compliance", "latency", "token_usage"]
+  },
+  "phase_1_repeatability_if_phase_0_passes": {
+    "calls_per_model": 5,
+    "total_planned_calls": 15,
+    "purpose": "Estimate byte-level and semantic output stability under provider-managed sampling; not an E2 scientific effect test.",
+    "open_only_after_phase_0": true
+  },
+  "scientific_authority": {
+    "r3d_stage_a": false,
+    "r3d_stage_b": false,
+    "support_read": false,
+    "heldout_read": false,
+    "public_p1": false,
+    "primary_model_replacement": false,
+    "failure_rescue": false,
+    "paper_claim_promotion": false
+  },
+  "forbidden_inputs": [
+    "R3D Stage-A task/pool artifacts",
+    "unread Stage-A support",
+    "Stage-B heldout/effect outcomes",
+    "any outcome used to choose the primary frozen model"
+  ],
+  "later_eligible_roles": [
+    "optional D1 cross-backbone robustness after the primary gate",
+    "non-voting independent review/model panel",
+    "public-lane robustness after prospective freeze"
+  ],
+  "selection_rule": "Never select an AtomGit model by favorable E2 effect. For any later optional role, select prospectively using runtime validity, harness compatibility, stability, marginal cost, and literature relevance.",
+  "provider_calls_before_execution": 0,
+  "e2_scientific_execution": false
+}
