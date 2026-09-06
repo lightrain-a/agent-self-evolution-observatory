@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-same-evidence-state-regeneration-shadow-receipt",
+  "date": "2026-09-06",
+  "status": "PASS_EXPLORATORY_SHADOW_PANEL_ZERO_PRIMARY_AUTHORITY",
+  "provider": "AtomGit CodingPlan via AtomCode 5.0.9",
+  "models": [
+    "qwen3.8-27b",
+    "GLM-5.2",
+    "deepseek-v4-flash"
+  ],
+  "design": {
+    "same_byte_identical_synthetic_evidence": true,
+    "draws_per_model": 6,
+    "cli_invocations": 18,
+    "usage_rows": 18,
+    "single_round": true,
+    "tool_calls": 0,
+    "automatic_retry": false,
+    "output_budget_repair": "V3 changed only max_tokens from 2048 to 8192 after V2 exposed MaxRounds truncation; the evidence prompt and semantic contract were unchanged.",
+    "duplicate_execution_guard": "exclusive flock plus terminal marker"
+  },
+  "raw_provenance": {
+    "root": "/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v3",
+    "plan_sha256": "3111e32599f953c0c0e71d84932ac89a73b61bb825d6cea645dbcb7e7a147c70",
+    "prompt_sha256": "d9995ace7e7274ec1fb1d7823c09e9d64011a7c32d66917f0c6c2910b78751e9",
+    "results_sha256": "5edfb277c0ab9a6a8d2154758136434df020975df53138052c0a826a8e0019c0",
+    "terminal_sha256": "204743b3eacec5445166ff222834e4794a33c43ff4e4db8420184b7ac80ac8dd",
+    "raw_jsonl_units": 18,
+    "state_units": 18,
+    "offline_raw_to_result_sha_mismatches": 0
+  },
+  "results": {
+    "qwen3.8-27b": {
+      "transport_clean": "6/6",
+      "byte_distinct_states": "6/6",
+      "expected_core_primitives_retained": "6/6",
+      "extra_same_instance_binding": "5/6",
+      "literal_instance_identifier_leak": "0/6",
+      "format_contract": "6/6",
+      "pairwise_text_similarity_median": 0.2414,
+      "median_wall_seconds": 37.775
+    },
+    "GLM-5.2": {
+      "transport_clean": "6/6",
+      "byte_distinct_states": "6/6",
+      "expected_core_primitives_retained": "6/6",
+      "extra_same_instance_binding": "0/6",
+      "literal_instance_identifier_leak": "0/6",
+      "format_contract": "6/6",
+      "pairwise_text_similarity_median": 0.2959,
+      "median_wall_seconds": 12.712
+    },
+    "deepseek-v4-flash": {
+      "transport_clean": "6/6",
+      "byte_distinct_states": "6/6",
+      "expected_core_primitives_retained": "6/6",
+      "extra_same_instance_binding": "5/6",
+      "literal_instance_identifier_leak": "0/6",
+      "format_contract": "4/6",
+      "pairwise_text_similarity_median": 0.1832,
+      "median_wall_seconds": 7.363
+    }
+  },
+  "cross_panel_context": {
+    "prior_atomgit_diagnosis_panel": {
+      "qwen3.8-27b_semantic_pass": "16/18",
+      "GLM-5.2_semantic_pass": "14/18",
+      "deepseek-v4-flash_semantic_pass": "13/18",
+      "artifact": "generated/e2-r17-atomgit-shadow-model-qualification-20260906.json"
+    },
+    "interpretation": "All three models preserved the core reusable verification, tool-recovery, and completion primitives on every V3 draw while producing byte-distinct free-form states. Qwen and DeepSeek nevertheless selected an explicitly instance-binding primitive in 5/6 draws despite the instruction not to generalize the instance-only fact. This motivates a serialization/abstraction-boundary diagnostic, not a general model-quality ranking."
+  },
+  "harness_lessons": {
+    "v1": "Local config parse failure occurred before provider dispatch; zero usage rows and zero model requests.",
+    "v2": "A 2048 completion budget confounded reasoning-heavy Qwen/DeepSeek with MaxRounds truncation; V2 remains harness-development evidence only.",
+    "atomcode_no_tools_boundary": "No V3 tool.start events were observed. Elsewhere AtomCode 5.0.9 can expose schedule_wakeup even under --no-tools, so future panels must continue auditing full JSONL and VOID any tool event or multi-usage invocation."
+  },
+  "next_falsifier": {
+    "name": "NEGATIVE_BINDING_SALIENCE_SERIALIZATION_ABLATION",
+    "purpose": "Distinguish conceptual binding confusion from prompt/serialization salience: hold the synthetic evidence fixed while prospectively changing only how the non-transferable binding primitive is exposed in the output contract.",
+    "decision_if_leakage_disappears": "Narrow the mechanism to output-contract / candidate-label salience rather than general binding-understanding failure.",
+    "decision_if_leakage_persists": "Retain a stronger state-synthesis abstraction-boundary hypothesis for later controlled validation.",
+    "authority": false
+  },
+  "claim_boundary": {
+    "same_evidence_can_yield_byte_distinct_free_form_states_in_this_shadow_harness": true,
+    "core_semantics_retained_in_this_synthetic_panel": true,
+    "state_generation_variance_component_established": false,
+    "downstream_utility_effect_established": false,
+    "search_projection_censoring_established": false,
+    "model_superiority_established": false,
+    "primary_model_replacement_authority": false,
+    "paper_claim_promotion_authority": false,
+    "scientific_execution_authority": false
+  }
+}
