@@ -1,0 +1,112 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-BROWSER-NETWORK-QUALIFICATION-R4P2-20260906",
+  "browser_actions": 0,
+  "browser_network_addendum_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-BROWSER-NETWORK-ADDENDUM-R4P2-20260906",
+  "browser_network_addendum_sha256": "2dd9f9bda3d1a52344ba66cb5ef3762185828d34af44548601859ef98c6320d4",
+  "browser_network_mode": "UNIFORM_CHROMIUM_PROXY_ALL_Q0_TASKS",
+  "harmful_calls": 0,
+  "model_requests": 0,
+  "p0_execution_authorized": false,
+  "p1_execution_authorized": false,
+  "page_or_task_rewrite": false,
+  "paper_id": "AGENT-SAFETY-R9",
+  "provider_calls": 0,
+  "proxy_endpoint": "http://127.0.0.1:7897",
+  "python_base_prefix": "/usr",
+  "python_executable": "/data/wyt/agent-safety-discovery-20260818/runtime-r9/browser-agent-venv/bin/python",
+  "python_prefix": "/data/wyt/agent-safety-discovery-20260818/runtime-r9/browser-agent-venv",
+  "q0_execution_authorized": false,
+  "required_reset_pass_count": 10,
+  "reset_pass_count": 10,
+  "rows": [
+    {
+      "elapsed_ms": 10429.9,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 0
+    },
+    {
+      "elapsed_ms": 9137.6,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 1
+    },
+    {
+      "elapsed_ms": 9819.5,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 2
+    },
+    {
+      "elapsed_ms": 5320.4,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 3
+    },
+    {
+      "elapsed_ms": 6546.3,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 4
+    },
+    {
+      "elapsed_ms": 10541.8,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 5
+    },
+    {
+      "elapsed_ms": 8837.9,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 6
+    },
+    {
+      "elapsed_ms": 9792.1,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 7
+    },
+    {
+      "elapsed_ms": 8391.1,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 8
+    },
+    {
+      "elapsed_ms": 9834.4,
+      "observation_key_count": 13,
+      "page_url_nonempty": true,
+      "reset_pass": true,
+      "task_id": 9
+    }
+  ],
+  "runner_sha256": "085c6fa6261dbcd40ec21e4321b5191e1b4dc83a2edefb43ef9425cca0394a87",
+  "same_proxy_for_all_ten_tasks": true,
+  "schema_version": "g1-atomgit-q0-browser-network-qualification-v1",
+  "scientific_authority": false,
+  "scientific_outcomes_observed": 0,
+  "status": "BROWSER_NETWORK_ZERO_MODEL_10_OF_10_PASS",
+  "task_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "task_specific_proxy_override": false
+}

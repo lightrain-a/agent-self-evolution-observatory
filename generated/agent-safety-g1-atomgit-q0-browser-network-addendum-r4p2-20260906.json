@@ -1,0 +1,88 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-BROWSER-NETWORK-ADDENDUM-R4P2-20260906",
+  "schema_version": "4.2",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "FROZEN_ZERO_MODEL_REQUEST_BROWSER_NETWORK_ADDENDUM_NO_Q0_AUTHORITY",
+  "parent": "generated/agent-safety-g1-atomgit-q0-candidate-budget-addendum-r4p1-20260906.json",
+  "purpose": "Restore uniform external-network reachability for the frozen BrowserART Q0 substrate without changing any task, page content, action space, model, budget, success predicate, or candidate-selection rule.",
+  "diagnosis": {
+    "provider_calls": 0,
+    "scientific_outcomes_observed": 0,
+    "direct_network_reset_smoke": {
+      "official_task_ids": [0,1,2,3,4,5,6,7,8,9],
+      "pass_count": 9,
+      "required_count": 10,
+      "only_failed_task_id": 1,
+      "failure_class": "BROWSER_LOAD_TIMEOUT_ON_EXTERNAL_STATIC_RESOURCE",
+      "task1_exact_reset_repeats": 2,
+      "task1_exact_reset_repeat_passes": 0,
+      "local_twitter_html_http_latency_ms": "approximately 1-4",
+      "blocking_resource_host": "twitter.com",
+      "blocking_resource_path": "/compose/twitter-logo.png",
+      "blocking_resource_is_task_semantics": false
+    },
+    "network_transport_probe": {
+      "direct_blocking_resource": "timeout at 8 seconds",
+      "uniform_http_proxy_blocking_resource": "HTTP 200 in approximately 0.9 seconds",
+      "diagnostic_proxy_endpoint": "http://127.0.0.1:7897"
+    },
+    "uniform_proxy_reset_smoke": {
+      "official_task_ids": [0,1,2,3,4,5,6,7,8,9],
+      "pass_count": 10,
+      "required_count": 10,
+      "provider_calls": 0,
+      "scientific_outcomes_observed": 0,
+      "proxy_applied_to_every_task": true
+    }
+  },
+  "runtime_contract": {
+    "browser_network_mode": "UNIFORM_CHROMIUM_PROXY_ALL_Q0_TASKS",
+    "browsergym_python": "/data/wyt/agent-safety-discovery-20260818/runtime-r9/browser-agent-venv/bin/python",
+    "browsergym_core_version": "0.4.0",
+    "runner_requires_exact_browsergym_python": true,
+    "proxy_endpoint_is_operational_not_scientific": true,
+    "proxy_must_be_supplied_before_execution": true,
+    "proxy_must_pass_zero-model-request_reachability_preflight": true,
+    "same_proxy_endpoint_for_all_candidates": true,
+    "same_proxy_endpoint_for_all_ten_tasks": true,
+    "task_specific_proxy_or_route_override": false,
+    "page_html_or_javascript_rewrite": false,
+    "request_interception_or_task_specific_asset_stub": false,
+    "browser_timeout_change": false,
+    "max_steps_change": false,
+    "task_order_change": false,
+    "seed_change": false,
+    "success_predicate_change": false,
+    "candidate_order_change": false,
+    "model_selection_uses_safety_outcomes": false,
+    "reason": "BrowserART Q0 contains external-network dependencies, including Google tasks and a static Twitter-hosted image referenced by the local benign page. A uniform Chromium proxy restores transport reachability while leaving the benchmark object unchanged."
+  },
+  "execution_binding": {
+    "runner_must_receive_explicit_browser_proxy": true,
+    "runner_must_pass_proxy_via_browsergym_pw_chromium_kwargs": true,
+    "proxy_endpoint_must_be_recorded_in_execution_receipt": true,
+    "proxy_availability_failure_before_model_dispatch": "PRE_DISPATCH_OPERATIONAL_HOLD_BROWSER_NETWORK_UNAVAILABLE",
+    "proxy_availability_failure_is_model_failure": false,
+    "proxy_availability_failure_is_scientific_failure": false
+  },
+  "scientific_invariance": {
+    "q0_scientific_object_changed": false,
+    "browserart_tasks_changed": false,
+    "awm_changed": false,
+    "workflow_changed": false,
+    "model_candidates_changed": false,
+    "success_threshold_changed": false,
+    "harmful_execution_opened": false,
+    "p0_or_p1_opened": false
+  },
+  "authority": {
+    "zero_model_network_preflight": true,
+    "q0_model_requests": false,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  },
+  "next_gate": "ATOMCODE_AUTH_PLUS_UNIFORM_BROWSER_PROXY_ZERO_REQUEST_PREFLIGHT"
+}

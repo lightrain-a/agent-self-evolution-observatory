@@ -1,0 +1,97 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-R4P2-QA-20260906",
+  "schema_version": "4.2",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "R4P2_UNIFORM_BROWSER_NETWORK_QA_PASS_AUTH_HOLD",
+  "purpose": "Close the zero-provider BrowserART network/runtime blocker before any AtomGit Q0 model request.",
+  "diagnosis": {
+    "direct_uniform_network_reset_pass_count": 9,
+    "direct_uniform_network_reset_required_count": 10,
+    "only_direct_failure_task_id": 1,
+    "only_direct_failure": "BrowserGym load timeout caused by a pending external twitter.com/compose/twitter-logo.png request; local Twitter page itself returned in milliseconds.",
+    "task1_exact_reset_retries_for_diagnosis": 2,
+    "task1_exact_reset_retry_pass_count": 0,
+    "uniform_proxy_diagnostic_pass_count": 10,
+    "uniform_proxy_diagnostic_required_count": 10,
+    "provider_calls_during_diagnosis": 0,
+    "scientific_outcomes_observed_during_diagnosis": 0
+  },
+  "frozen_runtime": {
+    "browser_network_mode": "UNIFORM_CHROMIUM_PROXY_ALL_Q0_TASKS",
+    "browser_proxy_endpoint": "http://127.0.0.1:7897",
+    "same_proxy_for_all_candidates_and_tasks": true,
+    "task_specific_proxy_override": false,
+    "page_or_javascript_rewrite": false,
+    "request_interception_or_asset_stub": false,
+    "browser_timeout_changed": false,
+    "max_steps_changed": false,
+    "task_panel_changed": false,
+    "seed_changed": false,
+    "success_predicate_changed": false,
+    "browsergym_python": "/data/wyt/agent-safety-discovery-20260818/runtime-r9/browser-agent-venv/bin/python",
+    "browsergym_core_version": "0.4.0"
+  },
+  "qualification": {
+    "path": "generated/agent-safety-g1-atomgit-q0-browser-network-qualification-r4p2-20260906.json",
+    "sha256": "b8a5a2f1a7145a8cdedf7218c545b39aa332c884e2cd24e3ebcfc60abaee5073",
+    "status": "BROWSER_NETWORK_ZERO_MODEL_10_OF_10_PASS",
+    "reset_pass_count": 10,
+    "required_reset_pass_count": 10,
+    "provider_calls": 0,
+    "model_requests": 0,
+    "browser_actions": 0,
+    "scientific_outcomes_observed": 0
+  },
+  "zero_request_preflight": {
+    "path": "generated/agent-safety-g1-atomgit-q0-zero-request-preflight-r4p2-20260906.json",
+    "sha256": "1da41e695b5293bd04cf4ac1c7caa4d0ec233445e36b46a60aeb2a584158c35f",
+    "status": "PRE_DISPATCH_OPERATIONAL_HOLD_AUTH_MISSING",
+    "browser_network_pass": true,
+    "twitter_transport_status": 200,
+    "google_transport_status": 200,
+    "atomcode_auth_present": false,
+    "credential_content_read": false,
+    "model_request_delta": 0,
+    "dispatch_attempted": false
+  },
+  "source_bindings": {
+    "browser_network_addendum": {
+      "path": "generated/agent-safety-g1-atomgit-q0-browser-network-addendum-r4p2-20260906.json",
+      "sha256": "2dd9f9bda3d1a52344ba66cb5ef3762185828d34af44548601859ef98c6320d4"
+    },
+    "preflight": {
+      "path": "research_pipeline/agent_safety_g1_atomgit_q0_preflight.py",
+      "sha256": "c3b84ee7d9cd044225a8a4537ed7b37becb3541298480b012dba502696b818f5"
+    },
+    "runner": {
+      "path": "research_pipeline/agent_safety_g1_atomgit_q0_runner.py",
+      "sha256": "f6f95fd42bfbf4fb094eb088dd2ed4cbf53706aa13bfc81fbff668fcc8959a11"
+    },
+    "network_qualification_runner": {
+      "path": "research_pipeline/agent_safety_g1_atomgit_q0_browser_network_qualification.py",
+      "sha256": "085c6fa6261dbcd40ec21e4321b5191e1b4dc83a2edefb43ef9425cca0394a87"
+    },
+    "tests": {
+      "path": "research_pipeline/test_agent_safety_g1_atomgit_q0.py",
+      "sha256": "bba297276b1322757b0380801af336fe9a78f1cf6a5ae69f0d7ee0515c44499f"
+    }
+  },
+  "qa": {
+    "g1_test_command": "python3 -m unittest discover -s research_pipeline -p 'test_agent_safety_g1*.py'",
+    "tests_run": 124,
+    "tests_passed": 124,
+    "tests_failed": 0,
+    "git_diff_check": "PASS",
+    "json_parse": "PASS"
+  },
+  "authority": {
+    "q0_model_requests": false,
+    "p0_model_requests": false,
+    "p1_model_requests": false,
+    "harmful_model_calls": false,
+    "paper_claim_upgrade": false
+  },
+  "scientific_outcomes_observed": 0,
+  "next_gate": "RESTORE_ATOMGIT_OAUTH_THEN_RERUN_R4P2_ZERO_REQUEST_PREFLIGHT_AND_REQUIRE_CODINGPLAN_REMAINING_AT_LEAST_205"
+}
