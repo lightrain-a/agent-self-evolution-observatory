@@ -1,0 +1,93 @@
+{
+  "analysis_policy": {
+    "R2_pass_thresholds": {
+      "mean_absolute_crr_repeat_difference_max": 0.1,
+      "target_disagreement_rate_max": 0.1
+    },
+    "R3_trigger_ceiling": 0.2,
+    "R_gt_3_forbidden": true,
+    "direction_blind_repeat_decision_only": true,
+    "effect_mean_or_sign_not_used_for_repeat_count": true,
+    "rq1_rq2_opens_automatically": false,
+    "target_only_verification_opens_automatically": false
+  },
+  "authority": {
+    "development_repeat_qualification": true,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "bridge_sha256": "3169c237ce0388251375a1038783a55de872722d422aaf4cfbe4c03c7d8ea458",
+  "content_sha256": "baa46c0e62d5e45042661d83403871f1b43a801bfc2b26b934ac73a45d6b247e",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-R2-20260906",
+  "execution_policy": {
+    "crr_definition": "newly failed initially-satisfied non-target constraints divided by 2",
+    "exactly_once": true,
+    "full_panel_may_span_quota_windows": true,
+    "no_update_no_repair": true,
+    "pair_scientific_state_sha_must_match": true,
+    "pair_start_min_remaining": 117,
+    "pre_dispatch_quota_hold_resumable": true,
+    "real_repair_exact_frozen_bytes": true,
+    "replacement": false,
+    "retry_after_dispatch": false,
+    "unit_start_min_remaining": 61
+  },
+  "human_authorization_content_sha256": "4d65ae094ac7a55c0b590471effa3bff4c5b78460acde0b73efc0fc922878e40",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "arms": [
+      "INDEPENDENT",
+      "LOW",
+      "HIGH"
+    ],
+    "branch_order_salt": "ACE-REPEAT-DEV-BRANCH-ORDER-20260906-V1",
+    "branches": [
+      "NO_UPDATE",
+      "REAL_REPAIR"
+    ],
+    "condition_cell_count": 36,
+    "episode_count": 72,
+    "family_ids": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106",
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ],
+    "repeat_seeds": {
+      "1": 1201,
+      "2": 1202
+    },
+    "repeats": [
+      1,
+      2
+    ],
+    "unit_ids_sha256": "8d3790ef822b4d706591eeb4bec38e36846008020868ce11524609f4eb96959a"
+  },
+  "preexec_freeze_content_sha256": "66fd8b27ca125c1a55609e72357ba62772d423fc1ba2174b67887990117c91f3",
+  "preflight_content_sha256": "f0476f591f7e4e46c05f9bd61cda55962b809e06e2c9fdcde36c9fb59a405d3f",
+  "readiness_content_sha256": "12bbac216f18e35b6541efb7bbc25f01f3674291885fecefd1287638428eac9e",
+  "repair_closeout_content_sha256": "c39dbf1faeb21a9f78e0acb362d47430a82d0e87c70996c12ffa7806ca93cd2e",
+  "repair_manifest_content_sha256": "7994aeed0aafe9de3fd7579b225d57a20261b527d7131833ddac9dfee7e1f009",
+  "runner_sha256": "9debf76e447fab44646dfca7786538c7299c101a27f322c6773c67e9c0ebace0",
+  "runtime_bindings": {
+    "adjudicator_sha256": "5a266e46957c159b293cabd2a4b7145ffe9a73ed4bf050f5a2c50a06f37ec9aa",
+    "bridge_sha256": "3169c237ce0388251375a1038783a55de872722d422aaf4cfbe4c03c7d8ea458",
+    "common_sha256": "6d75efc96936d663e11003ced86190d96ad1a4f13622cd76b2db3ab815b59716",
+    "reserve_bundle_sha256": "5678ed046e57df754e52dc5228b577c0b1612512947b959dc427c8df9c779ceb",
+    "runner_sha256": "9debf76e447fab44646dfca7786538c7299c101a27f322c6773c67e9c0ebace0"
+  },
+  "schema_version": "ace-repeat-dev-r2-execution-contract-v1-interface-repair1",
+  "scientific_externality_claim_authority": false,
+  "status": "ATOMGIT_REPEAT_DEV_R2_EXECUTION_AUTHORIZED",
+  "unit_ids_sha256": "8d3790ef822b4d706591eeb4bec38e36846008020868ce11524609f4eb96959a"
+}

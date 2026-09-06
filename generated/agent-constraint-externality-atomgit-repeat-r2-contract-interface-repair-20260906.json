@@ -1,0 +1,31 @@
+{
+  "authority": {
+    "development_repeat_qualification": true,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "content_sha256": "3c3ec19f94f5cd3c209fe3c7fbbf6eb74d8842be034b78b67c394b8ef73c0f2f",
+  "downstream_authority_opened": false,
+  "fields_copied_without_recomputation": {
+    "bridge_sha256": "3169c237ce0388251375a1038783a55de872722d422aaf4cfbe4c03c7d8ea458",
+    "runner_sha256": "9debf76e447fab44646dfca7786538c7299c101a27f322c6773c67e9c0ebace0",
+    "unit_ids_sha256": "8d3790ef822b4d706591eeb4bec38e36846008020868ce11524609f4eb96959a"
+  },
+  "human_authorization_content_sha256": "4d65ae094ac7a55c0b590471effa3bff4c5b78460acde0b73efc0fc922878e40",
+  "new_contract_content_sha256": "baa46c0e62d5e45042661d83403871f1b43a801bfc2b26b934ac73a45d6b247e",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_contract_content_sha256": "601f686a0b35ef1534cb479d573559abbd31954abf6adf7bc5c1242b4c1d3637",
+  "provider_requests_created": 0,
+  "reason": "Frozen executor reads runner_sha256, bridge_sha256, and unit_ids_sha256 at the contract top level; the authorized contract stored the same already-frozen values only in nested audit objects.",
+  "repeat_ledger_existed_before_repair": false,
+  "repeat_runtime_unit_count_before_repair": 0,
+  "schema_version": "ace-repeat-dev-r2-contract-interface-repair-v1",
+  "scientific_contract_sha256_after": "4b1b62bbd160bc299411bfc2075143470f7c2671909d2ea096ee118078638335",
+  "scientific_contract_sha256_before": "4b1b62bbd160bc299411bfc2075143470f7c2671909d2ea096ee118078638335",
+  "scientific_contract_unchanged": true,
+  "scientific_repeat_outcomes_created": 0,
+  "status": "ATOMGIT_REPEAT_DEV_R2_CONTRACT_INTERFACE_REPAIR_PASS_ZERO_DISPATCH"
+}

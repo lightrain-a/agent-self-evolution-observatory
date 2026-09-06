@@ -1,0 +1,23 @@
+{
+  "authority": {
+    "development_repeat_qualification": true,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "authorization_source": "CURRENT_SESSION_USER_MESSAGE_CONTINUE_AFTER_R2_ZERO_PROVIDER_READINESS",
+  "authorized_at": "2026-09-06T22:34:00+08:00",
+  "content_sha256": "4d65ae094ac7a55c0b590471effa3bff4c5b78460acde0b73efc0fc922878e40",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preexec_freeze_content_sha256": "66fd8b27ca125c1a55609e72357ba62772d423fc1ba2174b67887990117c91f3",
+  "preflight_content_sha256": "f0476f591f7e4e46c05f9bd61cda55962b809e06e2c9fdcde36c9fb59a405d3f",
+  "readiness_content_sha256": "12bbac216f18e35b6541efb7bbc25f01f3674291885fecefd1287638428eac9e",
+  "repair_closeout_content_sha256": "c39dbf1faeb21a9f78e0acb362d47430a82d0e87c70996c12ffa7806ca93cd2e",
+  "repair_manifest_content_sha256": "7994aeed0aafe9de3fd7579b225d57a20261b527d7131833ddac9dfee7e1f009",
+  "schema_version": "ace-repeat-dev-r2-human-authorization-v1",
+  "scientific_externality_claim_authority": false,
+  "scope": "Exactly the frozen 72-episode development-only R*=2 repeat-qualification panel: 6 families x 3 topology arms x 2 branches x 2 repeats. No TARGET_ONLY_VERIFICATION or confirmatory RQ authority.",
+  "status": "USER_AUTHORIZED_ATOMGIT_REPEAT_DEV_R2_ONLY"
+}

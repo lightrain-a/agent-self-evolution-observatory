@@ -1,0 +1,30 @@
+{
+  "authority": {
+    "development_repeat_qualification": true,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "content_sha256": "07cd9340a039c4dc604e298ea8683d5d360171f7a9bea8a61c4652639ada0572",
+  "contract_interface_repair_content_sha256": "3c3ec19f94f5cd3c209fe3c7fbbf6eb74d8842be034b78b67c394b8ef73c0f2f",
+  "execution_contract_content_sha256": "baa46c0e62d5e45042661d83403871f1b43a801bfc2b26b934ac73a45d6b247e",
+  "human_authorization_content_sha256": "4d65ae094ac7a55c0b590471effa3bff4c5b78460acde0b73efc0fc922878e40",
+  "next_legal_action": "After quota reset/headroom >=117, resume the same frozen R2 authority from the first undispatched unit. Do not create a new authority, replay a dispatched unit, or open TARGET_ONLY_VERIFICATION/RQ1-RQ2.",
+  "next_unit_id": "repeatdevr2:mimo-v2.5-pro|ACE-DEV-FG-104|INDEPENDENT|NO_UPDATE|1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "observed_usage": {
+    "limit": 500,
+    "next_reset_at": "2026-09-06T23:04:58",
+    "remaining": 27,
+    "used": 473
+  },
+  "provider_requests_created_by_attempt": 0,
+  "repeat_ledger_exists": false,
+  "repeat_runtime_unit_count": 0,
+  "required_remaining": 117,
+  "schema_version": "ace-repeat-dev-r2-quota-hold-v1",
+  "scientific_repeat_outcomes_created": 0,
+  "status": "ATOMGIT_REPEAT_DEV_R2_AUTHORIZED_PRE_DISPATCH_QUOTA_HOLD"
+}
