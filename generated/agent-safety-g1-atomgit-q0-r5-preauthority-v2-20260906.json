@@ -1,0 +1,72 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-R5-PREAUTHORITY-V2-20260906",
+  "schema_version": "2.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "R5_PREAUTHORITY_READY_NETWORK_PASS_QUOTA_HOLD",
+  "activation_allowed": false,
+  "activation_blocker": "latest zero-request CodingPlan usage probe reported remaining=27 < 205",
+  "candidate_order": ["mimo-v2.5", "mimo-v2.5-pro"],
+  "task_ids": [0,1,2,3,4,5,6,7,8,9],
+  "max_steps": 10,
+  "required_success_count": 10,
+  "r3_replay_forbidden": true,
+  "r3_candidate_reentry_forbidden": true,
+  "selection_uses_only_benign_capability": true,
+  "residual_set_frozen_from_pre_g1_evidence": true,
+  "parent_r3_closeout_sha256": "9a41facbaf1a1b1b921d6bc1767ce165af8429180c73d692687a7a8d90a578f7",
+  "parent_r3_cascade_receipt_sha256": "83084c31df018d12834251e544a265e2575fbada440bbfcf31ec21aa424075ac",
+  "source_git_head": "243e301f8f9581280acdec0bc0b7db95eea5e108",
+  "preflight": {
+    "path": "generated/agent-safety-g1-atomgit-q0-r5-host69-runtime-network-preflight-v2-20260906.json",
+    "required_status": "R5_HOST69_RUNTIME_NETWORK_READY_QUOTA_HOLD_ZERO_PROVIDER"
+  },
+  "code_bindings": {
+    "r5_runner_sha256": "4d133dc0a50dd8241fc6a6290b23caf43f0784240242aa6582f797064c662bee",
+    "q0_runner_sha256": "4af39b5caf7f833bfbdb1ad48d5ceb61f0e7fba2a46a530dc5d0eb483bbef3af",
+    "chat_adapter_sha256": "5a595ba1efbaca84419a7bfd5552a64341781b5e4e3af53b828e85245287b107"
+  },
+  "runtime": {
+    "python": "/data/wyt/g1-atomgit-runtime-20260906/venv/bin/python",
+    "awm_root": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/agent-workflow-memory",
+    "browserart_root": "/data/wyt/agent-safety-discovery-20260818/substrate-assets-r9/browser-art-pinned-0d72180042f2-host69-upstream-20260906",
+    "auth_path": "/home/wyt/.atomcode/auth.toml",
+    "node_path": "/data/wyt/g1-atomgit-runtime-20260906/browser-art/src/websites/node_modules",
+    "static_server_pid_file": "/data/wyt/agent-safety-g1-atomgit-q0/runtime-services/static8000/server.pid",
+    "static_server_port": 8000,
+    "static_server_root": "/data/wyt/g1-atomgit-runtime-20260906/browser-art/src/websites",
+    "static_server_git_root": "/data/wyt/g1-atomgit-runtime-20260906/browser-art",
+    "static_server_git_commit": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
+    "network_probe_urls": [
+      "http://127.0.0.1:8000/twitter",
+      "http://127.0.0.1:8000/instagram",
+      "https://www.google.com"
+    ],
+    "browser_proxy": {
+      "server": "http://127.0.0.1:7897",
+      "bypass": "127.0.0.1,localhost"
+    },
+    "parent_r3_run_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/q0-cascade-host69-20260906-r3/scientific",
+    "r5_run_root": "/data/wyt/agent-safety-g1-atomgit-q0/runs/q0-r5-residual-host69-20260906-v1/scientific"
+  },
+  "quota_policy": {
+    "rolling_window_limit": 500,
+    "maximum_model_requests_per_candidate": 100,
+    "reserve_for_other_research": 100,
+    "operational_margin": 5,
+    "minimum_remaining_before_starting_any_candidate": 205,
+    "reprobe_before_each_escalated_candidate": true,
+    "latest_observation": {
+      "observed_at": "2026-09-06T22:59:34.097968+08:00",
+      "used": 473,
+      "remaining": 27,
+      "limit": 500,
+      "next_reset_at": "2026-09-06T23:04:58"
+    }
+  },
+  "harmful_model_calls": false,
+  "p0_execution_authorized": false,
+  "p1_execution_authorized": false,
+  "paper_claim_upgrade": false,
+  "activation_rule": "Create the active R5 execution authority only after a fresh zero-request quota probe reports remaining >= 205 while all code/runtime/network bindings above still validate. No R5 model request may occur under this preauthority artifact."
+}
