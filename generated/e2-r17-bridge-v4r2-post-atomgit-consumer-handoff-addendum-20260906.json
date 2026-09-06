@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-post-atomgit-consumer-handoff-addendum",
+  "date": "2026-09-06",
+  "status": "FROZEN_ZERO_PROVIDER_EXECUTION_HANDOFF_REQUIREMENT_NO_SCIENTIFIC_CHANGE",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "parent_protocol": {
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r2-20260903.md",
+    "sha256": "1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7",
+    "independent_review_verdict": "PASS_PREEXECUTION_DESIGN"
+  },
+  "parent_execution_preparation": {
+    "path": "generated/e2-r17-bridge-v4r2-execution-preparation-20260906.json",
+    "status": "PASS_ZERO_PROVIDER_BRIDGE_V4R2_EXECUTION_PREPARATION_NO_AUTHORITY",
+    "next_gate": "SEPARATE_BRIDGE_STAGE_A_CONTRACT_AND_PREEXECUTION_AUTHORITY_AFTER_M3R4_ADJUDICATION"
+  },
+  "compiler_binding": {
+    "implementation_path": "research_pipeline/e2_r17_state_compiler_bridge.py",
+    "implementation_sha256": "aa19c0284f1259f0e18006f25523b5393b48bfefaf9ab8110a32d963d3c28e78",
+    "test_path": "research_pipeline/test_e2_r17_state_compiler_bridge.py",
+    "test_sha256": "524fe1f048090ef28bac116c582a8e73e3d73218a1309bc46f0da9e1b60819af",
+    "current_test_result": "15/15 PASS",
+    "persistent_output_field": "CompiledState.skill_markdown",
+    "persistent_output_hash_field": "CompiledState.skill_sha256"
+  },
+  "mandatory_future_stage_a_handoff": [
+    "For W_COMP, FF4_COMP, SCORE_ONLY_GENERIC_MAX, and SCOPE_MATCHED_GENERIC_MAX, the only persistent actor-visible state is the exact bytes of compile_skill(...).skill_markdown materialized as SKILL.md.",
+    "The Stage-A runner must recompute SHA-256 of the materialized SKILL.md and require equality with CompiledState.skill_sha256 before any actor provider I/O.",
+    "The actor receives the parent directory only through the standard skill_source / skill_sources interface and must load that exact SKILL.md.",
+    "Raw TypedDiagnosis fields, diagnosis JSON, required_repairs enums, arm labels, and hidden experiment metadata are never actor-visible.",
+    "No LLM, paraphraser, summarizer, or second free-form renderer may transform deterministic compiler/control output between compile_skill and actor consumption.",
+    "All FREE/COMP/generic states still enter the already-frozen universal state-SHA equivalence-class procedure before actor evaluation."
+  ],
+  "pre_provider_failure_conditions": [
+    "materialized SKILL.md bytes differ from compile_skill output",
+    "materialized SKILL.md SHA differs from CompiledState.skill_sha256",
+    "actor skill_source is not the directory containing the SHA-verified SKILL.md",
+    "raw typed diagnosis or hidden metadata is exposed to actor",
+    "any additional model-based render occurs after compile_skill",
+    "state-SHA aliasing is applied before final actor-visible bytes are frozen"
+  ],
+  "atomgit_shadow_rationale": {
+    "role": "non-authoritative design diagnostic only",
+    "finding": "Synthetic V3-V8 shadow panels showed that free-form write serialization can vary, state omissions can propagate under controlled consumption, and raw typed-field interpretation can be actor-dependent; a deterministic schema-aware consumer mapping closed one GLM synthetic interpretation gap.",
+    "why_no_protocol_reopen": "Formal Bridge V4-R2 does not expose raw typed fields to the actor: its scientific method is typed diagnosis followed by deterministic canonical Markdown primitive rendering. The addendum therefore binds the future execution handoff to the already-reviewed complete method rather than changing the method, estimand, task split, model, or gate.",
+    "paper_claim_authority": false
+  },
+  "unchanged_science": {
+    "primary_estimand": "G_MAIN,A",
+    "screen_validation_geometry": true,
+    "primitive_vocabulary": true,
+    "diagnosis_rules": true,
+    "generic_controls": true,
+    "state_sha_aliasing": true,
+    "actor_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "provider_retry_limit": 0,
+    "new_tasks": 0,
+    "new_provider_calls": 0,
+    "new_model_families": 0
+  },
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "updater_execution": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "e3": false,
+    "paper_promotion": false
+  }
+}
