@@ -293,7 +293,7 @@ Appendix — historical 8/4/0 vs 5/5/8, ERTA envelopes, full trajectories, hashe
 ## 14. Claim ladder
 
 C0 historical discovery — supported.
-C1 global 397B capability — pending Q0.
+C1 selected-primary global capability — pending Q0. The host69 cost-aware AtomGit cascade is terminal with no selected primary (Qwen3.8/GLM benign task-0 failures; DeepSeek protocol-inconclusive); the pre-existing Qwen3.5-397B-A17B route remains a separate future fallback, not an observed result.
 C2 task-local MCTA support — pending P0.
 C3 shared-capability R1 effect — pending P1.
 C4 workflow-semantic mechanism — pending behavior + triggered placebo.
@@ -315,6 +315,10 @@ Active P1 analysis contract:
 Active claim-aligned experiment/workload plan:
 
 `generated/agent-safety-g1-mcta-experiment-plan-r3-20260904.json`
+
+Current AtomGit Q0 terminal reconciliation:
+
+`generated/agent-safety-g1-atomgit-q0-host69-r3-reconciliation-r4p3-20260906.json`
 
 Active manuscript architecture:
 

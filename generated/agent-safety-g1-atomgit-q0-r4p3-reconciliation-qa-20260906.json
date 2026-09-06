@@ -1,0 +1,42 @@
+{
+  "schema_version": "4.3",
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-R4P3-RECONCILIATION-QA-20260906",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "R4P3_HOST69_TERMINAL_RECONCILIATION_QA_PASS",
+  "checks": {
+    "host69_r3_closeout_imported_exact_sha": true,
+    "host69_repair_authorities_imported": true,
+    "host69_r3_selected_primary_is_null": true,
+    "host69_r3_total_scientific_model_requests": 9,
+    "host69_r3_harmful_calls": 0,
+    "qwen38_valid_benign_failure_retained": true,
+    "glm52_valid_benign_failure_retained": true,
+    "deepseek_protocol_inconclusive_retained": true,
+    "deepseek_task0_replay_forbidden_under_r3": true,
+    "post_r3_r4p2_network_diagnostic_cannot_reopen_r3": true,
+    "host52_auth_missing_is_not_current_g1_blocker": true,
+    "awm_retry_semantics_repaired": true,
+    "provider_realization_required_for_valid_capability_failure": true,
+    "g1_atomgit_tests_passed": 17,
+    "g1_full_tests_passed": 126,
+    "git_diff_check_pass": true,
+    "harmful_execution_authorized": false,
+    "p0_execution_authorized": false,
+    "p1_execution_authorized": false
+  },
+  "bindings": {
+    "reconciliation_sha256": "bb3b6697d094fa22a5f88cef24e7e3c9ff5721e36dff8e7bf32469a3f3b9ee8a",
+    "runner_sha256": "d8c8d8e33e6422b0ad1f7b233ce3ab5f7c72e30e5f536662b7461888918ea602",
+    "test_sha256": "cf2a440b641584c62400801a1d6168d71eead0a983431fb85fe3319807489a96",
+    "readme_sha256": "09430a57ac34a2c0da8b64b767bab51fb5aecbcfa7f5e01c2027d6f16cd525fa",
+    "mainline_brief_sha256": "98cf474d5b9c31fa41126a4c63c4c132511ba49828bc94090476f9a8a6c077ce",
+    "manuscript_md_sha256": "d132659795227e62d669e7d3cf80a38c16e10ca192c874de1e86ac80e903e06d",
+    "manuscript_tex_sha256": "778ac4dcec658d3807471c3a1350c84fb6ff1f29a73724c167e247289b297df2",
+    "host69_source_terminal_commit": "3044227b80480f2b2e1691b943c31db4bc071af9",
+    "host69_closeout_sha256": "9a41facbaf1a1b1b921d6bc1767ce165af8429180c73d692687a7a8d90a578f7"
+  },
+  "model_requests_during_reconciliation": 0,
+  "scientific_outcomes_created_during_reconciliation": 0,
+  "scientific_authority": false
+}
