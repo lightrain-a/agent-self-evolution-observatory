@@ -1,0 +1,63 @@
+{
+  "actor_replicates": [
+    1,
+    2
+  ],
+  "analysis_run": false,
+  "artifact_type": "e2-r17-m3r4-outcome-blind-completion-audit",
+  "authority": {
+    "actor_measurement": false,
+    "analysis": false,
+    "bridge": false,
+    "mint_single_use_analysis_authorization": true,
+    "paper_promotion": false,
+    "provider_io": false,
+    "updater": false
+  },
+  "completed_manifest_path": "/data/wyt/e2-r17-search-projection/runs/m3r4-frozen-state-localization-20260904/completed_units.jsonl",
+  "completed_manifest_sha256": "2e78e2e0f225db4425b1328a720cdf2e06739c16612adc8dbda430e1ce321684",
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/generated/e2-r17-m3r4-execution-final-contract-20260907.json",
+  "contract_sha256": "5c7b6fc50bf00edff0db79131ee354cc2ac7470dbf18d3f28a65ff55c446971c",
+  "created_at_utc": "2026-09-06T17:34:29+00:00",
+  "cross_task_factorization_qualified": true,
+  "inference_diagnostics": {
+    "exact_72_unit_hash_interleaved_order": true,
+    "fresh_actor_call_per_logical_unit_by_bound_runner": true,
+    "fresh_unique_unit_roots": true,
+    "hidden_provider_independence_not_provable_from_logs": true,
+    "no_automatic_retry": true,
+    "no_completed_unit_replay": true,
+    "no_concrete_cross_task_batch_or_shared_state_coupling_detected": true,
+    "no_concrete_shared_context_or_task_cache_violation_detected": true,
+    "provider_claims_partitioned_by_exact_unit_id": true,
+    "same_resolved_model_runtime_and_verifier_bound": true
+  },
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-m3r4-frozen-state-localization-v1.json",
+  "lineage_lease_sha256": "b289e000b8aac242b06a633220bbc0c119ea216e740ac93ff68017f8a02d130f",
+  "logical_units": 72,
+  "measurement_authorization_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-m3r4-atomgit-engineering-20260906/generated/e2-r17-m3r4-measurement-authorization-20260907.json",
+  "measurement_authorization_sha256": "688d6dbb7c9dad7bfd7b1f99e6a7d89bebfef35d9b9370babae7921228d8ad8e",
+  "next_gate": "MINT_SINGLE_USE_M3R4_ANALYSIS_AUTHORIZATION_THEN_READ_72_SEALED_SCORES_ONCE",
+  "partial_effect_read": false,
+  "provider_budget": {
+    "per_unit_limit": 10,
+    "total_claimed": 453,
+    "total_limit": 720,
+    "unit_count": 72
+  },
+  "qualification_boundary": "No concrete coupling violation was detected in the frozen execution diagnostics. These flags license the preregistered model-based interpretation but do not claim that hidden provider independence was proven from logs.",
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/m3r4-frozen-state-localization-20260904/run_summary.json",
+  "run_summary_sha256": "af08e33f009629ae2bb2c2a2423364956c04f0059aa7e866e4290aef805effed",
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "scores_read": false,
+  "states": [
+    "ff_r1",
+    "ff_r2"
+  ],
+  "status": "PASS_M3R4_COMPLETION_INTEGRITY_READY_FOR_SEPARATE_ANALYSIS_AUTHORIZATION",
+  "task_count": 18,
+  "technical_failures": 0,
+  "trajectory_files_sha_verified_without_opening_outcome_content": 72,
+  "within_task_iid_stationarity_qualified": true
+}
