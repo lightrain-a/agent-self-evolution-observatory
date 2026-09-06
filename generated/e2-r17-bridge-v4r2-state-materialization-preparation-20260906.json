@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-state-materialization-preparation",
+  "date": "2026-09-06",
+  "status": "PASS_ZERO_PROVIDER_BRIDGE_V4R2_DETERMINISTIC_STATE_HANDOFF_PREPARATION_NO_AUTHORITY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "parent_protocol": {
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r2-20260903.md",
+    "sha256": "1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7",
+    "review_verdict": "PASS_PREEXECUTION_DESIGN"
+  },
+  "parent_execution_handoff_addendum": {
+    "path": "generated/e2-r17-bridge-v4r2-post-atomgit-consumer-handoff-addendum-20260906.json",
+    "sha256": "a6f75059b11e27ca5b019a79c87a99914e8e56902eb9a8cb4b253be2fa1c2d53"
+  },
+  "implementation": {
+    "path": "research_pipeline/e2_r17_bridge_v4r2_state_materialization.py",
+    "sha256": "ebab3041d151b6705f4a1f9b5f0ee23db779cffc9125a477842d13caee2b237a",
+    "test_path": "research_pipeline/test_e2_r17_bridge_v4r2_state_materialization.py",
+    "test_sha256": "80719c70cff074e5f4e8e204eb9268fff033becc9dadd090ddbe4693ff90c4d7"
+  },
+  "deterministic_arm_support": [
+    "W_COMP",
+    "FF4_COMP",
+    "SCORE_ONLY_GENERIC_MAX",
+    "SCOPE_MATCHED_GENERIC_MAX"
+  ],
+  "handoff_invariants": {
+    "exact_eight_selected_evidence_units_for_compiler": true,
+    "selected_evidence_sha_is_load_bearing": true,
+    "selected_score_is_binary": true,
+    "score_only_control_receives_no_trajectory_text": true,
+    "scope_matched_control_receives_only_scores_and_rendered_block_count": true,
+    "compile_skill_is_only_state_renderer": true,
+    "materialized_skill_sha_must_equal_compiled_state_skill_sha": true,
+    "actor_visible_directory_contains_only_skill_md": true,
+    "raw_typed_diagnosis_actor_visible": false,
+    "hidden_experiment_metadata_actor_visible": false,
+    "post_compile_model_calls": 0,
+    "post_compile_renderer": "NONE",
+    "overwrite_or_replay_of_existing_state_root": false
+  },
+  "verification": {
+    "new_state_materialization_tests": "6/6 PASS",
+    "compiler_tests": "15/15 PASS",
+    "bridge_execution_plan_tests": "7/7 PASS",
+    "v4r2_review_repair_tests": "7/7 PASS",
+    "combined": "35/35 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "remaining_stage_a_implementation": [
+    "prospective Bridge K=8 search-pool acquisition under a separately frozen Stage-A contract",
+    "support qualification before state generation",
+    "native FREE updater realization A and validation-only B according to V4-R2",
+    "construction of exact W/FF4 selected learner evidence from sealed pools",
+    "calls to this deterministic materializer for COMP and generic-control states",
+    "universal state-SHA alias classes before actor scheduling",
+    "actor evaluation only under separate Stage-A authority"
+  ],
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "free_updater": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "paper_promotion": false
+  },
+  "interpretation_boundary": "This checkpoint implements only the deterministic compiler/control state materialization and exact compiler-to-actor handoff required by the already-reviewed V4-R2 method. It grants no Bridge execution authority and does not create any Bridge outcome."
+}
