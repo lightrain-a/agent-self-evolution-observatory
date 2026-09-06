@@ -11,6 +11,7 @@ from research_pipeline.agent_safety_g1_atomgit_q0_r5_runner import (
     AUTH_ID,
     AUTH_STATUS,
     EXPECTED_BROWSER_ART_COMMIT,
+    EXPECTED_BROWSER_PROXY,
     EXPECTED_SHA256,
     NETWORK_PROBE_URLS,
     R3_CLOSEOUT,
@@ -19,6 +20,7 @@ from research_pipeline.agent_safety_g1_atomgit_q0_r5_runner import (
     run_r5_cascade,
     validate_authority,
     validate_static_provenance,
+    _network_http_status_ready,
 )
 from research_pipeline.agent_safety_g1_atomgit_q0_runner import validate_authority as validate_r3_authority
 
@@ -57,6 +59,7 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
                 "static_server_git_root": "/frozen/live-browserart",
                 "static_server_git_commit": EXPECTED_BROWSER_ART_COMMIT,
                 "network_probe_urls": list(NETWORK_PROBE_URLS),
+                "browser_proxy": dict(EXPECTED_BROWSER_PROXY),
                 "parent_r3_run_root": "/frozen/r3",
                 "r5_run_root": str(root / "r5"),
             },
@@ -113,6 +116,16 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
             bad = dict(auth); bad["runtime"] = dict(auth["runtime"]); bad["runtime"]["network_probe_urls"] = ["https://www.google.com"]
             with self.assertRaisesRegex(RunnerError, "network readiness panel drift"):
                 validate_authority(bad)
+            bad = dict(auth); bad["runtime"] = dict(auth["runtime"]); bad["runtime"]["browser_proxy"] = {"server": "http://127.0.0.1:9999", "bypass": "127.0.0.1,localhost"}
+            with self.assertRaisesRegex(RunnerError, "browser proxy binding drift"):
+                validate_authority(bad)
+
+    def test_network_readiness_rejects_http_error_statuses(self) -> None:
+        self.assertTrue(_network_http_status_ready(200))
+        self.assertTrue(_network_http_status_ready(302))
+        self.assertFalse(_network_http_status_ready(399 + 1))
+        self.assertFalse(_network_http_status_ready(502))
+        self.assertFalse(_network_http_status_ready(None))
 
     def test_insufficient_quota_starts_zero_r5_episodes(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -136,9 +149,12 @@ class G1AtomGitQ0R5Test(unittest.TestCase):
                  mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_r5_runner.validate_static_provenance", return_value={"residual_candidate_order": list(R5_CANDIDATES)}), \
                  mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_r5_runner.configure_imports"), \
                  mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_r5_runner.probe_codingplan_usage", return_value={"used": 0, "remaining": 500, "limit": 500}), \
-                 mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_r5_runner.run_episode", side_effect=[fail, protocol]):
+                 mock.patch("research_pipeline.agent_safety_g1_atomgit_q0_r5_runner.run_episode", side_effect=[fail, protocol]) as run_episode_mock:
                 result = run_r5_cascade(authority=auth, output_root=out, awm=root/"awm", browserart=root/"browserart", auth_path=root/"auth.toml")
             self.assertEqual([x["model_id"] for x in result["candidates"]], R5_CANDIDATES)
+            self.assertEqual(len(run_episode_mock.call_args_list), 2)
+            for call in run_episode_mock.call_args_list:
+                self.assertEqual(call.kwargs["pw_context_kwargs"], {"proxy": EXPECTED_BROWSER_PROXY})
             self.assertEqual(result["candidates"][0]["status"], "ATOMGIT_Q0_CANDIDATE_VALID_BENIGN_FAIL_ESCALATE")
             self.assertEqual(result["status"], "ATOMGIT_Q0_R5_PROTOCOL_INCONCLUSIVE_STOP_ALL")
             self.assertIsNone(result["selected_primary"])

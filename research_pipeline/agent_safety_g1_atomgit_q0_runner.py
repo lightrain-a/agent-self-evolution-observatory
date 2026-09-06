@@ -65,7 +65,7 @@ class ModelTextServer(TextServer):
         self.llm=f"atomgit-{safe}-g1cap"; self.agent=f"g1cap-atomgit-t{task_id}-20260906"
 
 
-def run_episode(task_id:int,*,model_id:str,out:Path,awm:Path,browserart:Path,auth_path:Path)->dict[str,Any]:
+def run_episode(task_id:int,*,model_id:str,out:Path,awm:Path,browserart:Path,auth_path:Path,pw_context_kwargs:dict[str,Any]|None=None)->dict[str,Any]:
     import gymnasium as gym
     edir=out/f"task-{task_id}"; result_path=edir/"episode-result.json"
     if edir.exists() and any(edir.iterdir()): raise RunnerError(f"task rerun/overwrite forbidden:{model_id}:{task_id}")
@@ -75,7 +75,7 @@ def run_episode(task_id:int,*,model_id:str,out:Path,awm:Path,browserart:Path,aut
     server=ModelTextServer(browserart,task_id,model_id); env=None; steps=[]; first=None; status="PROTOCOL_INCONCLUSIVE"; error=None
     try:
         server.start(edir); agent=make_agent(model_id=model_id,awm_root=awm,browserart_root=browserart,workflow=workflow,episode_dir=edir,auth_path=auth_path)
-        env=gym.make(f"browsergym/hbb_benign.{task_id}",disable_env_checker=True,max_episode_steps=MAX_STEPS,headless=True,wait_for_user_message=False,action_mapping=agent.action_set.to_python_code)
+        env=gym.make(f"browsergym/hbb_benign.{task_id}",disable_env_checker=True,max_episode_steps=MAX_STEPS,headless=True,wait_for_user_message=False,action_mapping=agent.action_set.to_python_code,pw_context_kwargs=dict(pw_context_kwargs or {}))
         obs,_=env.reset(seed=0); install_page_instrumentation(env.unwrapped.page,task_id); obs=agent.obs_preprocessor(obs); terminated=truncated=False
         for i in range(MAX_STEPS):
             if terminated or truncated: break

@@ -53,6 +53,10 @@ NETWORK_PROBE_URLS = [
     "http://127.0.0.1:8000/instagram",
     "https://www.google.com",
 ]
+EXPECTED_BROWSER_PROXY = {
+    "server": "http://127.0.0.1:7897",
+    "bypass": "127.0.0.1,localhost",
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -135,6 +139,8 @@ def validate_authority(authority: dict[str, Any]) -> None:
         raise RunnerError("R5 BrowserART commit binding drift")
     if runtime.get("network_probe_urls") != NETWORK_PROBE_URLS:
         raise RunnerError("R5 network readiness panel drift")
+    if runtime.get("browser_proxy") != EXPECTED_BROWSER_PROXY:
+        raise RunnerError("R5 browser proxy binding drift")
     if Path(runtime["r5_run_root"]).resolve() == Path(runtime["parent_r3_run_root"]).resolve():
         raise RunnerError("R5 run root collides with immutable R3 root")
 
@@ -226,24 +232,36 @@ def validate_live_static_server(runtime: dict[str, Any]) -> None:
         raise RunnerError("R5 BrowserART tracked website surface is dirty")
 
 
-def validate_browser_network_readiness(urls: list[str]) -> dict[str, Any]:
+def _network_http_status_ready(http_status: Any) -> bool:
+    return isinstance(http_status, int) and 200 <= http_status < 400
+
+
+def validate_browser_network_readiness(urls: list[str], proxy: dict[str, str]) -> dict[str, Any]:
     try:
         from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
         from playwright.sync_api import sync_playwright
     except Exception as exc:
         raise RunnerError("R5 Playwright network preflight unavailable") from exc
+    if proxy != EXPECTED_BROWSER_PROXY:
+        raise RunnerError("R5 browser proxy binding drift")
+    if not _port_open("127.0.0.1", 7897):
+        raise RunnerError("R5 browser proxy transport unavailable")
     rows: list[dict[str, Any]] = []
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
+        context = browser.new_context(proxy=dict(proxy))
         try:
             for url in urls:
-                page = browser.new_page()
+                page = context.new_page()
                 try:
                     response = page.goto(url, timeout=10_000)
+                    http_status = response.status if response is not None else None
+                    status = "LOAD_PASS" if _network_http_status_ready(http_status) else "LOAD_HTTP_ERROR"
                     rows.append({
                         "url": url,
-                        "status": "LOAD_PASS",
-                        "http_status": response.status if response is not None else None,
+                        "status": status,
+                        "http_status": http_status,
+                        "final_url": page.url,
                     })
                 except PlaywrightTimeoutError as exc:
                     rows.append({"url": url, "status": "LOAD_TIMEOUT", "error_type": type(exc).__name__})
@@ -252,12 +270,13 @@ def validate_browser_network_readiness(urls: list[str]) -> dict[str, Any]:
                 finally:
                     page.close()
         finally:
+            context.close()
             browser.close()
     failed = [row for row in rows if row["status"] != "LOAD_PASS"]
     if failed:
         failed_urls = ",".join(row["url"] for row in failed)
         raise RunnerError(f"R5 browser network readiness failed:{failed_urls}")
-    return {"status": "R5_BROWSER_NETWORK_READINESS_PASS", "rows": rows}
+    return {"status": "R5_BROWSER_NETWORK_READINESS_PASS", "proxy": dict(proxy), "rows": rows}
 
 
 def validate_runtime(authority: dict[str, Any], *, output_root: Path, awm: Path, browserart: Path, auth_path: Path) -> None:
@@ -277,7 +296,7 @@ def validate_runtime(authority: dict[str, Any], *, output_root: Path, awm: Path,
     if os.environ.get("NODE_PATH") != runtime["node_path"]:
         raise RunnerError("R5 NODE_PATH drift")
     validate_live_static_server(runtime)
-    validate_browser_network_readiness(list(runtime["network_probe_urls"]))
+    validate_browser_network_readiness(list(runtime["network_probe_urls"]), dict(runtime["browser_proxy"]))
 
 
 def run_r5_cascade(*, authority: dict[str, Any], output_root: Path, awm: Path, browserart: Path, auth_path: Path) -> dict[str, Any]:
@@ -319,7 +338,15 @@ def run_r5_cascade(*, authority: dict[str, Any], output_root: Path, awm: Path, b
             break
         episodes: list[dict[str, Any]] = []
         for task_id in TASK_IDS:
-            row = run_episode(task_id, model_id=model_id, out=model_root, awm=awm, browserart=browserart, auth_path=auth_path)
+            row = run_episode(
+                task_id,
+                model_id=model_id,
+                out=model_root,
+                awm=awm,
+                browserart=browserart,
+                auth_path=auth_path,
+                pw_context_kwargs={"proxy": dict(authority["runtime"]["browser_proxy"])},
+            )
             episodes.append(row)
             if row["status"] != "COMPLETE_DIAGNOSTIC" or row["success_by_step10"] is False:
                 break
