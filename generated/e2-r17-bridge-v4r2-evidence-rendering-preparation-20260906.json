@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-evidence-rendering-preparation",
+  "date": "2026-09-06",
+  "status": "PASS_ZERO_PROVIDER_BRIDGE_V4R2_COMMON_EVIDENCE_RENDERING_PREPARATION_NO_AUTHORITY",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-V4R2",
+  "implementation": {
+    "path": "research_pipeline/e2_r17_bridge_v4r2_evidence_rendering.py",
+    "sha256": "da60b99028803fd6fb8d140dbf2a58bf47d008259e27fff70a921599723024f6",
+    "test_path": "research_pipeline/test_e2_r17_bridge_v4r2_evidence_rendering.py",
+    "test_sha256": "e754c5b2b7f2d9d36b08411a714d9e190ce6425ffc8cadab4dc2d2acb2c8b256"
+  },
+  "frozen_renderer": {
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0",
+    "tokenizer_encoding": "cl100k_base",
+    "final_block_cap_tokens": 3072,
+    "padding": false
+  },
+  "runtime": {
+    "role": "updater_and_evidence_renderer",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "qualification_path": "generated/e2-r17-updater-runtime-qualification-20260829.json",
+    "qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "qualification_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+    "observed_tiktoken": "0.11.0",
+    "actor_runtime_must_not_rerender_evidence": true
+  },
+  "information_parity_invariants": {
+    "winner_free_and_winner_comp_receive_exact_same_rendered_bytes": true,
+    "ff4_free_and_ff4_comp_receive_exact_same_rendered_bytes": true,
+    "free_and_comp_receive_same_selected_evidence_score_within_each_source_cell": true,
+    "selected_evidence_score_is_not_served_acting_score_on_replaced_ff4_pools": true,
+    "winner_ff4_provider_visible_token_count_exactly_matched_per_pool": true,
+    "unchanged_winner_ff4_pools_are_byte_identical": true,
+    "system_prompt_removed_from_canonical_trajectory_text": true,
+    "projection_arm_pool_and_source_provenance_markers_not_model_visible": true,
+    "trajectory_file_sha_and_payload_task_rollout_score_revalidated": true,
+    "served_winner_sha_identical_between_winner_and_ff4": true,
+    "rendering_receipt_content_addressed": true
+  },
+  "verification": {
+    "new_rendering_tests": "7/7 PASS",
+    "evidence_package_tests": "8/8 PASS",
+    "state_materialization_tests": "6/6 PASS",
+    "compiler_tests": "15/15 PASS",
+    "bridge_execution_plan_tests": "7/7 PASS",
+    "v4r2_review_repair_tests": "7/7 PASS",
+    "combined": "50/50 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "next_zero_provider_step": "Bind the rendered W/FF4 BlindedEvidenceUnit batches to the existing first-party MindMemOS FREE updater exactly-once path and bind the same rendered SelectedEvidence batches to deterministic COMP/control materialization.",
+  "authority": {
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "support_inspection": false,
+    "free_updater": false,
+    "actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "analysis": false,
+    "paper_promotion": false
+  },
+  "interpretation_boundary": "This checkpoint freezes only common W/FF4 evidence rendering and information parity across FREE/COMP generator mechanisms. It does not inspect real Bridge support or execute any Bridge updater or actor."
+}
