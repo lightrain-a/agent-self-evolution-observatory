@@ -7,7 +7,7 @@ window.ADVISOR_MEETING_DATA = {
     "status": "9_OF_9_READY",
     "review_route": "exception-and-boundary-review",
     "freeze_status": "MEETING_CANDIDATE_FROZEN",
-    "candidate_hash": "58e21fc579519a0110bf802bf5f83f21391092360ef9b3475c93b5f2fbd2de81"
+    "candidate_hash": "588a6417e6cc390dec5693bc204ec502cc5e2c82213265aeeeeda232768f77f9"
   },
   "route_summary": {
     "FREEZE_SUBMIT": 3,
@@ -283,19 +283,18 @@ window.ADVISOR_MEETING_DATA = {
         "explicit_non_authority": "The advisor meeting is strategy/scheduling guidance only and grants no scientific, experiment, provider, GPU, or submission authority."
       },
       "stanford": {
-        "status": "PRIOR_VERSION",
-        "numerical_score": 5.2,
+        "status": "READY",
+        "numerical_score": 5.6,
         "textual_signal": "MIXED_POSITIVE",
-        "review_date": "2026-09-05T09:10:37.869549",
+        "review_date": "2026-09-06T03:55:12.082910",
         "advisor_digest": {
-          "strongest_positive": "- Technical novelty and innovation - Introduces a clean, same-trajectory writer intervention (flipping success/failure reflection) to isolate persistent-state changes without changing the source experience. - Proposes a stage-evidence ladder that preserves the distinct inferential semantics of heterogeneous measurements (write distance, exposure rate, action TV, endpoint contrast), avoiding spurious scalar “transport efficiency” scores. - Separates forced fixed-evidence “capacity” from native transport, enabling a principled diagnosis that avoids concluding “memory can never matter” from weak native endpoints. - Experimental rigor and validation - Uses paired designs, permutation/sign-flip …",
-          "decision_changing_concern": "- Technical limitations or concerns - The write intervention is a bundled protocol change (instruction + outcome semantics), not a pure reward-bit manipulation; atom-level causal attribution is thus unresolved. - Native exposure is measured at the source-item level, not at the “treatment-residual” level; it remains unknown whether the branch-differentiating content enters the policy’s effective readout. - Uptake is probed only at the first structured action; later-step or plan-level differences could exist but are not assessed. - Experimental gaps or methodological issues - Limited domains and sample sizes for downstream transport (36 Shopping states; Reddit lacks matched exposure/uptake pr…",
-          "reviewer_question": "1. How exactly is native retrieval implemented and scored (embedding model, indexing, k, reranking, rank thresholds), and how sensitive are the exposure and uptake results to these choices and to retrieval budget k? 2. Can you report retrieval rank distributions for the source-item exposure across branches and analyze whether lower ranks correlate with weaker uptake or endpoints? 3. Did you control for or analyze interference from other items in the memory bank (e.g., competition from similar items or cross-branch contamination) when measuring exposure and uptake? 4. Beyond the first action, did you assess second-step or plan-level divergences (e.g., action sequences, tool call chains, plan…"
+          "strongest_positive": "- Technical novelty and innovation - Introduces a stage-resolved diagnostic that explicitly separates write, source-item exposure, first-action uptake, and terminal outcome rather than conflating them into endpoint effects. - Distinguishes “capacity” (forced fixed-evidence leverage) from “native transport,” a valuable conceptual and experimental separation that prevents over-interpreting positive injection results as end-to-end behavioral change. - The “ordinal stage-evidence ladder” is a simple but effective operator for localizing where evidence first fails without imposing unjustified cross-stage normalization or mediation claims. - Experimental rigor and validation - Uses controlled pai…",
+          "decision_changing_concern": "- Technical limitations or concerns - The writer “branch” is a bundled protocol manipulation (instruction + outcome semantics), not an isolated reward-bit intervention; absence of per-atom seed binding or noise-floor replication limits causal attribution for specific textual differences. - First-action uptake is a narrow probe; behavioral changes might occur at later steps, plan-level choices, or tool sequences not captured by this assay. - Exposure is measured at the source-item level, not at the treatment-residual level; it remains unknown whether the branch-differentiating content was actually read/used by the policy. - Experimental gaps or methodological issues - Small to modest sample …",
+          "reviewer_question": "1. How exactly is retrieval implemented in the native pipeline (indexing modality, top-k, fusion, reranking)? Are these parameters strictly controlled and symmetric across branches, and is the retrieval budget comparable when banks differ in size/content? 2. Is first-action uptake U computed conditional on exposure (E=1) for the same state? If not, can you report U|E=1 and whether the boundary persists under this conditioning? 3. What are the rollout counts and stochasticity for estimating p^(1)(·|q) in the native setting? How sensitive is the TV statistic and its p-value to the number of rollouts and random seeds? 4. In the forced fixed-evidence setup, what is the exact prompt composition?…"
         },
-        "token_fingerprint_sha256_16": "c277515d89920ce3",
-        "reviewed_pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167",
-        "exact_current_pdf": false,
-        "prior_version_note": "External review is for the immediately preceding PDF SHA, not the current meeting candidate."
+        "token_fingerprint_sha256_16": null,
+        "reviewed_pdf_sha256": "fb09cbb4811b7350097f7c4659aa08238105076197e9ed487524cb6d75dee937",
+        "exact_current_pdf": true
       }
     },
     {
