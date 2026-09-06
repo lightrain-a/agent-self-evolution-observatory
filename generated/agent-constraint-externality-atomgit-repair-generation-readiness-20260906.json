@@ -1,0 +1,31 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "repair_generation": false,
+    "rq1_rq2": false
+  },
+  "content_sha256": "e817fe40f712fecd2fac43795435870ff45518e76a41afa20e4dd750d86c2761",
+  "human_edit_after_generation": false,
+  "next_required_action": "Separate human authority for exactly six repair-writer requests; no topology/repeat execution authority.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "one_frozen_repair_per_family": true,
+  "projection_content_sha256": "f18cc61fdb40f5c14bb036b766c04f0445bb3a7bf36a09e463aabdeefcdf8e1d",
+  "projection_file_sha256": "96456497ddd6335765b8d66869524f26a0c670cef5239ccce87a1ed3ca4ebba7",
+  "provider_requests_created": 0,
+  "raw_source_trajectory_visible_to_writer": false,
+  "repair_writer_request_cap": 6,
+  "schema_version": "ace-repair-generation-readiness-v1",
+  "selected_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ]
+  },
+  "status": "ATOMGIT_REPEAT_DEV_REPAIR_GENERATION_READY_AWAITING_SEPARATE_HUMAN_AUTHORITY"
+}

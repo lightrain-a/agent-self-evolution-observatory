@@ -1,0 +1,177 @@
+{
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "reserve_source_execution_closed": true,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "content_sha256": "af5cbf7ed5f7b507a11518c340d1b6b906a906cc0dbdfc41d29b2bd15e206cc5",
+  "execution_contract_content_sha256": "3c637c10670280a3e8ad86ce1fc034867e337c9b3498ba75b0c5921e1c351879",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-RESERVE-SOURCE-20260906",
+  "interpretation": "The six-family development source panel is frozen and valid for source-failure eligibility. This is not repair-uptake, collateral-externality, or topology evidence. Repair generation remains closed until a zero-provider target-evidence projection passes anti-leakage tests.",
+  "ledger": {
+    "completion_count": 10,
+    "dispatch_completion_unit_sets_equal": true,
+    "dispatch_count": 10,
+    "failure_count": 0,
+    "row_count": 20,
+    "unique_completion_units": 10,
+    "unique_dispatch_units": 10
+  },
+  "ledger_sha256": "517d0b6f9c118a7cdb9700fb8c78f3e145f8c47bf2e1a7cbdf0907b4fe4928bf",
+  "next_legal_action": "Implement and test TARGET_EVIDENCE_PROJECTION_V1 with zero provider calls, then freeze repair-generation readiness; any repair-writer execution requires separate human authority.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "repair_generation_executed": false,
+  "repair_input_audit": {
+    "raw_source_trajectory_is_not_direct_repair_input": true,
+    "reason": "Source eligibility remains valid because selection used only normally completed target outcome before repair/topology. The updater contract is stricter: only target-failure evidence may be visible, so dummy topology-construction resources and authentication transport must be deterministically projected out before any repair-writer provider call.",
+    "required_projection": "TARGET_EVIDENCE_PROJECTION_V1",
+    "selected_families_with_auth_transport_evidence": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106",
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ],
+    "selected_families_with_dummy_observation": [
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ],
+    "selected_family_audit": {
+      "ACE-DEV-FG-101": {
+        "auth_transport_row_count": 34,
+        "dummy_marker_row_count": 0,
+        "raw_trajectory_safe_for_repair_writer": false
+      },
+      "ACE-DEV-FG-104": {
+        "auth_transport_row_count": 34,
+        "dummy_marker_row_count": 0,
+        "raw_trajectory_safe_for_repair_writer": false
+      },
+      "ACE-DEV-FG-106": {
+        "auth_transport_row_count": 33,
+        "dummy_marker_row_count": 0,
+        "raw_trajectory_safe_for_repair_writer": false
+      },
+      "ACE-DEV-TNF-110": {
+        "auth_transport_row_count": 45,
+        "dummy_marker_row_count": 1,
+        "raw_trajectory_safe_for_repair_writer": false
+      },
+      "ACE-DEV-TNF-111": {
+        "auth_transport_row_count": 49,
+        "dummy_marker_row_count": 5,
+        "raw_trajectory_safe_for_repair_writer": false
+      },
+      "ACE-DEV-TNF-115": {
+        "auth_transport_row_count": 46,
+        "dummy_marker_row_count": 1,
+        "raw_trajectory_safe_for_repair_writer": false
+      }
+    }
+  },
+  "result_content_sha256": "1e6832f0200b028f05c2b8e365416f5440366a5bbb9d450f2d6c91932fabd4ca",
+  "result_file_sha256": "8ae3307617b4fb10dca189d5eb89ce7cfb32d90df5844870ca37cebd3888076d",
+  "schema_version": "ace-repeat-dev-reserve-source-closeout-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "source_outcomes": {
+    "appworld_tool_call_total": 344,
+    "completed_source_count": 10,
+    "scientific_model_round_count": 119,
+    "selected_family_count": 6,
+    "selected_family_ids": {
+      "FG": [
+        "ACE-DEV-FG-104",
+        "ACE-DEV-FG-101",
+        "ACE-DEV-FG-106"
+      ],
+      "TNF": [
+        "ACE-DEV-TNF-115",
+        "ACE-DEV-TNF-110",
+        "ACE-DEV-TNF-111"
+      ]
+    },
+    "semantic_failure_count": 6,
+    "target_success_count": 4
+  },
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_PANEL_PASS_TARGET_EVIDENCE_PROJECTION_REQUIRED",
+  "topology_execution_executed": false,
+  "trajectory_integrity": {
+    "ACE-DEV-FG-101": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 60,
+      "tool_call_count": 30,
+      "trajectory_sha256": "2f048d3ef678ec3e5a01b7d210cd905f1880d558945eac13d5350e1e0d824248"
+    },
+    "ACE-DEV-FG-102": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 54,
+      "tool_call_count": 27,
+      "trajectory_sha256": "e70823e3b226f1d86cb773e372eaddfcca43db7bd2b81b0eda9f939e3603ab65"
+    },
+    "ACE-DEV-FG-103": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 54,
+      "tool_call_count": 27,
+      "trajectory_sha256": "d3c68a183c439f640bd231c5f0fd5384496a13bffd56f219581a7171e4861fa6"
+    },
+    "ACE-DEV-FG-104": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 64,
+      "tool_call_count": 32,
+      "trajectory_sha256": "5a955ee049d3a2910c2befc039fb6c138f10eb355511c0b8f46d9edd369abc1a"
+    },
+    "ACE-DEV-FG-105": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 54,
+      "tool_call_count": 27,
+      "trajectory_sha256": "9877e6e1b6f511e29b3ec1bce1cd35b5103610f2405defdd6fb1c22f0b757d7b"
+    },
+    "ACE-DEV-FG-106": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 64,
+      "tool_call_count": 32,
+      "trajectory_sha256": "fe2434dd36e6939ac3cf30885e928e35b581ee3f086bd3fa7b0557f1ced47840"
+    },
+    "ACE-DEV-TNF-110": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 84,
+      "tool_call_count": 42,
+      "trajectory_sha256": "7e7bb5284a36480e071110a09966de89607c666b94e9c8a3108bab22ea3fa934"
+    },
+    "ACE-DEV-TNF-111": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 86,
+      "tool_call_count": 43,
+      "trajectory_sha256": "d13e37a5cc58f5c7571bff5ae39f5733d0e53173d3825251ae01676bc5fdd9d6"
+    },
+    "ACE-DEV-TNF-113": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 80,
+      "tool_call_count": 40,
+      "trajectory_sha256": "b2d371500c5d0799403cbe9b68a73bf9ee8ea4f42bfe8c261c29aa5f89cfa6ae"
+    },
+    "ACE-DEV-TNF-115": {
+      "dispatch_completion_sets_equal": true,
+      "rejected_count": 0,
+      "row_count": 88,
+      "tool_call_count": 44,
+      "trajectory_sha256": "d17da2a330bd05295895a52771414cdb75a4c8ee3350f6897b6ad83e6614be63"
+    }
+  }
+}

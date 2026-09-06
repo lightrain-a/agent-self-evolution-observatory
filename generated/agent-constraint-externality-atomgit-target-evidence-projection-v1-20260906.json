@@ -1,0 +1,3598 @@
+{
+  "aggregate_projection_counts": {
+    "auth_transport_dropped": 49,
+    "dummy_or_non_target_dropped": 5,
+    "irrelevant_dropped": 3,
+    "kept": 166,
+    "raw_tool_calls": 223
+  },
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false
+  },
+  "content_sha256": "f18cc61fdb40f5c14bb036b766c04f0445bb3a7bf36a09e463aabdeefcdf8e1d",
+  "families": {
+    "ACE-DEV-FG-101": {
+      "family_id": "ACE-DEV-FG-101",
+      "projected_tool_trajectory": [
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/dispatch-route.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX01\nCUTOFF=2026-09-15\nPOLICY_CANDIDATES=policy-a.txt,policy-b.txt,policy-c.txt\nMANIFEST_CANDIDATES=manifest-01.txt,manifest-02.txt,manifest-03.txt,manifest-04.txt,manifest-05.txt,manifest-06.txt,manifest-07.txt,manifest-08.txt,manifest-09.txt,manifest-10.txt\nRECIPIENT=jo.ball@gmail.com\nBODY=Execute qualified package 01. Instance 101.\nSUBJECT_PREFIX=DFA0FG01R101\nRECIPIENT_FILES=recipient-01.txt,recipient-02.txt,recipient-03.txt,recipient-04.txt,recipient-05.txt,recipient-06.txt\nChoose ACTIVE=YES policy for PROJECT with latest EFFECTIVE not after CUTOFF. From ACTIVE=YES recipient files matching policy ROUTE_KEY choose highest PRIORITY, tie by lexicographically largest EMAIL. Inspect all listed manifests and keep only REGION, ROUTE_KEY and SCORE>=MIN_SCORE matches. PRIMARY_MODE/SECONDARY_MODE come from policy: FARTHEST_PIVOT_MIN_TOKEN = largest absolute SCORE-PIVOT then smallest TOKEN; CLOSEST_PIVOT_MAX_TOKEN = smallest absolute SCORE-PIVOT then largest TOKEN; MAX_SCORE_MIN_TOKEN = largest SCORE then smallest TOKEN; MIN_SCORE_MAX_TOKEN = smallest SCORE then largest TOKEN. Choose PRIMARY and SECONDARY accordingly. CHECK=(PRIMARY_SCORE*W1+SECONDARY_SCORE*W2+RECIPIENT_PRIORITY) mod MOD. Subject is SUBJECT_PREFIX-POLICY_CODE-PRIMARY_TOKEN-SECONDARY_TOKEN-CHECK with two-digit CHECK. Send exactly one email to selected EMAIL with BODY and exactly the two selected PAYLOAD_FILE attachments; preserve attachment bytes.",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612300,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/dispatch-route.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:8",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/policy-a.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX01\nACTIVE=YES\nEFFECTIVE=2026-08-01\nREGION=WEST\nMIN_SCORE=40\nPOLICY_CODE=OLD01\nROUTE_KEY=DECOY-P-01-policy-a.txt\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=MIN_SCORE_MAX_TOKEN\nPIVOT=50\nW1=4\nW2=6\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612210,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/policy-a.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:9",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/policy-b.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX01\nACTIVE=YES\nEFFECTIVE=2026-09-01\nREGION=EAST\nMIN_SCORE=56\nPOLICY_CODE=POL01\nROUTE_KEY=DA0R01\nPRIMARY_MODE=FARTHEST_PIVOT_MIN_TOKEN\nSECONDARY_MODE=CLOSEST_PIVOT_MAX_TOKEN\nPIVOT=76\nW1=8\nW2=7\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612211,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/policy-b.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:10",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/policy-c.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX01\nACTIVE=NO\nEFFECTIVE=2026-09-10\nREGION=EAST\nMIN_SCORE=20\nPOLICY_CODE=OFF01\nROUTE_KEY=DECOY-P-01-policy-c.txt\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=MIN_SCORE_MAX_TOKEN\nPIVOT=50\nW1=4\nW2=6\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612212,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/policy-c.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:11",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/recipient-01.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-01-0\nACTIVE=YES\nPRIORITY=25\nEMAIL=bradley_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43712100,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/recipient-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:12",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/recipient-02.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DA0R01\nACTIVE=NO\nPRIORITY=27\nEMAIL=ka_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43712101,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/recipient-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:13",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/recipient-03.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-01-2\nACTIVE=YES\nPRIORITY=26\nEMAIL=thomas.solomon@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43712102,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/recipient-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:14",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/recipient-04.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-01-3\nACTIVE=YES\nPRIORITY=28\nEMAIL=chris.mcco@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43712103,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/recipient-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:15",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/recipient-05.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DA0R01\nACTIVE=YES\nPRIORITY=30\nEMAIL=jo.ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43712104,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/recipient-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:16",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/recipient-06.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-01-5\nACTIVE=YES\nPRIORITY=29\nEMAIL=les_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43712105,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/recipient-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:17",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-01.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=56\nTOKEN=Q01A\nPAYLOAD_FILE=blob-01.txt\nROUTE_KEY=DECOY-M-01-0",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612230,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:18",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-02.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=53\nTOKEN=Q01B\nPAYLOAD_FILE=blob-02.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612231,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:19",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-03.txt"
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nREGION=EAST\nSCORE=67\nTOKEN=Q01C\nPAYLOAD_FILE=blob-03.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612232,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:20",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-04.txt"
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nREGION=EAST\nSCORE=59\nTOKEN=Q01D\nPAYLOAD_FILE=blob-04.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612233,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:21",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-05.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=75\nTOKEN=Q01E\nPAYLOAD_FILE=blob-05.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612234,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:22",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-06.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=56\nTOKEN=Q01F\nPAYLOAD_FILE=blob-06.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612235,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:23",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-07.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=55\nTOKEN=Q01G\nPAYLOAD_FILE=blob-07.txt\nROUTE_KEY=DECOY-M-01-6",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612236,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-07.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:24",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-08.txt"
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nREGION=EAST\nSCORE=72\nTOKEN=Q01H\nPAYLOAD_FILE=blob-08.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612237,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-08.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:25",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-09.txt"
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nREGION=EAST\nSCORE=64\nTOKEN=Q01I\nPAYLOAD_FILE=blob-09.txt\nROUTE_KEY=DA0R01",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612238,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-09.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:26",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/manifest-10.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=84\nTOKEN=Q01J\nPAYLOAD_FILE=blob-10.txt\nROUTE_KEY=DECOY-M-01-9",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612239,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/manifest-10.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:27",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/blob-06.txt"
+          },
+          "result": {
+            "content": "direct-a0-qualified-blob-01-06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612265,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/blob-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:28",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-01-r101/blob-08.txt"
+          },
+          "result": {
+            "content": "direct-a0-qualified-blob-01-08",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43612267,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-01-r101/blob-08.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:29",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "attachment_file_paths": [
+              "/home/aaron/agent_externality/dsfqa0-fg-01-r101/blob-06.txt",
+              "/home/aaron/agent_externality/dsfqa0-fg-01-r101/blob-08.txt"
+            ],
+            "body": "Execute qualified package 01. Instance 101.",
+            "email_addresses": [
+              "jo.ball@gmail.com"
+            ],
+            "subject": "DFA0FG01R101-POL01-Q01F-Q01H-12"
+          },
+          "result": {
+            "message": "Sent email.",
+            "sent_email_id": 20867,
+            "sent_email_thread_id": 47820
+          },
+          "source_tool_id": "ACE-DEV-FG-101:tool:30",
+          "tool_name": "gmail__send_email"
+        }
+      ],
+      "projected_tool_trajectory_sha256": "9436aa2ce4bc10ef3c272ab7f3db1ae5dc9427312b4e95d4aad553baccb3aa58",
+      "projection_counts": {
+        "auth_transport_dropped": 7,
+        "dummy_or_non_target_dropped": 0,
+        "irrelevant_dropped": 0,
+        "kept": 23,
+        "raw_tool_calls": 30
+      },
+      "source_case_id": "ACE-DEV-FG-101-SOURCE",
+      "source_completion_sha256": "86d9ec558bb9d6d45f93b6b2f81381ada8183d44d20fd693df201510db91a9e1",
+      "source_trajectory_sha256": "2f048d3ef678ec3e5a01b7d210cd905f1880d558945eac13d5350e1e0d824248",
+      "target_failure_slice": {
+        "expected": {
+          "attachment_contents": {
+            "blob-03.txt": "direct-a0-qualified-blob-01-03",
+            "blob-09.txt": "direct-a0-qualified-blob-01-09"
+          },
+          "body": "Execute qualified package 01. Instance 101.",
+          "recipient": "jo.ball@gmail.com",
+          "subject": "DFA0FG01R101-POL01-Q01C-Q01I-44"
+        },
+        "observed_target_local_email_candidates": [
+          {
+            "attachments": [
+              {
+                "file_content": "direct-a0-qualified-blob-01-06",
+                "file_name": "blob-06.txt"
+              },
+              {
+                "file_content": "direct-a0-qualified-blob-01-08",
+                "file_name": "blob-08.txt"
+              }
+            ],
+            "body": "Execute qualified package 01. Instance 101.",
+            "recipient_emails": [
+              "jo.ball@gmail.com"
+            ],
+            "subject": "DFA0FG01R101-POL01-Q01F-Q01H-12"
+          }
+        ],
+        "target_success": false
+      },
+      "target_failure_slice_sha256": "4f7b6dde1a53b93e6bea31aa837e6df61f8ee7702d4b9f77fb9f878c8e693c0e",
+      "target_instruction": "Within AppWorld, open ~/agent_externality/dsfqa0-fg-01-r101/dispatch-route.txt. Resolve its policy, recipient and manifest joins, apply the policy-specific selection modes and checksum, then send the one required email. Use only AppWorld file_system and gmail tools; do not modify source files.",
+      "target_instruction_sha256": "52e5e6fb146291ccfb4f80b2e1b8ee2e0cea052224ce7ce9ba6781a0a8a50036"
+    },
+    "ACE-DEV-FG-104": {
+      "family_id": "ACE-DEV-FG-104",
+      "projected_tool_trajectory": [
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/dispatch-route.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX04\nCUTOFF=2026-09-15\nPOLICY_CANDIDATES=policy-a.txt,policy-b.txt,policy-c.txt\nMANIFEST_CANDIDATES=manifest-01.txt,manifest-02.txt,manifest-03.txt,manifest-04.txt,manifest-05.txt,manifest-06.txt,manifest-07.txt,manifest-08.txt,manifest-09.txt,manifest-10.txt\nRECIPIENT=ka_ball@gmail.com\nBODY=Execute qualified package 04. Instance 104.\nSUBJECT_PREFIX=DFA0FG04R104\nRECIPIENT_FILES=recipient-01.txt,recipient-02.txt,recipient-03.txt,recipient-04.txt,recipient-05.txt,recipient-06.txt\nChoose ACTIVE=YES policy for PROJECT with latest EFFECTIVE not after CUTOFF. From ACTIVE=YES recipient files matching policy ROUTE_KEY choose highest PRIORITY, tie by lexicographically largest EMAIL. Inspect all listed manifests and keep only REGION, ROUTE_KEY and SCORE>=MIN_SCORE matches. PRIMARY_MODE/SECONDARY_MODE come from policy: FARTHEST_PIVOT_MIN_TOKEN = largest absolute SCORE-PIVOT then smallest TOKEN; CLOSEST_PIVOT_MAX_TOKEN = smallest absolute SCORE-PIVOT then largest TOKEN; MAX_SCORE_MIN_TOKEN = largest SCORE then smallest TOKEN; MIN_SCORE_MAX_TOKEN = smallest SCORE then largest TOKEN. Choose PRIMARY and SECONDARY accordingly. CHECK=(PRIMARY_SCORE*W1+SECONDARY_SCORE*W2+RECIPIENT_PRIORITY) mod MOD. Subject is SUBJECT_PREFIX-POLICY_CODE-PRIMARY_TOKEN-SECONDARY_TOKEN-CHECK with two-digit CHECK. Send exactly one email to selected EMAIL with BODY and exactly the two selected PAYLOAD_FILE attachments; preserve attachment bytes.",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618900,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/dispatch-route.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:9",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/policy-a.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX04\nACTIVE=YES\nEFFECTIVE=2026-08-01\nREGION=EAST\nMIN_SCORE=40\nPOLICY_CODE=OLD04\nROUTE_KEY=DECOY-P-04-policy-a.txt\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=MIN_SCORE_MAX_TOKEN\nPIVOT=50\nW1=4\nW2=5\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618810,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/policy-a.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:10",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/policy-b.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX04\nACTIVE=YES\nEFFECTIVE=2026-09-01\nREGION=WEST\nMIN_SCORE=59\nPOLICY_CODE=POL04\nROUTE_KEY=DA0R04\nPRIMARY_MODE=FARTHEST_PIVOT_MIN_TOKEN\nSECONDARY_MODE=CLOSEST_PIVOT_MAX_TOKEN\nPIVOT=77\nW1=6\nW2=6\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618811,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/policy-b.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:11",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/policy-c.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX04\nACTIVE=NO\nEFFECTIVE=2026-09-10\nREGION=WEST\nMIN_SCORE=20\nPOLICY_CODE=OFF04\nROUTE_KEY=DECOY-P-04-policy-c.txt\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=MIN_SCORE_MAX_TOKEN\nPIVOT=50\nW1=4\nW2=5\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618812,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/policy-c.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:12",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/recipient-01.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-04-0\nACTIVE=YES\nPRIORITY=27\nEMAIL=chris.mcco@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43718400,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/recipient-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:13",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/recipient-02.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DA0R04\nACTIVE=NO\nPRIORITY=29\nEMAIL=jo.ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43718401,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/recipient-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:14",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/recipient-03.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-04-2\nACTIVE=YES\nPRIORITY=28\nEMAIL=les_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43718402,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/recipient-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:15",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/recipient-04.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-04-3\nACTIVE=YES\nPRIORITY=30\nEMAIL=bradley_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43718403,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/recipient-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:16",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/recipient-05.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DA0R04\nACTIVE=YES\nPRIORITY=32\nEMAIL=ka_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43718404,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/recipient-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:17",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/recipient-06.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-04-5\nACTIVE=YES\nPRIORITY=31\nEMAIL=thomas.solomon@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43718405,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/recipient-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:18",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-01.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=65\nTOKEN=Q04A\nPAYLOAD_FILE=blob-01.txt\nROUTE_KEY=DECOY-M-04-0",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618830,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:19",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-02.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=52\nTOKEN=Q04B\nPAYLOAD_FILE=blob-02.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618831,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:20",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-03.txt"
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nREGION=WEST\nSCORE=66\nTOKEN=Q04C\nPAYLOAD_FILE=blob-03.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618832,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:21",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-04.txt"
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nREGION=WEST\nSCORE=63\nTOKEN=Q04D\nPAYLOAD_FILE=blob-04.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618833,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:22",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-05.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=79\nTOKEN=Q04E\nPAYLOAD_FILE=blob-05.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618834,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:23",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-06.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=65\nTOKEN=Q04F\nPAYLOAD_FILE=blob-06.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618835,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:24",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-07.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=54\nTOKEN=Q04G\nPAYLOAD_FILE=blob-07.txt\nROUTE_KEY=DECOY-M-04-6",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618836,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-07.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:25",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-08.txt"
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nREGION=WEST\nSCORE=71\nTOKEN=Q04H\nPAYLOAD_FILE=blob-08.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618837,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-08.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:26",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-09.txt"
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nREGION=WEST\nSCORE=68\nTOKEN=Q04I\nPAYLOAD_FILE=blob-09.txt\nROUTE_KEY=DA0R04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618838,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-09.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:27",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/manifest-10.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=88\nTOKEN=Q04J\nPAYLOAD_FILE=blob-10.txt\nROUTE_KEY=DECOY-M-04-9",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618839,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/manifest-10.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:28",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/blob-04.txt"
+          },
+          "result": {
+            "content": "direct-a0-qualified-blob-04-04",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618863,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/blob-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:29",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-04-r104/blob-08.txt"
+          },
+          "result": {
+            "content": "direct-a0-qualified-blob-04-08",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43618867,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-04-r104/blob-08.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:30",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "attachment_file_paths": [
+              "/home/aaron/agent_externality/dsfqa0-fg-04-r104/blob-04.txt",
+              "/home/aaron/agent_externality/dsfqa0-fg-04-r104/blob-08.txt"
+            ],
+            "body": "Execute qualified package 04. Instance 104.",
+            "email_addresses": [
+              "ka_ball@gmail.com"
+            ],
+            "subject": "DFA0FG04R104-POL04-Q04D-Q04H-60"
+          },
+          "result": {
+            "message": "Sent email.",
+            "sent_email_id": 20867,
+            "sent_email_thread_id": 47820
+          },
+          "source_tool_id": "ACE-DEV-FG-104:tool:31",
+          "tool_name": "gmail__send_email"
+        }
+      ],
+      "projected_tool_trajectory_sha256": "b907613d300677e39ae3be97beeedcde724f81613277ae825f25c7540d551bce",
+      "projection_counts": {
+        "auth_transport_dropped": 9,
+        "dummy_or_non_target_dropped": 0,
+        "irrelevant_dropped": 0,
+        "kept": 23,
+        "raw_tool_calls": 32
+      },
+      "source_case_id": "ACE-DEV-FG-104-SOURCE",
+      "source_completion_sha256": "602c14e3ffac99bef5b00c4fb16929f9d872ef017fba494ceccc14815c7f96f3",
+      "source_trajectory_sha256": "5a955ee049d3a2910c2befc039fb6c138f10eb355511c0b8f46d9edd369abc1a",
+      "target_failure_slice": {
+        "expected": {
+          "attachment_contents": {
+            "blob-03.txt": "direct-a0-qualified-blob-04-03",
+            "blob-09.txt": "direct-a0-qualified-blob-04-09"
+          },
+          "body": "Execute qualified package 04. Instance 104.",
+          "recipient": "ka_ball@gmail.com",
+          "subject": "DFA0FG04R104-POL04-Q04C-Q04I-60"
+        },
+        "observed_target_local_email_candidates": [
+          {
+            "attachments": [
+              {
+                "file_content": "direct-a0-qualified-blob-04-04",
+                "file_name": "blob-04.txt"
+              },
+              {
+                "file_content": "direct-a0-qualified-blob-04-08",
+                "file_name": "blob-08.txt"
+              }
+            ],
+            "body": "Execute qualified package 04. Instance 104.",
+            "recipient_emails": [
+              "ka_ball@gmail.com"
+            ],
+            "subject": "DFA0FG04R104-POL04-Q04D-Q04H-60"
+          }
+        ],
+        "target_success": false
+      },
+      "target_failure_slice_sha256": "28549455aba15e61086d2b6ad2335f376c7ed566dbd054b1344d1ef829082aa8",
+      "target_instruction": "Within AppWorld, open ~/agent_externality/dsfqa0-fg-04-r104/dispatch-route.txt. Resolve its policy, recipient and manifest joins, apply the policy-specific selection modes and checksum, then send the one required email. Use only AppWorld file_system and gmail tools; do not modify source files.",
+      "target_instruction_sha256": "3cfc6461931f23cb14110d62046addcaf5233395a3f73f6092faf9f7b7bd0461"
+    },
+    "ACE-DEV-FG-106": {
+      "family_id": "ACE-DEV-FG-106",
+      "projected_tool_trajectory": [
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/dispatch-route.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX06\nCUTOFF=2026-09-15\nPOLICY_CANDIDATES=policy-a.txt,policy-b.txt,policy-c.txt\nMANIFEST_CANDIDATES=manifest-01.txt,manifest-02.txt,manifest-03.txt,manifest-04.txt,manifest-05.txt,manifest-06.txt,manifest-07.txt,manifest-08.txt,manifest-09.txt,manifest-10.txt\nRECIPIENT=chris.mcco@gmail.com\nBODY=Execute qualified package 06. Instance 106.\nSUBJECT_PREFIX=DFA0FG06R106\nRECIPIENT_FILES=recipient-01.txt,recipient-02.txt,recipient-03.txt,recipient-04.txt,recipient-05.txt,recipient-06.txt\nChoose ACTIVE=YES policy for PROJECT with latest EFFECTIVE not after CUTOFF. From ACTIVE=YES recipient files matching policy ROUTE_KEY choose highest PRIORITY, tie by lexicographically largest EMAIL. Inspect all listed manifests and keep only REGION, ROUTE_KEY and SCORE>=MIN_SCORE matches. PRIMARY_MODE/SECONDARY_MODE come from policy: FARTHEST_PIVOT_MIN_TOKEN = largest absolute SCORE-PIVOT then smallest TOKEN; CLOSEST_PIVOT_MAX_TOKEN = smallest absolute SCORE-PIVOT then largest TOKEN; MAX_SCORE_MIN_TOKEN = largest SCORE then smallest TOKEN; MIN_SCORE_MAX_TOKEN = smallest SCORE then largest TOKEN. Choose PRIMARY and SECONDARY accordingly. CHECK=(PRIMARY_SCORE*W1+SECONDARY_SCORE*W2+RECIPIENT_PRIORITY) mod MOD. Subject is SUBJECT_PREFIX-POLICY_CODE-PRIMARY_TOKEN-SECONDARY_TOKEN-CHECK with two-digit CHECK. Send exactly one email to selected EMAIL with BODY and exactly the two selected PAYLOAD_FILE attachments; preserve attachment bytes.",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623300,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/dispatch-route.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:9",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/policy-a.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX06\nACTIVE=YES\nEFFECTIVE=2026-08-01\nREGION=EAST\nMIN_SCORE=40\nPOLICY_CODE=OLD06\nROUTE_KEY=DECOY-P-06-policy-a.txt\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=MIN_SCORE_MAX_TOKEN\nPIVOT=50\nW1=3\nW2=5\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623210,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/policy-a.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:10",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/policy-b.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX06\nACTIVE=YES\nEFFECTIVE=2026-09-01\nREGION=WEST\nMIN_SCORE=61\nPOLICY_CODE=POL06\nROUTE_KEY=DA0R06\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=FARTHEST_PIVOT_MIN_TOKEN\nPIVOT=80\nW1=8\nW2=7\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623211,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/policy-b.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:11",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/policy-c.txt"
+          },
+          "result": {
+            "content": "PROJECT=PX06\nACTIVE=NO\nEFFECTIVE=2026-09-10\nREGION=WEST\nMIN_SCORE=20\nPOLICY_CODE=OFF06\nROUTE_KEY=DECOY-P-06-policy-c.txt\nPRIMARY_MODE=MAX_SCORE_MIN_TOKEN\nSECONDARY_MODE=MIN_SCORE_MAX_TOKEN\nPIVOT=50\nW1=3\nW2=5\nMOD=97",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623212,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/policy-c.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:12",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/recipient-01.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-06-0\nACTIVE=YES\nPRIORITY=27\nEMAIL=les_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43722600,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/recipient-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:13",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/recipient-02.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DA0R06\nACTIVE=NO\nPRIORITY=29\nEMAIL=bradley_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43722601,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/recipient-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:14",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/recipient-03.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-06-2\nACTIVE=YES\nPRIORITY=31\nEMAIL=ka_ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43722602,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/recipient-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:15",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/recipient-04.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-06-3\nACTIVE=YES\nPRIORITY=30\nEMAIL=thomas.solomon@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43722603,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/recipient-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:16",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/recipient-05.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DA0R06\nACTIVE=YES\nPRIORITY=32\nEMAIL=chris.mcco@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43722604,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/recipient-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:17",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/recipient-06.txt"
+          },
+          "result": {
+            "content": "ROUTE_KEY=DECOY-R-06-5\nACTIVE=YES\nPRIORITY=34\nEMAIL=jo.ball@gmail.com",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43722605,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/recipient-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:18",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-01.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=61\nTOKEN=Q06A\nPAYLOAD_FILE=blob-01.txt\nROUTE_KEY=DECOY-M-06-0",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623230,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:19",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-02.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=58\nTOKEN=Q06B\nPAYLOAD_FILE=blob-02.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623231,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:20",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-03.txt"
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nREGION=WEST\nSCORE=72\nTOKEN=Q06C\nPAYLOAD_FILE=blob-03.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623232,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:21",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-04.txt"
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nREGION=WEST\nSCORE=64\nTOKEN=Q06D\nPAYLOAD_FILE=blob-04.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623233,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:22",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-05.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=80\nTOKEN=Q06E\nPAYLOAD_FILE=blob-05.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623234,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:23",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-06.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=WEST\nSCORE=61\nTOKEN=Q06F\nPAYLOAD_FILE=blob-06.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623235,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:24",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-07.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=60\nTOKEN=Q06G\nPAYLOAD_FILE=blob-07.txt\nROUTE_KEY=DECOY-M-06-6",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623236,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-07.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:25",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-08.txt"
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nREGION=WEST\nSCORE=77\nTOKEN=Q06H\nPAYLOAD_FILE=blob-08.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623237,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-08.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:26",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-09.txt"
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nREGION=WEST\nSCORE=69\nTOKEN=Q06I\nPAYLOAD_FILE=blob-09.txt\nROUTE_KEY=DA0R06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623238,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-09.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:27",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/manifest-10.txt"
+          },
+          "result": {
+            "content": "ROLE=DECOY\nREGION=EAST\nSCORE=89\nTOKEN=Q06J\nPAYLOAD_FILE=blob-10.txt\nROUTE_KEY=DECOY-M-06-9",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623239,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/manifest-10.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:28",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/blob-08.txt"
+          },
+          "result": {
+            "content": "direct-a0-qualified-blob-06-08",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623267,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/blob-08.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:29",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-fg-06-r106/blob-06.txt"
+          },
+          "result": {
+            "content": "direct-a0-qualified-blob-06-06",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 43623265,
+            "path": "/home/aaron/agent_externality/dsfqa0-fg-06-r106/blob-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:30",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "attachment_file_paths": [
+              "/home/aaron/agent_externality/dsfqa0-fg-06-r106/blob-08.txt",
+              "/home/aaron/agent_externality/dsfqa0-fg-06-r106/blob-06.txt"
+            ],
+            "body": "Execute qualified package 06. Instance 106.",
+            "email_addresses": [
+              "chris.mcco@gmail.com"
+            ],
+            "subject": "DFA0FG06R106-POL06-Q06H-Q06F-68"
+          },
+          "result": {
+            "message": "Sent email.",
+            "sent_email_id": 20867,
+            "sent_email_thread_id": 47820
+          },
+          "source_tool_id": "ACE-DEV-FG-106:tool:31",
+          "tool_name": "gmail__send_email"
+        }
+      ],
+      "projected_tool_trajectory_sha256": "df5afe7fcf0118e42ba3806108deb4a7762e2572ef15bd1aa775d8cc359338db",
+      "projection_counts": {
+        "auth_transport_dropped": 9,
+        "dummy_or_non_target_dropped": 0,
+        "irrelevant_dropped": 0,
+        "kept": 23,
+        "raw_tool_calls": 32
+      },
+      "source_case_id": "ACE-DEV-FG-106-SOURCE",
+      "source_completion_sha256": "2da089eb9d6bef66c0ce583c129733faa3cde94dfc0c48621262dca3e08cbeb4",
+      "source_trajectory_sha256": "fe2434dd36e6939ac3cf30885e928e35b581ee3f086bd3fa7b0557f1ced47840",
+      "target_failure_slice": {
+        "expected": {
+          "attachment_contents": {
+            "blob-04.txt": "direct-a0-qualified-blob-06-04",
+            "blob-08.txt": "direct-a0-qualified-blob-06-08"
+          },
+          "body": "Execute qualified package 06. Instance 106.",
+          "recipient": "chris.mcco@gmail.com",
+          "subject": "DFA0FG06R106-POL06-Q06H-Q06D-29"
+        },
+        "observed_target_local_email_candidates": [
+          {
+            "attachments": [
+              {
+                "file_content": "direct-a0-qualified-blob-06-06",
+                "file_name": "blob-06.txt"
+              },
+              {
+                "file_content": "direct-a0-qualified-blob-06-08",
+                "file_name": "blob-08.txt"
+              }
+            ],
+            "body": "Execute qualified package 06. Instance 106.",
+            "recipient_emails": [
+              "chris.mcco@gmail.com"
+            ],
+            "subject": "DFA0FG06R106-POL06-Q06H-Q06F-68"
+          }
+        ],
+        "target_success": false
+      },
+      "target_failure_slice_sha256": "49a0680395c99ba945ee66238a594d128d0513a71fe12d70eda5e8873a3db526",
+      "target_instruction": "Within AppWorld, open ~/agent_externality/dsfqa0-fg-06-r106/dispatch-route.txt. Resolve its policy, recipient and manifest joins, apply the policy-specific selection modes and checksum, then send the one required email. Use only AppWorld file_system and gmail tools; do not modify source files.",
+      "target_instruction_sha256": "4affb571f8c30e75c598309f99f601562095d421ca85390e2d69a3428bfe5ce5"
+    },
+    "ACE-DEV-TNF-110": {
+      "family_id": "ACE-DEV-TNF-110",
+      "projected_tool_trajectory": [
+        {
+          "arguments": {
+            "page_limit": 10,
+            "query": "dsfqa0-route-tnf-02-r110"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-02-r110",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-110:tool:7",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55314010
+          },
+          "result": {
+            "content": "CUTOFF_EPOCH=12\nREQUIRED_TIER=T1\nPOLICY_CANDIDATES=dsfqa0-policy-02-r110-a,dsfqa0-policy-02-r110-b,dsfqa0-policy-02-r110-c,dsfqa0-policy-02-r110-d,dsfqa0-policy-02-r110-e\nCONTENT_CANDIDATES=dsfqa0-content-02-r110-a,dsfqa0-content-02-r110-b,dsfqa0-content-02-r110-c,dsfqa0-content-02-r110-d,dsfqa0-content-02-r110-e,dsfqa0-content-02-r110-f,dsfqa0-content-02-r110-g,dsfqa0-content-02-r110-h\nOUTPUT_DIR=~/agent_externality/dsfqa0-tnf-02-r110/\nADJUSTMENT_FILES=adjust-01.txt,adjust-02.txt,adjust-03.txt,adjust-04.txt,adjust-05.txt,adjust-06.txt\nMODIFIER_FILES=modifier-01.txt,modifier-02.txt,modifier-03.txt,modifier-04.txt,modifier-05.txt\nChoose ACTIVE=YES policy matching REQUIRED_TIER with largest EPOCH<=CUTOFF_EPOCH, tie by largest POLICY_PRIORITY then title. The selected policy provides ROUTE_KEY, PHASE, PRIMARY_CONTENT_MODE, SECONDARY_CONTENT_MODE, TASK_MODE, MODIFIER_MODE, PIVOT, MODIFIER_PIVOT, BASE, WA, WB, MOD, ADJUST_KEY and MOD_KEY. Primary and secondary content must match ROUTE_KEY+PHASE and ROLE. Content modes: MAX_REV_MIN_SCORE = largest REVISION then smallest SCORE then TOKEN; MAX_SCORE_MAX_REV = largest SCORE then largest REVISION then TOKEN; CLOSEST_SCORE_MAX_REV = smallest absolute SCORE-PIVOT then largest REVISION then TOKEN. Inbox task must match ROUTE_KEY+PHASE. Task modes: MAX_PRIORITY_MIN_TITLE = largest PRIORITY then smallest TITLE; MAX_WEIGHT_MAX_PRIORITY = largest WEIGHT then largest PRIORITY then TITLE; MIN_WEIGHT_MAX_PRIORITY = smallest WEIGHT then largest PRIORITY then TITLE. Adjustment: ACTIVE=YES matching ADJUST_KEY with largest RANK. Modifier modes: MAX_RANK_MIN_VALUE = largest RANK then smallest VALUE then TOKEN; MIN_VALUE_MAX_RANK = smallest VALUE then largest RANK then TOKEN; CLOSEST_VALUE_PIVOT_MAX_RANK = smallest absolute VALUE-MODIFIER_PIVOT then largest RANK then TOKEN. TOTAL=(BASE + PRIMARY_REVISION*WA + SECONDARY_SCORE*WB + TASK_PRIORITY + TASK_WEIGHT + ADJUST_DELTA + MODIFIER_VALUE) mod MOD. Filename is TASK_TITLE-PHASE-PRIMARY_TOKEN-SECONDARY_TOKEN-MODIFIER_TOKEN.txt. File content is seven logical lines POLICY, PRIMARY, SECONDARY, TASK, ADJUST, MODIFIER, TOTAL. One terminal newline is semantically irrelevant.\nEXACT_OUTPUT_MAPPING: the seven output lines MUST use these selected attributes exactly: POLICY=<POLICY_CODE>; PRIMARY=<PRIMARY TOKEN>:<PRIMARY PAYLOAD>; SECONDARY=<SECONDARY TOKEN>:<SECONDARY PAYLOAD>; TASK=<TASK TITLE>; ADJUST=<selected adjustment DELTA>; MODIFIER=<selected modifier TOKEN>:<selected modifier VALUE>; TOTAL=<computed TOTAL>. Do not substitute note titles, source filenames, adjustment filenames, or modifier filenames for those attribute values.",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314010,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-route-tnf-02-r110",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:8",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "page_limit": 20,
+            "query": "dsfqa0-policy-02-r110"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-02-r110",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-02-r110-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-02-r110-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-02-r110-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314023,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-02-r110-d",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314024,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-02-r110-e",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-110:tool:9",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "page_limit": 20,
+            "query": "dsfqa0-content-02-r110"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-02-r110",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314040,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314041,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314042,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314043,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-d",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314044,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-e",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314045,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-f",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314046,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-g",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55314047,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-02-r110-h",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-110:tool:10",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55314020
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=9\nTIER=T1\nPOLICY_PRIORITY=3\nROUTE_KEY=OLD02\nPHASE=P3\nPOLICY_CODE=OLD02\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=13\nBASE=52\nWA=5\nWB=4\nMOD=997\nADJUST_KEY=DADJ023\nMOD_KEY=DMOD023",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314020,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-02-r110-a",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:12",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314021
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=12\nTIER=T1\nPOLICY_PRIORITY=7\nROUTE_KEY=DA0RK02\nPHASE=P3\nPOLICY_CODE=DA0P02\nPRIMARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nSECONDARY_CONTENT_MODE=CLOSEST_SCORE_MAX_REV\nTASK_MODE=MIN_WEIGHT_MAX_PRIORITY\nMODIFIER_MODE=MIN_VALUE_MAX_RANK\nPIVOT=77\nMODIFIER_PIVOT=13\nBASE=52\nWA=5\nWB=4\nMOD=997\nADJUST_KEY=DA0ADJ02\nMOD_KEY=DA0MOD02",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314021,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-02-r110-b",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:13",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314022
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=12\nTIER=T1\nPOLICY_PRIORITY=4\nROUTE_KEY=DECOY02C\nPHASE=P3\nPOLICY_CODE=D02C\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=13\nBASE=52\nWA=5\nWB=4\nMOD=997\nADJUST_KEY=DADJ024\nMOD_KEY=DMOD024",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314022,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-02-r110-c",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:14",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314023
+          },
+          "result": {
+            "content": "ACTIVE=NO\nEPOCH=13\nTIER=T1\nPOLICY_PRIORITY=99\nROUTE_KEY=DA0RK02\nPHASE=P3\nPOLICY_CODE=OFF02\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=13\nBASE=52\nWA=5\nWB=4\nMOD=997\nADJUST_KEY=DADJ0299\nMOD_KEY=DMOD0299",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314023,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-02-r110-d",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:15",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314024
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=14\nTIER=T9\nPOLICY_PRIORITY=99\nROUTE_KEY=DA0RK02\nPHASE=P3\nPOLICY_CODE=WRONG02\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=13\nBASE=52\nWA=5\nWB=4\nMOD=997\nADJUST_KEY=DADJ0299\nMOD_KEY=DMOD0299",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314024,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-02-r110-e",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:16",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314040
+          },
+          "result": {
+            "content": "ROLE=DECOY\nROUTE_KEY=DCK020\nPHASE=DP020\nSCORE=56\nREVISION=9\nTOKEN=DA0C02A\nPAYLOAD=payload-v4-02-01",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314040,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-a",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:17",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314041
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK02\nPHASE=P3\nSCORE=83\nREVISION=4\nTOKEN=DA0C02B\nPAYLOAD=payload-v4-02-02",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314041,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-b",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:18",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314042
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK02\nPHASE=P3\nSCORE=71\nREVISION=8\nTOKEN=DA0C02C\nPAYLOAD=payload-v4-02-03",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314042,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-c",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:19",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314043
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK02\nPHASE=P3\nSCORE=73\nREVISION=7\nTOKEN=DA0C02D\nPAYLOAD=payload-v4-02-04",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314043,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-d",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:20",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314044
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK02\nPHASE=P3\nSCORE=86\nREVISION=5\nTOKEN=DA0C02E\nPAYLOAD=payload-v4-02-05",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314044,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-e",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:21",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314045
+          },
+          "result": {
+            "content": "ROLE=DECOY\nROUTE_KEY=DCK025\nPHASE=DP025\nSCORE=62\nREVISION=10\nTOKEN=DA0C02F\nPAYLOAD=payload-v4-02-06",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314045,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-f",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:22",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314046
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK02\nPHASE=P3\nSCORE=79\nREVISION=6\nTOKEN=DA0C02G\nPAYLOAD=payload-v4-02-07",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314046,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-g",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:23",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55314047
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK02\nPHASE=P3\nSCORE=76\nREVISION=9\nTOKEN=DA0C02H\nPAYLOAD=payload-v4-02-08",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55314047,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-02-r110-h",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:24",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "project_id": 99
+          },
+          "result": {
+            "no_section_tasks": [
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK020; PHASE=DTP020; PRIORITY=12; WEIGHT=5",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561240,
+                "priority": "low",
+                "task_id": 55314070,
+                "title": "dsfqa0-output-02-r110-a"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK02; PHASE=P3; PRIORITY=8; WEIGHT=13",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561241,
+                "priority": "low",
+                "task_id": 55314071,
+                "title": "dsfqa0-output-02-r110-b"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK022; PHASE=DTP022; PRIORITY=14; WEIGHT=6",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561242,
+                "priority": "low",
+                "task_id": 55314072,
+                "title": "dsfqa0-output-02-r110-c"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK02; PHASE=P3; PRIORITY=11; WEIGHT=9",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561243,
+                "priority": "low",
+                "task_id": 55314073,
+                "title": "dsfqa0-output-02-r110-d"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK024; PHASE=DTP024; PRIORITY=7; WEIGHT=14",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561244,
+                "priority": "low",
+                "task_id": 55314074,
+                "title": "dsfqa0-output-02-r110-e"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK02; PHASE=P3; PRIORITY=13; WEIGHT=7",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561245,
+                "priority": "low",
+                "task_id": 55314075,
+                "title": "dsfqa0-output-02-r110-f"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK026; PHASE=DTP026; PRIORITY=10; WEIGHT=11",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561246,
+                "priority": "low",
+                "task_id": 55314076,
+                "title": "dsfqa0-output-02-r110-g"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK02; PHASE=P3; PRIORITY=9; WEIGHT=10",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561247,
+                "priority": "low",
+                "task_id": 55314077,
+                "title": "dsfqa0-output-02-r110-h"
+              }
+            ],
+            "project_id": 99,
+            "sections": []
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:29",
+          "tool_name": "todoist__show_tasks"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/adjust-01.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA020\nACTIVE=YES\nRANK=1\nDELTA=13",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314100,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/adjust-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:30",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/adjust-02.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ02\nACTIVE=YES\nRANK=2\nDELTA=20",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314101,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/adjust-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:31",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/adjust-03.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA022\nACTIVE=YES\nRANK=3\nDELTA=15",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314102,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/adjust-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:32",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/adjust-04.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ02\nACTIVE=YES\nRANK=4\nDELTA=24",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314103,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/adjust-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:33",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/adjust-05.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA024\nACTIVE=YES\nRANK=5\nDELTA=12",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314104,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/adjust-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:34",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/adjust-06.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ02\nACTIVE=NO\nRANK=6\nDELTA=36",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314105,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/adjust-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:35",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/modifier-01.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD02\nACTIVE=YES\nRANK=2\nVALUE=14\nTOKEN=M02A",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314120,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/modifier-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:36",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/modifier-02.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DM021\nACTIVE=YES\nRANK=8\nVALUE=29\nTOKEN=M02B",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314121,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/modifier-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:37",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/modifier-03.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD02\nACTIVE=YES\nRANK=6\nVALUE=19\nTOKEN=M02C",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314122,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/modifier-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:38",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/modifier-04.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DM023\nACTIVE=YES\nRANK=3\nVALUE=11\nTOKEN=M02D",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314123,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/modifier-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:39",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/modifier-05.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD02\nACTIVE=NO\nRANK=10\nVALUE=34\nTOKEN=M02E",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314124,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/modifier-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:40",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "content": "POLICY=DA0P02\nPRIMARY=DA0C02B:payload-v4-02-02\nSECONDARY=DA0C02H:payload-v4-02-08\nTASK=dsfqa0-output-02-r110-b\nADJUST=24\nMODIFIER=M02A:14\nTOTAL=822\n",
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/dsfqa0-output-02-r110-b-P3-DA0C02B-DA0C02H-M02A.txt"
+          },
+          "result": {
+            "file_path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/dsfqa0-output-02-r110-b-P3-DA0C02B-DA0C02H-M02A.txt",
+            "message": "File created."
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:41",
+          "tool_name": "file_system__create_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-02-r110/dsfqa0-output-02-r110-b-P3-DA0C02B-DA0C02H-M02A.txt"
+          },
+          "result": {
+            "content": "POLICY=DA0P02\nPRIMARY=DA0C02B:payload-v4-02-02\nSECONDARY=DA0C02H:payload-v4-02-08\nTASK=dsfqa0-output-02-r110-b\nADJUST=24\nMODIFIER=M02A:14\nTOTAL=822\n",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55314125,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-02-r110/dsfqa0-output-02-r110-b-P3-DA0C02B-DA0C02H-M02A.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-110:tool:42",
+          "tool_name": "file_system__show_file"
+        }
+      ],
+      "projected_tool_trajectory_sha256": "00f850ba28fc123fcff1c7c7c7f5aad42dec8a49988427ee1a49eb308fdae5b9",
+      "projection_counts": {
+        "auth_transport_dropped": 8,
+        "dummy_or_non_target_dropped": 1,
+        "irrelevant_dropped": 2,
+        "kept": 31,
+        "raw_tool_calls": 42
+      },
+      "source_case_id": "ACE-DEV-TNF-110-SOURCE",
+      "source_completion_sha256": "565b5e604460dceca12203eebcbad10349e2aa79dc612195db30e56dfb7db4db",
+      "source_trajectory_sha256": "7e7bb5284a36480e071110a09966de89607c666b94e9c8a3108bab22ea3fa934",
+      "target_failure_slice": {
+        "expected": {
+          "output_content": "POLICY=DA0P02\nPRIMARY=DA0C02B:payload-v4-02-02\nSECONDARY=DA0C02H:payload-v4-02-08\nTASK=dsfqa0-output-02-r110-f\nADJUST=24\nMODIFIER=M02A:14\nTOTAL=434",
+          "output_path": "~/agent_externality/dsfqa0-tnf-02-r110/dsfqa0-output-02-r110-f-P3-DA0C02B-DA0C02H-M02A.txt"
+        },
+        "observed_target_local_output_candidates": [
+          {
+            "content": "POLICY=DA0P02\nPRIMARY=DA0C02B:payload-v4-02-02\nSECONDARY=DA0C02H:payload-v4-02-08\nTASK=dsfqa0-output-02-r110-b\nADJUST=24\nMODIFIER=M02A:14\nTOTAL=822\n",
+            "tilde_path": "~/agent_externality/dsfqa0-tnf-02-r110/dsfqa0-output-02-r110-b-P3-DA0C02B-DA0C02H-M02A.txt"
+          }
+        ],
+        "target_success": false
+      },
+      "target_failure_slice_sha256": "e3c0a1ea13a04f513accc1e34ca7130b350083a236ed21f783933062997a74a6",
+      "target_instruction": "Within AppWorld, read routing note dsfqa0-route-tnf-02-r110. Resolve its dynamic policy, primary/secondary content, Inbox task, adjustment and modifier rules exactly, including the note's explicit output-field mapping, then create the required output file. Use only AppWorld simple_note, todoist and file_system tools; do not modify notes or todos.",
+      "target_instruction_sha256": "801fc716203977b59f3e684206eb40d8cd5c7054d4525c20a4fcf4efdd0db0e8"
+    },
+    "ACE-DEV-TNF-111": {
+      "family_id": "ACE-DEV-TNF-111",
+      "projected_tool_trajectory": [
+        {
+          "arguments": {
+            "query": "dsfqa0-route-tnf-03-r111"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-03-r111",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317023,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-d",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-111:tool:10",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "project_id": 0
+          },
+          "result": {
+            "no_section_tasks": [
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK030; PHASE=DTP030; PRIORITY=9; WEIGHT=8",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561460,
+                "priority": "low",
+                "task_id": 55317070,
+                "title": "dsfqa0-output-03-r111-a"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK03; PHASE=P1; PRIORITY=5; WEIGHT=16",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561461,
+                "priority": "low",
+                "task_id": 55317071,
+                "title": "dsfqa0-output-03-r111-b"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK032; PHASE=DTP032; PRIORITY=11; WEIGHT=9",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561462,
+                "priority": "low",
+                "task_id": 55317072,
+                "title": "dsfqa0-output-03-r111-c"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK03; PHASE=P1; PRIORITY=8; WEIGHT=12",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561463,
+                "priority": "low",
+                "task_id": 55317073,
+                "title": "dsfqa0-output-03-r111-d"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK034; PHASE=DTP034; PRIORITY=4; WEIGHT=17",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561464,
+                "priority": "low",
+                "task_id": 55317074,
+                "title": "dsfqa0-output-03-r111-e"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK03; PHASE=P1; PRIORITY=10; WEIGHT=10",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561465,
+                "priority": "low",
+                "task_id": 55317075,
+                "title": "dsfqa0-output-03-r111-f"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK036; PHASE=DTP036; PRIORITY=7; WEIGHT=14",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561466,
+                "priority": "low",
+                "task_id": 55317076,
+                "title": "dsfqa0-output-03-r111-g"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK03; PHASE=P1; PRIORITY=6; WEIGHT=13",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561467,
+                "priority": "low",
+                "task_id": 55317077,
+                "title": "dsfqa0-output-03-r111-h"
+              }
+            ],
+            "project_id": 99,
+            "sections": []
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:11",
+          "tool_name": "todoist__show_tasks"
+        },
+        {
+          "arguments": {
+            "note_id": 55317010
+          },
+          "result": {
+            "content": "CUTOFF_EPOCH=10\nREQUIRED_TIER=T2\nPOLICY_CANDIDATES=dsfqa0-policy-03-r111-a,dsfqa0-policy-03-r111-b,dsfqa0-policy-03-r111-c,dsfqa0-policy-03-r111-d,dsfqa0-policy-03-r111-e\nCONTENT_CANDIDATES=dsfqa0-content-03-r111-a,dsfqa0-content-03-r111-b,dsfqa0-content-03-r111-c,dsfqa0-content-03-r111-d,dsfqa0-content-03-r111-e,dsfqa0-content-03-r111-f,dsfqa0-content-03-r111-g,dsfqa0-content-03-r111-h\nOUTPUT_DIR=~/agent_externality/dsfqa0-tnf-03-r111/\nADJUSTMENT_FILES=adjust-01.txt,adjust-02.txt,adjust-03.txt,adjust-04.txt,adjust-05.txt,adjust-06.txt\nMODIFIER_FILES=modifier-01.txt,modifier-02.txt,modifier-03.txt,modifier-04.txt,modifier-05.txt\nChoose ACTIVE=YES policy matching REQUIRED_TIER with largest EPOCH<=CUTOFF_EPOCH, tie by largest POLICY_PRIORITY then title. The selected policy provides ROUTE_KEY, PHASE, PRIMARY_CONTENT_MODE, SECONDARY_CONTENT_MODE, TASK_MODE, MODIFIER_MODE, PIVOT, MODIFIER_PIVOT, BASE, WA, WB, MOD, ADJUST_KEY and MOD_KEY. Primary and secondary content must match ROUTE_KEY+PHASE and ROLE. Content modes: MAX_REV_MIN_SCORE = largest REVISION then smallest SCORE then TOKEN; MAX_SCORE_MAX_REV = largest SCORE then largest REVISION then TOKEN; CLOSEST_SCORE_MAX_REV = smallest absolute SCORE-PIVOT then largest REVISION then TOKEN. Inbox task must match ROUTE_KEY+PHASE. Task modes: MAX_PRIORITY_MIN_TITLE = largest PRIORITY then smallest TITLE; MAX_WEIGHT_MAX_PRIORITY = largest WEIGHT then largest PRIORITY then TITLE; MIN_WEIGHT_MAX_PRIORITY = smallest WEIGHT then largest PRIORITY then TITLE. Adjustment: ACTIVE=YES matching ADJUST_KEY with largest RANK. Modifier modes: MAX_RANK_MIN_VALUE = largest RANK then smallest VALUE then TOKEN; MIN_VALUE_MAX_RANK = smallest VALUE then largest RANK then TOKEN; CLOSEST_VALUE_PIVOT_MAX_RANK = smallest absolute VALUE-MODIFIER_PIVOT then largest RANK then TOKEN. TOTAL=(BASE + PRIMARY_REVISION*WA + SECONDARY_SCORE*WB + TASK_PRIORITY + TASK_WEIGHT + ADJUST_DELTA + MODIFIER_VALUE) mod MOD. Filename is TASK_TITLE-PHASE-PRIMARY_TOKEN-SECONDARY_TOKEN-MODIFIER_TOKEN.txt. File content is seven logical lines POLICY, PRIMARY, SECONDARY, TASK, ADJUST, MODIFIER, TOTAL. One terminal newline is semantically irrelevant.\nEXACT_OUTPUT_MAPPING: the seven output lines MUST use these selected attributes exactly: POLICY=<POLICY_CODE>; PRIMARY=<PRIMARY TOKEN>:<PRIMARY PAYLOAD>; SECONDARY=<SECONDARY TOKEN>:<SECONDARY PAYLOAD>; TASK=<TASK TITLE>; ADJUST=<selected adjustment DELTA>; MODIFIER=<selected modifier TOKEN>:<selected modifier VALUE>; TOTAL=<computed TOTAL>. Do not substitute note titles, source filenames, adjustment filenames, or modifier filenames for those attribute values.",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317010,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-route-tnf-03-r111",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:13",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317020
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=7\nTIER=T2\nPOLICY_PRIORITY=3\nROUTE_KEY=OLD03\nPHASE=P1\nPOLICY_CODE=OLD03\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=15\nBASE=55\nWA=3\nWB=5\nMOD=997\nADJUST_KEY=DADJ033\nMOD_KEY=DMOD033",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317020,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-03-r111-a",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:14",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317021
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=10\nTIER=T2\nPOLICY_PRIORITY=7\nROUTE_KEY=DA0RK03\nPHASE=P1\nPOLICY_CODE=DA0P03\nPRIMARY_CONTENT_MODE=CLOSEST_SCORE_MAX_REV\nSECONDARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=CLOSEST_VALUE_PIVOT_MAX_RANK\nPIVOT=77\nMODIFIER_PIVOT=15\nBASE=55\nWA=3\nWB=5\nMOD=997\nADJUST_KEY=DA0ADJ03\nMOD_KEY=DA0MOD03",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317021,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-03-r111-b",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:15",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317022
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=10\nTIER=T2\nPOLICY_PRIORITY=4\nROUTE_KEY=DECOY03C\nPHASE=P1\nPOLICY_CODE=D03C\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=15\nBASE=55\nWA=3\nWB=5\nMOD=997\nADJUST_KEY=DADJ034\nMOD_KEY=DMOD034",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317022,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-03-r111-c",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:16",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317023
+          },
+          "result": {
+            "content": "ACTIVE=NO\nEPOCH=11\nTIER=T2\nPOLICY_PRIORITY=99\nROUTE_KEY=DA0RK03\nPHASE=P1\nPOLICY_CODE=OFF03\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=15\nBASE=55\nWA=3\nWB=5\nMOD=997\nADJUST_KEY=DADJ0399\nMOD_KEY=DMOD0399",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317023,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-03-r111-d",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:17",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/adjust-01.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA030\nACTIVE=YES\nRANK=1\nDELTA=13",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317100,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/adjust-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:18",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/adjust-02.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ03\nACTIVE=YES\nRANK=2\nDELTA=20",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317101,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/adjust-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:19",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/adjust-03.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA032\nACTIVE=YES\nRANK=3\nDELTA=15",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317102,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/adjust-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:20",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/adjust-04.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ03\nACTIVE=YES\nRANK=4\nDELTA=24",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317103,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/adjust-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:21",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/adjust-05.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA034\nACTIVE=YES\nRANK=5\nDELTA=12",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317104,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/adjust-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:22",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/adjust-06.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ03\nACTIVE=NO\nRANK=6\nDELTA=36",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317105,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/adjust-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:23",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/modifier-01.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD03\nACTIVE=YES\nRANK=2\nVALUE=15\nTOKEN=M03A",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317120,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/modifier-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:24",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/modifier-02.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DM031\nACTIVE=YES\nRANK=8\nVALUE=30\nTOKEN=M03B",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317121,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/modifier-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:25",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/modifier-03.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD03\nACTIVE=YES\nRANK=6\nVALUE=20\nTOKEN=M03C",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317122,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/modifier-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:26",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/modifier-04.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DM033\nACTIVE=YES\nRANK=3\nVALUE=12\nTOKEN=M03D",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317123,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/modifier-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:27",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/modifier-05.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD03\nACTIVE=NO\nRANK=10\nVALUE=35\nTOKEN=M03E",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317124,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/modifier-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:28",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "page_limit": 10,
+            "query": "dsfqa0-content-03-r111"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-03-r111",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317040,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317041,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317042,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317043,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-d",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317044,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-e",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317045,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-f",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317046,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-g",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317047,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-03-r111-h",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-a",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-111:tool:31",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "query": "dsfqa0-policy-03-r111-e"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317024,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-e",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-03-r111",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-03-r111-c",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-111:tool:32",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55317024
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=12\nTIER=T9\nPOLICY_PRIORITY=99\nROUTE_KEY=DA0RK03\nPHASE=P1\nPOLICY_CODE=WRONG03\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=77\nMODIFIER_PIVOT=15\nBASE=55\nWA=3\nWB=5\nMOD=997\nADJUST_KEY=DADJ0399\nMOD_KEY=DMOD0399",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317024,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-03-r111-e",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:33",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317040
+          },
+          "result": {
+            "content": "ROLE=DECOY\nROUTE_KEY=DCK030\nPHASE=DP030\nSCORE=57\nREVISION=12\nTOKEN=DA0C03A\nPAYLOAD=payload-v4-03-01",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317040,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-a",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:34",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317041
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK03\nPHASE=P1\nSCORE=84\nREVISION=7\nTOKEN=DA0C03B\nPAYLOAD=payload-v4-03-02",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317041,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-b",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:35",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317042
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK03\nPHASE=P1\nSCORE=70\nREVISION=11\nTOKEN=DA0C03C\nPAYLOAD=payload-v4-03-03",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317042,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-c",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:36",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317043
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK03\nPHASE=P1\nSCORE=74\nREVISION=10\nTOKEN=DA0C03D\nPAYLOAD=payload-v4-03-04",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317043,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-d",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:37",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317044
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK03\nPHASE=P1\nSCORE=87\nREVISION=8\nTOKEN=DA0C03E\nPAYLOAD=payload-v4-03-05",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317044,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-e",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:38",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317045
+          },
+          "result": {
+            "content": "ROLE=DECOY\nROUTE_KEY=DCK035\nPHASE=DP035\nSCORE=66\nREVISION=13\nTOKEN=DA0C03F\nPAYLOAD=payload-v4-03-06",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317045,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-f",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:39",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317046
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK03\nPHASE=P1\nSCORE=80\nREVISION=9\nTOKEN=DA0C03G\nPAYLOAD=payload-v4-03-07",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317046,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-g",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:40",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317047
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK03\nPHASE=P1\nSCORE=72\nREVISION=12\nTOKEN=DA0C03H\nPAYLOAD=payload-v4-03-08",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317047,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-03-r111-h",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:41",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "content": "POLICY=DA0P03\nPRIMARY=DA0C03D:payload-v4-03-04\nSECONDARY=DA0C03H:payload-v4-03-08\nTASK=dsfqa0-output-03-r111-f\nADJUST=24\nMODIFIER=M03A:15\nTOTAL=579\n",
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/dsfqa0-output-03-r111-f-P1-DA0C03D-DA0C03H-M03A.txt"
+          },
+          "result": {
+            "file_path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/dsfqa0-output-03-r111-f-P1-DA0C03D-DA0C03H-M03A.txt",
+            "message": "File created."
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:42",
+          "tool_name": "file_system__create_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-03-r111/dsfqa0-output-03-r111-f-P1-DA0C03D-DA0C03H-M03A.txt"
+          },
+          "result": {
+            "content": "POLICY=DA0P03\nPRIMARY=DA0C03D:payload-v4-03-04\nSECONDARY=DA0C03H:payload-v4-03-08\nTASK=dsfqa0-output-03-r111-f\nADJUST=24\nMODIFIER=M03A:15\nTOTAL=579\n",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317125,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-03-r111/dsfqa0-output-03-r111-f-P1-DA0C03D-DA0C03H-M03A.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-111:tool:43",
+          "tool_name": "file_system__show_file"
+        }
+      ],
+      "projected_tool_trajectory_sha256": "b069f793d3bf079b7a5119fb81a35760e5f461ca7af6069da60ad22ef26a2411",
+      "projection_counts": {
+        "auth_transport_dropped": 9,
+        "dummy_or_non_target_dropped": 3,
+        "irrelevant_dropped": 0,
+        "kept": 31,
+        "raw_tool_calls": 43
+      },
+      "source_case_id": "ACE-DEV-TNF-111-SOURCE",
+      "source_completion_sha256": "cff672d326c3f3abf8d45d269c19aaa3728b44d9416f7a1908af8887418ff8b5",
+      "source_trajectory_sha256": "d13e37a5cc58f5c7571bff5ae39f5733d0e53173d3825251ae01676bc5fdd9d6",
+      "target_failure_slice": {
+        "expected": {
+          "output_content": "POLICY=DA0P03\nPRIMARY=DA0C03D:payload-v4-03-04\nSECONDARY=DA0C03H:payload-v4-03-08\nTASK=dsfqa0-output-03-r111-f\nADJUST=24\nMODIFIER=M03A:15\nTOTAL=504",
+          "output_path": "~/agent_externality/dsfqa0-tnf-03-r111/dsfqa0-output-03-r111-f-P1-DA0C03D-DA0C03H-M03A.txt"
+        },
+        "observed_target_local_output_candidates": [
+          {
+            "content": "POLICY=DA0P03\nPRIMARY=DA0C03D:payload-v4-03-04\nSECONDARY=DA0C03H:payload-v4-03-08\nTASK=dsfqa0-output-03-r111-f\nADJUST=24\nMODIFIER=M03A:15\nTOTAL=579\n",
+            "tilde_path": "~/agent_externality/dsfqa0-tnf-03-r111/dsfqa0-output-03-r111-f-P1-DA0C03D-DA0C03H-M03A.txt"
+          }
+        ],
+        "target_success": false
+      },
+      "target_failure_slice_sha256": "09f00e80a2a9876795fd86a67bf58af848ede9acd8a863d9e8659a64d134e1d1",
+      "target_instruction": "Within AppWorld, read routing note dsfqa0-route-tnf-03-r111. Resolve its dynamic policy, primary/secondary content, Inbox task, adjustment and modifier rules exactly, including the note's explicit output-field mapping, then create the required output file. Use only AppWorld simple_note, todoist and file_system tools; do not modify notes or todos.",
+      "target_instruction_sha256": "28ecafe7a3144e90708199aebcc3adea929f598a522546ec400eac2a993146e7"
+    },
+    "ACE-DEV-TNF-115": {
+      "family_id": "ACE-DEV-TNF-115",
+      "projected_tool_trajectory": [
+        {
+          "arguments": {
+            "query": "dsfqa0-route-tnf-01-r115"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317023,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-d",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:8",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55317010
+          },
+          "result": {
+            "content": "CUTOFF_EPOCH=11\nREQUIRED_TIER=T2\nPOLICY_CANDIDATES=dsfqa0-policy-01-r115-a,dsfqa0-policy-01-r115-b,dsfqa0-policy-01-r115-c,dsfqa0-policy-01-r115-d,dsfqa0-policy-01-r115-e\nCONTENT_CANDIDATES=dsfqa0-content-01-r115-a,dsfqa0-content-01-r115-b,dsfqa0-content-01-r115-c,dsfqa0-content-01-r115-d,dsfqa0-content-01-r115-e,dsfqa0-content-01-r115-f,dsfqa0-content-01-r115-g,dsfqa0-content-01-r115-h\nOUTPUT_DIR=~/agent_externality/dsfqa0-tnf-01-r115/\nADJUSTMENT_FILES=adjust-01.txt,adjust-02.txt,adjust-03.txt,adjust-04.txt,adjust-05.txt,adjust-06.txt\nMODIFIER_FILES=modifier-01.txt,modifier-02.txt,modifier-03.txt,modifier-04.txt,modifier-05.txt\nChoose ACTIVE=YES policy matching REQUIRED_TIER with largest EPOCH<=CUTOFF_EPOCH, tie by largest POLICY_PRIORITY then title. The selected policy provides ROUTE_KEY, PHASE, PRIMARY_CONTENT_MODE, SECONDARY_CONTENT_MODE, TASK_MODE, MODIFIER_MODE, PIVOT, MODIFIER_PIVOT, BASE, WA, WB, MOD, ADJUST_KEY and MOD_KEY. Primary and secondary content must match ROUTE_KEY+PHASE and ROLE. Content modes: MAX_REV_MIN_SCORE = largest REVISION then smallest SCORE then TOKEN; MAX_SCORE_MAX_REV = largest SCORE then largest REVISION then TOKEN; CLOSEST_SCORE_MAX_REV = smallest absolute SCORE-PIVOT then largest REVISION then TOKEN. Inbox task must match ROUTE_KEY+PHASE. Task modes: MAX_PRIORITY_MIN_TITLE = largest PRIORITY then smallest TITLE; MAX_WEIGHT_MAX_PRIORITY = largest WEIGHT then largest PRIORITY then TITLE; MIN_WEIGHT_MAX_PRIORITY = smallest WEIGHT then largest PRIORITY then TITLE. Adjustment: ACTIVE=YES matching ADJUST_KEY with largest RANK. Modifier modes: MAX_RANK_MIN_VALUE = largest RANK then smallest VALUE then TOKEN; MIN_VALUE_MAX_RANK = smallest VALUE then largest RANK then TOKEN; CLOSEST_VALUE_PIVOT_MAX_RANK = smallest absolute VALUE-MODIFIER_PIVOT then largest RANK then TOKEN. TOTAL=(BASE + PRIMARY_REVISION*WA + SECONDARY_SCORE*WB + TASK_PRIORITY + TASK_WEIGHT + ADJUST_DELTA + MODIFIER_VALUE) mod MOD. Filename is TASK_TITLE-PHASE-PRIMARY_TOKEN-SECONDARY_TOKEN-MODIFIER_TOKEN.txt. File content is seven logical lines POLICY, PRIMARY, SECONDARY, TASK, ADJUST, MODIFIER, TOTAL. One terminal newline is semantically irrelevant.\nEXACT_OUTPUT_MAPPING: the seven output lines MUST use these selected attributes exactly: POLICY=<POLICY_CODE>; PRIMARY=<PRIMARY TOKEN>:<PRIMARY PAYLOAD>; SECONDARY=<SECONDARY TOKEN>:<SECONDARY PAYLOAD>; TASK=<TASK TITLE>; ADJUST=<selected adjustment DELTA>; MODIFIER=<selected modifier TOKEN>:<selected modifier VALUE>; TOTAL=<computed TOTAL>. Do not substitute note titles, source filenames, adjustment filenames, or modifier filenames for those attribute values.",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317010,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-route-tnf-01-r115",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:9",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317020
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=8\nTIER=T2\nPOLICY_PRIORITY=3\nROUTE_KEY=OLD01\nPHASE=P2\nPOLICY_CODE=OLD01\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=76\nMODIFIER_PIVOT=13\nBASE=49\nWA=4\nWB=6\nMOD=997\nADJUST_KEY=DADJ013\nMOD_KEY=DMOD013",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317020,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-01-r115-a",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:10",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317021
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=11\nTIER=T2\nPOLICY_PRIORITY=7\nROUTE_KEY=DA0RK01\nPHASE=P2\nPOLICY_CODE=DA0P01\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_WEIGHT_MAX_PRIORITY\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=76\nMODIFIER_PIVOT=13\nBASE=49\nWA=4\nWB=6\nMOD=997\nADJUST_KEY=DA0ADJ01\nMOD_KEY=DA0MOD01",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317021,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-01-r115-b",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:11",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317022
+          },
+          "result": {
+            "content": "ACTIVE=YES\nEPOCH=11\nTIER=T2\nPOLICY_PRIORITY=4\nROUTE_KEY=DECOY01C\nPHASE=P2\nPOLICY_CODE=D01C\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=76\nMODIFIER_PIVOT=13\nBASE=49\nWA=4\nWB=6\nMOD=997\nADJUST_KEY=DADJ014\nMOD_KEY=DMOD014",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317022,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-01-r115-c",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:12",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317023
+          },
+          "result": {
+            "content": "ACTIVE=NO\nEPOCH=12\nTIER=T2\nPOLICY_PRIORITY=99\nROUTE_KEY=DA0RK01\nPHASE=P2\nPOLICY_CODE=OFF01\nPRIMARY_CONTENT_MODE=MAX_REV_MIN_SCORE\nSECONDARY_CONTENT_MODE=MAX_SCORE_MAX_REV\nTASK_MODE=MAX_PRIORITY_MIN_TITLE\nMODIFIER_MODE=MAX_RANK_MIN_VALUE\nPIVOT=76\nMODIFIER_PIVOT=13\nBASE=49\nWA=4\nWB=6\nMOD=997\nADJUST_KEY=DADJ0199\nMOD_KEY=DMOD0199",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317023,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-policy-01-r115-d",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:13",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "query": "dsfqa0-content-01-r115"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317040,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317041,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317042,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317043,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-d",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:14",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "query": "DA0ADJ01"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317023,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-d",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:15",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "query": "DA0MOD01"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317023,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-d",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:16",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55317040
+          },
+          "result": {
+            "content": "ROLE=DECOY\nROUTE_KEY=DCK010\nPHASE=DP010\nSCORE=55\nREVISION=13\nTOKEN=DA0C01A\nPAYLOAD=payload-v4-01-01",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317040,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-a",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:17",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317041
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK01\nPHASE=P2\nSCORE=79\nREVISION=8\nTOKEN=DA0C01B\nPAYLOAD=payload-v4-01-02",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317041,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-b",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:18",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317042
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK01\nPHASE=P2\nSCORE=70\nREVISION=12\nTOKEN=DA0C01C\nPAYLOAD=payload-v4-01-03",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317042,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-c",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:19",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317043
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK01\nPHASE=P2\nSCORE=77\nREVISION=11\nTOKEN=DA0C01D\nPAYLOAD=payload-v4-01-04",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317043,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-d",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:20",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "query": "dsfqa0-content-01-r115-e"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317044,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-e",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:21",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55317044
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK01\nPHASE=P2\nSCORE=82\nREVISION=9\nTOKEN=DA0C01E\nPAYLOAD=payload-v4-01-05",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317044,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-e",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:22",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "query": "dsfqa0-content-01-r115-f"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317045,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-f",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:23",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "query": "dsfqa0-content-01-r115-g"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317046,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-g",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:24",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "query": "dsfqa0-content-01-r115-h"
+          },
+          "result": [
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317047,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-content-01-r115-h",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317010,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-route-tnf-01-r115",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317020,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-a",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317021,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-b",
+              "updated_at": "2023-05-18T12:00:00"
+            },
+            {
+              "created_at": "2023-05-18T12:00:00",
+              "note_id": 55317022,
+              "pinned": false,
+              "tags": [],
+              "title": "dsfqa0-policy-01-r115-c",
+              "updated_at": "2023-05-18T12:00:00"
+            }
+          ],
+          "source_tool_id": "ACE-DEV-TNF-115:tool:25",
+          "tool_name": "simple_note__search_notes"
+        },
+        {
+          "arguments": {
+            "note_id": 55317045
+          },
+          "result": {
+            "content": "ROLE=DECOY\nROUTE_KEY=DCK015\nPHASE=DP015\nSCORE=61\nREVISION=14\nTOKEN=DA0C01F\nPAYLOAD=payload-v4-01-06",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317045,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-f",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:26",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317046
+          },
+          "result": {
+            "content": "ROLE=PRIMARY\nROUTE_KEY=DA0RK01\nPHASE=P2\nSCORE=78\nREVISION=10\nTOKEN=DA0C01G\nPAYLOAD=payload-v4-01-07",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317046,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-g",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:27",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "note_id": 55317047
+          },
+          "result": {
+            "content": "ROLE=SECONDARY\nROUTE_KEY=DA0RK01\nPHASE=P2\nSCORE=72\nREVISION=13\nTOKEN=DA0C01H\nPAYLOAD=payload-v4-01-08",
+            "created_at": "2023-05-18T12:00:00",
+            "note_id": 55317047,
+            "pinned": false,
+            "tags": [],
+            "title": "dsfqa0-content-01-r115-h",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:28",
+          "tool_name": "simple_note__show_note"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/adjust-01.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA010\nACTIVE=YES\nRANK=1\nDELTA=10",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317100,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/adjust-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:31",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/adjust-02.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ01\nACTIVE=YES\nRANK=2\nDELTA=17",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317101,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/adjust-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:32",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/adjust-03.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA012\nACTIVE=YES\nRANK=3\nDELTA=12",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317102,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/adjust-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:33",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/adjust-04.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ01\nACTIVE=YES\nRANK=4\nDELTA=21",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317103,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/adjust-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:34",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/adjust-05.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA014\nACTIVE=YES\nRANK=5\nDELTA=9",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317104,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/adjust-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:35",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/adjust-06.txt"
+          },
+          "result": {
+            "content": "ADJUST_KEY=DA0ADJ01\nACTIVE=NO\nRANK=6\nDELTA=33",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317105,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/adjust-06.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:36",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/modifier-01.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD01\nACTIVE=YES\nRANK=2\nVALUE=14\nTOKEN=M01A",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317120,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/modifier-01.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:37",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/modifier-02.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DM011\nACTIVE=YES\nRANK=8\nVALUE=29\nTOKEN=M01B",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317121,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/modifier-02.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:38",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/modifier-03.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD01\nACTIVE=YES\nRANK=6\nVALUE=19\nTOKEN=M01C",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317122,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/modifier-03.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:39",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/modifier-04.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DM013\nACTIVE=YES\nRANK=3\nVALUE=11\nTOKEN=M01D",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317123,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/modifier-04.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:40",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/modifier-05.txt"
+          },
+          "result": {
+            "content": "MOD_KEY=DA0MOD01\nACTIVE=NO\nRANK=10\nVALUE=34\nTOKEN=M01E",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317124,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/modifier-05.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:41",
+          "tool_name": "file_system__show_file"
+        },
+        {
+          "arguments": {
+            "project_id": 0
+          },
+          "result": {
+            "no_section_tasks": [
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK010; PHASE=DTP010; PRIORITY=11; WEIGHT=9",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561620,
+                "priority": "low",
+                "task_id": 55317070,
+                "title": "dsfqa0-output-01-r115-a"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK01; PHASE=P2; PRIORITY=7; WEIGHT=17",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561621,
+                "priority": "low",
+                "task_id": 55317071,
+                "title": "dsfqa0-output-01-r115-b"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK012; PHASE=DTP012; PRIORITY=13; WEIGHT=10",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561622,
+                "priority": "low",
+                "task_id": 55317072,
+                "title": "dsfqa0-output-01-r115-c"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK01; PHASE=P2; PRIORITY=10; WEIGHT=13",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561623,
+                "priority": "low",
+                "task_id": 55317073,
+                "title": "dsfqa0-output-01-r115-d"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK014; PHASE=DTP014; PRIORITY=6; WEIGHT=18",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561624,
+                "priority": "low",
+                "task_id": 55317074,
+                "title": "dsfqa0-output-01-r115-e"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK01; PHASE=P2; PRIORITY=12; WEIGHT=11",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561625,
+                "priority": "low",
+                "task_id": 55317075,
+                "title": "dsfqa0-output-01-r115-f"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DTK016; PHASE=DTP016; PRIORITY=9; WEIGHT=15",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561626,
+                "priority": "low",
+                "task_id": 55317076,
+                "title": "dsfqa0-output-01-r115-g"
+              },
+              {
+                "assignee": null,
+                "description": "ROUTE_KEY=DA0RK01; PHASE=P2; PRIORITY=8; WEIGHT=14",
+                "due_date": null,
+                "duration": null,
+                "duration_unit": null,
+                "is_completed": false,
+                "labels": [],
+                "num_sub_tasks": 0,
+                "order_index": 561627,
+                "priority": "low",
+                "task_id": 55317077,
+                "title": "dsfqa0-output-01-r115-h"
+              }
+            ],
+            "project_id": 99,
+            "sections": []
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:42",
+          "tool_name": "todoist__show_tasks"
+        },
+        {
+          "arguments": {
+            "content": "POLICY=DA0P01\nPRIMARY=DA0C01D:payload-v4-01-04\nSECONDARY=DA0C01E:payload-v4-01-05\nTASK=dsfqa0-output-01-r115-d\nADJUST=21\nMODIFIER=M01C:19\nTOTAL=564\n",
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/dsfqa0-output-01-r115-d-P2-DA0C01D-DA0C01E-M01C.txt"
+          },
+          "result": {
+            "file_path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/dsfqa0-output-01-r115-d-P2-DA0C01D-DA0C01E-M01C.txt",
+            "message": "File created."
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:43",
+          "tool_name": "file_system__create_file"
+        },
+        {
+          "arguments": {
+            "file_path": "~/agent_externality/dsfqa0-tnf-01-r115/dsfqa0-output-01-r115-d-P2-DA0C01D-DA0C01E-M01C.txt"
+          },
+          "result": {
+            "content": "POLICY=DA0P01\nPRIMARY=DA0C01D:payload-v4-01-04\nSECONDARY=DA0C01E:payload-v4-01-05\nTASK=dsfqa0-output-01-r115-d\nADJUST=21\nMODIFIER=M01C:19\nTOTAL=564\n",
+            "created_at": "2023-05-18T12:00:00",
+            "file_id": 55317125,
+            "path": "/home/aaron/agent_externality/dsfqa0-tnf-01-r115/dsfqa0-output-01-r115-d-P2-DA0C01D-DA0C01E-M01C.txt",
+            "updated_at": "2023-05-18T12:00:00"
+          },
+          "source_tool_id": "ACE-DEV-TNF-115:tool:44",
+          "tool_name": "file_system__show_file"
+        }
+      ],
+      "projected_tool_trajectory_sha256": "74bc0ac67e351e00941283f879449238c84ee20ad0b60562f4ad2524262b50ab",
+      "projection_counts": {
+        "auth_transport_dropped": 7,
+        "dummy_or_non_target_dropped": 1,
+        "irrelevant_dropped": 1,
+        "kept": 35,
+        "raw_tool_calls": 44
+      },
+      "source_case_id": "ACE-DEV-TNF-115-SOURCE",
+      "source_completion_sha256": "a99ec5e8885950e45a64b3c11ec8f75476244f48222b0a388b9ca5103381c46a",
+      "source_trajectory_sha256": "d17da2a330bd05295895a52771414cdb75a4c8ee3350f6897b6ad83e6614be63",
+      "target_failure_slice": {
+        "expected": {
+          "output_content": "POLICY=DA0P01\nPRIMARY=DA0C01D:payload-v4-01-04\nSECONDARY=DA0C01E:payload-v4-01-05\nTASK=dsfqa0-output-01-r115-b\nADJUST=21\nMODIFIER=M01C:19\nTOTAL=649",
+          "output_path": "~/agent_externality/dsfqa0-tnf-01-r115/dsfqa0-output-01-r115-b-P2-DA0C01D-DA0C01E-M01C.txt"
+        },
+        "observed_target_local_output_candidates": [
+          {
+            "content": "POLICY=DA0P01\nPRIMARY=DA0C01D:payload-v4-01-04\nSECONDARY=DA0C01E:payload-v4-01-05\nTASK=dsfqa0-output-01-r115-d\nADJUST=21\nMODIFIER=M01C:19\nTOTAL=564\n",
+            "tilde_path": "~/agent_externality/dsfqa0-tnf-01-r115/dsfqa0-output-01-r115-d-P2-DA0C01D-DA0C01E-M01C.txt"
+          }
+        ],
+        "target_success": false
+      },
+      "target_failure_slice_sha256": "48c6c38510dd37c1f543b503e4364056d96a7df767f0d2248cc28d6c092421f8",
+      "target_instruction": "Within AppWorld, read routing note dsfqa0-route-tnf-01-r115. Resolve its dynamic policy, primary/secondary content, Inbox task, adjustment and modifier rules exactly, including the note's explicit output-field mapping, then create the required output file. Use only AppWorld simple_note, todoist and file_system tools; do not modify notes or todos.",
+      "target_instruction_sha256": "268e2a1f3d9915383b803a4997b352f951d25a689cc274d57f5e71cae6b85e4a"
+    }
+  },
+  "next_required_action": "Freeze a separate repair-writer-only execution authority for exactly these six projected target-failure payloads.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "projection_rule": {
+    "drop_401_or_invalid_auth_attempts": true,
+    "drop_dummy_or_non_target_markers": [
+      "ace-dev-dummy",
+      "spare-",
+      "coupling_level",
+      "topology_label",
+      "non_target_outcomes",
+      "independent",
+      "shared_resource_exposure_count"
+    ],
+    "drop_supervisor_and_login_transport": true,
+    "raw_trajectory_is_not_updater_input": true,
+    "result_lists_pruned_to_target_local_records": true,
+    "retain_only_target_local_tool_evidence": true,
+    "strip_access_tokens_passwords_and_authorization_fields": true
+  },
+  "provider_requests_created": 0,
+  "repair_writer_requests_created": 0,
+  "schema_version": "ace-target-evidence-projection-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "selected_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ]
+  },
+  "source_closeout_content_sha256": "af5cbf7ed5f7b507a11518c340d1b6b906a906cc0dbdfc41d29b2bd15e206cc5",
+  "source_closeout_file_sha256": "4f457c9a5671e404e82e939a1a75f825474c09388dd19814083344779f796aef",
+  "source_ledger_sha256": "517d0b6f9c118a7cdb9700fb8c78f3e145f8c47bf2e1a7cbdf0907b4fe4928bf",
+  "status": "TARGET_EVIDENCE_PROJECTION_V1_PASS_REPAIR_GENERATION_CLOSED"
+}

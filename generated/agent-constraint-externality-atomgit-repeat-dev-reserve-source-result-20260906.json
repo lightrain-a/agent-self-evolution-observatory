@@ -1,0 +1,36 @@
+{
+  "appworld_tool_call_total": 344,
+  "authority": {
+    "development_repeat_qualification": false,
+    "paper_claim": false,
+    "repair_generation": false,
+    "reserve_source_execution_closed": true,
+    "rq1_rq2": false
+  },
+  "completed_source_count": 10,
+  "content_sha256": "1e6832f0200b028f05c2b8e365416f5440366a5bbb9d450f2d6c91932fabd4ca",
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-RESERVE-SOURCE-20260906",
+  "ledger_sha256": "517d0b6f9c118a7cdb9700fb8c78f3e145f8c47bf2e1a7cbdf0907b4fe4928bf",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "repair_generation_executed": false,
+  "schema_version": "ace-repeat-dev-reserve-source-result-v1",
+  "scientific_externality_outcomes_observed": 0,
+  "scientific_model_round_count": 119,
+  "selected_family_count": 6,
+  "selected_family_ids": {
+    "FG": [
+      "ACE-DEV-FG-104",
+      "ACE-DEV-FG-101",
+      "ACE-DEV-FG-106"
+    ],
+    "TNF": [
+      "ACE-DEV-TNF-115",
+      "ACE-DEV-TNF-110",
+      "ACE-DEV-TNF-111"
+    ]
+  },
+  "semantic_failure_count": 6,
+  "status": "ATOMGIT_REPEAT_DEV_RESERVE_SOURCE_PANEL_PASS_REPAIR_CLOSED",
+  "target_success_count": 4,
+  "topology_execution_executed": false
+}
