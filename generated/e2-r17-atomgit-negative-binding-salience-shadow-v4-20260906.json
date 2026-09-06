@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-atomgit-negative-binding-salience-shadow-receipt",
+  "date": "2026-09-06",
+  "status": "PASS_POSTHOC_SHADOW_FALSIFIER_SCHEMA_SENSITIVITY_FAVORED",
+  "parent_v3_receipt": "generated/e2-r17-atomgit-same-evidence-state-regeneration-shadow-v3-20260906.json",
+  "design": {
+    "posthoc_explanatory": true,
+    "confirmatory": false,
+    "models": ["qwen3.8-27b", "GLM-5.2", "deepseek-v4-flash"],
+    "draws_per_model": 6,
+    "usage_rows": 18,
+    "transport_clean": "18/18",
+    "tool_calls": 0,
+    "semantic_change_from_v3": "The non-transferable fourth candidate was renamed from SAME_INSTANCE_BINDING to P4_LOCAL_ONLY and explicitly defined as same-historical-workbook-only. The synthetic evidence and three reusable primitives were unchanged.",
+    "primary_shadow_endpoint": "P4_LOCAL_ONLY selection count among clean states"
+  },
+  "provenance": {
+    "raw_root": "/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v4-salience",
+    "plan_sha256": "be7d7b0e7d0e62b53e614cd9ac5458781ff4d6a920c7b3d14d614f06215677b7",
+    "prompt_sha256": "14b36ac25c50c30b38a78fc465ecc84e221d7dc2441a74853ec50c6bd07f27b1",
+    "results_sha256": "70902f0fbf4a397ddc54d593ce8a8c12d6ea3eb5c15c28165ce10de97d37fca5",
+    "terminal_sha256": "31aada7750721d33c150c9a551396bc7987be7409aa23771f831fea0c9ddb145",
+    "raw_to_result_sha_mismatches": 0
+  },
+  "results": {
+    "qwen3.8-27b": {
+      "v3_named_binding_selected": "5/6",
+      "v4_neutral_p4_selected": "0/6",
+      "core_primitives_retained": "6/6",
+      "literal_identifier_leak": "0/6",
+      "format_contract": "5/6",
+      "byte_distinct_states": "6/6"
+    },
+    "GLM-5.2": {
+      "v3_named_binding_selected": "0/6",
+      "v4_neutral_p4_selected": "0/6",
+      "core_primitives_retained": "6/6",
+      "literal_identifier_leak": "1/6",
+      "literal_leak_interpretation": "The model mentioned the historical identifiers only in an explanatory note stating that they were excluded; this violates the literal output contract but does not select P4 or promote the local fact as a reusable rule.",
+      "format_contract": "5/6",
+      "byte_distinct_states": "6/6"
+    },
+    "deepseek-v4-flash": {
+      "v3_named_binding_selected": "5/6",
+      "v4_neutral_p4_selected": "0/6",
+      "core_primitives_retained": "6/6",
+      "literal_identifier_leak": "0/6",
+      "format_contract": "2/6",
+      "format_fail_interpretation": "The observed failures are primarily output-length compliance (>1200 characters), not loss of the three reusable primitives.",
+      "byte_distinct_states": "6/6"
+    }
+  },
+  "adjudication": {
+    "schema_or_candidate_salience_explanation_favored": true,
+    "deep_binding_understanding_failure_supported": false,
+    "lexical_label_alone_isolated": false,
+    "reason_lexical_label_not_isolated": "V4 changed both the label and its explicit contract definition, so the safe conclusion is broader output-schema/candidate-presentation sensitivity rather than a pure lexical-label effect.",
+    "same_evidence_byte_level_state_variability_remains": true,
+    "core_reusable_semantics_remain_present": true
+  },
+  "claim_boundary": {
+    "shadow_only": true,
+    "state_generation_variance_component_established": false,
+    "downstream_utility_effect_established": false,
+    "paper_claim_promotion_authority": false,
+    "model_superiority_established": false,
+    "scientific_execution_authority": false
+  }
+}

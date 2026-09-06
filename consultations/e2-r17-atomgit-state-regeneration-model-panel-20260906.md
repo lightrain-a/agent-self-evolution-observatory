@@ -77,17 +77,44 @@ It supports only these shadow observations:
 
 This panel does **not** establish a population state-generation variance component, downstream utility variance, Search-Projection Censoring, a benchmark effect, or general model superiority.
 
-## Next useful AtomGit experiment
+## V4 mechanism falsifier: candidate/schema sensitivity
 
-The highest-value next shadow test is not “more draws.” It is one focused falsifier:
+The proposed salience test has now been executed as a post-hoc shadow falsifier. It keeps the synthetic evidence and the three reusable primitives fixed, but replaces the fourth candidate name `SAME_INSTANCE_BINDING` with a neutral `P4_LOCAL_ONLY` definition stating that it applies only to the same historical workbook.
 
-**Negative-Binding Salience / Serialization Ablation**
+The transport is clean: 18/18 requests, 18 usage rows, zero tool calls, zero retries/replacements.
 
-Hold the synthetic evidence fixed and change only how the non-transferable binding primitive is represented in the output contract. The goal is to separate two explanations:
+| Model | V3 named binding selected | V4 neutral P4 selected | Core primitives retained | Literal ID leak | Format pass |
+|---|---:|---:|---:|---:|---:|
+| Qwen3.8-27B | 5/6 | **0/6** | 6/6 | 0/6 | 5/6 |
+| GLM-5.2 | 0/6 | **0/6** | 6/6 | 1/6* | 5/6 |
+| DeepSeek-V4-Flash | 5/6 | **0/6** | 6/6 | 0/6 | 2/6 |
 
-- **candidate-label salience / serialization effect:** leakage disappears when the forbidden label is no longer presented as a selectable candidate;
-- **deeper abstraction-boundary failure:** model still turns instance-only evidence into reusable state even when the output contract removes that candidate salience.
+`*` The GLM literal-ID case is not a promoted binding rule: the state added an unnecessary explanatory note saying that the historical identifiers had been excluded, thereby repeating them verbatim. It is a literal output-contract violation, not a `P4_LOCAL_ONLY` selection.
 
-If the first explanation wins, the paper/system lesson narrows to state-schema/output-contract design. If the second survives, it becomes a stronger hypothesis about persistent-state synthesis itself.
+DeepSeek's V4 format failures are likewise mostly verbosity/length violations (>1200 characters); the three core reusable primitives remain present in all six draws.
 
-This next test remains shadow-only unless it is prospectively connected to a paper-level claim gate.
+### Revised mechanism judgment
+
+V4 changes the interpretation of V3. The earlier Qwen/DeepSeek 5/6 selection of `SAME_INSTANCE_BINDING` should **not** be used as evidence that those models fundamentally fail to understand instance binding. When the same non-transferable concept is presented through the neutral `P4_LOCAL_ONLY` contract, all three models exclude it in all six draws.
+
+The safer conclusion is:
+
+> Persistent-state synthesis is highly sensitive to the serialization schema and candidate presentation. A model can preserve the same core evidence while changing which boundary labels enter the persistent state as the output contract changes.
+
+V4 does not isolate a purely lexical name effect because both the candidate label and its explicit definition changed. Therefore the supported diagnosis is **schema/candidate-presentation sensitivity**, not “the token string `SAME_INSTANCE_BINDING` alone caused the error.”
+
+This is a useful system lesson because the scientific object is the persistent state actually written, not merely the model's latent ability to classify evidence correctly. The interface used to serialize state can itself become part of the update mechanism.
+
+Exact V4 provenance:
+
+- plan SHA-256: `be7d7b0e7d0e62b53e614cd9ac5458781ff4d6a920c7b3d14d614f06215677b7`
+- prompt SHA-256: `14b36ac25c50c30b38a78fc465ecc84e221d7dc2441a74853ec50c6bd07f27b1`
+- result SHA-256: `70902f0fbf4a397ddc54d593ce8a8c12d6ea3eb5c15c28165ce10de97d37fca5`
+- raw root: `/data/wyt/e2-r17-shadow-state-regeneration-panel-20260906/v4-salience`
+- offline raw/result SHA mismatch: `0/18`
+
+## What AtomGit should be used for next
+
+At this point more repeats of the same free-form prompt have low value. The next useful AtomGit model experiment, if we spend another quota block, should compare **free-form state serialization versus a prospectively frozen typed state interface** on the same evidence. The question is not whether a rigid schema can mechanically make bytes identical; it is whether a typed interface reduces semantically consequential state variation (wrong primitive admission, omitted recovery/verification behavior, or invalid scope) while preserving useful procedural content.
+
+That experiment should report semantic state equivalence and boundary errors, not merely compression or exact-string similarity. It remains shadow-only unless a separate paper-level claim gate is frozen before execution.
