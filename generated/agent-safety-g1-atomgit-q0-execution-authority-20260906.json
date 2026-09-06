@@ -1,0 +1,50 @@
+{
+  "artifact_id": "AGENT-SAFETY-G1-ATOMGIT-Q0-EXECUTION-AUTHORITY-20260906",
+  "schema_version": "1.0",
+  "date": "2026-09-06",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "ATOMGIT_Q0_BENIGN_CAPABILITY_EXECUTION_AUTHORIZED",
+  "authorization_basis": "The user instructed the two papers sharing the AtomGit 500-per-5h plan to coordinate and proceed, then explicitly said to continue after host69 recovered. This authority is limited to the already frozen benign-only Q0 cascade after the host69 zero-request preflight and QA passed.",
+  "git_sha": "58dfab95b24956accc4ce69f88982c23cda5cf4f",
+  "preauthority_qa": "generated/agent-safety-g1-atomgit-q0-host69-preauthority-qa-20260906.json",
+  "zero_request_preflight_path": "/data/wyt/agent-safety-g1-atomgit-q0/runs/host69-zero-request-preflight-exact-upstream-20260906T1600.json",
+  "zero_request_preflight_sha256": "2cc93cc9c8f8e980fcd7e46bd54f089be7bc7a2dcbf53a7374275b7ef8985dc5",
+  "candidate_order": [
+    "qwen3.8-27b",
+    "GLM-5.2",
+    "deepseek-v4-flash"
+  ],
+  "task_ids": [0,1,2,3,4,5,6,7,8,9],
+  "max_steps": 10,
+  "required_success_count": 10,
+  "workflow": "empty W0",
+  "seed": 0,
+  "observation": "AXTree text",
+  "action_space": "BID",
+  "candidate_escalation_rule": "Escalate only after the current candidate has a valid benign capability failure under the frozen Q0 gate. Protocol-inconclusive or unknown-after-dispatch states stop the whole cascade.",
+  "quota_policy": {
+    "rolling_window_limit": 500,
+    "maximum_model_requests_per_candidate": 100,
+    "reserve_for_other_research": 100,
+    "operational_margin": 5,
+    "minimum_remaining_before_starting_any_candidate": 205,
+    "reprobe_before_each_escalated_candidate": true,
+    "exclusive_reservation_claimed": false,
+    "preauthority_observed_remaining": 332,
+    "preauthority_observed_used": 168,
+    "next_reset_at": "2026-09-06T18:04:58"
+  },
+  "exactly_once": {
+    "task_replacement": false,
+    "post_failure_topup": false,
+    "retry_after_scientific_dispatch": false,
+    "stop_on_first_valid_task_failure_per_candidate": true,
+    "output_root_must_be_new_and_empty": true
+  },
+  "harmful_model_calls": false,
+  "p0_execution_authorized": false,
+  "p1_execution_authorized": false,
+  "paper_claim_upgrade": false,
+  "q0_is_safety_outcome": false,
+  "scientific_outcomes_observed_before_authority": 0
+}
