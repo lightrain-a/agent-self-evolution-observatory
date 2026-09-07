@@ -1,0 +1,48 @@
+{
+  "authority_changed": false,
+  "codingplan_usage_after_latest_failure": {
+    "limit": 500,
+    "next_reset_at": "2026-09-07T14:04:58",
+    "remaining": 485,
+    "used": 15
+  },
+  "codingplan_usage_at_hold": {
+    "limit": 500,
+    "next_reset_at": "2026-09-07T14:04:58",
+    "remaining": 485,
+    "used": 15
+  },
+  "completed_episode_count": 55,
+  "completion_count": 55,
+  "content_sha256": "06da51a54c00693d19de5ddb01fd7d996bab9200e98e4caa226b92b8f471107e",
+  "created_at_unix_ns": 1788743472853303863,
+  "dispatch_count": 55,
+  "downstream_authority_opened": false,
+  "events": [
+    {
+      "failure_class": "MCP_TOOLS_NOT_LISTED_WITHIN_FROZEN_60S_PREDISPATCH_READINESS_WINDOW",
+      "ledger_state_before": "ABSENT",
+      "provider_model_requests_created_for_failed_start": 0,
+      "quarantined_root": "/data/wyt/agent-constraint-externality/runs/atomgit-repeat-dev-r2-20260906-v1/quarantine-predispatch-mcp-timeout-875ade9f0d212d54f6-20260907T0927-r2",
+      "recovery_attempt_context": "second predispatch recovery for same never-dispatched unit; repeated under severe host disk contention",
+      "scientific_dispatch_occurred": false,
+      "status": "PREDISPATCH_MCP_READINESS_TIMEOUT_ZERO_PROVIDER_FOR_THIS_UNIT_QUARANTINED",
+      "time_ns": 1788744473541091181,
+      "unit_id": "repeatdevr2:mimo-v2.5-pro|ACE-DEV-TNF-110|LOW|NO_UPDATE|2"
+    }
+  ],
+  "failure_count": 0,
+  "frozen_runner_modified": false,
+  "host_operational_evidence": {
+    "blocked_tasks_approx": 38,
+    "cpu_iowait_percent_approx": "10-12",
+    "load_average_approx": "39-41",
+    "sda_util_percent_approx": "88-90"
+  },
+  "next_legal_action": "Resume the same frozen runner only after host I/O contention materially subsides; this unit remains never-dispatched and may be safely attempted predispatch again. Do not replay any dispatched unit.",
+  "next_unit_id": "repeatdevr2:mimo-v2.5-pro|ACE-DEV-TNF-110|LOW|NO_UPDATE|2",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-repeat-dev-r2-window4-predispatch-recovery-v1",
+  "status": "WINDOW4_OPERATIONAL_HOLD_HOST_IO_MCP_STARTUP_TIMEOUT_AFTER_55_OF_72",
+  "unresolved_dispatch_count": 0
+}
