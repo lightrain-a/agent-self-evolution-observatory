@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-bridge-v4r2-stage-a-r3b-review-chain-provenance-correction-r2",
+  "date": "2026-09-07",
+  "status": "PASS_R3B_REVIEW_CHAIN_PROVENANCE_CONSISTENT_BEFORE_REVIEW",
+  "scope": "REVIEW_AND_REVIEWER_MIGRATION_PROVENANCE_ONLY",
+  "executable_object_commit": "32355a0f9bb8ade40f422ae2f39706e0a24a582d",
+  "contract": {
+    "path": "generated/e2-r17-bridge-v4r2-stage-a-contract-r3b-20260907.json",
+    "sha256": "369c3153f1afc73a860d4ada53750218bcde84c10e585c4815704b72b37883bf"
+  },
+  "preflight": {
+    "path": "generated/e2-r17-bridge-v4r2-stage-a-preflight-r3b-20260907.json",
+    "sha256": "cdcc5f306708236ea5b26323b9119733aebabbffa655a1fdddb3ecf5279182d7"
+  },
+  "reviewer_migration": {
+    "path": "generated/e2-r17-bridge-v4r2-stage-a-r3-reviewer-availability-supersession-20260907.json",
+    "sha256": "5843ea2024e92d6b14aee6dd983f0c11b066fbe0f6d5497c773968b3270b9049",
+    "replacement_contract_sha256": "369c3153f1afc73a860d4ada53750218bcde84c10e585c4815704b72b37883bf",
+    "replacement_preflight_sha256": "cdcc5f306708236ea5b26323b9119733aebabbffa655a1fdddb3ecf5279182d7",
+    "review_model": "GPT-6 Pro",
+    "review_surface": "ChatGPT web"
+  },
+  "review_brief": {
+    "path": "oracle_briefs/E2_R17_BRIDGE_V4R2_STAGE_A_R3B_GPT6_PRO_EXECUTION_REVIEW_20260907.md",
+    "sha256": "b523753fa010bfd52281a24365c8b1f5c2172044a516dfc44085b36c63cf89a6"
+  },
+  "review_packet": {
+    "path": "oracle_briefs/E2_R17_BRIDGE_V4R2_STAGE_A_R3B_GPT6_PRO_EXECUTION_REVIEW_PACKET_COMPACT_20260907.md",
+    "sha256": "1441140f67f20eb93859d1ac412b98d3199589044516f12ff8c192adb5866812"
+  },
+  "supersedes_review_packet_correction": {
+    "path": "generated/e2-r17-bridge-v4r2-stage-a-r3b-review-packet-provenance-correction-20260907.json",
+    "sha256": "3c7e1eec1c0fb513d845f9e2f8a36b9de4adac9de216153dde5dac460058d792",
+    "reason": "R1 corrected the review header but did not yet repair provisional replacement hashes inside the reviewer-migration receipt embedded by the packet. R2 closes the whole review chain."
+  },
+  "stale_provisional_values_remaining_in_final_review_objects": false,
+  "post_executable_object_code_changes": false,
+  "r3b_review_user_turns_before_r2_correction": 0,
+  "r3b_review_verdict_before_r2_correction": null,
+  "scientific_geometry_changed": false,
+  "control_plane_code_changed": false,
+  "scientific_model_identity_changed": false,
+  "provider_budget_changed": false,
+  "support_gate_changed": false,
+  "scientific_outcomes_read": false,
+  "scientific_authority": false,
+  "provider_io": false,
+  "search_pool_acquisition": false,
+  "support_inspection": false,
+  "free_updater": false,
+  "actor_evaluation": false,
+  "validation_opening": false,
+  "paper_promotion": false,
+  "next_gate": "FREEZE_FINAL_CORRECTED_R3B_REVIEW_OBJECT_THEN_ONE_FRESH_GPT6_PRO_EXECUTION_REVIEW"
+}

@@ -45,7 +45,7 @@ R3B zero-provider preflight:
 
 R3 reviewer-availability supersession:
 - `generated/e2-r17-bridge-v4r2-stage-a-r3-reviewer-availability-supersession-20260907.json`
-- SHA256 `23dd3569e591384408710386bec0687b068503c89f02cd040cfe11429e7b86a8`
+- SHA256 `5843ea2024e92d6b14aee6dd983f0c11b066fbe0f6d5497c773968b3270b9049`
 - R3 reviewer user turns: 0;
 - R3 review verdict: null;
 - R3 authorization/capability/provider I/O: none.
@@ -531,9 +531,9 @@ SHA256: `e0090ac757175a6d10f33f3921c97738bf34b4722530b86237fecd7f9b3dc9f3`
   },
   "replacement_r3b": {
     "contract_path": "generated/e2-r17-bridge-v4r2-stage-a-contract-r3b-20260907.json",
-    "contract_sha256": "4b24829abe80956008e76271e2e2df956f64f9693c9a3b47423690418bfbdc31",
+    "contract_sha256": "369c3153f1afc73a860d4ada53750218bcde84c10e585c4815704b72b37883bf",
     "preflight_path": "generated/e2-r17-bridge-v4r2-stage-a-preflight-r3b-20260907.json",
-    "preflight_sha256": "506f4fd8bed6eec3c02dc829e9566b66560fa38974da5301b751a46445fa4a0c",
+    "preflight_sha256": "cdcc5f306708236ea5b26323b9119733aebabbffa655a1fdddb3ecf5279182d7",
     "review_model": "GPT-6 Pro",
     "review_surface": "ChatGPT web",
     "fresh_conversation_required": true,

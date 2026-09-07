@@ -45,7 +45,7 @@ R3B zero-provider preflight:
 
 R3 reviewer-availability supersession:
 - `generated/e2-r17-bridge-v4r2-stage-a-r3-reviewer-availability-supersession-20260907.json`
-- SHA256 `23dd3569e591384408710386bec0687b068503c89f02cd040cfe11429e7b86a8`
+- SHA256 `5843ea2024e92d6b14aee6dd983f0c11b066fbe0f6d5497c773968b3270b9049`
 - R3 reviewer user turns: 0;
 - R3 review verdict: null;
 - R3 authorization/capability/provider I/O: none.
