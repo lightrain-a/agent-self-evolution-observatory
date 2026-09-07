@@ -29,18 +29,18 @@ M3R4 returned `M3R4_OBSERVED_EXCESS_ONLY_NO_PROPENSITY_LOCALIZATION`. The frozen
 ## Exact R3B object
 
 Executable-object commit:
-`09f0eae47b4be04f4e1b4be5b8703b817e971902`
+`32355a0f9bb8ade40f422ae2f39706e0a24a582d`
 
 R3B contract:
 - `generated/e2-r17-bridge-v4r2-stage-a-contract-r3b-20260907.json`
-- SHA256 `eb0e0e2765f4beb34c591de5cd0c94dd8f23c548d6120a92b427e39139478c69`
+- SHA256 `369c3153f1afc73a860d4ada53750218bcde84c10e585c4815704b72b37883bf`
 - status `FROZEN_E2_R17_BRIDGE_V4R2_STAGE_A_SCREEN_SEARCH_SUPPORT`
 - control-plane revision `STAGE_A_R3_EXTERNAL_SIGNED_EXECUTION_CAPABILITY`
 - all authority bits false.
 
 R3B zero-provider preflight:
 - `generated/e2-r17-bridge-v4r2-stage-a-preflight-r3b-20260907.json`
-- SHA256 `455cfb70b384a61c6b258828b9b064b5fac93f1fe9f6b7f2aa4a69ac587f237a`
+- SHA256 `cdcc5f306708236ea5b26323b9119733aebabbffa655a1fdddb3ecf5279182d7`
 - status `PASS_ZERO_PROVIDER_BRIDGE_V4R2_STAGE_A_CONTRACT_PREFLIGHT`.
 
 R3 reviewer-availability supersession:
@@ -138,8 +138,8 @@ Then emit these exact synthesis fields:
 - `remaining_blockers`: array
 - `stage_a_execution_recommendation`: ALLOW_SEPARATE_AUTHORIZATION / REVISE_BEFORE_AUTHORIZATION / STOP_STAGE_A
 - `scientific_authority_now`: must remain false at review time
-- `contract_sha256_acknowledged`: must equal `eb0e0e2765f4beb34c591de5cd0c94dd8f23c548d6120a92b427e39139478c69`
-- `preflight_sha256_acknowledged`: must equal `455cfb70b384a61c6b258828b9b064b5fac93f1fe9f6b7f2aa4a69ac587f237a`
+- `contract_sha256_acknowledged`: must equal `369c3153f1afc73a860d4ada53750218bcde84c10e585c4815704b72b37883bf`
+- `preflight_sha256_acknowledged`: must equal `cdcc5f306708236ea5b26323b9119733aebabbffa655a1fdddb3ecf5279182d7`
 - `control_plane_revision`: must equal `STAGE_A_R3_EXTERNAL_SIGNED_EXECUTION_CAPABILITY`
 
 Finish with exactly one token:
@@ -158,7 +158,7 @@ or
 ---
 ## Original R3B contract compact deterministic audit view
 
-Original full R3B contract SHA256: `eb0e0e2765f4beb34c591de5cd0c94dd8f23c548d6120a92b427e39139478c69`. Only the repetitive 384 `unit_ids` strings are replaced here by count/order SHA; every other contract field is reproduced.
+Original full R3B contract SHA256: `369c3153f1afc73a860d4ada53750218bcde84c10e585c4815704b72b37883bf`. Only the repetitive 384 `unit_ids` strings are replaced here by count/order SHA; every other contract field is reproduced.
 
 ```json
 {
