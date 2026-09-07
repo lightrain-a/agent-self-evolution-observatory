@@ -1,0 +1,34 @@
+{
+  "ambiguous_post_dispatch_unit_count": 0,
+  "authority": {
+    "development_repeat_qualification": true,
+    "paper_claim": false,
+    "rq1_rq2": false,
+    "rq3": false,
+    "rq4": false,
+    "target_only_verification": false
+  },
+  "codingplan_usage": {
+    "limit": 500,
+    "next_reset_at": "2026-09-07T09:04:58",
+    "remaining": 88,
+    "used": 412
+  },
+  "completed_episode_count": 54,
+  "content_sha256": "97d9fe594c9c87a6bddb84968a6396413dc4469f34c01d78ccc1cc055b78afd7",
+  "dispatch_count": 54,
+  "execution_id": "ACE-ATOMGIT-REPEAT-DEV-R2-20260906",
+  "failure_count": 0,
+  "ledger_rows_added_by_hold_check": 0,
+  "ledger_sha256": "8cc24a57bf8e493e38543b96d999ee6cfe75c71cd0cb1fdd196aec69020550b3",
+  "model_requests_created_by_hold_check": 0,
+  "next_legal_action": "After CodingPlan remaining >=117, resume the same frozen R2 authority from the first undispatched unit; never replay the prior 54 completed episodes.",
+  "next_unit_id": "repeatdevr2:mimo-v2.5-pro|ACE-DEV-TNF-110|LOW|REAL_REPAIR|2",
+  "next_unit_is_pair_start": true,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "planned_episode_count": 72,
+  "recorded_at": "2026-09-07T08:34:00+08:00",
+  "required_remaining": 117,
+  "schema_version": "ace-repeat-dev-r2-window-hold-v1",
+  "status": "ATOMGIT_REPEAT_DEV_R2_WINDOW3_PRE_DISPATCH_QUOTA_HOLD_54_OF_72"
+}
