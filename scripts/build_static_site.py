@@ -30,6 +30,9 @@ ROOT_FILES = (
     "sitemap.xml",
     "site.webmanifest",
 )
+PUBLIC_DIRS = (
+    "seed-causalwm",
+)
 GENERATED_PATTERNS = ("*.js", "*.json")
 TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".tex", ".xml", ".webmanifest"}
 PUBLIC_REDACTIONS = (
@@ -223,6 +226,15 @@ def build() -> Path:
         source = ROOT / name
         if source.exists():
             destination = OUTPUT / name
+            copy_file(source, destination)
+            copied.add(destination)
+
+    for name in PUBLIC_DIRS:
+        source_root = ROOT / name
+        if not source_root.exists():
+            continue
+        for source in sorted(path for path in source_root.rglob("*") if path.is_file()):
+            destination = OUTPUT / name / source.relative_to(source_root)
             copy_file(source, destination)
             copied.add(destination)
 

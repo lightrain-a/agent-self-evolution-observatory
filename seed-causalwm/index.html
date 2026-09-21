@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seed 2.1 pro — CausalWM, made playable</title>
+<meta name="description" content="Observation -> optical flow -> pointmaps -> future RGB: an interactive instrument built from CausalWM's official generated media.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#instrument">Skip to the instrument</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="masthead-brand"><span class="tk-seed">SEED 2.1 PRO</span><span class="masthead-sep">/</span><span>PAPER &rarr; PLAYABLE</span></p>
+    <nav class="masthead-links" aria-label="Official sources">
+      <span class="masthead-source">Source work: CausalWM &middot; Aether AI, 2026</span>
+      <a href="https://aetherlabsai.github.io/CausalWM/" target="_blank" rel="noopener noreferrer">Project</a>
+      <a href="https://github.com/AetherLabsAI/CausalWM" target="_blank" rel="noopener noreferrer">Code</a>
+      <a href="https://openreview.net/forum?id=3pf4d0EEqm" target="_blank" rel="noopener noreferrer">Paper</a>
+    </nav>
+  </div>
+</header>
+
+<main id="instrument" class="instrument">
+
+  <!-- Causal rail -->
+  <section class="rail-wrap" aria-label="Causal reasoning order">
+    <div class="rail" id="rail">
+      <div class="rail-beam" aria-hidden="true"></div>
+      <button class="rail-node is-active" data-stage="obs" type="button">
+        <span class="node-index">01</span>
+        <span class="node-dot"><span class="node-glyph">O</span></span>
+        <span class="node-name">Observe</span>
+      </button>
+      <button class="rail-node" data-stage="flow" type="button">
+        <span class="node-index">02</span>
+        <span class="node-dot"><span class="node-glyph">F</span></span>
+        <span class="node-name">Motion</span>
+      </button>
+      <button class="rail-node" data-stage="pointmap" type="button">
+        <span class="node-index">03</span>
+        <span class="node-dot"><span class="node-glyph">P</span></span>
+        <span class="node-name">Geometry</span>
+      </button>
+      <button class="rail-node" data-stage="rgb" type="button">
+        <span class="node-index">04</span>
+        <span class="node-dot"><span class="node-glyph">V</span></span>
+        <span class="node-name">Future</span>
+      </button>
+      <span class="rail-pulse" id="railPulse" aria-hidden="true"></span>
+    </div>
+    <div class="rail-callout" id="railCallout" hidden>
+      <p class="callout-title" id="calloutTitle"></p>
+      <p class="callout-body" id="calloutBody"></p>
+      <p class="callout-src">Causal attention mask &middot; paper Fig 4 &middot; §4.1.2</p>
+    </div>
+  </section>
+
+  <!-- Instruction + stage caption -->
+  <section class="caption-row">
+    <p class="instruction"><span class="instruction-label">Instruction</span>&ldquo;<span id="instructionText"></span>&rdquo;</p>
+    <p class="stage-caption" id="stageCaption"></p>
+  </section>
+
+  <!-- Hero stage -->
+  <section class="hero-area" id="heroArea">
+    <div class="stage" id="stage">
+
+      <div class="face is-on" data-face="obs">
+        <img id="obsImg" src="media/cases/0007/input.jpg" alt="First-frame observation given to CausalWM">
+      </div>
+
+      <div class="face" data-face="flow">
+        <div class="filmstrip"><video id="vid-flow" class="stage-video" muted playsinline preload="auto"></video></div>
+      </div>
+
+      <div class="face" data-face="pointmap">
+        <div class="filmstrip"><video id="vid-pointmap" class="stage-video" muted playsinline preload="auto"></video></div>
+      </div>
+
+      <div class="face" data-face="rgb">
+        <div class="filmstrip"><video id="vid-rgb" class="stage-video" muted playsinline preload="auto"></video></div>
+      </div>
+
+      <div class="face-meta">
+        <span class="face-tag" id="faceTag">OBSERVATION</span>
+        <span class="conceptual-badge" id="conceptualBadge">Conceptual visualization</span>
+      </div>
+
+      <div class="conceptual-veil" id="conceptualVeil" hidden>
+        <div class="veil-card">
+          <p class="veil-badge">Conceptual illustration</p>
+          <h2>Without causal CoT &mdash; direct prediction</h2>
+          <div class="veil-mini" aria-hidden="true">
+            <span class="vm-node" data-vm="O">O</span><i class="vm-arrow"></i>
+            <span class="vm-node" data-vm="V">V</span>
+          </div>
+          <p class="veil-skips"><span>F &middot; motion skipped</span><span>P &middot; geometry skipped</span></p>
+          <p class="veil-text">The observed frame maps straight to future RGB. Motion and geometry are never made explicit, so nothing intermediary constrains the generated future &mdash; the &ldquo;Without explicit CoT&rdquo; setting in the paper&rsquo;s Figure 1(a).</p>
+          <p class="veil-note">Illustration of the paper&rsquo;s Fig 1(a) contrast only &mdash; not a CausalWM inference and not model-generated media.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beam overlay: dock -> stage -->
+  <svg class="beam-overlay" id="beamOverlay" aria-hidden="true">
+    <defs>
+      <linearGradient id="beamGrad" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0%" stop-color="#3aa79f"/>
+        <stop offset="100%" stop-color="#4be3d2"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Context dock -->
+  <section class="dock-wrap" aria-label="Completed predictions reused as context">
+    <p class="dock-label"><span class="dock-dot"></span>Completed predictions &middot; frozen and reused as context</p>
+    <div class="dock" id="dock">
+      <div class="dock-tile" data-tile="obs">
+        <img id="tileObsImg" src="media/cases/0007/input.jpg" alt="Observation tile">
+        <span class="tile-tag">O</span>
+      </div>
+      <div class="dock-tile" data-tile="flow" hidden>
+        <img id="tileFlowImg" src="media/cases/0007/flow_end.jpg" alt="Completed optical flow tile">
+        <span class="tile-tag">F</span>
+      </div>
+      <div class="dock-tile" data-tile="pointmap" hidden>
+        <img id="tilePointmapImg" src="media/cases/0007/pointmap_end.jpg" alt="Completed pointmap tile">
+        <span class="tile-tag">P</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transport controls -->
+  <section class="controls" aria-label="Playback controls">
+    <div class="controls-left">
+      <button class="btn btn-play" id="playBtn" type="button" aria-label="Pause" aria-keyshortcuts="Space">
+        <svg class="ic ic-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="ic ic-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M8 5.5v13a1 1 0 0 0 1.54.84l10-6.5a1 1 0 0 0 0-1.68l-10-6.5A1 1 0 0 0 8 5.5z"/></svg>
+      </button>
+      <button class="btn btn-replay" id="replayBtn" type="button" aria-label="Replay from start">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      </button>
+      <span class="time-readout" id="timeReadout">OBSERVE</span>
+    </div>
+
+    <div class="scrubber">
+      <input type="range" id="scrubber" min="0" max="1000" value="0" step="1" aria-label="Scrub reasoning timeline">
+      <div class="scrub-ticks" aria-hidden="true">
+        <span data-tick="obs">O</span><span data-tick="flow">F</span><span data-tick="pointmap">P</span><span data-tick="rgb">V</span>
+      </div>
+    </div>
+
+    <div class="controls-right">
+      <div class="mode-toggle" id="modeToggle" role="switch" aria-checked="false" tabindex="0" aria-label="Show the without-CoT contrast from the paper's Figure 1(a)">
+        <span class="mode-track"><span class="mode-thumb"></span></span>
+        <span class="mode-text">Without CoT</span>
+      </div>
+      <button class="btn btn-view" id="viewBtn" type="button" aria-pressed="false">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="16" rx="1"/><rect x="13" y="4" width="8" height="16" rx="1"/></svg>
+        <span>Side by side</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Case switcher -->
+  <section class="cases" aria-label="Switch official case">
+    <button class="case-tab is-active" data-case="0007" type="button">
+      <img src="media/cases/0007/rgb.jpg" alt="">
+      <span class="case-meta"><small>01 / CASE</small><strong>Bottle to drawer</strong></span>
+    </button>
+    <button class="case-tab" data-case="0090" type="button">
+      <img src="media/cases/0090/rgb.jpg" alt="">
+      <span class="case-meta"><small>02 / CASE</small><strong>Close the drawer</strong></span>
+    </button>
+    <button class="case-tab" data-case="0099" type="button">
+      <img src="media/cases/0099/rgb.jpg" alt="">
+      <span class="case-meta"><small>03 / CASE</small><strong>Retrieve the bottle</strong></span>
+    </button>
+  </section>
+
+</main>
+
+<!-- Evidence band -->
+<footer class="evidence" id="evidence">
+  <div class="evidence-inner">
+    <p class="evidence-eyebrow">Official results &middot; every number sourced</p>
+
+    <div class="evidence-grid">
+      <div class="ev-block">
+        <p class="ev-num">66.04<sup><a href="https://aetherlabsai.github.io/CausalWM/" target="_blank" rel="noopener noreferrer" title="Official project page">1</a></sup></p>
+        <p class="ev-label">TWB-Score &middot; <strong>#1 of 36 models</strong> on TriWorldBench</p>
+        <p class="ev-sub">Action-conditioned, multi-view &middot; leaderboard snapshot Sep 11, 2026 (listed as CWM)</p>
+      </div>
+      <div class="ev-block">
+        <p class="ev-num">89.9<sup><a href="https://github.com/AetherLabsAI/CausalWM#results" target="_blank" rel="noopener noreferrer" title="Official code README">2</a></sup></p>
+        <p class="ev-label">RO score / 100 &middot; <strong>state of the art</strong>, PAI-Bench robot domain</p>
+        <p class="ev-sub">174 prompts &times; 5 seeds &middot; judge Qwen3-VL-235B-A22B-Instruct</p>
+      </div>
+      <ul class="ev-chips">
+        <li><strong>88.84</strong> RO with <strong>1 denoising step</strong> per stage &middot; <strong>5.16&times;</strong> faster than 20/20/20 (Table 4)</li>
+        <li><strong>7</strong> top-two finishes across 19 TriWorldBench metrics (2 first, 5 second)</li>
+        <li><strong>~31K</strong> source hours curated to <strong>~20K</strong> hours &middot; 20 sources (Table 1)</li>
+        <li><strong>16B</strong> shared diffusion Transformer &middot; no external flow/depth estimator at inference</li>
+        <li>Trained in <strong>3 stages</strong>: video pre-training &rarr; causal CoT mid-training &rarr; multi-objective RLVR &middot; §4.2</li>
+        <li><strong>In-context visual guidance</strong>: URDF-rendered trajectories condition generation after few-episode fine-tuning &middot; §4.3, Fig 5</li>
+      </ul>
+    </div>
+
+    <div class="evidence-figures">
+      <button class="fig-link" data-fig="connected" type="button">Official framework figure &rarr;</button>
+      <button class="fig-link" data-fig="comparison" type="button">Official benchmark comparison &rarr;</button>
+    </div>
+
+    <div class="seed-note">
+      <p><strong>What Seed 2.1 pro did here.</strong> It read the official code and project page, then the full 35-page technical PDF once it became available (method in §4, evidence in §5, figures 1 &amp; 4). It identified the hardest idea &mdash; intermediate predictions are <em>fixed and reused as context</em> under a causal attention mask (§4.1.2), rather than serving as auxiliary supervision or parallel outputs &mdash; and built this instrument entirely from official generated media. All video shown is CausalWM output; no predictions or benchmark values were invented.</p>
+    </div>
+
+    <p class="colophon">SEED 2.1 PRO &middot; PAPER &rarr; PLAYABLE &middot; source: CausalWM (Aether AI, 2026)</p>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close figure">&times;</button>
+  <img id="lightboxImg" src="" alt="Official CausalWM figure">
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
