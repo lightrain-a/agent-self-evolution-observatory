@@ -173,7 +173,7 @@ def layout_change(old: dict, new: dict, reason: str) -> dict:
 def table_exports(table: dict) -> tuple[str, str]:
     rows, columns = table['rows'], table['columns']
     index = {(c['row_id'], c['column_id']): c['display'] for c in table['cells']}
-    out = io.StringIO(); writer = csv.writer(out)
+    out = io.StringIO(); writer = csv.writer(out, lineterminator='\n')
     def safe_csv(v):
         s = str(v)
         return "'"+s if s.startswith(('=', '+', '-', '@')) else s

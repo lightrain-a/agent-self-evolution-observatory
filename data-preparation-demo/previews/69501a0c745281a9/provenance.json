@@ -1,5 +1,5 @@
 {
-  "snapshot_sha256": "830aa4f5cfbd158415e8950065473e4f1dbf76bc42b6496dbde693edcdc5b96d",
+  "snapshot_sha256": "69501a0c745281a9e317e08bcd849db902744131d233951dd48818c36101ed1e",
   "source_refs": [
     {
       "path": "synthetic-evidence.json",
@@ -83,7 +83,7 @@
     }
   ],
   "source_data_included": false,
-  "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef",
+  "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b",
   "reproduce": "python3 -m research_pipeline.experiment_data_preparation --manifest input-manifest.json --evidence-root ORIGINAL_EVIDENCE_ROOT --output OUTPUT_ROOT",
   "scientific_authority": false
 }

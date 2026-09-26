@@ -40,5 +40,5 @@
 <circle cx="432.397" cy="325.000" r="5.000" fill="#94a3b8" opacity="1"/>
 <circle cx="588.604" cy="325.000" r="6.000" fill="#db2777" opacity="1"/>
 <text x="132.000" y="91.000" font-size="12" text-anchor="start" class="muted" >gray: before   colored: after</text>
-<text x="24.000" y="449.000" font-size="10" text-anchor="start" class="muted" >Candidate only · FIG-47e24f98a53119 · data 42ec2dbd4630</text>
+<text x="24.000" y="449.000" font-size="10" text-anchor="start" class="muted" >Candidate only · FIG-1f16ff6d8f9ce8 · data 42ec2dbd4630</text>
 </svg>

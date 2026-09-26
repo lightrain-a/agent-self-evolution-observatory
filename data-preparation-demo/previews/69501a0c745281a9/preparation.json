@@ -342,7 +342,7 @@
         "comparison_mode": "SAME_DATA_DIFFERENT_ENCODING",
         "candidates": [
           {
-            "id": "FIG-1623277f722c0b",
+            "id": "FIG-c062b1be7ac41d",
             "recipe": "dot",
             "recipe_label": "点图 / Dot plot",
             "asset_id": "DEMO-categories",
@@ -351,12 +351,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
-            "spec_sha256": "1623277f722c0b9efe3aaac54f1ff4cbae8119687d7e7d7ac383be1bdfde0f4c",
+            "spec_sha256": "c062b1be7ac41d167a5b66b5cebea3a965a931879d03cabc1acb140570e88266",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -365,7 +365,7 @@
             }
           },
           {
-            "id": "FIG-4af9cff98f3211",
+            "id": "FIG-a2fbb9c7cd181c",
             "recipe": "lollipop",
             "recipe_label": "棒棒糖 / Lollipop",
             "asset_id": "DEMO-categories",
@@ -374,12 +374,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
-            "spec_sha256": "4af9cff98f321191cfb9702518f5db9d161d5dfff453b7a33c77736e2879c73c",
+            "spec_sha256": "a2fbb9c7cd181c33107441b1ba194c60eeffeb9e5240287b216c0ac1c7ec94ec",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -388,7 +388,7 @@
             }
           },
           {
-            "id": "FIG-85fd60d16d45de",
+            "id": "FIG-32be1da5622724",
             "recipe": "bar",
             "recipe_label": "横向条形 / Horizontal bar",
             "asset_id": "DEMO-categories",
@@ -397,12 +397,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
-            "spec_sha256": "85fd60d16d45de1cc5cd1a1f873c9e177d59ff6c208bb73bf2a1a40919c0a27c",
+            "spec_sha256": "32be1da562272468308dc0c037a3efb0efa145d619ff7774bdce00012a00b291",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -411,7 +411,7 @@
             }
           },
           {
-            "id": "FIG-40c66c44e3ce11",
+            "id": "FIG-19ce40a0dbaa5c",
             "recipe": "tile",
             "recipe_label": "数值条带 / Value tiles",
             "asset_id": "DEMO-categories",
@@ -420,12 +420,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
-            "spec_sha256": "40c66c44e3ce11e2643377d35a60c41cc1fab335c28033026750151de20cfb1b",
+            "spec_sha256": "19ce40a0dbaa5c25e86a738c5aa22e622833a4109f2c2fdc5f862f0d19e2904e",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -443,7 +443,7 @@
         "comparison_mode": "SAME_DATA_DIFFERENT_ENCODING",
         "candidates": [
           {
-            "id": "FIG-47e24f98a53119",
+            "id": "FIG-1f16ff6d8f9ce8",
             "recipe": "dumbbell",
             "recipe_label": "哑铃 / Dumbbell",
             "asset_id": "DEMO-paired",
@@ -452,12 +452,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
-            "spec_sha256": "47e24f98a53119dafcd18148cffa0d3bfd8c8f96843c0dde4284528293f96cd4",
+            "spec_sha256": "1f16ff6d8f9ce897a9f5223ce38743875a08ef5e1ea9efb6547dd033cb9bb954",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -466,7 +466,7 @@
             }
           },
           {
-            "id": "FIG-e0638b654223ca",
+            "id": "FIG-1e9b6647ea6f7a",
             "recipe": "slope",
             "recipe_label": "斜率 / Slope",
             "asset_id": "DEMO-paired",
@@ -475,12 +475,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
-            "spec_sha256": "e0638b654223ca6bc21b8e9fc7c676a6155fb8b59ac1f0827252d2e7fc5e0c8d",
+            "spec_sha256": "1e9b6647ea6f7aef6404fb43e5198b13e1c1aa1c7acb8462dc38dc48c4ea1f07",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -489,7 +489,7 @@
             }
           },
           {
-            "id": "FIG-6fe5cae8e97f94",
+            "id": "FIG-22636c0c5a0137",
             "recipe": "parity",
             "recipe_label": "配对一致性 / Parity",
             "asset_id": "DEMO-paired",
@@ -498,12 +498,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
-            "spec_sha256": "6fe5cae8e97f94cc98d4101979c90e043ae3a871c6424d626510726be69e830e",
+            "spec_sha256": "22636c0c5a01374cc9dea7ee6588f50c17336e37554f23a558942c34c8d1c9d0",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -512,7 +512,7 @@
             }
           },
           {
-            "id": "FIG-61f70929f7cd71",
+            "id": "FIG-e04fa067fad639",
             "recipe": "delta",
             "recipe_label": "配对差值 / Paired delta",
             "asset_id": "DEMO-paired",
@@ -521,12 +521,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
-            "spec_sha256": "61f70929f7cd712f6f052a0baa4ab221c9819397d261c53cd61e60b3c92d9691",
+            "spec_sha256": "e04fa067fad6394210203a93aa4961f210ae81413b07a65cc9aaf8da575fc44b",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -544,7 +544,7 @@
         "comparison_mode": "SAME_DATA_DIFFERENT_ENCODING",
         "candidates": [
           {
-            "id": "FIG-10211808929867",
+            "id": "FIG-1f1ad31fe31832",
             "recipe": "ecdf",
             "recipe_label": "经验累积分布 / ECDF",
             "asset_id": "DEMO-samples",
@@ -553,12 +553,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
-            "spec_sha256": "102118089298671adcb6625e598d7299b13642c0a7af89192c421217c1c9d285",
+            "spec_sha256": "1f1ad31fe318325a00ebfbc45074ced1d8734af19fd30ca09115c44079d82880",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -567,7 +567,7 @@
             }
           },
           {
-            "id": "FIG-dad6513861861d",
+            "id": "FIG-f66bf999c842fd",
             "recipe": "box",
             "recipe_label": "箱线 / Box plot",
             "asset_id": "DEMO-samples",
@@ -576,12 +576,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
-            "spec_sha256": "dad6513861861dde67ff837b9c58df781d2a6f140e480c2926fddeaeb4fbb11f",
+            "spec_sha256": "f66bf999c842fdc8541349ed604f123276155ab167c73a07d59e0fb66198392b",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -590,7 +590,7 @@
             }
           },
           {
-            "id": "FIG-db011a3f29f5b9",
+            "id": "FIG-49d767a227d291",
             "recipe": "histogram",
             "recipe_label": "直方 / Histogram",
             "asset_id": "DEMO-samples",
@@ -599,12 +599,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
-            "spec_sha256": "db011a3f29f5b969605017c66184694b5043c36c5c15f32e9f44471c24df96e9",
+            "spec_sha256": "49d767a227d2919e3dd660072f3fb5f3ac72e966dbaec63fe24a3bd619ffd064",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -613,7 +613,7 @@
             }
           },
           {
-            "id": "FIG-cd2fe8a9786bac",
+            "id": "FIG-212347951f683e",
             "recipe": "strip",
             "recipe_label": "样本点分布 / Strip",
             "asset_id": "DEMO-samples",
@@ -622,12 +622,12 @@
             "scope": "Synthetic workflow demonstration only",
             "data_role": "SYNTHETIC_DEMO",
             "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
-            "spec_sha256": "cd2fe8a9786bace7c7c57e0fe86b120704a0f9f76b8b0e3efe8ac1502c2cd3e8",
+            "spec_sha256": "212347951f683e7c4d2d8365d8b5b6fc6417db5b111edf978a4a178d8fb52f40",
             "status": "CANDIDATE_NOT_SELECTED",
             "style": {
               "font_family": "Georgia, serif",
               "theme": "paper-vivid",
-              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+              "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b"
             },
             "source_ref": {
               "path": "synthetic-evidence.json",
@@ -667,21 +667,21 @@
   ],
   "pdf_png_conversion": "USE_EXISTING_EXPORT_PIPELINE_NOT_IMPLEMENTED_HERE",
   "source_data_included": false,
-  "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef",
-  "snapshot_sha256": "830aa4f5cfbd158415e8950065473e4f1dbf76bc42b6496dbde693edcdc5b96d",
+  "renderer_sha256": "0dba213a31bdc206cebfcd40936087faa124319a3b5dc18df2c5fe298369959b",
+  "snapshot_sha256": "69501a0c745281a9e317e08bcd849db902744131d233951dd48818c36101ed1e",
   "status": "PREVIEW_READY_FOR_OPERATOR_SELECTION",
   "artifact_sha256": {
-    "figures/FIG-cd2fe8a9786bac.svg": "8ec9ac5df9bea82ef1b879e5aad5211b715090b8b50aed96d1d96e1773ea438a",
-    "figures/FIG-10211808929867.svg": "7b4b9a9b7854cef9031789aa016885373c795d967167c343895ea36acaa4b4cd",
-    "figures/FIG-e0638b654223ca.svg": "051012dc9e864b7ed0883a786f0b404057f843675e67a871b470cc8a3f3fa602",
-    "figures/FIG-db011a3f29f5b9.svg": "1a59a8230eac652bcb292b48f91897c95eef8a73a23958f2bbfec7e9e94bd4ed",
-    "figures/FIG-dad6513861861d.svg": "248e2bf18c3f166015f9a880446a7c1983a3ea9c5b788cec2908aa2d05b75929",
-    "figures/FIG-40c66c44e3ce11.svg": "97cfad78839b3b8cd1fbb65165ebde21009114a52be2a61e3bafb608a87f7962",
-    "figures/FIG-85fd60d16d45de.svg": "6f47ae682124a6c26305e7cffe005e4eb60c2a90a0a95a62233840ca481940f2",
-    "figures/FIG-1623277f722c0b.svg": "92199cf744e7b2bda5bf26f2f337e672fbc0a227008e5031c6fa6223a0fa278f",
-    "figures/FIG-47e24f98a53119.svg": "4862eb94c6797987cb9c9f78b30e76150c92c060fcb2587bdd6aceed1b8575aa",
-    "figures/FIG-6fe5cae8e97f94.svg": "c0b3c15ea0d6a894708edebb3831a0381f3dc91593b0cad3fef8c5571f2aadc0",
-    "figures/FIG-61f70929f7cd71.svg": "024a29b1944b7af0b508964d21f02d8829d30dffe0740712c984116e5dd0c129",
-    "figures/FIG-4af9cff98f3211.svg": "f14457cea16feb23dc514bf5109fb0909db5d81178c6ca0121a3f76219cbb774"
+    "figures/FIG-22636c0c5a0137.svg": "1aa2bc4583417c00f40e1206a61d43f74afc1edc46778f960a038b8a626f0316",
+    "figures/FIG-c062b1be7ac41d.svg": "f7509c273ff95582d6036dac2c141e822b1eb1157f625ae4894e3301b75b7bb0",
+    "figures/FIG-1f16ff6d8f9ce8.svg": "ce5c8e50f287c106376a03cf5f25973da5738acd295b576346c0a5be2fe15c0f",
+    "figures/FIG-1e9b6647ea6f7a.svg": "63aebf32a2fc33ebd82affeb24144421190cf54e6ed175f8e1a2bd0501e61623",
+    "figures/FIG-49d767a227d291.svg": "73fb8c9622f8cb484dfc840baa239e07b661bb46fd7df44ba100349b9df2ba1e",
+    "figures/FIG-32be1da5622724.svg": "620e761887511191d2762252478258f631c3063af904a64ea4599879cc4ad1c0",
+    "figures/FIG-a2fbb9c7cd181c.svg": "6d5861b6c5f6ac078fdd66b24e7709ffc26771d35d06ada5c2b79f510da4e8fd",
+    "figures/FIG-e04fa067fad639.svg": "d492130622cb5afcffa3e7d972c96fd1d2a80910fc5eaa6ad58b8c54517c0fb2",
+    "figures/FIG-212347951f683e.svg": "91b71e5a6e1fddcae939ad48310d9e0f88d1715a57b1735a98a3f8eda32eedec",
+    "figures/FIG-1f1ad31fe31832.svg": "b74d24b2bb76a5bd8e74a18bc9364673b1a80000e977ef42f83f8e7613f92002",
+    "figures/FIG-f66bf999c842fd.svg": "62a6f8807f935a434585e13c3600189e2519c2aa208e57170932ebbfd937407e",
+    "figures/FIG-19ce40a0dbaa5c.svg": "1523c641800b18fa631243a24b0301ec7d5dabfc53e19f6a3efc45ae48b5f38c"
   }
 }

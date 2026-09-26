@@ -3,92 +3,92 @@
   "is_synthetic": true,
   "not_heirs_data": true,
   "not_current_paper_results": true,
-  "snapshot_sha256": "830aa4f5cfbd158415e8950065473e4f1dbf76bc42b6496dbde693edcdc5b96d",
-  "url": "data-preparation-demo/previews/830aa4f5cfbd1584/index.html",
+  "snapshot_sha256": "69501a0c745281a9e317e08bcd849db902744131d233951dd48818c36101ed1e",
+  "url": "data-preparation-demo/previews/69501a0c745281a9/index.html",
   "groups": 3,
   "figures": [
     {
-      "id": "FIG-1623277f722c0b",
+      "id": "FIG-c062b1be7ac41d",
       "recipe": "dot",
       "label": "点图 / Dot plot",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-1623277f722c0b.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-c062b1be7ac41d.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-4af9cff98f3211",
+      "id": "FIG-a2fbb9c7cd181c",
       "recipe": "lollipop",
       "label": "棒棒糖 / Lollipop",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-4af9cff98f3211.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-a2fbb9c7cd181c.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-85fd60d16d45de",
+      "id": "FIG-32be1da5622724",
       "recipe": "bar",
       "label": "横向条形 / Horizontal bar",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-85fd60d16d45de.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-32be1da5622724.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-40c66c44e3ce11",
+      "id": "FIG-19ce40a0dbaa5c",
       "recipe": "tile",
       "label": "数值条带 / Value tiles",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-40c66c44e3ce11.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-19ce40a0dbaa5c.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-47e24f98a53119",
+      "id": "FIG-1f16ff6d8f9ce8",
       "recipe": "dumbbell",
       "label": "哑铃 / Dumbbell",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-47e24f98a53119.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-1f16ff6d8f9ce8.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-e0638b654223ca",
+      "id": "FIG-1e9b6647ea6f7a",
       "recipe": "slope",
       "label": "斜率 / Slope",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-e0638b654223ca.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-1e9b6647ea6f7a.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-6fe5cae8e97f94",
+      "id": "FIG-22636c0c5a0137",
       "recipe": "parity",
       "label": "配对一致性 / Parity",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-6fe5cae8e97f94.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-22636c0c5a0137.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-61f70929f7cd71",
+      "id": "FIG-e04fa067fad639",
       "recipe": "delta",
       "label": "配对差值 / Paired delta",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-61f70929f7cd71.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-e04fa067fad639.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-10211808929867",
+      "id": "FIG-1f1ad31fe31832",
       "recipe": "ecdf",
       "label": "经验累积分布 / ECDF",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-10211808929867.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-1f1ad31fe31832.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-dad6513861861d",
+      "id": "FIG-f66bf999c842fd",
       "recipe": "box",
       "label": "箱线 / Box plot",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-dad6513861861d.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-f66bf999c842fd.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-db011a3f29f5b9",
+      "id": "FIG-49d767a227d291",
       "recipe": "histogram",
       "label": "直方 / Histogram",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-db011a3f29f5b9.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-49d767a227d291.svg",
       "role": "SYNTHETIC_DEMO"
     },
     {
-      "id": "FIG-cd2fe8a9786bac",
+      "id": "FIG-212347951f683e",
       "recipe": "strip",
       "label": "样本点分布 / Strip",
-      "url": "data-preparation-demo/previews/830aa4f5cfbd1584/figures/FIG-cd2fe8a9786bac.svg",
+      "url": "data-preparation-demo/previews/69501a0c745281a9/figures/FIG-212347951f683e.svg",
       "role": "SYNTHETIC_DEMO"
     }
   ],

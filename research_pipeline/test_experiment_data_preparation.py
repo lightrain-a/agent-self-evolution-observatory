@@ -184,6 +184,13 @@ class PreparationTests(unittest.TestCase):
     def test_bubble_requires_size_unit(self):
         a=copy.deepcopy(self.assets[4]);a.pop('size_unit')
         self.assertEqual([c['recipe'] for c in plan_candidates([a])['groups'][0]['candidates']],['scatter'])
+    def test_slope_equal_endpoints_do_not_overlap_labels(self):
+        a=self.assets[1];plan=plan_candidates([a]);c=next(c for c in plan['groups'][0]['candidates'] if c['recipe']=='slope')
+        tree=ET.fromstring(render_svg(a,c))
+        labels=[n for n in tree.iter() if n.tag.endswith('text') and (n.text or '').startswith('Unit ')]
+        self.assertEqual(len(labels),len(a['rows']))
+        self.assertEqual(len({n.attrib['y'] for n in labels}),len(labels))
+
     def test_pure_compilation(self):
         original=copy.deepcopy(self.manifest)
         a,_=compile_bundle(self.manifest,self.root);b,_=compile_bundle(self.manifest,self.root)

@@ -102,10 +102,19 @@ def render_svg(asset: dict, candidate: dict) -> str:
         if recipe=='forest': text(L,T-9,asset['interval_kind']+'; '+str(asset.get('confidence_level','')),12,cls='muted')
     elif recipe=='slope':
         domain=bounds([v for r in rows for v in (r['before'],r['after'])]); axis_y(domain,unit)
+        labels=[]
         for r in rows:
             c=color(r['label']); a,b=sy(r['before'],domain),sy(r['after'],domain)
             line(L+40,a,R-95,b,c,2); circle(L+40,a,5,c); circle(R-95,b,5,c)
-            text(R-85,b+4,str(r['label'])[:16],11)
+            labels.append((b,r['label'],c))
+        labels.sort(key=lambda item:(item[0],str(item[1])))
+        spacing=min(14,(B-T)/max(1,len(labels)-1)); positions=[]
+        for y,_,_ in labels: positions.append(max(y,positions[-1]+spacing) if positions else y)
+        if positions and positions[-1]>B:
+            overflow=positions[-1]-B; positions=[y-overflow for y in positions]
+        for (actual_y,label,c),label_y in zip(labels,positions):
+            line(R-89,actual_y,R-78,label_y,c,1)
+            text(R-74,label_y+4,str(label)[:16],11)
         text(L+40,B+26,'Before',14,'middle'); text(R-95,B+26,'After',14,'middle')
     elif recipe in {'parity','scatter','bubble'}:
         xs=[r['before'] if recipe=='parity' else r['x'] for r in rows]
@@ -163,7 +172,9 @@ def render_svg(asset: dict, candidate: dict) -> str:
                     rect(x-21,sy(q3,domain),42,sy(q1,domain)-sy(q3,domain),color(g),.3)
                     line(x-21,sy(median,domain),x+21,sy(median,domain),color(g),3)
             if recipe=='box': text(L,T-9,'Q1 / median / Q3; whiskers = min/max',11,cls='muted')
-        for i,(g,vs) in enumerate(groups.items()): text(L+i*145,425,g[:14]+f' (n={len(vs)})',11,cls='muted')
+        for i,(g,vs) in enumerate(groups.items()):
+            rect(L+i*160,416,8,8,color(g))
+            text(L+i*160+14,425,g[:14]+f' (n={len(vs)})',11,cls='muted')
     elif recipe in {'heatmap','bubble_matrix'}:
         values=asset['values']; nr,nc=len(values),len(values[0]); cw,ch=(R-L)/nc,(B-T)/nr
         vmax=max(abs(v) for row in values for v in row if v is not None) or 1
@@ -180,7 +191,9 @@ def render_svg(asset: dict, candidate: dict) -> str:
         text(L,B+50,unit+'; color/area scale |v| ≤ '+f'{vmax:.3g}',12,cls='muted')
     else: raise ValueError('renderer-not-implemented')
     if recipe in {'line','step'}:
-        for i,g in enumerate(dict.fromkeys(r['group'] for r in rows)): text(L+i*145,425,g[:17],11,cls='muted')
+        for i,g in enumerate(dict.fromkeys(r['group'] for r in rows)):
+            rect(L+i*160,416,8,8,color(g))
+            text(L+i*160+14,425,g[:17],11,cls='muted')
     text(24,449,'Candidate only · '+candidate['id']+' · data '+candidate['data_sha256'][:12],10,cls='muted')
     parts.append('</svg>')
     return '\n'.join(parts)

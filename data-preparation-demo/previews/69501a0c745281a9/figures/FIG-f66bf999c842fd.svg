@@ -27,7 +27,9 @@
 <rect x="474.000" y="154.764" width="42.000" height="103.910" fill="#2563eb" opacity="0.3" rx="2"/>
 <line x1="474.000" y1="198.060" x2="516.000" y2="198.060" stroke="#2563eb" stroke-width="3" />
 <text x="132.000" y="91.000" font-size="11" text-anchor="start" class="muted" >Q1 / median / Q3; whiskers = min/max</text>
-<text x="132.000" y="425.000" font-size="11" text-anchor="start" class="muted" >Reference (n=12)</text>
-<text x="277.000" y="425.000" font-size="11" text-anchor="start" class="muted" >Variant (n=12)</text>
-<text x="24.000" y="449.000" font-size="10" text-anchor="start" class="muted" >Candidate only · FIG-dad6513861861d · data 4aeaae24d117</text>
+<rect x="132.000" y="416.000" width="8.000" height="8.000" fill="#0891b2" opacity="1" rx="2"/>
+<text x="146.000" y="425.000" font-size="11" text-anchor="start" class="muted" >Reference (n=12)</text>
+<rect x="292.000" y="416.000" width="8.000" height="8.000" fill="#2563eb" opacity="1" rx="2"/>
+<text x="306.000" y="425.000" font-size="11" text-anchor="start" class="muted" >Variant (n=12)</text>
+<text x="24.000" y="449.000" font-size="10" text-anchor="start" class="muted" >Candidate only · FIG-f66bf999c842fd · data 4aeaae24d117</text>
 </svg>
