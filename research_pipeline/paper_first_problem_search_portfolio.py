@@ -7,6 +7,7 @@ from datetime import date, timedelta
 from typing import Any, Callable
 
 from .ark_provider import extract_json_object
+from .discovery_method_formation import formation_prompt, formation_shape
 from .paper_first_fresh_saturation import reduction_pattern_audit
 from .premium_model_policy import preferred_model
 from .paper_first_problem_discovery_contract import (
@@ -34,6 +35,9 @@ CROSS_DOMAIN_STRUCTURES=(
     "program synthesis / version spaces and counterexamples", "organizational learning / distributed knowledge and routines",
     "database systems / consistency and provenance", "mechanism design / incentives and strategic feedback",
     "information theory / sufficiency and information constraints",
+    "neural training / checkpoint trajectories and deployment shift",
+    "adversarial transfer / surrogate diversity and source-target mismatch",
+    "best-arm identification / fixed-budget candidate selection",
 )
 
 def _norm(x:Any)->str:return " ".join(re.sub(r"[^a-z0-9]+"," ",str(x or "").lower()).split())
@@ -631,7 +635,7 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "mature_theory_baselines":[{"name":"...","same_information_projection":"...","ex_ante_prediction":"...","distinguishing_prediction":"...","cannot_express":"...","reduction_class":"SOFT_COLLISION|NEEDS_EXACT_REDUCTION_TEST|TOO_GENERIC_TO_VETO|VALID_HARD_VETO","exact_reduction_test":"..."}],
         "reduction_falsifiability_contract":{"same_observable_information_checked":True,"ex_ante_exact_prediction_checked":True,"distinguishing_prediction_checked":True,"scope_boundary_checked":True,"all_exact_reduction_tests_resolved":True},
         "same_information_nonreducibility":{"claim":"...","why_each_baseline_cannot_express_prediction":"..."},"exact_prediction":"...","strongest_same_information_baseline":"...","domain_transfer_audit":{"mature_source_domain":"...","mature_object":"...","agent_specific_structural_constraint":"...","why_not_domain_transfer":"..."},
-        "saturation_scan":{"checked":True,"matched_patterns":[],"pending_patterns":[],"rejected_patterns":[{"key":"known-key","reason":"why broad similarity does not establish exact reduction"}]},"cheapest_problem_falsifier":"...","endpoint_headroom_requirement":"...","importance":"...","likely_iclr_story":"..."
+        "saturation_scan":{"checked":True,"matched_patterns":[],"pending_patterns":[],"rejected_patterns":[{"key":"known-key","reason":"why broad similarity does not establish exact reduction"}]},"cheapest_problem_falsifier":"...","method_formation":formation_shape(),"endpoint_headroom_requirement":"...","importance":"...","likely_iclr_story":"..."
     }],"rejected":[{"source_branch_id":"...","reason":"...","matched_mature_theory":"...","reduction_class":"VALID_HARD_VETO|NEEDS_EXACT_REDUCTION_TEST|CLOSEST_WORK_COLLISION|UNDERFORMED","exact_reduction_test":"..."}],"notes":"..."}
     return (
         "FORMULATION stage after breadth search and evolutionary attack/repair. Convert genuinely promising branches into concrete paper-problem candidates, but do not confuse a provisional pre-F0 route with final scientific clearance. "
@@ -645,7 +649,8 @@ def _formulation_prompt(branches,registry,dead_end_memory=None):
         "Prefer a residual whose cheapest falsifier is an actual controlled comparison we can materialize quickly from released units, first-party code, or an existing provenance-audited substrate. Cheap falsification may precede final exact reduction only as zero-authority evidence acquisition; after a positive residual, the exact same-information reduction must be rerun before live Problem Gate/Paper Design eligibility. Do not claim support exists unless the supplied evidence establishes it; missing support is SUPPORT_STOP/HOLD, never a scientific negative. "
         "Preserve the inherited typed evidence/lane contract and source refs. "
         f"BRANCHES={json.dumps(compact,ensure_ascii=False,separators=(',',':'))}. SEARCH_CLOSURE_MEMORY={json.dumps(_prompt_dead_end_memory(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. CLOSED_BASIN_INVERSION_PRIORS={json.dumps(_opposite_search_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. POSITIVE_RESIDUAL_PRIORS={json.dumps(_positive_residual_priors(dead_end_memory),ensure_ascii=False,separators=(',',':'))}. PRIMARY_EVIDENCE={json.dumps(evidence,ensure_ascii=False,separators=(',',':'))}. REDUCTION_LEDGER={json.dumps(reduction_pattern_audit(),ensure_ascii=False,separators=(',',':'))}. "
-        f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
+        + formation_prompt()
+        + f"Return JSON only: {json.dumps(shape,ensure_ascii=False,separators=(',',':'))}"
     )
 
 def run_search_portfolio(*,records:list[dict[str,Any]],call:PortfolioCaller,model:str,target_raw_seeds:int=DEFAULT_RAW_SEEDS,archive_capacity:int=DEFAULT_ARCHIVE_CAPACITY,evolution_parents:int=DEFAULT_EVOLUTION_PARENTS,second_generation:int=DEFAULT_SECOND_GENERATION,repair_parents:int=DEFAULT_REPAIR_PARENTS,repair_children_per_parent:int=DEFAULT_REPAIR_CHILDREN_PER_PARENT,formulation_budget:int=DEFAULT_FORMULATION_BUDGET,max_parallel_calls:int=DEFAULT_MAX_PARALLEL_CALLS,dead_end_memory:dict[str,Any]|None=None)->dict[str,Any]:

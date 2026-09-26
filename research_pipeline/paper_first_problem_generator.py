@@ -16,6 +16,7 @@ from .paper_first_primary_evidence import load_private_primary_pool,private_prim
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, DISCOVERY_OPERATOR_VERSION, SEARCH_PORTFOLIO_PRIMITIVES, FORBIDDEN_DISCOVERY_LANES, LANE_DISTINCT_SOURCE_MINIMUM, PAPERABILITY_AXES, audit_problem_candidate
 from .paper_first_problem_gate_queue import default_auto_inbox_path
 from .paper_first_problem_generator_prompts import generator_prompt,reviewer_prompt
+from .discovery_method_formation import normalize_formation, audit_formation, public_formation_summary
 from .paper_first_problem_search_portfolio import DEFAULT_FORMULATION_BUDGET, DEFAULT_RAW_SEEDS, _maxmin_select, _normalize_paperability_axes, _paperability_survives, recover_archived_formulation_payload, run_search_portfolio
 from .premium_model_policy import preferred_model, stage_model_priority
 from .public_state_redaction import redact_private_paths
@@ -506,6 +507,8 @@ def _normalize(raw,reg):
         "same_information_nonreducibility":raw.get("same_information_nonreducibility") or {},"exact_prediction":str(raw.get("exact_prediction") or "").strip(),
         "strongest_same_information_baseline":str(raw.get("strongest_same_information_baseline") or "").strip(),"domain_transfer_audit":raw.get("domain_transfer_audit") or {},
         "saturation_scan":_normalize_saturation_scan(raw.get("saturation_scan")),"cheapest_problem_falsifier":str(raw.get("cheapest_problem_falsifier") or "").strip(),
+        "method_formation":normalize_formation(raw.get("method_formation")),
+        "method_formation_audit":audit_formation(raw.get("method_formation"),reg),
         "endpoint_headroom_requirement":str(raw.get("endpoint_headroom_requirement") or "").strip(),"importance":str(raw.get("importance") or "").strip(),"likely_iclr_story":str(raw.get("likely_iclr_story") or "").strip(),
         "semantic_reduction_review":{"reviewed":False,"block_only":True,"verdict":"BLOCK","reviewer_model":"","raw_sha256":"","source_claims_grounded":False,"source_claim_grounding":{},"lane_contract_verified":False,"lane_contract_reason":"unreviewed","matched_patterns":[],"strongest_reduction":"unreviewed"},
         "authority":{k:False for k in ("method_design","experiment_blueprint","local_validation","p0","gpu","full_experiment")}}
@@ -1073,6 +1076,16 @@ def recover_archived_portfolio_ingestion(*,storage:StorageSettings|None=None,pri
 
 def public_problem_generator_state(state:dict[str,Any],storage:StorageSettings|None=None)->dict[str,Any]:
     public=json.loads(json.dumps(state,ensure_ascii=False))
+    def strip_private_formation(value):
+        if isinstance(value,dict):
+            if "method_formation" in value:
+                card=value.pop("method_formation")
+                audit=value.pop("method_formation_audit",{})
+                value["method_formation_summary"]=public_formation_summary(card,audit)
+            for child in value.values():strip_private_formation(child)
+        elif isinstance(value,list):
+            for child in value:strip_private_formation(child)
+    strip_private_formation(public)
     for key in ("primary_pool_path","auto_inbox_path","archived_previous_auto_inbox","search_portfolio_private_path"):
         public.pop(key,None)
     for artifact in (public.get("raw_artifacts") or {}).values():

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
+from .discovery_method_formation import formation_prompt, formation_shape
 from .paper_first_fresh_saturation import REDUCTION_PATTERNS, reduction_pattern_audit
 from .paper_first_problem_discovery_contract import (
     DISCOVERY_LANES,
@@ -84,6 +85,7 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
                 "domain_transfer_audit": {"mature_source_domain": "...", "mature_object": "...", "why_not_domain_transfer": "..."},
                 "saturation_scan": {"checked": True, "matched_patterns": [], "rejected_patterns": [{"key": "known-ledger-key", "reason": "why the exact ledger veto does not apply under the same information"}]},
                 "cheapest_problem_falsifier": "...",
+                "method_formation": formation_shape(),
                 "endpoint_headroom_requirement": "...",
             }
         ],
@@ -118,6 +120,7 @@ def generator_prompt(records: list[dict[str, Any]], dead_end_memory: dict[str, A
         + "LANE SEARCH AUDIT: in the SAME single generator call, audit all four allowed discovery lanes exactly once, in lane_search_priority order when provided. Treat each lane as an evidence-tuple search, not a mandatory paper-pair search. Return status=NO_PAIR when no grounded evidence tuple satisfies the lane contract; REDUCIBLE when the strongest grounded tuple is already explained by the mature/negative-space stack; CANDIDATE only when at least one emitted candidate in that exact lane uses the same unique ref set. source_refs must be empty for NO_PAIR; for REDUCIBLE/CANDIDATE list the UNIQUE provided refs used by the tuple, with count meeting the lane-specific minimum and never exceeding two. In UNEXPLAINED_BOUNDARY this may therefore be a one-ref list. A lane audit never requires a candidate and carries zero scientific authority. Historically underexplored lanes are searched first, but their scientific gate is unchanged.\n"
         + "\n\nVERIFIED PRIMARY SOURCES (private abstracts + bounded full-text fact candidates; output only ref + grounded claim + evidence_role):\n"
         + json.dumps(sources, ensure_ascii=False, separators=(",", ":"))
+        + formation_prompt()
         + "\n\nReturn syntactically valid JSON only, shape:\n"
         + json.dumps(shape, ensure_ascii=False, separators=(",", ":"))
         + "\nNo markdown/trailing commas. IDs AUTO-1..AUTO-5. Do not include authority fields; code forces them false."

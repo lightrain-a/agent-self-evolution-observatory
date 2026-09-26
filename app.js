@@ -3570,7 +3570,8 @@ function renderIdeaPortfolio(config) {
   const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
   const inventory=canonicalInventorySummary(groups,parents,independent);
   const currentAccounting=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false,ideasPage:true,inventory,hideBriefingHero:true}):"";
-  return `${renderPortfolioDecisionConsole(config,inventory)}${renderCanonicalIdeaLedger(groups,parents,independent,inventory,currentAccounting)}`;
+  const formation=window.renderDiscoveryMethodFormation?window.renderDiscoveryMethodFormation(language):"";
+  return `${renderPortfolioDecisionConsole(config,inventory)}${formation}${renderCanonicalIdeaLedger(groups,parents,independent,inventory,currentAccounting)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;

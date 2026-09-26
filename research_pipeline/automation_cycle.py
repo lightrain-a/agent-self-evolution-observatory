@@ -226,6 +226,8 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
     """Project the final paper-first discovery frontier for the cycle report only."""
     primary = load_primary_evidence_state()
     generator = load_problem_generator_state()
+    from .discovery_method_formation import write_method_formation_state
+    formation = write_method_formation_state(generator_state=generator, primary_state=primary)
     queue = load_problem_gate_queue_state()
     relation = load_global_relation_recall_state()
     freshness = relation_recall_freshness(generator, relation)
@@ -266,6 +268,7 @@ def _run_discovery_frontier_control(storage: StorageSettings) -> dict[str, Any]:
         pre_f0_evidence_state=pre_f0_evidence,
     )
     frontier.setdefault("summary", {}).update({
+        "method_formation": formation["summary"],
         "frontier_status": frontier.get("status", "WAIT_EXTERNAL_EVIDENCE_TRIGGERS"),
         "frontier_blockers": list(frontier.get("blockers") or []),
         "trigger_names": [str(row.get("trigger") or "") for row in frontier.get("triggers") or []],
