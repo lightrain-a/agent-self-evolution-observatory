@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="460" viewBox="0 0 680 460" role="img">
+<title>SYNTHETIC DEMO: paired improvements and regressions — 斜率 / Slope</title>
+<desc>Data: 42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca; Synthetic workflow demonstration only; role=SYNTHETIC_DEMO</desc>
+<rect width="680" height="460" fill="white"/>
+<style>text{font-family:Georgia, serif;fill:#172033} .muted{fill:#526174}</style>
+<text x="24.000" y="30.000" font-size="20" text-anchor="start" class="" >SYNTHETIC DEMO: paired improvements and regressions</text>
+<text x="24.000" y="80.000" font-size="13" text-anchor="start" class="muted" >Slope · synthetic observation</text>
+<text x="656.000" y="80.000" font-size="11" text-anchor="end" class="muted" >SYNTHETIC DEMO</text>
+<line x1="132.000" y1="100.000" x2="132.000" y2="350.000" stroke="#8290a1" stroke-width="1" />
+<line x1="132.000" y1="350.000" x2="616.000" y2="350.000" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 5"/>
+<text x="122.000" y="354.000" font-size="12" text-anchor="end" class="muted" >27.2</text>
+<line x1="132.000" y1="287.500" x2="616.000" y2="287.500" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 5"/>
+<text x="122.000" y="291.500" font-size="12" text-anchor="end" class="muted" >40.1</text>
+<line x1="132.000" y1="225.000" x2="616.000" y2="225.000" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 5"/>
+<text x="122.000" y="229.000" font-size="12" text-anchor="end" class="muted" >53</text>
+<line x1="132.000" y1="162.500" x2="616.000" y2="162.500" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 5"/>
+<text x="122.000" y="166.500" font-size="12" text-anchor="end" class="muted" >65.9</text>
+<line x1="132.000" y1="100.000" x2="616.000" y2="100.000" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 5"/>
+<text x="122.000" y="104.000" font-size="12" text-anchor="end" class="muted" >78.8</text>
+<text x="24.000" y="225.000" font-size="13" text-anchor="middle" class="" transform="rotate(-90 24 225.0)">percent</text>
+<line x1="172.000" y1="288.082" x2="521.000" y2="166.770" stroke="#0891b2" stroke-width="2" />
+<circle cx="172.000" cy="288.082" r="5.000" fill="#0891b2" opacity="1"/>
+<circle cx="521.000" cy="166.770" r="5.000" fill="#0891b2" opacity="1"/>
+<text x="531.000" y="170.770" font-size="11" text-anchor="start" class="" >Unit 1</text>
+<line x1="172.000" y1="215.295" x2="521.000" y2="239.557" stroke="#0891b2" stroke-width="2" />
+<circle cx="172.000" cy="215.295" r="5.000" fill="#0891b2" opacity="1"/>
+<circle cx="521.000" cy="239.557" r="5.000" fill="#0891b2" opacity="1"/>
+<text x="531.000" y="243.557" font-size="11" text-anchor="start" class="" >Unit 2</text>
+<line x1="172.000" y1="336.607" x2="521.000" y2="239.557" stroke="#2563eb" stroke-width="2" />
+<circle cx="172.000" cy="336.607" r="5.000" fill="#2563eb" opacity="1"/>
+<circle cx="521.000" cy="239.557" r="5.000" fill="#2563eb" opacity="1"/>
+<text x="531.000" y="243.557" font-size="11" text-anchor="start" class="" >Unit 3</text>
+<line x1="172.000" y1="142.508" x2="521.000" y2="152.213" stroke="#2563eb" stroke-width="2" />
+<circle cx="172.000" cy="142.508" r="5.000" fill="#2563eb" opacity="1"/>
+<circle cx="521.000" cy="152.213" r="5.000" fill="#2563eb" opacity="1"/>
+<text x="531.000" y="156.213" font-size="11" text-anchor="start" class="" >Unit 4</text>
+<line x1="172.000" y1="239.557" x2="521.000" y2="113.393" stroke="#db2777" stroke-width="2" />
+<circle cx="172.000" cy="239.557" r="5.000" fill="#db2777" opacity="1"/>
+<circle cx="521.000" cy="113.393" r="5.000" fill="#db2777" opacity="1"/>
+<text x="531.000" y="117.393" font-size="11" text-anchor="start" class="" >Unit 5</text>
+<text x="172.000" y="376.000" font-size="14" text-anchor="middle" class="" >Before</text>
+<text x="521.000" y="376.000" font-size="14" text-anchor="middle" class="" >After</text>
+<text x="24.000" y="449.000" font-size="10" text-anchor="start" class="muted" >Candidate only · FIG-e0638b654223ca · data 42ec2dbd4630</text>
+</svg>

@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "SYNTHETIC-DEMO-NOT-HEIRS",
+  "title": "Synthetic demo · tables and four-column figure alternatives",
+  "preview_rounds": 3,
+  "figure_style": {
+    "font_family": "Georgia, serif",
+    "theme": "paper-vivid"
+  },
+  "tables": [
+    {
+      "id": "DEMO-TABLE-1",
+      "label": "Synthetic demo table — not research results",
+      "rows": [
+        {
+          "id": "Reference",
+          "label": "Reference"
+        },
+        {
+          "id": "Variant A",
+          "label": "Variant A"
+        },
+        {
+          "id": "Variant B",
+          "label": "Variant B"
+        }
+      ],
+      "columns": [
+        {
+          "id": "within-a",
+          "label": "within-a",
+          "protocol_id": "DEMO-P1",
+          "split_id": "DEMO-ONLY",
+          "metric_id": "success",
+          "unit": "percent",
+          "analysis_unit": "synthetic task",
+          "cohort_sha256": "synthetic-panel",
+          "dataset_id": "SYNTHETIC",
+          "condition_id": "within-a",
+          "expected_total": 20,
+          "group": "Within group",
+          "direction": "higher"
+        },
+        {
+          "id": "within-b",
+          "label": "within-b",
+          "protocol_id": "DEMO-P1",
+          "split_id": "DEMO-ONLY",
+          "metric_id": "success",
+          "unit": "percent",
+          "analysis_unit": "synthetic task",
+          "cohort_sha256": "synthetic-panel",
+          "dataset_id": "SYNTHETIC",
+          "condition_id": "within-b",
+          "expected_total": 20,
+          "group": "Within group",
+          "direction": "higher"
+        },
+        {
+          "id": "within-avg",
+          "label": "Within Avg",
+          "aggregate": "macro",
+          "members": [
+            "within-a",
+            "within-b"
+          ],
+          "group": "Within group"
+        },
+        {
+          "id": "cross-a",
+          "label": "cross-a",
+          "protocol_id": "DEMO-P1",
+          "split_id": "DEMO-ONLY",
+          "metric_id": "success",
+          "unit": "percent",
+          "analysis_unit": "synthetic task",
+          "cohort_sha256": "synthetic-panel",
+          "dataset_id": "SYNTHETIC",
+          "condition_id": "cross-a",
+          "expected_total": 20,
+          "group": "Cross group",
+          "direction": "higher"
+        },
+        {
+          "id": "cross-avg",
+          "label": "Cross Avg",
+          "aggregate": "macro",
+          "members": [
+            "cross-a"
+          ],
+          "group": "Cross group"
+        }
+      ],
+      "digits": 1,
+      "delta_reference": "Reference",
+      "result_refs": [
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/0"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/1"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/2"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/3"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/4"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/5"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/6"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/7"
+        },
+        {
+          "path": "synthetic-evidence.json",
+          "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+          "pointer": "/results/8"
+        }
+      ]
+    }
+  ],
+  "figure_asset_refs": [
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/0"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/1"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/2"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/3"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/4"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/5"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/6"
+    }
+  ]
+}

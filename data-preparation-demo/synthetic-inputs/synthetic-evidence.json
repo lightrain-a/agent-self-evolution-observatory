@@ -1,0 +1,563 @@
+{
+  "notice": "SYNTHETIC_DEMO — not scientific data",
+  "results": [
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-0-0",
+      "method_id": "Reference",
+      "column_id": "within-a",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "within-a",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 8,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-0-1",
+      "method_id": "Reference",
+      "column_id": "within-b",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "within-b",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 7,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-0-2",
+      "method_id": "Reference",
+      "column_id": "cross-a",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "cross-a",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 6,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-1-0",
+      "method_id": "Variant A",
+      "column_id": "within-a",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "within-a",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 11,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-1-1",
+      "method_id": "Variant A",
+      "column_id": "within-b",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "within-b",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 10,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-1-2",
+      "method_id": "Variant A",
+      "column_id": "cross-a",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "cross-a",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 9,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-2-0",
+      "method_id": "Variant B",
+      "column_id": "within-a",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "within-a",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 14,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-2-1",
+      "method_id": "Variant B",
+      "column_id": "within-b",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "within-b",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 13,
+      "total": 20
+    },
+    {
+      "protocol_id": "DEMO-P1",
+      "split_id": "DEMO-ONLY",
+      "metric_id": "success",
+      "unit": "percent",
+      "analysis_unit": "synthetic task",
+      "cohort_sha256": "synthetic-panel",
+      "result_id": "DEMO-2-2",
+      "method_id": "Variant B",
+      "column_id": "cross-a",
+      "dataset_id": "SYNTHETIC",
+      "condition_id": "cross-a",
+      "status": "COMPLETE",
+      "kind": "rate",
+      "successes": 12,
+      "total": 20
+    }
+  ],
+  "assets": [
+    {
+      "id": "DEMO-categories",
+      "kind": "categorical",
+      "question": "SYNTHETIC DEMO: category comparison",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "rows": [
+        {
+          "id": "0",
+          "label": "Reference",
+          "value": 40
+        },
+        {
+          "id": "1",
+          "label": "Variant A",
+          "value": 55
+        },
+        {
+          "id": "2",
+          "label": "Variant B",
+          "value": 70
+        },
+        {
+          "id": "3",
+          "label": "Stress",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": "DEMO-paired",
+      "kind": "paired",
+      "question": "SYNTHETIC DEMO: paired improvements and regressions",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "pairing_definition": "same synthetic ID in both conditions",
+      "rows": [
+        {
+          "id": "0",
+          "label": "Unit 1",
+          "before": 40,
+          "after": 65
+        },
+        {
+          "id": "1",
+          "label": "Unit 2",
+          "before": 55,
+          "after": 50
+        },
+        {
+          "id": "2",
+          "label": "Unit 3",
+          "before": 30,
+          "after": 50
+        },
+        {
+          "id": "3",
+          "label": "Unit 4",
+          "before": 70,
+          "after": 68
+        },
+        {
+          "id": "4",
+          "label": "Unit 5",
+          "before": 50,
+          "after": 76
+        }
+      ]
+    },
+    {
+      "id": "DEMO-samples",
+      "kind": "samples",
+      "question": "SYNTHETIC DEMO: distribution and tail behavior",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "rows": [
+        {
+          "id": "0-Reference",
+          "group": "Reference",
+          "value": 31
+        },
+        {
+          "id": "1-Reference",
+          "group": "Reference",
+          "value": 38
+        },
+        {
+          "id": "2-Reference",
+          "group": "Reference",
+          "value": 41
+        },
+        {
+          "id": "3-Reference",
+          "group": "Reference",
+          "value": 47
+        },
+        {
+          "id": "4-Reference",
+          "group": "Reference",
+          "value": 53
+        },
+        {
+          "id": "5-Reference",
+          "group": "Reference",
+          "value": 56
+        },
+        {
+          "id": "6-Reference",
+          "group": "Reference",
+          "value": 63
+        },
+        {
+          "id": "7-Reference",
+          "group": "Reference",
+          "value": 67
+        },
+        {
+          "id": "8-Reference",
+          "group": "Reference",
+          "value": 71
+        },
+        {
+          "id": "9-Reference",
+          "group": "Reference",
+          "value": 75
+        },
+        {
+          "id": "10-Reference",
+          "group": "Reference",
+          "value": 78
+        },
+        {
+          "id": "11-Reference",
+          "group": "Reference",
+          "value": 82
+        },
+        {
+          "id": "0-Variant",
+          "group": "Variant",
+          "value": 39
+        },
+        {
+          "id": "1-Variant",
+          "group": "Variant",
+          "value": 43
+        },
+        {
+          "id": "2-Variant",
+          "group": "Variant",
+          "value": 49
+        },
+        {
+          "id": "3-Variant",
+          "group": "Variant",
+          "value": 52
+        },
+        {
+          "id": "4-Variant",
+          "group": "Variant",
+          "value": 61
+        },
+        {
+          "id": "5-Variant",
+          "group": "Variant",
+          "value": 66
+        },
+        {
+          "id": "6-Variant",
+          "group": "Variant",
+          "value": 68
+        },
+        {
+          "id": "7-Variant",
+          "group": "Variant",
+          "value": 73
+        },
+        {
+          "id": "8-Variant",
+          "group": "Variant",
+          "value": 77
+        },
+        {
+          "id": "9-Variant",
+          "group": "Variant",
+          "value": 82
+        },
+        {
+          "id": "10-Variant",
+          "group": "Variant",
+          "value": 85
+        },
+        {
+          "id": "11-Variant",
+          "group": "Variant",
+          "value": 89
+        }
+      ]
+    },
+    {
+      "id": "DEMO-series",
+      "kind": "series",
+      "question": "SYNTHETIC DEMO: observed budget sequence",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "x_unit": "logical evaluations",
+      "y_unit": "percent",
+      "rows": [
+        {
+          "id": "0-Reference",
+          "group": "Reference",
+          "x": 4,
+          "y": 40
+        },
+        {
+          "id": "1-Reference",
+          "group": "Reference",
+          "x": 8,
+          "y": 45
+        },
+        {
+          "id": "2-Reference",
+          "group": "Reference",
+          "x": 16,
+          "y": 46
+        },
+        {
+          "id": "3-Reference",
+          "group": "Reference",
+          "x": 32,
+          "y": 47
+        },
+        {
+          "id": "0-Variant",
+          "group": "Variant",
+          "x": 4,
+          "y": 40
+        },
+        {
+          "id": "1-Variant",
+          "group": "Variant",
+          "x": 8,
+          "y": 50
+        },
+        {
+          "id": "2-Variant",
+          "group": "Variant",
+          "x": 16,
+          "y": 59
+        },
+        {
+          "id": "3-Variant",
+          "group": "Variant",
+          "x": 32,
+          "y": 63
+        }
+      ]
+    },
+    {
+      "id": "DEMO-xy",
+      "kind": "xy",
+      "question": "SYNTHETIC DEMO: cost and utility",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "x_unit": "logical evaluations",
+      "y_unit": "percent",
+      "size_unit": "synthetic count",
+      "rows": [
+        {
+          "id": "0",
+          "label": "0",
+          "x": 10,
+          "y": 30,
+          "size": 4
+        },
+        {
+          "id": "1",
+          "label": "1",
+          "x": 20,
+          "y": 46,
+          "size": 8
+        },
+        {
+          "id": "2",
+          "label": "2",
+          "x": 30,
+          "y": 57,
+          "size": 12
+        },
+        {
+          "id": "3",
+          "label": "3",
+          "x": 50,
+          "y": 63,
+          "size": 15
+        }
+      ]
+    },
+    {
+      "id": "DEMO-matrix",
+      "kind": "matrix",
+      "question": "SYNTHETIC DEMO: heterogeneous effects",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "row_labels": [
+        "Reference",
+        "Variant A",
+        "Variant B"
+      ],
+      "column_labels": [
+        "Task A",
+        "Task B",
+        "Task C",
+        "Task D"
+      ],
+      "values": [
+        [
+          0,
+          3,
+          -2,
+          1
+        ],
+        [
+          2,
+          6,
+          null,
+          3
+        ],
+        [
+          4,
+          7,
+          -1,
+          5
+        ]
+      ]
+    },
+    {
+      "id": "DEMO-interval",
+      "kind": "interval",
+      "question": "SYNTHETIC DEMO: declared confidence intervals",
+      "scope": "Synthetic workflow demonstration only",
+      "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+      "unit": "percent",
+      "analysis_unit": "synthetic observation",
+      "status": "COMPLETE",
+      "data_role": "SYNTHETIC_DEMO",
+      "interval_kind": "CI",
+      "interval_source": "Constructed interval fixture, not inferred uncertainty",
+      "confidence_level": 0.95,
+      "rows": [
+        {
+          "id": "0",
+          "label": "Case 1",
+          "value": 1,
+          "lower": -2,
+          "upper": 5
+        },
+        {
+          "id": "1",
+          "label": "Case 2",
+          "value": -2,
+          "lower": -5,
+          "upper": 2
+        },
+        {
+          "id": "2",
+          "label": "Case 3",
+          "value": 7,
+          "lower": 4,
+          "upper": 11
+        },
+        {
+          "id": "3",
+          "label": "Case 4",
+          "value": 4,
+          "lower": 1,
+          "upper": 8
+        }
+      ]
+    }
+  ]
+}

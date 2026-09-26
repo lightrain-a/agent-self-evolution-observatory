@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="460" viewBox="0 0 680 460" role="img">
+<title>SYNTHETIC DEMO: paired improvements and regressions — 配对差值 / Paired delta</title>
+<desc>Data: 42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca; Synthetic workflow demonstration only; role=SYNTHETIC_DEMO</desc>
+<rect width="680" height="460" fill="white"/>
+<style>text{font-family:Georgia, serif;fill:#172033} .muted{fill:#526174}</style>
+<text x="24.000" y="30.000" font-size="20" text-anchor="start" class="" >SYNTHETIC DEMO: paired improvements and regressions</text>
+<text x="24.000" y="80.000" font-size="13" text-anchor="start" class="muted" >Paired delta · synthetic observation</text>
+<text x="656.000" y="80.000" font-size="11" text-anchor="end" class="muted" >SYNTHETIC DEMO</text>
+<line x1="132.000" y1="350.000" x2="616.000" y2="350.000" stroke="#8290a1" stroke-width="1" />
+<line x1="132.000" y1="350.000" x2="132.000" y2="355.000" stroke="#cbd5e1" stroke-width="1" />
+<text x="132.000" y="373.000" font-size="12" text-anchor="middle" class="muted" >-6.86</text>
+<line x1="253.000" y1="350.000" x2="253.000" y2="355.000" stroke="#cbd5e1" stroke-width="1" />
+<text x="253.000" y="373.000" font-size="12" text-anchor="middle" class="muted" >1.82</text>
+<line x1="374.000" y1="350.000" x2="374.000" y2="355.000" stroke="#cbd5e1" stroke-width="1" />
+<text x="374.000" y="373.000" font-size="12" text-anchor="middle" class="muted" >10.5</text>
+<line x1="495.000" y1="350.000" x2="495.000" y2="355.000" stroke="#cbd5e1" stroke-width="1" />
+<text x="495.000" y="373.000" font-size="12" text-anchor="middle" class="muted" >19.2</text>
+<line x1="616.000" y1="350.000" x2="616.000" y2="355.000" stroke="#cbd5e1" stroke-width="1" />
+<text x="616.000" y="373.000" font-size="12" text-anchor="middle" class="muted" >27.9</text>
+<text x="374.000" y="402.000" font-size="14" text-anchor="middle" class="" >percent</text>
+<text x="120.000" y="129.000" font-size="12" text-anchor="end" class="" >Unit 1</text>
+<text x="120.000" y="179.000" font-size="12" text-anchor="end" class="" >Unit 2</text>
+<text x="120.000" y="229.000" font-size="12" text-anchor="end" class="" >Unit 3</text>
+<text x="120.000" y="279.000" font-size="12" text-anchor="end" class="" >Unit 4</text>
+<text x="120.000" y="329.000" font-size="12" text-anchor="end" class="" >Unit 5</text>
+<line x1="227.629" y1="100.000" x2="227.629" y2="350.000" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="227.629" y1="125.000" x2="576.131" y2="125.000" stroke="#0891b2" stroke-width="2" />
+<circle cx="576.131" cy="125.000" r="6.000" fill="#0891b2" opacity="1"/>
+<text x="586.131" y="129.000" font-size="12" text-anchor="start" class="" >25</text>
+<line x1="227.629" y1="175.000" x2="157.929" y2="175.000" stroke="#dc5263" stroke-width="2" />
+<circle cx="157.929" cy="175.000" r="6.000" fill="#dc5263" opacity="1"/>
+<text x="167.929" y="179.000" font-size="12" text-anchor="start" class="" >-5</text>
+<line x1="227.629" y1="225.000" x2="506.431" y2="225.000" stroke="#2563eb" stroke-width="2" />
+<circle cx="506.431" cy="225.000" r="6.000" fill="#2563eb" opacity="1"/>
+<text x="516.431" y="229.000" font-size="12" text-anchor="start" class="" >20</text>
+<line x1="227.629" y1="275.000" x2="199.749" y2="275.000" stroke="#dc5263" stroke-width="2" />
+<circle cx="199.749" cy="275.000" r="6.000" fill="#dc5263" opacity="1"/>
+<text x="209.749" y="279.000" font-size="12" text-anchor="start" class="" >-2</text>
+<line x1="227.629" y1="325.000" x2="590.071" y2="325.000" stroke="#db2777" stroke-width="2" />
+<circle cx="590.071" cy="325.000" r="6.000" fill="#db2777" opacity="1"/>
+<text x="600.071" y="329.000" font-size="12" text-anchor="start" class="" >26</text>
+<text x="24.000" y="449.000" font-size="10" text-anchor="start" class="muted" >Candidate only · FIG-61f70929f7cd71 · data 42ec2dbd4630</text>
+</svg>

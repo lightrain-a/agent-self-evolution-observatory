@@ -32,6 +32,7 @@ ROOT_FILES = (
 )
 PUBLIC_DIRS = (
     "seed-causalwm",
+    "data-preparation-demo",  # Explicitly synthetic, independently rendered examples only.
 )
 GENERATED_PATTERNS = ("*.js", "*.json")
 TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".tex", ".xml", ".webmanifest"}
@@ -124,6 +125,9 @@ def version_html_assets(html: str, build_sha: str) -> str:
 
 
 def build() -> Path:
+    # Read-only data-preparation inventory; never render private results or run experiments.
+    from research_pipeline.experiment_data_preparation import write_preparation_portfolio
+    write_preparation_portfolio(ROOT)
     # Refresh only the embedded Paper Acceptance public projection from the
     # append-only canonical ledgers.  Rebuilding the entire Research System here
     # would also recompile unrelated discovery state, which a frontend publish

@@ -1,0 +1,687 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "SYNTHETIC-DEMO-NOT-HEIRS",
+  "title": "Synthetic demo · tables and four-column figure alternatives",
+  "manifest_sha256": "3aca776c0c6697a743ea81adc84ab70d9d16f7c64c4c70e32b0c889c27ec97c8",
+  "tables": [
+    {
+      "id": "DEMO-TABLE-1",
+      "label": "Synthetic demo table — not research results",
+      "spec_sha256": "9be2542792f2af5c5228c333c1787cd5e1583517777e7090ce79ef46bb441a22",
+      "snapshot_sha256": "1c1498e5e9b7eb068dc616cb895fceab7497db7337d9bbab1bf2359695956459",
+      "rows": [
+        {
+          "id": "Reference",
+          "label": "Reference"
+        },
+        {
+          "id": "Variant A",
+          "label": "Variant A"
+        },
+        {
+          "id": "Variant B",
+          "label": "Variant B"
+        }
+      ],
+      "columns": [
+        {
+          "id": "within-a",
+          "label": "within-a",
+          "protocol_id": "DEMO-P1",
+          "split_id": "DEMO-ONLY",
+          "metric_id": "success",
+          "unit": "percent",
+          "analysis_unit": "synthetic task",
+          "cohort_sha256": "synthetic-panel",
+          "dataset_id": "SYNTHETIC",
+          "condition_id": "within-a",
+          "expected_total": 20,
+          "group": "Within group",
+          "direction": "higher"
+        },
+        {
+          "id": "within-b",
+          "label": "within-b",
+          "protocol_id": "DEMO-P1",
+          "split_id": "DEMO-ONLY",
+          "metric_id": "success",
+          "unit": "percent",
+          "analysis_unit": "synthetic task",
+          "cohort_sha256": "synthetic-panel",
+          "dataset_id": "SYNTHETIC",
+          "condition_id": "within-b",
+          "expected_total": 20,
+          "group": "Within group",
+          "direction": "higher"
+        },
+        {
+          "id": "within-avg",
+          "label": "Within Avg",
+          "aggregate": "macro",
+          "members": [
+            "within-a",
+            "within-b"
+          ],
+          "group": "Within group"
+        },
+        {
+          "id": "cross-a",
+          "label": "cross-a",
+          "protocol_id": "DEMO-P1",
+          "split_id": "DEMO-ONLY",
+          "metric_id": "success",
+          "unit": "percent",
+          "analysis_unit": "synthetic task",
+          "cohort_sha256": "synthetic-panel",
+          "dataset_id": "SYNTHETIC",
+          "condition_id": "cross-a",
+          "expected_total": 20,
+          "group": "Cross group",
+          "direction": "higher"
+        },
+        {
+          "id": "cross-avg",
+          "label": "Cross Avg",
+          "aggregate": "macro",
+          "members": [
+            "cross-a"
+          ],
+          "group": "Cross group"
+        }
+      ],
+      "cells": [
+        {
+          "row_id": "Reference",
+          "column_id": "within-a",
+          "status": "COMPLETE",
+          "value": 40.0,
+          "successes": 8,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/0"
+          },
+          "delta": null,
+          "display": "40.0",
+          "result_id": "DEMO-0-0"
+        },
+        {
+          "row_id": "Reference",
+          "column_id": "within-b",
+          "status": "COMPLETE",
+          "value": 35.0,
+          "successes": 7,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/1"
+          },
+          "delta": null,
+          "display": "35.0",
+          "result_id": "DEMO-0-1"
+        },
+        {
+          "row_id": "Reference",
+          "column_id": "within-avg",
+          "status": "COMPLETE",
+          "value": 37.5,
+          "delta": null,
+          "display": "37.5",
+          "coverage": [
+            2,
+            2
+          ],
+          "members": [
+            "within-a",
+            "within-b"
+          ]
+        },
+        {
+          "row_id": "Reference",
+          "column_id": "cross-a",
+          "status": "COMPLETE",
+          "value": 30.0,
+          "successes": 6,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/2"
+          },
+          "delta": null,
+          "display": "30.0",
+          "result_id": "DEMO-0-2"
+        },
+        {
+          "row_id": "Reference",
+          "column_id": "cross-avg",
+          "status": "COMPLETE",
+          "value": 30.0,
+          "delta": null,
+          "display": "30.0",
+          "coverage": [
+            1,
+            1
+          ],
+          "members": [
+            "cross-a"
+          ]
+        },
+        {
+          "row_id": "Variant A",
+          "column_id": "within-a",
+          "status": "COMPLETE",
+          "value": 55.0,
+          "successes": 11,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/3"
+          },
+          "delta": 15.0,
+          "display": "55.0 (+15.0)",
+          "result_id": "DEMO-1-0"
+        },
+        {
+          "row_id": "Variant A",
+          "column_id": "within-b",
+          "status": "COMPLETE",
+          "value": 50.0,
+          "successes": 10,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/4"
+          },
+          "delta": 15.0,
+          "display": "50.0 (+15.0)",
+          "result_id": "DEMO-1-1"
+        },
+        {
+          "row_id": "Variant A",
+          "column_id": "within-avg",
+          "status": "COMPLETE",
+          "value": 52.5,
+          "delta": 15.0,
+          "display": "52.5 (+15.0)",
+          "coverage": [
+            2,
+            2
+          ],
+          "members": [
+            "within-a",
+            "within-b"
+          ]
+        },
+        {
+          "row_id": "Variant A",
+          "column_id": "cross-a",
+          "status": "COMPLETE",
+          "value": 45.0,
+          "successes": 9,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/5"
+          },
+          "delta": 15.0,
+          "display": "45.0 (+15.0)",
+          "result_id": "DEMO-1-2"
+        },
+        {
+          "row_id": "Variant A",
+          "column_id": "cross-avg",
+          "status": "COMPLETE",
+          "value": 45.0,
+          "delta": 15.0,
+          "display": "45.0 (+15.0)",
+          "coverage": [
+            1,
+            1
+          ],
+          "members": [
+            "cross-a"
+          ]
+        },
+        {
+          "row_id": "Variant B",
+          "column_id": "within-a",
+          "status": "COMPLETE",
+          "value": 70.0,
+          "successes": 14,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/6"
+          },
+          "delta": 30.0,
+          "display": "70.0 (+30.0)",
+          "result_id": "DEMO-2-0"
+        },
+        {
+          "row_id": "Variant B",
+          "column_id": "within-b",
+          "status": "COMPLETE",
+          "value": 65.0,
+          "successes": 13,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/7"
+          },
+          "delta": 30.0,
+          "display": "65.0 (+30.0)",
+          "result_id": "DEMO-2-1"
+        },
+        {
+          "row_id": "Variant B",
+          "column_id": "within-avg",
+          "status": "COMPLETE",
+          "value": 67.5,
+          "delta": 30.0,
+          "display": "67.5 (+30.0)",
+          "coverage": [
+            2,
+            2
+          ],
+          "members": [
+            "within-a",
+            "within-b"
+          ]
+        },
+        {
+          "row_id": "Variant B",
+          "column_id": "cross-a",
+          "status": "COMPLETE",
+          "value": 60.0,
+          "successes": 12,
+          "total": 20,
+          "source_ref": {
+            "path": "synthetic-evidence.json",
+            "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+            "pointer": "/results/8"
+          },
+          "delta": 30.0,
+          "display": "60.0 (+30.0)",
+          "result_id": "DEMO-2-2"
+        },
+        {
+          "row_id": "Variant B",
+          "column_id": "cross-avg",
+          "status": "COMPLETE",
+          "value": 60.0,
+          "delta": 30.0,
+          "display": "60.0 (+30.0)",
+          "coverage": [
+            1,
+            1
+          ],
+          "members": [
+            "cross-a"
+          ]
+        }
+      ],
+      "gaps": [],
+      "delta_reference": "Reference",
+      "status": "TABLE_NUMBERS_COMPLETE_REVIEW_PENDING",
+      "scientific_authority": false
+    }
+  ],
+  "figures": {
+    "groups": [
+      {
+        "id": "GROUP-928c3b17d7a4",
+        "label": "SYNTHETIC DEMO: category comparison",
+        "comparison_mode": "SAME_DATA_DIFFERENT_ENCODING",
+        "candidates": [
+          {
+            "id": "FIG-1623277f722c0b",
+            "recipe": "dot",
+            "recipe_label": "点图 / Dot plot",
+            "asset_id": "DEMO-categories",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: category comparison",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
+            "spec_sha256": "1623277f722c0b9efe3aaac54f1ff4cbae8119687d7e7d7ac383be1bdfde0f4c",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/0"
+            }
+          },
+          {
+            "id": "FIG-4af9cff98f3211",
+            "recipe": "lollipop",
+            "recipe_label": "棒棒糖 / Lollipop",
+            "asset_id": "DEMO-categories",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: category comparison",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
+            "spec_sha256": "4af9cff98f321191cfb9702518f5db9d161d5dfff453b7a33c77736e2879c73c",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/0"
+            }
+          },
+          {
+            "id": "FIG-85fd60d16d45de",
+            "recipe": "bar",
+            "recipe_label": "横向条形 / Horizontal bar",
+            "asset_id": "DEMO-categories",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: category comparison",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
+            "spec_sha256": "85fd60d16d45de1cc5cd1a1f873c9e177d59ff6c208bb73bf2a1a40919c0a27c",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/0"
+            }
+          },
+          {
+            "id": "FIG-40c66c44e3ce11",
+            "recipe": "tile",
+            "recipe_label": "数值条带 / Value tiles",
+            "asset_id": "DEMO-categories",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: category comparison",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "611cc0eb74bfba72c1a840d7ae7cd9ae4c582660e4abbf02cb48bf509a9e6b1b",
+            "spec_sha256": "40c66c44e3ce11e2643377d35a60c41cc1fab335c28033026750151de20cfb1b",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/0"
+            }
+          }
+        ],
+        "unfilled_slots": 0,
+        "reason_if_short": ""
+      },
+      {
+        "id": "GROUP-a54865e0986b",
+        "label": "SYNTHETIC DEMO: paired improvements and regressions",
+        "comparison_mode": "SAME_DATA_DIFFERENT_ENCODING",
+        "candidates": [
+          {
+            "id": "FIG-47e24f98a53119",
+            "recipe": "dumbbell",
+            "recipe_label": "哑铃 / Dumbbell",
+            "asset_id": "DEMO-paired",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: paired improvements and regressions",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
+            "spec_sha256": "47e24f98a53119dafcd18148cffa0d3bfd8c8f96843c0dde4284528293f96cd4",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/1"
+            }
+          },
+          {
+            "id": "FIG-e0638b654223ca",
+            "recipe": "slope",
+            "recipe_label": "斜率 / Slope",
+            "asset_id": "DEMO-paired",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: paired improvements and regressions",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
+            "spec_sha256": "e0638b654223ca6bc21b8e9fc7c676a6155fb8b59ac1f0827252d2e7fc5e0c8d",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/1"
+            }
+          },
+          {
+            "id": "FIG-6fe5cae8e97f94",
+            "recipe": "parity",
+            "recipe_label": "配对一致性 / Parity",
+            "asset_id": "DEMO-paired",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: paired improvements and regressions",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
+            "spec_sha256": "6fe5cae8e97f94cc98d4101979c90e043ae3a871c6424d626510726be69e830e",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/1"
+            }
+          },
+          {
+            "id": "FIG-61f70929f7cd71",
+            "recipe": "delta",
+            "recipe_label": "配对差值 / Paired delta",
+            "asset_id": "DEMO-paired",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: paired improvements and regressions",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "42ec2dbd46306e05032226861219a6190337a51bd4a9214d20156f2015541eca",
+            "spec_sha256": "61f70929f7cd712f6f052a0baa4ab221c9819397d261c53cd61e60b3c92d9691",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/1"
+            }
+          }
+        ],
+        "unfilled_slots": 0,
+        "reason_if_short": ""
+      },
+      {
+        "id": "GROUP-eb50205ec708",
+        "label": "SYNTHETIC DEMO: distribution and tail behavior",
+        "comparison_mode": "SAME_DATA_DIFFERENT_ENCODING",
+        "candidates": [
+          {
+            "id": "FIG-10211808929867",
+            "recipe": "ecdf",
+            "recipe_label": "经验累积分布 / ECDF",
+            "asset_id": "DEMO-samples",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: distribution and tail behavior",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
+            "spec_sha256": "102118089298671adcb6625e598d7299b13642c0a7af89192c421217c1c9d285",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/2"
+            }
+          },
+          {
+            "id": "FIG-dad6513861861d",
+            "recipe": "box",
+            "recipe_label": "箱线 / Box plot",
+            "asset_id": "DEMO-samples",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: distribution and tail behavior",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
+            "spec_sha256": "dad6513861861dde67ff837b9c58df781d2a6f140e480c2926fddeaeb4fbb11f",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/2"
+            }
+          },
+          {
+            "id": "FIG-db011a3f29f5b9",
+            "recipe": "histogram",
+            "recipe_label": "直方 / Histogram",
+            "asset_id": "DEMO-samples",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: distribution and tail behavior",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
+            "spec_sha256": "db011a3f29f5b969605017c66184694b5043c36c5c15f32e9f44471c24df96e9",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/2"
+            }
+          },
+          {
+            "id": "FIG-cd2fe8a9786bac",
+            "recipe": "strip",
+            "recipe_label": "样本点分布 / Strip",
+            "asset_id": "DEMO-samples",
+            "claim_id": "DEMO-NO-SCIENTIFIC-CLAIM",
+            "question": "SYNTHETIC DEMO: distribution and tail behavior",
+            "scope": "Synthetic workflow demonstration only",
+            "data_role": "SYNTHETIC_DEMO",
+            "data_sha256": "4aeaae24d117f81de48aab6576ef13aeeed0263bae30e99866bf206b73bc8011",
+            "spec_sha256": "cd2fe8a9786bace7c7c57e0fe86b120704a0f9f76b8b0e3efe8ac1502c2cd3e8",
+            "status": "CANDIDATE_NOT_SELECTED",
+            "style": {
+              "font_family": "Georgia, serif",
+              "theme": "paper-vivid",
+              "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef"
+            },
+            "source_ref": {
+              "path": "synthetic-evidence.json",
+              "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+              "pointer": "/assets/2"
+            }
+          }
+        ],
+        "unfilled_slots": 0,
+        "reason_if_short": ""
+      }
+    ],
+    "blocked_assets": [],
+    "not_rendered_due_to_round_budget": [
+      "DEMO-series",
+      "DEMO-xy",
+      "DEMO-matrix",
+      "DEMO-interval"
+    ],
+    "columns": 4,
+    "rounds_requested": 3,
+    "scientific_authority": false,
+    "no_forced_distribution_or_uncertainty": true
+  },
+  "source_errors": [],
+  "stage": "EXPERIMENT_DATA_PREPARATION_NOT_MANUSCRIPT_WRITING",
+  "scientific_authority": false,
+  "experiments_launched": 0,
+  "model_calls": 0,
+  "human_review_status": "NOT_REVIEWED",
+  "formats": [
+    "CSV",
+    "LaTeX",
+    "SVG",
+    "HTML",
+    "JSON"
+  ],
+  "pdf_png_conversion": "USE_EXISTING_EXPORT_PIPELINE_NOT_IMPLEMENTED_HERE",
+  "source_data_included": false,
+  "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef",
+  "snapshot_sha256": "830aa4f5cfbd158415e8950065473e4f1dbf76bc42b6496dbde693edcdc5b96d",
+  "status": "PREVIEW_READY_FOR_OPERATOR_SELECTION",
+  "artifact_sha256": {
+    "figures/FIG-cd2fe8a9786bac.svg": "8ec9ac5df9bea82ef1b879e5aad5211b715090b8b50aed96d1d96e1773ea438a",
+    "figures/FIG-10211808929867.svg": "7b4b9a9b7854cef9031789aa016885373c795d967167c343895ea36acaa4b4cd",
+    "figures/FIG-e0638b654223ca.svg": "051012dc9e864b7ed0883a786f0b404057f843675e67a871b470cc8a3f3fa602",
+    "figures/FIG-db011a3f29f5b9.svg": "1a59a8230eac652bcb292b48f91897c95eef8a73a23958f2bbfec7e9e94bd4ed",
+    "figures/FIG-dad6513861861d.svg": "248e2bf18c3f166015f9a880446a7c1983a3ea9c5b788cec2908aa2d05b75929",
+    "figures/FIG-40c66c44e3ce11.svg": "97cfad78839b3b8cd1fbb65165ebde21009114a52be2a61e3bafb608a87f7962",
+    "figures/FIG-85fd60d16d45de.svg": "6f47ae682124a6c26305e7cffe005e4eb60c2a90a0a95a62233840ca481940f2",
+    "figures/FIG-1623277f722c0b.svg": "92199cf744e7b2bda5bf26f2f337e672fbc0a227008e5031c6fa6223a0fa278f",
+    "figures/FIG-47e24f98a53119.svg": "4862eb94c6797987cb9c9f78b30e76150c92c060fcb2587bdd6aceed1b8575aa",
+    "figures/FIG-6fe5cae8e97f94.svg": "c0b3c15ea0d6a894708edebb3831a0381f3dc91593b0cad3fef8c5571f2aadc0",
+    "figures/FIG-61f70929f7cd71.svg": "024a29b1944b7af0b508964d21f02d8829d30dffe0740712c984116e5dd0c129",
+    "figures/FIG-4af9cff98f3211.svg": "f14457cea16feb23dc514bf5109fb0909db5d81178c6ca0121a3f76219cbb774"
+  }
+}

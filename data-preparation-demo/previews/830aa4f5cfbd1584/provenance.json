@@ -1,0 +1,89 @@
+{
+  "snapshot_sha256": "830aa4f5cfbd158415e8950065473e4f1dbf76bc42b6496dbde693edcdc5b96d",
+  "source_refs": [
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/0"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/1"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/2"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/3"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/4"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/5"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/6"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/7"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/results/8"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/0"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/1"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/2"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/3"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/4"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/5"
+    },
+    {
+      "path": "synthetic-evidence.json",
+      "sha256": "f7b7541573a537e695e554074e23cd45d26ff570839e217dc79b96b90a5bfff4",
+      "pointer": "/assets/6"
+    }
+  ],
+  "source_data_included": false,
+  "renderer_sha256": "24c62ef75812620157d89bea12b45052c67d6ccc1a4d1c37fb7c500f73e749ef",
+  "reproduce": "python3 -m research_pipeline.experiment_data_preparation --manifest input-manifest.json --evidence-root ORIGINAL_EVIDENCE_ROOT --output OUTPUT_ROOT",
+  "scientific_authority": false
+}

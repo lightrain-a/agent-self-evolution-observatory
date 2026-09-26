@@ -78,6 +78,8 @@ def build_paper_visual_evidence_portfolio(project_root: Path = PROJECT_ROOT) -> 
     planned = _planned_rows(project_root)
     stri = _stri_row(project_root)
     papers = planned + [stri]
+    from .experiment_data_preparation import build_preparation_portfolio
+    preparation = build_preparation_portfolio(project_root)
     role_union = sorted({role for row in papers for role in row.get("main_visual_roles") or []})
     return {
         "schema_version": "1.0",
@@ -92,6 +94,7 @@ def build_paper_visual_evidence_portfolio(project_root: Path = PROJECT_ROOT) -> 
             "repair_required": sum("REPAIR" in str(row.get("status")) for row in papers),
         },
         "papers": papers,
+        "data_preparation": preparation,
         "policy": dict(POLICY),
         "scientific_authority": False,
         "authority": {"paper_design": False, "method": False, "experiment": False, "p0": False, "gpu": False},

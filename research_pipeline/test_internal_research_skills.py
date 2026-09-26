@@ -20,7 +20,7 @@ class InternalResearchSkillsTest(unittest.TestCase):
         self.assertEqual(state["summary"]["external_skill_packs_distilled"], 8)
         self.assertEqual(state["summary"]["external_skill_packs_left_catalogued"], 0)
         self.assertEqual(state["summary"]["external_runtime_dependencies"], 0)
-        self.assertEqual(state["summary"]["canonical_internal_skills"], 7)
+        self.assertEqual(state["summary"]["canonical_internal_skills"], 8)
         self.assertEqual(validate_internal_skill_library(), [])
         self.assertTrue(all(row["decision"] == "DISTILLED" for row in EXTERNAL_SKILL_DISTILLATION))
         self.assertTrue(all(row["discarded"] for row in EXTERNAL_SKILL_DISTILLATION))
@@ -58,6 +58,14 @@ class InternalResearchSkillsTest(unittest.TestCase):
         self.assertEqual(ml["status"], "INTERNAL_SKILL_ROUTE_READY")
         self.assertEqual([row["skill_id"] for row in ml["selected_skills"]], ["ai-ml-experiment-engineering"])
         self.assertEqual(ml["external_runtime_dependencies"], 0)
+
+    def test_data_preparation_routes_before_prose_without_new_authority(self) -> None:
+        route = route_internal_skills({"task_family": "experiment-data-preparation", "capability_types": ["visualization", "statistics", "coding"]})
+        self.assertEqual([r["skill_id"] for r in route["selected_skills"]], ["evidence-bound-data-preparation"])
+        job = compile_internal_skill_job("evidence-bound-data-preparation", {"provided_inputs": ["bound_result_manifest", "table_skeleton_or_figure_questions", "data_roles_and_units"]})
+        self.assertEqual(job["status"], "INTERNAL_SKILL_JOB_READY")
+        self.assertFalse(job["experiment_authority"])
+        self.assertIn("draft-manuscript-prose", job["forbidden_actions"])
 
     def test_writer_surfaces_missing_inputs_and_cannot_change_scientific_truth(self) -> None:
         skill = next(row for row in CANONICAL_INTERNAL_SKILLS if row["skill_id"] == "evidence-first-manuscript")

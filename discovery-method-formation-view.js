@@ -20,6 +20,7 @@
         ${rows ? `<div class="discovery-formation-table"><table><thead><tr><th>ID</th><th>${pick("当前计划状态", "Planning status")}</th><th>${pick("类比 / 假设", "Analogies / hypotheses")}</th><th>${pick("待补字段", "Missing fields")}</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p>${pick("当前发布的生成器没有候选可编译。本次已安装流程与检查器，没有虚构新 Idea，也没有启动模型调用或实验。", "The published generator currently has no candidates to compile. The workflow and auditor are installed; no ideas, provider calls or experiment results were invented.")}</p>`}
         <p>${pick("生成的假设统一标记为“待验证”；真实结果继续由现有实验记录、限定范围的失败记忆和科学门控处理。人类咨询独立保留。", "Generated hypotheses remain proposed. Actual results stay with the existing experiment records, scoped failure memory and scientific gates. Human consultation remains separate.")}</p>
         <a class="link-btn" href="https://github.com/lightrain-a/agent-self-evolution-observatory/blob/main/docs/heirs-discovery-methodology.md">${pick("查看完整方法论、组件核对与接入说明 →", "Methodology, component audit and integration notes →")}</a>
+        <a class="link-btn" href="experiment-data-preparation.html">${pick("下一阶段：实验数据准备 · 大表与候选图 →", "Next: experiment data preparation · tables and figure alternatives →")}</a>
       </div></details>`;
   };
 })();

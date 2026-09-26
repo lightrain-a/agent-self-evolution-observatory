@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "bundles": [],
+  "policy": "Register only explicitly selected, source-bound preparation.json manifests. Synthetic examples are separate and never count as paper results.",
+  "registration_shape": {"paper_id":"PAPER-ID","ref":{"path":"generated/approved-preparation.json","sha256":"exact file digest","pointer":""}},
+  "scientific_authority": false
+}

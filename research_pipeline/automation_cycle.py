@@ -305,6 +305,8 @@ def _refresh_pre_publication_state() -> None:
     write_p0_offline_qualification_state()
     write_p0_admission_state()
     write_research_system_state()
+    from .experiment_data_preparation import write_preparation_portfolio
+    write_preparation_portfolio()
 
 
 def run_cycle(
