@@ -1,0 +1,307 @@
+{
+  "schema_version": "1.0",
+  "scope": {
+    "id": "SKILL-SECURITY-R1-20260927",
+    "round": 1,
+    "phase": "SURVEY_AND_IDEA_DISCOVERY",
+    "title": "Skill获取与使用攻击面：原生信任边界调研与候选发现",
+    "round2": "DEFERRED_DEFENSE_DESIGN",
+    "scientific_object": "第三方Skill从被发现到产生副作用，哪些具体可信边界会失效，哪些只是已授予能力的正常使用？",
+    "in_scope": [
+      "元数据/指令/脚本/资源包",
+      "发现与选择",
+      "安装/激活/预处理",
+      "调用与授权",
+      "文件/网络/密钥副作用",
+      "委托与持久化",
+      "更新/撤销",
+      "审计可观测性"
+    ],
+    "out_of_scope": [
+      "泛化聊天越狱榜",
+      "把所有MCP问题重命名Skill漏洞",
+      "无真实边界的可信管理员行为",
+      "防御训练与完整防御框架",
+      "公开系统的未授权测试"
+    ],
+    "attacker_tiers": [
+      {
+        "id": "AT1",
+        "control": "不可信Skill发布者仅能控制包内内容/元数据",
+        "not_granted": "不能预先改宿主配置、系统提示、用户真实任务或管理员权限"
+      },
+      {
+        "id": "AT2",
+        "control": "受限协作者能提交工作区内规定路径的Skill文件",
+        "not_granted": "路径必须有真实写入入口；不能额外假设任意宿主写权限"
+      },
+      {
+        "id": "AT3",
+        "control": "已安装Skill的合法更新通道或受控依赖来源",
+        "not_granted": "初始授权范围与更新权限必须明确，不能事后补能力"
+      },
+      {
+        "id": "AT4",
+        "control": "公开或授权的低信任工具返回/检索内容",
+        "not_granted": "如果完全不涉及Skill生命周期则归为相邻工具注入，不算新Skill贡献"
+      }
+    ],
+    "classification": [
+      "SUSPICIOUS_ARTIFACT",
+      "DOCUMENTED_RISK",
+      "POLICY_DEVIATION",
+      "REPRODUCED_BOUNDARY_VIOLATION",
+      "MAINTAINER_CONFIRMED_VULNERABILITY"
+    ],
+    "safety": {
+      "sandbox_only": true,
+      "real_credentials": false,
+      "production_targets": false,
+      "public_malicious_publication": false,
+      "malware_execution": false,
+      "inert_canaries_only": true,
+      "outbound_network_default": "DENY; any test sink must be local and controlled",
+      "responsible_disclosure_before_exploit_details": true
+    },
+    "authority": {
+      "experiment": false,
+      "provider": false,
+      "scientific": false,
+      "submission": false,
+      "overwrite_existing_projects": false
+    }
+  },
+  "surfaces": [
+    {
+      "id": "AS01",
+      "name": "来源与获取",
+      "stage": "package",
+      "boundary": "发布者/仓库信号 → 安装者信任",
+      "risks": "仿冒、名称混淆、评价伪造、来源/签名不等于行为安全",
+      "sources": [
+        "P02",
+        "P07",
+        "P18",
+        "D01",
+        "P23",
+        "P24"
+      ],
+      "control": "来源/版本审计与当前官方安装策略；不运行未知包"
+    },
+    {
+      "id": "AS02",
+      "name": "检索与Skill选择",
+      "stage": "selection",
+      "boundary": "非可信描述 → 规划器选择",
+      "risks": "语义伪装、元数据诱导、重复发布影响曝光",
+      "sources": [
+        "P07",
+        "P11",
+        "P03",
+        "D08"
+      ],
+      "control": "正常描述/内容配对；检索和选择单独计分；检查内部重复方向"
+    },
+    {
+      "id": "AS03",
+      "name": "安装与打包",
+      "stage": "package",
+      "boundary": "归档/目录 → 宿主文件与依赖",
+      "risks": "资源遗漏、依赖不完整、路径/身份解析变化",
+      "sources": [
+        "D01",
+        "D03",
+        "P04",
+        "P10",
+        "P16",
+        "P23",
+        "P24"
+      ],
+      "control": "当前版本、实际可控写入路径和原生安装入口；不把预置管理员写入当攻击"
+    },
+    {
+      "id": "AS04",
+      "name": "激活与预处理",
+      "stage": "activation",
+      "boundary": "Skill元数据/模板 → 模型推理之前的宿主动作",
+      "risks": "同意范围和求值时间不一致；效果可能早于模型工具轨迹",
+      "sources": [
+        "D02",
+        "D04",
+        "P04",
+        "P20",
+        "P22",
+        "D08"
+      ],
+      "control": "无模型stub、无害临时标记、宿主事件与Agent-visible trace对齐"
+    },
+    {
+      "id": "AS05",
+      "name": "权限与隔离",
+      "stage": "authorization",
+      "boundary": "声明/同意 → 实际执行权限",
+      "risks": "预批准被误当白名单、作用域/期限差异、权限委托未保留来源",
+      "sources": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "P15",
+        "P16",
+        "P22"
+      ],
+      "control": "明确文档承诺、有效配置与系统级deny；测实际效果而非仅模型建议"
+    },
+    {
+      "id": "AS06",
+      "name": "脚本与间接代码执行",
+      "stage": "execution",
+      "boundary": "自然语言/例子/资源 → 执行器副作用",
+      "risks": "文档示例复用、无显式载荷诱导、语言和代码组合、内嵌模型",
+      "sources": [
+        "P04",
+        "P05",
+        "P08",
+        "P09",
+        "P10"
+      ],
+      "control": "已有攻击族作为最近邻；仅隔离的无害效果替身，不发布武器化样本"
+    },
+    {
+      "id": "AS07",
+      "name": "数据泄露与密钥生命周期",
+      "stage": "secrets",
+      "boundary": "数据/密钥持有者 → 另一个目的、主体或接收方",
+      "risks": "非任务数据流、凭据继承、日志/提示暴露；跨Skill共享能力需明确实际边界",
+      "sources": [
+        "P02",
+        "P03",
+        "D03",
+        "D06",
+        "D07",
+        "A01",
+        "A02",
+        "P22"
+      ],
+      "control": "惟一无害标记、授权目的和接收域；数据可达不等于已外传"
+    },
+    {
+      "id": "AS08",
+      "name": "委托与跨工具",
+      "stage": "delegation",
+      "boundary": "调用者的身份/任务 → 子Agent、MCP或进程",
+      "risks": "权限衰减遗漏、凭据来源混淆、以可信代理执行另一来源指令",
+      "sources": [
+        "D05",
+        "P15",
+        "P16",
+        "A02"
+      ],
+      "control": "原生父子链记录；同权限和同任务对照；区分既有能力与越界"
+    },
+    {
+      "id": "AS09",
+      "name": "持久记忆与演化",
+      "stage": "persistence",
+      "boundary": "一次低信任交互 → 未来高信任Skill/记忆",
+      "risks": "成功轨迹污染、后续任务复用、跨版本传播",
+      "sources": [
+        "P12",
+        "P19",
+        "P11"
+      ],
+      "control": "污染进入记忆和真正发生效果分开评价；内部R9/STRI重复检查"
+    },
+    {
+      "id": "AS10",
+      "name": "更新与撤销",
+      "stage": "update",
+      "boundary": "旧批准/禁用决定 → 新闭包及残留载体",
+      "risks": "批准后变化、依赖延迟加载、撤销后重建",
+      "sources": [
+        "P16",
+        "P17",
+        "D03"
+      ],
+      "control": "完整版本/闭包记录；普通TOCTOU和残留复活已碰撞"
+    },
+    {
+      "id": "AS11",
+      "name": "可用性与资源消耗",
+      "stage": "availability",
+      "boundary": "有限任务预算 → 被Skill引导的额外工作",
+      "risks": "任务仍成功但不必要委托/重试/上下文消耗",
+      "sources": [
+        "P13",
+        "P11"
+      ],
+      "control": "同效用与同预算；已有CDH不能换名再做"
+    },
+    {
+      "id": "AS12",
+      "name": "审计与标签",
+      "stage": "audit",
+      "boundary": "执行事实与授权上下文 → 扫描器/轨迹分类结论",
+      "risks": "漏掉激活期效果、来源信息不足、未触发判安全、训练测试同源、正常高权限误报",
+      "sources": [
+        "P14",
+        "P20",
+        "P03",
+        "P11",
+        "T01",
+        "P23",
+        "P24"
+      ],
+      "control": "源/结构留出；原生副作用真值；明确曝光/激活/执行分母与正常效用"
+    }
+  ],
+  "evidence_ladder": [
+    {
+      "stage": "L0",
+      "name": "来源可定位",
+      "requires": "官方文档/论文/代码版本可定位；搜索摘要不等于全文复核"
+    },
+    {
+      "stage": "L1",
+      "name": "问题与最近邻区分",
+      "requires": "明确攻击者能力、受保护对象、文档承诺和无法被现有工作直接覆盖的差异"
+    },
+    {
+      "stage": "L2",
+      "name": "原生支持资格",
+      "requires": "原生入口确实存在且隔离环境能承载测试；缺依赖是SUPPORT_HOLD不是科学失败"
+    },
+    {
+      "stage": "L3",
+      "name": "安全的最小反例",
+      "requires": "无害真实效果、匹配对照、原生日志、最新版本回执与root cause"
+    },
+    {
+      "stage": "L4",
+      "name": "前瞻与范围确认",
+      "requires": "冻结后独立任务/来源/宿主验证；不修改分母救结论"
+    },
+    {
+      "stage": "L5",
+      "name": "论文与披露",
+      "requires": "命名为测量/部署风险/边界漏洞中正确的一类；必要时先负责任披露，再写攻击细节"
+    }
+  ],
+  "measurement_rules": [
+    "先记录N_total_user_tasks，再记录候选可见、Skill激活、到达效果、实际越界；条件成功率和端到端成功率均可报告，不混分母。",
+    "malicious intent、harmful capability、可疑静态模式、允许但敏感动作、完成的未授权效果是不同标签。",
+    "正常任务效用、benign FPR、未触发/超时比例与安全指标并列；不能只报告攻击成功的子集。",
+    "使用相同任务、初态、模型和预算作配对；源/结构家族跨训练测试留出；多seed不能替代来源留出。",
+    "事件真值来自受控资源变化和策略记录，不由攻击生成器自评，也不只依赖被测Agent的叙述。",
+    "迁移测量固定Skill字节和声明条件；不同平台的承诺范围分开，不能预设不存在的逐Skill隔离。",
+    "同一根因下的多个方向/载体优先合并成一篇充分的研究，不为论文数量拆碎。"
+  ],
+  "native_gate": [
+    "固定宿主版本/安装路径/模型/配置；读取官方威胁模型与最近修复记录",
+    "先确认攻击者真能控制对应低信任入口；不得追加管理员/任意文件写能力",
+    "区分不安全能力、文档说明的正常行为、配置错误、承诺违例和真实越权",
+    "无害标记与本地接收器；保留原始事件、任务身份、配置哈希和失败原因",
+    "负向/修复版本/NoSkill/显式授权相同动作对照；缺失或未触发不判安全",
+    "通过新数据、任务/来源留出后才扩大结论；native witness缺失时不称方法成功"
+  ]
+}

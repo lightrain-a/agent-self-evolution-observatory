@@ -21,6 +21,7 @@
         <p>${pick("生成的假设统一标记为“待验证”；真实结果继续由现有实验记录、限定范围的失败记忆和科学门控处理。人类咨询独立保留。", "Generated hypotheses remain proposed. Actual results stay with the existing experiment records, scoped failure memory and scientific gates. Human consultation remains separate.")}</p>
         <a class="link-btn" href="https://github.com/lightrain-a/agent-self-evolution-observatory/blob/main/docs/heirs-discovery-methodology.md">${pick("查看完整方法论、组件核对与接入说明 →", "Methodology, component audit and integration notes →")}</a>
         <a class="link-btn" href="experiment-data-preparation.html">${pick("下一阶段：实验数据准备 · 大表与候选图 →", "Next: experiment data preparation · tables and figure alternatives →")}</a>
+        <a class="link-btn" href="skill-security-research.html">${pick("本轮新研究重点：Skill安全攻击面知识库 →", "New research focus: Skill-security attack-surface knowledge →")}</a>
       </div></details>`;
   };
 })();
