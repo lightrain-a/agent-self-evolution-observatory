@@ -128,6 +128,8 @@ def build() -> Path:
     # Read-only data-preparation inventory; never render private results or run experiments.
     from research_pipeline.experiment_data_preparation import write_preparation_portfolio
     write_preparation_portfolio(ROOT)
+    from scripts.build_paper_writing_workflow import build as build_writing_workflow
+    build_writing_workflow(ROOT)
     # Refresh only the embedded Paper Acceptance public projection from the
     # append-only canonical ledgers.  Rebuilding the entire Research System here
     # would also recompile unrelated discovery state, which a frontend publish

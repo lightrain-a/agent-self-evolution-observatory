@@ -151,6 +151,7 @@ def guidance_payload() -> dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
         "guidance_id": GUIDANCE_ID,
+        "writing_execution": {"module": "research_pipeline.paper_writing_loop", "methodology": "current source -> selected evidence/visuals -> argument -> one section -> candidate diff -> independent review -> explicit scoped apply", "figure_knowledge_page": "figure-knowledge-base.html", "preparation_page": "experiment-data-preparation.html", "writing_page": "paper-writing-workflow.html", "scientific_authority": False, "automatic_full_rewrite": False},
         "recorded_at": "2026-08-23",
         "scope": {
             "current_papers": list(CURRENT_PAPER_IDS),

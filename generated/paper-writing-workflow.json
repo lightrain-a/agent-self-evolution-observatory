@@ -1,0 +1,276 @@
+{
+  "schema_version": "1.0",
+  "status": "WRITING_LOOP_INSTALLED",
+  "stages": [
+    {
+      "id": "CURRENT_SOURCE",
+      "zh": "读取当前稿与同步版本",
+      "en": "Read current manuscript and versions"
+    },
+    {
+      "id": "EVIDENCE_HANDOFF",
+      "zh": "接收当前数据、主表和选中图",
+      "en": "Bind current data, tables and selected figures"
+    },
+    {
+      "id": "REFERENCE_ROLES",
+      "zh": "核心参考材料按角色整理",
+      "en": "Separate exemplar, baseline and evidence roles"
+    },
+    {
+      "id": "ARGUMENT_ARCHITECTURE",
+      "zh": "先确认主线和章节职责",
+      "en": "Confirm argument and section ownership"
+    },
+    {
+      "id": "FRAMEWORK",
+      "zh": "建立完整但不虚报结果的框架",
+      "en": "Build a complete scaffold without invented results"
+    },
+    {
+      "id": "SECTION_LOOP",
+      "zh": "逐章诊断、修订与局部核对",
+      "en": "Diagnose, revise and check one section at a time"
+    },
+    {
+      "id": "GLOBAL_RECONCILIATION",
+      "zh": "图文、章节与正文附录对账",
+      "en": "Reconcile text, visuals and appendix"
+    },
+    {
+      "id": "SUMMARY_SYNC",
+      "zh": "回写标题、摘要和结论",
+      "en": "Synchronize title, abstract and conclusion"
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "zh": "独立检查事实、逻辑与证据范围",
+      "en": "Independent fact, logic and evidence review"
+    },
+    {
+      "id": "LAYOUT_AND_RELEASE",
+      "zh": "实际尺寸排版检查与版本交付",
+      "en": "Actual-size layout review and versioned delivery"
+    }
+  ],
+  "modes": {
+    "OUTLINE": "Return a one-page argument and section-ownership plan. Do not rewrite LaTeX or invent outcomes.",
+    "DRAFT": "Draft only the named section from the bound packet. Framework-mode results remain explicit missing inputs, not affirmative findings.",
+    "REWRITE": "Diagnose the named section, then rewrite only that section. Keep evidence identities and approved scope fixed.",
+    "LOCAL_POLISH": "Make local wording corrections only. Preserve section structure, numeric facts, definitions, citations, figure/table calls and venue layout.",
+    "APPENDIX_ALIGN": "Compare main and appendix claims, definitions, protocols and costs. Return conflicts and targeted edits; no silent evidence deletion.",
+    "SUMMARY_SYNC": "Update the named abstract or conclusion to current section evidence. Do not add a result or strengthen the claim to improve the story.",
+    "LAYOUT_QA": "Prepare local wording/layout suggestions. A source check cannot certify page count, orphan lines or visual legibility without an actual rendered-page review."
+  },
+  "section_roles": {
+    "introduction": {
+      "question": "Why is this problem worth studying, and why does the proposed idea address it?",
+      "order": [
+        "concrete setting and stake",
+        "existing deployment practice",
+        "specific unresolved difficulty",
+        "evidence-backed intuition",
+        "minimal method",
+        "bounded contributions"
+      ],
+      "avoid": [
+        "implementation diary",
+        "formal definitions before motivation",
+        "contributions as a module inventory"
+      ]
+    },
+    "background": {
+      "question": "What must a new reader know before understanding the phenomenon and method?",
+      "order": [
+        "only needed preliminaries",
+        "method families and what they solve",
+        "closest work and exact residual question"
+      ],
+      "avoid": [
+        "citation catalogue without comparison",
+        "treating every adjacent method as a fair baseline"
+      ]
+    },
+    "phenomenon": {
+      "question": "What observation establishes the problem, and what is explanation rather than fact?",
+      "order": [
+        "plain finding",
+        "matched evidence",
+        "concrete case",
+        "scope and alternative explanation",
+        "transition to method"
+      ],
+      "avoid": [
+        "attributing a pre-existing phenomenon to our selector",
+        "equating correlation with mechanism",
+        "moving essential motivation to appendix"
+      ]
+    },
+    "method": {
+      "question": "What happens from input to output, and why is each necessary operation present?",
+      "order": [
+        "intuition",
+        "inputs and held-fixed objects",
+        "design requirements",
+        "operations in execution order",
+        "output and non-claims",
+        "cost and limitations"
+      ],
+      "avoid": [
+        "invented operations",
+        "renaming a standard primitive as a new theory",
+        "equations without an explanatory role"
+      ]
+    },
+    "theory": {
+      "question": "Which concrete relationship needs formal explanation, under which assumptions?",
+      "order": [
+        "scientific relationship",
+        "definitions and assumptions",
+        "derivation",
+        "interpretation",
+        "observability and limits"
+      ],
+      "avoid": [
+        "decorative theorem count",
+        "sufficient condition written as necessary",
+        "weight-space assumptions silently transferred to text"
+      ]
+    },
+    "experiments": {
+      "question": "What do completed evaluations establish, compared with which alternative?",
+      "order": [
+        "concise setup",
+        "main effect and counterexamples",
+        "mechanism or component questions",
+        "budget and cost",
+        "boundary"
+      ],
+      "avoid": [
+        "execution chronology",
+        "cell-by-cell repetition",
+        "win/loss/tie scoreboard replacing effect sizes",
+        "mixing screening and end-to-end cost"
+      ]
+    },
+    "abstract": {
+      "question": "What is the problem, idea, completed evidence and bounded conclusion?",
+      "order": [
+        "setting and missed choice",
+        "specific gap",
+        "intuition and method",
+        "representative current evidence",
+        "bounded conclusion"
+      ],
+      "avoid": [
+        "results from a superseded table",
+        "promising planned experiments as findings",
+        "copying exemplar sentences"
+      ]
+    },
+    "conclusion": {
+      "question": "What was learned, where does it apply, and what remains unresolved?",
+      "order": [
+        "return to the question",
+        "current supported findings",
+        "limitations",
+        "broader impact when required"
+      ],
+      "avoid": [
+        "universalizing migration-specific results",
+        "claiming a future controller already exists",
+        "padding to fill space"
+      ]
+    },
+    "appendix": {
+      "question": "What additional material is needed to reproduce, verify or delimit the main argument?",
+      "order": [
+        "protocols and identities",
+        "proofs and assumptions",
+        "full supporting results",
+        "diagnostics and reproducibility"
+      ],
+      "avoid": [
+        "duplicate main table without a distinct purpose",
+        "author repair diary",
+        "conflicting definitions or populations"
+      ]
+    }
+  },
+  "features": [
+    "current-include-inventory",
+    "role-scoped-references",
+    "version-bound-figure-table-handoff",
+    "single-section-job",
+    "bounded-one-call-provider",
+    "candidate-diff",
+    "snapshot-safe-reviewed-apply"
+  ],
+  "not_automatic": [
+    "scientific-approval",
+    "experimental-execution",
+    "human-advisor-judgment",
+    "actual-size-PDF-review",
+    "git-push"
+  ],
+  "runtime_entry": "python3 -m research_pipeline.paper_writing_loop",
+  "scientific_authority": false,
+  "retrospective": [
+    {
+      "phase": "先搭可改的初稿",
+      "period": "09-14—09-17",
+      "problem": "材料和实验很多，但缺少一条统一问题线。",
+      "change": "以研究对象、直觉、方法边界和待验证问题初始化；允许实验框架空位，不虚报结果。"
+    },
+    {
+      "phase": "从实验报告转为论文",
+      "period": "09-15—09-20",
+      "problem": "按执行历史写作，段落有记录但没有科学论证。",
+      "change": "先规定问题、观察、方法与证据的关系，参考论文只借结构，不移植结果。"
+    },
+    {
+      "phase": "分清现象与方法",
+      "period": "09-20—09-23",
+      "problem": "容易把方法所针对的现象写成方法带来的机制。",
+      "change": "现象先行；具体例子与可观测量先解释，再进入方法及必要公式。"
+    },
+    {
+      "phase": "图表和正文共同收束",
+      "period": "09-22—09-23",
+      "problem": "图表重复、文字逐格复述，核心信息被实现细节稀释。",
+      "change": "保留直接证据；多图型四联比较；每节与图表各自有明确论证任务。"
+    },
+    {
+      "phase": "章节职责重新安排",
+      "period": "09-23",
+      "problem": "背景、现象、方法和相关工作顺序不利于首次阅读。",
+      "change": "Background/Preliminaries前移；按理解依赖组织，精简重复内容。"
+    },
+    {
+      "phase": "逐章Improve与摘要回写",
+      "period": "09-23—09-26",
+      "problem": "全文笼统润色不能修复具体问题。",
+      "change": "先诊断、再局部改写、核对；摘要和结论随当前证据同步。"
+    },
+    {
+      "phase": "正文附录、成本与术语对齐",
+      "period": "09-24—09-26",
+      "problem": "相同符号、表格、比较阶段在不同位置容易漂移。",
+      "change": "核对分母、模型方向、screening与完整成本；删重复表，保留必要证明与协议。"
+    },
+    {
+      "phase": "语言、实际版式和协作收尾",
+      "period": "09-24—09-26",
+      "problem": "孤行、图例、表注、引用链接和多窗口更新互相影响。",
+      "change": "不改官方布局凑页；实际PDF复核；保存新数据，按当前快照合并提交。"
+    }
+  ],
+  "boundaries": {
+    "private_manuscript_published": false,
+    "private_conversation_published": false,
+    "live_heirs_rewritten": false,
+    "real_provider_quality_evaluation_completed": false,
+    "deterministic_checks_are_not_semantic_or_pdf_review": true,
+    "figure_library_size_is_not_renderer_limit": true
+  }
+}

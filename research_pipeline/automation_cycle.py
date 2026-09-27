@@ -307,6 +307,8 @@ def _refresh_pre_publication_state() -> None:
     write_research_system_state()
     from .experiment_data_preparation import write_preparation_portfolio
     write_preparation_portfolio()
+    from scripts.build_paper_writing_workflow import build as build_writing_workflow
+    build_writing_workflow()
 
 
 def run_cycle(
