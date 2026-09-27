@@ -87,6 +87,12 @@ def compile_bundle(manifest: dict, evidence_root: Path) -> tuple[dict,list[dict]
            'experiments_launched':0,'model_calls':0,'human_review_status':'NOT_REVIEWED',
            'formats':['CSV','LaTeX','SVG','HTML','JSON'], 'pdf_png_conversion':'USE_EXISTING_EXPORT_PIPELINE_NOT_IMPLEMENTED_HERE',
            'source_data_included':False,'renderer_sha256':renderer_sha}
+    if manifest.get('figure_reference_brief'):
+        from .figure_knowledge_base import validate_reference_selection, selection_brief
+        kb=_read(ROOT/'generated'/'figure-knowledge-base.json')
+        ids=validate_reference_selection(kb,manifest['figure_reference_brief'])
+        state['external_reference_selection']=selection_brief(kb,ids,manifest.get('figure_question',''),manifest.get('available_data_fields',[]))
+        state['external_reference_selection']['role']='DESIGN_REFERENCES_NOT_EXPERIMENTAL_RESULTS'
     state['snapshot_sha256']=digest(state)
     state['status']='PREVIEW_WITH_GAPS' if errors or figures['blocked_assets'] or any(t['gaps'] for t in tables) else 'PREVIEW_READY_FOR_OPERATOR_SELECTION'
     return state,assets
@@ -151,6 +157,8 @@ def build_bundle(manifest: dict, evidence_root: Path, output_root: Path) -> tupl
     state['artifact_sha256'] = {str(p.relative_to(target)):hashlib.sha256(p.read_bytes()).hexdigest() for p in target.glob('figures/*.svg')}
     _json(target/'preparation.json',state)
     _json(target/'input-manifest.json',manifest)
+    if 'external_reference_selection' in state:
+        _json(target/'figure-reference-selection.json',state['external_reference_selection'])
     _write(target/'index.html',render_bundle_html(state))
     source_refs=[r for t in manifest.get('tables',[]) for r in t.get('result_refs',[])]+manifest.get('figure_asset_refs',[])
     _json(target/'provenance.json',{'snapshot_sha256':state['snapshot_sha256'],'source_refs':source_refs,'source_data_included':False,'renderer_sha256':state['renderer_sha256'],'reproduce':'python3 -m research_pipeline.experiment_data_preparation --manifest input-manifest.json --evidence-root ORIGINAL_EVIDENCE_ROOT --output OUTPUT_ROOT','scientific_authority':False})
@@ -239,7 +247,10 @@ def build_preparation_portfolio(project_root: Path = ROOT) -> dict:
                          'snapshot_sha256':bundle['snapshot_sha256']})
         except (ValueError,OSError,KeyError,TypeError) as exc:
             rows.append({'paper_id':item.get('paper_id',''),'status':'SOURCE_REVIEW_REQUIRED','reason':type(exc).__name__})
+    knowledge_path=project_root/'generated'/'figure-knowledge-summary.json'
+    knowledge=_read(knowledge_path) if knowledge_path.exists() else {}
     return {'schema_version':SCHEMA_VERSION,'stage':'EXPERIMENT_DATA_PREPARATION','status':'REGISTERED_BUNDLES' if rows else 'WAIT_BOUND_RESULT_MANIFEST',
+            'figure_knowledge_base':{'page':'figure-knowledge-base.html','summary':knowledge.get('summary',{}),'search_module':'research_pipeline.figure_knowledge_base','full_index_precedes_local_renderer_selection':True},
             'rows':rows,'catalog':[{'id':r[0],'data_kind':r[1],'label':r[2],'purpose':r[3]} for r in CATALOG],
             'workflow':['结果与版本清点','主表骨架','逐批验证回填','小改表与依赖刷新','数据—问题映射','图库匹配','每行四图、多组候选','挑选与局部重画','实际尺寸复核','写作输入材料包'],
             'interaction_policy':{'preview_columns':4,'default_rounds':3,'prefer_distinct_types':True,'never_fabricate_to_fill_slots':True,'browser_draft_is_not_server_save':True,'stale_selection_requires_reconfirmation':True},
@@ -258,10 +269,13 @@ def main():
     p.add_argument('--manifest',type=Path);p.add_argument('--evidence-root',type=Path);p.add_argument('--output',type=Path)
     p.add_argument('--feedback',type=Path);p.add_argument('--ledger',type=Path);p.add_argument('--project-root',type=Path,default=ROOT)
     p.add_argument('--previous-manifest',type=Path,help='Record layout versus experiment-design changes against this previous manifest')
+    p.add_argument('--reference-brief',type=Path,help='Version-checked upstream figure shortlist exported from the full knowledge base')
     args=p.parse_args()
     if args.manifest:
         if not args.evidence_root or not args.output:p.error('--manifest requires --evidence-root and --output')
-        manifest=_read(args.manifest);state,path=build_bundle(manifest,args.evidence_root,args.output)
+        manifest=_read(args.manifest)
+        if args.reference_brief:manifest['figure_reference_brief']=_read(args.reference_brief)
+        state,path=build_bundle(manifest,args.evidence_root,args.output)
         if args.previous_manifest:
             previous=_read(args.previous_manifest); old={t['id']:t for t in previous.get('tables',[])}; new={t['id']:t for t in manifest.get('tables',[])}
             changes=[{'table_id':tid,**layout_change(old[tid],new[tid],manifest.get('change_reason','operator manifest update'))} for tid in sorted(old.keys()&new.keys())]

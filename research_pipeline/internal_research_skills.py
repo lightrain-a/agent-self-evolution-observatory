@@ -196,6 +196,9 @@ CANONICAL_INTERNAL_SKILLS: tuple[dict[str, Any], ...] = (
         "procedure": [
             "validate version-bound result identities before filling table cells",
             "iterate table layout without changing scientific cell identities",
+            "query the complete figure knowledge base by data shape and scientific question before considering the 19 local renderers",
+            "inspect source-linked previews and commit-pinned code candidates; reference indexing is not installation or reuse permission",
+            "import the operator figure reference brief with content-version checks before creating external chart adaptations",
             "match data structures and questions to compatible chart recipes",
             "render distinct alternatives in four-column groups; never fabricate to fill slots",
             "collect operator keep/revise/reject feedback with snapshot and data hashes",

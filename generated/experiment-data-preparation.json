@@ -2,6 +2,28 @@
   "schema_version": "1.0",
   "stage": "EXPERIMENT_DATA_PREPARATION",
   "status": "WAIT_BOUND_RESULT_MANIFEST",
+  "figure_knowledge_base": {
+    "page": "figure-knowledge-base.html",
+    "summary": {
+      "repositories": 4,
+      "entries": 2081,
+      "selectable_examples": 1192,
+      "tutorial_entries": 404,
+      "support_entries": 485,
+      "visual_files": 1845,
+      "indexed_visual_files": 1845,
+      "recipe_cards": 146,
+      "with_preview": 1990,
+      "without_preview": 91,
+      "family_tags": 90,
+      "unclassified_entries": 373,
+      "local_renderer_count": 19,
+      "upstream_code_executed": 0,
+      "images_mirrored": 0
+    },
+    "search_module": "research_pipeline.figure_knowledge_base",
+    "full_index_precedes_local_renderer_selection": true
+  },
   "rows": [],
   "catalog": [
     {
