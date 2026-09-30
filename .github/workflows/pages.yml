@@ -35,6 +35,9 @@ jobs:
       - name: Verify curated figure entry and bounded export
         run: node scripts/test_curated_figure_frontend.js
 
+      - name: Verify human-readable problem atlas and review-only controls
+        run: node scripts/test_problem_atlas_frontend.js
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

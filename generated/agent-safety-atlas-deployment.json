@@ -1,0 +1,13 @@
+{
+  "source_repository": "lightrain-a/flow_idea",
+  "source_commit": "22709a78686f2a9f30d8a34ce885593a60380f58",
+  "atlas_revision": "fe09efe7d6d16f9806327269a66d494133bff83f90651df5e5d288df5dc38122",
+  "files": {
+    "agent-safety-atlas.html": "51e16ef665ac385431b5778efec2b30ea9e950d133e33bb8084045b6b1a0774c",
+    "agent-safety-atlas.css": "80bd4aa954dc1cdb34101e4066e6c51f96eb72e5b1efbd37f86aa154eab9a247",
+    "agent-safety-atlas.js": "bda3062e34e10a1b25ecce14bc01bf64b678ba426b37e62990fbaf8399376bd3",
+    "generated/agent-safety-atlas.json": "27b86a4252f59856fa4c0910c4e965a8ad80e8016019c1e9455fa4d558c3b36e"
+  },
+  "projection": "PUBLIC_READ_ONLY",
+  "human_confirmations": 0
+}

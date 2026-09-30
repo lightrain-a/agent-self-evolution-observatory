@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="从具体例子理解Agent安全的研究困难，比较已有进展和证据范围；先人工确认问题，再研究方案。">
+<title>先找值得研究的问题 · Agent 安全难点地图</title>
+<link rel="stylesheet" href="agent-safety-atlas.css">
+</head>
+<body>
+<a class="skip" href="#content">跳到内容</a>
+<header class="site-head"><a class="brand" href="index.html"><span class="brand-mark">AE</span><span>Research Observatory<small>研究不是先选算法，而是先看清问题</small></span></a><nav aria-label="站点导航"><a href="research-directions.html">领域图谱</a><a href="skill-security-research.html">Skill文献库</a><a href="paper-ideas.html">已有研究</a></nav></header>
+<main id="content">
+<section class="hero"><div class="hero-copy"><p class="eyebrow">FLOW IDEA / 第一阶段 · 研究难点</p><h1>先看清问题，<br>再决定做什么。</h1><p class="lead">Agent会读资料、选技能、调用工具，也会保存经验。<br class="desktop">风险可能在哪一步出现？已有研究解决了什么？还有什么值得问？</p><div class="hero-actions"><a class="primary" href="#explore">打开难点地图 <span aria-hidden="true">↘</span></a><a href="#how-to-read">第一次来，先看说明</a></div></div><aside class="hero-note"><span class="note-label">这轮需要你决定的</span><h2>哪些难点，值得继续深挖？</h2><p>先读例子和已有进展，把感兴趣的难点放入待选清单。确认后再查方案，现在不替你选方法或开实验。</p><div id="hero-stats" class="stats" aria-live="polite">正在读取地图…</div></aside></section>
+<section class="steps" aria-label="人工确认流程"><div class="current"><b>01</b><span>研究难点<small>现在：阅读、比较、选择</small></span></div><div class="checkpoint"><span>你确认问题</span><small>尚未确认</small></div><div><b>02</b><span>寻找方案<small>只针对选中的难点</small></span></div><div class="checkpoint"><span>你确认方案</span><small>尚未开始</small></div><div><b>03</b><span>预实验<small>方案与预算明确后再做</small></span></div></section>
+<section id="how-to-read" class="reading-note"><div><span class="section-kicker">怎么读</span><h2>把“难点”与“新idea”分开。</h2></div><p>这里的条目是<strong>需要理解和比较的问题</strong>，不是已经成立的新论文。每条先讲一个例子，再说明现有进展和证据。待回答的问题是研究者归纳，仍需查重与验证。<span id="scope"></span></p></section>
+<section id="explore" class="explore"><div class="section-head"><div><p class="section-kicker">从全景到细节</p><h2>你想先理解哪一类困难？</h2></div><div class="view-tabs" role="group" aria-label="地图视角"><button data-view="map" aria-pressed="true">主题地图</button><button data-view="list" aria-pressed="false">逐项阅读</button><button data-view="coverage" aria-pressed="false">证据覆盖</button></div></div>
+<div class="controls"><label class="search-label"><span class="sr-only">搜索难点、例子或论文</span><input type="search" id="query" placeholder="搜索：比如 权限、误报、记忆、数据泄露…"></label><label><span class="sr-only">按主题筛选</span><select id="theme-filter"><option value="">所有主题</option></select></label><label><span class="sr-only">按研究状态筛选</span><select id="status-filter"><option value="">所有问题</option><option>持续研究</option><option>已知边界</option><option>待补证据</option></select></label><button id="reset" class="quiet">清除筛选</button></div>
+<div class="legend"><span><i class="dot research"></i>持续研究：已有工作，边界仍值得比较</span><span><i class="dot known"></i>已知边界：先避免误读承诺</span><span><i class="dot gap"></i>待补证据：不能当作已确认空白</span></div>
+<p id="count" class="result-count" aria-live="polite"></p>
+<div id="map-view" class="theme-grid"></div><div id="list-view" class="problem-grid" hidden></div><div id="coverage-view" hidden></div>
+<div id="load-error" class="empty" hidden>地图数据暂时未能加载。请刷新页面；当前没有提交或启动任何研究操作。</div>
+</section>
+<section class="shortlist" aria-labelledby="shortlist-title"><div class="section-head"><div><p class="section-kicker">你的研究判断</p><h2 id="shortlist-title">待选清单 <span id="selection-count">0</span></h2></div><div class="selection-actions"><button id="compare" disabled>并排比较</button><button id="copy-selection" disabled>复制给聊天确认</button><button id="download-selection" disabled>导出清单</button><button id="clear-selection" class="quiet">清空</button></div></div><p class="selection-note">勾选只保存在当前浏览器，<strong>不是服务器确认，也不会启动方案或实验</strong>。在聊天里明确确认具体编号后，后端才记录第一道人工确认。</p><div id="selection-items"><p class="muted">还没有选择。可以从主题进入，或直接逐项阅读。</p></div><p id="selection-feedback" role="status"></p><textarea id="copy-fallback" readonly hidden aria-label="待复制的确认清单"></textarea></section>
+<section class="how-built"><div><p class="section-kicker">地图如何形成</p><h2>不只是把论文标题堆在一起。</h2><p>按工作环节找来源，按真正困难归并；把原文支持、研究者推断和缺失证据分开。哪些地方材料少，同样要让人看见。</p></div><div id="survey-steps"></div></section>
+<details class="source-library"><summary>查看全部一手来源与阅读深度 <span id="source-count"></span></summary><div id="source-list"></div></details>
+<footer class="footer"><p id="version-note"></p><p>前端只读取公开地图；研究决定由Flow Idea后端保存。新方案、实验与私有记录不在公开页面。</p><a href="index.html">返回研究站首页</a></footer>
+</main>
+<dialog id="detail-dialog" aria-labelledby="detail-title"><button class="dialog-close" aria-label="关闭详情">×</button><div id="detail-body"></div></dialog>
+<dialog id="compare-dialog" aria-labelledby="compare-title"><button class="dialog-close" aria-label="关闭比较">×</button><h2 id="compare-title">放在一起，再判断什么值得做</h2><p class="muted">这里比较的是问题价值和证据，不是已经选好的技术方案。</p><div id="compare-body"></div></dialog>
+<noscript><p>此地图需要JavaScript读取公开JSON。可直接查看 <a href="generated/agent-safety-atlas.json">结构化资料</a>；这不会发起任何研究任务。</p></noscript>
+<script defer src="agent-safety-atlas.js"></script>
+</body></html>

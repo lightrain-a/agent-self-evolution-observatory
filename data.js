@@ -6,6 +6,7 @@ window.NAV_GROUPS = [
     ["experiment-costs.html",{en:"Experiment Costs",zh:"实验成本"}],
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:false, pages:[
+    ["agent-safety-atlas.html",{en:"Agent Safety · Research Problems",zh:"Agent安全 · 研究难点地图"}],
     ["foundations.html",{en:"Definition & Boundary · What Is Self-Evolution?",zh:"定义与边界 · 什么是 Agent 自进化"}],
     ["research-directions.html",{en:"Field Landscape · History & Problems",zh:"领域全景 · 历史与问题"}],
     ["mechanisms.html",{en:"Field Matrix · Mechanism × Domain × Evidence",zh:"领域矩阵 · 机制 × 场景 × 评测"}],
@@ -198,6 +199,7 @@ window.PAGE_CONTENT = {
   overviewFigure:{src:{en:"agent-self-evolution-directions-en.svg",zh:"agent-self-evolution-directions-zh.svg"},caption:{en:"The map groups the historical 34 paper ideas into ten stable research directions. It is a field map, not a live to-do list: current work is read separately from the latest paper, new-idea, experiment, and historical-decision pages.",zh:"这张图把历史 34 个论文 Idea 归到十个稳定研究方向，用来理解领域结构，不代表今天的待办。当前正在投稿的论文、可继续的新 Idea、可启动实验和历史停止结论分别以最新状态页为准。"}},
   ideaCount:20,
   featured:[
+    {href:"agent-safety-atlas.html",paper:true,title:{en:"Agent Safety · Choose the Research Problem First",zh:"Agent安全难点地图 · 先确认问题，再找方案"},desc:{en:"Explore 24 evidence-linked problems across 8 themes. Read concrete examples, compare existing progress, and confirm problems before researching solutions or experiments.",zh:"按8个主题浏览24项研究困难：先看例子、价值和已有进展，再比较与挑选。人工确认难点后才研究方案，方案再次确认后再做预实验。"}},
     {href:"foundations.html",title:{en:"What Is Agent Self-Evolution?",zh:"什么是 Agent 自进化"},desc:{en:"Defines the boundary: what counts as a persistent update, what is only retry or self-correction, and which four questions classify any self-evolving system.",zh:"先把边界说清楚：什么是持久更新、什么只是重试或自纠错，再用四个问题判断任何自进化系统到底改了什么、为什么改、何时持久化、怎样验证。"}},
 
     {href:"mechanisms.html",title:{en:"Field Matrix · Mechanism × Domain × Evidence",zh:"领域矩阵 · 机制 × 场景 × 评测"},desc:{en:"One dense view connecting what the agent changes, where the update is deployed, and what evidence is required to call it a persistent improvement. Detailed mechanism/domain/evaluation notes remain expandable on demand.",zh:"把“Agent 改什么、在哪种环境里改、凭什么证据证明真的变好”放进同一张高密度矩阵；具体机制、场景和评测细节需要时再展开。"}},

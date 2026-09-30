@@ -1,0 +1,992 @@
+{
+  "schema_version": 1,
+  "id": "agent-safety-problems",
+  "checked_on": "2026-09-30",
+  "title": "Agent 安全研究难点地图",
+  "scope": "覆盖工具型Agent安全，重点是Skill获取、使用与持续更新；不含具身机器人。",
+  "coverage_statement": "系统性起始地图，不是全领域穷尽清单。24项是问题索引，不是24个新idea或已确认漏洞。",
+  "human_workflow": {
+    "phase": "WAITING_FOR_PROBLEM_CONFIRMATION",
+    "problem_confirmation": false,
+    "solution_confirmation": false,
+    "new_solution_count": 0,
+    "experiment_count": 0,
+    "decision_channel": "当前聊天中的明确人工确认；网页勾选仅保存在本机，不是服务端批准。"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "title": "AgentDojo",
+      "url": "https://arxiv.org/abs/2406.13352v3",
+      "kind": "paper",
+      "publication": "2024 · arXiv v3",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "在工具返回不可信数据的环境中，同时评价正常任务、攻击和防御；无攻击时的能力失败也会影响解释。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S02",
+      "title": "InjecAgent",
+      "url": "https://arxiv.org/abs/2403.02691",
+      "kind": "paper",
+      "publication": "2024 · arXiv",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "将间接提示注入放进工具集成Agent任务，区分正常用户任务与外部内容的恶意指令。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S03",
+      "title": "AgentPoison",
+      "url": "https://arxiv.org/abs/2407.12784v1",
+      "kind": "paper",
+      "publication": "2024 · arXiv v1",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "研究长期记忆和知识库投毒，使特定输入检索到被污染的示例，且不必修改模型参数。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S04",
+      "title": "AgentHarm",
+      "url": "https://arxiv.org/abs/2410.09024v3",
+      "kind": "paper",
+      "publication": "ICLR 2025 · 作者出版备注",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "测量恶意用户请求下的多步工具行为；拒绝率与执行多步任务的能力都影响结果。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S05",
+      "title": "Skill-Inject",
+      "url": "https://arxiv.org/abs/2602.20156v3",
+      "kind": "paper",
+      "publication": "2026 · arXiv v3",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "提供Skill注入与正常任务配对，覆盖明显恶意和依赖上下文的指令，同时评价安全与正常指令遵从。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S06",
+      "title": "SkillSentry",
+      "url": "https://arxiv.org/abs/2608.03485v1",
+      "kind": "paper",
+      "publication": "2026 · 预印本",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "通过动态环境与配对执行探索条件性行为，结合代码和轨迹验证；不是只对Skill文本做一次分类。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S07",
+      "title": "SkillSec-Eval",
+      "url": "https://arxiv.org/abs/2607.13987v1",
+      "kind": "paper",
+      "publication": "2026 · 预印本",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "将准入、检索、规划、执行和演化纳入同一生命周期分类与评测。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S08",
+      "title": "PoisonedEvolution",
+      "url": "https://arxiv.org/abs/2608.05563v2",
+      "kind": "paper",
+      "publication": "2026 · arXiv v2",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "区分污染证据被包含、被归因和写入持久技能的过程；行为写入不自动等于未来真实危害已经发生。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S09",
+      "title": "ClosureBound",
+      "url": "https://arxiv.org/abs/2609.05920v1",
+      "kind": "paper",
+      "publication": "2026 · 预印本",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "把批准绑定到依赖闭包、效果范围和有效期；保证依赖完整发现、完整介入等前提，不证明远程服务诚实。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S10",
+      "title": "MaliciousSkillBench",
+      "url": "https://arxiv.org/abs/2608.19901v1",
+      "kind": "paper",
+      "publication": "2026 · 预印本",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "汇集正常与恶意Skill，区分随机、结构留出和来源留出；报告跨来源泛化和正常样本误报困难。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S11",
+      "title": "Do Not Mention This to the User",
+      "url": "https://arxiv.org/abs/2602.06547",
+      "kind": "paper",
+      "publication": "2026 · arXiv 当前页面",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "研究在野恶意Skill的识别与行为；生态扫描和确认样本不能混用分母。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S12",
+      "title": "Convergent Detour Hijacking",
+      "url": "https://arxiv.org/abs/2608.12273v1",
+      "kind": "paper",
+      "publication": "2026 · 预印本",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "研究正常任务最终仍完成，但执行流程被引向额外资源消耗的情况。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S13",
+      "title": "Under the Hood of SKILL.md",
+      "url": "https://arxiv.org/abs/2605.11418v1",
+      "kind": "paper",
+      "publication": "2026 · 预印本",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "研究技能注册和选择环节的语义供应链攻击，提醒不能仅关注执行后的行为。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S14",
+      "title": "Context Matters",
+      "url": "https://arxiv.org/abs/2603.16572v2",
+      "kind": "paper",
+      "publication": "2026 · arXiv v2",
+      "read_level": "摘要与出版元信息已核对",
+      "locator": "Abstract / submission history",
+      "supports": "从仓库上下文理解Skill风险，关注脱离上下文的误判和来源相关风险。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "论文陈述",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S15",
+      "title": "Agent Skills 格式规范",
+      "url": "https://agentskills.io/specification",
+      "kind": "documentation",
+      "publication": "官方规范 · 阅读日快照",
+      "read_level": "相关官方章节已核对",
+      "locator": "安全语义、权限或事件相关章节",
+      "supports": "技能可含指令、脚本和资源；格式兼容不自动意味着所有宿主提供相同权限保证。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "官方文档",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S16",
+      "title": "Claude Code Skills",
+      "url": "https://code.claude.com/docs/en/skills",
+      "kind": "documentation",
+      "publication": "官方文档 · 阅读日快照",
+      "read_level": "相关官方章节已核对",
+      "locator": "安全语义、权限或事件相关章节",
+      "supports": "动态内容可在模型收到前执行，allowed-tools是预批准而不是通用白名单；必须检查实际权限规则。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "官方文档",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S17",
+      "title": "Claude Code Hooks",
+      "url": "https://code.claude.com/docs/en/hooks",
+      "kind": "documentation",
+      "publication": "官方文档 · 阅读日快照",
+      "read_level": "相关官方章节已核对",
+      "locator": "安全语义、权限或事件相关章节",
+      "supports": "工具事件和用户直接触发的展开事件是不同观察/控制入口；不能将一个钩子等同于所有执行路径。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "官方文档",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    },
+    {
+      "id": "S18",
+      "title": "MCP 安全最佳实践",
+      "url": "https://modelcontextprotocol.io/docs/draft/tutorials/security/security_best_practices",
+      "kind": "documentation",
+      "publication": "官方草案 · 非固定发布标准",
+      "read_level": "相关官方章节已核对",
+      "locator": "安全语义、权限或事件相关章节",
+      "supports": "讨论混淆代理、令牌传递和会话等安全边界；规范和缓解建议不能证明每个具体实现都安全。",
+      "checked_on": "2026-09-30",
+      "reproduced": false,
+      "evidence_type": "官方文档",
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+    }
+  ],
+  "themes": [
+    {
+      "id": "A",
+      "title": "读到的内容可信吗？",
+      "subtitle": "用户指令、网页、文件和工具返回混在一起时，谁有权让Agent做事？",
+      "stage": "输入",
+      "coverage": "较充分",
+      "coverage_note": "已有工具注入和Skill注入基准；图像、音频入口本轮覆盖不足。"
+    },
+    {
+      "id": "B",
+      "title": "选到的技能可靠吗？",
+      "subtitle": "从“找得到”到“装得上”，元数据、资源和依赖都可能改变实际行为。",
+      "stage": "发现与安装",
+      "coverage": "较充分",
+      "coverage_note": "已有生态、选择和依赖研究；当前来源偏重Skill，其他插件市场仍需补查。"
+    },
+    {
+      "id": "C",
+      "title": "权限和数据会越界吗？",
+      "subtitle": "批准一个任务，不等于允许任意读文件、调用服务或转交数据。",
+      "stage": "授权与执行",
+      "coverage": "中等",
+      "coverage_note": "官方语义较明确；跨宿主共同承诺与真实部署测量需要逐项核对。"
+    },
+    {
+      "id": "D",
+      "title": "多步协作还能守住边界吗？",
+      "subtitle": "单步操作或单个Agent看起来合理，组合起来未必符合用户目的。",
+      "stage": "工具与委托",
+      "coverage": "待补查",
+      "coverage_note": "多步任务和MCP材料已读；专门的多Agent通信、责任分配证据仍偏少。"
+    },
+    {
+      "id": "E",
+      "title": "记忆会把风险留到以后吗？",
+      "subtitle": "一次读到的内容可能进入记忆或技能，之后换任务仍有影响。",
+      "stage": "记忆与更新",
+      "coverage": "中等",
+      "coverage_note": "记忆投毒与技能演化已有工作；撤销和长期真实运行仍需更完整来源。"
+    },
+    {
+      "id": "F",
+      "title": "我们看见了真实效果吗？",
+      "subtitle": "文本可疑、调用已发出、真实效果已发生，是三件不同的事。",
+      "stage": "观察与归因",
+      "coverage": "较充分",
+      "coverage_note": "动态检测与日志语义已有材料；不能由单个观测缺失推成整体不可观察。"
+    },
+    {
+      "id": "G",
+      "title": "评测分数能信多少？",
+      "subtitle": "模型做不到、评测器看错、检测器真失败，不能混成同一个数字。",
+      "stage": "评测",
+      "coverage": "较充分",
+      "coverage_note": "安全/效用和来源留出已有明确工作；更多独立复现仍未完成。"
+    },
+    {
+      "id": "H",
+      "title": "长期使用还可靠吗？",
+      "subtitle": "任务完成之外，还要看资源、正常体验和版本变化后的适用范围。",
+      "stage": "持续运行",
+      "coverage": "中等",
+      "coverage_note": "成本放大与跨设置差异已有材料；生产事故率、部署规模缺可靠统计。"
+    }
+  ],
+  "problems": [
+    {
+      "id": "A01",
+      "theme_id": "A",
+      "title": "怎样分清“用户让我做”与“网页让我做”？",
+      "example": "用户让Agent总结网页，网页里却出现要求改做其他任务的指令。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "保住原任务和用户意图，而不是简单地不读外部信息。",
+      "why_hard": "外部内容和任务指令都以语言进入上下文，相关内容也可能包含操作要求。",
+      "existing_progress": "工具返回注入与Skill注入已有配对评测。",
+      "open_question": "换任务、语言和包装后，哪些指令仍会被错误当作有权要求的操作？",
+      "source_refs": [
+        "S01",
+        "S02",
+        "S05"
+      ],
+      "status": "持续研究",
+      "contexts": "浏览器 / 办公 / Skill",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "A02",
+      "theme_id": "A",
+      "title": "有害用户请求与第三方劫持，为什么必须分开？",
+      "example": "一个用户直接要求做有害任务；另一个用户提出正常需求，但网页把任务带偏。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "避免拿错威胁模型，导致“很安全”的结论只对另一类攻击成立。",
+      "why_hard": "是否拒绝用户与是否忽略不可信内容，目标、授权和评价真值不同。",
+      "existing_progress": "AgentHarm测用户滥用，AgentDojo等测正常任务下的外部注入。",
+      "open_question": "不同威胁模型的结果和能力要求，应怎样分别解释而不混用？",
+      "source_refs": [
+        "S04",
+        "S01"
+      ],
+      "status": "已知边界",
+      "contexts": "通用工具Agent",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "A03",
+      "theme_id": "A",
+      "title": "同一条操作，为什么有时正常、有时越权？",
+      "example": "导出报告本身正常，但导出的对象、接收方和用户是否同意会改变安全含义。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "减少将正常工作误拦，也避免只靠敏感关键词漏掉真正越界。",
+      "why_hard": "合法性依赖任务目的、对象和授权，而不只是某个工具名。",
+      "existing_progress": "Skill-Inject和仓库上下文分析已研究情境相关判断。",
+      "open_question": "真实宿主提供的信息是否足以判断当前操作的授权范围？",
+      "source_refs": [
+        "S05",
+        "S14",
+        "S18"
+      ],
+      "status": "持续研究",
+      "contexts": "办公 / 数据处理 / Skill",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "B01",
+      "theme_id": "B",
+      "title": "技能描述越吸引人，就越值得被选中吗？",
+      "example": "两个技能都声称会整理数据，其中一个靠描述更容易被Agent选中。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "防止安全边界在尚未执行时就被不可信选择信号影响。",
+      "why_hard": "检索相关性、功能说明与可信执行能力不是同一个属性。",
+      "existing_progress": "语义供应链与生命周期研究已覆盖检索和规划选择。",
+      "open_question": "不同选择流程真正依赖哪些不可信信号，影响是否能与功能匹配分开？",
+      "source_refs": [
+        "S13",
+        "S07"
+      ],
+      "status": "持续研究",
+      "contexts": "技能库 / 检索 / 规划",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "B02",
+      "theme_id": "B",
+      "title": "只读SKILL.md，能知道整个包会做什么吗？",
+      "example": "说明文件只说生成报表，真正处理数据的逻辑却在脚本或依赖里。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "让分析对象覆盖实际执行内容，而不是只检查最容易读的文件。",
+      "why_hard": "行为分布在指令、代码、资源和运行时依赖中，动态加载还会改变可见范围。",
+      "existing_progress": "规范允许资源和脚本；动态测试、依赖闭包工作已扩展检查范围。",
+      "open_question": "哪些依赖能可靠发现，哪些外部服务行为仍无法从包内容推定？",
+      "source_refs": [
+        "S15",
+        "S06",
+        "S09"
+      ],
+      "status": "持续研究",
+      "contexts": "安装 / 代码助手 / Skill",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "B03",
+      "theme_id": "B",
+      "title": "昨天批准的技能，今天还是同一个东西吗？",
+      "example": "主目录没变，但一个远程依赖升级；用户并没有重新阅读其行为。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "明确一次批准究竟约束哪个版本和哪些依赖。",
+      "why_hard": "静态签名、递归依赖和最终效果之间存在不同身份边界。",
+      "existing_progress": "ClosureBound研究版本化依赖闭包与效果授权。",
+      "open_question": "在完整发现和介入前提不满足的实际宿主上，保证还能成立到什么范围？",
+      "source_refs": [
+        "S09",
+        "S15"
+      ],
+      "status": "持续研究",
+      "contexts": "依赖 / 更新 / 供应链",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "C01",
+      "theme_id": "C",
+      "title": "写在技能里的权限，和真正能做的事一致吗？",
+      "example": "文件里写着“只读”，但这段说明未必是宿主实际执行的限制。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "不让用户把格式字段误当成沙箱保证。",
+      "why_hard": "说明、预批准、全局拒绝、目录沙箱分别由不同层控制。",
+      "existing_progress": "规范和宿主文档解释了预批准语义；它不是统一的权限上限。",
+      "open_question": "实际承诺是什么、由谁执行、在哪些配置和版本下有效？",
+      "source_refs": [
+        "S15",
+        "S16"
+      ],
+      "status": "已知边界",
+      "contexts": "Skill / 宿主权限",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "C02",
+      "theme_id": "C",
+      "title": "用户点了同意，究竟同意了什么？",
+      "example": "用户同意生成一份本地报告，不一定同意把全部原始资料发给外部服务。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "将人类可理解的同意，连接到实际动作、对象和用途。",
+      "why_hard": "自然语言的宽泛意图与低层动作权限粒度不一致，后续动作还可能变化。",
+      "existing_progress": "上下文授权需求和用途/来源绑定已有相关研究。",
+      "open_question": "能否准确说明批准覆盖的对象与用途，而不将已有的细粒度权限重命名成新问题？",
+      "source_refs": [
+        "S05",
+        "S09",
+        "S18"
+      ],
+      "status": "持续研究",
+      "contexts": "人机确认 / 办公流程",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "C03",
+      "theme_id": "C",
+      "title": "数据经过工具或服务时，会不会流向未批准的位置？",
+      "example": "Agent为完成工作读取了资料，随后调用的另一服务却不在用户授权范围内。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "保护数据流向，而不只是阻止读取敏感词。",
+      "why_hard": "数据依赖和调用权限跨越Agent、工具、凭据和服务边界。",
+      "existing_progress": "注入基准覆盖外传目标，MCP文档明确令牌及混淆代理风险。",
+      "open_question": "真实数据流和独立授权如何对应，什么才算已完成的未授权效果？",
+      "source_refs": [
+        "S02",
+        "S05",
+        "S18"
+      ],
+      "status": "持续研究",
+      "contexts": "MCP / 工具 / 企业数据",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "D01",
+      "theme_id": "D",
+      "title": "每一步都像正常工作，整条流程也一定正常吗？",
+      "example": "读取、整理和发送都可能是正常操作，但接收方或整体目的不同会改变结论。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "识别多步任务中的整体偏离，而不是逐工具孤立打标签。",
+      "why_hard": "危害可以依赖组合与先后关系，单步事件缺少完整任务语境。",
+      "existing_progress": "AgentHarm和AgentDojo包含多步任务评价。",
+      "open_question": "哪些组合性风险不能由已有任务级评测解释，需要什么样的明确任务真值？",
+      "source_refs": [
+        "S04",
+        "S01"
+      ],
+      "status": "持续研究",
+      "contexts": "多步工具 / 工作流",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "D02",
+      "theme_id": "D",
+      "title": "把任务交给另一个Agent，会不会顺便交出不该有的权限？",
+      "example": "主Agent委托一个子任务，接收者是否能使用超出该子任务所需的身份或能力？",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "明确委托者、执行者与最终用户各自的权限范围。",
+      "why_hard": "身份、资源范围和用途可能在多跳调用中由不同组件管理。",
+      "existing_progress": "MCP安全材料讨论混淆代理与授权边界，但不等于所有多Agent系统都有相同实现。",
+      "open_question": "哪些真实委托系统承诺隔离、又提供可观察证据？专门文献还需补齐。",
+      "source_refs": [
+        "S18",
+        "S09"
+      ],
+      "status": "待补证据",
+      "contexts": "多Agent / MCP / 委托",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "D03",
+      "theme_id": "D",
+      "title": "内容转手几次后，还知道它最初是谁说的吗？",
+      "example": "网页内容被一个Agent摘要后交给另一个Agent，摘要是否仍被当成不可信来源？",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "避免转述让信息的可信级别悄悄提高。",
+      "why_hard": "原始来源、转述、执行请求之间的关联可能需要跨组件保留。",
+      "existing_progress": "间接注入研究说明来源混淆风险；官方授权讨论提供相邻边界。",
+      "open_question": "真实多Agent消息是否保留足够来源，还是目前只存在于人工构造的例子？",
+      "source_refs": [
+        "S02",
+        "S18"
+      ],
+      "status": "待补证据",
+      "contexts": "多Agent / 摘要 / 消息",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "E01",
+      "theme_id": "E",
+      "title": "被污染的记忆，为什么以后还会被反复检索？",
+      "example": "当前任务本来正常，却因为检索到某条旧经验而被引向错误处理方式。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "理解持久记忆为什么会把一次污染带到后续任务。",
+      "why_hard": "检索相似性不等于经验可靠性，触发条件与正常任务可能相近。",
+      "existing_progress": "AgentPoison已直接研究记忆和知识库投毒。",
+      "open_question": "在不同检索和更新流程中，已有攻击边界、触发范围及正常影响如何变化？",
+      "source_refs": [
+        "S03"
+      ],
+      "status": "持续研究",
+      "contexts": "记忆 / RAG / 长期Agent",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "E02",
+      "theme_id": "E",
+      "title": "一次经验为什么会被学成长期执行规则？",
+      "example": "某条历史轨迹被当成有用经验整理成Skill，后续任务直接沿用。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "找清从低信任经验到持久指令的提升边界。",
+      "why_hard": "包含证据、归因有用性与最终实现是不同过程，不能只看文本写入。",
+      "existing_progress": "PoisonedEvolution已研究轨迹证据如何被提升为技能行为。",
+      "open_question": "不同系统中的写入、被调用和真实副作用分别是什么关系？",
+      "source_refs": [
+        "S08",
+        "S07"
+      ],
+      "status": "持续研究",
+      "contexts": "自进化 / 技能写入",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "E03",
+      "theme_id": "E",
+      "title": "删除或撤销以后，哪些旧影响仍然有效？",
+      "example": "用户取消了一个批准，但旧状态、缓存或依赖是否仍影响下一次执行？",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "让撤销的实际范围可被用户理解和检查。",
+      "why_hard": "删除包、撤回权限和清除持久状态不是同一操作。",
+      "existing_progress": "ClosureBound将有效期和状态变化纳入绑定；这不等于完全清除所有历史影响。",
+      "open_question": "要先核对具体宿主承诺与已有撤销研究；本轮尚未补齐长期撤销的专门材料。",
+      "source_refs": [
+        "S09",
+        "S03"
+      ],
+      "status": "待补证据",
+      "contexts": "撤销 / 缓存 / 记忆",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "F01",
+      "theme_id": "F",
+      "title": "只在特定环境触发的问题，怎样才能被看见？",
+      "example": "某个技能在空目录里表现正常，换成有某类文件的任务才出现异常行为。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "避免把一次未触发当成普遍安全。",
+      "why_hard": "触发条件分散在环境、资源和历史中，有限测试无法遍历全部状态。",
+      "existing_progress": "SkillSentry已有自适应环境和配对动态测试。",
+      "open_question": "哪些触发空间仍未覆盖，如何明确测试覆盖范围而不是重复提出动态测试？",
+      "source_refs": [
+        "S06"
+      ],
+      "status": "持续研究",
+      "contexts": "运行环境 / 条件触发",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "F02",
+      "theme_id": "F",
+      "title": "没有工具日志，就等于没有发生操作吗？",
+      "example": "一个处理步骤可能发生在加载或预处理阶段，而我们只读取了模型工具调用日志。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "确保安全结论与实际观察范围相匹配。",
+      "why_hard": "不同阶段的事件类型、记录入口和权限检查不完全相同。",
+      "existing_progress": "宿主文档提供工具钩子与展开事件等不同入口。",
+      "open_question": "当前事件是否遗漏、完整转录是否已覆盖、是否只用错了观察入口？",
+      "source_refs": [
+        "S16",
+        "S17"
+      ],
+      "status": "已知边界",
+      "contexts": "原生日志 / 加载 / 审计",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "F03",
+      "theme_id": "F",
+      "title": "可疑内容、发出调用和真的造成效果，有什么区别？",
+      "example": "Agent写下“已经上传”，不代表上传发生；发出请求也可能被拒绝。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "让结论建立在真实状态变化，而不是模型自述。",
+      "why_hard": "检测标签、执行尝试和被保护资源的最终状态需要独立核对。",
+      "existing_progress": "动态Skill测试结合执行轨迹；AgentDojo在具体任务环境检查结果。",
+      "open_question": "哪种独立事实足以认定效果、归因到输入，并排除任务本来就要求的合法操作？",
+      "source_refs": [
+        "S06",
+        "S01"
+      ],
+      "status": "持续研究",
+      "contexts": "效果核验 / 归因",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "G01",
+      "theme_id": "G",
+      "title": "攻击没有成功，是系统安全，还是Agent本来就不会做？",
+      "example": "Agent连正常订票都做不完，攻击条件下失败也不能说明防御有效。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "避免用能力不足换出虚假的安全提升。",
+      "why_hard": "能力、可到达性、攻击激活和最终效果是不同分母。",
+      "existing_progress": "AgentDojo报告无攻击时仍存在任务失败；AgentHarm要求保留多步执行能力。",
+      "open_question": "不同阶段的失败应如何单独报告，才能公平比较安全能力？",
+      "source_refs": [
+        "S01",
+        "S04"
+      ],
+      "status": "持续研究",
+      "contexts": "基准 / 能力 / 统计",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "G02",
+      "theme_id": "G",
+      "title": "检测器拦得多，是更安全还是误伤更多？",
+      "example": "检测器把正常维护脚本也全拦掉，看起来漏检少，但正常工作无法完成。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "同时看安全与可用性，避免只优化一个好看的数字。",
+      "why_hard": "正常样本分布、任务上下文和阈值会共同影响误报。",
+      "existing_progress": "Skill-Inject比较正常遵从；MaliciousSkillBench和Context Matters讨论正常覆盖与误报。",
+      "open_question": "对实际正常任务，误报和漏报应使用哪些共同条件与分母？",
+      "source_refs": [
+        "S05",
+        "S10",
+        "S14"
+      ],
+      "status": "持续研究",
+      "contexts": "检测 / 标签 / 误报",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "G03",
+      "theme_id": "G",
+      "title": "在熟悉样本上有效，换来源后还有效吗？",
+      "example": "训练和测试含同一模板的近重复内容，换一个发布者或结构后表现可能不同。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "区分真正泛化与记住来源、模板或包装。",
+      "why_hard": "来源和结构相关性让随机划分过于乐观，模型选择还可能污染测试集。",
+      "existing_progress": "MaliciousSkillBench已区分随机、结构与来源留出。",
+      "open_question": "新的研究还需要覆盖什么未见条件，不能仅换模型重做已有留出结论？",
+      "source_refs": [
+        "S10",
+        "S14"
+      ],
+      "status": "持续研究",
+      "contexts": "泛化 / 数据划分",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "H01",
+      "theme_id": "H",
+      "title": "任务最终完成了，为什么仍可能被攻击？",
+      "example": "同样生成一份报告，却被引导做了许多额外搜索、重复推理和调用。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "把时间、调用量和资源消耗纳入任务完成之外的代价。",
+      "why_hard": "额外步骤可能看似合理，正常难任务也会消耗更多资源。",
+      "existing_progress": "Convergent Detour Hijacking已研究保留任务结果的资源放大。",
+      "open_question": "如何区分必要工作量与被引导的额外成本，且不把已知现象改名？",
+      "source_refs": [
+        "S12"
+      ],
+      "status": "持续研究",
+      "contexts": "成本 / 工作流 / 可用性",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "H02",
+      "theme_id": "H",
+      "title": "保护越严格，正常任务会不会越难做？",
+      "example": "完全不调用外部工具可以减少风险，却也失去了Agent的用途。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "找清安全结论对真实任务能力的代价。",
+      "why_hard": "不同任务对权限和交互的需求不同，不能只比较拒绝率。",
+      "existing_progress": "AgentDojo和Skill-Inject同时考虑正常任务与攻击条件。",
+      "open_question": "同信息、同预算和同权限前提下，哪些安全收益仍然成立？",
+      "source_refs": [
+        "S01",
+        "S05"
+      ],
+      "status": "持续研究",
+      "contexts": "安全效用 / 正常任务",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    },
+    {
+      "id": "H03",
+      "theme_id": "H",
+      "title": "模型、宿主或依赖升级后，旧结论还适用吗？",
+      "example": "同一个技能换执行模型或宿主版本，日志和执行行为可能改变。",
+      "example_type": "解释性假设场景，不是本轮复现案例",
+      "why_it_matters": "给测试结论写清有效版本与条件，而不是宣称永远安全。",
+      "why_hard": "模型策略、工具语义、依赖和观测接口可能同时变化。",
+      "existing_progress": "生命周期与依赖绑定工作已讨论变化；官方文档也有各自版本语义。",
+      "open_question": "哪些变化需要重新核验，哪些历史证据仍可沿用？真实部署规模数据还缺。",
+      "source_refs": [
+        "S07",
+        "S09",
+        "S16"
+      ],
+      "status": "持续研究",
+      "contexts": "版本 / 模型 / 持续运行",
+      "open_question_type": "研究者归纳，尚未确认新颖性",
+      "not_a_new_idea": true,
+      "human_confirmed": false,
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+    }
+  ],
+  "relations": [
+    {
+      "from": "B01",
+      "to": "A01",
+      "label": "不可信来源进入选择后，仍可能变成指令问题",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "B02",
+      "to": "B03",
+      "label": "实际依赖范围决定版本身份",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "C02",
+      "to": "A03",
+      "label": "具体授权决定同一动作是否合法",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "D02",
+      "to": "C03",
+      "label": "委托可能带着数据和凭据跨边界",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "D03",
+      "to": "E02",
+      "label": "来源信息影响经验提升的可信解释",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "E01",
+      "to": "E02",
+      "label": "检索旧经验与生成长期技能是不同持久化路径",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "E02",
+      "to": "E03",
+      "label": "写入长期状态后，需要重新考虑撤销范围",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "F01",
+      "to": "F03",
+      "label": "触发行为之后仍需核对真实效果",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "F02",
+      "to": "G01",
+      "label": "观测入口影响哪些失败进入分母",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "G02",
+      "to": "H02",
+      "label": "误报会直接降低正常任务效用",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "G03",
+      "to": "H03",
+      "label": "来源和版本变化都影响结论适用范围",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    },
+    {
+      "from": "H01",
+      "to": "G01",
+      "label": "任务成功率并不覆盖所有攻击后果",
+      "type": "EDITORIAL_CONNECTION",
+      "evidence_type": "解释性关联，不是已验证因果关系"
+    }
+  ],
+  "survey_method": [
+    {
+      "step": "01 划清范围",
+      "detail": "从读信息、选技能、授权执行、协作、记忆、观察、评测和长期使用逐层覆盖；按失败机制归并，而非按论文标题分组。",
+      "state": "已用于本轮"
+    },
+    {
+      "step": "02 找证据骨架",
+      "detail": "先核对基础基准、近期Skill论文和官方安全语义。普通关键词搜索本轮出现较多不相关结果，因此改用一手原文与已知来源定向核对。",
+      "state": "已用于本轮"
+    },
+    {
+      "step": "03 提炼困难",
+      "detail": "逐条写现实例子、谁受影响、为什么难、已有进展、仍需核对的问题；来源与推断分开。",
+      "state": "已用于本轮"
+    },
+    {
+      "step": "04 补充与反证",
+      "detail": "对选中的重点深读相关工作、方法图、消融和局限，沿引文与版本补查；不能把作者自述gap直接当成研究空白。",
+      "state": "后续重点深读，尚未全面完成"
+    },
+    {
+      "step": "05 人工挑选",
+      "detail": "你确认具体困难后才开始新方案检索；方案再次确认后才进入预实验，旧原生实验不自动成为新问题通过记录。",
+      "state": "现在等待你确认"
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "area": "多Agent通信与权限委托",
+      "reason": "当前以MCP规范和相邻基准为主，专门通信/委托论文需补齐。"
+    },
+    {
+      "area": "视觉与音频等多模态输入",
+      "reason": "本轮未系统覆盖多模态注入和界面误导。"
+    },
+    {
+      "area": "撤销、缓存与长期运行",
+      "reason": "有相邻依赖/记忆材料，缺少完整的撤销与生产长期测量；部分定向原文抓取失败不等于没有工作。"
+    },
+    {
+      "area": "真实生产事故和采用规模",
+      "reason": "没有统一可信分母，不生成风险发生率或热度排行榜。"
+    },
+    {
+      "area": "形式保证与实现之间的差异",
+      "reason": "已有条件性保证，具体宿主能否满足前提还需逐个读实现和验证。"
+    }
+  ],
+  "retrieval_receipt": {
+    "method": "定向一手来源核对 + 已有公共知识库归并",
+    "full_text_systematic_review": false,
+    "failed_fetches": [
+      "https://arxiv.org/abs/2606.19191",
+      "https://arxiv.org/abs/2608.08264"
+    ],
+    "failed_fetch_effect": "未将本轮无法读取的原文作为新增支持证据；保留补查任务。",
+    "all_sources_freshly_reproduced": false
+  },
+  "revision": "fe09efe7d6d16f9806327269a66d494133bff83f90651df5e5d288df5dc38122"
+}
