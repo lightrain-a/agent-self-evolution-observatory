@@ -37,7 +37,7 @@ def create_demo_inputs(root: Path) -> dict:
     sha=hashlib.sha256(source.read_bytes()).hexdigest()
     bind=lambda pointer:{'path':source.name,'sha256':sha,'pointer':pointer}
     manifest={'schema_version':'1.0','paper_id':'SYNTHETIC-DEMO-NOT-HEIRS','title':'Synthetic demo · tables and four-column figure alternatives',
-              'preview_rounds':3,'figure_style':{'font_family':'Georgia, serif','theme':'paper-vivid'},
+              'preview_rounds':3,'preview_columns':4,'figure_style':{'font_family':'Georgia, serif','theme':'paper-vivid'},
               'tables':[{'id':'DEMO-TABLE-1','label':'Synthetic demo table — not research results','rows':rows,'columns':columns,'digits':1,'delta_reference':'Reference','result_refs':[bind('/results/'+str(i)) for i in range(len(results))]}],
               'figure_asset_refs':[bind('/assets/'+str(i)) for i in range(len(assets))]}
     (root/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

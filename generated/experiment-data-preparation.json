@@ -5,24 +5,16 @@
   "figure_knowledge_base": {
     "page": "figure-knowledge-base.html",
     "summary": {
-      "repositories": 4,
-      "entries": 2081,
-      "selectable_examples": 1192,
-      "tutorial_entries": 404,
-      "support_entries": 485,
-      "visual_files": 1845,
-      "indexed_visual_files": 1845,
-      "recipe_cards": 146,
-      "with_preview": 1990,
-      "without_preview": 91,
-      "family_tags": 90,
-      "unclassified_entries": 373,
-      "local_renderer_count": 19,
-      "upstream_code_executed": 0,
-      "images_mirrored": 0
+      "active_examples": 6,
+      "archived_entries": 2075,
+      "original_entries": 2081,
+      "primary_sources": 1
     },
-    "search_module": "research_pipeline.figure_knowledge_base",
-    "full_index_precedes_local_renderer_selection": true
+    "catalog_ref": "generated/figure-curated.json",
+    "catalog_version": "4e0cc72aca83ad931ea4c5f9731fafde82fff884aa528bc0cc05196379a1a849",
+    "default_scope": "CURATED_ONLY",
+    "full_index_precedes_local_renderer_selection": false,
+    "archive_requires_explicit_opt_in": true
   },
   "rows": [],
   "catalog": [
@@ -147,15 +139,18 @@
     "逐批验证回填",
     "小改表与依赖刷新",
     "数据—问题映射",
-    "图库匹配",
-    "每行四图、多组候选",
-    "挑选与局部重画",
+    "精选参考匹配",
+    "一个主方案与一个备选",
+    "沿用脚本与局部修订",
     "实际尺寸复核",
     "写作输入材料包"
   ],
   "interaction_policy": {
-    "preview_columns": 4,
-    "default_rounds": 3,
+    "preview_columns": 2,
+    "default_rounds": 1,
+    "reference_limit": 2,
+    "candidate_limit": 3,
+    "force_four_candidates": false,
     "prefer_distinct_types": true,
     "never_fabricate_to_fill_slots": true,
     "browser_draft_is_not_server_save": true,

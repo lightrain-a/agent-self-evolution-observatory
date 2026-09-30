@@ -32,6 +32,9 @@ jobs:
       - name: Build frontend-only static site
         run: python3 scripts/build_static_site.py
 
+      - name: Verify curated figure entry and bounded export
+        run: node scripts/test_curated_figure_frontend.js
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

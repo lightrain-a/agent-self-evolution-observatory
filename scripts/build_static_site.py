@@ -125,6 +125,9 @@ def version_html_assets(html: str, build_sha: str) -> str:
 
 
 def build() -> Path:
+    # Explicit compact reference set; the raw source archive never enters default selection.
+    from scripts.build_curated_figure_library import build as build_curated_figures
+    build_curated_figures(ROOT)
     # Read-only data-preparation inventory; never render private results or run experiments.
     from research_pipeline.experiment_data_preparation import write_preparation_portfolio
     write_preparation_portfolio(ROOT)

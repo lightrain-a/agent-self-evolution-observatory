@@ -87,13 +87,19 @@ class PreparationTests(unittest.TestCase):
         table=compile_table(self.spec,self.records);csv,tex=table_exports(table)
         self.assertIn('Within Avg',csv);self.assertIn('Cross Avg',csv)
         self.assertIn('multicolumn{3}{c}{Within group}',tex)
-    def test_default_twelve_distinct_types(self):
+    def test_default_two_candidates_one_question(self):
         plan=plan_candidates(self.assets)
+        self.assertEqual(plan['columns'],2)
+        self.assertEqual(len(plan['groups']),1)
+        self.assertEqual(len(plan['groups'][0]['candidates']),2)
+        self.assertEqual(len(plan['not_rendered_due_to_round_budget']),len(self.assets)-1)
+    def test_explicit_legacy_twelve_distinct_types(self):
+        plan=plan_candidates(self.assets,rounds=3,columns=4)
         types=[c['recipe'] for g in plan['groups'] for c in g['candidates']]
         self.assertEqual(len(types),12);self.assertEqual(len(set(types)),12)
         self.assertEqual(plan['columns'],4)
     def test_does_not_force_four(self):
-        p=plan_candidates([self.assets[3]])
+        p=plan_candidates([self.assets[3]],columns=4)
         self.assertEqual(p['groups'][0]['unfilled_slots'],2)
     def test_samples_not_inferred_from_means(self):
         asset=copy.deepcopy(self.assets[0]);asset['kind']='samples'
@@ -105,7 +111,7 @@ class PreparationTests(unittest.TestCase):
         asset=copy.deepcopy(self.assets[6]);asset.pop('interval_source')
         self.assertIn('interval-definition-missing',validate_asset(asset))
     def test_all_renderers_are_valid_svg(self):
-        plan=plan_candidates(self.assets,rounds=7);amap={a['id']:a for a in self.assets}
+        plan=plan_candidates(self.assets,rounds=7,columns=4);amap={a['id']:a for a in self.assets}
         rendered=[]
         for g in plan['groups']:
             for c in g['candidates']:
@@ -114,7 +120,7 @@ class PreparationTests(unittest.TestCase):
                 self.assertNotIn('nan',svg.lower());rendered.append(c['recipe'])
         self.assertEqual(set(rendered),{r[0] for r in CATALOG})
     def test_stable_ids_do_not_depend_on_screen_order(self):
-        a=plan_candidates(self.assets[:3]);b=plan_candidates(list(reversed(self.assets[:3])))
+        a=plan_candidates(self.assets[:3],rounds=3);b=plan_candidates(list(reversed(self.assets[:3])),rounds=3)
         ids=lambda p:{c['id'] for g in p['groups'] for c in g['candidates']}
         self.assertEqual(ids(a),ids(b))
     def test_data_or_style_change_invalidates_candidate_id(self):

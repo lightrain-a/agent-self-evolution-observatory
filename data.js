@@ -14,7 +14,7 @@ window.NAV_GROUPS = [
   ]},
   { title:{en:"Paper Production",zh:"论文生产"}, open:true, pages:[
     ["experiment-data-preparation.html",{en:"Evidence Preparation · Table 1 & Figure Candidates",zh:"实验数据准备 · Table 1 与候选图"}],
-    ["figure-knowledge-base.html",{en:"Figure Gallery & Knowledge Base",zh:"科研绘图 · 图库与选图知识库"}],
+    ["figure-knowledge-base.html",{en:"Curated Publication Figures",zh:"科研绘图 · Figures4Papers 精选"}],
     ["paper-writing-workflow.html",{en:"Evidence-First Paper Writing",zh:"论文写作闭环 · 从证据到逐章成稿"}],
   ]},
   { title:{en:"Current Research",zh:"当前科研"}, open:false, pages:[

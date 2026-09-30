@@ -80,7 +80,7 @@ def compile_bundle(manifest: dict, evidence_root: Path) -> tuple[dict,list[dict]
                 errors.append({'surface':asset.get('id'),'kind':'TABLE_FIGURE_BINDING_ERROR','reason':str(exc)})
     renderer_sha=hashlib.sha256((Path(__file__).parent/'data_preparation_svg.py').read_bytes()).hexdigest()
     style={**manifest.get('figure_style',{}),'renderer_sha256':renderer_sha}
-    figures=plan_candidates(assets,rounds=manifest.get('preview_rounds',3),style=style)
+    figures=plan_candidates(assets,rounds=manifest.get('preview_rounds',1),columns=manifest.get('preview_columns',2),style=style)
     state={'schema_version':SCHEMA_VERSION,'paper_id':manifest['paper_id'],'title':manifest.get('title','Experiment data preparation'),
            'manifest_sha256':digest(manifest),'tables':tables,'figures':figures,'source_errors':errors,
            'stage':'EXPERIMENT_DATA_PREPARATION_NOT_MANUSCRIPT_WRITING','scientific_authority':False,
@@ -128,7 +128,7 @@ def render_bundle_html(state: dict) -> str:
                 '<label>选择 <select data-candidate="'+c['id']+'"><option value="">未选择</option><option value="KEEP">保留</option><option value="REVISE">重画 / 修改</option><option value="REJECT">不采用</option></select></label>'+
                 '<label>修改意见 <textarea data-note="'+c['id']+'" rows="2" placeholder="只改图例、类型、布局；数据变化另行记录"></textarea></label></article>')
         body.append('</div>')
-        if group['unfilled_slots']:body.append('<p>未凑满四图：当前数据不足以支持更多不同类型。</p>')
+        if group['unfilled_slots']:body.append('<p>当前数据不足以支持更多合理图型，不为补数量添加候选。</p>')
         body.append('</section>')
     body.append('<button id="export-feedback">导出本地反馈 JSON</button><p id="save-state">未写入服务器。</p>')
     body.append('<details><summary>来源/缺口/版本记录</summary><pre>'+e(json.dumps({'source_errors':state['source_errors'],'blocked_assets':state['figures']['blocked_assets'],'snapshot':state['snapshot_sha256']},ensure_ascii=False,indent=2))+'</pre></details>')
@@ -139,6 +139,7 @@ const key='paper-prep:'+bundle.snapshot_sha256;let draft={};try{draft=JSON.parse
 for(const c of bundle.candidates){const s=document.querySelector('[data-candidate="'+c.id+'"]'),n=document.querySelector('[data-note="'+c.id+'"]');s.value=draft[c.id]?.action||'';n.value=draft[c.id]?.note||'';const save=()=>{draft[c.id]={action:s.value,note:n.value};try{localStorage.setItem(key,JSON.stringify(draft));document.getElementById('save-state').textContent='已保存到本机浏览器；尚未写服务器。'}catch(_){document.getElementById('save-state').textContent='本地保存不可用，请立即导出反馈。'}};s.addEventListener('change',save);n.addEventListener('input',save)}
 document.getElementById('export-feedback').onclick=()=>{const events=bundle.candidates.filter(c=>draft[c.id]?.action).map(c=>({...c,...draft[c.id],at:new Date().toISOString()}));const payload={schema_version:'1.0',paper_id:bundle.paper_id,snapshot_sha256:bundle.snapshot_sha256,events,origin:'BROWSER_DRAFT_NOT_SERVER_ACCEPTED'};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}));a.download='figure-feedback-'+bundle.snapshot_sha256.slice(0,12)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};"""
     css='body{font:15px/1.55 system-ui,sans-serif;color:#172033;background:#f5f7fb;margin:0;padding:28px}h1{font-size:30px}section{margin:28px 0}.notice{border-left:4px solid #2563eb;padding:12px;background:white}.figure-grid{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:16px;overflow-x:auto;padding-bottom:12px}.candidate{background:white;border:1px solid #dce3ef;border-radius:12px;padding:12px;min-width:0}.candidate img{width:100%;display:block}.candidate h4{margin:10px 0}.candidate p{font-size:12px}.candidate code{font-size:11px;overflow-wrap:anywhere}label{display:block;margin-top:10px}select,textarea{box-sizing:border-box;width:100%;font:inherit}table{border-collapse:collapse;background:white;min-width:600px}td,th{padding:10px 14px;border-bottom:1px solid #dce3ef;text-align:right}th:first-child{text-align:left}.table-wrap{overflow:auto}button{padding:10px 20px;cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere}'
+    css=css.replace('repeat(4,', 'repeat('+str(state['figures']['columns'])+',')
     return '<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+e(state['title'])+'</title><style>'+css+'</style><body>'+''.join(body)+'<script id="bundle-data" type="application/json">'+data_json+'</script><script>'+script+'</script></body></html>'
 
 
@@ -247,13 +248,13 @@ def build_preparation_portfolio(project_root: Path = ROOT) -> dict:
                          'snapshot_sha256':bundle['snapshot_sha256']})
         except (ValueError,OSError,KeyError,TypeError) as exc:
             rows.append({'paper_id':item.get('paper_id',''),'status':'SOURCE_REVIEW_REQUIRED','reason':type(exc).__name__})
-    knowledge_path=project_root/'generated'/'figure-knowledge-summary.json'
+    knowledge_path=project_root/'generated'/'figure-curated.json'
     knowledge=_read(knowledge_path) if knowledge_path.exists() else {}
     return {'schema_version':SCHEMA_VERSION,'stage':'EXPERIMENT_DATA_PREPARATION','status':'REGISTERED_BUNDLES' if rows else 'WAIT_BOUND_RESULT_MANIFEST',
-            'figure_knowledge_base':{'page':'figure-knowledge-base.html','summary':knowledge.get('summary',{}),'search_module':'research_pipeline.figure_knowledge_base','full_index_precedes_local_renderer_selection':True},
+            'figure_knowledge_base':{'page':'figure-knowledge-base.html','summary':knowledge.get('summary',{}),'catalog_ref':'generated/figure-curated.json','catalog_version':knowledge.get('catalog_version'),'default_scope':'CURATED_ONLY','full_index_precedes_local_renderer_selection':False,'archive_requires_explicit_opt_in':True},
             'rows':rows,'catalog':[{'id':r[0],'data_kind':r[1],'label':r[2],'purpose':r[3]} for r in CATALOG],
-            'workflow':['结果与版本清点','主表骨架','逐批验证回填','小改表与依赖刷新','数据—问题映射','图库匹配','每行四图、多组候选','挑选与局部重画','实际尺寸复核','写作输入材料包'],
-            'interaction_policy':{'preview_columns':4,'default_rounds':3,'prefer_distinct_types':True,'never_fabricate_to_fill_slots':True,'browser_draft_is_not_server_save':True,'stale_selection_requires_reconfirmation':True},
+            'workflow':['结果与版本清点','主表骨架','逐批验证回填','小改表与依赖刷新','数据—问题映射','精选参考匹配','一个主方案与一个备选','沿用脚本与局部修订','实际尺寸复核','写作输入材料包'],
+            'interaction_policy':{'preview_columns':2,'default_rounds':1,'reference_limit':2,'candidate_limit':3,'force_four_candidates':False,'prefer_distinct_types':True,'never_fabricate_to_fill_slots':True,'browser_draft_is_not_server_save':True,'stale_selection_requires_reconfirmation':True},
             'scientific_authority':False,'model_calls':0,'experiments_launched':0}
 
 

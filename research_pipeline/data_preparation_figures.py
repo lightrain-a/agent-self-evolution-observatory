@@ -1,4 +1,4 @@
-"""Data-shaped chart candidates, four per row. Independent SVG recipes, no vendor code."""
+"""Data-shaped candidates: two focused alternatives by default; explicit legacy fixtures remain available."""
 from __future__ import annotations
 import math
 from typing import Any
@@ -74,11 +74,11 @@ def validate_asset(asset: dict) -> list[str]:
     return sorted(set(errors))
 
 
-def plan_candidates(assets: list[dict], *, rounds: int = 3, columns: int = 4, style: dict | None = None) -> dict:
-    """Choose distinct structural recipes, not four palettes of the same plot."""
-    if columns != 4: raise ValueError('candidate-contact-sheet-requires-four-columns')
+def plan_candidates(assets: list[dict], *, rounds: int = 1, columns: int = 2, style: dict | None = None) -> dict:
+    """Choose few structural alternatives; columns=4 is an explicit legacy display request."""
+    if type(columns) is not int or not 1 <= columns <= 4: raise ValueError('columns-must-be-1-to-4')
     if type(rounds) is not int or not 1 <= rounds <= 12: raise ValueError('rounds-must-be-1-to-12')
-    style = style or {'font_family':'Georgia, serif', 'theme':'paper-vivid'}
+    style = style or {'font_family':'serif', 'theme':'publication-neutral'}
     groups, blocked, unused = [], [], []
     ids = [a.get('id') for a in assets]
     if len(set(ids)) != len(ids): raise ValueError('duplicate-asset-ids')
@@ -103,5 +103,5 @@ def plan_candidates(assets: list[dict], *, rounds: int = 3, columns: int = 4, st
                        'candidates':candidates, 'unfilled_slots':columns-len(candidates),
                        'reason_if_short':'Insufficient compatible distinct chart types; no fabricated data.' if len(candidates)<columns else ''})
     return {'groups':groups, 'blocked_assets':blocked, 'not_rendered_due_to_round_budget':unused,
-            'columns':4, 'rounds_requested':rounds, 'scientific_authority':False,
+            'columns':columns, 'rounds_requested':rounds, 'scientific_authority':False,
             'no_forced_distribution_or_uncertainty':True}
