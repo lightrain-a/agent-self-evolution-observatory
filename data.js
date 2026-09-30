@@ -12,6 +12,11 @@ window.NAV_GROUPS = [
     ["research-map.html",{en:"Current Research Map · A–G Portfolio",zh:"当前研究组合图谱 · A–G"}],
     ["paper-ideas.html",{en:"Research Portfolio · ResearchItems",zh:"研究组合 · ResearchItems"}],
   ]},
+  { title:{en:"Paper Production",zh:"论文生产"}, open:true, pages:[
+    ["experiment-data-preparation.html",{en:"Evidence Preparation · Table 1 & Figure Candidates",zh:"实验数据准备 · Table 1 与候选图"}],
+    ["figure-knowledge-base.html",{en:"Figure Gallery & Knowledge Base",zh:"科研绘图 · 图库与选图知识库"}],
+    ["paper-writing-workflow.html",{en:"Evidence-First Paper Writing",zh:"论文写作闭环 · 从证据到逐章成稿"}],
+  ]},
   { title:{en:"Current Research",zh:"当前科研"}, open:false, pages:[
     ["selected-paper.html",{en:"Paper Collection · Current 9",zh:"论文合集 · 当前 9 篇"}],
     ["advisor-review.html",{en:"Advisor Review · 9 Papers",zh:"师兄审阅 · 九篇论文"}],
