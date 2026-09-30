@@ -1,7 +1,7 @@
 window.PAGE_ARCHITECTURES = {
   home:{
     chapters:[
-      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, how did the field form, and how do mechanism, environment, and evidence interact?",zh:"什么算自进化、这个领域怎样形成，以及更新机制、环境约束和证据标准如何相互作用？"},links:["foundations.html","research-directions.html","mechanisms.html"]},
+      {id:"understand-field",title:{en:"Understand the field",zh:"理解领域"},question:{en:"What counts as self-evolution, how did the field form, and how do mechanism, environment, and evidence interact?",zh:"什么算自进化、这个领域怎样形成，以及更新机制、环境约束和证据标准如何相互作用？"},links:["agent-safety-atlas.html","foundations.html","research-directions.html","mechanisms.html"]},
       {id:"select-research",title:{en:"Understand current research",zh:"理解当前科研"},question:{en:"Where are our current A–G ResearchItems in the field, what is each authoritative decision, how did those decisions change over time, and which workflow produced them?",zh:"我们的 A–G ResearchItem 在领域里处于什么位置、每个对象当前的权威结论是什么、这些结论怎样随时间变化，以及科研系统怎样产生这些状态？"},links:["research-map.html","paper-ideas.html","research-timeline.html","system-overview.html"]},
 
       {id:"execute-audit",title:{en:"Run, inspect, and submit",zh:"运行、核查与投稿"},question:{en:"Which experiments are still allowed to run, what exact evidence supports the current STRI submission, and how can old projects be inspected without mistaking their archived plans for today's work?",zh:"哪些实验现在仍允许运行、STRI 当前投稿具体由哪些证据支持，以及怎样查看旧项目而不把它们已经归档的计划误当成今天的待办？"},links:["experiments.html","selected-paper.html","bibliography.html"]}

@@ -22,6 +22,8 @@ const html = read('agent-safety-atlas.html');
 for (const text of ['主题地图','逐项阅读','证据覆盖','并排比较','复制给聊天确认','不是服务器确认']) assert.ok(html.includes(text), text);
 for (const name of ['agent-safety-atlas.css','agent-safety-atlas.js']) assert.ok(fs.existsSync(path.join(site,name)));
 assert.ok(read('data.js').includes('agent-safety-atlas.html'));
+assert.ok(read('page-architecture-data.js').includes('links:["agent-safety-atlas.html"'));
+assert.ok(read('app.js').includes('["agent-safety-atlas.html","挑选安全研究难点"]'));
 assert.ok(read('skill-security-research.html').includes('agent-safety-atlas.html'));
 const script = read('agent-safety-atlas.js');
 assert.ok(script.includes('REVIEW_DRAFT_NOT_CONFIRMATION'));
