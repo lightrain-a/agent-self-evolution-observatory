@@ -57,3 +57,18 @@ assert.ok(read('app.js').includes('function discoveryPaperCard'));
 assert.equal(rows.find(r=>r.atlasSourceId==='AX-2608-25512').publicationShort,'arXiv’26');
 assert.equal(rows.filter(r=>r.evidenceRole==='discovery_only').length,519);
 console.log('PASS inclusive arXiv and industry map: 576 indexed papers,46 verified,519 discovery-only;6 organizations/8 leads; no confirmations');
+
+const review=data.problem_review;
+assert.equal(review.readings.length,9);
+assert.equal(review.questions.length,3);
+assert.equal(review.questions.filter(q=>q.selectable).length,2);
+assert.equal(review.recommended_question,'RQ-COMPAT');
+assert.equal(review.human_confirmation,false);
+assert.equal(review.methods_selected,0);
+assert.equal(review.experiments_started,0);
+assert.ok(html.includes('id="problem-review"'));
+assert.ok(html.includes('href="#problem-review"'));
+for(const file of ['agent-safety-review.js','agent-safety-review.css']) assert.ok(fs.existsSync(path.join(site,file)));
+assert.ok(read('agent-safety-review.js').includes('只有我在聊天中明确发送'));
+assert.ok(review.questions.every(q=>q.what_already_exists&&q.nearest_challenge&&q.missing_evidence));
+console.log('PASS focused reading review: two question drafts, one deferred formulation, no methods or human approvals');

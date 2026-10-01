@@ -34352,5 +34352,389 @@
     "signals": 8,
     "companies": 6
   },
-  "revision": "aec715e151b6441b4699200b3947f502b0537f9ea4063e3a697c3a60a5944544"
+  "problem_review": {
+    "id": "problem-reading-round-20261001",
+    "checked_on": "2026-10-01",
+    "title": "从公开难点，收敛到值得确认的问题",
+    "summary": "本轮不继续扩数量：选择7篇最接近论文和2份既有规范，核对机制、证据与边界；提出2个可供确认的问题表述，另1个宽泛主张暂不独立立题。",
+    "scope": "选择性章节精读，不是所有论文全文或证明已核验；本轮核心论文为近期预印本，投稿级结论还需复核。",
+    "human_confirmation": false,
+    "methods_selected": 0,
+    "experiments_started": 0,
+    "readings": [
+      {
+        "id": "READ-CORDIS",
+        "title": "A Programming Paradigm for Spatiotemporal Composability",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/pdf/2608.25512",
+        "version_note": "本轮读取92页PDF快照；不据缺失页眉推测版本号",
+        "read_scope": "§3.3.2、§4.4、§5与Table 2、§6.1/6.5/6.6、§7.4；选择性精读，不是全部证明已检查",
+        "problem": "独立组件加入、替换和退出时，依赖与副作用怎样协调。",
+        "mechanism": "将可逆效果和响应式依赖放入统一上下文；在定义的观察等价下组合。",
+        "evidence": "形式模型、性质论证、运行时对应表及Koishi案例；不是有组件消融的模型效果论文。",
+        "limitations": "§6.1明确划出外部不可逆效果；§6.6承认名字匹配不保证接口或行为兼容，讨论命名空间、peer依赖与结构兼容。",
+        "reading_anchors": [
+          {
+            "label": "模型与运行时对应 · Table 2",
+            "url": "https://arxiv.org/pdf/2608.25512#page=58"
+          },
+          {
+            "label": "系统边界 · §6.1",
+            "url": "https://arxiv.org/pdf/2608.25512#page=70"
+          },
+          {
+            "label": "依赖类型与版本 · §6.6",
+            "url": "https://arxiv.org/pdf/2608.25512#page=75"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [
+          "Table 2，PDF第58页",
+          "§4.4异步扩展所在页"
+        ],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-GOVDECAY",
+        "title": "Governance Decay: How Context Compaction Silently Erases Safety Constraints in Long-Horizon LLM Agents",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/html/2606.22528v2",
+        "version_note": "v2",
+        "read_scope": "§3–9、主要对照与限制；未重新运行作者实验",
+        "problem": "压缩长上下文时，组织或任务特定约束可能丢失。",
+        "mechanism": "将完整、压缩及缺失约束的决策作比较，并使用独立保留的Constraint Pinning。",
+        "evidence": "作者比较压缩器、执行模型、不同压缩方式及伪造的规则撤销；不是只做一次摘要比较。",
+        "limitations": "主要计分对象是生成的工具调用而非真正执行的外部效果；其SDK对照不能全部称为SDK原生压缩。",
+        "reading_anchors": [
+          {
+            "label": "因果对照与消融 · §3–5",
+            "url": "https://arxiv.org/html/2606.22528v2#S3"
+          },
+          {
+            "label": "Pinning及规则伪造 · §7",
+            "url": "https://arxiv.org/html/2606.22528v2#S7"
+          },
+          {
+            "label": "原生框架与边界 · §8–9",
+            "url": "https://arxiv.org/html/2606.22528v2#S8"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [
+          "HTML Table 3压缩器/模型交叉对照"
+        ],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-AUTHMEM",
+        "title": "When Memory Becomes Authority: Benchmarking Authority Collapse at the Memory Consolidation Boundary",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/pdf/2608.01679v2",
+        "version_note": "v2，38页",
+        "read_scope": "§2–4、Table 1、Table 5及相关工作；不是所有附录已复核",
+        "problem": "正确的记忆内容，被误当成当前有权执行操作的依据。",
+        "mechanism": "区分事实与权限来源，用匹配的有授权/无授权情况检查记忆整合后的行为。",
+        "evidence": "Table 1列出来源到权限的转移；Table 5显示降低未授权行为与保留正常效用必须分开。",
+        "limitations": "全部350项与留出70项不是同一分母；过度保守也能消除未授权行为，却会损失正常任务。",
+        "reading_anchors": [
+          {
+            "label": "配对与授权对象 · Table 1",
+            "url": "https://arxiv.org/pdf/2608.01679v2#page=5"
+          },
+          {
+            "label": "主结果与效用 · Table 5",
+            "url": "https://arxiv.org/pdf/2608.01679v2#page=9"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [
+          "Table 1，PDF第5页",
+          "Table 5，PDF第9页"
+        ],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-CLOSURE",
+        "title": "Versioned Transitive Dependency-Closure Binding and Operation-Time Effect Governance for Agent Skills: ClosureBound",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/html/2609.05920v1",
+        "version_note": "v1",
+        "read_scope": "威胁模型、Table 1、保证前提、评价及限制",
+        "problem": "批准的Skill与实际依赖、执行时效果及权限状态发生变化。",
+        "mechanism": "把批准绑定到版本化依赖闭包和当前效果条件，实际提交处重新核对。",
+        "evidence": "有限状态与确定性夹具中验证缺失条件；不是生产攻击发生率。",
+        "limitations": "依赖完整发现、所有关键效果被介入等前提；明确不提供任意程序语义等价、远程服务诚实或通用回滚保证。",
+        "reading_anchors": [
+          {
+            "label": "完整原文 · 范围表与前提",
+            "url": "https://arxiv.org/html/2609.05920v1"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [
+          "HTML Table 1范围说明"
+        ],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-CONTINUITY",
+        "title": "CONTINUITY: Security-Context Contracts for Composable LLM Agent Controls",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/html/2609.05269v1",
+        "version_note": "v1",
+        "read_scope": "组合条件、语义转换、评价、§12限制",
+        "problem": "多个来源、权限、适配器和最终效果控制组合后，安全事实可能断裂。",
+        "mechanism": "已有假设—保证契约、签名转换记录和最终提交条件，不是仅检查一个组件。",
+        "evidence": "作者使用确定性合成一致性测试；不测模型质量或真实攻击概率。",
+        "limitations": "原文明确区分完整性与语义正确性：可信语义校验器仍可能错；实现只涵盖受限转换，并依赖完整介入。",
+        "reading_anchors": [
+          {
+            "label": "已有组合方案及限制 · §12",
+            "url": "https://arxiv.org/html/2609.05269v1#S12"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-COMMIT",
+        "title": "Temporary Authority, Permanent Effects: Commit-Time Authorization for LLM Agents",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/html/2607.10487v1",
+        "version_note": "v1",
+        "read_scope": "效果授权条件、资格对照、受控漂移、限制",
+        "problem": "任务过程中曾获批准，并不保证真正提交时仍满足授权条件。",
+        "mechanism": "核对准确效果、证据来源、时序、当前资格和分支状态。",
+        "evidence": "已包含取消分支、过期批准、回调顺序等受控条件；不能把这些现象重新作为未经研究的问题。",
+        "limitations": "依赖可信且充分的执行记录；受控样本不提供生产普遍性，更不解决所有未介入通道。",
+        "reading_anchors": [
+          {
+            "label": "原文方法、评测与边界",
+            "url": "https://arxiv.org/html/2607.10487v1"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-BOUNDED",
+        "title": "Bounded Agents: Delegation Security for Multi-Agent AI Systems",
+        "label": "arXiv’26",
+        "url": "https://arxiv.org/html/2608.15888v1",
+        "version_note": "v1",
+        "read_scope": "委托限制、组合条件、评价与局限",
+        "problem": "子Agent不能因接到任务就获得比委托范围更多的能力。",
+        "mechanism": "已有能力衰减、会话状态与多项执行检查。",
+        "evidence": "作者在受控框架中测试权限约束；攻击执行条件不应混同为自然模型被诱导概率。",
+        "limitations": "组合性质依赖完整限制集合和序列化准入等条件，不能推广到任意异步生产系统。",
+        "reading_anchors": [
+          {
+            "label": "原文保证条件与评价范围",
+            "url": "https://arxiv.org/html/2608.15888v1"
+          }
+        ],
+        "claim_type": "PAPER_STATEMENT",
+        "figures_or_tables_inspected": [],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-RFC7009",
+        "title": "OAuth 2.0 Token Revocation",
+        "label": "RFC 7009 · 2013",
+        "url": "https://www.rfc-editor.org/rfc/rfc7009.html",
+        "version_note": "RFC 7009",
+        "read_scope": "§2.1–2.2，令牌与相关授权失效及传播窗口",
+        "problem": "客户端需要使不再使用或不再允许的令牌失效。",
+        "mechanism": "已有标准化令牌撤销端点及相关令牌撤销语义。",
+        "evidence": "正式规范，不是Agent实验论文。",
+        "limitations": "规范讨论传播延迟与撤销策略；不是撤回所有历史外部效果。",
+        "reading_anchors": [
+          {
+            "label": "撤销语义 · §2",
+            "url": "https://www.rfc-editor.org/rfc/rfc7009.html#section-2"
+          }
+        ],
+        "claim_type": "STANDARD_STATEMENT",
+        "figures_or_tables_inspected": [],
+        "reproduced": false,
+        "all_proofs_checked": false
+      },
+      {
+        "id": "READ-RFC8693",
+        "title": "OAuth 2.0 Token Exchange",
+        "label": "RFC 8693 · 2020",
+        "url": "https://www.rfc-editor.org/rfc/rfc8693.html",
+        "version_note": "RFC 8693",
+        "read_scope": "§4.1、§4.4及安全考虑",
+        "problem": "服务代表主体行动时，需要表达当前执行者和委托关系。",
+        "mechanism": "标准已有act、may_act与嵌套历史等表达。",
+        "evidence": "§4.1明确嵌套的先前执行者仅供历史说明，访问控制使用当前执行者和顶层声明。",
+        "limitations": "有委托历史字段不等于完整任务级授权证明，也不能说现有标准完全没有委托链。",
+        "reading_anchors": [
+          {
+            "label": "执行者声明 · §4.1",
+            "url": "https://www.rfc-editor.org/rfc/rfc8693.html#section-4.1"
+          }
+        ],
+        "claim_type": "STANDARD_STATEMENT",
+        "figures_or_tables_inspected": [],
+        "reproduced": false,
+        "all_proofs_checked": false
+      }
+    ],
+    "questions": [
+      {
+        "id": "RQ-COMPAT",
+        "priority": 1,
+        "recommendation": "优先确认",
+        "title": "组件换了，接口还能调用，原来的行为约束还成立吗？",
+        "problem_ids": [
+          "B03",
+          "C01",
+          "C02",
+          "H03"
+        ],
+        "industry_ids": [
+          "IND-DS-COMPOSE"
+        ],
+        "example": "同样叫“保存报告”的组件，旧版只写入指定本地目录，新版多了同步能力。接口形状没变，不代表消费者原先依赖的使用条件仍相同。这里只是假设例子，不是DeepSeek的实际缺陷。",
+        "value": "长期Agent需要升级或替换组件，也需要继续完成正常任务；不能只有“禁止更新”或“全部信任”两种选择。",
+        "old_framing": "让插件能够解耦、热替换，或卸载时清理副作用。",
+        "what_already_exists": "Cordis已研究动态依赖与清理，并采用peer依赖；ClosureBound绑定闭包与效果；CONTINUITY已有跨组件契约。",
+        "sharper_question": "在真实的组件替换中，哪些对任务和授权重要的行为约束，不能仅由名字、版本或结构接口判断？这个差异是否足够重要且能独立观察？",
+        "positive_basis": "Cordis §6.6直接将独立构建下的接口/行为漂移列为问题，并明确讨论统一兼容性模型的未解决部分。不是因检索不到而猜出的gap。",
+        "nearest_challenge": "简单版本检查、接口校验与现有契约系统可能已经足够；不能用违反已声明版本范围的坏组件制造结论。",
+        "missing_evidence": "还需要真实替换案例、实际承诺与变更说明；尤其要区分普通功能错误和有独立授权真值的安全问题。",
+        "decision_rule": "确认后只先比较问题边界与真实案例。若普通接口测试即可完整解释，就归入软件兼容性，不强行写成Agent安全。",
+        "source_refs": [
+          "READ-CORDIS",
+          "READ-CLOSURE",
+          "READ-CONTINUITY"
+        ],
+        "claim_type": "EVIDENCE_BASED_INFERENCE",
+        "novelty": "UNCONFIRMED",
+        "human_confirmed": false,
+        "proposal_is_method": false,
+        "selectable": true
+      },
+      {
+        "id": "RQ-POLICY",
+        "priority": 2,
+        "recommendation": "备选，需缩清差异",
+        "title": "任务中合法规则变了，压缩后的记忆能保留“现在有效”的授权吗？",
+        "problem_ids": [
+          "A03",
+          "E02",
+          "E03",
+          "G02"
+        ],
+        "industry_ids": [
+          "IND-AN-CONTEXT"
+        ],
+        "example": "用户先允许导出给A，随后明确撤回并改为只给B；长任务整理历史后，应既不沿用过期许可，也不因保留旧限制拒绝新的合法任务。只是问题例子，不是已观察攻击。",
+        "value": "只保留最早规则可能误伤合法变化，只保留最近文字又可能接受伪造授权；安全和正常任务都需要当前有效状态。",
+        "old_framing": "压缩会丢安全规则，因此把规则固定保留下来。",
+        "what_already_exists": "Governance Decay已做约束压缩、固定保留及伪造撤销；AuthMem已有事实与权限配对；提交时授权已有时效和分支检查。",
+        "sharper_question": "可信主体的真实修订、撤销和例外经过多轮整理后，什么信息必须保留才能恢复当前有效范围？现有规则固定与结构化权限是否已解决这个具体过程？",
+        "positive_basis": "最接近的论文已表明约束保留、权限来源和正常效用必须分开看；这支持核对新的问题边界，而非证明合法修订尚未被研究。",
+        "nearest_challenge": "不能把伪造“旧规则作废”的攻击改名为新问题；也不能忽视完整的外部权限状态已经能决定当前资格。",
+        "missing_evidence": "需进一步查阅政策更新、时间权限和记忆更新文献，确认与现有试验的差异；当前没有原生真实修订样本或新颖性结论。",
+        "decision_rule": "只有真实修订过程出现现有方法未解释的信息或效用损失时，再形成方案；否则合并进已有研究，不把多一次压缩作为创新。",
+        "source_refs": [
+          "READ-GOVDECAY",
+          "READ-AUTHMEM",
+          "READ-COMMIT",
+          "READ-CONTINUITY"
+        ],
+        "claim_type": "OPEN_CONJECTURE",
+        "novelty": "UNCONFIRMED",
+        "human_confirmed": false,
+        "proposal_is_method": false,
+        "selectable": true
+      },
+      {
+        "id": "RQ-ROLLBACK",
+        "priority": 3,
+        "recommendation": "暂不独立立题",
+        "title": "“插件撤回了，外部效果还在”本身不是新问题。",
+        "problem_ids": [
+          "E03",
+          "D02",
+          "F03"
+        ],
+        "industry_ids": [
+          "IND-DS-COMPOSE",
+          "IND-DS-PERMISSION"
+        ],
+        "example": "已经发出的消息不能因为卸载插件而从接收方消失；进行中的请求也不必然被瞬间取消。这个事实不能自动证明可组合性框架承诺失效。",
+        "value": "厘清撤回究竟覆盖组件状态、当前许可、未提交动作还是已完成效果，防止误读系统保证。",
+        "old_framing": "找出不能回滚的外部动作，证明组件可撤销机制存在安全缺口。",
+        "what_already_exists": "Cordis §6.1讨论系统边界、外部发出效果与补偿，§4.4讨论异步完成后的清理；RFC及近期工作已经处理令牌撤销、委托和提交时效。",
+        "sharper_question": "只作为RQ-COMPAT的生命周期/保证范围核对维度保留；若另有明确承诺且可复现的违反，再重新考虑独立价值。",
+        "positive_basis": "原文与标准直接限定了保证范围，能够排除宽泛的新颖性叙事。",
+        "nearest_challenge": "延迟完成、令牌撤销和补偿事务都是已有概念；不能制造一个作者未承诺的瞬时全世界回滚要求。",
+        "missing_evidence": "缺少具体系统作出的更强承诺和对该承诺的真实违反。",
+        "decision_rule": "不为这个宽泛主张设计新检测器或启动攻击实验；这不是否定所有生命周期安全研究。",
+        "source_refs": [
+          "READ-CORDIS",
+          "READ-COMMIT",
+          "READ-BOUNDED",
+          "READ-RFC7009",
+          "READ-RFC8693"
+        ],
+        "claim_type": "EVIDENCE_BASED_INFERENCE",
+        "novelty": "NOT_CLAIMED",
+        "human_confirmed": false,
+        "proposal_is_method": false,
+        "selectable": false
+      }
+    ],
+    "corrections": [
+      {
+        "id": "COR-CORDIS",
+        "before": "把外部不可回滚效果作为Cordis潜在遗漏的主要线索。",
+        "after": "原文已明确讨论外部边界、延迟提交和补偿；更有根据的阅读重点转为§6.6的依赖类型与行为兼容。",
+        "source_refs": [
+          "READ-CORDIS"
+        ],
+        "scope": "纠正我们先前的宽泛问题表述，不给作者新增漏洞标签。"
+      },
+      {
+        "id": "COR-CONTEXT",
+        "before": "把摘要丢安全约束、固定保留约束当成新方向。",
+        "after": "已有直接实验、Pinning和伪造更新对照；后续只能核对更具体的真实授权变化，不能忽略已有工作。",
+        "source_refs": [
+          "READ-GOVDECAY",
+          "READ-AUTHMEM"
+        ],
+        "scope": "更新最近邻覆盖，不把整个长时记忆安全方向判死。"
+      },
+      {
+        "id": "COR-EVIDENCE",
+        "before": "把工具调用输出、合成一致性测试或形式保证当作已测真实安全效果。",
+        "after": "逐论文标注测试对象、分母、完整介入和语义正确性假设；主文、全部样本与留出集不能混用。",
+        "source_refs": [
+          "READ-GOVDECAY",
+          "READ-AUTHMEM",
+          "READ-CONTINUITY",
+          "READ-CLOSURE"
+        ],
+        "scope": "文献解释校正，不改写任何旧实验结果。"
+      }
+    ],
+    "recommended_question": "RQ-COMPAT",
+    "recommendation_meaning": "作者建议先确认的研究问题，不是用户已选、方法已定或新颖性已成立。",
+    "next_after_confirmation": "对用户明确选中的问题比较已有及可能方案；方案再经确认后才进入预实验设计与授权。",
+    "revision": "8da4af2c5c18e77fb8409634a1b9b2242680c1b90092aa1d14b09cbbe610b8ef"
+  },
+  "revision": "b2272301631c27b2022ac13846abf92b936016c51eba654b8ede9e61aa5e7e11"
 }
