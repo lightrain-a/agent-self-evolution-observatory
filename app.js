@@ -1,4 +1,4 @@
-const DATA = [...(window.S2_LIVE_PAPERS || []), ...(window.SUPPLEMENTAL_PAPERS || [])];
+const DATA = [...(window.S2_LIVE_PAPERS || []), ...(window.SUPPLEMENTAL_PAPERS || []), ...(window.AGENT_SAFETY_LITERATURE || [])];
 const PAGES = window.PAGE_CONTENT || {};
 const NAV_GROUPS = window.NAV_GROUPS || [];
 const CATALOG_SOURCES = [
@@ -952,6 +952,13 @@ function inferVision(text) {
   return /vision|visual|image|video|multimodal|vln|robot|embodied|gui|web|photo|t2i|text-to-image|world model/i.test(text);
 }
 function publicationType(record) {
+  // Reviewed safety-library metadata takes priority over arXiv URLs and stale index years.
+  // Preserve legacy classification for unrelated records without an explicit status.
+  if (record.publicationStatus === "published_verified") {
+    return record.publicationVerification?.status === "verified" && record.publicationVerification?.primary_url ? "Published" : "Other";
+  }
+  if (record.publicationStatus === "indexed_unverified") return "Other";
+  if (record.publicationStatus === "preprint") return "Preprint";
   const venue = String(record.venue || "").toLowerCase();
   const url = String(record.url || "").toLowerCase();
   if (/repository|github/.test(venue) || url.includes("github.com")) return "Repository";

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "agent-safety-problems",
-  "checked_on": "2026-09-30",
+  "checked_on": "2026-10-01",
   "title": "Agent 安全研究难点地图",
   "scope": "覆盖工具型Agent安全，重点是Skill获取、使用与持续更新；不含具身机器人。",
   "coverage_statement": "系统性起始地图，不是全领域穷尽清单。24项是问题索引，不是24个新idea或已确认漏洞。",
@@ -15,200 +15,2620 @@
   },
   "sources": [
     {
-      "id": "S01",
-      "title": "AgentDojo",
-      "url": "https://arxiv.org/abs/2406.13352v3",
+      "id": "P101",
+      "title": "ToolSafe: Enhancing Tool Invocation Safety of LLM-based agents via Proactive Step-level Guardrail and Feedback",
+      "url": "https://aclanthology.org/2026.findings-acl.1850/",
       "kind": "paper",
-      "publication": "2024 · arXiv v3",
-      "read_level": "摘要与出版元信息已核对",
-      "locator": "Abstract / submission history",
-      "supports": "在工具返回不可信数据的环境中，同时评价正常任务、攻击和防御；无攻击时的能力失败也会影响解释。",
-      "checked_on": "2026-09-30",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Findings",
+      "venue_label": "ACL 2026 · Findings",
+      "published_year": 2026,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.findings-acl.1850/",
+        "evidence_sha256": "adb82ab84a317f600786a40d4523dd6aaddfe86526f164384ebbca87674a2050",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "将工具调用安全拆到执行前的步骤级检测与反馈，提醒最终成功率之外还要观察中间步骤。",
+      "checked_on": "2026-10-01",
       "reproduced": false,
-      "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2601.10156"
+      ],
+      "doi": "10.18653/v1/2026.findings-acl.1850",
+      "problem_ids": [
+        "C01",
+        "F03",
+        "G01",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "d68f4ce9fe1184e74e6cb59493f8cb3ec2265f98",
+        "indexed_year": 2026,
+        "indexed_date": "2026-01-15",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/MouXLLZYS26",
+          "ArXiv": "2601.10156",
+          "DOI": "10.48550/arXiv.2601.10156",
+          "CorpusId": 284738170
+        },
+        "citation_count": 63,
+        "retrieval_queries": [
+          "Q02"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
     },
     {
-      "id": "S02",
-      "title": "InjecAgent",
-      "url": "https://arxiv.org/abs/2403.02691",
+      "id": "P102",
+      "title": "ACIArena: Toward Unified Evaluation for Agent Cascading Injection",
+      "url": "https://aclanthology.org/2026.acl-long.457/",
       "kind": "paper",
-      "publication": "2024 · arXiv",
-      "read_level": "摘要与出版元信息已核对",
-      "locator": "Abstract / submission history",
-      "supports": "将间接提示注入放进工具集成Agent任务，区分正常用户任务与外部内容的恶意指令。",
-      "checked_on": "2026-09-30",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Main",
+      "venue_label": "ACL 2026 · Main",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.acl-long.457/",
+        "evidence_sha256": "8e10f62bfac8d78a33cae2a29b0e478c93b4554632ea79b750859c4568919c90",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "同时比较多种多Agent实现、攻击入口和目标；拓扑结构本身不足以解释协作系统鲁棒性。",
+      "checked_on": "2026-10-01",
       "reproduced": false,
-      "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2604.07775"
+      ],
+      "doi": "10.18653/v1/2026.acl-long.457",
+      "problem_ids": [
+        "D01",
+        "D02",
+        "D03",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "80a4d6bf889130167372f551f64637d4e6cd88ff",
+        "indexed_year": 2026,
+        "indexed_date": "2026-04-09",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "ArXiv": "2604.07775",
+          "DBLP": "conf/acl/AnLZXZLXDJ26",
+          "DOI": "10.48550/arXiv.2604.07775",
+          "CorpusId": 287255924
+        },
+        "citation_count": 7,
+        "retrieval_queries": [
+          "Q16"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
     },
     {
-      "id": "S03",
-      "title": "AgentPoison",
-      "url": "https://arxiv.org/abs/2407.12784v1",
+      "id": "P103",
+      "title": "Privacy-R1: Privacy-Aware Multi-LLM Agent Collaboration via Reinforcement Learning",
+      "url": "https://aclanthology.org/2026.acl-long.2130/",
       "kind": "paper",
-      "publication": "2024 · arXiv v1",
-      "read_level": "摘要与出版元信息已核对",
-      "locator": "Abstract / submission history",
-      "supports": "研究长期记忆和知识库投毒，使特定输入检索到被污染的示例，且不必修改模型参数。",
-      "checked_on": "2026-09-30",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Main",
+      "venue_label": "ACL 2026 · Main",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.acl-long.2130/",
+        "evidence_sha256": "5ba45bc2611974b041c6b36cd596a62191047950db7979c243816d9cf692d175",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究本地与远程模型间的隐私敏感任务委托，明确隐私暴露与任务效用之间的取舍。",
+      "checked_on": "2026-10-01",
       "reproduced": false,
-      "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2510.16054"
+      ],
+      "doi": "10.18653/v1/2026.acl-long.2130",
+      "problem_ids": [
+        "C02",
+        "C03",
+        "D02",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "c545d6dabea22621f27381965af7f05323123b58",
+        "indexed_year": 2025,
+        "indexed_date": "2025-10-16",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/HuiDSSC26",
+          "ArXiv": "2510.16054",
+          "DOI": "10.18653/v1/2026.acl-long.2130",
+          "CorpusId": 282209463
+        },
+        "citation_count": 6,
+        "retrieval_queries": [
+          "Q09"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P104",
+      "title": "Benchmarking Web Agent Safety under E-commerce Deceptive Interfaces",
+      "url": "https://aclanthology.org/2026.acl-long.1009/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Main",
+      "venue_label": "ACL 2026 · Main",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.acl-long.1009/",
+        "evidence_sha256": "df571447db4cce1235e1a0fbbd15fab2685536ff13e29bff90cbad70d513af57",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "把网页界面的广告、跳转和购买诱导纳入安全评测，不只依赖纯文本恶意指令。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2606.13686"
+      ],
+      "doi": "10.18653/v1/2026.acl-long.1009",
+      "problem_ids": [
+        "A01",
+        "D01",
+        "F01",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "86bab77e78e19f5ba3ad5cbe0bb823dc9dc9d75d",
+        "indexed_year": 2026,
+        "indexed_date": "2026-04-26",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/ShiFC26",
+          "ArXiv": "2606.13686",
+          "DOI": "10.18653/v1/2026.acl-long.1009",
+          "CorpusId": 289209482
+        },
+        "citation_count": 3,
+        "retrieval_queries": [
+          "Q23"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P105",
+      "title": "NaturalSloth: Revisiting Denial-of-Service Attacks on Large Language Models",
+      "url": "https://aclanthology.org/2026.acl-long.901/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Main",
+      "venue_label": "ACL 2026 · Main",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.acl-long.901/",
+        "evidence_sha256": "61d0f54ed889d413a59f2bd1cf65786257d97af0f9b742001137c5db5aa8f384",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "从语言模型拒绝服务研究补充资源消耗风险；这是邻近机制文献，不直接证明Agent工作流遭受同样影响。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2026.acl-long.901",
+      "problem_ids": [
+        "H01"
+      ],
+      "relevance_role": "adjacent",
+      "source_role": "邻近机制/评价背景，不当作目标系统直接证据",
+      "semantic_scholar": {
+        "paperId": "7e4268cb90d1dc05b0e4329e84a7d6ec7d10cc4d",
+        "indexed_year": 2026,
+        "indexed_date": null,
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/ChenLYTL26",
+          "DOI": "10.18653/v1/2026.acl-long.901",
+          "CorpusId": 289789331
+        },
+        "citation_count": 1,
+        "retrieval_queries": [
+          "Q20"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P106",
+      "title": "MAPS: A Multilingual Benchmark for Agent Performance and Security",
+      "url": "https://aclanthology.org/2026.findings-eacl.42/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EACL 2026 · Findings",
+      "venue_label": "EACL 2026 · Findings",
+      "published_year": 2026,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.findings-eacl.42/",
+        "evidence_sha256": "eb245363fff195ce64a4650ececa4f3389c51eb305b9189edc8a44a9e753110f",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "用多语言任务同时比较Agent能力与安全，避免将单语言结论直接当成普遍保证。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2505.15935"
+      ],
+      "doi": "10.18653/v1/2026.findings-eacl.42",
+      "problem_ids": [
+        "A01",
+        "G01",
+        "G03",
+        "H03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "2f82f2500e616a56c54ee57b8b50c7fda82f02fe",
+        "indexed_year": 2025,
+        "indexed_date": "2025-05-21",
+        "indexed_venue": "Conference of the European Chapter of the Association for Computational Linguistics",
+        "externalIds": {
+          "ArXiv": "2505.15935",
+          "DBLP": "conf/eacl/HofmanBRBPSSMGV26",
+          "DOI": "10.18653/v1/2026.findings-eacl.42",
+          "CorpusId": 278788889
+        },
+        "citation_count": 6,
+        "retrieval_queries": [
+          "Q16"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P107",
+      "title": "AgenticEval: Toward Agentic and Self-Evolving Safety Evaluation of Large Language Models",
+      "url": "https://aclanthology.org/2026.findings-acl.727/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Findings",
+      "venue_label": "ACL 2026 · Findings",
+      "published_year": 2026,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.findings-acl.727/",
+        "evidence_sha256": "a00bc18e9cee869896029a9fa5c0de08ae43151f6ae2af15e0a6e780df9e0a6d",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "关注可演化的安全评价过程；用于审视固定题库的适用范围，不直接替代原生Agent效果标签。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2509.26100"
+      ],
+      "doi": "10.18653/v1/2026.findings-acl.727",
+      "problem_ids": [
+        "G01",
+        "G03",
+        "H03"
+      ],
+      "relevance_role": "adjacent",
+      "source_role": "邻近机制/评价背景，不当作目标系统直接证据",
+      "semantic_scholar": {
+        "paperId": "28e6cc1cc8348d234c8f3d7970ce206a98f592ee",
+        "indexed_year": 2025,
+        "indexed_date": "2025-09-30",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "ArXiv": "2509.26100",
+          "DBLP": "conf/acl/WangWYLYTMW26",
+          "DOI": "10.18653/v1/2026.findings-acl.727",
+          "CorpusId": 281682851
+        },
+        "citation_count": 7,
+        "retrieval_queries": [
+          "Q14"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P108",
+      "title": "MCPTox: A Benchmark for Tool Poisoning on Real-World MCP Servers",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/40895",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "AAAI 2026 · Technical Track",
+      "venue_label": "AAAI 2026 · Technical Track",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://ojs.aaai.org/index.php/AAAI/article/view/40895",
+        "evidence_sha256": "47d57e8a7e3b38a970c44dade8e58f06ff8248281467d0bf103854cf03a2a351",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "在真实MCP服务器配置上评价工具描述投毒，补齐工具选择和工具生态的安全背景。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2508.14925"
+      ],
+      "doi": "10.1609/aaai.v40i42.40895",
+      "problem_ids": [
+        "B01",
+        "B02",
+        "C01",
+        "D02",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "34df7d82136868e5d492968647efd17d442a6720",
+        "indexed_year": 2025,
+        "indexed_date": "2025-08-19",
+        "indexed_venue": "AAAI Conference on Artificial Intelligence",
+        "externalIds": {
+          "ArXiv": "2508.14925",
+          "DBLP": "conf/aaai/WangGWLSCSDL26",
+          "DOI": "10.1609/aaai.v40i42.40895",
+          "CorpusId": 280699834
+        },
+        "citation_count": 80,
+        "retrieval_queries": [
+          "Q07"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P109",
+      "title": "InfrastructureSentinel: Policy Enforced Guardrails for Secure MCP-driven Infrastructure Agents",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/41468",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "IAAI 2026（收录于AAAI论文集）",
+      "venue_label": "IAAI 2026（收录于AAAI论文集）",
+      "published_year": 2026,
+      "publication_track": "iaai",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://ojs.aaai.org/index.php/AAAI/article/view/41468",
+        "evidence_sha256": "43d5f97c15805c30bda19303f96ae1314dea36cea812d657bff751d612949505",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "将策略约束用于MCP驱动基础设施Agent；需要分别看系统展示范围和普遍性保证。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.1609/aaai.v40i47.41468",
+      "problem_ids": [
+        "C01",
+        "C02",
+        "D02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "f3b0a5d343618170a906303741cb6adfe03d03ab",
+        "indexed_year": 2026,
+        "indexed_date": "2026-03-14",
+        "indexed_venue": "AAAI Conference on Artificial Intelligence",
+        "externalIds": {
+          "DBLP": "conf/aaai/KumarTSFBHBBKW26",
+          "DOI": "10.1609/aaai.v40i47.41468",
+          "CorpusId": 286674808
+        },
+        "citation_count": 4,
+        "retrieval_queries": [
+          "Q26"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P138",
+      "title": "Parasites in the Toolchain: A Large-Scale Analysis of Attacks on the MCP Ecosystem",
+      "url": "https://doi.org/10.1109/sp63933.2026.00154",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "IEEE S&P 2026",
+      "venue_label": "IEEE S&P 2026",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "PUBLISHER_DEPOSITED_CROSSREF_RECORD",
+        "primary_url": "https://api.crossref.org/works/10.1109/SP63933.2026.00154",
+        "evidence_sha256": "47c158cc349765aea034181da738599fcaa5f731a05e722e9dd073e4d814cd27",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "分析多个合法工具被组合成未授权隐私披露流程，补充单工具检测之外的工具链组合风险。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2509.06572"
+      ],
+      "doi": "10.1109/sp63933.2026.00154",
+      "problem_ids": [
+        "B02",
+        "C03",
+        "D01",
+        "D02",
+        "F03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "1763949de4f182019fdf2f21a101f60df339dd59",
+        "indexed_year": 2025,
+        "indexed_date": "2025-09-08",
+        "indexed_venue": "IEEE Symposium on Security and Privacy",
+        "externalIds": {
+          "DBLP": "conf/sp/ZhaoHZWXGCLX26",
+          "ArXiv": "2509.06572",
+          "DOI": "10.1109/SP63933.2026.00154",
+          "CorpusId": 281203664
+        },
+        "citation_count": 22,
+        "retrieval_queries": [
+          "Q07"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P139",
+      "title": "Beyond the Protocol: Unveiling Attack Vectors in the Model Context Protocol (MCP) Ecosystem",
+      "url": "https://doi.org/10.1109/tse.2026.3694876",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "IEEE TSE 2026",
+      "venue_label": "IEEE TSE 2026",
+      "published_year": 2026,
+      "publication_track": "journal",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "PUBLISHER_DEPOSITED_CROSSREF_RECORD",
+        "primary_url": "https://api.crossref.org/works/10.1109/TSE.2026.3694876",
+        "evidence_sha256": "6386ba30300fcfdbc5228125f057715c556fcb39650c1bd6e199b8b27ee10779",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "从MCP生态而非单一协议字段分析攻击向量；实现和生态中的安全边界需要分别核对。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2506.02040"
+      ],
+      "doi": "10.1109/tse.2026.3694876",
+      "problem_ids": [
+        "B02",
+        "B03",
+        "C01",
+        "D02",
+        "H03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "ef65bc91d689a7419b493f91989f101a5fdab62e",
+        "indexed_year": 2025,
+        "indexed_date": "2025-05-31",
+        "indexed_venue": "IEEE Transactions on Software Engineering",
+        "externalIds": {
+          "DBLP": "journals/tse/SongSLGCWLZC26",
+          "ArXiv": "2506.02040",
+          "DOI": "10.1109/TSE.2026.3694876",
+          "CorpusId": 280693042
+        },
+        "citation_count": 23,
+        "retrieval_queries": [
+          "Q07"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P140",
+      "title": "Navigating the Risks: A Survey of Security and Privacy Threats in LLM-Based Agents",
+      "url": "https://doi.org/10.1145/3807666",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACM TOSEM 2026",
+      "venue_label": "ACM TOSEM 2026",
+      "published_year": 2026,
+      "publication_track": "journal",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "PUBLISHER_DEPOSITED_CROSSREF_RECORD",
+        "primary_url": "https://api.crossref.org/works/10.1145/3807666",
+        "evidence_sha256": "29b11550286f994b1f91e82bb98e3c21dcae78228a049f8e8d14c33abcc6c7ea",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "正式发表综述用于检查Agent安全和隐私风险分类的覆盖面，不能单独证明新方法有效。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.1145/3807666",
+      "problem_ids": [
+        "A01",
+        "B02",
+        "C03",
+        "D02",
+        "E01",
+        "G01"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "9c61455f65e9c8c5f289ba5d0cd072dfc0d4d9cd",
+        "indexed_year": 2026,
+        "indexed_date": "2026-05-07",
+        "indexed_venue": "ACM Transactions on Software Engineering and Methodology",
+        "externalIds": {
+          "DOI": "10.1145/3807666",
+          "CorpusId": 288015814
+        },
+        "citation_count": 7,
+        "retrieval_queries": [
+          "Q10"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P142",
+      "title": "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents",
+      "url": "https://aclanthology.org/2026.findings-acl.1337/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2026 · Findings",
+      "venue_label": "ACL 2026 · Findings",
+      "published_year": 2026,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2026.findings-acl.1337/",
+        "evidence_sha256": "0d07568a4f31b3bc8b2d6db868ca16527a95020b530e495b64dfb4a2ad66cc37",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "评价旧记忆被更新或失效后是否仍被错误复用；是长期记忆可靠性背景，不等于完整的安全撤销机制。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2026.findings-acl.1337",
+      "problem_ids": [
+        "E03",
+        "G01",
+        "H03"
+      ],
+      "relevance_role": "adjacent",
+      "source_role": "邻近机制/评价背景，不当作目标系统直接证据",
+      "semantic_scholar": null,
+      "old_catalog_match": true,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P143",
+      "title": "Prompt Injection Attack to Tool Selection in LLM Agents",
+      "url": "https://www.ndss-symposium.org/ndss-paper/prompt-injection-attack-to-tool-selection-in-llm-agents/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "NDSS 2026",
+      "venue_label": "NDSS 2026",
+      "published_year": 2026,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://www.ndss-symposium.org/ndss-paper/prompt-injection-attack-to-tool-selection-in-llm-agents/",
+        "evidence_sha256": "13507fec5c86b93b19ea7cfd7205cbf85f71bf4682c3427088bed7c99cf2740a",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "针对工具库文档影响检索与选择的过程开展研究，工具“被选中之前”的攻击面已有NDSS正式发表工作。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2504.19793"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "B01",
+        "A01",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "eb6cbd2b06a980d8fabc1d7615575498385b35c8",
+        "indexed_year": 2025,
+        "indexed_date": "2025-04-28",
+        "indexed_venue": "Network and Distributed System Security Symposium",
+        "externalIds": {
+          "ArXiv": "2504.19793",
+          "DBLP": "journals/corr/abs-2504-19793",
+          "DOI": "10.48550/arXiv.2504.19793",
+          "CorpusId": 278164857
+        },
+        "citation_count": 176,
+        "retrieval_queries": [
+          "Q04"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P110",
+      "title": "StruQ: Defending Against Prompt Injection with Structured Queries",
+      "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/chen-sizhe",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "USENIX Security 2025",
+      "venue_label": "USENIX Security 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://www.usenix.org/conference/usenixsecurity25/presentation/chen-sizhe",
+        "evidence_sha256": "4a2ed208f9aed40134347fa81d94caf2eff83ab50a8c7bd4dbf9ecad7fffa7b3",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "通过显式分离指令与数据及相应训练提高注入抵抗；数据与指令边界已有正式研究。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": null,
+      "problem_ids": [
+        "A01",
+        "C01",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P112",
+      "title": "SecAlign: Defending Against Prompt Injection with Preference Optimization",
+      "url": "https://doi.org/10.1145/3719027.3744836",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACM CCS 2025",
+      "venue_label": "ACM CCS 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "PUBLISHER_DEPOSITED_CROSSREF_RECORD",
+        "primary_url": "https://api.crossref.org/works/10.1145/3719027.3744836",
+        "evidence_sha256": "6915153cfb5725c4c0c2394e004f42877b85b66a5e3fcca67c6ab6b98717bde3",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "出版记录已核验；作者摘要另作参考",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究用偏好优化区分应执行的任务与注入请求，提供训练型防御的正式发表对照。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.1145/3719027.3744836",
+      "problem_ids": [
+        "A01",
+        "G02",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": false,
+      "full_text_read": false
+    },
+    {
+      "id": "P114",
+      "title": "Agent Security Bench (ASB): Formalizing and Benchmarking Attacks and Defenses in LLM-based Agents",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/5750f91d8fb9d5c02bd8ad2c3b44456b-Abstract-Conference.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ICLR 2025",
+      "venue_label": "ICLR 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/5750f91d8fb9d5c02bd8ad2c3b44456b-Abstract-Conference.html",
+        "evidence_sha256": "80d6ca34211f1a0401b9301c0be249c5d5a3dc6435f13fefe2115014df4c66c1",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "统一多个Agent攻击面和防御条件，作为区分不同研究对象与评价范围的基准背景。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2410.02644"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "A01",
+        "A02",
+        "B02",
+        "D01",
+        "G01"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "5f4efbe3aae1d8f44ceab1da257ae685d6beb00b",
+        "indexed_year": 2024,
+        "indexed_date": "2024-10-03",
+        "indexed_venue": "International Conference on Learning Representations",
+        "externalIds": {
+          "ArXiv": "2410.02644",
+          "DBLP": "conf/iclr/ZhangHMYWZWZ25",
+          "DOI": "10.48550/arXiv.2410.02644",
+          "CorpusId": 273098793
+        },
+        "citation_count": 409,
+        "retrieval_queries": [
+          "Q01",
+          "Q04",
+          "Q13",
+          "Q16",
+          "Q19",
+          "Q21"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P115",
+      "title": "EIA: ENVIRONMENTAL INJECTION ATTACK ON GENERALIST WEB AGENTS FOR PRIVACY LEAKAGE",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/a73474c359ed523e6cd3174ed29a4d56-Abstract-Conference.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ICLR 2025",
+      "venue_label": "ICLR 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/a73474c359ed523e6cd3174ed29a4d56-Abstract-Conference.html",
+        "evidence_sha256": "aa4c979946268a31a393a191a05b7e77535e5ec549657cb9b513b0826d0af1db",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究网页环境注入与隐私泄露，补充一般网页Agent而非仅Skill文件的攻击入口。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2409.11295"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "A01",
+        "C03",
+        "F01"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "cffcfc8d317448d902a98f703f2ef56433c4aa0d",
+        "indexed_year": 2024,
+        "indexed_date": "2024-09-17",
+        "indexed_venue": "International Conference on Learning Representations",
+        "externalIds": {
+          "DBLP": "conf/iclr/LiaoMXKZXTL025",
+          "ArXiv": "2409.11295",
+          "DOI": "10.48550/arXiv.2409.11295",
+          "CorpusId": 272693848
+        },
+        "citation_count": 175,
+        "retrieval_queries": [
+          "Q18"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P116",
+      "title": "Empowering Users in Digital Privacy Management through Interactive LLM-Based Agents",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/bef8e5620c699630405adafaa86cb038-Abstract-Conference.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ICLR 2025",
+      "venue_label": "ICLR 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/bef8e5620c699630405adafaa86cb038-Abstract-Conference.html",
+        "evidence_sha256": "41825a132cd81455bb355928f1fdc81a53068e94e39cec3823a92b183e6bf588",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "通过交互式Agent帮助用户理解隐私政策与知情同意；这是用户理解背景，不直接证明底层权限或数据流被强制约束。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": null,
+      "problem_ids": [
+        "A03",
+        "C02",
+        "H02"
+      ],
+      "relevance_role": "adjacent",
+      "source_role": "邻近机制/评价背景，不当作目标系统直接证据",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P117",
+      "title": "Adaptive Attacks Break Defenses Against Indirect Prompt Injection Attacks on LLM Agents",
+      "url": "https://aclanthology.org/2025.findings-naacl.395/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "NAACL 2025 · Findings",
+      "venue_label": "NAACL 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-naacl.395/",
+        "evidence_sha256": "68f2baca28f9d898c4157c6510bae3418544e6ab483aa770490125d1734527b0",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "在针对防御调整的攻击下重新检查鲁棒性，不能只凭固定攻击集上分数判断防御有效。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2503.00061"
+      ],
+      "doi": "10.18653/v1/2025.findings-naacl.395",
+      "problem_ids": [
+        "A01",
+        "F01",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "0ed8da38a5fb60cd5fc70d325a63e6120111756c",
+        "indexed_year": 2025,
+        "indexed_date": "2025-02-27",
+        "indexed_venue": "North American Chapter of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/naacl/ZhanFPK25",
+          "ArXiv": "2503.00061",
+          "DOI": "10.48550/arXiv.2503.00061",
+          "CorpusId": 276741414
+        },
+        "citation_count": 146,
+        "retrieval_queries": [
+          "Q17"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P118",
+      "title": "Breaking ReAct Agents: Foot-in-the-Door Attack Will Get You In",
+      "url": "https://aclanthology.org/2025.findings-naacl.363/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "NAACL 2025 · Findings",
+      "venue_label": "NAACL 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-naacl.363/",
+        "evidence_sha256": "83a873e884d67ec13bf7b17ac8b2c3c4c8955a98f1454b45c753c733b4397bb0",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "通过多步交互研究渐进引导，补充一次性静态注入之外的任务偏离。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-naacl.363",
+      "problem_ids": [
+        "A01",
+        "D01",
+        "F01"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P119",
+      "title": "Attention Tracker: Detecting Prompt Injection Attacks in LLMs",
+      "url": "https://aclanthology.org/2025.findings-naacl.123/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "NAACL 2025 · Findings",
+      "venue_label": "NAACL 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-naacl.123/",
+        "evidence_sha256": "f4371f168506882862e10fe2ca45d1521c831ec575d08eb327c5eaaebee6be62",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "使用模型注意力模式检测注入，说明观测内部信号的适用模型和访问条件必须单列。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-naacl.123",
+      "problem_ids": [
+        "F02",
+        "G02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P120",
+      "title": "Preemptive Detection and Correction of Misaligned Actions in LLM Agents",
+      "url": "https://aclanthology.org/2025.emnlp-main.12/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Main",
+      "venue_label": "EMNLP 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.emnlp-main.12/",
+        "evidence_sha256": "fc844ffc1726acaec46061f7cb2b3220938e5fb3b84ec78294fa66ddb1940dc6",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "在行动前检查并纠正与任务不一致的动作，把动作意图与最终效果评价区分开。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.emnlp-main.12",
+      "problem_ids": [
+        "A03",
+        "C01",
+        "F03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P121",
+      "title": "IPIGuard: A Novel Tool Dependency Graph-Based Defense Against Indirect Prompt Injection in LLM Agents",
+      "url": "https://aclanthology.org/2025.emnlp-main.53/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Main",
+      "venue_label": "EMNLP 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.emnlp-main.53/",
+        "evidence_sha256": "1d2aaf5baae276d738dd05942961a2e3bdb600267610f13dd9dd96bcf13b1617",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "利用工具依赖关系隔离间接注入，说明关系结构已经被用于Agent防御。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2508.15310"
+      ],
+      "doi": "10.18653/v1/2025.emnlp-main.53",
+      "problem_ids": [
+        "A01",
+        "D01",
+        "F02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "9ddcbbff1e23b7f995fc363ad5123091f8866748",
+        "indexed_year": 2025,
+        "indexed_date": "2025-08-21",
+        "indexed_venue": "Conference on Empirical Methods in Natural Language Processing",
+        "externalIds": {
+          "ArXiv": "2508.15310",
+          "DBLP": "journals/corr/abs-2508-15310",
+          "DOI": "10.48550/arXiv.2508.15310",
+          "CorpusId": 280700086
+        },
+        "citation_count": 62,
+        "retrieval_queries": [
+          "Q04"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P122",
+      "title": "MCIP: Protecting MCP Safety via Model Contextual Integrity Protocol",
+      "url": "https://aclanthology.org/2025.emnlp-main.62/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Main",
+      "venue_label": "EMNLP 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.emnlp-main.62/",
+        "evidence_sha256": "ea034ba2710cab2413046dc8b93316447e5b7498175a29f67580df002e5da48d",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "以情境完整性审视MCP消息和行为，补齐跨组件信息流的已有工作。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.emnlp-main.62",
+      "problem_ids": [
+        "C01",
+        "C02",
+        "D02",
+        "D03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P123",
+      "title": "WebInject: Prompt Injection Attack to Web Agents",
+      "url": "https://aclanthology.org/2025.emnlp-main.104/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Main",
+      "venue_label": "EMNLP 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.emnlp-main.104/",
+        "evidence_sha256": "7593e1aeaddae2035f62cd88e261a3ff32de4393dc338872243a74d5859f4ef6",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究网页像素和截图中的视觉扰动如何影响网页Agent动作，说明多模态界面也是攻击入口。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2505.11717"
+      ],
+      "doi": "10.18653/v1/2025.emnlp-main.104",
+      "problem_ids": [
+        "A01",
+        "D01",
+        "F01"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "edd63168ea32a84ef63b3f34495cb8b65222ee32",
+        "indexed_year": 2025,
+        "indexed_date": "2025-05-16",
+        "indexed_venue": "Conference on Empirical Methods in Natural Language Processing",
+        "externalIds": {
+          "ArXiv": "2505.11717",
+          "DBLP": "conf/emnlp/WangBSHZG25",
+          "DOI": "10.18653/v1/2025.emnlp-main.104",
+          "CorpusId": 278739963
+        },
+        "citation_count": 62,
+        "retrieval_queries": [
+          "Q18"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P124",
+      "title": "ToolSafety: A Comprehensive Dataset for Enhancing Safety in LLM-Based Agent Tool Invocations",
+      "url": "https://aclanthology.org/2025.emnlp-main.714/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Main",
+      "venue_label": "EMNLP 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.emnlp-main.714/",
+        "evidence_sha256": "c4c680a232f8d6f0b0a12985c11a5606e2cee5b0274cbb7872a7ee44fe82dd53",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "面向工具调用安全的数据集，补充逐调用风险和正常工具效用的评价依据。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.emnlp-main.714",
+      "problem_ids": [
+        "C01",
+        "F03",
+        "G01",
+        "G02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P125",
+      "title": "DemonAgent: Dynamically Encrypted Multi-Backdoor Implantation Attack on LLM-based Agent",
+      "url": "https://aclanthology.org/2025.findings-emnlp.157/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Findings",
+      "venue_label": "EMNLP 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-emnlp.157/",
+        "evidence_sha256": "eece8d2eb6d9067003ea50171e63c3214c925ef3b2ac9bf57622119a57a40112",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究动态、多阶段触发的Agent后门以及对安全审计的影响；不把摘要中没有验证的长期记忆投毒作为结论。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-emnlp.157",
+      "problem_ids": [
+        "F01",
+        "F02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P126",
+      "title": "When Allies Turn Foes: Exploring Group Characteristics of LLM-Based Multi-Agent Collaborative Systems Under Adversarial Attacks",
+      "url": "https://aclanthology.org/2025.findings-emnlp.333/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Findings",
+      "venue_label": "EMNLP 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-emnlp.333/",
+        "evidence_sha256": "69a0360614c224e81646d52084b1b6c8fc6050fff983df8231036697fe6afe7d",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "比较多Agent群体在对抗条件下的行为，协作本身不自动提供安全冗余。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-emnlp.333",
+      "problem_ids": [
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "07eff17f4882fc66ae095090dc36b1df5ffe348e",
+        "indexed_year": 2025,
+        "indexed_date": null,
+        "indexed_venue": "Conference on Empirical Methods in Natural Language Processing",
+        "externalIds": {
+          "DBLP": "conf/emnlp/ZhangKGWH25",
+          "DOI": "10.18653/v1/2025.findings-emnlp.333",
+          "CorpusId": 282900975
+        },
+        "citation_count": 1,
+        "retrieval_queries": [
+          "Q11"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P127",
+      "title": "MASTER: Multi-Agent Security Through Exploration of Roles and Topological Structures - A Comprehensive Framework",
+      "url": "https://aclanthology.org/2025.findings-emnlp.917/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Findings",
+      "venue_label": "EMNLP 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-emnlp.917/",
+        "evidence_sha256": "647bf3405fe91ab680ee7eb7bb8a62aea37919284811d48c67cf17546371eb52",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "比较角色和拓扑对多Agent安全的作用，避免把某一种协作结构的结果无条件外推。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-emnlp.917",
+      "problem_ids": [
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P128",
+      "title": "Privacy in Action: Towards Realistic Privacy Mitigation and Evaluation for LLM-Powered Agents",
+      "url": "https://aclanthology.org/2025.findings-emnlp.925/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Findings",
+      "venue_label": "EMNLP 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-emnlp.925/",
+        "evidence_sha256": "288700f5dbc2e43239a8c38b09b07d033e6c1d7d2163debd59831b54ec67f212",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "把隐私缓解和Agent实际任务相连，补充孤立文本脱敏之外的任务级隐私评价。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2509.17488"
+      ],
+      "doi": "10.18653/v1/2025.findings-emnlp.925",
+      "problem_ids": [
+        "A03",
+        "C02",
+        "C03",
+        "F03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "e6f9e7b57df131ec36a0cc823e5ac6d3f101c974",
+        "indexed_year": 2025,
+        "indexed_date": "2025-09-22",
+        "indexed_venue": "Conference on Empirical Methods in Natural Language Processing",
+        "externalIds": {
+          "DBLP": "conf/emnlp/WangYLQZLZR25",
+          "ArXiv": "2509.17488",
+          "DOI": "10.48550/arXiv.2509.17488",
+          "CorpusId": 281421253
+        },
+        "citation_count": 41,
+        "retrieval_queries": [
+          "Q09"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P129",
+      "title": "Defending against Indirect Prompt Injection by Instruction Detection",
+      "url": "https://aclanthology.org/2025.findings-emnlp.1060/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Findings",
+      "venue_label": "EMNLP 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-emnlp.1060/",
+        "evidence_sha256": "510334efc348a31447b08547348ba269e922c3933ad854b4d9806b22e1ac15dc",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "利用中间隐藏状态与梯度等模型内部信号检测外部内容中的指令；该访问条件与纯黑盒Agent不同。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-emnlp.1060",
+      "problem_ids": [
+        "A01",
+        "G02",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P130",
+      "title": "AGENTVIGIL: Automatic Black-Box Red-teaming for Indirect Prompt Injection against LLM Agents",
+      "url": "https://aclanthology.org/2025.findings-emnlp.1258/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "EMNLP 2025 · Findings",
+      "venue_label": "EMNLP 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-emnlp.1258/",
+        "evidence_sha256": "ea6e1431cee900de8a8ee41e4d44f66170181e7cce57aaedc864126ebdbc4efa",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "自动化黑盒红队评价间接注入，对固定、已知攻击模板之外的覆盖提出要求。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": "10.18653/v1/2025.findings-emnlp.1258",
+      "problem_ids": [
+        "A01",
+        "F01",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P131",
+      "title": "Red-Teaming LLM Multi-Agent Systems via Communication Attacks",
+      "url": "https://aclanthology.org/2025.findings-acl.349/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2025 · Findings",
+      "venue_label": "ACL 2025 · Findings",
+      "published_year": 2025,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.findings-acl.349/",
+        "evidence_sha256": "59df721f1e54f0cc2f992d17c08c90aad81a353847b73898ae4c22cbf5aca67a",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "直接研究通信消息作为多Agent攻击入口，不应再把跨Agent消息安全称为尚无人研究。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2502.14847"
+      ],
+      "doi": "10.18653/v1/2025.findings-acl.349",
+      "problem_ids": [
+        "D01",
+        "D02",
+        "D03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "4669474df8ee4985a95c43c0ee54d621c0a639e1",
+        "indexed_year": 2025,
+        "indexed_date": "2025-02-20",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/HeLD00025",
+          "ArXiv": "2502.14847",
+          "DOI": "10.48550/arXiv.2502.14847",
+          "CorpusId": 276482743
+        },
+        "citation_count": 142,
+        "retrieval_queries": [
+          "Q01",
+          "Q11",
+          "Q21"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P132",
+      "title": "G-Safeguard: A Topology-Guided Security Lens and Treatment on LLM-based Multi-agent Systems",
+      "url": "https://aclanthology.org/2025.acl-long.359/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2025 · Main",
+      "venue_label": "ACL 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.acl-long.359/",
+        "evidence_sha256": "1fe43b66f03da1f496122daa3f15233bdda4b6a1c9dab4fa1ed99f974f1fc754",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "用多Agent消息图检测异常并进行拓扑干预，直接覆盖关系建模与异常检测的迁移边界。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2502.11127"
+      ],
+      "doi": "10.18653/v1/2025.acl-long.359",
+      "problem_ids": [
+        "D01",
+        "D03",
+        "F02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "4e92cc52b11da0785362c3b98a8821005d326b45",
+        "indexed_year": 2025,
+        "indexed_date": "2025-02-16",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/WangZYWMGWW25",
+          "ArXiv": "2502.11127",
+          "DOI": "10.48550/arXiv.2502.11127",
+          "CorpusId": 276409220
+        },
+        "citation_count": 69,
+        "retrieval_queries": [
+          "Q01",
+          "Q11",
+          "Q19",
+          "Q21"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P133",
+      "title": "GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning",
+      "url": "https://proceedings.mlr.press/v267/xiang25a.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ICML 2025",
+      "venue_label": "ICML 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.mlr.press/v267/xiang25a.html",
+        "evidence_sha256": "5a2e010844614ada83e69f1432917969cb9a2c09263589c05aa5ff28b16cf95d",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "通过知识与推理检查Agent行为约束，提供独立守护组件的正式发表背景。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2406.09187"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "C01",
+        "C02",
+        "F03",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "2fd69fa8ebbcbdf23f3ca6dff00706df5719a156",
+        "indexed_year": 2024,
+        "indexed_date": "2024-06-13",
+        "indexed_venue": "International Conference on Machine Learning",
+        "externalIds": {
+          "DBLP": "conf/icml/XiangZLHLX0XX0S25",
+          "ArXiv": "2406.09187",
+          "CorpusId": 270440371
+        },
+        "citation_count": 120,
+        "retrieval_queries": [
+          "Q02"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P134",
+      "title": "MELON: Provable Defense Against Indirect Prompt Injection Attacks in AI Agents",
+      "url": "https://proceedings.mlr.press/v267/zhu25z.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ICML 2025",
+      "venue_label": "ICML 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.mlr.press/v267/zhu25z.html",
+        "evidence_sha256": "826bac65ffa7853751bce7d2b163e99c8f16fca01eff3c10ee9392c5dfb9afb0",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "通过遮蔽用户任务后重新执行并比较工具动作检测注入；同一动作对用户任务是否仍有依赖，已经有正式研究。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2502.05174"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "A01",
+        "A03",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "830cb22483595ec0421398af195842d788e4ea6e",
+        "indexed_year": 2025,
+        "indexed_date": "2025-02-07",
+        "indexed_venue": "International Conference on Machine Learning",
+        "externalIds": {
+          "DBLP": "conf/icml/ZhuY00W25",
+          "ArXiv": "2502.05174",
+          "CorpusId": 276235401
+        },
+        "citation_count": 87,
+        "retrieval_queries": [
+          "Q04"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P135",
+      "title": "SafeArena: Evaluating the Safety of Autonomous Web Agents",
+      "url": "https://proceedings.mlr.press/v267/tur25a.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ICML 2025",
+      "venue_label": "ICML 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.mlr.press/v267/tur25a.html",
+        "evidence_sha256": "eaa15f16e0a37632f6f665ba82e94dd9e185b92c2c98e465798652c2fec42f94",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "评价自主网页Agent对有害请求的执行行为，补充普通问答拒绝率不能代表的工具风险。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2503.04957"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "A02",
+        "D01",
+        "G01",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "a4f49ce748c51ff05df6a971caf3070f631998c7",
+        "indexed_year": 2025,
+        "indexed_date": "2025-03-06",
+        "indexed_venue": "International Conference on Machine Learning",
+        "externalIds": {
+          "DBLP": "journals/corr/abs-2503-04957",
+          "ArXiv": "2503.04957",
+          "DOI": "10.48550/arXiv.2503.04957",
+          "CorpusId": 276884663
+        },
+        "citation_count": 101,
+        "retrieval_queries": [
+          "Q02"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P136",
+      "title": "DataSentinel: A Game-Theoretic Detection of Prompt Injection Attacks",
+      "url": "https://doi.org/10.1109/sp61157.2025.00250",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "IEEE S&P 2025",
+      "venue_label": "IEEE S&P 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "PUBLISHER_DEPOSITED_CROSSREF_RECORD",
+        "primary_url": "https://api.crossref.org/works/10.1109/SP61157.2025.00250",
+        "evidence_sha256": "476233fe9eda56b919bee18047ef3105c642879366bd5f0a5b16ae95bea17a68",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究注入检测及其攻击防御博弈，支持在适应性攻击下检查检测器，而不只看静态精度。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2504.11358"
+      ],
+      "doi": "10.1109/sp61157.2025.00250",
+      "problem_ids": [
+        "A01",
+        "G02",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "a90068513bf2eae66c81ff80b5060ce115097176",
+        "indexed_year": 2025,
+        "indexed_date": "2025-04-15",
+        "indexed_venue": "IEEE Symposium on Security and Privacy",
+        "externalIds": {
+          "DBLP": "journals/corr/abs-2504-11358",
+          "ArXiv": "2504.11358",
+          "DOI": "10.1109/SP61157.2025.00250",
+          "CorpusId": 277787029
+        },
+        "citation_count": 173,
+        "retrieval_queries": [
+          "Q17"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P141",
+      "title": "Unveiling Privacy Risks in LLM Agent Memory",
+      "url": "https://aclanthology.org/2025.acl-long.1227/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2025 · Main",
+      "venue_label": "ACL 2025 · Main",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2025.acl-long.1227/",
+        "evidence_sha256": "0700dfdce12cba9d577c8c0e1bbbe498cde92bae4d90c34c652541c26b7a0183",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "直接研究Agent记忆中的隐私泄露，补充记忆投毒之外的数据保密风险。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2502.13172"
+      ],
+      "doi": "10.18653/v1/2025.acl-long.1227",
+      "problem_ids": [
+        "C03",
+        "E01",
+        "E03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "3627081864348f1042ce4f3dd4cc5ce663945f82",
+        "indexed_year": 2025,
+        "indexed_date": "2025-02-17",
+        "indexed_venue": "Annual Meeting of the Association for Computational Linguistics",
+        "externalIds": {
+          "DBLP": "conf/acl/0069HZX0TH25",
+          "ArXiv": "2502.13172",
+          "DOI": "10.48550/arXiv.2502.13172",
+          "CorpusId": 276449687
+        },
+        "citation_count": 131,
+        "retrieval_queries": [
+          "Q09",
+          "Q13"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
     },
     {
       "id": "S04",
-      "title": "AgentHarm",
-      "url": "https://arxiv.org/abs/2410.09024v3",
+      "title": "AgentHarm: A Benchmark for Measuring Harmfulness of LLM Agents",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/c493d23af93118975cdbc32cbe7323f5-Abstract-Conference.html",
       "kind": "paper",
-      "publication": "ICLR 2025 · 作者出版备注",
-      "read_level": "摘要与出版元信息已核对",
-      "locator": "Abstract / submission history",
-      "supports": "测量恶意用户请求下的多步工具行为；拒绝率与执行多步任务的能力都影响结果。",
-      "checked_on": "2026-09-30",
+      "publication_status": "published_verified",
+      "publication": "ICLR 2025",
+      "venue_label": "ICLR 2025",
+      "published_year": 2025,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/c493d23af93118975cdbc32cbe7323f5-Abstract-Conference.html",
+        "evidence_sha256": "a22977ae5d8de13718c2456b4746f3a9335df8027c1a010aafde6cbaf7ec3469",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "测量恶意用户要求下的多步工具行为；不能把任务做不成自动解释为拒绝有害要求。",
+      "checked_on": "2026-10-01",
       "reproduced": false,
-      "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2410.09024v3",
+        "https://arxiv.org/abs/2410.09024"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "A02",
+        "D01",
+        "G01",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "716c6f6a6e653bebfa676402b887fe2927e06c73",
+        "indexed_year": 2024,
+        "indexed_date": "2024-10-11",
+        "indexed_venue": "International Conference on Learning Representations",
+        "externalIds": {
+          "ArXiv": "2410.09024",
+          "DBLP": "conf/iclr/AndriushchenkoS25",
+          "DOI": "10.48550/arXiv.2410.09024",
+          "CorpusId": 273323256
+        },
+        "citation_count": 443,
+        "retrieval_queries": [
+          "Q02"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P111",
+      "title": "Formalizing and Benchmarking Prompt Injection Attacks and Defenses",
+      "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/liu-yupei",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "USENIX Security 2024",
+      "venue_label": "USENIX Security 2024",
+      "published_year": 2024,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://www.usenix.org/conference/usenixsecurity24/presentation/liu-yupei",
+        "evidence_sha256": "bd71870c096da33a66e78db12c6e4c5ffe57d530238391f2f0b35f38fcaad0c0",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "统一攻击与防御的形式和比较设置，说明多个任务和攻击类型下的评价不能互相替代。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [],
+      "doi": null,
+      "problem_ids": [
+        "A01",
+        "F01",
+        "G02",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "P113",
+      "title": "AirGapAgent: Protecting Privacy-Conscious Conversational Agents",
+      "url": "https://doi.org/10.1145/3658644.3690350",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACM CCS 2024",
+      "venue_label": "ACM CCS 2024",
+      "published_year": 2024,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "PUBLISHER_DEPOSITED_CROSSREF_RECORD",
+        "primary_url": "https://api.crossref.org/works/10.1145/3658644.3690350",
+        "evidence_sha256": "393f0bd2f1c0b96069af33e983cdb37320ff4389c381e03ad57f0598900da9e1",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "围绕用户授权的信息披露设计隔离流程，说明隐私不能仅由敏感字段检测来定义。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2405.05175"
+      ],
+      "doi": "10.1145/3658644.3690350",
+      "problem_ids": [
+        "A03",
+        "C02",
+        "C03",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "50a78ce0151b551ca7287ce946e44b2cd5b8a684",
+        "indexed_year": 2024,
+        "indexed_date": "2024-05-08",
+        "indexed_venue": "Conference on Computer and Communications Security",
+        "externalIds": {
+          "DBLP": "conf/ccs/BagdasarianYGKG24",
+          "ArXiv": "2405.05175",
+          "DOI": "10.1145/3658644.3690350",
+          "CorpusId": 269626177
+        },
+        "citation_count": 121,
+        "retrieval_queries": [
+          "Q09"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "S01",
+      "title": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "NeurIPS 2024 · Datasets & Benchmarks",
+      "venue_label": "NeurIPS 2024 · Datasets & Benchmarks",
+      "published_year": 2024,
+      "publication_track": "datasets_benchmarks",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html",
+        "evidence_sha256": "3c74989f00206e8a4e8838b9ded23b8b92c713ddb277cfebf6ddb65d12b0a2b2",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "把正常任务、外部工具数据和攻击目标放入同一环境；安全与任务能力需要一起看。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2406.13352v3",
+        "https://arxiv.org/abs/2406.13352"
+      ],
+      "doi": "10.52202/079017-2636",
+      "problem_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "F03",
+        "G01",
+        "G02",
+        "H02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "cf95279b1da9de1aad9e7c651f5048f69af295ed",
+        "indexed_year": 2024,
+        "indexed_date": "2024-06-19",
+        "indexed_venue": "Neural Information Processing Systems",
+        "externalIds": {
+          "ArXiv": "2406.13352",
+          "DBLP": "journals/corr/abs-2406-13352",
+          "DOI": "10.48550/arXiv.2406.13352",
+          "CorpusId": 270619628
+        },
+        "citation_count": 150,
+        "retrieval_queries": [
+          "Q04",
+          "Q17"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "S02",
+      "title": "InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents",
+      "url": "https://aclanthology.org/2024.findings-acl.624/",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "ACL 2024 · Findings",
+      "venue_label": "ACL 2024 · Findings",
+      "published_year": 2024,
+      "publication_track": "findings",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://aclanthology.org/2024.findings-acl.624/",
+        "evidence_sha256": "134856475ec1eeeaa60ef3e6d11ec851da7f1e75132a785910f86af3f4a09466",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "系统区分正常用户工具与攻击者注入内容，覆盖偏离任务和数据外传。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2403.02691"
+      ],
+      "doi": "10.18653/v1/2024.findings-acl.624",
+      "problem_ids": [
+        "A01",
+        "A02",
+        "C03",
+        "F03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
+    },
+    {
+      "id": "S03",
+      "title": "AgentPoison: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/eb113910e9c3f6242541c1652e30dfd6-Abstract-Conference.html",
+      "kind": "paper",
+      "publication_status": "published_verified",
+      "publication": "NeurIPS 2024",
+      "venue_label": "NeurIPS 2024",
+      "published_year": 2024,
+      "publication_track": "main",
+      "indexed_claimed_venue": null,
+      "publication_verification": {
+        "status": "verified",
+        "basis": "OFFICIAL_PROCEEDINGS_PAGE",
+        "primary_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/eb113910e9c3f6242541c1652e30dfd6-Abstract-Conference.html",
+        "evidence_sha256": "0700d0220cf6ae79579321904197bb2478763bede5ba6e6fa38ef165249d7832",
+        "checked_on": "2026-10-01",
+        "limitation": "书目信息与论文身份已核对，不等于实验结果已复现。"
+      },
+      "read_level": "正式书目与摘要已核对；尚未全文精读/复现",
+      "locator": "官方书目 / Abstract",
+      "supports": "研究低比例的记忆或知识库投毒如何被检索触发；记忆可靠性不能用语义相似度替代。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "文献内容概括",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2407.12784v1"
+      ],
+      "doi": "10.52202/079017-4136",
+      "problem_ids": [
+        "E01",
+        "E02",
+        "F01",
+        "G03"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": null,
+      "old_catalog_match": false,
+      "abstract_available_for_triage": true,
+      "full_text_read": false
     },
     {
       "id": "S05",
       "title": "Skill-Inject",
       "url": "https://arxiv.org/abs/2602.20156v3",
       "kind": "paper",
-      "publication": "2026 · arXiv v3",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "提供Skill注入与正常任务配对，覆盖明显恶意和依赖上下文的指令，同时评价安全与正常指令遵从。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S06",
       "title": "SkillSentry",
       "url": "https://arxiv.org/abs/2608.03485v1",
       "kind": "paper",
-      "publication": "2026 · 预印本",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "通过动态环境与配对执行探索条件性行为，结合代码和轨迹验证；不是只对Skill文本做一次分类。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S07",
       "title": "SkillSec-Eval",
       "url": "https://arxiv.org/abs/2607.13987v1",
       "kind": "paper",
-      "publication": "2026 · 预印本",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "将准入、检索、规划、执行和演化纳入同一生命周期分类与评测。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S08",
       "title": "PoisonedEvolution",
       "url": "https://arxiv.org/abs/2608.05563v2",
       "kind": "paper",
-      "publication": "2026 · arXiv v2",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "区分污染证据被包含、被归因和写入持久技能的过程；行为写入不自动等于未来真实危害已经发生。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S09",
       "title": "ClosureBound",
       "url": "https://arxiv.org/abs/2609.05920v1",
       "kind": "paper",
-      "publication": "2026 · 预印本",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "把批准绑定到依赖闭包、效果范围和有效期；保证依赖完整发现、完整介入等前提，不证明远程服务诚实。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S10",
       "title": "MaliciousSkillBench",
       "url": "https://arxiv.org/abs/2608.19901v1",
       "kind": "paper",
-      "publication": "2026 · 预印本",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "汇集正常与恶意Skill，区分随机、结构留出和来源留出；报告跨来源泛化和正常样本误报困难。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S11",
       "title": "Do Not Mention This to the User",
       "url": "https://arxiv.org/abs/2602.06547",
       "kind": "paper",
-      "publication": "2026 · arXiv 当前页面",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "研究在野恶意Skill的识别与行为；生态扫描和确认样本不能混用分母。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S12",
       "title": "Convergent Detour Hijacking",
       "url": "https://arxiv.org/abs/2608.12273v1",
       "kind": "paper",
-      "publication": "2026 · 预印本",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "研究正常任务最终仍完成，但执行流程被引向额外资源消耗的情况。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S13",
       "title": "Under the Hood of SKILL.md",
       "url": "https://arxiv.org/abs/2605.11418v1",
       "kind": "paper",
-      "publication": "2026 · 预印本",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "研究技能注册和选择环节的语义供应链攻击，提醒不能仅关注执行后的行为。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
     },
     {
       "id": "S14",
       "title": "Context Matters",
       "url": "https://arxiv.org/abs/2603.16572v2",
       "kind": "paper",
-      "publication": "2026 · arXiv v2",
+      "publication": "预印本补充 · 正式发表状态未单独核实",
       "read_level": "摘要与出版元信息已核对",
       "locator": "Abstract / submission history",
       "supports": "从仓库上下文理解Skill风险，关注脱离上下文的误判和来源相关风险。",
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "论文陈述",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "preprint",
+      "first_posted_year": 2026,
+      "source_role": "用于追踪新进展，不能自动视为已发表研究",
+      "full_text_read": false
+    },
+    {
+      "id": "P137",
+      "title": "PromptLocate: Localizing Prompt Injection Attacks",
+      "url": "https://arxiv.org/abs/2510.12252",
+      "kind": "paper",
+      "publication_status": "indexed_unverified",
+      "publication": "索引标注 IEEE S&P 2026；本轮正式出处未核验",
+      "venue_label": "待核验正式出处",
+      "published_year": null,
+      "publication_track": "unverified",
+      "indexed_claimed_venue": "IEEE S&P 2026",
+      "publication_verification": {
+        "status": "unverified",
+        "basis": "SECONDARY_INDEX_ONLY",
+        "primary_url": "https://api.crossref.org/works/10.1109/SP63933.2026.00105",
+        "evidence_sha256": null,
+        "checked_on": "2026-10-01",
+        "limitation": "出版方端点限时读取未成功；不自动把Scholar venue当作发表确认。"
+      },
+      "read_level": "索引元信息；正式出处待核验",
+      "locator": "Semantic Scholar metadata; publisher fetch unresolved",
+      "supports": "将是否存在注入进一步拆成注入位置定位，补充检测、定位和效果归因之间的区别。",
+      "checked_on": "2026-10-01",
+      "reproduced": false,
+      "evidence_type": "索引线索，非已确认发表",
+      "limits": "仅用于研究难点地图。作者报告与我们的推断分开；不是已经确认的新研究空白。",
+      "aliases": [
+        "https://arxiv.org/abs/2510.12252"
+      ],
+      "doi": null,
+      "problem_ids": [
+        "F02",
+        "F03",
+        "G02"
+      ],
+      "relevance_role": "direct",
+      "source_role": "直接相关工作",
+      "semantic_scholar": {
+        "paperId": "532f88e78c96a7efb418c6fedd428b741a73e9af",
+        "indexed_year": 2025,
+        "indexed_date": "2025-10-14",
+        "indexed_venue": "IEEE Symposium on Security and Privacy",
+        "externalIds": {
+          "DBLP": "journals/corr/abs-2510-12252",
+          "ArXiv": "2510.12252",
+          "DOI": "10.1109/SP63933.2026.00105",
+          "CorpusId": 282064646
+        },
+        "citation_count": 35,
+        "retrieval_queries": [
+          "Q17"
+        ]
+      },
+      "old_catalog_match": false,
+      "abstract_available_for_triage": false,
+      "full_text_read": false
     },
     {
       "id": "S15",
@@ -222,7 +2642,8 @@
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "官方文档",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "documentation"
     },
     {
       "id": "S16",
@@ -236,7 +2657,8 @@
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "官方文档",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "documentation"
     },
     {
       "id": "S17",
@@ -250,7 +2672,8 @@
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "官方文档",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "documentation"
     },
     {
       "id": "S18",
@@ -264,7 +2687,8 @@
       "checked_on": "2026-09-30",
       "reproduced": false,
       "evidence_type": "官方文档",
-      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。"
+      "limits": "用于定位研究困难；未完成本轮全文复现，不据此确认新的研究空白。",
+      "publication_status": "documentation"
     }
   ],
   "themes": [
@@ -274,7 +2698,7 @@
       "subtitle": "用户指令、网页、文件和工具返回混在一起时，谁有权让Agent做事？",
       "stage": "输入",
       "coverage": "较充分",
-      "coverage_note": "已有工具注入和Skill注入基准；图像、音频入口本轮覆盖不足。"
+      "coverage_note": "补入USENIX/CCS、ACL/EMNLP和ICLR的正式工作；覆盖文字、网页视觉和任务上下文，但音频仍薄弱。"
     },
     {
       "id": "B",
@@ -282,23 +2706,23 @@
       "subtitle": "从“找得到”到“装得上”，元数据、资源和依赖都可能改变实际行为。",
       "stage": "发现与安装",
       "coverage": "较充分",
-      "coverage_note": "已有生态、选择和依赖研究；当前来源偏重Skill，其他插件市场仍需补查。"
+      "coverage_note": "补入NDSS工具选择、AAAI MCPTox及2026年MCP生态论文；Skill打包/演化部分仍需近期预印本补充。"
     },
     {
       "id": "C",
       "title": "权限和数据会越界吗？",
       "subtitle": "批准一个任务，不等于允许任意读文件、调用服务或转交数据。",
       "stage": "授权与执行",
-      "coverage": "中等",
-      "coverage_note": "官方语义较明确；跨宿主共同承诺与真实部署测量需要逐项核对。"
+      "coverage": "较充分",
+      "coverage_note": "已有正式访问控制、隐私委托和MCP情境完整性研究；具体宿主共同承诺仍需原生核对。"
     },
     {
       "id": "D",
       "title": "多步协作还能守住边界吗？",
       "subtitle": "单步操作或单个Agent看起来合理，组合起来未必符合用户目的。",
       "stage": "工具与委托",
-      "coverage": "待补查",
-      "coverage_note": "多步任务和MCP材料已读；专门的多Agent通信、责任分配证据仍偏少。"
+      "coverage": "较充分",
+      "coverage_note": "已补齐ACL/EMNLP的通信攻击、消息图与角色/拓扑研究，以及ACL 2026 ACIArena；不再标为仅有相邻规范。"
     },
     {
       "id": "E",
@@ -306,7 +2730,7 @@
       "subtitle": "一次读到的内容可能进入记忆或技能，之后换任务仍有影响。",
       "stage": "记忆与更新",
       "coverage": "中等",
-      "coverage_note": "记忆投毒与技能演化已有工作；撤销和长期真实运行仍需更完整来源。"
+      "coverage_note": "正式工作覆盖记忆投毒、记忆隐私与失效记忆复用；技能写入和完整撤销链仍有不同证据层次。"
     },
     {
       "id": "F",
@@ -314,7 +2738,7 @@
       "subtitle": "文本可疑、调用已发出、真实效果已发生，是三件不同的事。",
       "stage": "观察与归因",
       "coverage": "较充分",
-      "coverage_note": "动态检测与日志语义已有材料；不能由单个观测缺失推成整体不可观察。"
+      "coverage_note": "补入行动前检查、图结构约束及内部信号检测，明确观测条件；原生审计与任务效果仍分别核对。"
     },
     {
       "id": "G",
@@ -322,7 +2746,7 @@
       "subtitle": "模型做不到、评测器看错、检测器真失败，不能混成同一个数字。",
       "stage": "评测",
       "coverage": "较充分",
-      "coverage_note": "安全/效用和来源留出已有明确工作；更多独立复现仍未完成。"
+      "coverage_note": "已有正式多步安全、效用、自适应攻击和多语言评测；仍未完成所选论文的独立全文复现。"
     },
     {
       "id": "H",
@@ -330,7 +2754,7 @@
       "subtitle": "任务完成之外，还要看资源、正常体验和版本变化后的适用范围。",
       "stage": "持续运行",
       "coverage": "中等",
-      "coverage_note": "成本放大与跨设置差异已有材料；生产事故率、部署规模缺可靠统计。"
+      "coverage_note": "正式来源补充安全效用、资源消耗和跨语言迁移；生产事故率与长期部署仍缺可靠分母。"
     }
   ],
   "problems": [
@@ -345,6 +2769,23 @@
       "existing_progress": "工具返回注入与Skill注入已有配对评测。",
       "open_question": "换任务、语言和包装后，哪些指令仍会被错误当作有权要求的操作？",
       "source_refs": [
+        "P104",
+        "P106",
+        "P140",
+        "P143",
+        "P110",
+        "P112",
+        "P114",
+        "P115",
+        "P117",
+        "P118",
+        "P121",
+        "P123",
+        "P129",
+        "P130",
+        "P134",
+        "P136",
+        "P111",
         "S01",
         "S02",
         "S05"
@@ -354,7 +2795,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 19,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 20,
+        "published_2026": 4,
+        "findings": 6,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "A02",
@@ -367,15 +2818,28 @@
       "existing_progress": "AgentHarm测用户滥用，AgentDojo等测正常任务下的外部注入。",
       "open_question": "不同威胁模型的结果和能力要求，应怎样分别解释而不混用？",
       "source_refs": [
+        "P114",
+        "P135",
         "S04",
-        "S01"
+        "S01",
+        "S02"
       ],
       "status": "已知边界",
       "contexts": "通用工具Agent",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 5,
+        "preprint": 0,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 5,
+        "published_2026": 0,
+        "findings": 1,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "A03",
@@ -388,6 +2852,12 @@
       "existing_progress": "Skill-Inject和仓库上下文分析已研究情境相关判断。",
       "open_question": "真实宿主提供的信息是否足以判断当前操作的授权范围？",
       "source_refs": [
+        "P116",
+        "P120",
+        "P128",
+        "P134",
+        "P113",
+        "S01",
         "S05",
         "S14",
         "S18"
@@ -397,7 +2867,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 6,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 8,
+        "published_2026": 0,
+        "findings": 1,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "B01",
@@ -410,15 +2890,27 @@
       "existing_progress": "语义供应链与生命周期研究已覆盖检索和规划选择。",
       "open_question": "不同选择流程真正依赖哪些不可信信号，影响是否能与功能匹配分开？",
       "source_refs": [
-        "S13",
-        "S07"
+        "P108",
+        "P143",
+        "S07",
+        "S13"
       ],
       "status": "持续研究",
       "contexts": "技能库 / 检索 / 规划",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 2,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 4,
+        "published_2026": 2,
+        "findings": 0,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "B02",
@@ -431,16 +2923,31 @@
       "existing_progress": "规范允许资源和脚本；动态测试、依赖闭包工作已扩展检查范围。",
       "open_question": "哪些依赖能可靠发现，哪些外部服务行为仍无法从包内容推定？",
       "source_refs": [
-        "S15",
+        "P108",
+        "P138",
+        "P139",
+        "P140",
+        "P114",
         "S06",
-        "S09"
+        "S09",
+        "S15"
       ],
       "status": "持续研究",
       "contexts": "安装 / 代码助手 / Skill",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 5,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 7,
+        "published_2026": 4,
+        "findings": 0,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "B03",
@@ -453,6 +2960,7 @@
       "existing_progress": "ClosureBound研究版本化依赖闭包与效果授权。",
       "open_question": "在完整发现和介入前提不满足的实际宿主上，保证还能成立到什么范围？",
       "source_refs": [
+        "P139",
         "S09",
         "S15"
       ],
@@ -461,7 +2969,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 1,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 2,
+        "published_2026": 1,
+        "findings": 0,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "C01",
@@ -474,6 +2992,15 @@
       "existing_progress": "规范和宿主文档解释了预批准语义；它不是统一的权限上限。",
       "open_question": "实际承诺是什么、由谁执行、在哪些配置和版本下有效？",
       "source_refs": [
+        "P101",
+        "P108",
+        "P109",
+        "P139",
+        "P110",
+        "P120",
+        "P122",
+        "P124",
+        "P133",
         "S15",
         "S16"
       ],
@@ -482,7 +3009,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 9,
+        "preprint": 0,
+        "indexed_unverified": 0,
+        "documentation": 2,
+        "papers": 9,
+        "published_2026": 4,
+        "findings": 1,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "C02",
@@ -495,6 +3032,13 @@
       "existing_progress": "上下文授权需求和用途/来源绑定已有相关研究。",
       "open_question": "能否准确说明批准覆盖的对象与用途，而不将已有的细粒度权限重命名成新问题？",
       "source_refs": [
+        "P103",
+        "P109",
+        "P116",
+        "P122",
+        "P128",
+        "P133",
+        "P113",
         "S05",
         "S09",
         "S18"
@@ -504,7 +3048,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 7,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 9,
+        "published_2026": 2,
+        "findings": 1,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "C03",
@@ -517,6 +3071,13 @@
       "existing_progress": "注入基准覆盖外传目标，MCP文档明确令牌及混淆代理风险。",
       "open_question": "真实数据流和独立授权如何对应，什么才算已完成的未授权效果？",
       "source_refs": [
+        "P103",
+        "P138",
+        "P140",
+        "P115",
+        "P128",
+        "P141",
+        "P113",
         "S02",
         "S05",
         "S18"
@@ -526,7 +3087,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 8,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 9,
+        "published_2026": 3,
+        "findings": 2,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "D01",
@@ -536,9 +3107,21 @@
       "example_type": "解释性假设场景，不是本轮复现案例",
       "why_it_matters": "识别多步任务中的整体偏离，而不是逐工具孤立打标签。",
       "why_hard": "危害可以依赖组合与先后关系，单步事件缺少完整任务语境。",
-      "existing_progress": "AgentHarm和AgentDojo包含多步任务评价。",
+      "existing_progress": "ASB、ToolSafety和2026年MCP工具链研究已经讨论多步组合风险；单步合法不保证流程符合原任务。",
       "open_question": "哪些组合性风险不能由已有任务级评测解释，需要什么样的明确任务真值？",
       "source_refs": [
+        "P102",
+        "P104",
+        "P138",
+        "P114",
+        "P118",
+        "P121",
+        "P123",
+        "P126",
+        "P127",
+        "P131",
+        "P132",
+        "P135",
         "S04",
         "S01"
       ],
@@ -547,7 +3130,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 14,
+        "preprint": 0,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 14,
+        "published_2026": 3,
+        "findings": 4,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "D02",
@@ -557,18 +3150,39 @@
       "example_type": "解释性假设场景，不是本轮复现案例",
       "why_it_matters": "明确委托者、执行者与最终用户各自的权限范围。",
       "why_hard": "身份、资源范围和用途可能在多跳调用中由不同组件管理。",
-      "existing_progress": "MCP安全材料讨论混淆代理与授权边界，但不等于所有多Agent系统都有相同实现。",
-      "open_question": "哪些真实委托系统承诺隔离、又提供可观察证据？专门文献还需补齐。",
+      "existing_progress": "ACL/EMNLP的通信攻击、MASTER、MCIP和ACL 2026 ACIArena已直接研究多Agent协作与跨组件边界。",
+      "open_question": "已有通信与拓扑防御之下，具体委托系统仍缺哪种权限保证或证据？不能再把多Agent安全整体当成空白。",
       "source_refs": [
-        "S18",
-        "S09"
+        "P102",
+        "P103",
+        "P108",
+        "P109",
+        "P138",
+        "P139",
+        "P140",
+        "P122",
+        "P126",
+        "P127",
+        "P131",
+        "S09",
+        "S18"
       ],
-      "status": "待补证据",
+      "status": "持续研究",
       "contexts": "多Agent / MCP / 委托",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 11,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 12,
+        "published_2026": 7,
+        "findings": 3,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "D03",
@@ -578,18 +3192,34 @@
       "example_type": "解释性假设场景，不是本轮复现案例",
       "why_it_matters": "避免转述让信息的可信级别悄悄提高。",
       "why_hard": "原始来源、转述、执行请求之间的关联可能需要跨组件保留。",
-      "existing_progress": "间接注入研究说明来源混淆风险；官方授权讨论提供相邻边界。",
-      "open_question": "真实多Agent消息是否保留足够来源，还是目前只存在于人工构造的例子？",
+      "existing_progress": "Red-Teaming LLM Multi-Agent Systems、G-Safeguard、MASTER和ACIArena已经覆盖通信攻击、消息图异常及级联传播。",
+      "open_question": "哪些真实系统仍无法保持来源或授权边界？新问题需要区别于已有消息图检测和拓扑干预。",
       "source_refs": [
+        "P102",
+        "P122",
+        "P126",
+        "P127",
+        "P131",
+        "P132",
         "S02",
         "S18"
       ],
-      "status": "待补证据",
+      "status": "持续研究",
       "contexts": "多Agent / 摘要 / 消息",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 7,
+        "preprint": 0,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 7,
+        "published_2026": 1,
+        "findings": 4,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "E01",
@@ -602,6 +3232,8 @@
       "existing_progress": "AgentPoison已直接研究记忆和知识库投毒。",
       "open_question": "在不同检索和更新流程中，已有攻击边界、触发范围及正常影响如何变化？",
       "source_refs": [
+        "P140",
+        "P141",
         "S03"
       ],
       "status": "持续研究",
@@ -609,7 +3241,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 3,
+        "preprint": 0,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 3,
+        "published_2026": 1,
+        "findings": 0,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "E02",
@@ -622,15 +3264,26 @@
       "existing_progress": "PoisonedEvolution已研究轨迹证据如何被提升为技能行为。",
       "open_question": "不同系统中的写入、被调用和真实副作用分别是什么关系？",
       "source_refs": [
-        "S08",
-        "S07"
+        "S03",
+        "S07",
+        "S08"
       ],
       "status": "持续研究",
       "contexts": "自进化 / 技能写入",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 1,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 3,
+        "published_2026": 0,
+        "findings": 0,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "E03",
@@ -640,18 +3293,30 @@
       "example_type": "解释性假设场景，不是本轮复现案例",
       "why_it_matters": "让撤销的实际范围可被用户理解和检查。",
       "why_hard": "删除包、撤回权限和清除持久状态不是同一操作。",
-      "existing_progress": "ClosureBound将有效期和状态变化纳入绑定；这不等于完全清除所有历史影响。",
-      "open_question": "要先核对具体宿主承诺与已有撤销研究；本轮尚未补齐长期撤销的专门材料。",
+      "existing_progress": "ACL 2025的记忆隐私研究、ACL 2026 Findings的From Recall to Forgetting，以及依赖/有效期工作提供了相邻证据。",
+      "open_question": "旧信息失效、记忆遗忘和安全权限撤销不是同一问题。具体原生撤销承诺和派生影响仍需补查。",
       "source_refs": [
-        "S09",
-        "S03"
+        "P142",
+        "P141",
+        "S03",
+        "S09"
       ],
       "status": "待补证据",
       "contexts": "撤销 / 缓存 / 记忆",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 3,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 4,
+        "published_2026": 1,
+        "findings": 1,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "F01",
@@ -664,6 +3329,15 @@
       "existing_progress": "SkillSentry已有自适应环境和配对动态测试。",
       "open_question": "哪些触发空间仍未覆盖，如何明确测试覆盖范围而不是重复提出动态测试？",
       "source_refs": [
+        "P104",
+        "P115",
+        "P117",
+        "P118",
+        "P123",
+        "P125",
+        "P130",
+        "P111",
+        "S03",
         "S06"
       ],
       "status": "持续研究",
@@ -671,7 +3345,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 9,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 10,
+        "published_2026": 1,
+        "findings": 4,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "F02",
@@ -684,6 +3368,11 @@
       "existing_progress": "宿主文档提供工具钩子与展开事件等不同入口。",
       "open_question": "当前事件是否遗漏、完整转录是否已覆盖、是否只用错了观察入口？",
       "source_refs": [
+        "P119",
+        "P121",
+        "P125",
+        "P132",
+        "P137",
         "S16",
         "S17"
       ],
@@ -692,7 +3381,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 4,
+        "preprint": 0,
+        "indexed_unverified": 1,
+        "documentation": 2,
+        "papers": 5,
+        "published_2026": 0,
+        "findings": 2,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "F03",
@@ -705,15 +3404,33 @@
       "existing_progress": "动态Skill测试结合执行轨迹；AgentDojo在具体任务环境检查结果。",
       "open_question": "哪种独立事实足以认定效果、归因到输入，并排除任务本来就要求的合法操作？",
       "source_refs": [
+        "P101",
+        "P138",
+        "P120",
+        "P124",
+        "P128",
+        "P133",
+        "S01",
+        "S02",
         "S06",
-        "S01"
+        "P137"
       ],
       "status": "持续研究",
       "contexts": "效果核验 / 归因",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 8,
+        "preprint": 1,
+        "indexed_unverified": 1,
+        "documentation": 0,
+        "papers": 10,
+        "published_2026": 2,
+        "findings": 3,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "G01",
@@ -726,15 +3443,33 @@
       "existing_progress": "AgentDojo报告无攻击时仍存在任务失败；AgentHarm要求保留多步执行能力。",
       "open_question": "不同阶段的失败应如何单独报告，才能公平比较安全能力？",
       "source_refs": [
-        "S01",
-        "S04"
+        "P101",
+        "P106",
+        "P107",
+        "P140",
+        "P142",
+        "P114",
+        "P124",
+        "P135",
+        "S04",
+        "S01"
       ],
       "status": "持续研究",
       "contexts": "基准 / 能力 / 统计",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 10,
+        "preprint": 0,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 10,
+        "published_2026": 5,
+        "findings": 4,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "G02",
@@ -747,16 +3482,34 @@
       "existing_progress": "Skill-Inject比较正常遵从；MaliciousSkillBench和Context Matters讨论正常覆盖与误报。",
       "open_question": "对实际正常任务，误报和漏报应使用哪些共同条件与分母？",
       "source_refs": [
+        "P112",
+        "P119",
+        "P124",
+        "P129",
+        "P136",
+        "P111",
+        "S01",
         "S05",
         "S10",
-        "S14"
+        "S14",
+        "P137"
       ],
       "status": "持续研究",
       "contexts": "检测 / 标签 / 误报",
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 7,
+        "preprint": 3,
+        "indexed_unverified": 1,
+        "documentation": 0,
+        "papers": 11,
+        "published_2026": 0,
+        "findings": 2,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "G03",
@@ -766,9 +3519,20 @@
       "example_type": "解释性假设场景，不是本轮复现案例",
       "why_it_matters": "区分真正泛化与记住来源、模板或包装。",
       "why_hard": "来源和结构相关性让随机划分过于乐观，模型选择还可能污染测试集。",
-      "existing_progress": "MaliciousSkillBench已区分随机、结构与来源留出。",
+      "existing_progress": "自适应注入攻击、MAPS多语言评测与结构/来源留出研究分别揭示不同的泛化边界。",
       "open_question": "新的研究还需要覆盖什么未见条件，不能仅换模型重做已有留出结论？",
       "source_refs": [
+        "P102",
+        "P106",
+        "P107",
+        "P108",
+        "P143",
+        "P117",
+        "P130",
+        "P134",
+        "P136",
+        "P111",
+        "S03",
         "S10",
         "S14"
       ],
@@ -777,7 +3541,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 11,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 13,
+        "published_2026": 5,
+        "findings": 4,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "H01",
@@ -787,9 +3561,10 @@
       "example_type": "解释性假设场景，不是本轮复现案例",
       "why_it_matters": "把时间、调用量和资源消耗纳入任务完成之外的代价。",
       "why_hard": "额外步骤可能看似合理，正常难任务也会消耗更多资源。",
-      "existing_progress": "Convergent Detour Hijacking已研究保留任务结果的资源放大。",
+      "existing_progress": "已发表的NaturalSloth补充模型服务资源消耗，Skill工作流资源放大预印本提供相邻场景；两者不混作同一验证。",
       "open_question": "如何区分必要工作量与被引导的额外成本，且不把已知现象改名？",
       "source_refs": [
+        "P105",
         "S12"
       ],
       "status": "持续研究",
@@ -797,7 +3572,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 1,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 2,
+        "published_2026": 1,
+        "findings": 0,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "H02",
@@ -810,6 +3595,17 @@
       "existing_progress": "AgentDojo和Skill-Inject同时考虑正常任务与攻击条件。",
       "open_question": "同信息、同预算和同权限前提下，哪些安全收益仍然成立？",
       "source_refs": [
+        "P101",
+        "P103",
+        "P104",
+        "P110",
+        "P112",
+        "P116",
+        "P129",
+        "P133",
+        "P135",
+        "S04",
+        "P113",
         "S01",
         "S05"
       ],
@@ -818,7 +3614,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 12,
+        "preprint": 1,
+        "indexed_unverified": 0,
+        "documentation": 0,
+        "papers": 13,
+        "published_2026": 3,
+        "findings": 2,
+        "workshop_or_demo": 0
+      }
     },
     {
       "id": "H03",
@@ -831,6 +3637,10 @@
       "existing_progress": "生命周期与依赖绑定工作已讨论变化；官方文档也有各自版本语义。",
       "open_question": "哪些变化需要重新核验，哪些历史证据仍可沿用？真实部署规模数据还缺。",
       "source_refs": [
+        "P106",
+        "P107",
+        "P139",
+        "P142",
         "S07",
         "S09",
         "S16"
@@ -840,7 +3650,17 @@
       "open_question_type": "研究者归纳，尚未确认新颖性",
       "not_a_new_idea": true,
       "human_confirmed": false,
-      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。"
+      "next_reading": "人工确认优先难点后，深读最近邻的Related Work、Method与关键实验，再比较可行方案。",
+      "evidence_counts": {
+        "published_verified": 4,
+        "preprint": 2,
+        "indexed_unverified": 0,
+        "documentation": 1,
+        "papers": 6,
+        "published_2026": 4,
+        "findings": 3,
+        "workshop_or_demo": 0
+      }
     }
   ],
   "relations": [
@@ -936,14 +3756,14 @@
       "state": "已用于本轮"
     },
     {
-      "step": "02 找证据骨架",
-      "detail": "先核对基础基准、近期Skill论文和官方安全语义。普通关键词搜索本轮出现较多不相关结果，因此改用一手原文与已知来源定向核对。",
-      "state": "已用于本轮"
+      "step": "02 复用文献库并扩检",
+      "detail": "核对旧库281条Scholar记录与143条补充条目；26组认证API查询取得1216条去重候选，按相关性筛选并补查官方论文集。2组查询最终遇到429，未伪装成完整普查。",
+      "state": "采集和筛选已完成，覆盖有限"
     },
     {
-      "step": "03 提炼困难",
-      "detail": "逐条写现实例子、谁受影响、为什么难、已有进展、仍需核对的问题；来源与推断分开。",
-      "state": "已用于本轮"
+      "step": "03 先核实发表，再关联难点",
+      "detail": "正式年份与Main、Findings、IAAI等分轨以原始出版记录为准。四条原有预印本入口升级为正式版本，保留原版链接；未核实条目不计入正式发表。",
+      "state": "书目与摘要层面，非全部全文复现"
     },
     {
       "step": "04 补充与反证",
@@ -958,28 +3778,28 @@
   ],
   "coverage_gaps": [
     {
-      "area": "多Agent通信与权限委托",
-      "reason": "当前以MCP规范和相邻基准为主，专门通信/委托论文需补齐。"
+      "area": "原生跨主体权限与完整撤销链",
+      "reason": "多Agent通信已有大量正式研究；尚待具体系统共同承诺、来源绑定和撤销后的派生状态证据，而非泛称整个领域空白。"
     },
     {
-      "area": "视觉与音频等多模态输入",
-      "reason": "本轮未系统覆盖多模态注入和界面误导。"
+      "area": "音频等其他多模态入口",
+      "reason": "网页截图与欺骗界面已经补入正式论文；音频及跨模态联动尚未系统覆盖。"
     },
     {
-      "area": "撤销、缓存与长期运行",
-      "reason": "有相邻依赖/记忆材料，缺少完整的撤销与生产长期测量；部分定向原文抓取失败不等于没有工作。"
+      "area": "Skill演化与长期运行",
+      "reason": "记忆投毒和失效记忆已有正式工作；Skill写入/演化仍较多依赖近期预印本，不能混淆。"
     },
     {
-      "area": "真实生产事故和采用规模",
-      "reason": "没有统一可信分母，不生成风险发生率或热度排行榜。"
+      "area": "真实部署规模与风险发生率",
+      "reason": "这轮统计的是检索与来源覆盖，没有统一生产分母，不生成事故发生率。"
     },
     {
-      "area": "形式保证与实现之间的差异",
-      "reason": "已有条件性保证，具体宿主能否满足前提还需逐个读实现和验证。"
+      "area": "全文方法、消融和复现",
+      "reason": "正式发表身份已核验不等于全部方法结论都已复核；人工选中的重点再进行深读与方案比较。"
     }
   ],
   "retrieval_receipt": {
-    "method": "定向一手来源核对 + 已有公共知识库归并",
+    "method": "旧参考库核对 + 已有认证Scholar客户端 + 官方论文集/出版方记录核验",
     "full_text_systematic_review": false,
     "failed_fetches": [
       "https://arxiv.org/abs/2606.19191",
@@ -988,5 +3808,324 @@
     "failed_fetch_effect": "未将本轮无法读取的原文作为新增支持证据；保留补查任务。",
     "all_sources_freshly_reproduced": false
   },
-  "revision": "fe09efe7d6d16f9806327269a66d494133bff83f90651df5e5d288df5dc38122"
+  "research_cutoff": "2026-09-30",
+  "publication_counts": {
+    "published_verified": 46,
+    "preprint": 10,
+    "indexed_unverified": 1,
+    "documentation": 4,
+    "papers": 57,
+    "published_2026": 14,
+    "findings": 15,
+    "workshop_or_demo": 0
+  },
+  "collection_summary": {
+    "provider": "Semantic Scholar Academic Graph API（复用已有认证客户端）",
+    "authenticated": true,
+    "old_static_bibliography": {
+      "total_bibliographic_rows": 424,
+      "title_normalized_unique": 412,
+      "safety_title_candidates": 16
+    },
+    "old_scholar_records": 281,
+    "old_supplemental_records": 143,
+    "query_count": 26,
+    "successful_queries": 24,
+    "failed_queries": [
+      {
+        "id": "Q03",
+        "route": "injection",
+        "query": "indirect prompt injection agent",
+        "year_filter": "2023-2026",
+        "error": "SemanticScholarHTTPError",
+        "status": 429
+      },
+      {
+        "id": "Q12",
+        "route": "multiagent",
+        "query": "multi agent prompt injection",
+        "year_filter": "2023-2026",
+        "error": "SemanticScholarHTTPError",
+        "status": 429
+      }
+    ],
+    "http_requests": 40,
+    "unique_candidate_records": 1216,
+    "max_results_per_query": 60,
+    "started_at": "2026-09-30T15:54:41.290026+00:00",
+    "finished_at": "2026-09-30T15:56:14.281505+00:00",
+    "candidate_snapshot_sha256": "c9c3d23665ce527b396282ff0f20b0ac6e58cfe63f0413d4579ee94f011711be",
+    "query_log": [
+      {
+        "id": "Q01",
+        "route": "base",
+        "query": "LLM agent security",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 42499,
+        "next": 60,
+        "sha256": "fb08c26e5b1af7f96b672802727fb9025654169d80d0f153d130138ead203f54"
+      },
+      {
+        "id": "Q02",
+        "route": "base",
+        "query": "LLM agent safety benchmark",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 12662,
+        "next": 60,
+        "sha256": "719426d1dc9bc216ff98d02fa16c0554e6acffd2c4120ef922739aa6c66b6a53"
+      },
+      {
+        "id": "Q03",
+        "route": "injection",
+        "query": "indirect prompt injection agent",
+        "year_filter": "2023-2026",
+        "error": "SemanticScholarHTTPError",
+        "status": 429
+      },
+      {
+        "id": "Q04",
+        "route": "injection",
+        "query": "prompt injection tool agent defense",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 803,
+        "next": 60,
+        "sha256": "0558cc3a8a4761ee115bffee7145392381a355027e126242c51a1becf786f1c0"
+      },
+      {
+        "id": "Q05",
+        "route": "skills",
+        "query": "agent skills security",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 26408,
+        "next": 60,
+        "sha256": "2840ca02e4abcf1ddc364dec9f652006abc4e97d557d8d44c05496abf4eaee81"
+      },
+      {
+        "id": "Q06",
+        "route": "skills",
+        "query": "skill supply chain poisoning",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 2011,
+        "next": 60,
+        "sha256": "c90c14b960e498b0c4d2cdb4cae94de5fb2a29fef3873d6ebdd4f542b4e41353"
+      },
+      {
+        "id": "Q07",
+        "route": "tools",
+        "query": "MCP tool poisoning",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 2612,
+        "next": 60,
+        "sha256": "a8c3f67b5bbabf54bd083084c2c329df88143c57c13c1fc381a99cb1a65e0eae"
+      },
+      {
+        "id": "Q08",
+        "route": "tools",
+        "query": "LLM agent authorization",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 28789,
+        "next": 60,
+        "sha256": "2b7d14f586f4bf55db46959e963c48feaf76601071ed8b6257ef267edcbf8bdf"
+      },
+      {
+        "id": "Q09",
+        "route": "privacy",
+        "query": "LLM agent privacy leakage",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 2070,
+        "next": 60,
+        "sha256": "4ba68bde6e1865ef5b253981feda5f3517475cb7e339bd54f696bceb171e6471"
+      },
+      {
+        "id": "Q10",
+        "route": "privacy",
+        "query": "LLM agent information flow",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 7728,
+        "next": 60,
+        "sha256": "de6aeef2a0a88a8e25a91c601160070ff4412d20930c3e5a99e54dfb198be541"
+      },
+      {
+        "id": "Q11",
+        "route": "multiagent",
+        "query": "LLM multi agent adversarial communication",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 1788,
+        "next": 60,
+        "sha256": "7bf685c5d2c7eb37a0492d6077441f95fedf1f7b16b0564d59896a314420603d"
+      },
+      {
+        "id": "Q12",
+        "route": "multiagent",
+        "query": "multi agent prompt injection",
+        "year_filter": "2023-2026",
+        "error": "SemanticScholarHTTPError",
+        "status": 429
+      },
+      {
+        "id": "Q13",
+        "route": "memory",
+        "query": "LLM agent memory poisoning",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 3425,
+        "next": 60,
+        "sha256": "1044b8bd4250d624c0837f497c58997bff80539753e44b51eae18938ac0675ea"
+      },
+      {
+        "id": "Q14",
+        "route": "memory",
+        "query": "self evolving agent safety",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 5738,
+        "next": 60,
+        "sha256": "a894163b2d3ec3eeea2e7975286acd9d188250bacc56937e67e91679e6a7ded1"
+      },
+      {
+        "id": "Q15",
+        "route": "memory",
+        "query": "LLM agent forgetting unlearning",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 477,
+        "next": 60,
+        "sha256": "b599efe3e8a0eb6ee628dc771cb89a406029f8b7c37018a494fb81308813dcec"
+      },
+      {
+        "id": "Q16",
+        "route": "evaluation",
+        "query": "agent security benchmark evaluation",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 19523,
+        "next": 60,
+        "sha256": "0e78279b825991eb0cbb002be7c37ffd1251231df204c77cc26132dcba94ff36"
+      },
+      {
+        "id": "Q17",
+        "route": "evaluation",
+        "query": "prompt injection adaptive attacks",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 3414,
+        "next": 60,
+        "sha256": "7761da068849df152f5299da4ba1d2751e2066f21a76a4f60aeb96daf6b50e5e"
+      },
+      {
+        "id": "Q18",
+        "route": "visual",
+        "query": "visual prompt injection web agents",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 253,
+        "next": 60,
+        "sha256": "4551dcfa86fe65d3e696eb201a6c7b54f4a767320e228028de7aecc6b046bd96"
+      },
+      {
+        "id": "Q19",
+        "route": "visual",
+        "query": "GUI agent security",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 14112,
+        "next": 60,
+        "sha256": "deedc5c8fbff3a9fb30db7e2d2b694a488f1861d7be9c7d79441b660ff15f8e1"
+      },
+      {
+        "id": "Q20",
+        "route": "cost",
+        "query": "LLM agent denial of service cost",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 299,
+        "next": 60,
+        "sha256": "338a99f75b068a20d0e76b2c7738238ef07250d906d052264375abb17ee40277"
+      },
+      {
+        "id": "Q21",
+        "route": "formal",
+        "query": "LLM agent formal security",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 3253,
+        "next": 60,
+        "sha256": "62b090d664c0a1c1c3e0d3b119ac3d9aa6743b546c1b9f703c5d1bd68663b25f"
+      },
+      {
+        "id": "Q22",
+        "route": "deployment",
+        "query": "LLM coding agent supply chain",
+        "year_filter": "2023-2026",
+        "returned": 60,
+        "total": 859,
+        "next": 60,
+        "sha256": "0c47197e77feb5f5b5823d2a66d6437448b23dc0b1241178f1a4c73d3cbb7940"
+      },
+      {
+        "id": "Q23",
+        "route": "recent",
+        "query": "agent safety",
+        "year_filter": "2026",
+        "returned": 60,
+        "total": 324639,
+        "next": 60,
+        "sha256": "aa625faf3d5ed127d1a82a53757b020d8bbc85c02ab944dad7720a22c16cd981"
+      },
+      {
+        "id": "Q24",
+        "route": "recent",
+        "query": "agent security",
+        "year_filter": "2026",
+        "returned": 60,
+        "total": 234080,
+        "next": 60,
+        "sha256": "75e5f5b4b0248b045fd1ab277ccaec1a8fa12044aa0331eb468eb4ee060feed2"
+      },
+      {
+        "id": "Q25",
+        "route": "recent",
+        "query": "prompt injection",
+        "year_filter": "2026",
+        "returned": 60,
+        "total": 97639,
+        "next": 60,
+        "sha256": "2433517365c0c10ceb291be1c36a300fa183679bc1a5763491913ba649f04b74"
+      },
+      {
+        "id": "Q26",
+        "route": "recent",
+        "query": "MCP security",
+        "year_filter": "2026",
+        "returned": 60,
+        "total": 99290,
+        "next": 60,
+        "sha256": "ffe6a71181e9a0c888e54ebeb22669e7ae3c3cb2e65c3b0b96bf8d9f37ac2740"
+      }
+    ],
+    "published_candidates_reviewed": 47,
+    "published_verified": 46,
+    "pending_publication_verification": 1,
+    "new_records_from_api_are_not_all_relevant": true,
+    "coverage_limits": [
+      "2023–2026定向检索；末4个查询限定2026。不是全量分页或全领域普查。",
+      "26个查询中2个最终遇到429；API返回候选不等于已纳入地图。",
+      "索引中的year/publicationDate可能是预印本首发日期，正式发表年份另从出版记录核验。",
+      "论文集目录可能默认落在特定分轨，目录没有命中不代表没有论文。",
+      "以正式论文书目和摘要筛选为主，未把全体1216候选说成已经全文读过。"
+    ],
+    "credentials_in_public_output": false
+  },
+  "publication_policy": "先读正式发表的研究；预印本补充近期进展；索引发表状态未经核验时单独标示。书目已核验不等于方法已复现。",
+  "revision": "778e735a90cddd10bc8323e67998cf200906592c3f26efa121641183431918bd"
 }

@@ -1,12 +1,23 @@
 {
   "source_repository": "lightrain-a/flow_idea",
-  "source_commit": "22709a78686f2a9f30d8a34ce885593a60380f58",
-  "atlas_revision": "fe09efe7d6d16f9806327269a66d494133bff83f90651df5e5d288df5dc38122",
+  "source_commit": "9b0ee5df91c9c59f3f5a61bbfebc5bf0655d4b24",
+  "atlas_revision": "778e735a90cddd10bc8323e67998cf200906592c3f26efa121641183431918bd",
+  "publication_counts": {
+    "published_verified": 46,
+    "preprint": 10,
+    "indexed_unverified": 1,
+    "documentation": 4,
+    "papers": 57,
+    "published_2026": 14,
+    "findings": 15,
+    "workshop_or_demo": 0
+  },
   "files": {
-    "agent-safety-atlas.html": "51e16ef665ac385431b5778efec2b30ea9e950d133e33bb8084045b6b1a0774c",
-    "agent-safety-atlas.css": "80bd4aa954dc1cdb34101e4066e6c51f96eb72e5b1efbd37f86aa154eab9a247",
-    "agent-safety-atlas.js": "bda3062e34e10a1b25ecce14bc01bf64b678ba426b37e62990fbaf8399376bd3",
-    "generated/agent-safety-atlas.json": "27b86a4252f59856fa4c0910c4e965a8ad80e8016019c1e9455fa4d558c3b36e"
+    "agent-safety-atlas.html": "23e2c58b4f66c5088de142954cc0322d619cb41580101511d91063786c9bef5e",
+    "agent-safety-atlas.css": "c3f0ecdd935763a19ac05f34aedf642d1d75e62c4f21486d482544dc8d4be8ca",
+    "agent-safety-atlas.js": "b41d7bf48f627ecc1df55f42994f0d25f8d432d128b4ad2a76883f0d7553db9c",
+    "generated/agent-safety-atlas.json": "e009fa491fb8530086f06c73962a4d2b05ce03463149ee179f32883c059aa6cb",
+    "generated/agent-safety-literature.js": "4b9a318656d21d386a710f41c75d0fdc3eec4e20befaabc8ee18a0d09fb6f056"
   },
   "projection": "PUBLIC_READ_ONLY",
   "human_confirmations": 0
