@@ -18,22 +18,23 @@
   function sourceLinks(refs) {
     const make = id => {
       const s=sources[id];
-      return `<a class="source-chip pub-${esc(groupOf(s))}" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"><small>${esc(s.publication || groupLabel(s))}</small>${esc(s.title)} ↗</a>`;
+      return `<a class="source-chip pub-${esc(groupOf(s))}" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer"><small>${esc(s.short_label || s.publication || groupLabel(s))}</small>${esc(s.title)} ↗</a>`;
     };
     const first=refs.slice(0,6).map(make).join('');
     return first+(refs.length>6?`<details class="more-references"><summary>展开其余 ${refs.length-6} 项依据</summary>${refs.slice(6).map(make).join('')}</details>`:'');
   }
   function sourceYear(s) { return s.published_year || s.first_posted_year || s.semantic_scholar?.indexed_year || ''; }
   function renderSources() {
-    const status=$('source-status').value, year=$('source-year').value, query=$('source-query').value.trim().toLowerCase();
-    const matches=data.sources.filter(s=>(status==='all'||groupOf(s)===status)&&(!year||String(sourceYear(s))===year)&&
-      (!query||[s.title,s.publication,s.supports,...data.problems.filter(p=>p.source_refs.includes(s.id)).map(p=>p.id+' '+p.title)].join(' ').toLowerCase().includes(query)));
-    $('source-results').textContent=`共 ${matches.length} 项，当前展示 ${Math.min(sourceLimit,matches.length)} 项。正式记录按发表年份降序；预印本年份与索引年份单独解释。`;
+    const status=$('source-status').value, year=$('source-year').value, query=$('source-query').value.trim().toLowerCase(), depth=$('source-depth').value;
+    const matches=data.sources.filter(s=>(status==='all'||(status==='papers'&&s.kind==='paper')||groupOf(s)===status)&&(!depth||s.evidence_role===depth)&&(!year||String(sourceYear(s))===year)&&
+      (!query||[s.title,s.short_label,s.publication,s.supports,...data.problems.filter(p=>p.source_refs.includes(s.id)||(p.discovery_refs||[]).includes(s.id)).map(p=>p.id+' '+p.title)].join(' ').toLowerCase().includes(query)));
+    if($('source-sort').value==='recent') matches.sort((a,b)=>Number(sourceYear(b)||0)-Number(sourceYear(a)||0)||a.title.localeCompare(b.title));
+    $('source-results').textContent=`共 ${matches.length} 项，当前展示 ${Math.min(sourceLimit,matches.length)} 项。正式论文按发表年、arXiv按首发年；索引条目不等于已核验结论。`;
     $('source-list').innerHTML=matches.slice(0,sourceLimit).map(s=>{
       const proof=s.publication_verification;
-      const related=data.problems.filter(p=>p.source_refs.includes(s.id));
+      const related=data.problems.filter(p=>p.source_refs.includes(s.id)||(p.discovery_refs||[]).includes(s.id));
       const yearNote=s.published_year&&s.semantic_scholar?.indexed_year&&s.published_year!==s.semantic_scholar.indexed_year ? ` · Scholar索引年份 ${s.semantic_scholar.indexed_year}，正式发表 ${s.published_year}`:'';
-      return `<article class="source-entry" id="source-${esc(s.id)}" data-publication-status="${esc(groupOf(s))}" data-publication-year="${esc(s.published_year||'')}"><span class="pid">${esc(s.id)}</span><div><div class="source-heading"><span class="pub-badge pub-${esc(groupOf(s))}">${esc(groupLabel(s))}</span><span class="source-meta">${esc(s.publication)}</span></div><h3><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></h3><p>${esc(s.supports)}</p><p class="source-meta">${esc(s.read_level)} · 核对 ${esc(s.checked_on)}${esc(yearNote)}</p>${s.relevance_role==='adjacent'?`<p class="adjacent-note">邻近背景：不把该论文当作目标系统的直接安全证明。</p>`:''}<div class="source-evidence-links">${proof?.status==='verified'?`<a href="${esc(proof.primary_url)}" target="_blank" rel="noopener noreferrer">查看正式出处 ↗</a>`:''}${(s.aliases||[]).filter(u=>u!==s.url).slice(0,1).map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">原版本 ↗</a>`).join('')}</div><div class="source-problems">对应难点：${related.map(p=>`<button data-detail="${esc(p.id)}" title="${esc(p.title)}">${esc(p.id)}</button>`).join('')}</div></div></article>`;
+      return `<article class="source-entry" id="source-${esc(s.id)}" data-publication-status="${esc(groupOf(s))}" data-publication-year="${esc(s.published_year||'')}"><span class="pid">${esc(s.id)}</span><div><div class="source-heading"><span class="pub-badge pub-${esc(groupOf(s))}">${esc(groupLabel(s))}</span><span class="source-meta">${esc(s.short_label || s.publication)}</span>${s.evidence_role==='discovery_only'?'<span class="discovery-badge">扩展索引 · 待深读</span>':''}</div><h3><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a></h3><p>${esc(s.supports)}</p><p class="source-meta">${esc(s.read_level)} · 核对 ${esc(s.checked_on)}${esc(yearNote)}</p>${s.relevance_role==='adjacent'?`<p class="adjacent-note">邻近背景：不把该论文当作目标系统的直接安全证明。</p>`:''}<div class="source-evidence-links">${proof?.status==='verified'?`<a href="${esc(proof.primary_url)}" target="_blank" rel="noopener noreferrer">查看正式出处 ↗</a>`:''}${(s.aliases||[]).filter(u=>u!==s.url).slice(0,1).map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">原版本 ↗</a>`).join('')}</div><div class="source-problems">${s.evidence_role==='discovery_only'?'主题导航（非证据）':'对应难点'}：${related.map(p=>`<button data-detail="${esc(p.id)}" title="${esc(p.title)}">${esc(p.id)}</button>`).join('')}</div></div></article>`;
     }).join('')||'<p class="empty">当前筛选没有条目，不代表该领域没有已发表研究。</p>';
     $('source-more').hidden=sourceLimit>=matches.length;
   }
@@ -92,8 +93,9 @@
       if(data.schema_version!==1 || !Array.isArray(data.problems) || !data.revision) throw new Error('Unsupported map');
       sources=Object.fromEntries(data.sources.map(s=>[s.id,s])); problems=Object.fromEntries(data.problems.map(p=>[p.id,p]));
       const counts=data.publication_counts;
-      $('hero-stats').innerHTML=`<div><b>${counts.published_verified}</b><small>已核验正式论文</small></div><div><b>${counts.published_2026}</b><small>其中发表于2026</small></div><div><b>${data.problems.length}</b><small>研究难点</small></div>`;
-      $('refresh-summary').textContent=`从原来的14篇扩展到${counts.papers}篇论文记录：${counts.published_verified}篇已核验正式发表、${counts.preprint}篇预印本补充、${counts.indexed_unverified}篇发表状态待核实，另有${counts.documentation}份官方文档。1216条API候选只作为筛选池，未直接堆进地图。`;
+      document.dispatchEvent(new CustomEvent('flow-idea-atlas-ready',{detail:data}));
+      $('hero-stats').innerHTML=`<div><b>${counts.published_verified}</b><small>已核验正式论文</small></div><div><b>${counts.papers-counts.published_verified}</b><small>预印本/待核记录</small></div><div><b>${data.industry_counts.companies}</b><small>机构公开难点</small></div>`;
+      $('refresh-summary').textContent=`当前${counts.papers}条去重论文记录，含${counts.published_verified}篇已核验正式发表；其余为预印本或发表待核记录。新增${data.frontier_collection.retained_new_records}条扩展入口只经题名/索引摘要初筛，未计作难点的已核验证据；${data.industry_counts.signals}条厂商公开问题另列，不混算论文。`;
       const receipt=data.collection_summary;
       $('collection-receipt').innerHTML=`<p>复用旧参考库的${receipt.old_scholar_records}条Scholar记录与${receipt.old_supplemental_records}条补充条目；静态去重后${receipt.old_static_bibliography.title_normalized_unique}项。重新执行${receipt.query_count}组认证查询，${receipt.successful_queries}组返回结果，获得${receipt.unique_candidate_records}个去重候选；实际HTTP尝试${receipt.http_requests}次（含重试）。</p><p>这些是候选，不是全部相关、已发表或已全文读完的论文。再经人工相关性筛选和官方书目核验，才进入当前地图。</p><p>未成功查询：${receipt.failed_queries.map(q=>esc(q.id+' '+q.query+' · HTTP '+q.status)).join('；')}。</p><p>${receipt.coverage_limits.map(esc).join('<br>')}</p>`;
 
@@ -109,9 +111,11 @@
         else if(saved?.ids?.length) feedback('地图已更新：旧版本清单未被自动沿用，请重新核对后选择。');
       } catch (_) { feedback('本地清单不可用；仍可阅读、比较和复制本次选择。'); }
       renderCoverage(); render();
+      if(location.hash==='#industry') $('industry').scrollIntoView();
       const id=location.hash.replace('#problem-',''); if(problems[id]) showProblem(id);
     } catch(error) { $('load-error').hidden=false; $('hero-stats').textContent='资料暂未加载'; }
   }
+  document.addEventListener('flow-idea-open-problem',event=>{if(data && problems[event.detail]) showProblem(event.detail);});
   document.addEventListener('click',event=>{
     const element=event.target.closest('button'); if(!element || !data) return;
     if(element.dataset.view){view=element.dataset.view;render();}
@@ -126,7 +130,7 @@
     saveSelection();renderSelection();
   });
   ['query','theme-filter','status-filter'].forEach(id=>$(id).addEventListener(id==='query'?'input':'change',()=>{if(data)render();}));
-  ['source-query','source-status','source-year'].forEach(id=>$(id).addEventListener(id==='source-query'?'input':'change',()=>{sourceLimit=12;if(data)renderSources();}));
+  ['source-query','source-status','source-year','source-depth','source-sort'].forEach(id=>$(id).addEventListener(id==='source-query'?'input':'change',()=>{sourceLimit=12;if(data)renderSources();}));
   $('source-more').addEventListener('click',()=>{sourceLimit+=12;renderSources();});
   $('reset').addEventListener('click',()=>{['query','theme-filter','status-filter'].forEach(id=>$(id).value='');if(data)render();});
   $('clear-selection').addEventListener('click',()=>{selected.clear();saveSelection();renderSelection();feedback('本机清单已清空；没有改动服务器研究状态。');});

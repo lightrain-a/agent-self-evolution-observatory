@@ -1,24 +1,32 @@
 {
   "source_repository": "lightrain-a/flow_idea",
-  "source_commit": "9b0ee5df91c9c59f3f5a61bbfebc5bf0655d4b24",
-  "atlas_revision": "778e735a90cddd10bc8323e67998cf200906592c3f26efa121641183431918bd",
+  "source_commit": "f2d37ada5243f875ad1f86dcff91afa8ca2ef274",
+  "atlas_revision": "aec715e151b6441b4699200b3947f502b0537f9ea4063e3a697c3a60a5944544",
+  "files": {
+    "agent-safety-atlas.html": "8c2be6a5dcb1c813f1d0d4320a8503009fb31353479c665dcf2acfb239a075cf",
+    "agent-safety-atlas.css": "c3f0ecdd935763a19ac05f34aedf642d1d75e62c4f21486d482544dc8d4be8ca",
+    "agent-safety-atlas.js": "647d05b48dac60517a8f7dcdf8773b1f29b8d977f94e5da36743a74551276bdd",
+    "agent-safety-industry.css": "ad1831b7d74df08afe4602d6e50e39596818d1b70284eba316cc97b1f76a90bf",
+    "agent-safety-industry.js": "e598263d42a4cbae23ed760e5f6dbd556cfefb1e9fa46f9a12d8d81ab8343ea2",
+    "generated/agent-safety-atlas.json": "796b6e188843c511d226f88ee1a9e7b60549cc0e0defbe2a75856024749c4ab8",
+    "generated/agent-safety-literature.js": "a7911206fce4287d5d5205837e95a082f151a1687948e0d41166fd49743d7179"
+  },
+  "projection": "PUBLIC_READ_ONLY",
+  "human_confirmations": 0,
   "publication_counts": {
     "published_verified": 46,
-    "preprint": 10,
-    "indexed_unverified": 1,
+    "preprint": 470,
+    "indexed_unverified": 60,
     "documentation": 4,
-    "papers": 57,
+    "papers": 576,
     "published_2026": 14,
     "findings": 15,
     "workshop_or_demo": 0
   },
-  "files": {
-    "agent-safety-atlas.html": "23e2c58b4f66c5088de142954cc0322d619cb41580101511d91063786c9bef5e",
-    "agent-safety-atlas.css": "c3f0ecdd935763a19ac05f34aedf642d1d75e62c4f21486d482544dc8d4be8ca",
-    "agent-safety-atlas.js": "b41d7bf48f627ecc1df55f42994f0d25f8d432d128b4ad2a76883f0d7553db9c",
-    "generated/agent-safety-atlas.json": "e009fa491fb8530086f06c73962a4d2b05ce03463149ee179f32883c059aa6cb",
-    "generated/agent-safety-literature.js": "4b9a318656d21d386a710f41c75d0fdc3eec4e20befaabc8ee18a0d09fb6f056"
-  },
-  "projection": "PUBLIC_READ_ONLY",
-  "human_confirmations": 0
+  "discovery_only": 519,
+  "industry_counts": {
+    "sources": 11,
+    "signals": 8,
+    "companies": 6
+  }
 }
