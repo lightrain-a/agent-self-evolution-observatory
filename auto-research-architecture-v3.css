@@ -1,0 +1,3 @@
+/* Flow direction and tighter desktop canvas */
+@media(min-width:1101px){.ar-nodes .ar-node:not(:last-child)::after{content:"›";position:absolute;right:-7px;top:44%;z-index:3;color:var(--node-accent);font-size:17px;font-weight:900;line-height:1;background:#fff;border-radius:5px}.ar-nodes.detailed{grid-template-columns:repeat(9,minmax(0,1fr))}}
+@media(max-width:1100px){.ar-nodes .ar-node::after{display:none}}

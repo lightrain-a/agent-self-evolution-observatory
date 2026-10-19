@@ -1,0 +1,51 @@
+window.AUTO_RESEARCH_CATALOG = {
+ideaSkills:[
+["flow-idea","总控 Skill","读取项目状态，按研究问题路由到阶段 Skill；协调探索、审阅、P0 与交接，不把一次模型输出当作已验证结论。","flow-idea"],
+["idea-scope","研究范围","界定应用场景、研究对象、目标与边界；先澄清问题，不预先设计完整解决方案。","idea-scope"],
+["idea-scout","文献侦察","收集去重的一手来源，保留版本、日期、来源角色与阅读深度；把文献主张和已核验证据分开。","idea-scout"],
+["idea-cards","问题卡片","从文献和真实观察提炼问题地图、适用条件、解释假设与承重证据，而不只是摘录摘要。","idea-cards"],
+["idea-match","候选构建","将具体问题映射到少量可区分的机制假设，明确预测与最强简单替代。","idea-match"],
+["idea-collision","最近邻比较","按对象、假设、机制、数据、预算和结论核对最接近的已有工作，形成可审查的差异边界。","idea-collision"],
+["idea-design","最小实验设计","定义能够区分竞争解释的测试、匹配对照、成功/失败信号、预算和停止条件。","idea-design"],
+["idea-review","独立审阅","检查研究价值、近邻差异、证据缺口与简单替代；必要时要求修订或停止。","idea-review"],
+["idea-p0","P0 预实验","核对执行入口、输入、预算和授权；执行有界尝试并记录原始结果，失败时不自动重跑。","idea-p0"],
+["idea-handoff","研究交接","保留 pilot 状态、失败层级、证据引用、哈希和重开条件；只有经确认的真实 pilot 才可作为通过交接。","idea-handoff"]
+].map(([name,label,desc,slug])=>({name,label,desc,url:"https://github.com/lightrain-a/flow_idea/blob/main/src/flow_idea/resources/skills/"+slug+"/SKILL.md"})),
+inkSkills:[
+["flow-ink","总控 Skill","读取 W0 交接、当前项目状态和阶段 packet；按需加载最小 Skill/Prompt 集，保留既有结果并约束执行权限。","flow-ink"],
+["flow-ink-outline","W1 论文大纲与对照契约","冻结论文主线、最近邻差异、实验矩阵、Table 1 契约和图表计划。","flow-ink-outline"],
+["flow-ink-experiments","W2 有界实验 DAG","把固定实验矩阵转成带依赖、允许命令、预算、输出和覆盖单元的任务 DAG；支持 run/resume。","flow-ink-experiments"],
+["flow-ink-table1","W3 结果核验与 Table 1","根据原始来源、哈希、任务/方法身份、分母和重复单位验证结果，再生成确定性的主表。","flow-ink-table1"],
+["flow-ink-analysis","W4 分析与图表","从已核验结果制定分析和图表；统计图由代码生成，概念架构图走专门的框架图工作流。","flow-ink-analysis"],
+["flow-ink-writing","W5 章节写作","按章节任务生成与证据绑定的草稿；候选与已接受稿分离，不凭空补实验结论。","flow-ink-writing"],
+["flow-ink-review","W6–W7 审阅与 PDF 检查","独立审查科学主张和修订；编译后实际逐页检查 PDF，并核对证据、引用、公式与版式。","flow-ink-review"],
+["flow-ink-release","W8 交付审计","检查源码、PDF、证据和审查记录是否绑定同一版本，生成 release manifest；不自动投稿。","flow-ink-release"],
+["flow-ink-citation","引用核验","检查参考文献身份及句子级引用是否真正支持相应主张。","flow-ink-citation"],
+["flow-ink-response","审稿回复与同步","将真实审稿意见映射到证据、修订与实验分流，并同步到论文。","flow-ink-response"],
+["flow-ink-spotlight","AI 聚光灯审查","在科学核验之后，清理防御性表达和不自然的学术语言，但不隐藏负结果或限制。","flow-ink-spotlight"],
+["flow-ink-submission","投稿准备审计","核验目标会议/期刊的最新规则、匿名、披露、复现材料和提交元数据；不执行自动投稿。","flow-ink-submission"]
+].map(([name,label,desc,slug])=>({name,label,desc,url:"https://github.com/lightrain-a/flow_ink/blob/main/src/flow_ink/resources/skills/"+slug+"/SKILL.md"})),
+prompts:[
+["P01","Advisor-style initialization","从已通过的研究设计初始化论文主线、实验矩阵和章节职责。"],
+["P02","Section-targeted improve","定位一个真实缺陷，做局部修改而不是无边界重写全文。"],
+["P03","HEIRS clear human writing","清晰、直接、可读的论文语言与实际页面空间检查。"],
+["P04","Fact / logic / evidence audit","语言润色前先审科学事实、逻辑与证据。"],
+["P05","Reader-first experiments","按读者问题组织实验：问题 → 证据 → 观察 → 结论边界。"],
+["P06","Related work & citations","组织相关工作主线、引用溯源与比较边界。"],
+["P07","Method & theory rewrite","围绕本文真实机制重写方法和理论解释。"],
+["P08","Main / appendix alignment","去除重复，同时保留复现信息与必要披露。"],
+["P09","Figure evidence repair","修复图表来源、语义、图注与实际尺寸，不改变数据含义。"],
+["P10","Summary synchronization","同步标题、摘要、引言、结论与当前证据。"],
+["P11","Title core goal + idea","让标题清楚表达论文的核心目标和洞见。"],
+["P12","Final PDF space QA","逐页检查最终 PDF 的留白、短尾行、图表间距和重排。"],
+["P13","Framework figure handoff","为方法/架构图准备参考、生成说明和局部编辑提示。"],
+["P14","AI Spotlight audit","在科学检查之后清理 AI 式、防御性学术表达。"],
+["P15","Citation / bibliography audit","核验参考文献身份和句子级证据支持。"],
+["P16","Rebuttal / response sync","把真实审稿意见、回应证据和论文修订同步起来。"],
+["P17","Notation / formula audit","检查符号首次出现、公式一致性和实现对应关系。"],
+["P18","Venue / submission audit","核验投稿规则、匿名、AI 披露、工件和复现材料。"],
+["P19","Benchmark exemplar pass","对照少量最近论文的结构与修辞功能，不复制原文。"],
+["P20","Claim provenance / lineage","审计关键主张的来源、推导、独立性、时间顺序与成本边界。"],
+["P21","Reviewer-visible novelty pre-mortem","检查最近邻碰撞边界是否足够清晰、是否在正文可见，并预演关键拒稿理由。"]
+].map(([id,name,desc])=>({id,name,desc,url:"https://github.com/lightrain-a/flow_ink/blob/main/src/flow_ink/resources/skills/flow-ink/prompts/"+String(Number(id.slice(1))).padStart(2,"0")+"-"+({"P01":"advisor-paper-initialization","P02":"section-targeted-improve","P03":"heirs-clear-human-writing","P04":"fact-logic-evidence-audit","P05":"reader-first-experiments","P06":"related-work-and-citations","P07":"method-and-theory-rewrite","P08":"main-appendix-alignment","P09":"figure-evidence-repair","P10":"summary-sync","P11":"title-core-idea","P12":"final-pdf-space-qa","P13":"framework-figure-gpt-handoff","P14":"ai-spotlight-audit","P15":"citation-bibliography-audit","P16":"rebuttal-response-sync","P17":"notation-formula-symbol-audit","P18":"venue-submission-artifact-audit","P19":"benchmark-exemplar-pass","P20":"claim-provenance-lineage-audit","P21":"reviewer-visible-novelty-pre-mortem"}[id])+".md"}))
+};
