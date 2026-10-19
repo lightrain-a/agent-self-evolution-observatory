@@ -3,6 +3,7 @@ window.NAV_GROUPS = [
     ["index.html",{en:"Observatory Home",zh:"研究站首页"}],
     ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
     ["system-overview.html",{en:"Research System",zh:"科研系统"}],
+    ["auto-research-architecture.html",{en:"Auto Research · Interactive Architecture",zh:"Auto Research · 交互式架构"}],
     ["experiment-costs.html",{en:"Experiment Costs",zh:"实验成本"}],
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:false, pages:[
@@ -191,6 +192,11 @@ window.SUPPLEMENTAL_PAPERS = [
 ];
 
 window.PAGE_CONTENT = {
+"auto-research-architecture":{
+  eyebrow:{en:"Auto Research · Interactive Architecture",zh:"Auto Research · 交互式架构"},
+  title:{en:"How Flow Idea and Flow Ink work together",zh:"Flow Idea 与 Flow Ink 如何协作"},
+  lead:{en:"Explore the two systems as interactive data-flow maps, including accumulated skills, prompts, artifacts, stage contracts, and human approval boundaries.",zh:"以交互式数据流图查看两个系统，包含已积累的 Skill、Prompt、产物、阶段合同和人工确认边界。"}
+},
 "home":{
   eyebrow:{en:"Agent Self-Evolution Observatory",zh:"Agent 自进化研究站"},
   title:{en:"From retrying to learning: a mechanism-first map of self-evolving agents",zh:"从“多试几次”到“真正学会”：Agent 自进化机制地图"},
