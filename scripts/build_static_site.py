@@ -35,7 +35,7 @@ PUBLIC_DIRS = (
     "data-preparation-demo",  # Explicitly synthetic, independently rendered examples only.
 )
 GENERATED_PATTERNS = ("*.js", "*.json")
-TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".tex", ".xml", ".webmanifest"}
+TEXT_PUBLIC_SUFFIXES = {"", ".html", ".css", ".js", ".json", ".svg", ".txt", ".tex", ".xml", ".webmanifest", ".md", ".tsv"}
 PUBLIC_REDACTIONS = (
     (re.compile(r"(?<![\w.])(?:[A-Za-z0-9._-]+@)?(?:222\.20\.126\.\d+|10\.42\.8\.\d+):/[^\s\"'`<>#\\]+"), "[internal-remote-path-redacted]"),
     (re.compile(r"(?<![\w.])host\d+:/[^\s\"'`<>#\\]+", re.IGNORECASE), "[internal-remote-path-redacted]"),
@@ -332,7 +332,22 @@ def build() -> Path:
             copied.add(destination)
             advisor_pdf_names.append(source.name)
 
+    # Publish the independently scoped RSI dossier, never its Python authoring sources.
+    rsi_source = ROOT / "rsi"
+    for source in sorted(rsi_source.iterdir()):
+        if source.is_file() and source.suffix in {".html", ".css", ".js", ".json", ".tsv", ".md"}:
+            destination = OUTPUT / "rsi" / source.name
+            copy_file(source, destination)
+            if source.suffix == ".html":
+                rendered = version_html_assets(destination.read_text(encoding="utf-8"), build_sha)
+                rendered = rendered.replace("fetch(`deployment-manifest.json", "fetch(`../deployment-manifest.json")
+                destination.write_text(rendered, encoding="utf-8")
+            copied.add(destination)
+
     required = (
+        OUTPUT / "rsi" / "index.html",
+        OUTPUT / "rsi" / "ideas.html",
+        OUTPUT / "rsi" / "sources.json",
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
         OUTPUT / "research-timeline.html",

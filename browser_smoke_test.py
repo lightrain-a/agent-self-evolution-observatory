@@ -164,6 +164,7 @@ def main() -> None:
             session_id,
             """return {
               nav: document.querySelectorAll('.nav-level2').length,
+              expectedNav: (window.NAV_GROUPS || []).reduce((n,g) => n + g.pages.length, 0),
               stats: document.querySelectorAll('.stat').length,
               routeCards: document.querySelectorAll('.page-chapter .framework-card').length,
               hero: document.querySelectorAll('.home-hero').length,
@@ -185,7 +186,7 @@ def main() -> None:
               consoleLinks: [...document.querySelectorAll('.home-research-console a')].map(x=>x.getAttribute('href')||'')
             };""",
         )
-        require(home["nav"] == 20, f"expected 20 primary navigation targets after adding the experiment-cost page, got {home['nav']}")
+        require(home["nav"] == home["expectedNav"] and home["expectedNav"] >= 27, f"sidebar must render every declared page including the RSI dossier: {home['nav']} / {home['expectedNav']}")
         require(home["stats"] == 4 and home["routeCards"] == 9 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")

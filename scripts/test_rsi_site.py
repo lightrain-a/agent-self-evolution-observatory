@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Dependency-free integrity checks for the separately scoped RSI dossier."""
+from __future__ import annotations
+import json
+import re
+import subprocess
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import urlsplit, unquote
+
+ROOT = Path(__file__).resolve().parents[1]
+PAGES = ['index','literature','cross-domain','learning-science','ideas','experiments','references']
+
+class Parsed(HTMLParser):
+    def __init__(self):
+        super().__init__(); self.ids=[]; self.links=[]; self.h1=0
+    def handle_starttag(self, tag, attrs):
+        d=dict(attrs)
+        if 'id' in d: self.ids.append(d['id'])
+        if tag=='h1': self.h1+=1
+        for attr in ['href','src']:
+            if attr in d: self.links.append(d[attr])
+
+def parse(path):
+    p=Parsed(); p.feed(path.read_text(encoding='utf-8')); return p
+
+def check(condition, message):
+    if not condition: raise AssertionError(message)
+
+def main():
+    source=json.loads((ROOT/'rsi/sources.json').read_text(encoding='utf-8'))
+    refs={r['id'] for r in source['sources']}
+    check(len(refs)==42,'Expected the audited 42-record source snapshot')
+    check(source['review_date']=='2026-10-21','Review date drift')
+    parsed={}
+    for slug in PAGES:
+        path=ROOT/'rsi'/f'{slug}.html'; p=parse(path); parsed[path]=p
+        check(p.h1==1,f'{slug}: expected one h1')
+        check(len(set(p.ids))==len(p.ids),f'{slug}: duplicate IDs')
+        text=path.read_text(encoding='utf-8')
+        check('[[' not in text,f'{slug}: unexpanded source token')
+        check('提案尚待实验' in text,f'{slug}: missing hypothesis status')
+        check('lang="zh-CN"' in text,f'{slug}: wrong content language')
+    for path,p in parsed.items():
+        for href in p.links:
+            u=urlsplit(href)
+            if u.scheme or u.netloc: continue
+            target=(path.parent/unquote(u.path)).resolve() if u.path else path
+            check(target.is_relative_to(ROOT),f'Escaping link: {href}')
+            check(target.is_file(),f'Missing file: {path.name} -> {href}')
+            if u.fragment and target.suffix=='.html':
+                target_parsed=parsed.get(target) or parse(target)
+                check(unquote(u.fragment) in target_parsed.ids,f'Missing anchor: {path.name} -> {href}')
+    ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
+    check(refs<=ref_ids,'Some source cards have no anchors')
+    nav=(ROOT/'data.js').read_text(encoding='utf-8')
+    for slug in PAGES:
+        check(f'"rsi/{slug}.html"' in nav,f'Missing root navigation: {slug}')
+    records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
+    for r in records:
+        u=urlsplit(r['url']); p=ROOT/'rsi'/u.path
+        check(p in parsed and u.fragment in parsed[p].ids,'Search result target missing: '+r['url'])
+    subprocess.run(['node','--check',str(ROOT/'rsi/research.js')],check=True)
+    public=ROOT/'_site'
+    if public.exists():
+        for slug in PAGES:
+            check((public/'rsi'/f'{slug}.html').is_file(),f'Not exported: {slug}')
+        check(not list(public.rglob('*.py')),'Python leaked into public output')
+        check((public/'rsi/sources.json').read_bytes()==(ROOT/'rsi/sources.json').read_bytes(),'Exported source manifest differs')
+    print(f'PASS: {len(PAGES)} RSI pages, {len(refs)} sources, {len(records)} search records, local links/anchors, nav and public export.')
+
+if __name__=='__main__': main()

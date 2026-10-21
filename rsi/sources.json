@@ -1,0 +1,426 @@
+{
+  "review_date": "2026-10-21",
+  "scope": "RSI、学习型改进器、相邻领域与学习科学；定向证据地图，非穷尽性综述。",
+  "sources": [
+    {
+      "id": "S01",
+      "group": "RSI",
+      "title": "Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.07663",
+      "level": "摘要核对",
+      "note": "按修改对象和闭环程度整理 RSI；用于界定范围，不把一种严格定义当成全领域共识。",
+      "code": ""
+    },
+    {
+      "id": "S02",
+      "group": "RSI",
+      "title": "Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents",
+      "date": "arXiv 25.05；核对 v3",
+      "url": "https://arxiv.org/abs/2505.22954",
+      "level": "摘要核对",
+      "note": "维护代码谱系，以任务执行评价自修改版本；代码自进化与开放式搜索已有系统基础。",
+      "code": ""
+    },
+    {
+      "id": "S03",
+      "group": "RSI",
+      "title": "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
+      "date": "ICLR 2026 Oral；arXiv 25.07",
+      "url": "https://arxiv.org/abs/2507.19457",
+      "level": "摘要与官方仓库核对",
+      "note": "反思执行轨迹，提出并测试提示修改、组合互补经验；可作共享编辑器和强搜索基线。",
+      "code": "https://github.com/gepa-ai/gepa"
+    },
+    {
+      "id": "S04",
+      "group": "RSI",
+      "title": "Self-Adapting Language Models (SEAL)",
+      "date": "arXiv 25.06",
+      "url": "https://arxiv.org/abs/2506.10943",
+      "level": "摘要核对",
+      "note": "生成微调数据和更新指令，以更新后模型表现学习自编辑；属于参数持久更新。",
+      "code": ""
+    },
+    {
+      "id": "S05",
+      "group": "RSI",
+      "title": "Hyperagents",
+      "date": "arXiv 26.03",
+      "url": "https://arxiv.org/abs/2603.19461",
+      "level": "摘要核对",
+      "note": "任务 Agent 与修改它的 Meta-Agent 同在可编辑程序中；双层循环本身不再是充分创新。",
+      "code": ""
+    },
+    {
+      "id": "S06",
+      "group": "RSI",
+      "title": "MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.05297",
+      "level": "正文方法核对",
+      "note": "快慢时间尺度分别更新任务技能与元技能；与泛化的“改进器积累经验”直接相邻。",
+      "code": ""
+    },
+    {
+      "id": "S07",
+      "group": "RSI",
+      "title": "Harness-R1: Learning to Edit Executable Runtime Harnesses from Agent Failure Trajectories",
+      "date": "arXiv 26.08",
+      "url": "https://arxiv.org/abs/2608.02276",
+      "level": "摘要与官方仓库核对",
+      "note": "训练专门的 Harness 编辑器，以真实执行表现优化修改；学习生成补丁不是新的空白。",
+      "code": "https://github.com/DeepExperience/Harness-R1"
+    },
+    {
+      "id": "S08",
+      "group": "RSI",
+      "title": "Harness Learning Enables Generalizable Test-Time Adaptation",
+      "date": "arXiv 26.09",
+      "url": "https://arxiv.org/abs/2609.35738",
+      "level": "正文方法核对",
+      "note": "把 Harness 修改作为元学习问题，学习可迁移适应策略；需比较新任务学习过程。",
+      "code": ""
+    },
+    {
+      "id": "S09",
+      "group": "RSI",
+      "title": "ModularRSI: Modular and Generalizable Recursive Harness Self-Improvement",
+      "date": "arXiv 26.09",
+      "url": "https://arxiv.org/abs/2609.14857",
+      "level": "正文方法与官方仓库核对",
+      "note": "成败轨迹对照、模块化修改与独立任务迁移；上述三项组合不能直接当作新方向。",
+      "code": "https://github.com/IQuestLab/ModularRSI"
+    },
+    {
+      "id": "S10",
+      "group": "RSI",
+      "title": "RRSI: Regularized Recursive Self-Improvement of Agent Harnesses",
+      "date": "arXiv 26.09；核对 26.10 修订摘要",
+      "url": "https://arxiv.org/abs/2609.24972",
+      "level": "摘要核对",
+      "note": "正则化修改提议和选择，缓解递归搜索过拟合；不同修订的实验数字不混用。",
+      "code": ""
+    },
+    {
+      "id": "S11",
+      "group": "RSI",
+      "title": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+      "date": "arXiv 26.09",
+      "url": "https://arxiv.org/abs/2609.14858",
+      "level": "摘要与项目入口核对",
+      "note": "利用历史发现树回放优化探索策略；回放覆盖范围之外的收益需真实执行验证。",
+      "code": "https://github.com/zhengkid/Dream-RSI"
+    },
+    {
+      "id": "S12",
+      "group": "RSI",
+      "title": "Harness²: Recursive Agent Harnessing for an Open World",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/abs/2610.14224",
+      "level": "正文方法与官方仓库核对",
+      "note": "任务内修改与跨任务 Harnessing 经验积累；行为对比不等于带标准答案的正确性证明。",
+      "code": "https://github.com/google-research/harness2"
+    },
+    {
+      "id": "S13",
+      "group": "RSI",
+      "title": "RSI-Anything: Unlocking Recursive Self-Improvement with World Models",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/abs/2610.13912",
+      "level": "摘要与官方仓库核对",
+      "note": "预测行动后果，再以真实反馈校正；环境动力学与学习者更新后能力变化是不同对象。",
+      "code": "https://github.com/Gen-Verse/RSI-Anything"
+    },
+    {
+      "id": "S14",
+      "group": "RSI",
+      "title": "Rethinking the Evaluation of Harness Evolution for Agents",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.12227",
+      "level": "摘要与官方仓库核对",
+      "note": "强调与等反馈、等推理预算的普通采样和顺序精修比较；复杂流程不能只按得分解释。",
+      "code": "https://github.com/rethinking-harness-evolution/code"
+    },
+    {
+      "id": "S15",
+      "group": "RSI",
+      "title": "Does Failure Feedback Direct Agent Self-Modification?",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/abs/2610.14662",
+      "level": "摘要核对",
+      "note": "目标修复、相关失败迁移和独立测试增益须分开；反馈效果具有模型依赖性。",
+      "code": ""
+    },
+    {
+      "id": "S16",
+      "group": "RSI",
+      "title": "ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/html/2610.00906v1",
+      "level": "正文方法与实验设置核对",
+      "note": "失败模式作为动态 bandit 臂，以学习进展调整优先级并探索新失败；直接覆盖自动修复课程。",
+      "code": ""
+    },
+    {
+      "id": "S17",
+      "group": "RSI",
+      "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)",
+      "date": "arXiv 26.01；核对 v3",
+      "url": "https://arxiv.org/html/2601.18778v3",
+      "level": "正文方法与实验设置核对",
+      "note": "双层元强化学习让教师出题，以学生在困难题上的实际进步作奖励，而非仅用难度代理。",
+      "code": ""
+    },
+    {
+      "id": "S18",
+      "group": "RSI",
+      "title": "Anticipating the Consequences of Curriculum Decisions with Large Language Models",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/html/2610.04604v1",
+      "level": "正文方法与实验设置核对",
+      "note": "将学习进展、下游迁移潜力和当前可学性结合；任务依赖图与前瞻课程已有近邻。",
+      "code": "https://github.com/Octavio-Pappalardo/curriculum-foresight"
+    },
+    {
+      "id": "S19",
+      "group": "RSI",
+      "title": "The Assistance Dilemma: Learning to Teach via Multi-Turn Reinforcement Learning",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/html/2610.06446v1",
+      "level": "正文方法与实验设置核对",
+      "note": "遮蔽教师话语的近迁移后测仍保留学生话语；单题回报难覆盖支持撤除的远期价值。",
+      "code": "https://github.com/eth-lre/EduardoRL"
+    },
+    {
+      "id": "M01",
+      "group": "相邻领域",
+      "title": "Learning to learn by gradient descent by gradient descent",
+      "date": "arXiv 16.06",
+      "url": "https://arxiv.org/abs/1606.04474",
+      "level": "摘要核对",
+      "note": "学习优化算法而非只优化任务模型；更新规则可作为学习对象，但不提供通用 RSI 保证。",
+      "code": ""
+    },
+    {
+      "id": "M02",
+      "group": "相邻领域",
+      "title": "RL²: Fast Reinforcement Learning via Slow Reinforcement Learning",
+      "date": "arXiv 16.11",
+      "url": "https://arxiv.org/abs/1611.02779",
+      "level": "摘要核对",
+      "note": "跨任务训练快速适应算法；启发重置学习者、保留元策略的检验。",
+      "code": ""
+    },
+    {
+      "id": "M03",
+      "group": "相邻领域",
+      "title": "Automated Curriculum Learning for Neural Networks",
+      "date": "arXiv 17.04",
+      "url": "https://arxiv.org/abs/1704.03003",
+      "level": "摘要核对",
+      "note": "用非平稳 bandit 和学习进度选择训练数据；难度改为进展并非新颖机制。",
+      "code": ""
+    },
+    {
+      "id": "M04",
+      "group": "相邻领域",
+      "title": "Teacher-Student Curriculum Learning (TSCL)",
+      "date": "arXiv 17.07",
+      "url": "https://arxiv.org/abs/1707.00183",
+      "level": "摘要核对",
+      "note": "优先练习进步快的子任务，也重访性能下降的任务；学习和防遗忘联合调度已有经典基线。",
+      "code": "https://github.com/tambetm/TSCL"
+    },
+    {
+      "id": "M05",
+      "group": "相邻领域",
+      "title": "Deep Knowledge Tracing",
+      "date": "NeurIPS 2015",
+      "url": "https://papers.nips.cc/paper/5654-deep-knowledge-tracing",
+      "level": "会议原始摘要核对",
+      "note": "从学习交互序列估计学生知识状态；下一题正确率预测不等于某种教学干预的因果收益。",
+      "code": ""
+    },
+    {
+      "id": "M06",
+      "group": "相邻领域",
+      "title": "Learning to Teach with Dynamic Loss Functions",
+      "date": "NeurIPS 2018",
+      "url": "https://proceedings.neurips.cc/paper/2018/hash/8051a3c40561002834e59d566b7430cf-Abstract.html",
+      "level": "会议原始摘要核对",
+      "note": "教师按学生阶段输出动态损失，以开发集表现优化教学；应迁移双层目标而非师生角色名称。",
+      "code": ""
+    },
+    {
+      "id": "M07",
+      "group": "相邻领域",
+      "title": "Dual Control for Approximate Bayesian Reinforcement Learning",
+      "date": "arXiv 15.10",
+      "url": "https://arxiv.org/abs/1510.03591",
+      "level": "摘要核对",
+      "note": "行动同时改变状态并揭示未知动力学；需验证诊断信息是否真正改变后续更新决策。",
+      "code": ""
+    },
+    {
+      "id": "M08",
+      "group": "相邻领域",
+      "title": "Prioritized Experience Replay",
+      "date": "ICLR 2016；arXiv 15.11",
+      "url": "https://arxiv.org/abs/1511.05952",
+      "level": "摘要核对",
+      "note": "按经验重要性非均匀重放；间隔练习方案必须排除普通优先重放即可解释收益。",
+      "code": ""
+    },
+    {
+      "id": "M09",
+      "group": "相邻领域",
+      "title": "Online Continual Learning with Maximally Interfered Retrieval",
+      "date": "NeurIPS 2019；arXiv 19.08",
+      "url": "https://arxiv.org/abs/1908.04742",
+      "level": "摘要核对",
+      "note": "选择可能被当前更新干扰的旧样本重放；作为干扰感知巩固的重要对照。",
+      "code": ""
+    },
+    {
+      "id": "E01",
+      "group": "学习科学",
+      "title": "Becoming a Self-Regulated Learner: An Overview",
+      "date": "Theory Into Practice, 2002",
+      "url": "https://www.tandfonline.com/doi/abs/10.1207/s15430421tip4102_2",
+      "level": "理论综述与元数据核对",
+      "note": "自我调节的前瞻、执行监控与反思是设计视角；不是增加三个 Agent 模块即可有效的证明。",
+      "code": ""
+    },
+    {
+      "id": "E02",
+      "group": "学习科学",
+      "title": "A Region of Proximal Learning model of study time allocation",
+      "date": "Journal of Memory and Language, 2005",
+      "url": "https://www.columbia.edu/cu/psychology/metcalfe/PDFs/Metcalfe%20Kornell%202005.pdf",
+      "level": "作者存档与摘要核对",
+      "note": "在尚未掌握且可取得进展的材料间分配时间；不等同于挑最难题，也不与其他近侧发展区理论混称。",
+      "code": ""
+    },
+    {
+      "id": "E03",
+      "group": "学习科学",
+      "title": "Test-enhanced learning: taking memory tests improves long-term retention",
+      "date": "Psychological Science, 2006",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16507066/",
+      "level": "原始研究摘要核对",
+      "note": "比较练习性检索与重复阅读的保持效果；冻结模型需要持久写入才能形成跨会话学习。",
+      "code": ""
+    },
+    {
+      "id": "E04",
+      "group": "学习科学",
+      "title": "Spacing effects in learning: a temporal ridgeline of optimal retention",
+      "date": "Psychological Science, 2008",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19076480/",
+      "level": "原始研究摘要核对",
+      "note": "间隔效果依赖保持时长；机器实验应操纵中间学习和干扰，不假定静止参数随时间遗忘。",
+      "code": ""
+    },
+    {
+      "id": "E05",
+      "group": "学习科学",
+      "title": "Transitioning From Studying Examples to Solving Problems: Effects of Self-Explanation Prompts and Fading Worked-Out Steps",
+      "date": "Journal of Educational Psychology, 2003",
+      "url": "https://asu.elsevierpure.com/en/publications/transitioning-from-studying-examples-to-solving-problems-effects-/",
+      "level": "作者机构摘要核对",
+      "note": "研究例题到自主解题、逐步撤去步骤及自我解释；支持撤除是教学干预，不只是评测删提示。",
+      "code": ""
+    },
+    {
+      "id": "E06",
+      "group": "学习科学",
+      "title": "Learning from productive failure",
+      "date": "Learning: Research and Practice, 2015",
+      "url": "https://repository.nie.edu.sg/entities/publication/cd4409fb-a12f-476f-ad02-febbf9caa4cc",
+      "level": "作者机构摘要核对",
+      "note": "生成探索后进行知识整理巩固；关键在教学次序与整合，不是错误越多越好。",
+      "code": ""
+    },
+    {
+      "id": "E07",
+      "group": "学习科学",
+      "title": "Exploring the assistance dilemma in experiments with Cognitive Tutors",
+      "date": "Educational Psychology Review, 2007",
+      "url": "https://act-r.psy.cmu.edu/?post_type=publications&p=14210",
+      "level": "作者机构记录与论文摘要核对",
+      "note": "何时、以何种程度帮助是教学设计问题；不能直接推出 LLM 上的有效性。",
+      "code": ""
+    },
+    {
+      "id": "E08",
+      "group": "学习科学",
+      "title": "Examining productive failure, productive success, unproductive failure, and unproductive success in learning",
+      "date": "Educational Psychologist, 2016",
+      "url": "https://repository.eduhk.hk/en/publications/examining-productive-failure-productive-success-unproductive-fail-5/",
+      "level": "作者机构摘要核对",
+      "note": "区分学习时表现与长期学习收益；用于提出测量问题，机器机制须另行验证。",
+      "code": ""
+    },
+    {
+      "id": "B01",
+      "group": "实验资源",
+      "title": "ToolSandbox: A Stateful, Conversational, Interactive Evaluation Benchmark for LLM Tool Use Capabilities",
+      "date": "Findings of NAACL 2025；arXiv 24.08",
+      "url": "https://aclanthology.org/2025.findings-naacl.65/",
+      "level": "会议页面与官方介绍核对",
+      "note": "带状态工具执行、用户模拟与轨迹里程碑；派生训练任务须与官方评测隔离。",
+      "code": "https://github.com/apple/ToolSandbox"
+    },
+    {
+      "id": "B02",
+      "group": "实验资源",
+      "title": "τ-bench / τ²-bench：官方仓库与版本化评测协议",
+      "date": "官方资源；核对 2026-10-21",
+      "url": "https://github.com/sierra-research/tau2-bench",
+      "level": "官方文档核对",
+      "note": "当前仓库持续演进，不能把 main 与论文 τ² 任务集混用；记录 commit、任务清单和模拟器。",
+      "code": "https://github.com/sierra-research/tau2-bench"
+    },
+    {
+      "id": "B03",
+      "group": "实验资源",
+      "title": "Terminal-Bench 2.1",
+      "date": "官方资源；核对 2026-10-21",
+      "url": "https://github.com/harbor-framework/terminal-bench-2-1",
+      "level": "官方仓库核对",
+      "note": "可执行终端任务；固定容器、测试和超时，最终测试不得训练元策略。",
+      "code": "https://github.com/harbor-framework/harbor"
+    },
+    {
+      "id": "B04",
+      "group": "实验资源",
+      "title": "Qwen3.5-9B",
+      "date": "官方模型卡；核对 2026-10-21",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+      "level": "官方模型卡核对",
+      "note": "主学习者与元控制器初始化候选；工具解析、训练与吞吐尚待实际运行验证。",
+      "code": ""
+    },
+    {
+      "id": "B05",
+      "group": "实验资源",
+      "title": "Qwen3.5-27B",
+      "date": "官方模型资源；核对 2026-10-21",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-27B",
+      "level": "官方模型目录核对",
+      "note": "同家族强模型对照；选型为保证可比性，不声称它是最新最强模型。",
+      "code": ""
+    },
+    {
+      "id": "B06",
+      "group": "实验资源",
+      "title": "Gemma 4 31B instruction-tuned",
+      "date": "官方模型卡；核对 2026-10-21",
+      "url": "https://huggingface.co/google/gemma-4-31B-it",
+      "level": "官方模型卡核对",
+      "note": "跨家族目标模型候选；固定工具与预算，并单独记录模型替换后的校准开销。",
+      "code": ""
+    }
+  ]
+}

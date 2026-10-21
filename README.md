@@ -5,6 +5,16 @@ A bilingual, ICLR-first research observatory for self-evolving agents, with CVPR
 - Website: <https://agent-evolution.lightrain.asia>
 - Repository: <https://github.com/lightrain-a/agent-self-evolution-observatory>
 
+## RSI × 自主学习研究（2026-10-21）
+
+A separately scoped research dossier is available at <https://agent-evolution.lightrain.asia/rsi/index.html> and under its own sidebar group. Seven pages cover the RSI literature, adjacent methods, learning sciences, four falsifiable candidate ideas, experimental protocols, and 42 primary/official source records. Detailed notes are in Chinese; the navigation can switch between Chinese and English.
+
+- Authoring: `scripts/rsi_pages/*.py` and `rsi/sources.tsv`.
+- Rebuild: `python3 scripts/build_rsi_research.py`.
+- Validate: `python3 scripts/test_rsi_site.py` and `python3 site_smoke_test.py`.
+- Public assets: `rsi/` only; the static build explicitly excludes Python authoring files.
+- Candidate ideas are hypotheses, not experimentally established results or externally approved selections. Existing selected-paper and historical review states are unchanged.
+
 ## Information architecture
 
 The site follows the same research-observatory framework as the LLM Distillation Lineage Observatory:

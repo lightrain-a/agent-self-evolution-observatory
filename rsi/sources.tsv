@@ -1,0 +1,43 @@
+id	group	title	date	url	level	note	code
+S01	RSI	Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops	arXiv 26.07	https://arxiv.org/abs/2607.07663	摘要核对	按修改对象和闭环程度整理 RSI；用于界定范围，不把一种严格定义当成全领域共识。	""
+S02	RSI	Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents	arXiv 25.05；核对 v3	https://arxiv.org/abs/2505.22954	摘要核对	维护代码谱系，以任务执行评价自修改版本；代码自进化与开放式搜索已有系统基础。	""
+S03	RSI	GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning	ICLR 2026 Oral；arXiv 25.07	https://arxiv.org/abs/2507.19457	摘要与官方仓库核对	反思执行轨迹，提出并测试提示修改、组合互补经验；可作共享编辑器和强搜索基线。	https://github.com/gepa-ai/gepa
+S04	RSI	Self-Adapting Language Models (SEAL)	arXiv 25.06	https://arxiv.org/abs/2506.10943	摘要核对	生成微调数据和更新指令，以更新后模型表现学习自编辑；属于参数持久更新。	""
+S05	RSI	Hyperagents	arXiv 26.03	https://arxiv.org/abs/2603.19461	摘要核对	任务 Agent 与修改它的 Meta-Agent 同在可编辑程序中；双层循环本身不再是充分创新。	""
+S06	RSI	MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution	arXiv 26.07	https://arxiv.org/abs/2607.05297	正文方法核对	快慢时间尺度分别更新任务技能与元技能；与泛化的“改进器积累经验”直接相邻。	""
+S07	RSI	Harness-R1: Learning to Edit Executable Runtime Harnesses from Agent Failure Trajectories	arXiv 26.08	https://arxiv.org/abs/2608.02276	摘要与官方仓库核对	训练专门的 Harness 编辑器，以真实执行表现优化修改；学习生成补丁不是新的空白。	https://github.com/DeepExperience/Harness-R1
+S08	RSI	Harness Learning Enables Generalizable Test-Time Adaptation	arXiv 26.09	https://arxiv.org/abs/2609.35738	正文方法核对	把 Harness 修改作为元学习问题，学习可迁移适应策略；需比较新任务学习过程。	""
+S09	RSI	ModularRSI: Modular and Generalizable Recursive Harness Self-Improvement	arXiv 26.09	https://arxiv.org/abs/2609.14857	正文方法与官方仓库核对	成败轨迹对照、模块化修改与独立任务迁移；上述三项组合不能直接当作新方向。	https://github.com/IQuestLab/ModularRSI
+S10	RSI	RRSI: Regularized Recursive Self-Improvement of Agent Harnesses	arXiv 26.09；核对 26.10 修订摘要	https://arxiv.org/abs/2609.24972	摘要核对	正则化修改提议和选择，缓解递归搜索过拟合；不同修订的实验数字不混用。	""
+S11	RSI	Dream-RSI: Recursive Self-Improvement through Evolving Worlds	arXiv 26.09	https://arxiv.org/abs/2609.14858	摘要与项目入口核对	利用历史发现树回放优化探索策略；回放覆盖范围之外的收益需真实执行验证。	https://github.com/zhengkid/Dream-RSI
+S12	RSI	Harness²: Recursive Agent Harnessing for an Open World	arXiv 26.10	https://arxiv.org/abs/2610.14224	正文方法与官方仓库核对	任务内修改与跨任务 Harnessing 经验积累；行为对比不等于带标准答案的正确性证明。	https://github.com/google-research/harness2
+S13	RSI	RSI-Anything: Unlocking Recursive Self-Improvement with World Models	arXiv 26.10	https://arxiv.org/abs/2610.13912	摘要与官方仓库核对	预测行动后果，再以真实反馈校正；环境动力学与学习者更新后能力变化是不同对象。	https://github.com/Gen-Verse/RSI-Anything
+S14	RSI	Rethinking the Evaluation of Harness Evolution for Agents	arXiv 26.07	https://arxiv.org/abs/2607.12227	摘要与官方仓库核对	强调与等反馈、等推理预算的普通采样和顺序精修比较；复杂流程不能只按得分解释。	https://github.com/rethinking-harness-evolution/code
+S15	RSI	Does Failure Feedback Direct Agent Self-Modification?	arXiv 26.10	https://arxiv.org/abs/2610.14662	摘要核对	目标修复、相关失败迁移和独立测试增益须分开；反馈效果具有模型依赖性。	""
+S16	RSI	ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization	arXiv 26.10	https://arxiv.org/html/2610.00906v1	正文方法与实验设置核对	失败模式作为动态 bandit 臂，以学习进展调整优先级并探索新失败；直接覆盖自动修复课程。	""
+S17	RSI	Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)	arXiv 26.01；核对 v3	https://arxiv.org/html/2601.18778v3	正文方法与实验设置核对	双层元强化学习让教师出题，以学生在困难题上的实际进步作奖励，而非仅用难度代理。	""
+S18	RSI	Anticipating the Consequences of Curriculum Decisions with Large Language Models	arXiv 26.10	https://arxiv.org/html/2610.04604v1	正文方法与实验设置核对	将学习进展、下游迁移潜力和当前可学性结合；任务依赖图与前瞻课程已有近邻。	https://github.com/Octavio-Pappalardo/curriculum-foresight
+S19	RSI	The Assistance Dilemma: Learning to Teach via Multi-Turn Reinforcement Learning	arXiv 26.10	https://arxiv.org/html/2610.06446v1	正文方法与实验设置核对	遮蔽教师话语的近迁移后测仍保留学生话语；单题回报难覆盖支持撤除的远期价值。	https://github.com/eth-lre/EduardoRL
+M01	相邻领域	Learning to learn by gradient descent by gradient descent	arXiv 16.06	https://arxiv.org/abs/1606.04474	摘要核对	学习优化算法而非只优化任务模型；更新规则可作为学习对象，但不提供通用 RSI 保证。	""
+M02	相邻领域	RL²: Fast Reinforcement Learning via Slow Reinforcement Learning	arXiv 16.11	https://arxiv.org/abs/1611.02779	摘要核对	跨任务训练快速适应算法；启发重置学习者、保留元策略的检验。	""
+M03	相邻领域	Automated Curriculum Learning for Neural Networks	arXiv 17.04	https://arxiv.org/abs/1704.03003	摘要核对	用非平稳 bandit 和学习进度选择训练数据；难度改为进展并非新颖机制。	""
+M04	相邻领域	Teacher-Student Curriculum Learning (TSCL)	arXiv 17.07	https://arxiv.org/abs/1707.00183	摘要核对	优先练习进步快的子任务，也重访性能下降的任务；学习和防遗忘联合调度已有经典基线。	https://github.com/tambetm/TSCL
+M05	相邻领域	Deep Knowledge Tracing	NeurIPS 2015	https://papers.nips.cc/paper/5654-deep-knowledge-tracing	会议原始摘要核对	从学习交互序列估计学生知识状态；下一题正确率预测不等于某种教学干预的因果收益。	""
+M06	相邻领域	Learning to Teach with Dynamic Loss Functions	NeurIPS 2018	https://proceedings.neurips.cc/paper/2018/hash/8051a3c40561002834e59d566b7430cf-Abstract.html	会议原始摘要核对	教师按学生阶段输出动态损失，以开发集表现优化教学；应迁移双层目标而非师生角色名称。	""
+M07	相邻领域	Dual Control for Approximate Bayesian Reinforcement Learning	arXiv 15.10	https://arxiv.org/abs/1510.03591	摘要核对	行动同时改变状态并揭示未知动力学；需验证诊断信息是否真正改变后续更新决策。	""
+M08	相邻领域	Prioritized Experience Replay	ICLR 2016；arXiv 15.11	https://arxiv.org/abs/1511.05952	摘要核对	按经验重要性非均匀重放；间隔练习方案必须排除普通优先重放即可解释收益。	""
+M09	相邻领域	Online Continual Learning with Maximally Interfered Retrieval	NeurIPS 2019；arXiv 19.08	https://arxiv.org/abs/1908.04742	摘要核对	选择可能被当前更新干扰的旧样本重放；作为干扰感知巩固的重要对照。	""
+E01	学习科学	Becoming a Self-Regulated Learner: An Overview	Theory Into Practice, 2002	https://www.tandfonline.com/doi/abs/10.1207/s15430421tip4102_2	理论综述与元数据核对	自我调节的前瞻、执行监控与反思是设计视角；不是增加三个 Agent 模块即可有效的证明。	""
+E02	学习科学	A Region of Proximal Learning model of study time allocation	Journal of Memory and Language, 2005	https://www.columbia.edu/cu/psychology/metcalfe/PDFs/Metcalfe%20Kornell%202005.pdf	作者存档与摘要核对	在尚未掌握且可取得进展的材料间分配时间；不等同于挑最难题，也不与其他近侧发展区理论混称。	""
+E03	学习科学	Test-enhanced learning: taking memory tests improves long-term retention	Psychological Science, 2006	https://pubmed.ncbi.nlm.nih.gov/16507066/	原始研究摘要核对	比较练习性检索与重复阅读的保持效果；冻结模型需要持久写入才能形成跨会话学习。	""
+E04	学习科学	Spacing effects in learning: a temporal ridgeline of optimal retention	Psychological Science, 2008	https://pubmed.ncbi.nlm.nih.gov/19076480/	原始研究摘要核对	间隔效果依赖保持时长；机器实验应操纵中间学习和干扰，不假定静止参数随时间遗忘。	""
+E05	学习科学	Transitioning From Studying Examples to Solving Problems: Effects of Self-Explanation Prompts and Fading Worked-Out Steps	Journal of Educational Psychology, 2003	https://asu.elsevierpure.com/en/publications/transitioning-from-studying-examples-to-solving-problems-effects-/	作者机构摘要核对	研究例题到自主解题、逐步撤去步骤及自我解释；支持撤除是教学干预，不只是评测删提示。	""
+E06	学习科学	Learning from productive failure	Learning: Research and Practice, 2015	https://repository.nie.edu.sg/entities/publication/cd4409fb-a12f-476f-ad02-febbf9caa4cc	作者机构摘要核对	生成探索后进行知识整理巩固；关键在教学次序与整合，不是错误越多越好。	""
+E07	学习科学	Exploring the assistance dilemma in experiments with Cognitive Tutors	Educational Psychology Review, 2007	https://act-r.psy.cmu.edu/?post_type=publications&p=14210	作者机构记录与论文摘要核对	何时、以何种程度帮助是教学设计问题；不能直接推出 LLM 上的有效性。	""
+E08	学习科学	Examining productive failure, productive success, unproductive failure, and unproductive success in learning	Educational Psychologist, 2016	https://repository.eduhk.hk/en/publications/examining-productive-failure-productive-success-unproductive-fail-5/	作者机构摘要核对	区分学习时表现与长期学习收益；用于提出测量问题，机器机制须另行验证。	""
+B01	实验资源	ToolSandbox: A Stateful, Conversational, Interactive Evaluation Benchmark for LLM Tool Use Capabilities	Findings of NAACL 2025；arXiv 24.08	https://aclanthology.org/2025.findings-naacl.65/	会议页面与官方介绍核对	带状态工具执行、用户模拟与轨迹里程碑；派生训练任务须与官方评测隔离。	https://github.com/apple/ToolSandbox
+B02	实验资源	τ-bench / τ²-bench：官方仓库与版本化评测协议	官方资源；核对 2026-10-21	https://github.com/sierra-research/tau2-bench	官方文档核对	当前仓库持续演进，不能把 main 与论文 τ² 任务集混用；记录 commit、任务清单和模拟器。	https://github.com/sierra-research/tau2-bench
+B03	实验资源	Terminal-Bench 2.1	官方资源；核对 2026-10-21	https://github.com/harbor-framework/terminal-bench-2-1	官方仓库核对	可执行终端任务；固定容器、测试和超时，最终测试不得训练元策略。	https://github.com/harbor-framework/harbor
+B04	实验资源	Qwen3.5-9B	官方模型卡；核对 2026-10-21	https://huggingface.co/Qwen/Qwen3.5-9B	官方模型卡核对	主学习者与元控制器初始化候选；工具解析、训练与吞吐尚待实际运行验证。	""
+B05	实验资源	Qwen3.5-27B	官方模型资源；核对 2026-10-21	https://huggingface.co/Qwen/Qwen3.5-27B	官方模型目录核对	同家族强模型对照；选型为保证可比性，不声称它是最新最强模型。	""
+B06	实验资源	Gemma 4 31B instruction-tuned	官方模型卡；核对 2026-10-21	https://huggingface.co/google/gemma-4-31B-it	官方模型卡核对	跨家族目标模型候选；固定工具与预算，并单独记录模型替换后的校准开销。	""
