@@ -1,0 +1,126 @@
+{
+  "schema": "rsi.teaching_to_improve.protocol.v0.1",
+  "written_at": "2026-10-21",
+  "status": "PROPOSED_ONLY_NO_EXPERIMENTS_RUN",
+  "claim_scope": {
+    "p0": "Student independent enactment may expose teacher skill blindspots not surfaced by equal-budget teacher self-probing.",
+    "p1": "Verified student-induced blindspot repairs may yield persistent teacher held-out task gains.",
+    "meta_rsi": "Meta-controller improvement requires learner reset and an outer train/test separation; no meta-learning result yet."
+  },
+  "teacher": {
+    "initial_backbones": [
+      "Qwen3.5-9B",
+      "Qwen3.5-27B"
+    ],
+    "student_selection": "one weaker, one cross-family; validate their skill ceiling on real task families",
+    "durable_surface": [
+      "versioned skill / harness text",
+      "independent LoRA-only followup"
+    ],
+    "privacy_guard": "Teacher never gets final test answers, raw test trajectories, or oracle scripts."
+  },
+  "skill_contract_fields": [
+    "skill_id",
+    "trigger",
+    "preconditions",
+    "state_invariants",
+    "stop_condition",
+    "edge_cases",
+    "recovery",
+    "source_trajectory_ids",
+    "version_hash"
+  ],
+  "student_trial_arms": {
+    "S0": "Student without lesson, identical task",
+    "S1": "Student with teacher's current skill contract",
+    "S2": "Student with development-set verified reference explanation (capacity check only)",
+    "T0": "Teacher baseline with same task and environment budget; student traces hidden"
+  },
+  "candidate_labels": [
+    "TEACHER_GAP",
+    "EXPRESSION_GAP",
+    "STUDENT_LIMIT",
+    "ENV_FAULT",
+    "UNRESOLVED"
+  ],
+  "counterfactuals": [
+    "same parent teacher independent probe with equal environment calls",
+    "student cross-family probe with identical lesson",
+    "reference explanation and executable replay",
+    "patch exactly one skill clause then verify repeatability"
+  ],
+  "action_budget": {
+    "student_questions_per_trial": 2,
+    "patch_candidates_per_event": 3,
+    "seed_traces_per_family": "pre-registered",
+    "verification": "training/development splits only"
+  },
+  "split_contract": {
+    "D_seed": "Teacher initial verified successes and failures; lesson extraction",
+    "D_probe": "Student teaching episodes; never final test",
+    "D_meta": "Optional meta-policy development rewards, disjoint by root task family",
+    "D_gate": "Patch/version selection; limited query count",
+    "D_test": "Frozen final evaluation only; task-level outcomes are not used for training"
+  },
+  "initial_pilot": [
+    {
+      "phase": "P0a",
+      "task_families": 4,
+      "student_models": 2,
+      "seeds": 3,
+      "goal": "replayable environment & authenticated skill visibility"
+    },
+    {
+      "phase": "P0b",
+      "task_families": 24,
+      "student_models": 2,
+      "seeds": 3,
+      "goal": "validated teacher blindspot discovery vs same-budget self-probe"
+    },
+    {
+      "phase": "P0c",
+      "patches_per_verified_event": 3,
+      "goal": "teacher held-out net gain paired against strong baselines"
+    }
+  ],
+  "baseline_set": [
+    "frozen teacher",
+    "teacher self-reflection",
+    "equal-budget teacher self-probe",
+    "LbT feedback-and-update",
+    "student-only SKILL-KD-style transfer",
+    "direct subtask skill induction / GEPA",
+    "question-only without independent execution",
+    "shuffled student trace"
+  ],
+  "metrics": [
+    "verified_teacher_gap_yield_per_100_env_calls",
+    "teacher_heldout_success_delta",
+    "teacher_old_task_regression",
+    "incremental_signal_over_teacher_selfprobe",
+    "same_cause_transfer",
+    "cross_student_model_generalization",
+    "full_training_and_verification_cost"
+  ],
+  "stop_conditions": [
+    "all alleged teacher gaps are explained by student ceiling or environment faults",
+    "equal-budget teacher self-probe has equal or better validated discovery and teacher gain",
+    "teacher gains vanish with conversation reset",
+    "positive results appear only in manually injected failures or reused tasks",
+    "no significant advantage over shared editor and simple skill induction"
+  ],
+  "source_ids": [
+    "S20",
+    "S21",
+    "S22",
+    "S23",
+    "S24",
+    "S25",
+    "E09",
+    "E10",
+    "B01",
+    "B02",
+    "B07"
+  ],
+  "deployment_note": "The published webpage and JSON are research plans, not experimental outcomes or approvals."
+}

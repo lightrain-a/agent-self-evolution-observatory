@@ -12,8 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-21'
-ORDER = ['index', 'literature', 'cross-domain', 'learning-science', 'ideas', 'experiments']
-LABELS = ['专题总览', '文献与竞争边界', '相邻领域方法', '教育学与学习科学', '候选 Idea 与框架', '实验执行方案', '来源与核验记录']
+ORDER = ['index', 'literature', 'cross-domain', 'learning-science', 'ideas', 'teaching', 'experiments']
+LABELS = ['专题总览', '文献与竞争边界', '相邻领域方法', '教育学与学习科学', '候选 Idea 与框架', 'I5 · 教学反馈自进化', '实验执行方案', '来源与核验记录']
 
 
 def plain(text: str) -> str:
@@ -73,7 +73,7 @@ def main() -> None:
     (OUT / 'sources.json').write_text(json.dumps(metadata, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     (OUT / 'search-index.json').write_text(json.dumps(search, ensure_ascii=False)+'\n', encoding='utf-8')
     notes.append('\n## 原始来源\n\n' + '\n'.join(f'- [{r["id"]}] {r["title"]} · {r["date"]}\n  {r["url"]}' for r in sources))
-    (OUT / 'research-notes.md').write_text('\n'.join(notes), encoding='utf-8')
+    (OUT / 'research-notes.md').write_text('\n'.join(line.rstrip() for line in '\n'.join(notes).splitlines()) + '\n', encoding='utf-8')
     print(f'Built {len(pages)} pages; {len(sources)} sources; {len(used)} inline-cited sources; {len(search)} search records.')
     unused = set(refmap)-used
     if unused:

@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','literature','cross-domain','learning-science','ideas','experiments','references']
+PAGES = ['index','literature','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -30,7 +30,7 @@ def check(condition, message):
 def main():
     source=json.loads((ROOT/'rsi/sources.json').read_text(encoding='utf-8'))
     refs={r['id'] for r in source['sources']}
-    check(len(refs)==42,'Expected the audited 42-record source snapshot')
+    check(len(refs)==51,'Expected the audited 51-record source snapshot')
     check(source['review_date']=='2026-10-21','Review date drift')
     parsed={}
     for slug in PAGES:

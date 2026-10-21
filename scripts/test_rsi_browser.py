@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','literature','cross-domain','learning-science','ideas','experiments','references']
+PAGES=['index','literature','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -51,7 +51,7 @@ def main():
         for slug in PAGES:
             nav('rsi/'+slug+'.html')
             stats=js("""return {title:document.title,h1:document.querySelectorAll('h1').length,active:document.querySelectorAll('#research-nav a[aria-current="page"]').length,nav:document.querySelectorAll('#research-nav a[href*="/rsi/"]').length,overflow:document.documentElement.scrollWidth>innerWidth+1,cites:document.querySelectorAll('.cite').length,sections:document.querySelectorAll('.research-section').length};""")
-            check(stats['h1']==1 and stats['active']==1 and stats['nav']==7,slug+': nav or title integrity '+str(stats))
+            check(stats['h1']==1 and stats['active']==1 and stats['nav']==8,slug+': nav or title integrity '+str(stats))
             check(not stats['overflow'],slug+': desktop page overflow')
             summaries.append({'page':slug,**stats})
         nav('rsi/index.html'); screenshot('overview-desktop.png')
@@ -68,7 +68,7 @@ def main():
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
         screenshot('idea-framework-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','ideas','experiments','references']:
+        for slug in ['index','ideas','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/index.html'); screenshot('overview-mobile.png')
@@ -80,9 +80,9 @@ def main():
         req('POST',f'/session/{session}/window/rect',{'width':1440,'height':1050})
         nav('index.html')
         for _ in range(30):
-            if js("return document.querySelectorAll('.nav a[href^="+'"rsi/"'+"]').length===7"): break
+            if js("return document.querySelectorAll('.nav a[href^="+'"rsi/"'+"]').length===8"): break
             time.sleep(.3)
-        check(js("return document.querySelectorAll('.nav a[href^="+'"rsi/"'+"]').length===7"),'Root site lacks new sidebar entry')
+        check(js("return document.querySelectorAll('.nav a[href^="+'"rsi/"'+"]').length===8"),'Root site lacks new sidebar entry')
         result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','root_navigation':'PASS','screenshots':4}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))

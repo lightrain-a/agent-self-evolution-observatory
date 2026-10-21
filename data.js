@@ -12,6 +12,7 @@ window.NAV_GROUPS = [
     ["rsi/cross-domain.html",{en:"Methods from Adjacent Fields",zh:"相邻领域方法"}],
     ["rsi/learning-science.html",{en:"Education & Learning Sciences",zh:"教育学与学习科学"}],
     ["rsi/ideas.html",{en:"Candidate Ideas & Frameworks",zh:"候选 Idea 与框架"}],
+    ["rsi/teaching.html",{en:"I5 · Learning by Teaching for RSI",zh:"I5 · 教学反馈自进化"}],
     ["rsi/experiments.html",{en:"Experimental Plan",zh:"实验执行方案"}],
     ["rsi/references.html",{en:"Sources & Verification",zh:"来源与核验记录"}],
   ]},

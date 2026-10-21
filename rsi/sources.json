@@ -421,6 +421,96 @@
       "level": "官方模型卡核对",
       "note": "跨家族目标模型候选；固定工具与预算，并单独记录模型替换后的校准开销。",
       "code": ""
+    },
+    {
+      "id": "S20",
+      "group": "RSI",
+      "title": "Can LLMs Learn by Teaching for Better Reasoning? A Preliminary Study",
+      "date": "NeurIPS 2024；arXiv 24.06",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/8340b085045cf13f1f0b6c2c4cc0a89c-Abstract-Conference.html",
+      "level": "会议正文与官方仓库核对",
+      "note": "教师解释根据学生反馈选择；反馈可以构成 DPO 训练偏好；多学生多样性是已有近邻。不能把 teacher 由 student feedback 更新称作首次提出。",
+      "code": "https://github.com/imagination-research/lbt"
+    },
+    {
+      "id": "S21",
+      "group": "RSI",
+      "title": "MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization",
+      "date": "AAAI 2026",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/38668",
+      "level": "会议摘要与方法概述核对",
+      "note": "Teacher-Critic-Student Socratic dialogue 用于提示优化；多智能体教学及问题驱动迭代不能单独作为方法创新。",
+      "code": ""
+    },
+    {
+      "id": "S22",
+      "group": "RSI",
+      "title": "SKILL-KD: Contrastive Skill Distillation for LLM Agents",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.28048",
+      "level": "摘要与作者公开说明核对",
+      "note": "对比教师成功与学生失败轨迹，迭代修改学生的技能；本候选必须与“更新教师自己”区分，并避免只做反向技能蒸馏。",
+      "code": ""
+    },
+    {
+      "id": "S23",
+      "group": "RSI",
+      "title": "Break It Down, Pass It On: Cross-Task Skill Transfer in LLM Agents",
+      "date": "arXiv 26.08",
+      "url": "https://arxiv.org/abs/2608.20274",
+      "level": "论文正文与摘要核对",
+      "note": "子任务级和任务级技能、文本与代码技能对跨任务迁移有不同影响；要求本候选与直接细粒度技能归纳和静态技能质量评价比较。",
+      "code": ""
+    },
+    {
+      "id": "S24",
+      "group": "RSI",
+      "title": "Socratic Students: Teaching Language Models to Learn by Asking Questions",
+      "date": "arXiv 25.12",
+      "url": "https://arxiv.org/abs/2512.13102",
+      "level": "摘要核对",
+      "note": "训练学生主动询问教师以改善学生的学习效率；不能把会追问的 Student 当作空白，需证明问题对 Teacher 自身能力有独立信息。",
+      "code": ""
+    },
+    {
+      "id": "S25",
+      "group": "RSI",
+      "title": "Large Language Models are In-context Teachers for Knowledge Reasoning",
+      "date": "arXiv 23.11",
+      "url": "https://arxiv.org/abs/2311.06985",
+      "level": "摘要核对",
+      "note": "提出 Self-Explain 和 Teach-Back 来提高学生的 in-context knowledge reasoning；Teach-Back 名称本身不保证与教师自进化相关。",
+      "code": ""
+    },
+    {
+      "id": "E09",
+      "group": "学习科学",
+      "title": "Learning by Teaching Human Pupils and Teachable Agents: The Importance of Recursive Feedback",
+      "date": "Journal of the Learning Sciences, 2013",
+      "url": "https://aaalab.stanford.edu/research/assets/papers/2013/Learning_by_teaching_human_pupils.pdf",
+      "level": "完整论文机制与实验设计核对",
+      "note": "Recursive Feedback 要求学生在新环境中自主使用所学以及教师把学生行为映射回自己的理解；人类机制不能直接视为 LLM 有效性。",
+      "code": ""
+    },
+    {
+      "id": "E10",
+      "group": "学习科学",
+      "title": "Beyond prior knowledge: the predictive role of knowledge-building in tutor learning",
+      "date": "Behaviormetrika, 2026",
+      "url": "https://link.springer.com/article/10.1007/s41237-026-00294-9",
+      "level": "正文摘要与研究设计核对",
+      "note": "人类教师面对 teachable agent 追问时 knowledge-building 比 knowledge-telling 更具诊断意义，相关性结果不是 LLM 教学自进化的因果证据。",
+      "code": ""
+    },
+    {
+      "id": "B07",
+      "group": "实验资源",
+      "title": "AppWorld Benchmark: executable app-ecosystem agent tasks",
+      "date": "官方资源；核对 2026-10-21",
+      "url": "https://github.com/StonyBrookNLP/appworld",
+      "level": "官方 README 与实验切分核对",
+      "note": "官方 train / dev / test_normal / test_challenge 严格隔离；后两者只能用于冻结终评，不得按任务反馈修改教学方法。",
+      "code": "https://github.com/StonyBrookNLP/appworld"
     }
   ]
 }

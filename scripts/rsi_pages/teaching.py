@@ -1,0 +1,151 @@
+"""I5: Teaching-induced blindspot discovery for recursive agent improvement.
+
+Everything below is a proposed mechanism and preregistration skeleton, not measured outcomes.
+"""
+PAGE = {
+ "slug": "teaching",
+ "title": "I5 · 教学反馈驱动的 Agent 自我进化",
+ "en": "Teacher-targeted recursive feedback · detailed method & falsification plan",
+ "lead": "从学生独立执行引出的追问与误用中，识别教师自己的隐性知识盲点；通过受控验证与版本化更新证明教师能力是否真正改善。",
+ "sections": [
+ ("position","研究目标：更新教师，而不是帮学生提高分数", '''
+ <div class="decision"><span class="kicker">CANDIDATE I5 · PRE-EXPERIMENT DESIGN</span>
+ <h3>Learner-Induced Blindspot Discovery for Recursive Agent Self-Improvement</h3>
+ <p>核心假设：学生在<strong>独立使用</strong>教师教出的经验时，会暴露一些教师自己执行任务或自我反思时没有发现的隐藏前提、例外条件和错误泛化。这些差异如果能被<strong>独立执行证据</strong>确认，就可能成为教师技能、Harness 或参数更新的有效学习信号。</p>
+ <p><b>主要终点：</b>教师 Agent 在更新并清除会话与学生提示之后，在未参与教学/版本选择的新任务上的独立成功率净增益；同时看旧任务的能力回归。</p></div>
+ <p>NeurIPS 2024 LbT 已让学生表现影响教师解释选择和教师权重微调；SKILL-KD 已由师生轨迹差异改进<strong>学生</strong>技能；AAAI 2026 MARS 已引入苏格拉底式 Teacher–Student–Critic 提示优化。故本方向不以“有一个学生”“学生会追问”“教师看反馈”作为 novelty。[[S20]][[S22]][[S21]][[S25]]</p>
+ <p>教育学 Recursive Feedback 原始研究强调两点：学生在新环境独立运用所学、教师将其行为映射回自身的知识结构。这里的“recursive”是教育学的反馈机制；只有随后证明 Agent 及其改进策略的持久改进，才可称为我们定义下的 RSI。[[E09]]</p>
+ '''),
+ ("mechanism","机制抓手：学生反馈究竟比自我测试多了什么？", '''
+ <p>把“教师原来能做对”与“教师能否把规则交给另一模型可靠执行”分开。先假设教师 T 有一组成功经验 <code>H_T</code>，通过固定格式提取技能 <code>K_t</code>。学生 S 只能读 <code>K_t</code> 和必要工具文档，不能读教师原任务答案。随后在新的同族 / 邻域任务上独立执行。</p>
+ <div class="flow"><div><b>Teacher T 的原经验</b><small>成功轨迹、技能版本</small></div><div><b>教学契约 K_t</b><small>触发、前提、不变量、例外</small></div><div><b>Student S 的独立执行</b><small>新状态、新工具/参数</small></div><div><b>对教师的反事实审计</b><small>是教师漏了还是学生不会？</small></div><div><b>更新 T 而非只更新 S</b><small>独立留出任务检验</small></div></div>
+ <p>学生提供的信息可以有三类：<b>疑问</b>（需要条件明确化）、<b>错误执行</b>（教学规则的错误解释）、<b>意外成功</b>（可能揭示与教师不同的有效路径）。必须先判明该现象对教师知识具有增量信息，不能把所有 Student Failure 都写成 Teacher Blindspot。</p>
+ <p><b>最低辨别标准：</b>教师自行测试在<strong>相同任务、相同环境调用预算</strong>下的结果，与从学生轨迹得到的增益进行对比。若教师自己探索已同样发现缺陷，则不能声称教学反馈具有不可替代的信息优势。[[S20]][[S24]]</p>
+ '''),
+ ("contracts","模块 1｜教学材料是可检验的 Skill Contract", '''
+ <p>不要把教案写成自由散文。首版限定为工具型 Agent 的小型程序技能，学生拿到如下结构化产物：</p>
+ <pre><code>{
+  "skill_id": "paginate_records",
+  "trigger": "must exhaust a paginated result set",
+  "preconditions": ["API returns items and a continuation token"],
+  "state_invariants": ["do not repeat a consumed cursor",
+                       "preserve retrieved records across pages"],
+  "stop_condition": "confirmed terminal token/flag; not an empty page",
+  "edge_cases": ["empty page with next token", "rate limit",
+                 "repeated cursor", "duplicated records"],
+  "recovery": "bound retries; surface invalid cursor as an error",
+  "evidence": ["source trajectory id", "version id"]
+}</code></pre>
+ <p>这是<strong>示意 API</strong>，终止条件必须按具体 API 规范确定，不可把某一接口的分页约定推广到所有工具。模块输出包括 <code>K_t</code> 和“教师对于规则适用范围的预测”，便于后续构造可证伪的任务变体。</p>
+ <p>第一版只更新可回滚、可差分的技能文本；不要同时修改整个 Harness 和权重。对照包含从完整成功轨迹直接归纳技能、子任务级归纳技能。后者是已被研究的重要变量，不能让我们的优势仅来自粒度更细。[[S23]]</p>
+ '''),
+ ("students","模块 2｜学生必须真实独立执行，而非模拟会不会", '''
+ <p><b>固定学生池：</b>建议两种不同模型家族或能力水平的 Student；可加入与教师同底座的干净 Student 副本。所有学生在同一轮使用冻结权重和 Harness，当前任务上下文清零；教学材料仅包含该版本 Skill。</p>
+ <div class="table-wrap"><table><thead><tr><th>执行臂</th><th>学生获得的信息</th><th>意义</th></tr></thead><tbody>
+ <tr><td>S0</td><td>任务与公开工具文档，无该技能</td><td>学生基础能力基线。</td></tr>
+ <tr><td>S1</td><td>相同任务 + Teacher K_t</td><td>测教学技能的实际可迁移性。</td></tr>
+ <tr><td>S2</td><td>同任务 + 基于官方规则的完整参考说明（仅开发集）</td><td>排查“学生根本无法执行”的可能；不是无条件金标准。</td></tr>
+ <tr><td>T0</td><td>原教师快照独立执行同任务，不能看学生轨迹</td><td>区分教师自己能否解决及普通探索机会。</td></tr>
+ </tbody></table></div>
+ <p>对 S0/S1/S2/T0 采用可复位环境快照、匹配试验种子与同等 Token/工具调用上限。学生可提交最多 2 条<strong>可定位到任务事实的追问</strong>，但学生的自述困惑不是证据；必须附有执行轨迹、工具响应或受验证的边界例子。另设<strong>只追问不执行</strong>的消融，检验是否只是多生成了一些疑问。</p>
+ <p><b>切分：</b>技能源轨迹、学生试教任务、补丁筛选任务、最终教师独立评测按任务族、状态约束、工具组合隔离。学生试教任务属于训练反馈，不能再用作最终测试。</p>
+ '''),
+ ("diagnosis","模块 3｜教学失败归因：不能把学生弱当教师错", '''
+ <p>诊断器输入：已冻结的教师/学生执行记录、技能条款引用、环境快照标识、验证器断言；输出带可复现证据的<strong>候选</strong>诊断，而不是单凭语言推断的“根因金标”。</p>
+ <div class="table-wrap"><table><thead><tr><th>观察</th><th>解释优先级</th><th>需要的额外验证</th></tr></thead><tbody>
+ <tr><td>T0 成功；S1 失败；S2 成功</td><td>教学表达不充分、学生对技能理解偏差。</td><td>换学生、只改技能表达后是否修复？旧 T 能否使用原技能完成任务？</td></tr>
+ <tr><td>T0 失败；S1 失败；参考执行成功</td><td>教师自身技能 / 知识盲点的候选。</td><td>重建最小反例；教师的错误规则是否能稳定触发？</td></tr>
+ <tr><td>T0 成功；S1 失败；S2 也失败</td><td>学生模型能力或工具接口障碍。</td><td>不同学生、同上下文的参考脚本、环境复位。</td></tr>
+ <tr><td>T0 失败；S1 成功</td><td>学生可能提供不同且有效的规则。</td><td>教师无学生提示独立重试；检验学生成功非偶然。</td></tr>
+ <tr><td>执行或参考脚本不稳定</td><td>不可判定。</td><td>重现工具/验证器问题，禁止直接用于教师更新。</td></tr>
+ </tbody></table></div>
+ <p><b>反事实检查：</b>可尝试仅替换 Skill 中一条候选规则（如把“空页就停止”改为“看终止 token”），在相同快照中重跑；再通过其他模型与新状态确认修复没有依赖学生特定提示。将事件分类为 <code>TEACHER_GAP</code>、<code>EXPRESSION_GAP</code>、<code>STUDENT_LIMIT</code>、<code>ENV_FAULT</code>、<code>UNRESOLVED</code>。</p>
+ <div class="note">“T0 失败、S1 失败”仍不自动证明教师根因；“S2 成功”也不是证明 S1 的唯一原因。原因标签是可反驳的工作假设，后续通过干预建立更强证据。</div>
+ '''),
+ ("repair","模块 4｜把被验证的盲点转成教师自己的持久更新", '''
+ <p>首版共享固定 Editor（可以是相同 LLM + 相同编辑模板），每个候选最多修改一项前提、不变量、边界或恢复步骤。原则：<b>学生证据只告诉我们哪里需要查，不保证应该怎样改</b>。</p>
+ <div class="flow"><div><b>生成候选 patch</b><small>引用具体技能条款</small></div><div><b>局部可执行复现</b><small>最小反例消失？</small></div><div><b>独立开发验证</b><small>同类新任务/旧正确任务</small></div><div><b>置信与成本门控</b><small>收益、回归、验证次数</small></div><div><b>接受 / 拒绝 / 回滚</b><small>保存版本链</small></div></div>
+ <p>对每个候选 <code>K_t'</code>，统计目标修复、同机制新任务迁移、其他任务回归、执行成本。开发门控与最终独立测试分开；一个任务成功不能把 patch 升级为“有效”。保留所有被拒修改与失败原因。补丁需要清楚记录：哪个学生行为触发、哪条语义规则被修改、具体执行结果、教师在更新前后表现。</p>
+ <p><b>两条升级轨道：</b>A 轨将技能文件版本 <code>K_t → K_t'</code> 装载给<strong>教师自己</strong>，权重不动；B 轨在 A 轨验证有效后，以同样数据预算训练教师 LoRA，再彻底清除额外技能与会话进行评测。不能把 A 轨提升称为“权重学会了”，也不能把学生变强算作教师结果。[[S20]][[S04]]</p>
+ '''),
+ ("algorithm","可编程最小算法：一轮 Teaching-to-Improve", '''
+ <pre><code>for episode in teaching_stream:
+    parent = freeze_teacher_state()
+    skill = extract_skill_contract(parent, seed_successes)
+
+    # All branches start from independent, resettable copies.
+    for task in probe_tasks:   # training feedback only
+        t0 = execute(teacher=parent, task=task, skill=skill)
+        for student in frozen_student_pool:
+            s0 = execute(student, task, lesson=None)
+            s1 = execute(student, task, lesson=skill)
+            questions = bounded_questions(s1, max_questions=2)
+            record(task, student, t0, s0, s1, questions)
+
+    evidence = attribute_with_counterfactuals(records)
+    candidates = fixed_editor(parent, evidence, max_edits=3)
+
+    winner = None
+    for patch in candidates:
+        if not executable_reproduction(patch, evidence):
+            continue
+        result = independent_dev_and_regression_gate(patch)
+        if result.pre_registered_accept:
+            winner = choose_without_test_leakage(winner, patch, result)
+
+    commit_or_keep_parent(winner)
+    seal_version_and_cost_ledger()
+
+# Outside adaptation, evaluate NEW task families:
+# old/new teacher, equal inference, no student feedback,
+# no training probes, and clean conversation state.</code></pre>
+ <p>实现时的核心数据结构：<code>TeacherRevision</code>（权重与技能哈希）、<code>StudentRevision</code>、<code>SkillContract</code>、<code>TeachingEpisode</code>、<code>AttributionRecord</code>、<code>PatchCandidate</code>、<code>PairedOutcome</code>。每条记录含 <code>parent_state_id</code>、环境镜像/commit、随机种子、任务族、Split、学生可见材料、执行成本和审计来源。</p>
+ <div class="links"><a class="link-btn" href="teaching-protocol.json" download>下载结构化实验协议</a><a class="link-btn" href="research-notes.md" download>下载完整研究笔记</a></div>
+ '''),
+ ("meta","升级到 RSI 的必要一步：改进“如何教学试验”本身", '''
+ <p>只在固定算法下迭代更新技能，可以称<strong>教学反馈驱动的系统层面持续自改进</strong>；还不足以声称改进器本身学会递归改进。后续元策略 <code>π_φ</code> 可选择 <code>a=(选哪种学生, 何种试教任务/追问, 证据检查, 编辑目标, 停止/拒绝)</code>。</p>
+ <p>元控制器从历史的<strong>教师自身</strong>独立增益学习，而不是从学生答对率学习；例如：</p>
+ <div class="equation">R_meta = Δ Success_T,on-meta-dev − λ Regression_T − μ (Tokens + ToolCalls + Compute)</div>
+ <p>元策略训练只读 <code>D_meta</code> 的效果标签，最外层 <code>D_test</code> 彻底封存。比较固定 Student 策略、随机 Probe、教师自己选 Probe、普通 contextual bandit，以及训练后的 <code>π_φ</code>。特别重要：<b>Meta-reset</b>——把教师重置为同一个初始快照，仅保留新旧两版元控制器，在未见任务流比较“能否更高效地找到、验证并修复盲点”。</p>
+ <p>学生提问策略可能已经能通过 DPO 训练，本身也不是新颖性；我们检验的是<strong>提问对教师后续改进决策的价值</strong>，并与固定问句和普通不确定性采样比较。[[S24]][[M07]]</p>
+ '''),
+ ("data","模型 / 数据集 / 工程实现建议", '''
+ <div class="table-wrap"><table><thead><tr><th>组件</th><th>初始建议</th><th>验收要求</th></tr></thead><tbody>
+ <tr><td>Teacher</td><td>Qwen3.5-9B（主），27B 同族扩展。</td><td>先选有成功也有失败的工具任务，且单次运行可复位。[[B04]][[B05]]</td></tr>
+ <tr><td>Student pool</td><td>一个弱于 T、一个与 T 不同家族的冻结 Student；另设同底座干净副本。</td><td>强弱关系用环境基线<strong>实测</strong>，不靠参数量猜测。</td></tr>
+ <tr><td>诊断 / Patch Editor</td><td>共享冻结模型；条件间不换 Editor。</td><td>相同任务、样例、生成候选数和上下文预算。</td></tr>
+ <tr><td>机制主环境</td><td>ToolSandbox + 在其 API 风格下构造的独立任务族。</td><td>可复位状态、工具轨迹、真实终止判断。[[B01]]</td></tr>
+ <tr><td>第二环境</td><td>AppWorld 的 train / dev，或版本锁定的 τ 文本任务。</td><td>评测集不进入教学或选择；AppWorld 的 test_normal / test_challenge 仅作最终测试。[[B07]][[B02]]</td></tr>
+ <tr><td>外部评测</td><td>固定 Terminal-Bench 2.1 / AppWorld test。</td><td>只评冻结方法及整体结果，不看单题测试报告调参。[[B03]][[B07]]</td></tr></tbody></table></div>
+ <p>推荐 <code>Python 3.12 + pydantic + vLLM/LiteLLM + Docker + Parquet/JSONL</code> 实现小规模闭环；并行分支用任务队列与独立环境快照。第二阶段再引入 LoRA / GRPO，不把大规模 RL 训练作为 P0 前提。这里只规定接口与验收，暂未安装运行以上栈。</p>
+ '''),
+ ("pilot","P0：两周内应该产出的硬证据", '''
+ <p><b>先验证两个现象，而不是直接跑完整 RSI。</b>第一，教学后的独立 Student 行为是否比教师等预算直接 Probe 更常暴露<strong>经复现的教师规则缺口</strong>？第二，针对这些缺口的同预算 patch 是否比自我反思和直接技能归纳提升了<strong>教师自身</strong>的未见任务表现？</p>
+ <div class="table-wrap"><table><thead><tr><th>阶段</th><th>建议规模（计划）</th><th>准入门槛</th></tr></thead><tbody>
+ <tr><td>P0a · 管线预检</td><td>4 个任务族 × 2 Student × 3 seed</td><td>环境可复位、数据/答案隔离、Student 真正独立执行。</td></tr>
+ <tr><td>P0b · 盲区辨别</td><td>24 个任务族 × 2 Student × 3 seed；每轮限制提问/执行</td><td>有稳定、验证通过且不能完全由学生弱点解释的事件。</td></tr>
+ <tr><td>P0c · 方法对照</td><td>对 P0b 中合法事件生成 3 个 patch，同父版本配对比较</td><td>相同调用/编辑/验证成本下，教师未见任务净收益优于最强朴素基线。</td></tr>
+ <tr><td>P1 · 长程与迁移</td><td>2 个通用环境、≥2 教师、不同家族学生、5 条独立学习流</td><td>效果迁移到自然失败、不同工具组合；报告所有失败与回归。</td></tr>
+ </tbody></table></div>
+ <p>以上为计划规模，不是已跑实验。先按任务族聚类分析；多条相似 Probe 不能假装是独立统计单位。选择成功与失败混合的 T 初始状态须遵守<strong>事先固定的筛选规则</strong>并披露丢弃比例，不能只挑特别容易修复的案例。</p>
+ '''),
+ ("baselines","六种不可省的基线、消融与失败条件", '''
+ <div class="table-wrap"><table><thead><tr><th>Baselines / 消融</th><th>必须匹配</th><th>排除什么解释</th></tr></thead><tbody>
+ <tr><td>Self-Reflection / Reflexion</td><td>教师看自己轨迹，获得同样验证预算</td><td>只是普通自我复盘起作用。</td></tr>
+ <tr><td>Self-Probe / Self-Questioning</td><td>教师独立访问<strong>同一批</strong> Probe 任务，调用预算匹配</td><td>学生只是替教师做了额外测试。</td></tr>
+ <tr><td>LbT-Feedback / LbT-DPO 风格</td><td>学生反馈与更新数据规模可比</td><td>已有学习型教学反馈已足够。[[S20]]</td></tr>
+ <tr><td>Teacher→Student Distill（SKILL-KD 类）</td><td>一致的 Skill 与学生执行任务</td><td>收益仅由让学生变强产生。[[S22]]</td></tr>
+ <tr><td>Direct Skill Induction / GEPA</td><td>相同候选数、Skill 粒度与实际执行调用</td><td>只因更细粒度或更多提示搜索。[[S03]][[S23]]</td></tr>
+ <tr><td>随机/打乱 Student Trace、Question-Only</td><td>相同上下文长度与编辑器</td><td>任何学生文字、更多 Token 都能提高分数。</td></tr>
+ </tbody></table></div>
+ <p><b>主指标：</b><code>Verified Teacher-Gap Yield / 100 env calls</code>、<code>Teacher Held-out Net Gain</code>、旧任务回归率、跨学生一致性、同机制/新机制迁移、完整训练与验证预算。<b>不能以学生成绩、解释长度或教师的自评信心替代教师独立收益。</b></p>
+ <p><b>立即停止或缩题：</b>① Student 事件基本都来自 Student 能力上限；② 同预算 Teacher Self-Probe 也能暴露一样多盲点；③ 修复仅提升 Student，教师自身不升；④ 清空教师对话与教学材料后收益消失；⑤ 结果仅在人工故障或原题中出现。若只证实学生反馈有助于技能转移，可写分析但不要称 RSI 方法突破。</p>
+ '''),
+ ("positioning","论文路线与可投稿主张的上限", '''
+ <p><b>最小论文主张：</b>存在并可量化一种“学生独立应用所教规则所暴露的、教师自我测试容易遗漏的错误信息”，且验证后可用于教师自身的持久技能改进。</p>
+ <p><b>更强论文主张：</b>在相同任务、预算、编辑器与验证器条件下，基于 Student 反馈的归因与更新比通用反思/直接 Probe 改进了跨任务的教师独立成功率，并能在新学生和新任务机制上复现。</p>
+ <p><b>Meta-RSI 级主张：</b>训练后的教学 Probe 策略，在重置底层教师后的新任务流中比冻结元策略更高效；它优化的是未来学习过程，而不只是当前补丁。</p>
+ <div class="note">这三个主张递进但不等价。论文初期应只承诺前两层；看到 P0 / P1 结果后再决定第三层。与 2024 LbT、AAAI 2026 MARS、SKILL-KD 和学生提问研究的逐实验对比仍需要在正式投稿前持续更新。[[S20]][[S21]][[S22]][[S24]]</div>
+ ''')
+ ]
+}
