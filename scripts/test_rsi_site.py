@@ -32,8 +32,18 @@ def main():
     refs={r['id'] for r in source['sources']}
     card_data=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))
     cards=card_data['papers']
-    check(card_data['schema_version']==1 and len(cards)>0,'Invalid reading card registry')
+    check(card_data['schema_version']==2 and len(cards)>0,'Invalid reading card registry')
+    questions=card_data['research_questions']
+    question_ids={q['id'] for q in questions}
+    check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
     check(len({p['id'] for p in cards})==len(cards),'Duplicate reading card ID')
+    for card in cards:
+        check(card['lead_institution'] in card['institutions'],'Leading author institution not in institution list: '+card['id'])
+        check(card['institution_source'] and card['publication'],'Missing institution provenance: '+card['id'])
+        check(set(card['research_coverage'])==question_ids,'Paper missing RSI coverage axes: '+card['id'])
+        for axis in card['research_coverage'].values():
+            check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
+            check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
     check(len(refs)==51,'Expected the audited 51-record source snapshot')
     check(source['review_date']=='2026-10-21','Review date drift')
     parsed={}
@@ -57,6 +67,13 @@ def main():
                 check(unquote(u.fragment) in target_parsed.ids,f'Missing anchor: {path.name} -> {href}')
     card_ids=set(parsed[ROOT/'rsi/reading-cards.html'].ids)
     check(all(p['id'] in card_ids for p in cards),'Paper not rendered from JSON')
+    card_html=(ROOT/'rsi/reading-cards.html').read_text(encoding='utf-8')
+    check(card_html.count('class="reading-card"')==len(cards),'Wrong number of rendered paper cards')
+    check('id="reading-question-filter"' in card_html and 'id="reading-coverage-filter"' in card_html,'Missing five-question filters')
+    for card in cards:
+        check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
+        coverage='|'.join(f'{q["id"]}:{card["research_coverage"][q["id"]]["level"]}' for q in questions)
+        check(coverage in card_html,'Missing exact five-question coverage status: '+card['id'])
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
@@ -65,7 +82,10 @@ def main():
         check(f'"rsi/{slug}.html"' in nav,f'Missing root navigation: {slug}')
     records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
     for card in cards:
-        check(any(r['url']==f"reading-cards.html#{card['id']}" for r in records),'Paper missing from global search')
+        indexed=[r for r in records if r['url']==f"reading-cards.html#{card['id']}"]
+        check(len(indexed)==1,'Paper missing or duplicated in global search')
+        check(card['lead_institution'] in indexed[0]['text'],'Author institution missing from search: '+card['id'])
+        check(all(q['label'] in indexed[0]['text'] for q in questions),'Five-question labels missing from search: '+card['id'])
     for r in records:
         u=urlsplit(r['url']); p=ROOT/'rsi'/u.path
         check(p in parsed and u.fragment in parsed[p].ids,'Search result target missing: '+r['url'])

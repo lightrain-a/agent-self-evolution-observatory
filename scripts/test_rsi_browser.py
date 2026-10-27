@@ -65,6 +65,21 @@ def main():
             js(f"const q=document.querySelector('#reading-card-filter');q.value={query};q.dispatchEvent(new Event('input',{{bubbles:true}}));")
             check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===1"),'Card search did not uniquely find '+paper['short_title'])
             check(js("return document.querySelector('.reading-card:not([hidden])').id")==paper['id'],'Card search matched wrong paper: '+paper['id'])
+            check(js("return document.querySelector('.reading-card:not([hidden]) .reading-institution').textContent.includes("+json.dumps(paper['lead_institution'],ensure_ascii=False)+")"),'Institution not visible: '+paper['id'])
+            js("document.querySelector('.reading-card:not([hidden]) .reading-expand').open=true")
+            check(js("return document.querySelector('.reading-card:not([hidden]) .reading-question-details').children.length===5"),'Five-question details incomplete: '+paper['id'])
+        js("const q=document.querySelector('#reading-card-filter');q.value='';q.dispatchEvent(new Event('input',{bubbles:true}));")
+        for question,level in [('signal','core'),('novelty','partial'),('reach','core'),('retention','core'),('safety','addressed'),('safety','not_addressed')]:
+            js(f"const q=document.querySelector('#reading-question-filter');q.value={json.dumps(question)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
+            js(f"const q=document.querySelector('#reading-coverage-filter');q.value={json.dumps(level)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
+            expected=sorted(p['id'] for p in cards if (
+                p['research_coverage'][question]['level']!='not_addressed' if level=='addressed'
+                else p['research_coverage'][question]['level']==level
+            ))
+            actual=js("return [...document.querySelectorAll('.reading-card:not([hidden])')].map(c=>c.id).sort()")
+            check(actual==expected,f'Coverage filter mismatch {question}/{level}: {actual} vs {expected}')
+        js("const q=document.querySelector('#reading-question-filter');q.value='all';q.dispatchEvent(new Event('change',{bubbles:true}));")
+        js("const q=document.querySelector('#reading-coverage-filter');q.value='addressed';q.dispatchEvent(new Event('change',{bubbles:true}));")
         screenshot('reading-cards-desktop.png')
         nav('rsi/index.html'); screenshot('overview-desktop.png')
         js("const q=document.querySelector('#research-search');q.value='SOAR';q.dispatchEvent(new Event('input',{bubbles:true}));")

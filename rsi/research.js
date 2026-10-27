@@ -99,14 +99,24 @@
   const readingFilter = $('#reading-card-filter');
   if (readingFilter) {
     const cards = [...root.querySelectorAll('.reading-card')];
+    const readingQuestion = $('#reading-question-filter');
+    const readingCoverage = $('#reading-coverage-filter');
     const readingCount = $('#reading-card-count');
     const readingEmpty = $('#reading-empty');
+    const matchCoverage = (level, expected) =>
+      expected === 'all' || (expected === 'addressed' ? level !== 'not_addressed' : level === expected);
     const refreshReadingCards = () => {
       const terms = readingFilter.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+      const question = readingQuestion?.value || 'all';
+      const expected = readingCoverage?.value || 'addressed';
       let shown = 0;
       cards.forEach((card) => {
         const content = card.textContent.toLocaleLowerCase();
-        const visible = terms.every((term) => content.includes(term));
+        const covers = (card.dataset.questionCoverage || '').split('|').map((entry) => entry.split(':'));
+        const relevant = question === 'all' ? covers : covers.filter(([id]) => id === question);
+        const levelMatch = (question === 'all' && expected === 'addressed')
+          || relevant.some(([, level]) => matchCoverage(level, expected));
+        const visible = terms.every((term) => content.includes(term)) && levelMatch;
         card.hidden = !visible;
         if (visible) shown += 1;
       });
@@ -114,6 +124,8 @@
       readingEmpty.hidden = shown !== 0;
     };
     readingFilter.addEventListener('input', refreshReadingCards);
+    readingQuestion?.addEventListener('change', refreshReadingCards);
+    readingCoverage?.addEventListener('change', refreshReadingCards);
     refreshReadingCards();
   }
   if ('IntersectionObserver' in window) {

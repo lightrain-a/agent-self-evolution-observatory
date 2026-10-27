@@ -1,6 +1,13 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "updated": "2026-10-27",
+  "research_questions": [
+    {"id": "signal", "label": "信号对不对", "definition": "评估分数和真实能力是否一致；评估器也在变化时，用什么独立证据校准它。"},
+    {"id": "novelty", "label": "有没有新东西", "definition": "自己出题、自己造数据时，能够纠正模型的信息究竟从哪里来。"},
+    {"id": "reach", "label": "采不采得到", "definition": "高质量解法是否处在可采样的候选空间中，候选支持范围在哪一环节收窄。"},
+    {"id": "retention", "label": "吸收了会不会丢", "definition": "改进进入权重、记忆或技能后，旧能力是否保留、错误经验是否被排除。"},
+    {"id": "safety", "label": "安全", "definition": "评估器被绕过、越权修改真实系统、坏行为被持久记录三类跨环节风险。"}
+  ],
   "description": "RSI 精读论文卡片的唯一数据源。新增论文只追加 papers 条目，并运行 python3 scripts/build_rsi_research.py。",
   "papers": [
     {
@@ -8,6 +15,10 @@
       "short_title": "R²Orch",
       "title": "R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop",
       "authors": "Mingda Zhang et al.",
+      "lead_institution": "香港中文大学（深圳）",
+      "institutions": ["香港中文大学（深圳）", "复旦大学", "伊利诺伊大学厄巴纳-香槟分校", "清华大学", "新加坡国立大学"],
+      "institution_source": "arXiv v2 论文首页作者署名",
+      "publication": "arXiv 预印本",
       "arxiv": "2610.22740",
       "first_posted": "2026-10-15",
       "version": "v2 · 2026-10-22",
@@ -19,6 +30,33 @@
         "Curriculum",
         "Skill Lifecycle"
       ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "在同一道题和同一当前策略下随机隐藏或保留 Skill，用成功率差和 Bayesian Bootstrap 后验检验 Skill 是否还有帮助（§4.3、附录 A.7）。",
+          "open_question": "仍依赖外部任务正确性验证器；没有研究验证器自身更新、被绕过时怎样保持校准。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "Proposer 根据撤掉 Skill 后的可学习性动态选训练任务，让当前失败暴露出下一轮训练目标（§4.2）。",
+          "open_question": "主要从候选任务库中选题；没有解释封闭自生成数据能否持续引入真正的新信息。"
+        },
+        "reach": {
+          "level": "core",
+          "contribution": "用无 Skill 成功率的正负结果方差选题，避免 GRPO 训练时出现全对或全错导致优势信号消失（§4.2）。",
+          "open_question": "改善训练时可学性，并没有证明原本完全采样不到的好解会进入模型的候选支持集。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "让外部 Skill 经自博弈逐步内化进 Director 参数；撤回 Skill 依据随机对照证据，并安排后续回测（§4.3）。",
+          "open_question": "主要检验撤走 Skill 后的任务表现，未完整检验跨长期任务的旧能力遗忘或错误 Skill 的记忆污染。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "框架聚焦课程选择、技能贡献测量与技能撤回，而非 Agent 安全威胁。",
+          "open_question": "没有针对评分器攻击、越权真实操作、恶意 Skill 持久化开展系统的安全验证。"
+        }
+      },
       "one_sentence": "任务要按“撤掉 Skill 后还能不能学”来挑；Skill 要靠同题随机对照判断是否真的不再需要。",
       "problem": "以有 Skill 时的成功率选题，撤掉 Skill 后可能全错，GRPO 失去成败差异；仅凭整体成功率也分不清模型变强还是 Skill 仍有帮助。",
       "setup": "Proposer 选训练任务；Director 学习构建 Agent Graph；Workers 冻结。每个任务 5 条 Rollout，随机 3 条隐藏候选 Skill、2 条保留。",
@@ -66,13 +104,44 @@
       "id": "rsi-anything-2610-13912",
       "short_title": "RSI-Anything",
       "title": "RSI-Anything: Unlocking Recursive Self-Improvement with World Models",
-      "authors": "Taoyong Cui et al. · PhAI Labs",
+      "authors": "Taoyong Cui et al.",
+      "lead_institution": "PhAI Labs",
+      "institutions": ["PhAI Labs", "香港中文大学", "澳门大学", "上海交通大学", "复旦大学", "牛津大学", "斯坦福大学", "北京大学"],
+      "institution_source": "arXiv v1 论文附录 A（Author Affiliations and Correspondence）",
+      "publication": "PhAI Labs Technical Report · arXiv 预印本",
       "arxiv": "2610.13912",
       "first_posted": "2026-10-09",
       "version": "v1 · 2026-10",
       "read_on": "2026-10-27",
       "reading_level": "框架 §2.3–2.5、关键实验与官方项目说明精读；尚未独立复现",
       "tags": ["RSI", "World Model", "Feedback Learning", "Pair Retention", "JEPA-Anything"],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "将预测与真实观测配对以检查 World Model 可靠性；Policy、World Model 及其组合分别经过事先规定的接纳检验（§2.4–2.5）。",
+          "open_question": "这里主要校准可更新的预测器；实际任务验证标准保持固定，并未解决评估器自身也会被重写时的真实性锚点问题。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "用有限的真实程序测试、GUI 交互和科学实验获取外部结果，为下一轮训练提供新的观察反馈（§2.3）。",
+          "open_question": "新信息主要来自外部环境；没有证明完全自生成题目或数据能在封闭循环中不断产生正确的新知识。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "世界模型对已经提出的候选进行预测排序，优先执行有价值的方案，提高有限真实反馈预算的利用率（§2.3）。",
+          "open_question": "候选筛选不等于扩展采样支持集；如果好解最初不在 Policy 能提出的集合里，World Model 也无法将它挑出来。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "用版本化 Policy/Workflow、World Model 的组件检验与配对兼容性检验决定是否接受更新并继承到下一轮（§2.5）。",
+          "open_question": "验证的是组件更新和配对收益，不等同于证明长时间不遗忘旧任务、不会把错误经验写入记忆或权重。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "任务协议中固定操作约束、预算和接纳规则，为真正执行候选与保留改进设置基本边界（§2.1、§2.5）。",
+          "open_question": "没有独立覆盖评估器被绕过、Agent 越权操作真实系统，以及恶意行为被持久学习的三类对抗测试。"
+        }
+      },
       "one_sentence": "先用世界模型挑最值得真实验证的尝试；再用反馈改进策略和预测器，只有重新组合后也更好的版本才进入下一轮。",
       "problem": "Agent 的真实测试与实验很贵；策略进步后会尝试新类型动作，使旧世界模型的预测失准；即使策略和世界模型各自提升，二者组合后也可能退步。",
       "setup": "Policy/Workflow 提出多个候选，基于 JEPA-Anything 的 World Model 预测后果并筛选，再执行少量真实验证。代码修复、GUI、实验室规划、反应优化等领域共享改进流程，但仍使用不同领域的状态、行动与反馈适配器。",
