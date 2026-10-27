@@ -48,7 +48,7 @@
 
 <p>这是长期积累的<strong>论文阅读卡库</strong>，和覆盖面广的文献综述分开。每篇用一句话抓住核心问题，再看机制、关键公式、证据和可以迁移的实验；“作者报告”不代表我们已经复现。</p><div class="status-strip"><span>精读记录与后续设想分开</span><span>优先保留机制而不是堆摘要</span><span>有新论文直接追加结构化记录</span></div>
 
-## 论文精读卡片 / 论文卡片库 · 1 篇
+## 论文精读卡片 / 论文卡片库 · 2 篇
 
 <div class="reading-tools"><label for="reading-card-filter">搜索卡片（标题、方法、机制、标签）</label><input type="search" id="reading-card-filter" placeholder="例如：R²Orch、撤回、Curriculum、I5" autocomplete="off"><span id="reading-card-count" aria-live="polite"></span></div><div class="reading-grid"><article class="reading-card" id="r2orch-2610-22740" data-paper-tags="RSI|Self-Play|Curriculum|Skill Lifecycle">
   <div class="reading-card-head">
@@ -76,6 +76,33 @@
     </div>
   </details>
   <div class="links reading-links"><a class="link-btn" href="#r2orch-2610-22740" aria-label="复制或保存此卡片的锚点链接">卡片定位</a><a class="link-btn" href="https://arxiv.org/html/2610.22740v2" target="_blank" rel="noopener noreferrer">论文 HTML</a><a class="link-btn" href="https://arxiv.org/pdf/2610.22740" target="_blank" rel="noopener noreferrer">PDF</a><a class="link-btn" href="https://github.com/beita6969/R2Orch" target="_blank" rel="noopener noreferrer">GitHub 代码</a></div>
+</article>
+<article class="reading-card" id="rsi-anything-2610-13912" data-paper-tags="RSI|World Model|Feedback Learning|Pair Retention|JEPA-Anything">
+  <div class="reading-card-head">
+    <div class="reading-metadata"><span class="reading-paper-id">RSI-Anything</span><span>arXiv:2610.13912</span><span>精读 2026-10-27</span></div>
+    <h3>RSI-Anything</h3>
+    <p class="reading-full-title">RSI-Anything: Unlocking Recursive Self-Improvement with World Models</p>
+    <div class="reading-tags"><span class="reading-tag">RSI</span><span class="reading-tag">World Model</span><span class="reading-tag">Feedback Learning</span><span class="reading-tag">Pair Retention</span><span class="reading-tag">JEPA-Anything</span></div>
+  </div>
+  <p class="reading-one-sentence">先用世界模型挑最值得真实验证的尝试；再用反馈改进策略和预测器，只有重新组合后也更好的版本才进入下一轮。</p>
+  <dl class="reading-overview">
+    <div><dt>它解决什么问题</dt><dd>Agent 的真实测试与实验很贵；策略进步后会尝试新类型动作，使旧世界模型的预测失准；即使策略和世界模型各自提升，二者组合后也可能退步。</dd></div>
+    <div><dt>它怎么做</dt><dd>Policy/Workflow 提出多个候选，基于 JEPA-Anything 的 World Model 预测后果并筛选，再执行少量真实验证。代码修复、GUI、实验室规划、反应优化等领域共享改进流程，但仍使用不同领域的状态、行动与反馈适配器。</dd></div>
+    <div><dt>到底更新了什么</dt><dd>真实反馈可以更新 Policy 参数或 Agent Workflow；只有预测不可靠、证据充足且预算允许时才适配 World Model。新 Policy、新 World Model 分别接受检查，再检查二者配对是否优于当前组合；未通过就保留旧版本。</dd></div>
+    <div><dt>和我们有什么关系</dt><dd>我们的 I5 十模型交换舞伴：把预测对象从“动作会带来什么后果”改为“向哪个伙伴学习，等预算训练后的独立能力提升是多少”。</dd></div>
+  </dl>
+  <details class="reading-expand">
+    <summary>展开公式、实验证据与可迁移机制</summary>
+    <div class="reading-expanded-content">
+      <div class="reading-source-line"><b>作者</b> Taoyong Cui et al. · PhAI Labs · <b>首发</b> 2026-10-09 · <b>版本</b> v1 · 2026-10 · <b>阅读范围</b> 框架 §2.3–2.5、关键实验与官方项目说明精读；尚未独立复现</div>
+      <h4>核心机制 · 记住这几个公式</h4><ol class="reading-mechanisms"><li><b>预测引导的有限试错</b><p>先预测候选效果和不确定性，用有限的真实测试预算优先验证有价值的候选；未执行的候选不能当作真实反馈。</p><code class="reading-formula">a* = argmax_a [predicted reward(a) - uncertainty penalty(a)]（机制理解式）</code></li><li><b>按需更新世界模型</b><p>Policy 变强会改变候选分布，因此世界模型可靠性要按当前版本重新评价；证据或预算不足时不强行更新。</p><code class="reading-formula">update W iff unreliable(W) AND enough data AND enough budget（机制理解式）</code></li><li><b>策略—预测器联合保留</b><p>策略与世界模型各自通过评估还不够，还须验证搭配后的真实收益；确保下一轮继承的是有效组合。</p><code class="reading-formula">retain(Policy&#x27;, W&#x27;) iff pass(Policy&#x27;) AND pass(W&#x27;) AND pass(pair)（机制理解式）</code></li></ol>
+      <h4>实验证据（作者报告，未复现）</h4><ul><li>CodeContests 200 道题、3 个种子，固定代码生成模型：静态验证器 26.3%，预测筛选 29.2%，再适配 World Model 31.2%；在线测试量相近。</li><li>MiniWoB++ checkbox 同一组 100 个实例：连续保留版本的任务成功数 51 → 79 → 99；平均动作数 5.30 → 3.21（下降 39.4%）。</li><li>LabHorizon F200 Level 2：五个策略版本的规划得分 21.80% → 46.01%；Suzuki 反应优化在相同 40 次实验预算下，平均最优产率 96.15%，BO 为 82.16%。</li></ul>
+      <h4>限制与易错理解</h4><ul><li>“跨领域”指复用提出候选→预测→真实反馈→更新→保留的流程，不是一个共享权重的超级世界模型横跨所有任务。</li><li>五轮规划结果证明了连续策略改进，但不足以单独证明同一场景中 Policy 和 World Model 长期稳定的双向共同进化。</li><li>仅对被选中执行的候选获得真实反馈，预测器可能面对选择偏差与分布变化；预测误差降低也不自动意味着最终任务表现提升。</li></ul>
+      <h4>对我们 RSI / I5 的启发</h4><ul><li>我们的 I5 十模型交换舞伴：把预测对象从“动作会带来什么后果”改为“向哪个伙伴学习，等预算训练后的独立能力提升是多少”。</li><li>可以借鉴“预测→少量真实教学验证→更新学习增益预测器→检查新伙伴策略是否真的更好”的递归闭环，而不是永远选择最强教师。</li><li>与我们的 Agent 多层更新研究相关：把修改 Prompt、Memory、Workflow 或模型参数的效果与预测器的判断分开审计，并保留独立测试。</li></ul>
+      <div class="reading-next"><b>下一步最值得做的辨别实验</b><p>固定同一学生检查点，向强教师、能力相近教师、预测高增益教师和随机教师等预算学习；在未见测试集比较相对无教师的真实增益、负迁移率与成本，并观察多轮学习后最佳伙伴是否变化。</p></div>
+    </div>
+  </details>
+  <div class="links reading-links"><a class="link-btn" href="#rsi-anything-2610-13912" aria-label="复制或保存此卡片的锚点链接">卡片定位</a><a class="link-btn" href="https://arxiv.org/html/2610.13912" target="_blank" rel="noopener noreferrer">论文 HTML</a><a class="link-btn" href="https://arxiv.org/pdf/2610.13912" target="_blank" rel="noopener noreferrer">PDF</a><a class="link-btn" href="https://github.com/Gen-Verse/RSI-Anything" target="_blank" rel="noopener noreferrer">GitHub 代码</a></div>
 </article></div><p class="reading-empty" id="reading-empty" hidden>没有匹配的论文；清空搜索可以查看全部。</p><div class="links"><a class="link-btn" href="reading-cards.json" download>下载阅读卡片 JSON（可复用）</a></div>
 
 ## 论文精读卡片 / 下一篇论文如何进入卡片库

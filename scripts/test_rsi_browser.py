@@ -58,8 +58,13 @@ def main():
         check(js("return document.querySelectorAll('.reading-card').length>=1"),'Reading-card library is empty')
         js("const q=document.querySelector('#reading-card-filter');q.value='不存在的测试查询';q.dispatchEvent(new Event('input',{bubbles:true}));")
         check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===0"),'Paper-card filtering failed')
-        js("const q=document.querySelector('#reading-card-filter');q.value='R²Orch';q.dispatchEvent(new Event('input',{bubbles:true}));")
-        check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===1"),'Paper-card search did not find R²Orch')
+        cards=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))['papers']
+        check(js("return document.querySelectorAll('.reading-card').length")==len(cards),'Rendered card count does not match registry')
+        for paper in cards:
+            query=json.dumps(paper['short_title'],ensure_ascii=False)
+            js(f"const q=document.querySelector('#reading-card-filter');q.value={query};q.dispatchEvent(new Event('input',{{bubbles:true}}));")
+            check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===1"),'Card search did not uniquely find '+paper['short_title'])
+            check(js("return document.querySelector('.reading-card:not([hidden])').id")==paper['id'],'Card search matched wrong paper: '+paper['id'])
         screenshot('reading-cards-desktop.png')
         nav('rsi/index.html'); screenshot('overview-desktop.png')
         js("const q=document.querySelector('#research-search');q.value='SOAR';q.dispatchEvent(new Event('input',{bubbles:true}));")

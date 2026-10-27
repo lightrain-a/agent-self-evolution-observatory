@@ -61,6 +61,60 @@
         "pdf": "https://arxiv.org/pdf/2610.22740",
         "code": "https://github.com/beita6969/R2Orch"
       }
+    },
+    {
+      "id": "rsi-anything-2610-13912",
+      "short_title": "RSI-Anything",
+      "title": "RSI-Anything: Unlocking Recursive Self-Improvement with World Models",
+      "authors": "Taoyong Cui et al. · PhAI Labs",
+      "arxiv": "2610.13912",
+      "first_posted": "2026-10-09",
+      "version": "v1 · 2026-10",
+      "read_on": "2026-10-27",
+      "reading_level": "框架 §2.3–2.5、关键实验与官方项目说明精读；尚未独立复现",
+      "tags": ["RSI", "World Model", "Feedback Learning", "Pair Retention", "JEPA-Anything"],
+      "one_sentence": "先用世界模型挑最值得真实验证的尝试；再用反馈改进策略和预测器，只有重新组合后也更好的版本才进入下一轮。",
+      "problem": "Agent 的真实测试与实验很贵；策略进步后会尝试新类型动作，使旧世界模型的预测失准；即使策略和世界模型各自提升，二者组合后也可能退步。",
+      "setup": "Policy/Workflow 提出多个候选，基于 JEPA-Anything 的 World Model 预测后果并筛选，再执行少量真实验证。代码修复、GUI、实验室规划、反应优化等领域共享改进流程，但仍使用不同领域的状态、行动与反馈适配器。",
+      "updates": "真实反馈可以更新 Policy 参数或 Agent Workflow；只有预测不可靠、证据充足且预算允许时才适配 World Model。新 Policy、新 World Model 分别接受检查，再检查二者配对是否优于当前组合；未通过就保留旧版本。",
+      "key_ideas": [
+        {
+          "name": "预测引导的有限试错",
+          "summary": "先预测候选效果和不确定性，用有限的真实测试预算优先验证有价值的候选；未执行的候选不能当作真实反馈。",
+          "formula": "a* = argmax_a [predicted reward(a) - uncertainty penalty(a)]（机制理解式）"
+        },
+        {
+          "name": "按需更新世界模型",
+          "summary": "Policy 变强会改变候选分布，因此世界模型可靠性要按当前版本重新评价；证据或预算不足时不强行更新。",
+          "formula": "update W iff unreliable(W) AND enough data AND enough budget（机制理解式）"
+        },
+        {
+          "name": "策略—预测器联合保留",
+          "summary": "策略与世界模型各自通过评估还不够，还须验证搭配后的真实收益；确保下一轮继承的是有效组合。",
+          "formula": "retain(Policy', W') iff pass(Policy') AND pass(W') AND pass(pair)（机制理解式）"
+        }
+      ],
+      "evidence": [
+        "CodeContests 200 道题、3 个种子，固定代码生成模型：静态验证器 26.3%，预测筛选 29.2%，再适配 World Model 31.2%；在线测试量相近。",
+        "MiniWoB++ checkbox 同一组 100 个实例：连续保留版本的任务成功数 51 → 79 → 99；平均动作数 5.30 → 3.21（下降 39.4%）。",
+        "LabHorizon F200 Level 2：五个策略版本的规划得分 21.80% → 46.01%；Suzuki 反应优化在相同 40 次实验预算下，平均最优产率 96.15%，BO 为 82.16%。"
+      ],
+      "boundaries": [
+        "“跨领域”指复用提出候选→预测→真实反馈→更新→保留的流程，不是一个共享权重的超级世界模型横跨所有任务。",
+        "五轮规划结果证明了连续策略改进，但不足以单独证明同一场景中 Policy 和 World Model 长期稳定的双向共同进化。",
+        "仅对被选中执行的候选获得真实反馈，预测器可能面对选择偏差与分布变化；预测误差降低也不自动意味着最终任务表现提升。"
+      ],
+      "our_relevance": [
+        "我们的 I5 十模型交换舞伴：把预测对象从“动作会带来什么后果”改为“向哪个伙伴学习，等预算训练后的独立能力提升是多少”。",
+        "可以借鉴“预测→少量真实教学验证→更新学习增益预测器→检查新伙伴策略是否真的更好”的递归闭环，而不是永远选择最强教师。",
+        "与我们的 Agent 多层更新研究相关：把修改 Prompt、Memory、Workflow 或模型参数的效果与预测器的判断分开审计，并保留独立测试。"
+      ],
+      "next_test": "固定同一学生检查点，向强教师、能力相近教师、预测高增益教师和随机教师等预算学习；在未见测试集比较相对无教师的真实增益、负迁移率与成本，并观察多轮学习后最佳伙伴是否变化。",
+      "links": {
+        "html": "https://arxiv.org/html/2610.13912",
+        "pdf": "https://arxiv.org/pdf/2610.13912",
+        "code": "https://github.com/Gen-Verse/RSI-Anything"
+      }
     }
   ]
 }
