@@ -851,6 +851,16 @@
       "level": "PMLR 正式摘要核对；2026-10-27",
       "note": "使用学习进展反馈与非平稳多臂老虎机分配课程；说明学习速率驱动的训练预算调度早有直接前作。",
       "code": ""
+    },
+    {
+      "id": "M13",
+      "group": "相邻领域",
+      "title": "Demystifying Supervision Data Generalization in Multimodal LMs (DATAPROPHET)",
+      "date": "ICLR 2026",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/edcd1aa172dceda2ea9d45a48f25d3e3-Abstract-Conference.html",
+      "level": "ICLR 官方摘要和方法指标核对",
+      "note": "在视觉语言模型跨数据集监督迁移中，训练前综合困惑度、相似性和多样性预测各数据集对目标基准的真实训练收益；候选单位是数据集而非当前模型单条错误。",
+      "code": ""
     }
   ]
 }

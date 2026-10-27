@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==85 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,18)) and {'M10','M11','M12'}<=refs,'Expected I1–I8 citations including I6 stop/revisit direct precedents')
+    check(len(refs)==86 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,18)) and {'M10','M11','M12','M13'}<=refs,'Expected I1–I8 citations including I6 stop/revisit and I8 DATAPROPHET')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -207,8 +207,15 @@ def main():
     i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
     for label in ['Observable Phenomenon','Why','Challenge','Insight','Design','决定性实验','Related Work','预注册判断']:
         check(label in i8_html,'I8 research mechanism structure missing: '+label)
-    for ref in ['E12','E13','E14','E15','S40','S41','S42','S43','S44','M10','M11']:
+    for ref in ['E12','E13','E14','E15','S17','S40','S41','S42','S43','S44','M10','M11','M13']:
         check(f'href="references.html#{ref}"' in i8_html,'I8 reference missing: '+ref)
+    check('id="i8-related-matrix"' in i8_html, 'I8 closest-work comparison table missing')
+    for axis in ['研究对象与条件','用什么信号判断','操作与实际评价','与 I8 相同 / 不同之处']:
+        check(axis in i8_html,'I8 related-work scientific comparison axis missing: '+axis)
+    for close in ['Self-Error-Instruct','LESS','DATAPROPHET','SOAR','RULE-EDIT','Learning Dynamics','LENS / ACE','I8（待验证）']:
+        check(close in i8_html,'I8 nearest work missing from comparison matrix: '+close)
+    for boundary in ['Same','Different','Why','Evidence','没有结果']:
+        check(boundary in i8_html,'I8 missing honest closest-work boundary: '+boundary)
     check('href="i8.html"' in ideas_text,'I8 missing from idea board')
     check('href="i8.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I8 missing from homepage')
     i6_text=(ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8')
