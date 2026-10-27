@@ -7,7 +7,7 @@ PAGE = {
  "slug": "ideas",
  "title": "I1–I8：八个研究问题",
  "en": "I1–I8 · distinguish failure paths, learning order, and rule transfer",
- "lead": "保留 I1–I5 的具体学习机制；I6 研究同题不同失败过程的学习价值，I7 研究学习顺序，I8 研究高置信度错误和规则级迁移。三个问题各自验证。",
+ "lead": "I6 比较失败轨迹的独立学习收益，并判断何时继续、切换错误或暂缓重访；I7 研究学习顺序，I8 研究错误规则的迁移。三个问题各自验证。",
  "updated": "2026-10-27",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
@@ -18,7 +18,7 @@ PAGE = {
  <a class="idea-board-card" href="#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用，却和旧方法冲突怎么办？</b><small>复习并解决适用条件冲突</small></a>
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
  <a class="idea-board-card" href="#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b><small>伙伴选择随能力一起演化</small></a>
- <a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 失败学习价值</span><b>同题都答错，为什么有些失败过程更值得学习？</b><small>固定错误结果与教学方式，比较失败轨迹的增量收益</small></a>
+ <a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 失败学习价值</span><b>哪条失败更值得纠正？何时停下再回来？</b><small>固定纠错方式，比较失败的独立收益与继续尝试成本</small></a>
  <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  </div>

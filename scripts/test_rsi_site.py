@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==77 and all(f'S{i}' in refs for i in range(26,45)) and all(f'E{i}' in refs for i in range(11,16)) and {'M10','M11'}<=refs,'Expected audited I1–I6 source manifest plus 11 I8 sources')
+    check(len(refs)==85 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,18)) and {'M10','M11','M12'}<=refs,'Expected I1–I8 citations including I6 stop/revisit direct precedents')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -220,6 +220,12 @@ def main():
               'Current I6/I7 page not reachable from board and homepage: '+href)
     check('失败轨迹' in i6_text and '固定教学顺序' in i6_text and 'I8' in i6_text,
           'Current I6 must isolate failed-process effects from learning order and I8')
+    check(all(f'id="{x}"' in i6_text for x in ('question','observation','reason','protocol','stopping','stop-experiment','related','gate')),
+          'Current I6 must include failure-value-based stopping and revisit protocol')
+    check(all(k in i6_text for k in ('继续尝试当前题','纠正已有错误','换其他错题','暂缓并重访','Deferred Failure Queue','E2 · 继续、停止')),
+          'I6 action choices or decisive stopping experiment missing')
+    check(all(f'href="references.html#{ref}"' in i6_text for ref in ('E16','E17','S45','S46','S47','S48','S49','M12')),
+          'I6 stopping references missing')
     check('先独立尝试' in i7_text and '先看示范' in i7_text and 'I6' in i7_text,
           'Current I7 must isolate learning-order effects')
     check('历史版本' in historical_i6 and f'href="idea-i6-failure-value.html"' in historical_i6,

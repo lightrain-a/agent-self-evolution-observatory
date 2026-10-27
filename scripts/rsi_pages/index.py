@@ -1,6 +1,6 @@
 PAGE = {
 "slug":"index", "title":"RSI × 自主学习研究", "en":"Research on how agents learn · I1–I8",
-"lead":"保留 I1–I5 的研究方向，新增正交的 I6（失败轨迹的学习价值）与 I7（学习顺序），并保留 I8（高置信度错误与规则级迁移）。",
+"lead":"I1–I5 保留原问题；I6 研究失败轨迹的学习价值，以及何时继续、换错题或暂缓重访；I7 单独研究学习顺序，I8 研究错误规则迁移。",
 "updated":"2026-10-27",
 "sections":[
 ("decision","当前研究池：I1–I8 八个问题", '''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
@@ -10,16 +10,16 @@ PAGE = {
 <a class="idea-board-card" href="ideas.html#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用却伤了旧能力，怎么办？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b></a>
-<a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 错误轨迹</span><b>同题都答错，为什么有些失败过程更值得学习？</b></a>
+<a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 错误轨迹</span><b>哪次失败值得学，什么时候该停下再回来？</b></a>
 <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先独立尝试，还是先看正确示范？</b></a>
 <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 纠错迁移</span><b>纠正哪个错误，能让我学会一整类题？</b></a>
 </div>
-<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开，方便直接汇报与组织论文；它们各自研究具体学习机制。<b>I6</b> 固定错误终点与教学过程，仅比较不同失败轨迹的学习价值；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a></p>
+<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开，方便直接汇报与组织论文；它们各自研究具体学习机制。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
 ("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
 <a href="ideas.html"><b>I1–I5：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
-<a href="idea-i6-failure-value.html"><b>I6：失败轨迹有什么学习价值？</b><span>相同问题、相同错误终点，不同尝试过程能否产生不同独立迁移收益？</span></a>
+<a href="idea-i6-failure-value.html"><b>I6：哪些失败值得学，何时该停？</b><span>同题同错误终点的轨迹为什么学习价值不同；何时换错题、暂缓和重访？</span></a>
 <a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
 <a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
 <a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>

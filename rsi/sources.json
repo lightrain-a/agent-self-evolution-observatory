@@ -771,6 +771,86 @@
       "level": "PMLR 正式论文摘要核对",
       "note": "用预记忆阶段的训练题表现解释泛化并改进数据筛选，说明原题正确与记住解题步骤不同；不直接等于更新前单错题净迁移预测。",
       "code": ""
+    },
+    {
+      "id": "E16",
+      "group": "学习科学",
+      "title": "A Region of Proximal Learning model of study time allocation",
+      "date": "Journal of Memory and Language, 2005",
+      "url": "https://doi.org/10.1016/j.jml.2004.12.001",
+      "level": "期刊摘要与 ERIC 书目信息核对；2026-10-27",
+      "note": "将学习选择与学习坚持区分开，以主观学习速率判断 jROL 解释何时停止当前材料；是人类认知证据，不是 LLM 停止训练的实验证明。",
+      "code": ""
+    },
+    {
+      "id": "E17",
+      "group": "学习科学",
+      "title": "MetaCLASS: Metacognitive Coaching for Learning with Adaptive Self-regulation Support",
+      "date": "Findings EMNLP 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.2209/",
+      "level": "ACL Anthology 摘要及元信息核对；2026-10-27",
+      "note": "对话教学动作预测中，41.7% 轮次标注无需干预，而最佳模型仅在 6.6% 轮次预测不干预；反映教学动作偏差，不等于 RSI 停学收益。",
+      "code": ""
+    },
+    {
+      "id": "S45",
+      "group": "RSI",
+      "title": "SPaCe: Unlocking Sample-Efficient Large Language Models Training With Self-Pace Curriculum Learning",
+      "date": "Findings ACL 2026",
+      "url": "https://aclanthology.org/2026.findings-acl.171/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-27",
+      "note": "按聚类难度、解题率和学习进展用 bandit 调度训练样本；I6 不能将按学习速率换题当作新意。",
+      "code": ""
+    },
+    {
+      "id": "S46",
+      "group": "RSI",
+      "title": "Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning",
+      "date": "ICLR 2026",
+      "url": "https://openreview.net/pdf?id=bOwVr0yr7r",
+      "level": "ICLR 2026 正式 PDF 与作者仓库核对；2026-10-27",
+      "note": "检测独立学习平台期，在训练中引入由抽象到具体的分级提示恢复非零学习信号；I6 需比较换提示以外的行动。",
+      "code": "https://github.com/JIA-Lab-research/Scaf-GRPO"
+    },
+    {
+      "id": "S47",
+      "group": "RSI",
+      "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)",
+      "date": "ICML 2026",
+      "url": "https://proceedings.mlr.press/v306/sundaram26a.html",
+      "level": "PMLR 正式摘要与书目信息核对；2026-10-27",
+      "note": "通过自博弈生成练习题、以学生实际困难题能力提升训练教师，缓解极难题零奖励平台期；I6 不重复动态出题。",
+      "code": ""
+    },
+    {
+      "id": "S48",
+      "group": "RSI",
+      "title": "BEACON: Bayesian Optimal Stopping for Efficient LLM Sampling",
+      "date": "Findings EMNLP 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.105/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-27",
+      "note": "依据额外采样的预期收益与成本停止推理候选生成；与训练后独立能力的跨轮停止决策不同。",
+      "code": ""
+    },
+    {
+      "id": "S49",
+      "group": "RSI",
+      "title": "STRETCH the Boundaries: A Unified Self-Taught Framework for Progressive LLM Evolution",
+      "date": "Findings EMNLP 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.1168/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-27",
+      "note": "根据当前解题能力动态生成挑战，缓解固定难度导致的自学习停滞；未直接区分换方法与暂缓后重访的因果收益。",
+      "code": ""
+    },
+    {
+      "id": "M12",
+      "group": "相邻领域",
+      "title": "Automated Curriculum Learning for Neural Networks",
+      "date": "ICML 2017",
+      "url": "https://proceedings.mlr.press/v70/graves17a.html",
+      "level": "PMLR 正式摘要核对；2026-10-27",
+      "note": "使用学习进展反馈与非平稳多臂老虎机分配课程；说明学习速率驱动的训练预算调度早有直接前作。",
+      "code": ""
     }
   ]
 }
