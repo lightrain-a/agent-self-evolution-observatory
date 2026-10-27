@@ -187,6 +187,22 @@ def main():
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
+    # The five independent ideas share the same argument order so the page
+    # can be read like a paper outline rather than five unrelated modules.
+    ordered_headings = (
+        '<h3>Challenge <small>（难在哪里）</small></h3>',
+        '<h3>现有工作 <small>（别人研究了什么）</small></h3>',
+        '<h3>Insight <small>（为何可解）</small></h3>',
+        '<h3>Design <small>（如何做）</small></h3>',
+        '<h3>实验设计 <small>（怎么验证）</small></h3>',
+    )
+    for idea_number in range(1, 6):
+        section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
+        locations = [section.find(heading) for heading in ordered_headings]
+        check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
+              f'I{idea_number}: Challenge -> Related Work -> Insight -> Design -> Experiment order drift')
+        check(section.count('class="idea-step"') == 5,
+              f'I{idea_number}: expected exactly five argument blocks')
     check('交流结束后' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
     i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
     for label in ['Observable Phenomenon','Why','Challenge','Insight','Design','决定性实验','Related Work','预注册判断']:
