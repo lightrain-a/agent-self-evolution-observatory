@@ -67,6 +67,60 @@ html{scroll-behavior:smooth;scroll-padding-top:82px}body[data-rsi-page]{font-fam
 .reading-question-detail dd p{font-size:12px;line-height:1.8;margin:5px 0}
 @media(max-width:820px){.reading-grid{grid-template-columns:1fr}.reading-card{padding:18px}.reading-one-sentence{font-size:14px}.reading-tools input{flex-basis:100%}.reading-tools select{flex:1}.reading-issue{font-size:10px}}
 
+/* Long-form research notes: readable at desktop width and on a phone. */
+.reading-deep-link{font-weight:760;background:#eaf2fc;border-color:#bdd4ec;color:#20548a!important}
+.deep-paper-head{max-width:1050px;margin:0 auto}
+.deep-meta{color:#4c657f;font-size:12px;line-height:1.7;margin:0 0 8px}
+.deep-paper-head>h3{font-size:clamp(19px,2vw,26px);line-height:1.5;margin:8px 0 18px}
+.deep-focus{font-size:17px;line-height:1.8;font-weight:700;color:#203d60;padding:15px 19px;border-left:3px solid #527da9;background:#f3f7fb;border-radius:0 8px 8px 0}
+.deep-author-note{font-size:12px;color:#61738a}
+.deep-summary{background:#f7f9fc;border:1px solid #dce6f1;border-radius:10px;padding:12px 18px;margin:20px 0 18px}
+.deep-summary h4{font-size:14px;color:#305374;margin:4px 0 8px}
+.deep-summary ol{margin:8px 0;padding-left:23px}
+.deep-summary li{font-size:13px;line-height:1.85;padding:2px}
+.deep-shortcuts{display:flex;gap:7px;flex-wrap:wrap;margin:20px 0}
+.deep-shortcuts a{font-size:11px;font-weight:650;color:#315f8c;text-decoration:none;background:#f0f5fb;border:1px solid #dce7f2;border-radius:7px;padding:6px 9px}
+.deep-shortcuts a:hover{border-color:#b5d0e9;background:#e8f0fa}
+.deep-chapter{scroll-margin-top:90px;padding-top:18px;margin-top:28px;border-top:1px solid #dce4ee}
+.deep-chapter:first-of-type{border-top:0}
+.deep-chapter>h3{font-size:20px!important;color:#203e5f!important;line-height:1.5;margin:4px 0 17px}
+.deep-prose{font-size:14px;line-height:1.9;color:#394e69}
+.deep-table{width:100%;overflow-x:auto;max-width:100%;border:1px solid #dce4ef;border-radius:8px;margin:14px 0 18px}
+.deep-table table{width:100%;min-width:510px;border-collapse:collapse;font-size:12px;line-height:1.75}
+.deep-table th{background:#eef3f9;text-align:left;white-space:normal;color:#2a4a6e;padding:10px 12px;font-weight:730;border-bottom:1px solid #dce4ef}
+.deep-table td{vertical-align:top;padding:11px 12px;border-bottom:1px solid #e9eef4;min-width:80px}
+.deep-table tr:last-child td{border-bottom:0}
+.deep-table td:first-child{font-weight:690;color:#2b5379}
+.deep-table caption{caption-side:bottom;text-align:left;padding:8px 12px;font-size:11px;color:#64778a}
+.deep-steps,.deep-bullets{margin:13px 0;padding-left:26px}
+.deep-steps li,.deep-bullets li{line-height:1.8;font-size:13px;padding:6px 0}
+.deep-steps li>p{margin:3px 0;color:#4c6078}
+.deep-formula{border:1px solid #dce6f0;border-radius:10px;padding:16px 18px;margin:15px 0;background:#fbfcfe}
+.deep-formula>b{display:block;font-size:12px;color:#2c577d;margin-bottom:10px}
+.deep-formula code{display:block;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.85;background:#203148;color:#f6f8fe;border-radius:8px;padding:13px 15px}
+.deep-formula p{font-size:12.5px;line-height:1.85;margin:10px 0 0}
+.deep-caveat{color:#607184}
+.deep-note{border:1px solid #dce5ee;border-left:3px solid #7a9ab8;background:#f7fafd;border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.deep-note b{font-size:12px;color:#315579}
+.deep-note p{margin:6px 0 0;font-size:13px;line-height:1.85}
+.deep-note--example{border-left-color:#b18f61;background:#fbf9f5}
+.deep-note--proposal{border-left-color:#8790ba;background:#f7f7fb}
+.deep-evidence-grid,.deep-test-list{display:grid;gap:12px;margin:14px 0 20px}
+.deep-evidence,.deep-test{border:1px solid #dbe5ef;border-radius:10px;background:#fff;padding:15px 17px}
+.deep-evidence h4,.deep-test h4{font-size:14px;color:#244e74;margin:0 0 9px}
+.deep-evidence p,.deep-test p{font-size:12.5px;line-height:1.85;margin:6px 0}
+.deep-back{margin:24px 0 16px;font-size:13px}
+.deep-source-links{margin-bottom:5px}
+@media(max-width:820px){
+ .deep-paper-head{max-width:100%}
+ .deep-focus{font-size:14px;padding:13px}
+ .deep-paper-head>h3{font-size:20px}
+ .deep-chapter>h3{font-size:17px!important}
+ .deep-formula{padding:13px}
+ .deep-formula code{font-size:11px}
+ .deep-table table{font-size:11px}
+}
+
 /* RSI navigation: Agent-style expandable primary folders, indented page links. */
 [data-rsi-page] #research-nav{padding-top:12px}
 [data-rsi-page] #research-nav .nav-group{margin:5px 0 8px;border:1px solid transparent;border-radius:11px;transition:background .15s,border-color .15s}

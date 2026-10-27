@@ -122,7 +122,7 @@ def reading_card(p: dict) -> str:
       <div class="reading-next"><b>下一步最值得做的辨别实验</b><p>{esc(p['next_test'])}</p></div>
     </div>
   </details>
-  <div class="links reading-links"><a class="link-btn" href="#{esc(p['id'])}" aria-label="复制或保存此卡片的锚点链接">卡片定位</a>{external_links}</div>
+  <div class="links reading-links">{f'<a class="link-btn reading-deep-link" href="reading-notes.html#deep-{esc(p["id"])}">阅读完整精读（公式 · 实验 · 研究缺口）</a>' if p.get("deep_read") else ""}<a class="link-btn" href="#{esc(p['id'])}" aria-label="复制或保存此卡片的锚点链接">卡片定位</a>{external_links}</div>
 </article>'''
 
 

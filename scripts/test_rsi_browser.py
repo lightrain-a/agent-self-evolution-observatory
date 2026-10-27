@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -113,6 +113,24 @@ def main():
         js("const q=document.querySelector('#reading-question-filter');q.value='all';q.dispatchEvent(new Event('change',{bubbles:true}));")
         js("const q=document.querySelector('#reading-coverage-filter');q.value='addressed';q.dispatchEvent(new Event('change',{bubbles:true}));")
         screenshot('reading-cards-desktop.png')
+        for paper in cards:
+            deep=paper.get('deep_read')
+            if deep:
+                q=json.dumps('#'+paper['id'])
+                check(js(f"return document.querySelector({q}+' .reading-deep-link')!==null"),
+                      'Deep-read link missing from compact card: '+paper['id'])
+        nav('rsi/reading-notes.html')
+        deep_cards=[p for p in cards if p.get('deep_read')]
+        for paper in deep_cards:
+            identifier='deep-'+paper['id']
+            check(js("return document.querySelector("+json.dumps('#'+identifier)+")!==null"),
+                  'Deep paper missing in browser: '+paper['id'])
+            for section in paper['deep_read']['sections']:
+                check(js("return document.querySelector("+json.dumps('#'+identifier+'--'+section['id'])+")!==null"),
+                      'Deep section missing in browser: '+section['id'])
+        check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
+              'Evidence matrix did not render')
+        screenshot('reading-notes-desktop.png')
         nav('rsi/index.html'); screenshot('overview-desktop.png')
         js("const q=document.querySelector('#research-search');q.value='SOAR';q.dispatchEvent(new Event('input',{bubbles:true}));")
         for _ in range(25):
@@ -138,7 +156,7 @@ def main():
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
         screenshot('idea-framework-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','ideas','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','reading-notes','ideas','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/index.html'); screenshot('overview-mobile.png')
@@ -169,7 +187,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':6}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':7}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

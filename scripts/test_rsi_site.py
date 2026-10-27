@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -95,7 +95,7 @@ def main():
     groups=json.loads(nav_text[len('window.NAV_GROUPS = '):].strip().removesuffix(';'))
     expected_groups={
         'overview':['index','timeline'],
-        'literature':['literature','reading-cards','references'],
+        'literature':['literature','reading-cards','reading-notes','references'],
         'methods':['cross-domain','learning-science'],
         'research':['ideas','teaching','experiments'],
     }
@@ -154,6 +154,22 @@ def main():
         check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
         coverage='|'.join(f'{q["id"]}:{card["research_coverage"][q["id"]]["level"]}' for q in questions)
         check(coverage in card_html,'Missing exact five-question coverage status: '+card['id'])
+    deep_notes=[p for p in cards if p.get('deep_read')]
+    notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    for paper in deep_notes:
+        pid=paper['id']
+        check(f'href="reading-notes.html#deep-{pid}"' in card_html,
+              'Deep-read link missing from compact card: '+pid)
+        check(f'id="deep-{pid}"' in notes_html,
+              'Deep-read article missing: '+pid)
+        section_ids=[s['id'] for s in paper['deep_read']['sections']]
+        check(len(section_ids)==len(set(section_ids)) and section_ids,
+              'Deep-read sections missing or duplicated: '+pid)
+        for section in section_ids:
+            check(f'id="deep-{pid}--{section}"' in notes_html,
+                  'Deep-read section missing: '+pid+'/'+section)
+    check('教学示例' in notes_html and '非论文' in notes_html,
+          'Deep-read evidence provenance caveat missing')
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
