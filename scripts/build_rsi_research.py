@@ -12,9 +12,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-27'
-ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']
-LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', '研究方向总览', 'I5 · 费曼学习法 · 动态换伴', 'I6 · 失败过程的学习价值', 'I7 · 先试还是先学', 'I8 · 错误可学习性与迁移', '教学反馈诊断 · I5 支线', '归档 · 跨轮瓶颈切换', '实验执行方案', '来源与核验记录']
-EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'Research Ideas Overview', 'I5 · Learning Partners', 'I6 · Learning Value of Failure Trajectories', 'I7 · Learning Order', 'I8 · Error Learnability & Transfer', 'I5 · Teaching Feedback Branch', 'Archive · Bottleneck Switching', 'Experiments', 'Sources']
+ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'idea-i2', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']
+LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', '研究方向总览', 'I2 · 因材施教与师生共进化', 'I5 · 费曼学习法 · 动态换伴', 'I6 · 失败过程的学习价值', 'I7 · 先试还是先学', 'I8 · 错误可学习性与迁移', '教学反馈诊断 · I5 支线', '归档 · 跨轮瓶颈切换', '实验执行方案', '来源与核验记录']
+EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'Research Ideas Overview', 'I2 · Adaptive Teaching Co-Evolution', 'I5 · Learning Partners', 'I6 · Learning Value of Failure Trajectories', 'I7 · Learning Order', 'I8 · Error Learnability & Transfer', 'I5 · Teaching Feedback Branch', 'Archive · Bottleneck Switching', 'Experiments', 'Sources']
 # A single, ordered definition of RSI primary and secondary navigation.
 # The same hierarchy is rendered server-side (without JS) and client-side.
 NAV_SECTIONS = [
@@ -29,7 +29,7 @@ NAV_SECTIONS = [
 
 NAV_IDEA_ANCHORS = [
     ['ideas.html#idea-1', {'zh':'I1 · 脚手架学习', 'en':'I1 · Scaffolding'}],
-    ['ideas.html#idea-2', {'zh':'I2 · 因材施教', 'en':'I2 · Adaptive Teaching'}],
+    ['idea-i2.html', {'zh':'I2 · 因材施教 · 师生共进化', 'en':'I2 · Teacher–Student Co-Evolution'}],
     ['ideas.html#idea-3', {'zh':'I3 · 温故知新', 'en':'I3 · Retention & Rehearsal'}],
     ['ideas.html#idea-4', {'zh':'I4 · 生产性失败', 'en':'I4 · Productive Failure'}],
 ]
@@ -40,7 +40,10 @@ def build_navigation(pages: list[dict]) -> list[dict]:
     labels = {p['slug']: {'zh': LABELS[i], 'en': EN_LABELS[i]} for i, p in enumerate(pages)}
     flattened = [slug for section in NAV_SECTIONS for slug in section['slugs']]
     archived = list(NAV_ARCHIVED_PAGES)
-    if len(flattened + archived) != len(set(flattened + archived)) or set(flattened + archived) != set(labels):
+    # Detailed idea pages can occupy their original numbered slot among anchors.
+    inline_pages = [href.removesuffix('.html') for href, _ in NAV_IDEA_ANCHORS if '#' not in href]
+    covered = flattened + inline_pages + archived
+    if len(covered) != len(set(covered)) or set(covered) != set(labels):
         raise ValueError('RSI sidebar and linked historical pages must cover every generated page exactly once')
     groups = []
     for section in NAV_SECTIONS:

@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -203,6 +203,14 @@ def main():
         time.sleep(.3)
         check(js("return location.hash==='#idea-3' && document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='ideas.html#idea-3'"),
               'Current idea anchor not highlighted after same-page navigation')
+        nav('rsi/ideas.html#idea-2')
+        check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='idea-i2.html'"),
+              'Legacy I2 anchor must highlight the dedicated I2 entry')
+        js("document.querySelector('#research-nav a[href=\"idea-i2.html\"]').click()")
+        time.sleep(.4)
+        check(js("return document.body.dataset.rsiPage==='idea-i2' && document.querySelectorAll('#research-nav a[aria-current=page]').length===1"),
+              'I2 detailed page navigation failed')
+        screenshot('i2-coevolution-desktop.png')
         nav('rsi/teaching.html')
         check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='idea-i5.html'"),
               'Teaching feedback archive should highlight the sole I5 navigation item')
@@ -217,7 +225,7 @@ def main():
         js("document.querySelector('#idea-1').scrollIntoView()")
         screenshot('idea-framework-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i6','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
@@ -227,9 +235,9 @@ def main():
         check(js("return (()=>{const r=document.querySelector('#sidebar').getBoundingClientRect();return r.right>10 && r.left<innerWidth-10})()"),
               'Mobile research drawer not visible after transition')
         screenshot('ideas-numbered-navigation-mobile.png')
-        js("document.querySelector('#research-nav a[href=\"ideas.html#idea-2\"]').click()")
+        js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
         time.sleep(.2)
-        check(js("return location.hash==='#idea-2' && !document.querySelector('#sidebar').classList.contains('open')"),
+        check(js("return location.hash==='#idea-3' && !document.querySelector('#sidebar').classList.contains('open')"),
               'Mobile numbered anchor did not navigate or close the drawer')
         nav('rsi/index.html'); screenshot('overview-mobile.png')
         js("document.querySelector('#menu-toggle').click()")
@@ -259,7 +267,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':13}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':14}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

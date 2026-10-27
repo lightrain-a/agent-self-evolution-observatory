@@ -14,7 +14,7 @@ PAGE = {
  <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较学习顺序，I8 从知识准备与共同错误规则解释迁移。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
- <a class="idea-board-card" href="#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，为什么学习方法不同？</b><small>根据真实学习反应选方法</small></a>
+ <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
  <a class="idea-board-card" href="#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用，却和旧方法冲突怎么办？</b><small>复习并解决适用条件冲突</small></a>
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
  <a class="idea-board-card" href="idea-i5.html"><span class="idea-id">I5 · 十模型互教</span><b>什么时候交换舞伴，才能一起变强？</b><small>十模型学习网络的动态重组</small></a>
@@ -36,15 +36,14 @@ PAGE = {
  <div class="flow"><div><b>拆分辅助经验</b><small>稳定方法 / 易变知识</small></div><div><b>选择存放方式</b><small>内化 / 查询 / 混合</small></div><div><b>新任务测能力</b><small>撤辅与查询分开</small></div><div><b>更新取舍规则</b><small>比较收益和成本</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备稳定的调试技巧与会变动的 API 规则，在相同预算下比较<strong>全部内化、全部外置、固定渐隐、自适应取舍</strong>，并与 R²Orch/PATS 的可复现做法比较。重点看无辅助的新任务成功率、API 更新后的适应性、调用成本和旧能力退化。如果固定规则同样好，说明动态选择还没有额外价值。</p></div>
  </div>'''),
- ("idea-2", "I2：因材施教——同样犯错，为什么学习方法不同？", '''
- <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>两个 Agent 都不会修一个 Bug，一个看示范就会了，另一个要比较几次失败才学得会。怎样找到各自最适合的学习方法？</p></div>
+ ("idea-2", "I2：因材施教——学生变强，教师也能越来越会教吗？", '''
+ <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>学生通过教学学会解题，教师通过学生真正的学习结果学会教学；当学生能力变化，教师继续修订教法。</p></div>
  <div class="idea-steps">
- <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>知道“错在哪里”，不等于知道“怎么学最快”。同一种错误，换个模型或学习阶段，最有用的学习方式可能不同；但把所有学法试一遍又太贵。还要避免把眼前这道题的进步当成长久的能力提升。</p></div>
- <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>RSIFlow</b> 研究的是失败后该修改模型、Harness 还是任务产物；<b>MetaSkill-Evolve</b> 研究的是任务 Skill 和改进 Skill 的方法怎样一起演化。我们先固定<strong>更新的是 Skill</strong>，只研究同样的失败该用哪种学习方法，而不是重新做更新对象路由。[[S28]][[S06]]</p></div>
- <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>只看错误标签，可能看不出 Agent 最适合的学法；但是少量“试学”能告诉我们，<strong>它看示范、做反例对照或自己重试后，哪一种真的学得更快</strong>。Agent 变强后重新测，就能发现原来有效的方式是否还适合。</p></div>
- <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>对同一种失败，从相同 Skill 快照出发，分叉尝试示范、对比失败和独立练习。用另一批任务检验每种方式学完后的独立能力，再选择下一轮学法，并记录它在不同能力阶段的效果。</p>
- <div class="flow"><div><b>固定同类失败</b><small>同一个 Skill 更新目标</small></div><div><b>小预算试学</b><small>示范 / 反例 / 重试</small></div><div><b>测独立进步</b><small>测试任务不能参与试学</small></div><div><b>下轮重新选</b><small>随能力更新学法</small></div></div></div>
- <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>选多个能力阶段的 Agent，在同类任务上比较<strong>固定学法、只按错误类型选、普通 bandit、根据少量试学反应选</strong>。试学本身的费用也计入预算；主要看未见题的独立提升，以及能力变强后最佳学法是否改变。与 <a href="idea-i6.html">I6</a> 分开：I2 只决定当前学习任务该怎么学，不决定跨多轮要转去补知识还是改验证器。</p></div>
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>同一个学生变强后，原来最有用的教法可能不再合适。但师生两边分数都上涨，不代表教师更会教——也可能只是学生本来就更容易教了。必须把教师教学能力与学生解题能力分开测。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>Bayesian Teaching</b> 表明模仿证据条件下的判断可能比模仿 Oracle 答案更有迁移价值；<b>RLT</b> 已训练教师产生可学的解释；<b>SOAR</b> 已用学生真实训练增益更新出题教师，并提升学生检查点。我们研究固定题目后，教师如何从持续成长的学生身上学习更合适的教法，不把双边更新本身当创新。[[S100]][[S101]][[S17]] 同时保留原来的边界：<b>RSIFlow</b> 选择更新对象，<b>MetaSkill-Evolve</b> 更新任务与元技能；I2 首先固定更新器，只比较教法如何学习。[[S28]][[S06]]</p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>学生对不同教法的<b>学习反应</b>可能随能力改变。少量同起点试教能揭示这种变化；把结果写入教师的教学策略，就有机会让教师不仅适应一次任务，而且积累可迁移的教学能力。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>固定伙伴、教材和教学顺序，从同一学生快照试教；学生真实更新后，清空课堂对话并测新题。用独立收益改进教师教法，同时保留学生新能力；下一轮面对成长后的学生继续循环。原 I2 的固定 Skill 更新轨道保留，双 LoRA 参数更新单独验证。</p><div class="flow"><div><b>同起点试教</b><small>固定题目，改变解释</small></div><div><b>学生真学习</b><small>参数 / 任务 Skill</small></div><div><b>撤辅测新题</b><small>收益、回归与总成本</small></div><div><b>教师学教法</b><small>教学策略持久更新</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>比较固定教法、可读取当前状态但不更新的教师、在固定学生库上训练的教师，以及由当前学生真实收益训练的教师。另做<b>教师版本 × 冻结学生快照</b>交叉测试，检验后期教师是否真的更会教。I2 不更换伙伴，不选择失败材料，不优化先做还是先学；分别与 I5、I6、I7、I8 保持边界。</p><p><a href="idea-i2.html"><b>阅读 I2 合并方案：证据、最近邻、双边更新与决定性实验 →</b></a></p></div>
  </div>'''),
  ("idea-3", "I3：温故知新——新方法有用，却和旧方法冲突怎么办？", '''
  <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>一句话：</b>Agent 学会一个更快的新方法，却把以前在另一种场景下正确的做法弄坏了。新旧本事能不能都留下来？</p></div>

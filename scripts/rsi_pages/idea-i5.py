@@ -65,7 +65,7 @@ PAGE = {
  <div class="equation">选择下一轮五对伙伴 = 最大化全班的预期独立净学习增益 − 交流/更新成本，受回归、安全和成员覆盖约束</div>
  <p>这是问题定义，不是已验证的最优匹配公式。首次验证可用<strong>bandit 估计各配对边的双向增益，再在十节点一般图中做最大权匹配</strong>，与不用学习网络参数的静态方案比较；不要上来设计庞大的多 Agent 架构。若使用探索奖金，必须同时记录它是否真的带来新知识而非仅增加互动次数。</p>
  <h3>正交接口：I5 只管“谁与谁、什么时候换”</h3>
- <p><a href="ideas.html#idea-1">I1</a> 研究学进自身还是外查；<a href="ideas.html#idea-2">I2</a> 研究配对后采用什么教学方式；<a href="ideas.html#idea-3">I3</a> 研究新旧能力怎么巩固；<a href="ideas.html#idea-4">I4</a> 研究一次失败是否继续探索；<a href="idea-i6-failure-value.html">I6</a> 研究失败轨迹的学习价值；<a href="idea-i7-learning-order.html">I7</a> 研究先试还是先学；<a href="i8.html">I8</a> 研究哪些错误能产生跨题迁移。<strong>I5 不负责这些动作，只生成伙伴配对与交换时机。</strong>固定其余动作的实现后，I5 的作用仍应能被独立检验。</p>
+ <p><a href="ideas.html#idea-1">I1</a> 研究学进自身还是外查；<a href="idea-i2.html">I2</a> 研究配对后采用什么教学方式；<a href="ideas.html#idea-3">I3</a> 研究新旧能力怎么巩固；<a href="ideas.html#idea-4">I4</a> 研究一次失败是否继续探索；<a href="idea-i6-failure-value.html">I6</a> 研究失败轨迹的学习价值；<a href="idea-i7-learning-order.html">I7</a> 研究先试还是先学；<a href="i8.html">I8</a> 研究哪些错误能产生跨题迁移。<strong>I5 不负责这些动作，只生成伙伴配对与交换时机。</strong>固定其余动作的实现后，I5 的作用仍应能被独立检验。</p>
  '''),
  ("experiments", "决定性实验：交换舞伴真的能让整个班级长得更快吗？", '''
  <h3>E1 · 先证明“同样能力差距，并不等于同样教学收益”</h3>

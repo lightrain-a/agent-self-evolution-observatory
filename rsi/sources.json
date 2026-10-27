@@ -961,6 +961,66 @@
       "level": "系统综述摘要与学习流程核对；2026-10-27",
       "note": "Jigsaw 包含临时专家组与原学习组的往返和互教；只是组织结构启发，不是动态伙伴匹配或 RSI 共进化的直接证据。",
       "code": ""
+    },
+    {
+      "id": "S100",
+      "group": "RSI",
+      "title": "Bayesian teaching enables probabilistic reasoning in large language models",
+      "date": "Nature Communications 2026；2026-01-07",
+      "url": "https://www.nature.com/articles/s41467-025-67998-6",
+      "level": "原文 arXiv v3 方法与作者官方说明核对；2026-10-27",
+      "note": "学生 SFT 模仿规范 Bayesian 预测行为，在所测推荐任务中优于 Oracle 监督并展示跨任务迁移；不是显式思维链教学，也不是可更新教师与学生的共同进化。公开正文：https://arxiv.org/html/2503.17523v3",
+      "code": ""
+    },
+    {
+      "id": "S101",
+      "group": "RSI",
+      "title": "Reinforcement Learning Teachers of Test Time Scaling (RLT)",
+      "date": "arXiv 2025-06；作者官方项目",
+      "url": "https://arxiv.org/abs/2506.08388",
+      "level": "正文奖励、蒸馏阶段与局限核对；2026-10-27",
+      "note": "用题目与答案训练教师生成适合学生的解释；奖励含学生条件概率与分布差异项，之后做学生蒸馏。论文局限明确未探索教师学生并行训练。I2 比较持续教学更新及真实后测奖励。",
+      "code": "https://github.com/SakanaAI/RLT"
+    },
+    {
+      "id": "S102",
+      "group": "RSI",
+      "title": "The Strongest Teacher Is Not Always the Best Teacher: Student-Centric Answer Selection (SCAS)",
+      "date": "arXiv 2026-05；本轮未核实正式会议状态",
+      "url": "https://arxiv.org/abs/2605.26872",
+      "level": "原始正文方法核对；2026-10-27",
+      "note": "依据学生相关的学习成本代理，从已验证正确的教师输出中选监督；强教师不必给出最有用的训练答案。I2 不把答案选择或教师强弱比较声称为新机制。",
+      "code": ""
+    },
+    {
+      "id": "S103",
+      "group": "RSI",
+      "title": "Sherpa: Teaching LLMs to Teach Adaptively",
+      "date": "arXiv 2026-10-06 预印本",
+      "url": "https://arxiv.org/html/2610.08778",
+      "level": "正文 Sec. 2.1–2.3 冻结学生与奖励定义核对；2026-10-27",
+      "note": "多轮 RL 训练教师适应不同模拟学生，学生骨干冻结，收益来自上下文中的当前题表现；不等于学生跨轮参数持续更新。I2 需控制静态教师本已有的上下文适应能力。",
+      "code": ""
+    },
+    {
+      "id": "S104",
+      "group": "RSI",
+      "title": "Pedagogical RL: Teaching Models to Teach Themselves from Privileged Information",
+      "date": "作者研究报告 2026-05-14；不标作会议论文",
+      "url": "https://noahziems.com/pedagogical-rl",
+      "level": "作者报告 Sec. 2–3 方法与早期实验口径核对；2026-10-27",
+      "note": "用特权信息和当前学生的轨迹可吸收性代理训练自教师，再以 surprisal-gated imitation 更新学生；已经覆盖教得可学与学生吸收，I2 必须检验持续跟踪学习反应的独立作用。",
+      "code": ""
+    },
+    {
+      "id": "M100",
+      "group": "相邻领域",
+      "title": "Learning to Teach",
+      "date": "ICLR 2018",
+      "url": "https://openreview.net/forum?id=HJewuJWCZ",
+      "level": "正式会议条目与原始摘要核对；2026-10-27",
+      "note": "用学生反馈优化教师策略，已明确提出 teacher–student co-evolution。属于一般机器学习的先驱，而非 LLM 共进化首作；双边更新与双层优化本身不能作为 I2 新颖性。",
+      "code": ""
     }
   ]
 }

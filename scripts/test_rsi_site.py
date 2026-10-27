@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==96 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 sources including Pine 2018 and I5 co-learning sources')
+    check(len(refs)==102 and {'S100','S101','S102','S103','S104','M100'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 sources including Pine 2018 and I5 co-learning sources')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -101,7 +101,7 @@ def main():
         'overview':['index.html','timeline.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
         'methods':['cross-domain.html','learning-science.html'],
-        'research':['ideas.html',*[f'ideas.html#idea-{i}' for i in range(1,5)],
+        'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
                     'i8.html','experiments.html'],
     }
@@ -236,6 +236,17 @@ def main():
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
     check('十模型互教' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
+    i2_text=(ROOT/'rsi/idea-i2.html').read_text(encoding='utf-8')
+    check('href="idea-i2.html"' in ideas_text and 'href="idea-i2.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'I2 detailed plan must be reachable from both home and ideas')
+    check(all(f'id="{sid}"' in i2_text for sid in ('question','evidence','challenge','insight','related','design','objective','experiments','boundaries')),
+          'I2 teaching co-evolution evidence and experimental sections missing')
+    check(all(f'href="references.html#{ref}"' in i2_text for ref in ('S100','S101','S102','S103','S104','M100','S17','S19','S33')),
+          'I2 verified nearest-work references missing')
+    check(all(term in i2_text for term in ('冻结学生','TeachingGain','固定教师','独立学习增益','教学 LoRA','任务 Skill','I5','I6','I7','I8')),
+          'I2 must separate pedagogical gains, student learning, carriers and other ideas')
+    check('id="i2-coevolution"' in (ROOT/'rsi/experiments.html').read_text(encoding='utf-8'),
+          'I2 execution entry missing')
     i5_text=(ROOT/'rsi/idea-i5.html').read_text(encoding='utf-8')
     check('href="idea-i5.html"' in ideas_text and 'href="idea-i5.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I5 page not linked from home/ideas')
     check(all(k in i5_text for k in ('十个模型','换舞伴','Bridge ties bind collective memories','PopuLoRA','OPCoD','HACE','I7','未见任务')),'I5 evidence, orthogonal labels or controls missing')
