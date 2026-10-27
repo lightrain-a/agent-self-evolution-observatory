@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -181,7 +181,7 @@ def main():
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
         screenshot('idea-framework-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','reading-notes','ideas','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/index.html'); screenshot('overview-mobile.png')
