@@ -601,6 +601,66 @@
       "level": "原始摘要核对；2026-10-27",
       "note": "以结构化同伴选择促进探索和协作任务表现；I5 必须区分当前协作收益与伙伴退出后的独立能力增长，且不与同名记忆方法混淆。",
       "code": "https://github.com/deeplearning-wisc/mace"
+    },
+    {
+      "id": "S35",
+      "group": "RSI",
+      "title": "Mind the Gap: Examining the Self-Improvement Capabilities of Large Language Models",
+      "date": "ICLR 2025",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/63943ee9fe347f3d95892cf87d9a42e6-Abstract-Conference.html",
+      "level": "ICLR 官方摘要核对；2026-10-27",
+      "note": "研究生成—验证差距与反复自我提升的条件。I6 不能将生成/验证/更新拆分称为首次，而应验证跨轮瓶颈变化及选择收益。",
+      "code": ""
+    },
+    {
+      "id": "S36",
+      "group": "RSI",
+      "title": "Knowing When Thinking Is Not Enough: Teaching Small Reasoning Models to Reason Beyond Their Parametric Knowledge (FlyBy)",
+      "date": "arXiv 26.09",
+      "url": "https://arxiv.org/abs/2609.34327",
+      "level": "arXiv 原始摘要核对；2026-10-27",
+      "note": "通过中途干预区分知识与执行瓶颈，训练小模型选择性向更强模型查询；不等于持续参数/Skill 更新后的跨轮学习模式切换。",
+      "code": ""
+    },
+    {
+      "id": "S37",
+      "group": "RSI",
+      "title": "Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models",
+      "date": "ACL 2026",
+      "url": "https://aclanthology.org/2026.acl-long.1393/",
+      "level": "ACL 官方摘要核对；2026-10-27",
+      "note": "分析训练数据未被吸收的五类原因，并对 SFT 不完全学习执行有针对性的干预；与 I6 的吸收检查高度重合。",
+      "code": ""
+    },
+    {
+      "id": "S38",
+      "group": "RSI",
+      "title": "Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing (SRPO)",
+      "date": "COLM 2026",
+      "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/9cdb4f8c4dfa13284d2d5a6e7853e5a2-Abstract-Conference.html",
+      "level": "COLM 官方摘要核对；2026-10-27",
+      "note": "按采样结果将 GRPO 和自蒸馏组合，并针对训练阶段稳定性做调权；I6 需证明跨环节诊断的额外价值。",
+      "code": ""
+    },
+    {
+      "id": "S39",
+      "group": "RSI",
+      "title": "From Rollouts to Recipes: Self-Contained Post-Training for LLMs",
+      "date": "EMNLP 2026",
+      "url": "https://aclanthology.org/2026.emnlp-main.464/",
+      "level": "ACL Anthology 官方摘要核对；2026-10-27",
+      "note": "按正确率与置信度路由 GRPO、自蒸馏、正则或跳过，路由比例随训练改变；I6 最接近的动态配方基线之一。",
+      "code": ""
+    },
+    {
+      "id": "E11",
+      "group": "学习科学",
+      "title": "The Dynamics of Learning and Allocation of Study Time to a Region of Proximal Learning",
+      "date": "Journal of Experimental Psychology: General, 2003",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/14640846/",
+      "level": "PubMed 论文摘要与书目信息核对；2026-10-27",
+      "note": "人类实验显示把有限学习时间分配给中等难度材料可能取得更高收益；用于提分/任务选择假设，不可直接当作 RSI 实证。",
+      "code": ""
     }
   ]
 }

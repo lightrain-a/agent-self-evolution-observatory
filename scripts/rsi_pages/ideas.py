@@ -1,25 +1,26 @@
-"""I1–I5: five education-inspired RSI hypotheses, with nearest-work distinctions.
+"""I1–I5: concrete education-inspired RSI hypotheses; I6 is a separate cross-round controller.
 
 These are research candidates, not verified experimental findings or novelty claims.
 Paper comparisons are limited to the linked abstracts/method descriptions as dated.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I5：五个教育学启发的 RSI 研究方向",
- "en": "Five falsifiable ideas · what others studied, what we still want to ask",
- "lead": "不是把教育学名词套进 Agent。每个方向先讲一句人话，再说最近的论文做了什么、我们还想问什么，以及怎样证明 Agent 真的学会了。",
+ "title": "I1–I6：六个正交的 RSI 研究方向",
+ "en": "Six falsifiable ideas · five learning mechanisms and one cross-round switching question",
+ "lead": "I1–I5 分别研究具体的学习与更新机制，I6 只研究能力停滞后何时切换瓶颈处理模式。每项独立验证，不能拿“六个模块拼起来”代替科学贡献。",
  "updated": "2026-10-27",
  "sections": [
- ("portfolio", "五个方向，一眼看懂", '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>五个方向是独立研究假设，不要求塞进同一套系统。</p>
+ ("portfolio", "六个方向，一眼看懂", '''
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 研究各自的学习机制；I6 研究跨轮瓶颈阶段的转换判断，不能替代其他五项。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，为什么学习方法不同？</b><small>根据真实学习反应选方法</small></a>
  <a class="idea-board-card" href="#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用，却和旧方法冲突怎么办？</b><small>复习并解决适用条件冲突</small></a>
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
  <a class="idea-board-card" href="#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b><small>伙伴选择随能力一起演化</small></a>
+ <a class="idea-board-card" href="idea-i6.html"><span class="idea-id">I6 · 跨轮瓶颈切换</span><b>模型停滞后，究竟该换哪一类学习机制？</b><small>诊断知识、搜索、选择、吸收中的主导瓶颈迁移</small></a>
  </div>
- <p class="status">状态：五条研究假设已细化；最近邻工作有交集；本项目尚未取得这些 Idea 的受控实测结果。</p>
+ <p class="status">状态：I1–I6 六条正交假设已明确；相关工作存在交集；I6 仅是跨轮元控制提案，本项目尚无这些 Idea 的受控实测结果。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -78,7 +79,7 @@ PAGE = {
  <h3>最小验证</h3><p>从三种能力档位的若干模型开始，控制教师/学生方向、任务、教学 token 和训练预算，比较<strong>随机匹配 / 同级匹配 / 永远找最强者 / PopuLoRA 式能力匹配 / MACE 式当前交互收益匹配 / 以独立学习增益为目标的选择</strong>。连续多轮重选伙伴，记录最佳伙伴的变化、下轮独立成功率和旧能力退化。进一步做“只获得答案、不更新自身”和“更新后撤除伙伴”对照，排除只是在组队解题。</p>
  <div class="note">已有 <a href="teaching.html">教学反馈诊断教师盲点的 I5 早期技术方案</a>独立保留，属于相邻支线：它研究“学生反馈暴露教师哪类缺陷”；本页 I5 主线研究“当前该与谁学，能让自己下一轮变强”。两者不能混成同一项已验证成果。</div>
  '''),
- ("shared", "五个 Idea 如何证明真的用于 RSI？", '''
+ ("shared", "六个 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>
  <tr><td>当前任务变好</td><td>协助、提示或多次尝试后的即时成功率；这是短期表现。</td></tr>
  <tr><td>我自己真的学会</td><td>只保留允许写入的 Skill / Memory / Harness / 权重；撤除教师、伙伴和临时上下文，在新任务上测独立能力。</td></tr>

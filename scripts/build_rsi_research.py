@@ -12,16 +12,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-27'
-ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'teaching', 'experiments']
-LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', 'I1–I5 · 研究方向', '教学反馈诊断 · I5 支线', '实验执行方案', '来源与核验记录']
-EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'I1–I5 · Research Ideas', 'I5 · Teaching Feedback Branch', 'Experiments', 'Sources']
+ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'idea-i6', 'teaching', 'experiments']
+LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', 'I1–I5 · 研究方向', 'I6 · 瓶颈诊断与策略切换', '教学反馈诊断 · I5 支线', '实验执行方案', '来源与核验记录']
+EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'I1–I5 · Research Ideas', 'I6 · Bottleneck-Aware Switching', 'I5 · Teaching Feedback Branch', 'Experiments', 'Sources']
 # A single, ordered definition of RSI primary and secondary navigation.
 # The same hierarchy is rendered server-side (without JS) and client-side.
 NAV_SECTIONS = [
     {'id':'overview', 'title':{'zh':'专题入口', 'en':'Start Here'}, 'slugs':['index', 'timeline']},
     {'id':'literature', 'title':{'zh':'文献与论文精读', 'en':'Literature & Reading'}, 'slugs':['literature', 'reading-cards', 'reading-notes', 'references']},
     {'id':'methods', 'title':{'zh':'方法与学习科学', 'en':'Methods & Learning Science'}, 'slugs':['cross-domain', 'learning-science']},
-    {'id':'research', 'title':{'zh':'研究方向与实验', 'en':'Ideas & Experiments'}, 'slugs':['ideas', 'teaching', 'experiments']},
+    {'id':'research', 'title':{'zh':'研究方向与实验', 'en':'Ideas & Experiments'}, 'slugs':['ideas', 'idea-i6', 'teaching', 'experiments']},
 ]
 
 

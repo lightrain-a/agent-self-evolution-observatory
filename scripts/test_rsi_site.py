@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -45,7 +45,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==60 and all(f'S{i}' in refs for i in range(26,35)),'Expected the 51-record base plus nine audited I1–I5 sources')
+    check(len(refs)==66 and all(f'S{i}' in refs for i in range(26,40)) and 'E11' in refs,'Expected the audited I1–I6 source manifest')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -97,7 +97,7 @@ def main():
         'overview':['index','timeline'],
         'literature':['literature','reading-cards','reading-notes','references'],
         'methods':['cross-domain','learning-science'],
-        'research':['ideas','teaching','experiments'],
+        'research':['ideas','idea-i6','teaching','experiments'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     grouped_slugs=[]
@@ -177,6 +177,10 @@ def main():
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
     check('交流结束后' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
+    i6_text=(ROOT/'rsi/idea-i6.html').read_text(encoding='utf-8')
+    check('href="idea-i6.html"' in ideas_text,'I6 missing from I1–I6 idea board')
+    check(all(k in i6_text for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),'I6 four probes, orthogonality, or closest-work missing')
+    check(all(f'id="{x}"' in i6_text for x in ('question','challenge','insight','design','orthogonality','related','experiments','safety')),'I6 required sections missing')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')

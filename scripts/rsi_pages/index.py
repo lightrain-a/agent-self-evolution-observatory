@@ -1,21 +1,23 @@
 PAGE = {
-"slug":"index", "title":"RSI × 自主学习研究", "en":"How an agent learns to learn · five education-inspired ideas",
-"lead":"把教育学中关于指导、学习方式、复习、失败和同伴的机制，变成五个能在 RSI 中独立检验的问题。先讲清楚和现有论文有什么不同，再决定怎样做实验。",
+"slug":"index", "title":"RSI × 自主学习研究", "en":"How an agent learns to learn · five methods and one meta-switching question",
+"lead":"把指导、学习方式、复习、失败和同伴机制，连同停滞时的跨轮瓶颈切换，变成六个独立可检验的问题。I6 选择何时换模式，不接管 I1–I5 的实现。",
 "updated":"2026-10-27",
 "sections":[
-("decision","当前研究池：I1–I5 五个问题",'''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
+("decision","当前研究池：I1–I6 六个问题",'''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
 <div class="idea-board">
 <a class="idea-board-card" href="ideas.html#idea-1"><span class="idea-id">I1 · 脚手架学习</span><b>哪些该自己学会，哪些用时再查？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，怎么选适合自己的学习方法？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用却伤了旧能力，怎么办？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b></a>
+<a class="idea-board-card" href="idea-i6.html"><span class="idea-id">I6 · 瓶颈诊断</span><b>停止进步后，什么时候该更换学习模式？</b></a>
 </div>
-<p>每个方向都写了<strong>最近邻研究的是……；我们希望研究的是……</strong>，以及最小验证实验。当前只是研究提案，不是实验结论或首次性证明。<a href="ideas.html">进入 I1–I5 完整卡片 →</a></p>
+<p>I1–I5 各自负责具体学习方式；I6 只负责跨轮判定哪类瓶颈成为主要限制，避免与 I2 的单轮试学选择重复。每个方向都写清最近邻工作、独立实验与停止条件。<a href="ideas.html">进入 I1–I5 完整卡片</a> · <a href="idea-i6.html">阅读 I6 完整构思 →</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
 ("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
-<a href="ideas.html"><b>I1–I5 五个方向</b><span>一句人话、最近邻差异、方法草案、最小辨别实验。</span></a>
+<a href="ideas.html"><b>I1–I5：具体学习机制</b><span>每项独立的科学问题、最近邻与最小辨别实验。</span></a>
+<a href="idea-i6.html"><b>I6：瓶颈诊断与策略切换</b><span>知识—搜索—选择—吸收的主导瓶颈何时转移？怎样证明跨轮切换有增益？</span></a>
 <a href="literature.html"><b>RSI 文献与竞争边界</b><span>改什么、如何改，哪些研究已进入元层自进化。</span></a>
 <a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
@@ -39,8 +41,8 @@ PAGE = {
 <li><b>先做最小对照。</b>同预算比较固定简单策略与我们的方法，排除更多尝试、更多 token、外部答案泄漏。</li>
 <li><b>再检验长期进步。</b>连续多轮、新任务、旧能力回归，最后才评价改进策略本身有没有变好。</li>
 </ol>'''),
-("scope","网站范围、历史方案与证据状态",'''<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：I5 主线为“按自身学习增益动态选择伙伴”。</p>
+("scope","网站范围、历史方案与证据状态",'''<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：I5 主线为“按自身学习增益动态选择伙伴”；<a href="idea-i6.html">I6</a> 只分析连续学习的瓶颈转移与模式切换，不重复单任务诊断或具体学习算法。</p>
 <p><a href="teaching.html">I5 教学反馈诊断</a>作为此前的独立技术支线保留：研究学生的误解能否暴露教师的隐性缺陷。这个实验与“动态伙伴选择”可以共享学生评估基础设施，但不是同一个问题。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
-<div class="status-strip"><b>截至 2026-10-27</b><span>五条问题已细化</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]
+<div class="status-strip"><b>截至 2026-10-27</b><span>六条正交问题已细化</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]
 }

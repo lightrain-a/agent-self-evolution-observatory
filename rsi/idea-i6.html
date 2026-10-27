@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="模型停止进步时，别只看分数或继续沿用原来的训练方法。先查清能力增长卡在知识、搜索、验证选择还是吸收环节，再决定下一轮该修哪一环；模型变强后重新诊断。"><meta name="theme-color" content="#101827"><title>I6：瓶颈诊断驱动的动态自学策略切换 | RSI Self-Improvement Observatory</title><link rel="canonical" href="https://agent-evolution.lightrain.asia/rsi/idea-i6.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site-base.css"><link rel="stylesheet" href="research.css"><link rel="stylesheet" href="site-switch.css"></head>
+<body data-rsi-page="idea-i6"><a class="skip-link" href="#research-main">跳转到正文</a><div class="layout"><aside class="sidebar" id="sidebar"><button class="sidebar-close" id="sidebar-close" aria-label="关闭目录">×</button><nav class="site-switcher" aria-label="研究网站切换"><span class="site-switcher__caption">研究站点 · SITES</span><div class="site-switcher__tabs"><a class="site-switcher__tab" href="/" title="切换到 Agent 自进化研究站">Agent <span aria-hidden="true">↗</span></a><a class="site-switcher__tab active" href="/rsi/" aria-current="true" title="当前：RSI 自主学习研究站">RSI</a></div></nav><a class="brand" href="index.html"><span class="logo">RSI</span><span><strong>RSI × 自主学习</strong><span>Recursive Self-Improvement</span></span></a><nav class="nav" id="research-nav" aria-label="RSI 专题目录"><details class="nav-group" data-nav-group="overview"><summary class="nav-level1"><span>专题入口</span><span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-children"><a class="nav-level2" href="index.html">专题总览</a><a class="nav-level2" href="timeline.html">研究时间轴 · 会议 DDL</a></div></details><details class="nav-group" data-nav-group="literature"><summary class="nav-level1"><span>文献与论文精读</span><span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-children"><a class="nav-level2" href="literature.html">文献与竞争边界</a><a class="nav-level2" href="reading-cards.html">论文精读卡片</a><a class="nav-level2" href="reading-notes.html">论文完整精读</a><a class="nav-level2" href="references.html">来源与核验记录</a></div></details><details class="nav-group" data-nav-group="methods"><summary class="nav-level1"><span>方法与学习科学</span><span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-children"><a class="nav-level2" href="cross-domain.html">相邻领域方法</a><a class="nav-level2" href="learning-science.html">教育学与学习科学</a></div></details><details class="nav-group active-group" data-nav-group="research" open><summary class="nav-level1"><span>研究方向与实验</span><span class="nav-chevron" aria-hidden="true">⌄</span></summary><div class="nav-children"><a class="nav-level2" href="ideas.html">I1–I5 · 研究方向</a><a class="nav-level2 active" href="idea-i6.html" aria-current="page">I6 · 瓶颈诊断与策略切换</a><a class="nav-level2" href="teaching.html">教学反馈诊断 · I5 支线</a><a class="nav-level2" href="experiments.html">实验执行方案</a></div></details></nav><div class="page-toc"><div class="toc-title">本页目录</div><nav class="toc-links"><a href="#question">研究问题：同样 70 分，为什么下一轮不该用同一种方法？</a><a href="#challenge">Challenge：同一个平台期，可能卡在四个不同环节</a><a href="#insight">Insight：更有用的是发现瓶颈何时发生转移</a><a href="#design">Design：低成本探测 + 跨轮切换，而非又造一个万能 Learner</a><a href="#orthogonality">与 I1–I5 的正交边界：调用它们，不接管它们</a><a href="#related">Related Work：已有诊断与动态路由，我们还差在哪？</a><a href="#experiments">决定性实验：验证切换的必要性，而不是做一个花哨路由器</a><a href="#safety">安全与实验口径：成绩上升不等于 RSI 成立</a></nav></div><div class="sidebar-note">证据综述与待验证假设分开。<br>核验日期：2026-10-27<br>本专题详文为中文，保留英文术语与原始文献标题。</div></aside><button class="sidebar-overlay" id="sidebar-overlay" aria-label="关闭目录遮罩" hidden></button><main class="main" id="research-main"><div class="topbar"><button class="mobile-toggle" id="menu-toggle" aria-label="打开目录" aria-controls="sidebar" aria-expanded="false">☰</button><div class="search"><label class="sr-only" for="research-search">搜索本专题的章节与来源</label><input id="research-search" type="search" placeholder="搜索本专题：课程、帮助、Meta-reset、论文名…" autocomplete="off"></div><button class="language-toggle" id="nav-language" title="只切换目录语言；研究详文为中文">EN navigation</button></div><div class="content"><section class="search-results panel" id="search-results" aria-live="polite" hidden></section><header class="research-hero"><div class="eyebrow">RSI RESEARCH DOSSIER / 09</div><p class="research-en">Bottleneck-Aware Strategy Switching · from a stalled learner to the next useful intervention</p><h1>I6：瓶颈诊断驱动的动态自学策略切换</h1><p class="lead">模型停止进步时，别只看分数或继续沿用原来的训练方法。先查清能力增长卡在知识、搜索、验证选择还是吸收环节，再决定下一轮该修哪一环；模型变强后重新诊断。</p><div class="hero-meta"><span>更新 2026-10-27</span><span>来源可追踪</span><span>提案尚待实验</span></div></header><section class="panel research-section" id="question"><h2>研究问题：同样 70 分，为什么下一轮不该用同一种方法？</h2><div class="section-body">
+ <p class="thesis"><b>I6 的问题：</b>一个自我改进系统已经进入平台期，能否用少量可复验的干预确定当前最限制<strong>后续独立能力增长</strong>的环节，并在主要瓶颈发生转移时及时切换学习模式？</p>
+ <p>例子：两个数学 Agent 的单次正确率都是 70%。A 多次采样常能产生正确解，但自己的答案选择器总选错；B 不论怎么重采样都很少成功，但补一条前置定理后明显改善。继续统一做 GRPO、统一增加教师示范，甚至只按“70 分应该练什么”选任务，都可能用错力。</p>
+ <p><b>研究定位：</b>I6 是<strong>跨轮学习闭环的元控制问题</strong>（什么时候应该从补知识切到搜索、从搜索切到修验证或巩固等），不是发明四个底层学习算法。四个环节是能力形成的先后依赖，<strong>不是</strong>所有模型必经的四个时间阶段，也不是排他的四选一错误标签。</p>
+ <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p>考试 0–60 / 60–80 / 80–90 / 90–100 的分段仅用来提出“学习方式可能反转”的启发性假设；实际切换依据是可观测的瓶颈与干预收益，不是固定成绩阈值、模型参数规模或“智力”标签。</p></div>
+ </div></section><section class="panel research-section" id="challenge"><h2>Challenge：同一个平台期，可能卡在四个不同环节</h2><div class="section-body">
+ <div class="table-wrap"><table><thead><tr><th>环节 / 可观察现象</th><th>最小受控检查</th><th>可调用的动作族</th></tr></thead><tbody>
+ <tr><td><b>① 知识不足</b><br>基础前置题、概念题也失败</td><td>保持搜索与验证预算不变，随机对照“给经过核验的缺失知识”与“不给”；测可迁移解题率，而不是只看同一题的抄答。</td><td>知识补充、简短示例、前置任务学习、按需查询（必要时调用 I1）</td></tr>
+ <tr><td><b>② 搜索不足</b><br>多次采样偶尔正确，单次命中很低</td><td>固定信息与验证器，提高候选数或加入回溯；比较 pass@1、固定 k 下候选覆盖及新增有效路径。</td><td>探索、对比成功与失败路径、搜索或强化学习</td></tr>
+ <tr><td><b>③ 选择不足</b><br>正确候选已经产生，却没有被选中</td><td>冻结同一批候选，比较原验证器与可信独立验证/排序；不能把重新生成更好候选算成验证改进。</td><td>校准验证器、候选排序、独立测试反馈</td></tr>
+ <tr><td><b>④ 吸收不足</b><br>答案或 Skill 在手，但撤除后仍不会</td><td>冻结已验证示例与训练预算，允许真实更新后清空提示/伙伴/临时记忆；用未见题和后续回归测持久收益。</td><td>技能或权重更新、针对性训练、撤辅评测；具体学习方式由 I2/I3 实现</td></tr>
+ </tbody></table></div>
+ <p><b>关键困难：</b>单个测试的失败不能证明某类能力绝对不存在。有限 pass@k=0 不等于正确路径不可采样；外部知识带来的即时成功不等于知识已内化；验证器本身可能被污染。四项检查应记录对照差、样本量、成本、置信区间和互相干扰，允许“多重瓶颈 / 无法判定”。</p>
+ </div></section><section class="panel research-section" id="insight"><h2>Insight：更有用的是发现瓶颈何时发生转移</h2><div class="section-body">
+ <h3>原因先于模块</h3>
+ <p>对于停滞模型，增加数据、搜索次数、验证精度或参数更新并不等价。如果知识已经足够，但候选长期被评估器错选，继续补教材可能无法提高最终表现；如果验证器已可靠、训练后仍忘记新方法，就需要改善吸收与巩固环节。<b>同一模型连续进步时，曾经最有效的干预可能失效，因为瓶颈已经转移。</b></p>
+ <p>学习科学中的 <b>Region of Proximal Learning</b> 提醒我们，单位时间内最值得学的内容不必是最难的；但这来自人类实验，只支持研究动机，不直接证明 LLM 的最优学习区域。<a class="cite" href="references.html#E11" title="The Dynamics of Learning and Allocation of Study Time to a Region of Proximal Learning">[E11]</a></p>
+ <div class="flow">
+ <div><b>知识可用？</b><small>若缺失，先补前置条件</small></div>
+ <div><b>路径可采？</b><small>若可采但稀少，加强探索</small></div>
+ <div><b>候选可选？</b><small>若错选，修验证与排序</small></div>
+ <div><b>更新可留？</b><small>若撤辅仍失败，改变吸收过程</small></div>
+ </div>
+ <p class="note"><b>递进不等于固定顺序训练：</b>这里描述的是能力产出的依赖链。模型可以同时缺知识又选错答案，也可能在任何一轮回到前面环节。I6 的可检验贡献应是<strong>准确发现主导瓶颈的切换时刻</strong>，并把这种发现转化成下轮的独立学习收益。</p>
+ </div></section><section class="panel research-section" id="design"><h2>Design：低成本探测 + 跨轮切换，而非又造一个万能 Learner</h2><div class="section-body">
+ <div class="flow">
+ <div><b>冻结学习状态</b><small>版本、任务与预算锚定</small></div>
+ <div><b>四组局部 Probe</b><small>测候选覆盖、错选、知识与撤辅</small></div>
+ <div><b>判断瓶颈变化</b><small>对照差 + 不确定性 + 切换成本</small></div>
+ <div><b>路由到动作族</b><small>执行已有 I1–I5 或工具模块</small></div>
+ <div><b>未见题独立复测</b><small>收益、遗忘、安全回归后再判断</small></div>
+ </div>
+ <h3>机制：发现“继续沿用当前学习模式不划算”的证据</h3>
+ <p>对每轮学习状态保留 <b>Probe Report</b>，记录各环节可恢复的错误质量与估计误差。只在某类干预的预期净收益超过当前模式，并通过最小持续性/置信门槛时切换，避免一次随机错题就频繁改策略。低置信度时允许继续诊断、复习或暂不更新。</p>
+ <div class="equation">next_mode = switch_if( gain(new mode) − gain(current mode) &gt; cost_of_switch + uncertainty_margin )</div>
+ <p>此式是待评估的控制原则，不代表已经训练出模型。实际增益指<strong>未来未见任务、撤除临时帮助后的能力变化</strong>，估计用开发任务，最终测试集绝不参与路由决策。诊断开销和多分支试训均计入总预算。</p>
+ <h3>组件协议：只决定“下一轮修哪一环”</h3>
+ <div class="table-wrap"><table><thead><tr><th>I6 接口</th><th>职责</th><th>明确不做</th></tr></thead><tbody>
+ <tr><td>输入</td><td>冻结版本 ID、各类 Probe 证据、学习历史、可调用动作族、成本与安全限额</td><td>不直接修改执行器、权重、Skill 或线上权限</td></tr>
+ <tr><td>输出</td><td>瓶颈假设（可多标签）、置信度、切换/继续原因、下一动作族及试验预算</td><td>不选择 I5 具体伙伴、不制定 I3 巩固内容、不实现 I2 学习算法</td></tr>
+ <tr><td>反馈</td><td>跨轮无辅助能力增益、保持率、诊断成本、版本回归和安全门</td><td>不以当前答题总分或自我解释替代外部验证</td></tr>
+ </tbody></table></div>
+ </div></section><section class="panel research-section" id="orthogonality"><h2>与 I1–I5 的正交边界：调用它们，不接管它们</h2><div class="section-body">
+ <div class="table-wrap"><table><thead><tr><th>已有 Idea 的独立研究对象</th><th>I6 与它的关系</th><th>不可重复声称的贡献</th></tr></thead><tbody>
+ <tr><td><a href="ideas.html#idea-1"><b>I1 · 脚手架学习</b></a>：哪些知识应内化，哪些适合外部检索/撤辅？</td><td>I6 只检测当前是否主要受知识/支架依赖限制；需要内化还是查询，由 I1 决策。</td><td>不能把“支持获取与撤除”作为 I6 的新机制。</td></tr>
+ <tr><td><a href="ideas.html#idea-2"><b>I2 · 因材施教</b></a>：同样失败、同一更新对象，哪一种试学方法最有效？</td><td><b>最需解耦：</b>I2 做给定学习需求下的局部教学动作优化与响应估计；I6 只研究跨环节主导瓶颈的检测、持续性与跨轮模式切换。可以把 I2 作为“吸收环节”的已固定子模块和强基线。</td><td>不能把“试学→比较收益→选更好教学法”重新包装成 I6。</td></tr>
+ <tr><td><a href="ideas.html#idea-3"><b>I3 · 温故知新</b></a>：新旧 Skill/能力冲突时怎么定向巩固？</td><td>I6 把旧能力退化作为状态与硬约束，必要时把处理请求交给 I3。</td><td>不提出新型重放/抗遗忘算法。</td></tr>
+ <tr><td><a href="ideas.html#idea-4"><b>I4 · 生产性失败</b></a>：单次失败后是否继续试验，何时足以写 Skill？</td><td>I6 在<strong>多轮学习</strong>尺度上决定应不应该从搜索转到验证/补知识/吸收。单个失败链的试验与证据停止规则仍由 I4 负责。</td><td>不抢“失败后什么时候总结”的贡献。</td></tr>
+ <tr><td><a href="ideas.html#idea-5"><b>I5 · 费曼学习法</b></a>：与哪个伙伴互教，才能让自己独立能力增长最多？</td><td>I6 判断是否需要外部教学/协作；若需要，I5 负责伙伴匹配与交换。</td><td>不学习伙伴图或声称发现最佳能力差。</td></tr>
+ </tbody></table></div>
+ <p class="note"><b>正交判据：</b>只保留 I6 的变化检测器与模式切换规则，其余每个动作均调用固定实现，仍能单独检验“何时换模式”带来的增量；反过来固定 I6，I1–I5 每项方法也必须能各自检验自身研究问题。如果 I6 的全部优势只是更好的 I2 单轮动作预测，就应合并而不是新立方法。</p>
+ </div></section><section class="panel research-section" id="related"><h2>Related Work：已有诊断与动态路由，我们还差在哪？</h2><div class="section-body">
+ <div class="table-wrap"><table><thead><tr><th>直接前作</th><th>他们研究的是什么</th><th>I6 额外必须证明</th></tr></thead><tbody>
+ <tr><td><b>Mind the Gap</b>，ICLR 2025 <a class="cite" href="references.html#S35" title="Mind the Gap: Examining the Self-Improvement Capabilities of Large Language Models">[S35]</a></td><td>生成—验证差距、可改进性与迭代收益；生成/验证/更新的模块分析已有基础。</td><td>不是首次分瓶颈，而是跨轮检测主瓶颈转移并改善后续选择。</td></tr>
+ <tr><td><b>FlyBy</b>，2026 <a class="cite" href="references.html#S36" title="Knowing When Thinking Is Not Enough: Teaching Small Reasoning Models to Reason Beyond Their Parametric Knowledge (FlyBy)">[S36]</a></td><td>以受控推理状态区分知识与执行瓶颈，再选择是否向强模型查询。</td><td>从一次推理中的查询决策推进到经过持久更新的下一轮学习机制切换。</td></tr>
+ <tr><td><b>Why SFT Fails to Learn</b>，ACL 2026 <a class="cite" href="references.html#S37" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[S37]</a></td><td>诊断监督训练无法吸收数据的多种具体原因，并试验对应干预。</td><td>不限于 SFT 的内化子问题，比较知识/生成/选择/吸收跨环节瓶颈迁移。</td></tr>
+ <tr><td><b>SRPO</b>，COLM 2026 <a class="cite" href="references.html#S38" title="Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing (SRPO)">[S38]</a></td><td>按样本正确/错误，将 GRPO 和自蒸馏目标路由，抑制后期不稳定。</td><td>需要证明比固定样本级优化路由更有效的<strong>跨轮诊断重分配</strong>。</td></tr>
+ <tr><td><b>From Rollouts to Recipes</b>，EMNLP 2026 <a class="cite" href="references.html#S39" title="From Rollouts to Recipes: Self-Contained Post-Training for LLMs">[S39]</a></td><td>按 rollout 正确性与置信度路由 GRPO、蒸馏、正则化或跳过，路由比例随训练改变。</td><td>这是最强近邻之一：必须控制相同动作集与预算，证明因果 Probe 和瓶颈变迁信息具有额外价值。</td></tr>
+ <tr><td><b>R²Orch</b>，2026 <a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a></td><td>根据 Skill Withdrawal 的可学习性选任务，撤 Skill 后检验独立能力。</td><td>在技能撤辅之外，独立识别并切换验证/搜索/知识等主环节。</td></tr>
+ </tbody></table></div>
+ <p>上述工作已经覆盖失败分类、试训干预和动态优化目标。因此 I6 的贡献门槛不能是“四类标签”“根据错误给建议”或“会变化的训练配方”。还需要额外排除仅多采样、仅更大的验证器和仅增加训练数据带来的收益。</p>
+ </div></section><section class="panel research-section" id="experiments"><h2>决定性实验：验证切换的必要性，而不是做一个花哨路由器</h2><div class="section-body">
+ <h3>E1 · 同分不同因</h3>
+ <p>选数学与代码任务，构造<strong>初始 pass@1 相近</strong>但验证错选、知识缺失、搜索稀缺或内化失败各不相同的冻结状态；加入未经人工注入的自然失败状态。对每个状态随机进行四类有限预算干预，并在独立新题上确认实际最佳动作。核心是同分条件下出现可复验的<strong>跨环节最优动作差异</strong>，而不是分类器拟合人工标签。</p>
+ <h3>E2 · 同一模型能力变化后的策略反转</h3>
+ <p>冻结多个连续训练检查点，考察某环节已经修复后，继续沿用原模式与切换新模式的等预算后续收益。记录预先固定的 Probe 阈值、切换延迟、误报率、模式抖动和切换成本。以只看当前总分、只看 rollout 成败、LLM 自述原因、I2 风格单轮试学/通用 bandit 作为强对照。</p>
+ <h3>E3 · 多轮能力平台期能否真实突破</h3>
+ <p>弱/中/强学习者按<strong>预先独立测得的能力</strong>分组，而非直接按参数量代表智力；使用同一模型家族与跨家族复核。固定候选动作实现、教师预算、总训练 token、探测成本与计算开销，对比<strong>固定策略 / 成绩分段规则 / 样本状态路由 / 单轮 I2 / I6 的跨轮切换</strong>。只在未见题的独立能力、旧能力保持和多轮有效收益上作主要结论。</p>
+ <h3>Go / Merge / Stop</h3>
+ <div class="table-wrap"><table><thead><tr><th>裁决</th><th>预先需要的证据</th></tr></thead><tbody>
+ <tr><td>继续 I6</td><td>自然失败中能稳定观察到瓶颈主导关系变化；跨轮诊断比静态规则和等预算 I2/样本路由有可重复的独立收益。</td></tr>
+ <tr><td>并入 I2</td><td>收益完全由单轮试学/上下文 bandit 解释，诊断历史与瓶颈切换并无增量信息。</td></tr>
+ <tr><td>停止或缩题</td><td>瓶颈不可辨、切换成本超过收益、优势只在当前题/保留提示时出现，或旧能力/安全回归无法通过。</td></tr>
+ </tbody></table></div>
+ <p class="status">状态：研究假设与实验方案；截至 2026-10-27 尚未开展 I6 的受控实验，图表不含虚构成绩。</p>
+ </div></section><section class="panel research-section" id="safety"><h2>安全与实验口径：成绩上升不等于 RSI 成立</h2><div class="section-body">
+ <p>所有 Probe 和候选更新先在受控环境运行，冻结外部独立验证器及任务划分；开发集可用于模式切换，最终测试只能在策略冻结后运行。相同初始状态的干预分支必须共享数据拆分、执行预算与可访问工具。多种模式一起改变时，要记录交互效应，不能把增益简单归因于单个原因。</p>
+ <p><b>跨轮安全硬门：</b>验证器被绕过、Agent 越权执行、恶意轨迹写入长期 Skill/Memory、旧能力出现不可接受退化时拒绝晋级并保留回滚。这里是在给出安全协议要求，不是声称已经解决自进化安全。</p>
+ <p><b>成功的定义：</b>移除教师、临时提示与多余在线计算后，允许保留的模型/Skill/Memory/Harness 版本在不同、未见的任务上仍能持续进步；不能用分数波动、一次 pass@k 提高、或增加测试调用替代能力增长。<a href="ideas.html">返回 I1–I5 研究主线</a> · <a href="experiments.html">现有实验协议</a>。</p>
+ </div></section><nav class="page-pagination" aria-label="专题翻页"><a href="ideas.html">← I1–I5 · 研究方向</a><a href="teaching.html">教学反馈诊断 · I5 支线 →</a></nav></div><footer class="footer">RSI × 自主学习研究 · 2026-10-27 · <a href="references.html">来源与核验口径</a> · <a href="research-notes.md" download>研究笔记</a><br>文献结论、研究推断和实验计划分别标注；未运行实验，不展示模拟结果。</footer></main></div><script src="site-nav.js"></script><script src="research.js"></script></body></html>
