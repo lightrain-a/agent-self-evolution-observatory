@@ -112,6 +112,15 @@
       "description": "网站形成 RSI 文献、跨领域学习科学、候选方向和实验方案的资料页；属于研究文档整理，不代表实验验证完成。",
       "source_url": "index.html",
       "source_label": "专题总览"
+    },
+    {
+      "id": "rsi-i8-mechanism-20261027",
+      "date": "2026-10-27",
+      "title": "I8 · 错误可学习性与跨题迁移研究方案归档",
+      "type": "research",
+      "description": "从 Hypercorrection 原始研究出发，提出已有知识、共享错误规则与更新兼容性的待验证关系，列明匹配对照和否定条件；尚无实际训练结果。",
+      "source_url": "i8.html",
+      "source_label": "I8 完整研究记录"
     }
   ]
 }

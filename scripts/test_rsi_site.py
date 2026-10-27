@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','i8','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==66 and all(f'S{i}' in refs for i in range(26,40)) and 'E11' in refs,'Expected the audited I1–I6 source manifest')
+    check(len(refs)==77 and all(f'S{i}' in refs for i in range(26,45)) and all(f'E{i}' in refs for i in range(11,16)) and {'M10','M11'}<=refs,'Expected audited I1–I6 source manifest plus 11 I8 sources')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -101,7 +101,7 @@ def main():
         'overview':['index','timeline'],
         'literature':['literature','reading-cards','reading-notes','references'],
         'methods':['cross-domain','learning-science'],
-        'research':['ideas','idea-i6','teaching','experiments'],
+        'research':['ideas','idea-i6','teaching','i8','experiments'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     grouped_slugs=[]
@@ -188,6 +188,13 @@ def main():
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
     check('交流结束后' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
+    i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
+    for label in ['Observable Phenomenon','Why','Challenge','Insight','Design','决定性实验','Related Work','预注册判断']:
+        check(label in i8_html,'I8 research mechanism structure missing: '+label)
+    for ref in ['E12','E13','E14','E15','S40','S41','S42','S43','S44','M10','M11']:
+        check(f'href="references.html#{ref}"' in i8_html,'I8 reference missing: '+ref)
+    check('href="i8.html"' in ideas_text,'I8 missing from idea board')
+    check('href="i8.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I8 missing from homepage')
     i6_text=(ROOT/'rsi/idea-i6.html').read_text(encoding='utf-8')
     check('href="idea-i6.html"' in ideas_text,'I6 missing from I1–I6 idea board')
     check(all(k in i6_text for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),'I6 four probes, orthogonality, or closest-work missing')

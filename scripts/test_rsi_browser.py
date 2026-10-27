@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','i8','experiments','references']
 
 def port():
     with socket.socket() as sock:

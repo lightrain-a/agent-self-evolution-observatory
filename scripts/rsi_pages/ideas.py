@@ -5,12 +5,12 @@ Paper comparisons are limited to the linked abstracts/method descriptions as dat
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I6：六个正交的 RSI 研究方向",
- "en": "Six falsifiable ideas · five learning mechanisms and one cross-round switching question",
- "lead": "I1–I5 分别研究具体的学习与更新机制，I6 只研究能力停滞后何时切换瓶颈处理模式。每项独立验证，不能拿“六个模块拼起来”代替科学贡献。",
+ "title": "I1–I6 与 I8：相互独立的 RSI 研究方向",
+ "en": "I1–I6 plus I8 · mechanisms, bottlenecks and transferable error learning",
+ "lead": "I1–I5 研究具体学习机制，I6 研究跨轮瓶颈切换；I8 独立研究哪些错误能产生真实跨题迁移。先验证现象与原因，而非拼接多个模块。",
  "updated": "2026-10-27",
  "sections": [
- ("portfolio", "六个方向，一眼看懂", '''
+ ("portfolio", "研究方向，一眼看懂",  '''
  <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 研究各自的学习机制；I6 研究跨轮瓶颈阶段的转换判断，不能替代其他五项。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
@@ -19,8 +19,9 @@ PAGE = {
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
  <a class="idea-board-card" href="#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b><small>伙伴选择随能力一起演化</small></a>
  <a class="idea-board-card" href="idea-i6.html"><span class="idea-id">I6 · 跨轮瓶颈切换</span><b>模型停滞后，究竟该换哪一类学习机制？</b><small>诊断知识、搜索、选择、吸收中的主导瓶颈迁移</small></a>
+ <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  </div>
- <p class="status">状态：I1–I6 六条正交假设已明确；相关工作存在交集；I6 仅是跨轮元控制提案，本项目尚无这些 Idea 的受控实测结果。</p>
+ <p class="status">状态：I1–I6 与 I8 已归档；相关工作存在交集；各方案尚无本站的受控实测结果，不能宣称首次或已验证。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -79,7 +80,14 @@ PAGE = {
  <h3>最小验证</h3><p>从三种能力档位的若干模型开始，控制教师/学生方向、任务、教学 token 和训练预算，比较<strong>随机匹配 / 同级匹配 / 永远找最强者 / PopuLoRA 式能力匹配 / MACE 式当前交互收益匹配 / 以独立学习增益为目标的选择</strong>。连续多轮重选伙伴，记录最佳伙伴的变化、下轮独立成功率和旧能力退化。进一步做“只获得答案、不更新自身”和“更新后撤除伙伴”对照，排除只是在组队解题。</p>
  <div class="note">已有 <a href="teaching.html">教学反馈诊断教师盲点的 I5 早期技术方案</a>独立保留，属于相邻支线：它研究“学生反馈暴露教师哪类缺陷”；本页 I5 主线研究“当前该与谁学，能让自己下一轮变强”。两者不能混成同一项已验证成果。</div>
  '''),
- ("shared", "六个 Idea 如何证明真的用于 RSI？", '''
+ ("idea-8", "I8：Hypercorrection——为什么改正一种错误能学会一类题？", '''
+ <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">吸收了会不会丢</span><p><b>具体问题：</b>同样一道数学错题，一个模型得到正确反馈后只记住答案，另一个却能举一反三。纠正哪种错误值得投入下一轮学习预算？</p></div>
+ <h3>Observable Phenomenon / Why</h3><p>Hypercorrection 的人类学习研究发现，高置信度错误经正确反馈后有时更容易被纠正；已有知识可能是重要解释。由此提出待验证的模型假设：前置知识是否充分、错误是否由影响多题的共同规则造成，可能共同决定一次纠错的跨题收益。[[E12]][[E13]][[E14]]</p>
+ <h3>Challenge / Insight / Design</h3><p><b>Challenge：</b>置信度不等于学得会；修复原题不等于迁移；真实收益通常要在更新后才能观察。<b>Insight：</b>已有知识准备程度 × 规则影响范围 × 更新兼容性，可能解释实际收益差异。<b>Design：</b>学习前诊断知识与错误模式，固定纠错方式和训练预算，在独立模型副本上检验跨题真实收益。</p>
+ <h3>别人研究的是……；我们研究的是……</h3><p><b>Self-Error-Instruct</b> 已按错误类型合成题目，并用 one-shot 示例帮助筛选数据；<b>LESS</b> 已用梯度影响选择训练数据。I8 研究的是当前错误怎样转化为真实持久的跨题学习，以及能否提前预测。[[S40]][[M10]]</p>
+ <div class="links"><a class="link-btn" href="i8.html">阅读 I8：现象、原因、完整实验与否定条件</a></div>
+ '''),
+ ("shared", "这些 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>
  <tr><td>当前任务变好</td><td>协助、提示或多次尝试后的即时成功率；这是短期表现。</td></tr>
  <tr><td>我自己真的学会</td><td>只保留允许写入的 Skill / Memory / Harness / 权重；撤除教师、伙伴和临时上下文，在新任务上测独立能力。</td></tr>

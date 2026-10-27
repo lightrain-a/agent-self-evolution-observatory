@@ -661,6 +661,116 @@
       "level": "PubMed 论文摘要与书目信息核对；2026-10-27",
       "note": "人类实验显示把有限学习时间分配给中等难度材料可能取得更高收益；用于提分/任务选择假设，不可直接当作 RSI 实证。",
       "code": ""
+    },
+    {
+      "id": "E12",
+      "group": "学习科学",
+      "title": "Errors committed with high confidence are hypercorrected",
+      "date": "Journal of Experimental Psychology: Learning, Memory, and Cognition, 2001",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11713883/",
+      "level": "PubMed 摘要与 DOI 核对",
+      "note": "在人类事实知识回答中，高置信度错误得到正确反馈后更可能在复测中纠正；不是 LLM 的直接证据。",
+      "code": ""
+    },
+    {
+      "id": "E13",
+      "group": "学习科学",
+      "title": "Hypercorrection of high-confidence errors in the classroom",
+      "date": "Memory, 2018",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29781391/",
+      "level": "期刊摘要与 DOI 核对",
+      "note": "大学园艺课堂学生答题、报告置信度并接受正确反馈，后测观察到超纠正；不能直接解释为跨题规则迁移。",
+      "code": ""
+    },
+    {
+      "id": "E14",
+      "group": "学习科学",
+      "title": "Prior knowledge is more predictive of error correction than subjective confidence",
+      "date": "Memory & Cognition, 2014",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23797971/",
+      "level": "PubMed 摘要与 DOI 核对",
+      "note": "领域已有知识与纠错关系强，置信度独立解释力小；可能是已有知识的代理指标，而非其全部因果机制。",
+      "code": ""
+    },
+    {
+      "id": "E15",
+      "group": "学习科学",
+      "title": "School students’ confidence when answering diagnostic questions online",
+      "date": "Educational Studies in Mathematics, 2022（2021 online）",
+      "url": "https://link.springer.com/article/10.1007/s10649-021-10084-7",
+      "level": "期刊正文摘要与出版时间核对",
+      "note": "在线数学诊断数据研究学生置信度、答题正确率及后续相似题表现；不等于 LLM 的真实权重更新。",
+      "code": ""
+    },
+    {
+      "id": "S40",
+      "group": "RSI",
+      "title": "Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning",
+      "date": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.417/",
+      "level": "ACL 正式论文摘要与方法流程核对",
+      "note": "从模型错题聚类错误类型、合成数据，并用 one-shot 效果筛选微调数据；I8 不能声称首次按错误类型发现迁移价值。",
+      "code": ""
+    },
+    {
+      "id": "S41",
+      "group": "RSI",
+      "title": "RULE-EDIT: Benchmarking Rule-Level Knowledge Editing in Large Language Models",
+      "date": "Findings of EMNLP 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.1924/",
+      "level": "ACL Anthology 正式论文摘要核对",
+      "note": "验证数学抽象规则的直接编辑可能不迁移到实例；其知识编辑设置不直接等同于 SFT 或 LoRA 纠错。",
+      "code": ""
+    },
+    {
+      "id": "S42",
+      "group": "RSI",
+      "title": "Editing Rules in LLMs Requires More Than a Localized Update",
+      "date": "EMNLP 2026",
+      "url": "https://aclanthology.org/2026.emnlp-main.421/",
+      "level": "ACL Anthology 正式论文摘要核对",
+      "note": "提出多层分布式规则编辑，不同形式的规则知识对应不同表示层；说明公式记忆与实例应用的编辑一致性并非自动成立。",
+      "code": ""
+    },
+    {
+      "id": "S43",
+      "group": "RSI",
+      "title": "Don't Waste Mistakes: Leveraging Negative RL-Groups via Confidence Reweighting",
+      "date": "arXiv 25.10",
+      "url": "https://arxiv.org/abs/2510.08696",
+      "level": "arXiv 摘要核对",
+      "note": "LENS 对高置信度错误增加惩罚以利用 GRPO 全错组，属于 RL 更新信号设计，并不直接预测一次错题的跨题学习收益。",
+      "code": ""
+    },
+    {
+      "id": "S44",
+      "group": "RSI",
+      "title": "Overconfident Errors Need Stronger Correction: Asymmetric Confidence Penalties for Reinforcement Learning",
+      "date": "arXiv 26.02",
+      "url": "https://arxiv.org/abs/2602.21420",
+      "level": "arXiv 摘要核对",
+      "note": "ACE 利用相对参考策略的置信度位移调整错误 rollout 惩罚；与预测规则级净迁移收益的选题相邻但不相同。",
+      "code": ""
+    },
+    {
+      "id": "M10",
+      "group": "相邻领域",
+      "title": "LESS: Selecting Influential Data for Targeted Instruction Tuning",
+      "date": "ICML 2024",
+      "url": "https://proceedings.mlr.press/v235/xia24c.html",
+      "level": "PMLR 正式论文摘要核对",
+      "note": "以优化器感知的低秩梯度相似性估计训练数据影响力；I8 必须与之比较而非声称训练前价值预测全新。",
+      "code": ""
+    },
+    {
+      "id": "M11",
+      "group": "相邻领域",
+      "title": "What Do Learning Dynamics Reveal About Generalization in LLM Mathematical Reasoning?",
+      "date": "ICML 2025",
+      "url": "https://proceedings.mlr.press/v267/kang25f.html",
+      "level": "PMLR 正式论文摘要核对",
+      "note": "用预记忆阶段的训练题表现解释泛化并改进数据筛选，说明原题正确与记住解题步骤不同；不直接等于更新前单错题净迁移预测。",
+      "code": ""
     }
   ]
 }
