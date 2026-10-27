@@ -332,22 +332,10 @@ def build() -> Path:
             copied.add(destination)
             advisor_pdf_names.append(source.name)
 
-    # Publish the independently scoped RSI dossier, never its Python authoring sources.
-    rsi_source = ROOT / "rsi"
-    for source in sorted(rsi_source.iterdir()):
-        if source.is_file() and source.suffix in {".html", ".css", ".js", ".json", ".tsv", ".md"}:
-            destination = OUTPUT / "rsi" / source.name
-            copy_file(source, destination)
-            if source.suffix == ".html":
-                rendered = version_html_assets(destination.read_text(encoding="utf-8"), build_sha)
-                rendered = rendered.replace("fetch(`deployment-manifest.json", "fetch(`../deployment-manifest.json")
-                destination.write_text(rendered, encoding="utf-8")
-            copied.add(destination)
+    # The RSI site is built separately by scripts/build_rsi_site.py.
+    # Do not inject its pages or runtime navigation into the Agent site.
 
     required = (
-        OUTPUT / "rsi" / "index.html",
-        OUTPUT / "rsi" / "ideas.html",
-        OUTPUT / "rsi" / "sources.json",
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
         OUTPUT / "research-timeline.html",
@@ -504,7 +492,7 @@ def build() -> Path:
                 raise RuntimeError(f"Backend/internal artifact leaked into the static site: {source.name}")
     assert_no_sensitive_public_text(OUTPUT)
 
-    print(f"Built {len(copied)} public files in {OUTPUT}")
+    print(f"Built Agent site: {len(copied)} public files in {OUTPUT}")
     return OUTPUT
 
 

@@ -6,17 +6,6 @@ window.NAV_GROUPS = [
     ["auto-research-architecture.html",{en:"Auto Research · Interactive Architecture",zh:"Auto Research · 交互式架构"}],
     ["experiment-costs.html",{en:"Experiment Costs",zh:"实验成本"}],
   ]},
-  { title:{en:"RSI & Self-Regulated Learning",zh:"RSI × 自主学习研究"}, open:true, pages:[
-    ["rsi/index.html",{en:"Research Overview",zh:"专题总览"}],
-    ["rsi/literature.html",{en:"Literature & Novelty Boundaries",zh:"文献与竞争边界"}],
-    ["rsi/reading-cards.html",{en:"Paper Reading Cards",zh:"论文精读卡片"}],
-    ["rsi/cross-domain.html",{en:"Methods from Adjacent Fields",zh:"相邻领域方法"}],
-    ["rsi/learning-science.html",{en:"Education & Learning Sciences",zh:"教育学与学习科学"}],
-    ["rsi/ideas.html",{en:"Candidate Ideas & Frameworks",zh:"候选 Idea 与框架"}],
-    ["rsi/teaching.html",{en:"I5 · Learning by Teaching for RSI",zh:"I5 · 教学反馈自进化"}],
-    ["rsi/experiments.html",{en:"Experimental Plan",zh:"实验执行方案"}],
-    ["rsi/references.html",{en:"Sources & Verification",zh:"来源与核验记录"}],
-  ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:false, pages:[
     ["agent-safety-atlas.html",{en:"Agent Safety · Research Problems",zh:"Agent安全 · 研究难点地图"}],
     ["foundations.html",{en:"Definition & Boundary · What Is Self-Evolution?",zh:"定义与边界 · 什么是 Agent 自进化"}],

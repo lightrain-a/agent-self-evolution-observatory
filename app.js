@@ -842,7 +842,18 @@ function renderShell() {
   document.body.insertAdjacentHTML("afterbegin", `<a class="skip-link" href="#main-content">Skip to content</a><button class="sidebar-overlay" aria-label="Close navigation" hidden></button><button class="back-to-top" type="button" aria-label="Back to top">↑</button>`);
   const sidebar = document.querySelector(".sidebar");
   if (!sidebar) return;
-  sidebar.insertAdjacentHTML("afterbegin", `<button class="sidebar-close" aria-label="Close navigation">×</button>`);
+  // These are independent sites. Keep the cross-site switch above this site's own menu.
+  if (!document.querySelector('link[href^="site-switch.css"]')) {
+    document.head.insertAdjacentHTML("beforeend", '<link rel="stylesheet" href="site-switch.css">');
+  }
+  sidebar.insertAdjacentHTML("afterbegin", `<button class="sidebar-close" aria-label="Close navigation">×</button>
+    <nav class="site-switcher" aria-label="研究网站切换">
+      <span class="site-switcher__caption">研究站点 · SITES</span>
+      <div class="site-switcher__tabs">
+        <a class="site-switcher__tab active" href="/" aria-current="true" title="当前：Agent 自进化研究站">Agent</a>
+        <a class="site-switcher__tab" href="/rsi/" title="切换到 RSI 自主学习研究站">RSI <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>`);
   renderNavigation();
   const topbar = document.querySelector(".topbar");
   const searchInput = document.getElementById("site-search");

@@ -22,7 +22,7 @@
 
 ## RSI × 自主学习研究 / 本专题边界与旧站关系
 
-<p>本次是针对选题的<strong>定向、可追踪综述</strong>，不是声称收齐全部 RSI 工作的系统综述。覆盖自修改、学习型 Harness、课程与元学习、学习科学、实验资源；主要依赖原论文、作者机构和官方仓库。逐项阅读深度见来源页。</p><p>新增 <a href="teaching.html"><b>I5：教学反馈驱动教师自改进</b></a>，把学生独立执行、反事实归因、教师可回滚更新与 Meta-reset 明确为可执行实验，不将师生对话本身称作创新。</p><p>原站的 <a href="../paper-ideas.html">论文 Idea 实验室</a>与<a href="../selected-paper.html">已选方向</a>保留不变。旧记录已有 Delayed Regression Exams、Regression-Probe Half-Life 等提案。本轮不把“增加延迟考试”重新包装成新 idea；新候选须改变<strong>学习干预本身</strong>。</p><div class="status-strip"><b>当前状态</b><span>文献与方案已整理</span><span>环境运行验证待做</span><span>候选均未通过实验门槛</span><span>未宣称独立专家评审通过</span></div>
+<p>本次是针对选题的<strong>定向、可追踪综述</strong>，不是声称收齐全部 RSI 工作的系统综述。覆盖自修改、学习型 Harness、课程与元学习、学习科学、实验资源；主要依赖原论文、作者机构和官方仓库。逐项阅读深度见来源页。</p><p>新增 <a href="teaching.html"><b>I5：教学反馈驱动教师自改进</b></a>，把学生独立执行、反事实归因、教师可回滚更新与 Meta-reset 明确为可执行实验，不将师生对话本身称作创新。</p><p>原站的 <a href="https://agent-evolution.lightrain.asia/paper-ideas.html">论文 Idea 实验室</a>与<a href="https://agent-evolution.lightrain.asia/selected-paper.html">已选方向</a>保留不变。旧记录已有 Delayed Regression Exams、Regression-Probe Half-Life 等提案。本轮不把“增加延迟考试”重新包装成新 idea；新候选须改变<strong>学习干预本身</strong>。</p><div class="status-strip"><b>当前状态</b><span>文献与方案已整理</span><span>环境运行验证待做</span><span>候选均未通过实验门槛</span><span>未宣称独立专家评审通过</span></div>
 
 ## RSI 文献与竞争边界 / 机制图谱：从提出修改到学习如何学习
 

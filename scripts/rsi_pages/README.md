@@ -21,12 +21,13 @@
 在仓库根目录执行：
 
 ```bash
-python3 scripts/build_rsi_research.py
+python3 scripts/build_static_site.py      # Agent 站
+python3 scripts/build_rsi_research.py      # 生成 RSI 页面与独立导航
+python3 scripts/build_rsi_site.py          # RSI 独立站输出到 _site/rsi
 python3 scripts/test_rsi_site.py
-python3 scripts/build_static_site.py
 python3 scripts/test_rsi_browser.py
 ```
 
 对应源文件是 `scripts/rsi_pages/reading-cards.py`（通用渲染器），`scripts/build_rsi_research.py`（左侧目录、HTML 和本地搜索索引），`rsi/research.js`（浏览器筛选）。只要字段符合当前 JSON schema，后续论文无需再修改这些程序。
 
-部署仍使用仓库现有 GitHub Pages workflow：合入 `main` 后由静态构建执行；不要把 private 数据或本地路径写入公共卡片。
+RSI 站点使用独立的 `site-nav.js`，不再依赖 Agent 站的 `data.js`。双站架构、入口和单独导出方法参见根目录 `SITES.md`。部署仍使用仓库现有 GitHub Pages workflow：合入 `main` 后先构建 Agent、再构建 RSI；不要把 private 数据或本地路径写入公共卡片。

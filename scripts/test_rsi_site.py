@@ -47,6 +47,7 @@ def main():
     check(len(refs)==51,'Expected the audited 51-record source snapshot')
     check(source['review_date']=='2026-10-21','Review date drift')
     parsed={}
+    site_asset_sources={'site-base.css':ROOT/'style.css', 'site-switch.css':ROOT/'site-switch.css', 'favicon.svg':ROOT/'favicon.svg'}
     for slug in PAGES:
         path=ROOT/'rsi'/f'{slug}.html'; p=parse(path); parsed[path]=p
         check(p.h1==1,f'{slug}: expected one h1')
@@ -55,12 +56,20 @@ def main():
         check('[[' not in text,f'{slug}: unexpanded source token')
         check('提案尚待实验' in text,f'{slug}: missing hypothesis status')
         check('lang="zh-CN"' in text,f'{slug}: wrong content language')
+        check('class="site-switcher"' in text and 'href="/rsi/"' in text and 'href="/"' in text,f'{slug}: missing two-site switch')
+        check('src="site-nav.js"' in text and 'src="../data.js"' not in text,f'{slug}: navigation depends on Agent')
     for path,p in parsed.items():
         for href in p.links:
             u=urlsplit(href)
             if u.scheme or u.netloc: continue
+            if u.path.startswith('/'):
+                check(u.path in ('/', '/rsi/'),f'Unexpected absolute path in RSI: {href}')
+                continue
             target=(path.parent/unquote(u.path)).resolve() if u.path else path
             check(target.is_relative_to(ROOT),f'Escaping link: {href}')
+            if target.name in site_asset_sources and target.parent==ROOT/'rsi':
+                check(site_asset_sources[target.name].is_file(),f'Missing shared source for {href}')
+                continue
             check(target.is_file(),f'Missing file: {path.name} -> {href}')
             if u.fragment and target.suffix=='.html':
                 target_parsed=parsed.get(target) or parse(target)
@@ -77,9 +86,11 @@ def main():
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
-    nav=(ROOT/'data.js').read_text(encoding='utf-8')
+    agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')
+    check('"rsi/index.html"' not in agent_nav,'Agent navigation still includes RSI pages')
+    nav=(ROOT/'rsi/site-nav.js').read_text(encoding='utf-8')
     for slug in PAGES:
-        check(f'"rsi/{slug}.html"' in nav,f'Missing root navigation: {slug}')
+        check(f'"{slug}.html"' in nav,f'Missing RSI-only navigation: {slug}')
     records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
     for card in cards:
         indexed=[r for r in records if r['url']==f"reading-cards.html#{card['id']}"]
@@ -94,6 +105,10 @@ def main():
     if public.exists():
         for slug in PAGES:
             check((public/'rsi'/f'{slug}.html').is_file(),f'Not exported: {slug}')
+        for name,src in site_asset_sources.items():
+            check((public/'rsi'/name).is_file(),f'RSI standalone asset missing: {name}')
+            check((public/'rsi'/name).read_bytes()==src.read_bytes(),f'RSI standalone asset drift: {name}')
+        check((public/'rsi/site-nav.js').read_bytes()==(ROOT/'rsi/site-nav.js').read_bytes(),'RSI nav export drift')
         check(not list(public.rglob('*.py')),'Python leaked into public output')
         check((public/'rsi/sources.json').read_bytes()==(ROOT/'rsi/sources.json').read_bytes(),'Exported source manifest differs')
     print(f'PASS: {len(PAGES)} RSI pages, {len(refs)} sources, {len(records)} search records, local links/anchors, nav and public export.')

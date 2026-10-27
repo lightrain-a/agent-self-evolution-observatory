@@ -10,6 +10,7 @@ import subprocess
 import sys
 import time
 import urllib.request
+import urllib.error
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -30,7 +31,11 @@ def main():
     log=(OUT/'webdriver.log').open('w')
     def req(method,path,data=None):
         request=urllib.request.Request(f'http://127.0.0.1:{dp}'+path,data=json.dumps(data).encode() if data is not None else None,method=method,headers={'Content-Type':'application/json'})
-        with urllib.request.urlopen(request,timeout=65) as response: return json.load(response)['value']
+        try:
+            with urllib.request.urlopen(request,timeout=65) as response: return json.load(response)['value']
+        except urllib.error.HTTPError as exc:
+            detail=exc.read().decode('utf-8', errors='replace')[:1200]
+            raise AssertionError(f'WebDriver {method} {path} failed: {detail}') from exc
     def js(code): return req('POST',f'/session/{session}/execute/sync',{'script':code,'args':[]})
     def check(value,msg):
         if not value: raise AssertionError(msg)
@@ -50,10 +55,14 @@ def main():
         summaries=[]
         for slug in PAGES:
             nav('rsi/'+slug+'.html')
-            stats=js("""return {title:document.title,h1:document.querySelectorAll('h1').length,active:document.querySelectorAll('#research-nav a[aria-current="page"]').length,nav:document.querySelectorAll('#research-nav a[href*="/rsi/"]').length,overflow:document.documentElement.scrollWidth>innerWidth+1,cites:document.querySelectorAll('.cite').length,sections:document.querySelectorAll('.research-section').length};""")
+            stats=js("""return {title:document.title,h1:document.querySelectorAll('h1').length,active:document.querySelectorAll('#research-nav a[aria-current="page"]').length,nav:document.querySelectorAll('#research-nav .nav-level2').length,overflow:document.documentElement.scrollWidth>innerWidth+1,cites:document.querySelectorAll('.cite').length,sections:document.querySelectorAll('.research-section').length};""")
             check(stats['h1']==1 and stats['active']==1 and stats['nav']==len(PAGES),slug+': nav or title integrity '+str(stats))
             check(not stats['overflow'],slug+': desktop page overflow')
             summaries.append({'page':slug,**stats})
+        nav('rsi/index.html')
+        rsi_switch=js("return [...document.querySelectorAll('.site-switcher__tab')].map(a=>({href:a.getAttribute('href'),active:a.getAttribute('aria-current')==='true'}));")
+        check(rsi_switch==[{'href':'/','active':False},{'href':'/rsi/','active':True}],f'RSI switch destinations incorrect: {rsi_switch}')
+        check(js("return [...document.querySelectorAll('#research-nav .nav-level2')].every(a=>!a.getAttribute('href').startsWith('../'))"),'RSI navigation not standalone')
         nav('rsi/reading-cards.html')
         check(js("return document.querySelectorAll('.reading-card').length>=1"),'Reading-card library is empty')
         js("const q=document.querySelector('#reading-card-filter');q.value='不存在的测试查询';q.dispatchEvent(new Event('input',{bubbles:true}));")
@@ -106,11 +115,23 @@ def main():
         check(js("return !document.querySelector('#sidebar').classList.contains('open')&&document.querySelector('#sidebar-overlay').hidden"),'Mobile drawer did not close')
         req('POST',f'/session/{session}/window/rect',{'width':1440,'height':1050})
         nav('index.html')
-        for _ in range(30):
-            if js("return document.querySelectorAll('.nav a[href^="+'"rsi/"'+"]').length===9"): break
-            time.sleep(.3)
-        check(js("return document.querySelectorAll('.nav a[href^="+'"rsi/"'+"]').length===9"),'Root site lacks new sidebar entry')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','root_navigation':'PASS','screenshots':5}
+        agent_switch=js("return [...document.querySelectorAll('.site-switcher__tab')].map(a=>({href:a.getAttribute('href'),active:a.getAttribute('aria-current')==='true'}));")
+        check(agent_switch==[{'href':'/','active':True},{'href':'/rsi/','active':False}],f'Agent switch destinations incorrect: {agent_switch}')
+        check(js("""return document.querySelectorAll('.sidebar .nav a[href^="rsi/"]').length===0"""),'Agent navigation still mixes RSI pages')
+        js("document.querySelector('.site-switcher__tab[href=\"/rsi/\"]').click()")
+        for _ in range(35):
+            time.sleep(.2)
+            if js("return location.pathname==='/rsi/' && document.body.dataset.rsiPage==='index'"): break
+        check(js("return location.pathname==='/rsi/' && document.body.dataset.rsiPage==='index'"),'Agent to RSI switch failed')
+        js("document.querySelector('.site-switcher__tab[href=\"/\"]').click()")
+        for _ in range(35):
+            time.sleep(.2)
+            if js("return location.pathname==='/' && document.body.dataset.page==='home'"): break
+        check(js("return location.pathname==='/' && document.body.dataset.page==='home'"),'RSI to Agent switch failed')
+        nav('advisor-review.html')
+        check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
+        check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':5}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

@@ -13,7 +13,7 @@
     if (!Array.isArray(window.NAV_GROUPS)) return;
     const nav = $('#research-nav');
     nav.replaceChildren();
-    const current = 'rsi/' + (root.body.dataset.rsiPage || 'index') + '.html';
+    const current = (root.body.dataset.rsiPage || 'index') + '.html';
     window.NAV_GROUPS.forEach((group) => {
       const details = root.createElement('details');
       details.className = 'nav-group';
@@ -25,7 +25,7 @@
       children.className = 'nav-children';
       group.pages.forEach(([href, label]) => {
         const link = root.createElement('a');
-        link.href = '../' + href;
+        link.href = href;
         link.className = 'nav-level2' + (href === current ? ' active' : '');
         if (href === current) link.setAttribute('aria-current', 'page');
         link.textContent = text(label);

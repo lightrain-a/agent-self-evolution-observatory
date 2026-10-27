@@ -29,8 +29,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/cancel_legacy_pages_runs.py
 
-      - name: Build frontend-only static site
+      - name: Build Agent research website
         run: python3 scripts/build_static_site.py
+
+      - name: Generate RSI research website pages
+        run: python3 scripts/build_rsi_research.py
+
+      - name: Build independently scoped RSI website
+        run: python3 scripts/build_rsi_site.py
+
+      - name: Verify two-site navigation and RSI export
+        run: python3 scripts/test_rsi_site.py
 
       - name: Verify curated figure entry and bounded export
         run: node scripts/test_curated_figure_frontend.js
