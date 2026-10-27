@@ -35,7 +35,6 @@
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
 <a href="cross-domain.html"><b>相邻领域方法</b><span>元学习、课程、知识追踪、双重控制与持续学习。</span></a>
 <a href="learning-science.html"><b>教育学与学习科学</b><span>哪些教育学机制有实证支持，哪些迁移仍是猜想。</span></a>
-<a href="teaching.html"><b>教学反馈诊断 · I5 支线</b><span>此前“学生反馈能否暴露教师盲点”的详细实验草案，保留供比较。</span></a>
 <a href="experiments.html"><b>实验执行方案</b><span>版本控制、持久更新、数据隔离与元学习评估。</span></a>
 <a href="references.html"><b>来源与核验记录</b><span>96 条论文和官方资源，保留原始链接与阅读深度。</span></a></div>
 
@@ -63,7 +62,7 @@
 ## RSI × 自主学习研究 / 网站范围、历史方案与证据状态
 
 <p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：<a href="idea-i5.html">I5 主线</a>为“十模型按双向独立学习收益动态配对与决定换伴”；目前 <a href="idea-i6-failure-value.html">I6</a> 聚焦失败轨迹，<a href="idea-i7-learning-order.html">I7</a> 聚焦学习顺序。<a href="idea-i6.html">旧版瓶颈切换</a>已归档，不再占用 I6 编号。</p>
-<p><a href="teaching.html">I5 教学反馈诊断</a>作为此前的独立技术支线保留：研究学生的误解能否暴露教师的隐性缺陷。这个实验与“动态伙伴选择”可以共享学生评估基础设施，但不是同一个问题。</p>
+<p><a href="idea-i5.html#teaching-feedback">I5 统一详情页</a>同时保留“教学反馈诊断”作为历史研究支线：学生的误解能否暴露教师自己的隐性缺陷。它与当前的“动态伙伴选择”有不同的研究问题，因此在详情页中区分，不再在左侧目录重复出现。</p>
 <p><a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
 <div class="status-strip"><b>截至 2026-10-27</b><span>I1–I8 候选研究问题已整理</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
@@ -410,7 +409,7 @@
  <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>NC 2019《Bridge ties》</b> 研究相同交流次数下，先跨圈还是先组内交流如何改变群体记忆；<b>NC 2026</b> 研究多代人机群体如何通过选择示范者传播新策略。<b>PopuLoRA</b> 已做模型群体出题与共同进化；<b>OPCoD</b> 已做双模型互教；<b>MACE</b> 已做合作伙伴选择；<b>HACE</b> 已做异构模型和 Agent 的相互进化。它们不是空白。<a class="cite" href="references.html#E90" title="Bridge ties bind collective memories">[E90]</a><a class="cite" href="references.html#E93" title="Propagation and preservation of AI-discovered problem-solving strategies in human culture">[E93]</a><a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a><a class="cite" href="references.html#S34" title="Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)">[S34]</a><a class="cite" href="references.html#S90" title="Heterogeneous Agentic Coevolution (HACE)">[S90]</a></p></div>
  <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>一个伙伴的价值，不在于他有多强，而在于双方交流后<strong>各自能独立学到多少以前不会的东西</strong>。有效的伙伴关系可能随能力和知识变化而变化：需要新方法时跨圈交流，需要消化时保持配对，双方都学不到新东西时再换。Nature 系列关于知识分布、网络结构与收益学习的发现支持研究动机，但未直接验证 LLM 的这种更新。<a class="cite" href="references.html#E91" title="Clustering knowledge and dispersing abilities enhances collective problem solving in a network">[E91]</a><a class="cite" href="references.html#E92" title="Modularity and composite diversity affect the collective gathering of information online">[E92]</a><a class="cite" href="references.html#E94" title="Feature-based reward learning shapes human social learning strategies">[E94]</a><a class="cite" href="references.html#E95" title="Copy or collaborate? How networks impact collective problem solving">[E95]</a></p></div>
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>十个模型分成五对，分别交换验证过的正确和错误轨迹，双方使用<strong>相同且固定的更新器</strong>更新自己的 LoRA / Skill（首轮只固定一种更新面）。交流后撤除伙伴、清空临时上下文，在未见题上独立测试新能力和旧能力保持，再估计原配对继续交流与换伴的下一轮收益。在十节点伙伴网络里重配五对，而不是固定让最强模型当老师。</p><div class="flow"><div><b>十个独立模型</b><small>不同能力 × 不同专长</small></div><div><b>五对双向互教</b><small>同预算、同教学协议</small></div><div><b>撤伴独立考试</b><small>双方能力增益与保持</small></div><div><b>重选伙伴与顺序</b><small>边际学习收益决定留伴或换伴</small></div></div></div>
- <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先用 4 模型做全配对的学习收益测量，再扩展到 10 模型，比较<strong>固定伙伴、随机轮换、round-robin、固定最强教师、同级配对、跨专长配对、先跨组后巩固、PopuLoRA / MACE 风格匹配、学习收益驱动的动态换伴</strong>。各模型交流、参数更新和算力预算匹配，报告个人独立能力、全班净增益、旧能力保持、新解法发现与过早同质化。如果简单轮换已同样有效，就不单独提出复杂路由器。</p><p class="idea-side-note"><b>正交边界：</b>I5 只研究<strong>谁和谁学、何时换伴</strong>；I2 负责如何教学，I3 负责巩固，I6 研究失败轨迹的学习价值，I7 研究先试还是先学，I8 研究高置信错误的迁移。<a href="idea-i5.html">查看 Nature 证据、完整十模型实验与停止条件 →</a>。<a href="teaching.html">教学反馈诊断教师盲点</a>是历史支线，不与 I5 主线混作同一贡献。</p></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先用 4 模型做全配对的学习收益测量，再扩展到 10 模型，比较<strong>固定伙伴、随机轮换、round-robin、固定最强教师、同级配对、跨专长配对、先跨组后巩固、PopuLoRA / MACE 风格匹配、学习收益驱动的动态换伴</strong>。各模型交流、参数更新和算力预算匹配，报告个人独立能力、全班净增益、旧能力保持、新解法发现与过早同质化。如果简单轮换已同样有效，就不单独提出复杂路由器。</p><p class="idea-side-note"><b>正交边界：</b>I5 只研究<strong>谁和谁学、何时换伴</strong>；I2 负责如何教学，I3 负责巩固，I6 研究失败轨迹的学习价值，I7 研究先试还是先学，I8 研究高置信错误的迁移。<a href="idea-i5.html">查看 Nature 证据、完整十模型实验与停止条件 →</a>。<a href="idea-i5.html#teaching-feedback">教学反馈诊断教师盲点</a>是历史支线，不与 I5 主线混作同一贡献。</p></div>
  </div>
 
 ## I1–I8：八个研究问题 / I6、I7 与 I8：一次只研究一个变量
@@ -537,6 +536,17 @@
  <tr><td>停止/合并</td><td>只提高当前共同答题表现，撤除伙伴后无收益；优势只来自反复传播现成答案或固定最强教师；退化与计算成本抵消增长。</td></tr>
  </tbody></table></div>
  <p class="status">截至 2026-10-27：本页是 I5 调研后的研究问题与验证方案；尚无十模型持续训练的本项目受控结果。</p>
+
+
+## I5：十模型互教——什么时候换舞伴，才能一起变强？ / I5 的历史研究支线：教别人能否发现自己的盲点？
+
+
+ <p><b>为什么放在同一个 I5 下？</b>前面的十模型互教是当前主线，研究<strong>和谁学、何时交换伙伴</strong>。此前还有一个相邻问题：Agent 教另一个 Agent 时，学生的追问或误用，能否帮教师发现自己本来没发现的知识缺口？两者都从“以教促学”出发，但<strong>研究变量、更新对象和主要实验不同</strong>，不作为两个并列的 I5。</p>
+ <div class="table-wrap"><table><thead><tr><th>同属 I5 的研究记录</th><th>要回答的问题</th><th>独立验证</th></tr></thead><tbody>
+ <tr><td><strong>当前主线：十模型动态互教</strong></td><td>随着双方能力变化，下一轮跟谁学、何时换伴最有效？</td><td>撤除伙伴后各模型的独立能力增益、群体学习曲线</td></tr>
+ <tr><td>历史支线：教学反馈诊断</td><td>学生的错误和追问，能否暴露教师自己原本没有意识到的知识缺口？</td><td>教师从学生反馈更新前后的独立任务表现，与同预算自测比较</td></tr>
+ </tbody></table></div>
+ <p>我们保留这份早期技术方案与原始实验契约，方便以后回溯，但不再把它单独放在左侧研究方向菜单。<a href="teaching.html">查看历史支线的完整方法和实验设计</a>。</p>
 
 
 ## I5：十模型互教——什么时候换舞伴，才能一起变强？ / I5 最后应该回答什么？
@@ -892,7 +902,7 @@
 ## 教学反馈诊断 · I5 的早期研究支线 / 研究目标：更新教师，而不是帮学生提高分数
 
 
- <p class="status">历史研究支线（2026-10-21）；当前 I5 主线是<a href="ideas.html#idea-5">按自身学习增益动态选择伙伴</a>。此页作为“学生反馈诊断教师盲点”实验方案保留，不等同于当前 I5 主线。</p>
+ <p class="status">历史研究支线（2026-10-21）；当前 I5 统一入口是<a href="idea-i5.html#teaching-feedback">费曼学习法：十模型动态互教与研究支线</a>。此页作为“学生反馈诊断教师盲点”历史实验方案保留，不等同于当前 I5 主线。</p>
  <div class="decision"><span class="kicker">CANDIDATE I5 · PRE-EXPERIMENT DESIGN</span>
  <h3>Learner-Induced Blindspot Discovery for Recursive Agent Self-Improvement</h3>
  <p>核心假设：学生在<strong>独立使用</strong>教师教出的经验时，会暴露一些教师自己执行任务或自我反思时没有发现的隐藏前提、例外条件和错误泛化。这些差异如果能被<strong>独立执行证据</strong>确认，就可能成为教师技能、Harness 或参数更新的有效学习信号。</p>
