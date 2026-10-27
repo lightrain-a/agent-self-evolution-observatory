@@ -119,9 +119,17 @@ def main():
         js("const q=document.querySelector('#reading-question-filter');q.value='all';q.dispatchEvent(new Event('change',{bubbles:true}));")
         js("const q=document.querySelector('#reading-coverage-filter');q.value='addressed';q.dispatchEvent(new Event('change',{bubbles:true}));")
         js("document.querySelectorAll('.reading-expand').forEach(d=>d.open=false)")
-        check(js("return document.querySelector('.reading-card').id==='rsi-anything-2610-13912'"),
-              'Featured deep-read paper should be the first visible reading card')
+        expected_first=sorted(cards,key=lambda p:(bool(p.get('deep_read')),p['read_on']),reverse=True)[0]['id']
+        check(js("return document.querySelector('.reading-card').id")==expected_first,
+              'Reading cards must show latest deep-read papers first')
+        check(js("return document.querySelector('#optimal-practice-2020-eglington .reading-metadata').textContent.includes('npj Science of Learning')"),
+              'Journal card should display its real venue, not a made-up arXiv ID')
         screenshot('reading-cards-desktop.png')
+        js("document.querySelector('#optimal-practice-2020-eglington').scrollIntoView({block:'start'})")
+        time.sleep(.7)
+        screenshot('reading-npj-card-desktop.png')
+        check(js("return document.querySelector('#optimal-practice-2020-eglington .reading-related-link')!==null"),
+              'npj practice scheduling paper lacks related-work comparison')
         check(js("return document.querySelector('#rsi-anything-2610-13912 .reading-related-link')!==null"),
               'RSI-Anything card missing Related Work shortcut')
         js("document.querySelector('#rsi-anything-2610-13912').scrollIntoView({block:'start'})")
@@ -144,10 +152,17 @@ def main():
                       'Deep section missing in browser: '+section['id'])
         check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
               'Evidence matrix did not render')
-        check(js("return [...document.querySelectorAll('.deep-stage')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result,related,next'"),
-              'Long read must follow C-I-D-R, Related Work, then future questions')
-        check(js("return document.querySelectorAll('.deep-related > .deep-related-matrix tbody tr').length===7"),
-              'Main closest-work table should include seven papers')
+        for paper in deep_cards:
+            selector=json.dumps('#deep-'+paper['id'])
+            actual_stages=js("return [...document.querySelector("+selector+").querySelectorAll('.deep-stage')].map(s=>s.dataset.storyStage).join(',')")
+            check(actual_stages=='challenge,insight,design,result,related,next',
+                  'Paper long read must follow C-I-D-R, Related Work, then future questions: '+paper['id'])
+        check(js("return document.querySelectorAll('#deep-rsi-anything-2610-13912--stage-related > .deep-stage-details > .deep-related > .deep-related-matrix tbody tr').length===7"),
+              'RSI-Anything closest-work table should include seven papers')
+        check(js("return document.querySelectorAll('#deep-optimal-practice-2020-eglington--stage-related .deep-related-matrix tbody tr').length===4"),
+              'npj 2020 must compare four real closest works')
+        check(js("return document.querySelector('#deep-optimal-practice-2020-eglington').textContent.includes('p=0.2')"),
+              'Original paper versus speculative hard-task wait distinction not present')
         check(js("return document.querySelectorAll('#deep-rsi-anything-2610-13912--stage-related .deep-related-paper').length===9"),
               'Nine source-grounded Related Work comparisons expected')
         check(js("""return document.querySelector('#related-rsi-anything-2610-13912--rlanything a[href^="https"]').getAttribute('href')==='https://proceedings.mlr.press/v306/wang26jf.html'"""),
@@ -160,6 +175,9 @@ def main():
         js("document.querySelector('#deep-rsi-anything-2610-13912--stage-challenge').scrollIntoView({block:'start'})")
         time.sleep(.8)
         screenshot('reading-notes-story-desktop.png')
+        js("document.querySelector('#deep-optimal-practice-2020-eglington--stage-challenge').scrollIntoView({block:'start'})")
+        time.sleep(.7)
+        screenshot('reading-npj-story-desktop.png')
         js("document.querySelector('#deep-rsi-anything-2610-13912--stage-related').scrollIntoView({block:'start'})")
         time.sleep(.8)
         screenshot('reading-related-work-desktop.png')

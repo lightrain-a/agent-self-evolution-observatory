@@ -33,7 +33,7 @@ def main():
     refs={r['id'] for r in source['sources']}
     card_data=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))
     cards=card_data['papers']
-    check(card_data['schema_version']==2 and len(cards)>0,'Invalid reading card registry')
+    check(card_data['schema_version']==3 and len(cards)>0,'Invalid reading card registry')
     questions=card_data['research_questions']
     question_ids={q['id'] for q in questions}
     check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
@@ -45,6 +45,8 @@ def main():
         check(len(card['one_sentence'])<=100,'Paper opening summary too long: '+card['id'])
         check(card['lead_institution'] in card['institutions'],'Leading author institution not in institution list: '+card['id'])
         check(card['institution_source'] and card['publication'],'Missing institution provenance: '+card['id'])
+        check(bool(card.get('arxiv')) != bool(card.get('doi')),
+              'Every reading card must be a preprint or verified publication: '+card['id'])
         check(set(card['research_coverage'])==question_ids,'Paper missing RSI coverage axes: '+card['id'])
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
@@ -169,6 +171,14 @@ def main():
         check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
         coverage='|'.join(f'{q["id"]}:{card["research_coverage"][q["id"]]["level"]}' for q in questions)
         check(coverage in card_html,'Missing exact five-question coverage status: '+card['id'])
+    npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
+    check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
+          '2020 npj paper not correctly identified by its real DOI')
+    check(npj['links']['html']=='https://www.nature.com/articles/s41539-020-00074-4'
+          and npj['links']['code']=='https://osf.io/d9rms/',
+          'Publisher original or author-provided simulation materials missing')
+    check('等待' in ' '.join(npj['boundaries']) and '前置' in ' '.join(npj['our_relevance']),
+          'Forgot the distinction between retrieval decay and learning a new skill')
     deep_notes=[p for p in cards if p.get('deep_read')]
     notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
     for paper in deep_notes:
@@ -213,7 +223,12 @@ def main():
           'Related-work comparison lacks calibrated conclusion and limitations')
     check('教学示例' in notes_html and '非论文' in notes_html,
           'Deep-read evidence provenance caveat missing')
-    check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
+    check(all(
+        (p.get('arxiv') and p['links']['html'].startswith('https://arxiv.org/'))
+        or (p.get('doi') and p.get('official_url') == p['links']['html']
+            and p['official_url'].startswith('https://'))
+        for p in cards
+    ),'Paper lacks a verified arXiv or publisher original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
     check(all(f'idea-{i}' in ideas.ids for i in range(1,9)),'I1–I8 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')

@@ -169,12 +169,12 @@ def render_paper(p: dict) -> str:
         )
     links = "".join(
         f'<a class="link-btn" target="_blank" rel="noopener noreferrer" href="{e(p["links"][key])}">{label}</a>'
-        for key, label in (("html", "arXiv 原文"), ("pdf", "PDF 原文"), ("code", "作者代码"))
+        for key, label in (("html", "期刊 / 原文"), ("pdf", "论文 PDF"), ("code", "代码 / 数据"), ("full_text", "开放全文"))
         if p["links"].get(key)
     )
     return (
         f'<div class="deep-paper-head"><p class="deep-meta">{e(p["lead_institution"])} · '
-        f'{e(p["publication"])} · arXiv:{e(p["arxiv"])} · {e(p["read_on"])} 精读</p>'
+        f'{e(p["publication"])} · {e("arXiv:"+p["arxiv"] if p.get("arxiv") else "DOI:"+p["doi"])} · {e(p["read_on"])} 精读</p>'
         f'<h3>{e(p["title"])}</h3>'
         f'<p class="deep-focus">{e(d["focus"])}</p>'
         '<p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。'
