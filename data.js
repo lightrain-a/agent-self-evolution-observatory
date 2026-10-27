@@ -9,6 +9,7 @@ window.NAV_GROUPS = [
   { title:{en:"RSI & Self-Regulated Learning",zh:"RSI × 自主学习研究"}, open:true, pages:[
     ["rsi/index.html",{en:"Research Overview",zh:"专题总览"}],
     ["rsi/literature.html",{en:"Literature & Novelty Boundaries",zh:"文献与竞争边界"}],
+    ["rsi/reading-cards.html",{en:"Paper Reading Cards",zh:"论文精读卡片"}],
     ["rsi/cross-domain.html",{en:"Methods from Adjacent Fields",zh:"相邻领域方法"}],
     ["rsi/learning-science.html",{en:"Education & Learning Sciences",zh:"教育学与学习科学"}],
     ["rsi/ideas.html",{en:"Candidate Ideas & Frameworks",zh:"候选 Idea 与框架"}],

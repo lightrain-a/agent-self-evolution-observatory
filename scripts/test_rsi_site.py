@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','literature','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES = ['index','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -30,6 +30,10 @@ def check(condition, message):
 def main():
     source=json.loads((ROOT/'rsi/sources.json').read_text(encoding='utf-8'))
     refs={r['id'] for r in source['sources']}
+    card_data=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))
+    cards=card_data['papers']
+    check(card_data['schema_version']==1 and len(cards)>0,'Invalid reading card registry')
+    check(len({p['id'] for p in cards})==len(cards),'Duplicate reading card ID')
     check(len(refs)==51,'Expected the audited 51-record source snapshot')
     check(source['review_date']=='2026-10-21','Review date drift')
     parsed={}
@@ -51,12 +55,17 @@ def main():
             if u.fragment and target.suffix=='.html':
                 target_parsed=parsed.get(target) or parse(target)
                 check(unquote(u.fragment) in target_parsed.ids,f'Missing anchor: {path.name} -> {href}')
+    card_ids=set(parsed[ROOT/'rsi/reading-cards.html'].ids)
+    check(all(p['id'] in card_ids for p in cards),'Paper not rendered from JSON')
+    check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     nav=(ROOT/'data.js').read_text(encoding='utf-8')
     for slug in PAGES:
         check(f'"rsi/{slug}.html"' in nav,f'Missing root navigation: {slug}')
     records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
+    for card in cards:
+        check(any(r['url']==f"reading-cards.html#{card['id']}" for r in records),'Paper missing from global search')
     for r in records:
         u=urlsplit(r['url']); p=ROOT/'rsi'/u.path
         check(p in parsed and u.fragment in parsed[p].ids,'Search result target missing: '+r['url'])

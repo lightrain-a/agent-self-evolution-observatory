@@ -12,8 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-21'
-ORDER = ['index', 'literature', 'cross-domain', 'learning-science', 'ideas', 'teaching', 'experiments']
-LABELS = ['专题总览', '文献与竞争边界', '相邻领域方法', '教育学与学习科学', '候选 Idea 与框架', 'I5 · 教学反馈自进化', '实验执行方案', '来源与核验记录']
+ORDER = ['index', 'literature', 'reading-cards', 'cross-domain', 'learning-science', 'ideas', 'teaching', 'experiments']
+LABELS = ['专题总览', '文献与竞争边界', '论文精读卡片', '相邻领域方法', '教育学与学习科学', '候选 Idea 与框架', 'I5 · 教学反馈自进化', '实验执行方案', '来源与核验记录']
 
 
 def plain(text: str) -> str:
@@ -49,6 +49,7 @@ def main() -> None:
     notes = [f'# RSI × 自主学习研究\n\n核验日期：{DATE}\n\n本文件包含证据综述与待验证提案，不包含本项目实验结果。\n']
     for idx, p in enumerate(pages):
         slug = p['slug']
+        page_date = p.get('updated', DATE)
         body_parts = []
         toc = []
         for sid, title, body in p['sections']:
@@ -58,6 +59,8 @@ def main() -> None:
             if slug != 'references':
                 search.append({'title':p['title'] + ' · ' + title, 'url':slug + '.html#' + sid, 'text':plain(body)})
             notes.append(f'## {p["title"]} / {title}\n\n{body}\n')
+        for record in p.get('search_records', []):
+            search.append(record)
         for r in sources if slug == 'references' else []:
             search.append({'title':r['id']+' · '+r['title'], 'url':'references.html#'+r['id'], 'text':r['date']+' '+r['group']+' '+r['note']})
         nav = ''.join(f'<a class="nav-level2{" active" if q["slug"] == slug else ""}" href="{q["slug"]}.html"'+(' aria-current="page"' if q['slug'] == slug else '')+f'>{LABELS[i]}</a>' for i,q in enumerate(pages))
@@ -66,7 +69,7 @@ def main() -> None:
         title = html.escape(p['title'])
         doc = f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{html.escape(p['lead'], quote=True)}"><meta name="theme-color" content="#101827"><title>{title} | Agent Self-Evolution Observatory</title><link rel="canonical" href="https://agent-evolution.lightrain.asia/rsi/{slug}.html"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="research.css"></head>
-<body data-rsi-page="{slug}"><a class="skip-link" href="#research-main">跳转到正文</a><div class="layout"><aside class="sidebar" id="sidebar"><button class="sidebar-close" id="sidebar-close" aria-label="关闭目录">×</button><a class="brand" href="../index.html"><span class="logo">AE</span><span><strong>Agent Self-Evolution</strong><span>Research Observatory</span></span></a><nav class="nav" id="research-nav" aria-label="研究站目录"><a class="nav-level2" href="../index.html">研究站首页</a><details class="nav-group" open><summary class="nav-level1">RSI × 自主学习研究</summary><div class="nav-children">{nav}</div></details></nav><div class="page-toc"><div class="toc-title">本页目录</div><nav class="toc-links">{''.join(toc)}</nav></div><div class="sidebar-note">证据综述与待验证假设分开。<br>核验日期：{DATE}<br>本专题详文为中文，保留英文术语与原始文献标题。</div></aside><button class="sidebar-overlay" id="sidebar-overlay" aria-label="关闭目录遮罩" hidden></button><main class="main" id="research-main"><div class="topbar"><button class="mobile-toggle" id="menu-toggle" aria-label="打开目录" aria-controls="sidebar" aria-expanded="false">☰</button><div class="search"><label class="sr-only" for="research-search">搜索本专题的章节与来源</label><input id="research-search" type="search" placeholder="搜索本专题：课程、帮助、Meta-reset、论文名…" autocomplete="off"></div><button class="language-toggle" id="nav-language" title="只切换目录语言；研究详文为中文">EN navigation</button></div><div class="content"><section class="search-results panel" id="search-results" aria-live="polite" hidden></section><header class="research-hero"><div class="eyebrow">RSI RESEARCH DOSSIER / {idx+1:02d}</div><p class="research-en">{html.escape(p['en'])}</p><h1>{title}</h1><p class="lead">{html.escape(p['lead'])}</p><div class="hero-meta"><span>更新 {DATE}</span><span>来源可追踪</span><span>提案尚待实验</span></div></header>{''.join(body_parts)}<nav class="page-pagination" aria-label="专题翻页">{previous}{following}</nav></div><footer class="footer">RSI × 自主学习研究 · {DATE} · <a href="references.html">来源与核验口径</a> · <a href="research-notes.md" download>研究笔记</a><br>文献结论、研究推断和实验计划分别标注；未运行实验，不展示模拟结果。</footer></main></div><script src="../data.js"></script><script src="research.js"></script></body></html>'''
+<body data-rsi-page="{slug}"><a class="skip-link" href="#research-main">跳转到正文</a><div class="layout"><aside class="sidebar" id="sidebar"><button class="sidebar-close" id="sidebar-close" aria-label="关闭目录">×</button><a class="brand" href="../index.html"><span class="logo">AE</span><span><strong>Agent Self-Evolution</strong><span>Research Observatory</span></span></a><nav class="nav" id="research-nav" aria-label="研究站目录"><a class="nav-level2" href="../index.html">研究站首页</a><details class="nav-group" open><summary class="nav-level1">RSI × 自主学习研究</summary><div class="nav-children">{nav}</div></details></nav><div class="page-toc"><div class="toc-title">本页目录</div><nav class="toc-links">{''.join(toc)}</nav></div><div class="sidebar-note">证据综述与待验证假设分开。<br>核验日期：{DATE}<br>本专题详文为中文，保留英文术语与原始文献标题。</div></aside><button class="sidebar-overlay" id="sidebar-overlay" aria-label="关闭目录遮罩" hidden></button><main class="main" id="research-main"><div class="topbar"><button class="mobile-toggle" id="menu-toggle" aria-label="打开目录" aria-controls="sidebar" aria-expanded="false">☰</button><div class="search"><label class="sr-only" for="research-search">搜索本专题的章节与来源</label><input id="research-search" type="search" placeholder="搜索本专题：课程、帮助、Meta-reset、论文名…" autocomplete="off"></div><button class="language-toggle" id="nav-language" title="只切换目录语言；研究详文为中文">EN navigation</button></div><div class="content"><section class="search-results panel" id="search-results" aria-live="polite" hidden></section><header class="research-hero"><div class="eyebrow">RSI RESEARCH DOSSIER / {idx+1:02d}</div><p class="research-en">{html.escape(p['en'])}</p><h1>{title}</h1><p class="lead">{html.escape(p['lead'])}</p><div class="hero-meta"><span>更新 {page_date}</span><span>来源可追踪</span><span>提案尚待实验</span></div></header>{''.join(body_parts)}<nav class="page-pagination" aria-label="专题翻页">{previous}{following}</nav></div><footer class="footer">RSI × 自主学习研究 · {page_date} · <a href="references.html">来源与核验口径</a> · <a href="research-notes.md" download>研究笔记</a><br>文献结论、研究推断和实验计划分别标注；未运行实验，不展示模拟结果。</footer></main></div><script src="../data.js"></script><script src="research.js"></script></body></html>'''
         (OUT / (slug + '.html')).write_text(doc, encoding='utf-8')
     # Save public, portable research records; authoring Python remains outside public output.
     metadata = {'review_date':DATE,'scope':'RSI、学习型改进器、相邻领域与学习科学；定向证据地图，非穷尽性综述。','sources':sources}

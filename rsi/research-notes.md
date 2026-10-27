@@ -8,9 +8,9 @@
 
 <div class="decision"><span class="kicker">RESEARCH POSITION · 2026.10</span><h3>优先检验：帮助是否转化为可保留的独立能力？</h3><p>建议把主线收敛为<strong>跨多轮学习的支持获取、撤除与能力巩固</strong>。相邻备选是<strong>学习者响应建模</strong>：预测某种学习干预对未来多项能力的作用，而不只预测眼前补丁是否通过。</p><p>这是本轮调研后的<strong>研究建议，不是已确认的新颖性或实验结果</strong>。先做短程与长程目标的辨别实验，再决定是否训练完整元策略。</p></div><p>近期近邻已相当具体：ActiveSaddler 覆盖失败驱动课程；SOAR 用真实学习收益训练出题者；前瞻课程工作考虑下游迁移；EduardoRL 已区分帮助完成与学习收益。不能把这些笼统概念单独当创新。<a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S17" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S17]</a><a class="cite" href="references.html#S18" title="Anticipating the Consequences of Curriculum Decisions with Large Language Models">[S18]</a><a class="cite" href="references.html#S19" title="The Assistance Dilemma: Learning to Teach via Multi-Turn Reinforcement Learning">[S19]</a></p>
 
-## RSI × 自主学习研究 / 八个研究页面：证据 → 机制来源 → 方法设计 → 实验
+## RSI × 自主学习研究 / 九个研究页面：证据 → 机制来源 → 方法设计 → 实验
 
-<div class="route-grid"><a href="literature.html"><b>01 · RSI 文献与竞争边界</b><span>修改什么、学习什么、什么已经有人做。</span></a><a href="cross-domain.html"><b>02 · 相邻领域的方法迁移</b><span>元学习、课程、知识追踪、双重控制、持续学习。</span></a><a href="learning-science.html"><b>03 · 教育学与学习科学</b><span>来源支持什么，哪些机制不能直接照搬给机器。</span></a><a href="ideas.html"><b>04 · 四个候选 Idea</b><span>框架、最近邻、强基线、首轮实验与否定条件。</span></a><a href="teaching.html"><b>05 · I5 教学反馈自进化</b><span>详细机制、学生独立执行、归因矩阵、算法伪代码、两周预实验与否定条件。</span></a><a href="experiments.html"><b>06 · 实验执行方案</b><span>模型、环境、持久更新、数据隔离与元能力重置测试。</span></a><a href="references.html"><b>07 · 来源与核验记录</b><span>51 条论文/官方资源，区分正文、摘要和资源核对。</span></a></div>
+<div class="route-grid"><a href="literature.html"><b>01 · RSI 文献与竞争边界</b><span>修改什么、学习什么、什么已经有人做。</span></a><a href="reading-cards.html"><b>02 · 论文精读卡片</b><span>长期积累：一眼记住论文问题、机制、证据与对我们的启发。</span></a><a href="cross-domain.html"><b>03 · 相邻领域的方法迁移</b><span>元学习、课程、知识追踪、双重控制、持续学习。</span></a><a href="learning-science.html"><b>04 · 教育学与学习科学</b><span>来源支持什么，哪些机制不能直接照搬给机器。</span></a><a href="ideas.html"><b>05 · 四个候选 Idea</b><span>框架、最近邻、强基线、首轮实验与否定条件。</span></a><a href="teaching.html"><b>06 · I5 教学反馈自进化</b><span>详细机制、学生独立执行、归因矩阵、算法伪代码、两周预实验与否定条件。</span></a><a href="experiments.html"><b>07 · 实验执行方案</b><span>模型、环境、持久更新、数据隔离与元能力重置测试。</span></a><a href="references.html"><b>08 · 来源与核验记录</b><span>51 条论文/官方资源，区分正文、摘要和资源核对。</span></a></div>
 
 ## RSI × 自主学习研究 / 必须分开的三个研究主张
 
@@ -43,6 +43,44 @@
 ## RSI 文献与竞争边界 / 对前面对话方案的收敛
 
 <p><strong>保留：</strong>研究整个改进过程，利用充足算力做同版本分叉；同时评价跨任务、跨模型和长期退化。</p><p><strong>收窄：</strong>训练元控制器、主动选择失败、预测修改收益均有强近邻，须落到明确动作空间与延迟目标，不能单靠模块组合。</p><p><strong>纠正：</strong>公开仓库存在不等于复现通过；不同论文修订的数字不混用；当前 τ-bench 仓库不能直接视为历史 τ² 固定设置。<a class="cite" href="references.html#S10" title="RRSI: Regularized Recursive Self-Improvement of Agent Harnesses">[S10]</a><a class="cite" href="references.html#B02" title="τ-bench / τ²-bench：官方仓库与版本化评测协议">[B02]</a></p><div class="note">本轮没有给任何候选颁发“新颖性通过”。下一阶段应逐节对照最近邻并实际复现，不能因为标题中没有某个词就断言研究空白。</div>
+
+## 论文精读卡片 / 阅读卡片：看完论文以后应该记住什么
+
+<p>这是长期积累的<strong>论文阅读卡库</strong>，和覆盖面广的文献综述分开。每篇用一句话抓住核心问题，再看机制、关键公式、证据和可以迁移的实验；“作者报告”不代表我们已经复现。</p><div class="status-strip"><span>精读记录与后续设想分开</span><span>优先保留机制而不是堆摘要</span><span>有新论文直接追加结构化记录</span></div>
+
+## 论文精读卡片 / 论文卡片库 · 1 篇
+
+<div class="reading-tools"><label for="reading-card-filter">搜索卡片（标题、方法、机制、标签）</label><input type="search" id="reading-card-filter" placeholder="例如：R²Orch、撤回、Curriculum、I5" autocomplete="off"><span id="reading-card-count" aria-live="polite"></span></div><div class="reading-grid"><article class="reading-card" id="r2orch-2610-22740" data-paper-tags="RSI|Self-Play|Curriculum|Skill Lifecycle">
+  <div class="reading-card-head">
+    <div class="reading-metadata"><span class="reading-paper-id">R²Orch</span><span>arXiv:2610.22740</span><span>精读 2026-10-27</span></div>
+    <h3>R²Orch</h3>
+    <p class="reading-full-title">R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop</p>
+    <div class="reading-tags"><span class="reading-tag">RSI</span><span class="reading-tag">Self-Play</span><span class="reading-tag">Curriculum</span><span class="reading-tag">Skill Lifecycle</span></div>
+  </div>
+  <p class="reading-one-sentence">任务要按“撤掉 Skill 后还能不能学”来挑；Skill 要靠同题随机对照判断是否真的不再需要。</p>
+  <dl class="reading-overview">
+    <div><dt>它解决什么问题</dt><dd>以有 Skill 时的成功率选题，撤掉 Skill 后可能全错，GRPO 失去成败差异；仅凭整体成功率也分不清模型变强还是 Skill 仍有帮助。</dd></div>
+    <div><dt>它怎么做</dt><dd>Proposer 选训练任务；Director 学习构建 Agent Graph；Workers 冻结。每个任务 5 条 Rollout，随机 3 条隐藏候选 Skill、2 条保留。</dd></div>
+    <div><dt>到底更新了什么</dt><dd>真正通过 GRPO 更新的是 Director 和 Proposer 的 LoRA 参数；Skill 是外部提示文本，由 LLM Editor 修订、试用、撤回。随机隐藏只是训练时拿掉某一条 Skill 的上下文输入，并不撤销模型已经学到的参数；其余 Skill 可以仍然在场。</dd></div>
+    <div><dt>和我们有什么关系</dt><dd>对 I5 的十模型共进化：将“选下一道题”对应为“选下一位教学伙伴”，但不能直接用交互成功率替代学习后的独立能力提升。</dd></div>
+  </dl>
+  <details class="reading-expand">
+    <summary>展开公式、实验证据与可迁移机制</summary>
+    <div class="reading-expanded-content">
+      <div class="reading-source-line"><b>作者</b> Mingda Zhang et al. · <b>首发</b> 2026-10-15 · <b>版本</b> v2 · 2026-10-22 · <b>阅读范围</b> Method §4.2–4.3 + Appendix A.2/A.3/A.7 精读；尚未独立复现</div>
+      <h4>核心机制 · 记住这几个公式</h4><ol class="reading-mechanisms"><li><b>Recursive Learnability</b><p>KL 约束的局部策略改进与二值结果方差相关。用撤掉候选 Skill 后的成功率 p⁻ 而非有 Skill 时的 p⁺ 选择任务。</p><code class="reading-formula">L_rec(x) = 4 p⁻(1 − p⁻)</code></li><li><b>随机隐藏对比</b><p>固定任务与当前策略，随机分配隐藏/保留 Skill；两组成功率之差估计该 Skill 的剩余贡献，避免把任务难度和 Skill 效果混在一起。</p><code class="reading-formula">zₓ = mean(y_visible) − mean(y_hidden)</code></li><li><b>后验撤回与回测</b><p>为每个 Skill 累积对照记录，用 Dirichlet 加权的 Bayesian Bootstrap 估计平均贡献；仅当预期正向贡献足够低才撤回，之后仍定期回测。</p><code class="reading-formula">withdraw iff nₖ ≥ 12 and E[max(Δₖ,0) | data] ≤ 0.02</code></li></ol>
+      <h4>实验证据（作者报告，未复现）</h4><ul><li>论文在 12 个 IID/OOD 数据集报告多领域结果；AIME 2026：81.33%（PATS 74.00%），SWE-Bench：42.81%（PATS 40.16%）。</li><li>在 AIME 2026 的消融中，去掉 Recursive Learnability 后为 70.67%，换成固定 Skill 库后为 66.67%（完整方法 81.33%）。</li></ul>
+      <h4>限制与易错理解</h4><ul><li>L_rec 衡量小 KL 更新下的局部结果方差，不等于未来真实学习增益；冻结 Worker 的随机性也会制造结果方差。</li><li>对照无偏性依赖固定任务/策略、随机分配和无干扰；记录在自适应选题与持续更新下会发生分布漂移。</li><li>无 Skill 部署指不提供外部 Skill 文本，仍可调用冻结 Workers 和 Agent Graph；Proposer 主要从候选题库选题。</li></ul>
+      <h4>对我们 RSI / I5 的启发</h4><ul><li>对 I5 的十模型共进化：将“选下一道题”对应为“选下一位教学伙伴”，但不能直接用交互成功率替代学习后的独立能力提升。</li><li>可复用 3/2 随机对照 + 后验决策的思路；实际迁移时应从同一学习者检查点分叉，等预算训练后在独立测试集比较无教师增益。</li><li>把“辅助撤离”作为实验协议：验证 Skill/教师何时已不再贡献新收益，而不是只报告当前任务正确率。</li></ul>
+      <div class="reading-next"><b>下一步最值得做的辨别实验</b><p>在同一学生检查点上，比较不同教师、随机教师和无教师的等预算学习；以撤掉教师后的 held-out ΔAcc 与负迁移率，检验 L_rec 是否优于直接学习增益。</p></div>
+    </div>
+  </details>
+  <div class="links reading-links"><a class="link-btn" href="#r2orch-2610-22740" aria-label="复制或保存此卡片的锚点链接">卡片定位</a><a class="link-btn" href="https://arxiv.org/html/2610.22740v2" target="_blank" rel="noopener noreferrer">论文 HTML</a><a class="link-btn" href="https://arxiv.org/pdf/2610.22740" target="_blank" rel="noopener noreferrer">PDF</a><a class="link-btn" href="https://github.com/beita6969/R2Orch" target="_blank" rel="noopener noreferrer">GitHub 代码</a></div>
+</article></div><p class="reading-empty" id="reading-empty" hidden>没有匹配的论文；清空搜索可以查看全部。</p><div class="links"><a class="link-btn" href="reading-cards.json" download>下载阅读卡片 JSON（可复用）</a></div>
+
+## 论文精读卡片 / 下一篇论文如何进入卡片库
+
+<p>在 <code>rsi/reading-cards.json</code> 的 <code>papers</code> 数组中追加新条目，保持唯一的 <code>id</code>、原文链接、阅读版本与日期，并分别填写<strong>问题—机制—证据—局限—我们的启发</strong>。运行 <code>python3 scripts/build_rsi_research.py</code> 即可刷新卡片页、左侧目录和站内搜索索引。</p><p>避免把阅读后的研究想法写成原论文已证实的结论；对照实验、随机化假设与复现状态必须可追溯。</p>
 
 ## 从相邻领域迁移方法 / 六条方法桥接路线
 

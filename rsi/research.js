@@ -95,6 +95,27 @@
       indexPromise = null;
     }
   });
+  // Local, progressive-enhancement filter for the reusable paper reading-card library.
+  const readingFilter = $('#reading-card-filter');
+  if (readingFilter) {
+    const cards = [...root.querySelectorAll('.reading-card')];
+    const readingCount = $('#reading-card-count');
+    const readingEmpty = $('#reading-empty');
+    const refreshReadingCards = () => {
+      const terms = readingFilter.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+      let shown = 0;
+      cards.forEach((card) => {
+        const content = card.textContent.toLocaleLowerCase();
+        const visible = terms.every((term) => content.includes(term));
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      });
+      readingCount.textContent = '显示 ' + shown + ' / ' + cards.length + ' 篇';
+      readingEmpty.hidden = shown !== 0;
+    };
+    readingFilter.addEventListener('input', refreshReadingCards);
+    refreshReadingCards();
+  }
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       const active = entries.filter((e) => e.isIntersecting).sort((a,b) => a.boundingClientRect.top-b.boundingClientRect.top)[0];

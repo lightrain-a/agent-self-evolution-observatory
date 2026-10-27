@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "updated": "2026-10-27",
+  "description": "RSI 精读论文卡片的唯一数据源。新增论文只追加 papers 条目，并运行 python3 scripts/build_rsi_research.py。",
+  "papers": [
+    {
+      "id": "r2orch-2610-22740",
+      "short_title": "R²Orch",
+      "title": "R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop",
+      "authors": "Mingda Zhang et al.",
+      "arxiv": "2610.22740",
+      "first_posted": "2026-10-15",
+      "version": "v2 · 2026-10-22",
+      "read_on": "2026-10-27",
+      "reading_level": "Method §4.2–4.3 + Appendix A.2/A.3/A.7 精读；尚未独立复现",
+      "tags": [
+        "RSI",
+        "Self-Play",
+        "Curriculum",
+        "Skill Lifecycle"
+      ],
+      "one_sentence": "任务要按“撤掉 Skill 后还能不能学”来挑；Skill 要靠同题随机对照判断是否真的不再需要。",
+      "problem": "以有 Skill 时的成功率选题，撤掉 Skill 后可能全错，GRPO 失去成败差异；仅凭整体成功率也分不清模型变强还是 Skill 仍有帮助。",
+      "setup": "Proposer 选训练任务；Director 学习构建 Agent Graph；Workers 冻结。每个任务 5 条 Rollout，随机 3 条隐藏候选 Skill、2 条保留。",
+      "updates": "真正通过 GRPO 更新的是 Director 和 Proposer 的 LoRA 参数；Skill 是外部提示文本，由 LLM Editor 修订、试用、撤回。随机隐藏只是训练时拿掉某一条 Skill 的上下文输入，并不撤销模型已经学到的参数；其余 Skill 可以仍然在场。",
+
+      "key_ideas": [
+        {
+          "name": "Recursive Learnability",
+          "summary": "KL 约束的局部策略改进与二值结果方差相关。用撤掉候选 Skill 后的成功率 p⁻ 而非有 Skill 时的 p⁺ 选择任务。",
+          "formula": "L_rec(x) = 4 p⁻(1 − p⁻)"
+        },
+        {
+          "name": "随机隐藏对比",
+          "summary": "固定任务与当前策略，随机分配隐藏/保留 Skill；两组成功率之差估计该 Skill 的剩余贡献，避免把任务难度和 Skill 效果混在一起。",
+          "formula": "zₓ = mean(y_visible) − mean(y_hidden)"
+        },
+        {
+          "name": "后验撤回与回测",
+          "summary": "为每个 Skill 累积对照记录，用 Dirichlet 加权的 Bayesian Bootstrap 估计平均贡献；仅当预期正向贡献足够低才撤回，之后仍定期回测。",
+          "formula": "withdraw iff nₖ ≥ 12 and E[max(Δₖ,0) | data] ≤ 0.02"
+        }
+      ],
+      "evidence": [
+        "论文在 12 个 IID/OOD 数据集报告多领域结果；AIME 2026：81.33%（PATS 74.00%），SWE-Bench：42.81%（PATS 40.16%）。",
+        "在 AIME 2026 的消融中，去掉 Recursive Learnability 后为 70.67%，换成固定 Skill 库后为 66.67%（完整方法 81.33%）。"
+      ],
+      "boundaries": [
+        "L_rec 衡量小 KL 更新下的局部结果方差，不等于未来真实学习增益；冻结 Worker 的随机性也会制造结果方差。",
+        "对照无偏性依赖固定任务/策略、随机分配和无干扰；记录在自适应选题与持续更新下会发生分布漂移。",
+        "无 Skill 部署指不提供外部 Skill 文本，仍可调用冻结 Workers 和 Agent Graph；Proposer 主要从候选题库选题。"
+      ],
+      "our_relevance": [
+        "对 I5 的十模型共进化：将“选下一道题”对应为“选下一位教学伙伴”，但不能直接用交互成功率替代学习后的独立能力提升。",
+        "可复用 3/2 随机对照 + 后验决策的思路；实际迁移时应从同一学习者检查点分叉，等预算训练后在独立测试集比较无教师增益。",
+        "把“辅助撤离”作为实验协议：验证 Skill/教师何时已不再贡献新收益，而不是只报告当前任务正确率。"
+      ],
+      "next_test": "在同一学生检查点上，比较不同教师、随机教师和无教师的等预算学习；以撤掉教师后的 held-out ΔAcc 与负迁移率，检验 L_rec 是否优于直接学习增益。",
+      "links": {
+        "html": "https://arxiv.org/html/2610.22740v2",
+        "pdf": "https://arxiv.org/pdf/2610.22740",
+        "code": "https://github.com/beita6969/R2Orch"
+      }
+    }
+  ]
+}
