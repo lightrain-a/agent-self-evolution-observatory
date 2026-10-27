@@ -1,9 +1,46 @@
 PAGE = {
-"slug":"index", "title":"RSI × 自主学习研究", "en":"Learning to improve, not just improving a score", "lead":"把相邻领域的方法与学习科学转成可验证的 Agent 自我改进机制：先明确重复在哪里，再设计能够区分不同解释的实验。",
+"slug":"index", "title":"RSI × 自主学习研究", "en":"How an agent learns to learn · five education-inspired ideas",
+"lead":"把教育学中关于指导、学习方式、复习、失败和同伴的机制，变成五个能在 RSI 中独立检验的问题。先讲清楚和现有论文有什么不同，再决定怎样做实验。",
+"updated":"2026-10-27",
 "sections":[
-("decision","本轮判断：先研究“怎样学会”，而不是再造一个大框架",'''<div class="decision"><span class="kicker">RESEARCH POSITION · 2026.10</span><h3>优先检验：帮助是否转化为可保留的独立能力？</h3><p>建议把主线收敛为<strong>跨多轮学习的支持获取、撤除与能力巩固</strong>。相邻备选是<strong>学习者响应建模</strong>：预测某种学习干预对未来多项能力的作用，而不只预测眼前补丁是否通过。</p><p>这是本轮调研后的<strong>研究建议，不是已确认的新颖性或实验结果</strong>。先做短程与长程目标的辨别实验，再决定是否训练完整元策略。</p></div><p>近期近邻已相当具体：ActiveSaddler 覆盖失败驱动课程；SOAR 用真实学习收益训练出题者；前瞻课程工作考虑下游迁移；EduardoRL 已区分帮助完成与学习收益。不能把这些笼统概念单独当创新。[[S16]][[S17]][[S18]][[S19]]</p>'''),
-("reading","十个研究页面：时间轴 → 证据 → 方法 → 实验",'''<div class="route-grid"><a href="timeline.html"><b>01 · RSI 研究时间轴</b><span>CVPR / ICML / ACL DDL、精读卡片与研究记录。</span></a><a href="literature.html"><b>02 · RSI 文献与竞争边界</b><span>修改什么、学习什么、什么已经有人做。</span></a><a href="reading-cards.html"><b>03 · 论文精读卡片</b><span>长期积累：一眼记住论文问题、机制、证据与对我们的启发。</span></a><a href="cross-domain.html"><b>04 · 相邻领域的方法迁移</b><span>元学习、课程、知识追踪、双重控制、持续学习。</span></a><a href="learning-science.html"><b>05 · 教育学与学习科学</b><span>来源支持什么，哪些机制不能直接照搬给机器。</span></a><a href="ideas.html"><b>06 · 四个候选 Idea</b><span>框架、最近邻、强基线、首轮实验与否定条件。</span></a><a href="teaching.html"><b>07 · I5 教学反馈自进化</b><span>详细机制、学生独立执行、归因矩阵、算法伪代码、两周预实验与否定条件。</span></a><a href="experiments.html"><b>08 · 实验执行方案</b><span>模型、环境、持久更新、数据隔离与元能力重置测试。</span></a><a href="references.html"><b>09 · 来源与核验记录</b><span>[[SOURCE_COUNT]] 条论文/官方资源，区分正文、摘要和资源核对。</span></a></div>'''),
-("claims","必须分开的三个研究主张",'''<div class="table-wrap"><table><thead><tr><th>主张</th><th>应观察什么</th><th>不能据什么下结论</th></tr></thead><tbody><tr><td>任务完成得更好</td><td>当前环境的正确率、成功率或执行质量。</td><td>提示更长、教师直接给步骤后得分上涨。</td></tr><tr><td>系统获得持久改进</td><td>新会话只带允许保留的技能、记忆或参数，在新任务上仍有收益。</td><td>刚完成任务的答案还在上下文。</td></tr><tr><td>系统更会自我改进</td><td>保留学到的元策略，重置底层学习者；在未见任务族上以相同预算学得更好。</td><td>第八代 Agent 比第一代强，就称改进器变强。</td></tr></tbody></table></div><p>这些是本专题的操作性检验。元学习和自适应权重更新分别有 RL²、SEAL 等基础；不自动构成无边界、完全自主的 RSI。[[M02]][[S04]]</p><div class="note">固定外部审计器可以与改进器学习并存。没必要为了使用 RSI 名称而让系统修改最终评分标准。应明确递归深度、可编辑对象和不参与学习的参照。</div>'''),
-("method","从教育学或其他领域得到 Idea 的工作流",'''<ol class="research-steps"><li><b>找矛盾，而非找比喻。</b>例如帮助使当下成功率上升，但新会话独立表现不升；同难度的题产生不同学习增益。</li><li><b>找可迁移机制。</b>支持撤除、可学性估计、信息价值、抗干扰重放各改变什么变量？</li><li><b>定义持久载体。</b>能力写入参数、技能文件、记忆条目，还是只存在于上下文？</li><li><b>找最简单的替代解释。</b>通用预测器、bandit、普通重放与强提示必须得到同样的数据与预算。</li><li><b>做最小辨别实验。</b>先确定现象在自然失败中存在，再投入大规模 RL。</li><li><b>按结果缩小主张。</b>固定策略足够就不称元策略学习；只有同模板收益就不称跨能力泛化。</li></ol>'''),
-("scope","本专题边界与旧站关系",'''<p>本次是针对选题的<strong>定向、可追踪综述</strong>，不是声称收齐全部 RSI 工作的系统综述。覆盖自修改、学习型 Harness、课程与元学习、学习科学、实验资源；主要依赖原论文、作者机构和官方仓库。逐项阅读深度见来源页。</p><p>新增 <a href="teaching.html"><b>I5：教学反馈驱动教师自改进</b></a>，把学生独立执行、反事实归因、教师可回滚更新与 Meta-reset 明确为可执行实验，不将师生对话本身称作创新。</p><p>原站的 <a href="https://agent-evolution.lightrain.asia/paper-ideas.html">论文 Idea 实验室</a>与<a href="https://agent-evolution.lightrain.asia/selected-paper.html">已选方向</a>保留不变。旧记录已有 Delayed Regression Exams、Regression-Probe Half-Life 等提案。本轮不把“增加延迟考试”重新包装成新 idea；新候选须改变<strong>学习干预本身</strong>。</p><div class="status-strip"><b>当前状态</b><span>文献与方案已整理</span><span>环境运行验证待做</span><span>候选均未通过实验门槛</span><span>未宣称独立专家评审通过</span></div>''')]
+("decision","当前研究池：I1–I5 五个问题",'''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
+<div class="idea-board">
+<a class="idea-board-card" href="ideas.html#idea-1"><span class="idea-id">I1 · 脚手架学习</span><b>哪些该自己学会，哪些用时再查？</b></a>
+<a class="idea-board-card" href="ideas.html#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，怎么选适合自己的学习方法？</b></a>
+<a class="idea-board-card" href="ideas.html#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用却伤了旧能力，怎么办？</b></a>
+<a class="idea-board-card" href="ideas.html#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b></a>
+<a class="idea-board-card" href="ideas.html#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b></a>
+</div>
+<p>每个方向都写了<strong>最近邻研究的是……；我们希望研究的是……</strong>，以及最小验证实验。当前只是研究提案，不是实验结论或首次性证明。<a href="ideas.html">进入 I1–I5 完整卡片 →</a></p>
+<p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
+("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
+<a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
+<a href="ideas.html"><b>I1–I5 五个方向</b><span>一句人话、最近邻差异、方法草案、最小辨别实验。</span></a>
+<a href="literature.html"><b>RSI 文献与竞争边界</b><span>改什么、如何改，哪些研究已进入元层自进化。</span></a>
+<a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>
+<a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
+<a href="cross-domain.html"><b>相邻领域方法</b><span>元学习、课程、知识追踪、双重控制与持续学习。</span></a>
+<a href="learning-science.html"><b>教育学与学习科学</b><span>哪些教育学机制有实证支持，哪些迁移仍是猜想。</span></a>
+<a href="teaching.html"><b>教学反馈诊断 · I5 支线</b><span>此前“学生反馈能否暴露教师盲点”的详细实验草案，保留供比较。</span></a>
+<a href="experiments.html"><b>实验执行方案</b><span>版本控制、持久更新、数据隔离与元学习评估。</span></a>
+<a href="references.html"><b>来源与核验记录</b><span>[[SOURCE_COUNT]] 条论文和官方资源，保留原始链接与阅读深度。</span></a></div>'''),
+("claims","必须分开的三个研究主张",'''<div class="table-wrap"><table><thead><tr><th>主张</th><th>应观察什么</th><th>不能据什么下结论</th></tr></thead><tbody>
+<tr><td>眼前任务做得更好</td><td>有人帮忙、提示或额外执行后的成功率。</td><td>当前题目答对，就说自己学会。</td></tr>
+<tr><td>Agent 获得了持久能力</td><td>只保留版本化 Skill / Memory / Harness / 参数，清空临时上下文，在新任务上仍进步。</td><td>答案、同伴或教师仍在上下文里。</td></tr>
+<tr><td>Agent 更会自我改进</td><td>保留学到的学习策略，重置任务 Agent，在新的任务流中能否更快改进。</td><td>迭代次数更多、模型更大或训练预算更多。</td></tr>
+</tbody></table></div>
+<p>只要设计了循环，就能叫自我迭代，但<strong>要声称“递归地改进改进器”还需要额外证据</strong>。如 MetaSkill-Evolve 已研究元技能进化，不能再把“有两个循环”本身作为创新。[[S06]]</p>
+<div class="note">独立评测必须固定并与训练数据隔离；能力提升不会自动扩大 Agent 的真实工具权限。即便改进器学习，安全审计仍应独立。</div>'''),
+("method","从教育学概念到论文问题，怎么做？",'''<ol class="research-steps">
+<li><b>先说一个生活中的具体例子。</b>例如为什么新 Skill 影响旧 Skill，或为何同样 Bug 有人看示范就会、有人不会。</li>
+<li><b>说清最近邻研究了什么。</b>不能因为前人没用“费曼”“温故知新”这些词，就认定没人研究机制。</li>
+<li><b>问一个更具体的差异。</b>别人研究哪个失败值得修，我们研究失败后下一次试验何时该做、什么时候可以归纳。</li>
+<li><b>定义 Agent 真的学到了什么。</b>明确 Skill / Memory / Harness / 权重的可持久写入与回滚。</li>
+<li><b>先做最小对照。</b>同预算比较固定简单策略与我们的方法，排除更多尝试、更多 token、外部答案泄漏。</li>
+<li><b>再检验长期进步。</b>连续多轮、新任务、旧能力回归，最后才评价改进策略本身有没有变好。</li>
+</ol>'''),
+("scope","网站范围、历史方案与证据状态",'''<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：I5 主线为“按自身学习增益动态选择伙伴”。</p>
+<p><a href="teaching.html">I5 教学反馈诊断</a>作为此前的独立技术支线保留：研究学生的误解能否暴露教师的隐性缺陷。这个实验与“动态伙伴选择”可以共享学生评估基础设施，但不是同一个问题。</p>
+<p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
+<div class="status-strip"><b>截至 2026-10-27</b><span>五条问题已细化</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]
 }

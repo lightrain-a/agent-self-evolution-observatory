@@ -4,11 +4,12 @@ Everything below is a proposed mechanism and preregistration skeleton, not measu
 """
 PAGE = {
  "slug": "teaching",
- "title": "I5 · 教学反馈驱动的 Agent 自我进化",
+ "title": "教学反馈诊断 · I5 的早期研究支线",
  "en": "Teacher-targeted recursive feedback · detailed method & falsification plan",
- "lead": "从学生独立执行引出的追问与误用中，识别教师自己的隐性知识盲点；通过受控验证与版本化更新证明教师能力是否真正改善。",
+ "lead": "保留此前讨论的教学反馈诊断方案：学生的疑问能否暴露教师自己的盲点？I5 当前主线已进一步细化为动态学习伙伴选择，见五方向总览。",
  "sections": [
  ("position","研究目标：更新教师，而不是帮学生提高分数", '''
+ <p class="status">历史研究支线（2026-10-21）；当前 I5 主线是<a href="ideas.html#idea-5">按自身学习增益动态选择伙伴</a>。此页作为“学生反馈诊断教师盲点”实验方案保留，不等同于当前 I5 主线。</p>
  <div class="decision"><span class="kicker">CANDIDATE I5 · PRE-EXPERIMENT DESIGN</span>
  <h3>Learner-Induced Blindspot Discovery for Recursive Agent Self-Improvement</h3>
  <p>核心假设：学生在<strong>独立使用</strong>教师教出的经验时，会暴露一些教师自己执行任务或自我反思时没有发现的隐藏前提、例外条件和错误泛化。这些差异如果能被<strong>独立执行证据</strong>确认，就可能成为教师技能、Harness 或参数更新的有效学习信号。</p>

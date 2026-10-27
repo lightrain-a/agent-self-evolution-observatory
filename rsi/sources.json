@@ -1,5 +1,5 @@
 {
-  "review_date": "2026-10-21",
+  "review_date": "2026-10-27",
   "scope": "RSI、学习型改进器、相邻领域与学习科学；定向证据地图，非穷尽性综述。",
   "sources": [
     {
@@ -511,6 +511,96 @@
       "level": "官方 README 与实验切分核对",
       "note": "官方 train / dev / test_normal / test_challenge 严格隔离；后两者只能用于冻结终评，不得按任务反馈修改教学方法。",
       "code": "https://github.com/StonyBrookNLP/appworld"
+    },
+    {
+      "id": "S26",
+      "group": "RSI",
+      "title": "R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/abs/2610.22740",
+      "level": "原始摘要核对；2026-10-27",
+      "note": "通过自博弈将经验蒸馏为技能再内化进参数；以撤掉技能后效果是否保持决定 Skill Withdrawal。I1 研究何时该内化、何时保留外部支持。",
+      "code": ""
+    },
+    {
+      "id": "S27",
+      "group": "RSI",
+      "title": "PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.21419",
+      "level": "正文方法核对；2026-10-27",
+      "note": "针对当前策略调整训练时支架，冗余时压缩或撤除，部署时不保留支架。I1 不能把随能力渐隐提示当成首次提出。",
+      "code": "https://github.com/shi-yipeng/PATS"
+    },
+    {
+      "id": "S28",
+      "group": "RSI",
+      "title": "RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/abs/2610.21791",
+      "level": "原始摘要核对；2026-10-27",
+      "note": "依据任务轨迹和反馈诊断瓶颈，选择模型、Harness 或产物更新流程，并改进 Meta-Agent。I2 需聚焦同一更新对象内部的学习方法反应。",
+      "code": "https://github.com/1HUAN1/RSI-Flow"
+    },
+    {
+      "id": "S29",
+      "group": "RSI",
+      "title": "Harness Continual Learning: Continual Adaptation Beyond Model Parameters",
+      "date": "arXiv 26.08",
+      "url": "https://arxiv.org/abs/2608.19013",
+      "level": "原始摘要核对；2026-10-27",
+      "note": "Harness 更新前检查新进步、历史保持和有效性，提出 harness-level forgetting。I3 应区分主动冲突巩固与事后守门。",
+      "code": ""
+    },
+    {
+      "id": "S30",
+      "group": "RSI",
+      "title": "Rethinking Self-Evolution: A Constrained Exploration-Exploitation Process for Mitigating Skill Overfitting (SkillBoost)",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.26643",
+      "level": "原始摘要核对；2026-10-27",
+      "note": "结合结构化故障定位、候选探索与回归约束决定是否接受 Skill 修改。I3 研究保留有用新更新时怎样定向修复旧技能冲突。",
+      "code": ""
+    },
+    {
+      "id": "S31",
+      "group": "RSI",
+      "title": "Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills",
+      "date": "EMNLP 2026；arXiv 26.03",
+      "url": "https://aclanthology.org/2026.emnlp-main.758/",
+      "level": "会议摘要核对；2026-10-27",
+      "note": "并行分析多条执行轨迹，归纳为可复用且尽量无冲突的技能。I4 不是再次强调多轨迹，而是决定何时需要追加辨别实验、何时证据足够归纳。",
+      "code": "https://github.com/Qwen-Applications/Trace2Skill"
+    },
+    {
+      "id": "S32",
+      "group": "RSI",
+      "title": "PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play",
+      "date": "arXiv 26.05",
+      "url": "https://arxiv.org/abs/2605.16727",
+      "level": "原始摘要与作者说明核对；2026-10-27",
+      "note": "教师 LoRA 生成任务，匹配学生求解，通过跨群体评估促进共同进化；I5 改问伙伴给我带来的后续独立学习收益。",
+      "code": ""
+    },
+    {
+      "id": "S33",
+      "group": "RSI",
+      "title": "Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)",
+      "date": "arXiv 26.06",
+      "url": "https://arxiv.org/abs/2606.14368",
+      "level": "原始摘要核对；2026-10-27",
+      "note": "两个跨领域互补模型互相教学；通过认知门控决定是否给反馈并以问题锚定反馈。I5 要研究学习伙伴本身的跨阶段选择。",
+      "code": ""
+    },
+    {
+      "id": "S34",
+      "group": "RSI",
+      "title": "Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)",
+      "date": "arXiv 26.07",
+      "url": "https://arxiv.org/abs/2607.11250",
+      "level": "原始摘要核对；2026-10-27",
+      "note": "以结构化同伴选择促进探索和协作任务表现；I5 必须区分当前协作收益与伙伴退出后的独立能力增长，且不与同名记忆方法混淆。",
+      "code": "https://github.com/deeplearning-wisc/mace"
     }
   ]
 }

@@ -45,8 +45,8 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==51,'Expected the audited 51-record source snapshot')
-    check(source['review_date']=='2026-10-21','Review date drift')
+    check(len(refs)==60 and all(f'S{i}' in refs for i in range(26,35)),'Expected the 51-record base plus nine audited I1–I5 sources')
+    check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
     date.fromisoformat(timeline['verified_at'])
@@ -171,6 +171,12 @@ def main():
     check('教学示例' in notes_html and '非论文' in notes_html,
           'Deep-read evidence provenance caveat missing')
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
+    ideas=parsed[ROOT/'rsi/ideas.html']
+    check(all(f'idea-{i}' in ideas.ids for i in range(1,6)),'I1–I5 anchors missing from research board')
+    ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
+    for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
+        check(name in ideas_text,f'Missing nearest-work comparison: {name}')
+    check('交流结束后' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')
