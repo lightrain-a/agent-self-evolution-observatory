@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==95 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,18)) and {'M10','M11','M12','M13','S90'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 citations plus nine I5 Nature and co-learning sources')
+    check(len(refs)==96 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 sources including Pine 2018 and I5 co-learning sources')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -234,8 +234,10 @@ def main():
     i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
     for label in ['Observable Phenomenon','Why','Challenge','Insight','Design','决定性实验','Related Work','预注册判断']:
         check(label in i8_html,'I8 research mechanism structure missing: '+label)
-    for ref in ['E12','E13','E14','E15','S17','S40','S41','S42','S43','S44','M10','M11','M13']:
+    for ref in ['E12','E13','E14','E15','E18','S17','S40','S41','S42','S43','S44','M10','M11','M13']:
         check(f'href="references.html#{ref}"' in i8_html,'I8 reference missing: '+ref)
+    check('语义预测误差' in i8_html and '误导性反馈' in i8_html and '可信反馈门槛' in i8_html,'I8 must retain Pine 2018 prediction-error and misinformation boundary')
+    check('href="references.html#E18"' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8'),'Pine 2018 must be cross-linked from learning science')
     check('id="i8-related-matrix"' in i8_html, 'I8 closest-work comparison table missing')
     for axis in ['研究对象与条件','用什么信号判断','操作与实际评价','与 I8 相同 / 不同之处']:
         check(axis in i8_html,'I8 related-work scientific comparison axis missing: '+axis)

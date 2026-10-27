@@ -793,6 +793,16 @@
       "code": ""
     },
     {
+      "id": "E18",
+      "group": "学习科学",
+      "title": "Knowledge acquisition is governed by striatal prediction errors",
+      "date": "Nature Communications 9, article 1673 (2018)",
+      "url": "https://www.nature.com/articles/s41467-018-03992-5",
+      "level": "Nature Communications 官方全文（方法、结果、误导反馈条件）与 PubMed 书目信息核对；2026-10-27",
+      "note": "Pine 等通过事实知识答题、0–100 置信度、正确/部分错误反馈及一周后复测，发现反馈引出的语义预测误差与后续记忆更新关联，腹侧纹状体等区域编码该信号；错误反馈也能改写原本正确的记忆。支持 I8 将经核验的信念冲突作为候选诊断信号，不证明 LLM 权重更新或跨题规则迁移。",
+      "code": ""
+    },
+    {
       "id": "S45",
       "group": "RSI",
       "title": "SPaCe: Unlocking Sample-Efficient Large Language Models Training With Self-Pace Curriculum Learning",
