@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 sources including Pine 2018 and I5 co-learning sources')
+    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 sources including Pine 2018 and I5 co-learning sources')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -293,6 +293,15 @@ def main():
           'I6 action choices or decisive stopping experiment missing')
     check(all(f'href="references.html#{ref}"' in i6_text for ref in ('E16','E17','S45','S46','S47','S48','S49','M12')),
           'I6 stopping references missing')
+    check('id="nc2021"' in i6_text and 'href="references.html#E19"' in i6_text and 'Same Plateau' in i6_text,
+          'I6 must archive NC 2021 learning-progress evidence and falsifiable deferred revisit test')
+    check('绝对值' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0] and '净能力增益' in ideas_text,
+          'I3 must separate observed LP change from retained net capability gain')
+    check('href="references.html#E19"' in i8_html and 'idea-i6-failure-value.html#nc2021' in i8_html,
+          'I8 must distinguish learning-progress task choice from error-specific transfer')
+    learn_sci=(ROOT/'rsi/learning-science.html').read_text(encoding='utf-8')
+    check('id="learning-progress"' in learn_sci and 'href="references.html#E19"' in learn_sci,
+          'Learning science must include Ten et al. 2021 with primary citation')
     check('先独立尝试' in i7_text and '先看示范' in i7_text and 'I6' in i7_text,
           'Current I7 must isolate learning-order effects')
     check('历史版本' in historical_i6 and f'href="idea-i6-failure-value.html"' in historical_i6,

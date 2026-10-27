@@ -6,7 +6,7 @@ PAGE = {
  "title": "I8 · 哪些错误纠正一次，能让模型学会一类题？",
  "en": "Error Learnability and Transfer · Hypercorrection-inspired mechanism study",
  "lead": "从高置信度错误的反直觉纠正现象出发，区分原题修复与规则级迁移：在实际更新前，判断哪类错误更可能带来跨题净学习收益。",
- "updated": "2026-10-27",
+ "updated": "2026-10-28",
  "sections": [
  ("question","一句话问题与研究定位", '''
  <div class="decision"><span class="kicker">I8 · MECHANISM VALIDATION · 2026-10-27</span>
@@ -52,6 +52,7 @@ PAGE = {
  </div>
  <p><b>Readiness</b> 可以由与最终测试集分离的前置技能探针估计；<b>Rule Scope</b> 可以由规则图、错误在独立变体中复现的频度估计；<b>Update Compatibility</b> 可以由小预算诊断更新或局部学习信号估计，但不能把探针数据、验证数据泄露进最终测试。</p>
  <p><b>Prediction Error 的位置：</b>相对于已有答案与置信度，来自可靠反馈的强烈冲突可以作为待验证的<strong>纠错触发信号</strong>。但它不直接衡量模型能否吸收正确规则，更不直接衡量可以改善多少未见题；错误率、难度或高置信度都不能单独替代真实净迁移收益。[[E18]]</p>
+<p><b>与学习进步课程的区别：</b>Ten 等（2021）把近期正确率及其变化用于解释<strong>下一项学习活动的选择</strong>。[[E19]] I8 则固定纠错方法，预测<strong>一次具体错误被纠正后</strong>，有多少未见同规则题真正改善；因此不能将某个任务近期 LP 较高直接视为该错误具有规则级迁移价值，也不能把“learning progress 数据选择”称作首次提出。相关的停止/重访问题由 <a href="idea-i6-failure-value.html#nc2021">I6</a> 独立研究。</p>
  <p>操作性目标不是简单的三因子乘积。固定模型 <code>θ</code> 和更新算子 <code>u</code> 后，候选错误 <code>e</code> 的价值应由<strong>真实未见题增益 − 旧能力回归 − 更新成本</strong>定义；上述三因素只是待证实的预测解释变量。</p>
  <div class="equation">V(e | θ, u) = E[Δ Unseen-Rule-Accuracy] − λ E[Regression] − μ Update-Cost</div>
  <p><b>为什么可能提前判断：</b>如果已有知识与错误结构在训练前就含有与实际迁移收益相关的信息，我们无需对全部候选做完整权重更新，而可以先筛出少量最值得验证的错误。该推断需要受控实验确认。</p>

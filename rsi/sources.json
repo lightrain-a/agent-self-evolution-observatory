@@ -803,6 +803,16 @@
       "code": ""
     },
     {
+      "id": "E19",
+      "group": "学习科学",
+      "title": "Humans monitor learning progress in curiosity-driven exploration",
+      "date": "Nature Communications 12, 5972 (2021); published 2021-10-13",
+      "url": "https://www.nature.com/articles/s41467-021-26196-w",
+      "level": "Nature Communications 官方研究正文、Figure 1–5 与 Methods（含 PC/LP 定义）核对；2026-10-28",
+      "note": "Ten、Kaushik、Oudeyer、Gottlieb 的 382 人自由活动选择实验（3 项可学习、1 项随机不可学习，250 次自由选择）：显式目标组在随机任务投入 36.92%，无显式目标组为 23.43%；PC 与 LP 联合模型更好拟合选择，LP 使用表现变化绝对值，故能包含退步。该研究是行为关联与模型拟合，不证明 LLM 动态课程新颖，也不证明绝对 LP 可代表持久净能力提升。",
+      "code": ""
+    },
+    {
       "id": "S45",
       "group": "RSI",
       "title": "SPaCe: Unlocking Sample-Efficient Large Language Models Training With Self-Pace Curriculum Learning",

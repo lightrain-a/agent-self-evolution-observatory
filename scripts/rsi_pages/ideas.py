@@ -8,7 +8,7 @@ PAGE = {
  "title": "I1–I8：八个研究问题",
  "en": "I1–I8 · distinguish failure paths, learning order, and rule transfer",
  "lead": "八个想法统一按 Challenge、现有工作、Insight、Design、实验设计展开。I6 比较失败过程价值，I7 研究先试还是先学，I8 研究纠错后的跨题迁移；三个问题单独验证。",
- "updated": "2026-10-27",
+ "updated": "2026-10-28",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
  <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较学习顺序，I8 从知识准备与共同错误规则解释迁移。</p>
@@ -53,7 +53,7 @@ PAGE = {
  <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>有些退化未必是忘记，而是<strong>两个原本都有效的方法，被用在了不适合的场景</strong>。只要找到“什么时候用旧规则、什么时候用新规则”的区别，少量针对这些边界的练习，可能比全部重放旧经验更有效。</p></div>
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>比较修改前后的失败轨迹，找到出现冲突的条件，自动生成少量只改变一个关键条件的练习。用这些例子修订 Skill 的适用范围或选择规则，必要时再对参数做巩固。最终既要会用新方法，也不能丢旧能力。</p>
  <div class="flow"><div><b>发现旧任务退化</b><small>新旧版本对比</small></div><div><b>定位冲突条件</b><small>何时该用哪一条</small></div><div><b>有针对性地复习</b><small>只练容易混淆的场景</small></div><div><b>一起检验新旧能力</b><small>旧题 / 新题 / 组合题</small></div></div></div>
- <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备两套分别有效、合起来容易冲突的 Skill，并加入自然学习中出现的冲突案例。比较<strong>退化即回滚、均匀重放、MIR 风格重放、针对冲突条件复习</strong>；固定复习次数和记忆预算。分别测旧能力保持、新能力增益、组合任务成功率。如果优势只来自存了更多规则或多练了题，就不能归因于我们的复习方法。[[M09]]</p></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备两套分别有效、合起来容易冲突的 Skill，并加入自然学习中出现的冲突案例。比较<strong>退化即回滚、均匀重放、MIR 风格重放、针对冲突条件复习</strong>；固定复习次数和记忆预算。分别测旧能力保持、新能力增益、组合任务成功率。如果优势只来自存了更多规则或多练了题，就不能归因于我们的复习方法。[[M09]]</p><p><b>NC 2021 带来的评测提醒：</b>Ten 等在人类活动选择模型中使用学习表现变化的<strong>绝对值</strong>作为 LP，下降和上升都可能形成高变化信号；检测退步的做法与既有 TSCL/MIR 有关，不是 I3 的新颖性。[[E19]][[M04]] I3 可以额外构造“旧技能退化 → 重练恢复 → 再次退化”的对照轨迹，报告三个不同指标：①近期能力变化绝对值；②真正新增技能的独立收益；③经历其他更新后仍保留的<strong>净能力增益</strong>。若前者很高、后两者趋零，就不能把系统描述为持续变好。这是待验证的 RSI 失败模式，不是 NC 论文已经发现的 LLM 现象。</p></div>
  </div>'''),
  ("idea-4", "I4：生产性失败——失败一次就总结，还是再试几次？", '''
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>API 超时一次，Agent 就总结“这个工具以后别用”，可能学错。什么时候应该继续试，什么时候才值得把经验写进 Skill？</p></div>
