@@ -1,5 +1,5 @@
 {
-  "review_date": "2026-10-27",
+  "review_date": "2026-10-28",
   "scope": "RSI、学习型改进器、相邻领域与学习科学；定向证据地图，非穷尽性综述。",
   "sources": [
     {
@@ -1100,6 +1100,76 @@
       "url": "https://qwenlm.github.io/blog/qwen3/",
       "level": "官方发布页的模型规格核对；训练兼容性和本地资源未验证",
       "note": "确认 Qwen3-1.7B/4B/8B/14B/32B 的公开规格，支持既定五规模×两专长的十模型实验候选；不是最新性能推荐，不代表十模型可以同时装入当前显存。",
+      "code": ""
+    },
+    {
+      "id": "E20",
+      "group": "学习科学",
+      "title": "Interleaved practice enhances memory and problem-solving ability in undergraduate physics",
+      "date": "npj Science of Learning 6, 32 (2021)",
+      "url": "https://www.nature.com/articles/s41539-021-00110-x",
+      "level": "npj 原文结果与讨论核对；2026-10-28",
+      "note": "Samani/Pan；350人8周物理课；集中作业成绩更好但交错组在意外延迟新题测验表现更好。学生认为交错较难、学得更差；正式期中差异不显著，远迁移证据仍有限。",
+      "code": ""
+    },
+    {
+      "id": "E21",
+      "group": "学习科学",
+      "title": "Blocked training facilitates learning of multiple schemas",
+      "date": "Communications Psychology 2, 28 (2024)",
+      "url": "https://www.nature.com/articles/s44271-024-00079-4",
+      "level": "Communications Psychology 原文核对；2026-10-28",
+      "note": "Beukers等比较多规则叙事学习，集中优于交错，早期插入集中优于后期；表征分裂是作者模型解释，不等于已证明LLM权重存在该机制。",
+      "code": ""
+    },
+    {
+      "id": "E22",
+      "group": "学习科学",
+      "title": "Tailoring interleaved practice: Does adaptive sequencing boost the interleaving effect?",
+      "date": "Learning and Individual Differences 124, 102804 (2025)",
+      "url": "https://doi.org/10.1016/j.lindif.2025.102804",
+      "level": "Elsevier 原始正文核对；2026-10-28",
+      "note": "Nemeth等，259人绘画类别学习；随机及按混淆自适应交错均优于集中，自适应相对随机无显著优势；延迟测评有效192人。",
+      "code": ""
+    },
+    {
+      "id": "E23",
+      "group": "学习科学",
+      "title": "Similarity matters: A meta-analysis of interleaved learning and its moderators",
+      "date": "Psychological Bulletin 145(11), 1029–1052 (2019)",
+      "url": "https://doi.org/10.1037/bul0000209",
+      "level": "PubMed元信息与摘要核对；2026-10-28",
+      "note": "Brunmair/Richter元分析59项研究、238效应量，整体交错效应g=0.42；材料类型及类内类间相似度调节，单词材料存在集中优势；仅摘要级核验。",
+      "code": ""
+    },
+    {
+      "id": "E24",
+      "group": "学习科学",
+      "title": "Do large language models learn like humans: Interleaved and spaced practice in morphological learning",
+      "date": "Acta Psychologica 260, 105518 (2025)",
+      "url": "https://doi.org/10.1016/j.actpsy.2025.105518",
+      "level": "Elsevier摘要核对；2026-10-28",
+      "note": "Xiong/Wu比较人类与GPT4mini、DeepSeek_V3和Llama3.1在人工形态语言的示例交错/间隔呈现；模型反应不一致，不能视为真实持续参数更新。",
+      "code": ""
+    },
+    {
+      "id": "M15",
+      "group": "相邻领域",
+      "title": "Beyond Random Sampling: Efficient Language Model Pretraining via Curriculum Learning",
+      "date": "EACL 2026, long 271",
+      "url": "https://aclanthology.org/2026.eacl-long.271/",
+      "level": "ACL Anthology官方摘要核对；2026-10-28",
+      "note": "Zhang等在200余模型上比较预训练数据排序、pace和interleaved curricula；已有LLM交错课程，I9不能声称首次。",
+      "code": ""
+    },
+    {
+      "id": "M16",
+      "group": "相邻领域",
+      "title": "What Makes a Good Curriculum? Disentangling the Effects of Data Ordering on LLM Mathematical Reasoning",
+      "date": "ACL 2026, long 1591",
+      "url": "https://aclanthology.org/2026.acl-long.1591/",
+      "level": "ACL Anthology官方摘要核对；2026-10-28",
+      "note": "Jia等比较数学推理后训练课程；最佳方向依赖模型能力和任务复杂度，但未直接验证跨主题集中/交错状态切换的净收益。",
       "code": ""
     }
   ]

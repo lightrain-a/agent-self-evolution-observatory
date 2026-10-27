@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','teaching','idea-i6','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -197,7 +197,7 @@ def main():
         nav('rsi/ideas.html')
         ordered_links=js("return [...document.querySelectorAll('#research-nav [data-nav-group=research] .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
         numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I')]
-        check(numbers==[f'I{i}' for i in range(1,9)],f'Numbered ideas duplicated or not sorted: {ordered_links}')
+        check(numbers==[f'I{i}' for i in range(1,10)],f'Numbered ideas duplicated or not sorted: {ordered_links}')
         check(not any(item['href'] in ('teaching.html','idea-i6.html') for item in ordered_links),'Historical pages should not compete in the sidebar')
         js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
         time.sleep(.3)
@@ -218,13 +218,13 @@ def main():
         check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='ideas.html'"),
               'Historic I6 archive must not compete with current numbered I6')
         nav('rsi/ideas.html')
-        for idea_number in range(1, 9):
+        for idea_number in range(1, 10):
             steps=js(f"return [...document.querySelector('#idea-{idea_number}').querySelectorAll('.idea-step')].map(e=>({{heading:e.querySelector('h3').textContent.trim(),height:e.getBoundingClientRect().height}}));")
             check(len(steps)==5 and all(s['height']>35 for s in steps),f'I{idea_number} five-stage layout collapsed: {steps}')
             check([s['heading'].split(' ')[0] for s in steps]==['Challenge','现有工作','Insight','Design','实验设计'],f'I{idea_number} argument order wrong')
             check(js(f"return document.querySelectorAll('#idea-{idea_number} .flow>div').length>=4"),
                   f'I{idea_number} missing four-step design diagram')
-        for i,detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html')):
+        for i,detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html')):
             check(js(f"return document.querySelector('#idea-{i} .idea-side-note a[href=\"{detail}\"]')!==null"),
                   f'I{i} full research page link missing')
         js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
@@ -236,8 +236,11 @@ def main():
         js("document.querySelector('#idea-8').scrollIntoView({block:'start'})")
         time.sleep(.5)
         screenshot('idea-i8-five-stage-desktop.png')
+        js("document.querySelector('#idea-9').scrollIntoView({block:'start'})")
+        time.sleep(.5)
+        screenshot('idea-i9-five-stage-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i6','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
@@ -248,6 +251,10 @@ def main():
         check(not js('return document.documentElement.scrollWidth>innerWidth+1'),
               'I7 on mobile must not create horizontal page overflow')
         screenshot('idea-i7-five-stage-mobile.png')
+        nav('rsi/idea-i9-practice-switching.html')
+        check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'I9 detail must fit mobile width')
+        screenshot('idea-i9-detail-mobile.png')
+        nav('rsi/ideas.html')
         js("document.querySelector('#menu-toggle').click()")
         time.sleep(.45)
         check(js("return (()=>{const r=document.querySelector('#sidebar').getBoundingClientRect();return r.right>10 && r.left<innerWidth-10})()"),

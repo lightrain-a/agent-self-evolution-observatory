@@ -1,17 +1,17 @@
-"""I1–I5 concrete learning ideas, current I6 failure trajectories, I7 learning order, I8 error-rule transfer.
+"""I1–I9 research ideas: I9 topic-level blocked/interleaved schedules.
 
 The earlier bottleneck-switching proposal remains accessible as a historical draft.
 Research hypotheses are separate from measured findings.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I8：八个研究问题",
- "en": "I1–I8 · distinguish failure paths, learning order, and rule transfer",
- "lead": "八个想法统一按 Challenge、现有工作、Insight、Design、实验设计展开。I6 比较失败过程价值，I7 研究先试还是先学，I8 研究纠错后的跨题迁移；三个问题单独验证。",
+ "title": "I1–I9：九个研究问题",
+ "en": "I1–I9 · from learning value to curriculum switching",
+ "lead": "九个研究方向统一按 Challenge、现有工作、Insight、Design、实验设计展开。I6 比较失败过程价值，I7 研究先试还是先学，I8 研究纠错迁移；新增 I9 研究集中与交错练习的切换时机。",
  "updated": "2026-10-28",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较学习顺序，I8 从知识准备与共同错误规则解释迁移。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究不同主题练习的集中/交错安排。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -21,9 +21,10 @@ PAGE = {
  <a class="idea-board-card" href="#idea-6"><span class="idea-id">I6 · 失败学习价值</span><b>哪条失败更值得纠正？何时停下再回来？</b><small>固定纠错方式，比较失败的独立收益与继续尝试成本</small></a>
  <a class="idea-board-card" href="#idea-7"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="#idea-8"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
+ <a class="idea-board-card" href="#idea-9"><span class="idea-id">I9 · 集中与交错练习</span><b>什么时候从集中练习切到交错练习？</b><small>规则掌握状态与下一阶段练习收益</small></a>
  </div>
- <p class="idea-outline-key"><b>I1–I8 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I8 均保留独立详情页。</p>
- <p class="status">状态：I1–I8 研究问题已整理；I6 与 I7 正交拆分，I8 保留独立机制验证；尚无本项目的受控实测结果。</p>
+ <p class="idea-outline-key"><b>I1–I9 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9 均保留独立详情页。</p>
+ <p class="status">状态：I1–I9 研究问题已整理；I6–I9 的主要处理变量彼此独立；尚无本项目的受控实测结果。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -104,13 +105,24 @@ PAGE = {
  <div class="flow"><div><b>确认错误与规则</b><small>先核实反馈正确</small></div><div><b>学习前诊断</b><small>前置知识 / 规则范围</small></div><div><b>固定预算纠错</b><small>同教师、同更新器</small></div><div><b>独立测跨题净收益</b><small>新题迁移 / 遗忘 / 成本</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>构造<strong>前置知识高/低 × 错误规则影响范围大/小</strong>的配对数学错题，匹配难度、置信度、正确反馈和训练预算；每个候选从同一模型快照独立更新。比较<strong>随机、最难优先、高置信度优先、稳定错误优先、Self-Error-Instruct 的 one-shot 信号、LESS 梯度信号、DATAPROPHET 式价值特征、I8 的规则诊断</strong>。主指标是训练前预测与真实未见题净增益的对应关系，以及同预算选错题的最终收益；另外报告旧能力退化和诊断成本。如果优势只出现在原题、近似改写，或在匹配知识状态后消失，就不能宣称发现了规则级迁移机制。</p><p class="idea-side-note"><b>正交边界：</b>I8 固定纠错方式，只研究<strong>哪个错误规则在当前模型上更有迁移价值</strong>；<a href="#idea-6">I6</a> 在同题同错误终点比较失败中间过程，<a href="#idea-7">I7</a> 只改教学顺序。<a href="i8.html">查看 Hypercorrection 原始证据、最近邻矩阵和完整受控实验 →</a>。目前<strong>没有 I8 的实际训练结果</strong>。</p></div>
  </div>'''),
- ("orthogonal", "I6、I7 与 I8：一次只研究一个变量", '''
+ ("idea-9", "I9：集中还是交错——什么时候应该切换练习方式？", '''
+ <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>同样练 A、B、C 三类题，连续做 A 可能越做越顺，混合起来却容易用错方法；但基础尚未形成就直接交错，也可能学不进去。<strong>模型什么时候该集中建立规则，什么时候该交错练习不同规则？</strong></p></div>
+ <div class="idea-steps">
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>连续练同类题时训练正确率很高，不代表新题里知道该用哪条规则；交错训练又可能太早。交错还同时改变复习间隔、最近练习时间和相邻类别对比，因此一次后测提升不能自动归因于学会选规则。更难的是模型能力会不断变化，固定时点切换未必合适。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>Samani &amp; Pan（npj 2021）</b>发现交错物理练习在延迟新题测试更好，学生却觉得更难；<b>Beukers 等（Communications Psychology 2024）</b>在多个潜在规则学习中发现集中及早期集中更好；<b>Nemeth 等（2025）</b>发现按混淆自适应交错没有显著超过随机交错。LLM 预训练已研究交错课程，数学后训练也发现排序收益依赖模型能力。我们研究的是<strong>持续更新的模型处于什么规则掌握状态时，下一段集中或交错能获得更多独立净收益</strong>。[[E20]][[E21]][[E22]][[M15]][[M16]]</p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>模型的学习可能经历两种不同需求：<strong>先把某一条规则学稳，再学会从多个规则中选对一个</strong>。因此，只看训练正确率容易误判；独立单主题题是否掌握、混合题是否选错规则、经历其他更新后是否退化，可能预测下一步该采用哪种练习安排。这是待验证假设，不预设一定先集中后交错。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>固定每个主题的题目、正确反馈、LoRA 更新器和预算，仅重排 A/B/C 不同主题的练习顺序。先从相同模型检查点分叉，验证集中/交错在不同知识状态下的净学习收益；再用窗口之前的独立单主题、混合题与干扰探针预测何时切换。撤除示范与训练上下文，在未见新题和经历后续更新的旧题上测真实能力。</p>
+ <div class="flow"><div><b>独立测规则掌握</b><small>单主题新题</small></div><div><b>测规则选择错误</b><small>混合新题</small></div><div><b>匹配预算重排课程</b><small>集中 / 交错 / 阶段组合</small></div><div><b>后续独立测试</b><small>迁移 / 保持 / 总成本</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从同一检查点比较<strong>固定集中、随机交错、循环交错、先集中后交错、先交错后集中、固定时点切换</strong>；第二阶段才加入状态切换，与同特征 contextual bandit 和仅看训练正确率的规则比较。按规则相似度与前置知识高低分层，补充复习间隔对照。报告无提示单主题/混合题正确率、规则错选率、跨规则题、后续干扰后的保持与总预算。如果优势仅来自间隔或随机交错已经最好，就不强行加入复杂 Router。<a href="idea-i9-practice-switching.html">查看 I9 的最近邻矩阵、P0/P1/P2 完整协议与 Go/No-Go →</a></p><p class="idea-side-note"><b>正交边界：</b>I9 固定题目与每题内部教学顺序，只改变<strong>跨主题课程编排与集中/交错切换时点</strong>；不选择 I6 的失败轨迹，不改变 I7 的示范先后，也不优化 I8 的纠错目标。<a href="idea-i9-practice-switching.html">查看 I9 完整最近邻与实验协议 →</a></p></div>
+ </div>'''),
+ ("orthogonal", "I6–I9：一次只研究一个变量", '''
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
 <tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
 <tr><td><a href="idea-i7-learning-order.html">I7 · 学习顺序</a></td><td>先尝试 / 先看正确示范</td><td>题目、示范内容、更新器与预算</td><td>撤掉教师后的独立能力、有效探索与多轮迁移</td></tr>
 <tr><td><a href="i8.html">I8 · 规则级错误迁移</a></td><td>知识准备、错误规则覆盖范围和更新兼容性</td><td>对应的纠错/更新方法</td><td>哪些错误修复后能迁移到一整类题</td></tr>
+<tr><td><a href="idea-i9-practice-switching.html">I9 · 课程切换</a></td><td>同一批不同主题题目的排列与集中/交错切换时点</td><td>模型、题目、题内教学、更新器与训练预算</td><td>当前规则状态能否预测下一窗口的独立净学习收益</td></tr>
 </tbody></table></div>
-<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
 '''),
  ("shared", "这些 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>
@@ -120,7 +132,7 @@ PAGE = {
  </tbody></table></div>
  <p><b>共同对照：</b>同一学习器起点、相同训练/执行预算、固定外部验证器；报告新任务进步、旧任务保持、训练成本和多轮曲线。普通重试、固定规则、随机选择、通用 bandit 是必要基线。任务选择、训练数据和最终测试必须隔离。</p>
  <p><b>安全边界：</b>所有自修改先在受控沙箱中提议、测试、回滚；真实系统权限不随学习成功自动升级。Skill/Memory 写入保存来源与适用条件，拒绝把不稳定、污染或越权的经验固化。这里是协议要求，不是已完成的安全验证。</p>
- <p class="status">截至 2026-10-27：这些是有明确近邻的研究提案，不能声称“首次把教育学用于 RSI”；也不能因为已有相关组件，就断言上述更细化的问题已被解决。</p>
+ <p class="status">截至 2026-10-28：这些是有明确近邻的研究提案，不能声称“首次把教育学用于 RSI”；也不能因为已有相关组件，就断言上述更细化的问题已被解决。</p>
  ''')
  ]
 }

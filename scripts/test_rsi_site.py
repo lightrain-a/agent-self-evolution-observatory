@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -49,8 +49,8 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 sources including Pine 2018 and I5 co-learning sources')
-    check(source['review_date']=='2026-10-27','Review date drift')
+    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19','E20','E21','E22','E23','E24','M15','M16'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I9 sources, including I9 primary education and LLM curricula')
+    check(source['review_date']=='2026-10-28','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
     date.fromisoformat(timeline['verified_at'])
@@ -103,7 +103,7 @@ def main():
         'methods':['cross-domain.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -116,7 +116,7 @@ def main():
           'Visible RSI pages must exclude only linked historical research')
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,9)],'Research ideas must appear exactly once, ordered I1–I8')
+    check(numbered==[f'I{i}' for i in range(1,10)],'Research ideas must appear exactly once, ordered I1–I9')
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
@@ -215,7 +215,7 @@ def main():
           'Deep-read evidence provenance caveat missing')
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
-    check(all(f'idea-{i}' in ideas.ids for i in range(1,9)),'I1–I8 anchors missing from research board')
+    check(all(f'idea-{i}' in ideas.ids for i in range(1,10)),'I1–I9 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
@@ -228,7 +228,7 @@ def main():
         '<h3>Design <small>（如何做）</small></h3>',
         '<h3>实验设计 <small>（怎么验证）</small></h3>',
     )
-    for idea_number in range(1, 9):
+    for idea_number in range(1, 10):
         section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
         locations = [section.find(heading) for heading in ordered_headings]
         check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
@@ -236,14 +236,14 @@ def main():
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
         check(section.count('class="flow"') >= 1, f'I{idea_number}: four-step method flow missing')
-    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in range(1,9)]
-    check(idea_positions == sorted(idea_positions),'I1–I8 sections are out of order')
+    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in range(1,10)]
+    check(idea_positions == sorted(idea_positions),'I1–I9 sections are out of order')
     check(ideas_text.index('id="orthogonal"') > idea_positions[-1],
-          'Independent I6-I8 comparison must follow their complete research narratives')
-    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html')):
+          'Independent I6-I9 comparison must follow their complete research narratives')
+    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html')):
         section = ideas_text.split(f'id="idea-{i}"', 1)[1].split('</section>', 1)[0]
         check(f'href="{detail}"' in section, f'I{i}: full scientific detail page must remain linked')
-        check('正交边界' in section,'I6-I8 separation lost in I'+str(i))
+        check('正交边界' in section,'I6-I9 separation lost in I'+str(i))
     check('十模型互教' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
     i2_text=(ROOT/'rsi/idea-i2.html').read_text(encoding='utf-8')
     check('href="idea-i2.html"' in ideas_text and 'href="idea-i2.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
@@ -304,6 +304,24 @@ def main():
           'Learning science must include Ten et al. 2021 with primary citation')
     check('先独立尝试' in i7_text and '先看示范' in i7_text and 'I6' in i7_text,
           'Current I7 must isolate learning-order effects')
+    i9_text=(ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8')
+    check('href="idea-i9-practice-switching.html"' in ideas_text and
+          'href="idea-i9-practice-switching.html"' in overview,
+          'I9 detail page not reachable from home or overview')
+    check(all(f'id="{sid}"' in i9_text for sid in
+              ('question','evidence','related','challenge','insight','design','experiments','orthogonal','gate')),
+          'I9 scientific argument or experimental section missing')
+    check(all(f'href="references.html#{ref}"' in i9_text for ref in
+              ('E20','E21','E22','E23','E24','M15','M16')),
+          'I9 primary reference missing')
+    check(all(term in i9_text for term in
+              ('Blocked','Interleaved','Random Interleaved','规则形成','规则辨别','LoRA','I7','P0','P1','P2')),
+          'I9 nearest-work, state mechanism or controlled experiments missing')
+    check('id="interleaving"' in learn_sci and 'href="references.html#E20"' in learn_sci,
+          'Learning science must cross-link I9 primary experiment')
+    experiments_html=(ROOT/'rsi/experiments.html').read_text(encoding='utf-8')
+    check('id="i9-practice"' in experiments_html and 'idea-i9-practice-switching.html#experiments' in experiments_html,
+          'I9 independent experimental contract missing')
     check('历史版本' in historical_i6 and f'href="idea-i6-failure-value.html"' in historical_i6,
           'Historical bottleneck draft must have a clear link to the current I6')
     check(all(k in historical_i6 for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),

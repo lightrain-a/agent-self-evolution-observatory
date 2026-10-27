@@ -1,0 +1,89 @@
+"""I9: State-conditioned scheduling of blocked versus interleaved topic practice."""
+PAGE = {
+  "slug": "idea-i9-practice-switching",
+  "title": "I9 · 什么时候从集中练习切换到交错练习？",
+  "en": "When Should Self-Improving Models Switch from Blocked to Interleaved Practice?",
+  "lead": "同样一组题目，连续练同类题可能更容易答对，混合题却更容易选错方法；过早交错又可能让基础规则难以形成。I9 研究什么时候切换，才能提高模型未来的独立解题能力。",
+  "updated": "2026-10-28",
+  "sections": [
+    ("question", "Observable Phenomenon｜练得顺，为什么考试反而不如人？", '''
+<p class="thesis"><b>一句话：</b>模型练习 A 类题时，连续做十道可能越做越熟；一旦把 A、B、C 混合呈现，却不知道该使用哪种方法。反过来，模型基础规则尚未形成时就一直交错练习，也可能根本学不进。<strong>我们希望知道：下一阶段究竟该集中练熟一个主题，还是交错练习多个主题？模型已经学到了什么，能不能帮助我们提前判断？</strong></p>
+<div class="card-grid">
+<article class="research-card"><b>Blocked · 集中练习</b><h3>AAA → BBB → CCC</h3><p>一段时间只练同一种规则，较容易继续套用刚才的方法；但不一定学会在多种规则中做选择。</p></article>
+<article class="research-card"><b>Interleaved · 交错练习</b><h3>ABC → CAB → BCA</h3><p>不同规则交替出现，每次都要重新判断题目类型；训练成绩可能下降，未来混合新题却可能做得更好。</p></article>
+</div>
+<p><b>与 I7 的差异：</b><a href="idea-i7-learning-order.html">I7</a> 研究<strong>同一道题</strong>先尝试还是先看示范；I9 固定每题的教学过程，仅改变<strong>不同主题题目之间</strong>的顺序。</p>
+'''),
+    ("evidence", "原始证据｜npj 2021 的反转，与 Nature 2024 的相反结论", '''
+<p><b>Samani &amp; Pan，npj Science of Learning 2021：</b>350 名大学生参加两个物理课程班级的交叉安排，跨 8 周比较交错与集中作业。集中组在作业中更容易答对，而交错组在两次包含新题的意外延迟测试中更好：平均得分分别为 54% 对 43%、47% 对 27%；论文给出的 50% 与 125% 是中位数的相对改善，并非百分点。学生还倾向认为更难的交错练习效果更差。正式期中考试上未见显著差异，远距离迁移证据也仍有边界。[[E20]]</p>
+<p><b>Beukers 等，Communications Psychology 2024：</b>用两个潜在事件结构的叙事学习任务发现集中学习优于持续交错，并在“先集中/中途集中/最后集中”的补充实验中发现早期集中表现最好。作者的贝叶斯模型通过学习者可能把不同潜在规则分成独立表示解释结果。这个机制是关于人类及其模拟模型的研究，<strong>并未证明 LLM 权重自动进行相同的表征分裂</strong>。[[E21]]</p>
+<p><b>值得注意的直接否定例：</b>Nemeth 等 2025 年在 259 名参与者的绘画类别学习实验中发现随机与按混淆自适应交错都比集中更好，但自适应交错未显著优于随机交错。因此，单纯“哪里容易混淆就多交错”不足以构成可靠的新方法。[[E22]]</p>
+<div class="note"><b>共同启发：</b>练习组织的收益取决于任务的结构和学习者已有的知识。<strong>集中与交错并没有一个永远正确的固定答案</strong>。将这一条件性结论迁移到 LLM 的真实参数更新，需要重新验证。</div>
+'''),
+    ("related", "现有工作｜别人已经研究到了哪一步？", '''
+<div class="table-wrap"><table><thead><tr><th>研究</th><th>已有证据或机制</th><th>我们与它的实际差异</th></tr></thead><tbody>
+<tr><td><a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener noreferrer">Brunmair &amp; Richter · Psychological Bulletin 2019</a> [[E23]]</td><td>59 项研究的元分析；总体交错有益，但材料类型、类别间相似度与类别内差异调节效果；单词材料甚至更适合集中。</td><td>不重复“相似类别值得交错”；测试当前模型是否已掌握规则，以及这种掌握能否预测切换收益。</td></tr>
+<tr><td><a href="https://www.nature.com/articles/s41539-021-00110-x" target="_blank" rel="noopener noreferrer">Samani &amp; Pan · npj 2021</a> [[E20]]</td><td>物理作业和意外新题测验出现反转，学生的即时学习判断可能误导。</td><td>从人类静态课程转向真实参数更新后的独立新题及经历后续更新的保持。</td></tr>
+<tr><td><a href="https://www.nature.com/articles/s44271-024-00079-4" target="_blank" rel="noopener noreferrer">Beukers et al. · Communications Psychology 2024</a> [[E21]]</td><td>多潜在规则学习中集中更好；早期集中阶段优于后期集中。</td><td>不能说首次提出“先集中后交错”；研究哪种模型版本、哪种规则条件下应该切换。</td></tr>
+<tr><td><a href="https://doi.org/10.1016/j.lindif.2025.102804" target="_blank" rel="noopener noreferrer">Nemeth et al. · Learning and Individual Differences 2025</a> [[E22]]</td><td>按错误自适应交错没有显著超过随机交错。</td><td>必须有随机交错强基线；不仅检测混淆，还比较实际参数学习的下一阶段净收益。</td></tr>
+<tr><td><a href="https://doi.org/10.1016/j.actpsy.2025.105518" target="_blank" rel="noopener noreferrer">Xiong &amp; Wu · Acta Psychologica 2025</a> [[E24]]</td><td>比较人类与多种 LLM 的人工语言形态学习，LLM 对上下文示例顺序反应不同。</td><td>不能把 few-shot 上下文内表现当作持续更新后获得的能力。</td></tr>
+<tr><td><a href="https://aclanthology.org/2026.eacl-long.271/" target="_blank" rel="noopener noreferrer">Zhang et al. · EACL 2026</a> [[M15]]</td><td>在 LLM 预训练中比较课程策略，明确包含交错课程并报告训练效率。</td><td>交错进入 LLM 训练已经有工作；I9 聚焦有限预算持续学习、规则辨别和能力保持，不是单纯预训练加速。</td></tr>
+<tr><td><a href="https://aclanthology.org/2026.acl-long.1591/" target="_blank" rel="noopener noreferrer">Jia et al. · ACL 2026</a> [[M16]]</td><td>数学推理后训练中课程方向依赖模型能力和题目复杂度，没有统一最佳顺序。</td><td>不能把“根据模型状态调整排序”作为唯一创新；必须证明跨主题集中/交错切换机制的独立、可预测收益。</td></tr>
+</tbody></table></div>
+<p><b>最近邻边界：</b>教育心理学已研究集中、交错及二者不同的组合顺序；LLM 领域也已经研究课程、交错预训练和模型相关难度排序。I9 的科学问题应收窄为：<strong>在知识内容、题目数量与更新方式不变时，“规则是否已经形成”和“规则选择是否仍有混淆”，能否预测下一段集中或交错练习的真实收益？</strong></p>
+'''),
+    ("challenge", "Challenge｜难在哪里？", '''
+<div class="idea-steps">
+<div class="idea-step"><h3>当前高正确率可能只是重复刚才的方法</h3><p>在连续 A 题中，模型可能无需判断题型就继续用 A 的解法。即便当前训练 loss 很低，也不意味着随机混合 A/B/C 时它能选择正确的解题规则。</p></div>
+<div class="idea-step"><h3>交错带来了不止一种变化</h3><p>相邻类别比较、再次看到同类题的间隔、最近一次练习时间都会一起改变。若不检查它们，观察到的差异可能仅仅是复习间隔带来的，不能武断称为规则辨别。</p></div>
+<div class="idea-step"><h3>模型变强后，适合的练习方式可能反转</h3><p>基础薄弱时可能需要连续的同类例子；掌握规则以后则可能更需要混合练习。但随机交错也可能始终最好，因此在验证收益可预测之前，不应该直接堆叠复杂课程 Router。</p></div>
+</div>
+'''),
+    ("insight", "Insight｜规则形成与规则辨别可能需要不同的练习", '''
+<p><b>假设 H1 · 规则形成：</b>模型对单主题的新题尚不稳定时，集中练习可能优于立即交错，因为相似例子连续出现更容易建立当前规则。对基础已经扎实的模型，这一收益可能减弱甚至消失。</p>
+<p><b>假设 H2 · 规则辨别：</b>模型单独做 A/B/C 已经不错，却在混合题中经常错选方法时，交错练习可能更有收益，因为它迫使模型反复选择<strong>用哪一种知识</strong>，而不仅是执行某个已提示的解法。</p>
+<p><b>假设 H3 · 切换时点：</b>独立单主题题正确率、混合题错选规则率和干扰后保持率，可能共同预测哪种课程下一步更有效。这是待检验的预测关系，不把任一指标或固定阈值视为可靠规律。</p>
+<div class="flow"><div><b>单主题规则探针</b><small>规则学会了吗</small></div><div><b>混合题探针</b><small>会选规则吗</small></div><div><b>干扰后的保持探针</b><small>旧规则还会吗</small></div><div><b>同检查点分叉学习</b><small>估计两种日程的净收益</small></div></div>
+'''),
+    ("design", "Design｜如何做：从固定课程到状态驱动切换", '''
+<p><b>1 · 固定训练材料：</b>选同一组 A/B/C 题目，冻结初始模型、题目答案、每道题的教学流程、LoRA 优化器和训练预算，首先仅排列不同主题的训练顺序。不要在 I9 中另选错误题、另选教师或另选伙伴。</p>
+<p><b>2 · 识别两种能力：</b>用独立、未参与训练的诊断题，分开测 <strong>Rule Mastery</strong>（同一主题的规则掌握）和 <strong>Rule Selection</strong>（多主题混合时的规则选择）。可额外测经历其他主题更新后的保持率。诊断不透露最终测试集的答案。</p>
+<p><b>3 · 找到切换收益：</b>从相同的参数检查点分成集中与交错两支，下一段学习内容、数量和预算一致，比较撤掉例题后在新题上的提升。只有观察到稳定的“同一策略在某些状态好、另一些状态差”，才训练一个小型的事前调度器。</p>
+<p><b>4 · 真正验证 RSI：</b>每轮都执行真实 LoRA 更新；测试时清空临时对话、不给题型提示。经历若干轮其他任务的参数更新，再测旧能力、新题泛化与总净收益。每轮的探针和试学也必须计入总成本。</p>
+<div class="note">可定义每个预注册更新窗口的净收益：Δ<sub>a</sub> = Score<sub>new, independent</sub>(θ after schedule a) − Score<sub>old, independent</sub>(θ)，再单独报告旧任务退化与计算成本。模型对窗口收益的预测必须用训练前历史信号，不能泄漏该窗口的训练结果。</div>
+'''),
+    ("experiments", "实验设计｜怎样用最少实验判断机制是否成立？", '''
+<div class="table-wrap"><table><thead><tr><th>对照</th><th>主题安排</th><th>检验什么</th></tr></thead><tbody>
+<tr><td>Blocked</td><td>AAA BBB CCC</td><td>连续规则建立是否已足够好</td></tr>
+<tr><td>Random Interleaved</td><td>随机交错，匹配每类出现次数</td><td>简单随机是否优于任何复杂设计</td></tr>
+<tr><td>Cyclic Interleaved</td><td>ABC ABC ABC</td><td>规则的固定交替是否足够</td></tr>
+<tr><td>Blocked → Interleaved</td><td>前半段集中、后半段交错</td><td>形成后辨别是否确实有效</td></tr>
+<tr><td>Interleaved → Blocked</td><td>前半段交错、后半段集中</td><td>收益是否只是阶段的先后/占比</td></tr>
+<tr><td>固定时点切换</td><td>预先指定训练步数切换</td><td>不看模型状态是否也一样好</td></tr>
+<tr><td>状态切换（P1）</td><td>只看此前 Rule Mastery / Rule Selection 探针</td><td>是否确实有额外可预测的净收益</td></tr>
+</tbody></table></div>
+<p><b>P0 · 最小因果试验：</b>选择三个可验证、可区分而又容易混淆的数学规则族（例如模运算、计数和方程的受控题型），从同一开源模型检查点建立不同顺序的等预算 LoRA 分支。先在小规模规则模板上预检，验证训练管线和独立后测；扩展时建议至少两种模型能力水平、不同规则相似度条件与多个随机种子。按根规则模板划分 train / diagnostic / test，不能将同一模板换数字后当成独立泛化。</p>
+<p><b>区分两种机制：</b>其一，利用明确的规则类别、可审计解题步骤与高/低规则相似度，检测规则选择错误是否下降。其二，设置间隔/最近出现时间尽量匹配的补充课程，分别报告“规则辨别”和“时间间隔”能够解释多少收益；严格集中与交错无法把所有时间因素完全匹配，因此不声称彻底消除间隔影响。</p>
+<p><b>核心指标：</b>训练期间正确率曲线、未见单主题题准确率、未见混合题规则选择准确率、跨规则组合题成功率、后续干扰更新后的旧能力保持、最终净收益、训练与探针总 Token/GPU 时间。按任务规则族进行配对统计；同模板重复采样不能当作独立实验样本。</p>
+<p><b>P1 · 决策时点：</b>在开发任务族与模型版本上，从同一起点随机分配下一窗口的集中/交错课程，估计真实收益差，检验它能否由窗口之前的状态预测。对比固定交错、固定阶段比例、按当前分数阈值、随机和相同特征的 contextual bandit；之后才在从未参与策略训练的规则族/模型上冻结评估。</p>
+<p><b>P2 · Agent 迁移：</b>如果 P0/P1 证明切换机制成立，再将主题换成受控工具使用或代码技能，如分页、异常恢复和重试。只调整不同技能训练案例的顺序，不更换 Skill 写入器或扩大学习材料；避免与 I3 的复习选择和 I5 的动态换伴混在一起。</p>
+'''),
+    ("orthogonal", "与 I1–I8 如何解耦？", '''
+<div class="table-wrap"><table><thead><tr><th>Idea</th><th>它研究什么</th><th>I9 与它如何区别</th></tr></thead><tbody>
+<tr><td><a href="ideas.html#idea-3">I3 · 温故知新</a></td><td>选哪些旧知识复习，修复哪些新旧规则冲突</td><td>I9 固定每个主题的题目与出现次数，只重排不同主题的顺序</td></tr>
+<tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同一道错题的哪条失败过程最值得纠正、何时停止</td><td>I9 不选择失败轨迹，不改变停止规则</td></tr>
+<tr><td><a href="idea-i7-learning-order.html">I7 · 先试还是先学</a></td><td>同一道题先尝试还是先看示范</td><td>I9 保持每道题内部教学顺序一致，只调整跨主题的练习编排</td></tr>
+<tr><td><a href="i8.html">I8 · 错误可学习性</a></td><td>纠正哪一种错误规则能迁移到更多新题</td><td>I9 不改变挑选的错误和纠错反馈，只改变这些固定题的呈现顺序</td></tr>
+<tr><td><a href="idea-i5.html">I5 · 换舞伴</a></td><td>和哪个模型互教、何时换伙伴</td><td>I9 固定学习者、教师与更新器，不改变伙伴关系</td></tr>
+</tbody></table></div>
+<p>课程重排会自然改变某个主题的复习间隔，这和 I3 的巩固现象存在交叉；但 I9 的处理变量始终是<strong>跨主题顺序与切换时点</strong>，而不是决定哪些题目值得再次复习。</p>
+'''),
+    ("gate", "Go / No-Go｜什么结果值得写成 RSI 论文？", '''
+<p><b>Go：</b>等材料等预算下，训练期正确率与独立新题成绩存在可靠反转；并且针对规则掌握程度不同的模型版本，集中/交错的下一阶段净学习收益出现稳定差异。更进一步，状态预测器在未见规则族上超过固定切换和随机交错，累计成本包含诊断与试探。</p>
+<p><b>机制论文而非调度论文：</b>若发现强稳定反转却没有可预测切换信号，先报告规则形成/辨别的条件性现象，不额外包装状态 Router。</p>
+<p><b>Merge/Stop：</b>若规则状态解释不了后续课程收益，或优势全部来自复习间隔、样本重复或更高训练成本，则缩回到课程对照；若普通随机交错始终最好，接受这一结论，不强行引入动态调度。</p>
+<div class="links"><a class="link-btn" href="ideas.html">返回 I1–I9 研究总览</a><a class="link-btn" href="learning-science.html">学习科学原始证据</a><a class="link-btn" href="experiments.html">共同实验协议</a></div>
+<p class="status">截至 2026-10-28：这是经过来源核验的研究方案，没有本项目的训练结果；论文事实、机制假设及拟议实验分开陈述。</p>
+''')
+  ]
+}
