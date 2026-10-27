@@ -215,12 +215,12 @@ def main():
           'Deep-read evidence provenance caveat missing')
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
-    check(all(f'idea-{i}' in ideas.ids for i in range(1,6)),'I1–I5 anchors missing from research board')
+    check(all(f'idea-{i}' in ideas.ids for i in range(1,9)),'I1–I8 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
-    # The five independent ideas share the same argument order so the page
-    # can be read like a paper outline rather than five unrelated modules.
+    # All eight independent ideas share one readable argument chain;
+    # later ideas must not collapse to short summaries or links to detail pages.
     ordered_headings = (
         '<h3>Challenge <small>（难在哪里）</small></h3>',
         '<h3>现有工作 <small>（别人研究了什么）</small></h3>',
@@ -228,13 +228,22 @@ def main():
         '<h3>Design <small>（如何做）</small></h3>',
         '<h3>实验设计 <small>（怎么验证）</small></h3>',
     )
-    for idea_number in range(1, 6):
+    for idea_number in range(1, 9):
         section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
         locations = [section.find(heading) for heading in ordered_headings]
         check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
               f'I{idea_number}: Challenge -> Related Work -> Insight -> Design -> Experiment order drift')
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
+        check(section.count('class="flow"') >= 1, f'I{idea_number}: four-step method flow missing')
+    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in range(1,9)]
+    check(idea_positions == sorted(idea_positions),'I1–I8 sections are out of order')
+    check(ideas_text.index('id="orthogonal"') > idea_positions[-1],
+          'Independent I6-I8 comparison must follow their complete research narratives')
+    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html')):
+        section = ideas_text.split(f'id="idea-{i}"', 1)[1].split('</section>', 1)[0]
+        check(f'href="{detail}"' in section, f'I{i}: full scientific detail page must remain linked')
+        check('正交边界' in section,'I6-I8 separation lost in I'+str(i))
     check('十模型互教' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
     i5_text=(ROOT/'rsi/idea-i5.html').read_text(encoding='utf-8')
     check('href="idea-i5.html"' in ideas_text and 'href="idea-i5.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I5 page not linked from home/ideas')
