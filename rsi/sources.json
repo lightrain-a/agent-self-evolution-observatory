@@ -985,9 +985,9 @@
     {
       "id": "S102",
       "group": "RSI",
-      "title": "The Strongest Teacher Is Not Always the Best Teacher: Student-Centric Answer Selection (SCAS)",
-      "date": "arXiv 2026-05；本轮未核实正式会议状态",
-      "url": "https://arxiv.org/abs/2605.26872",
+      "title": "When the Strongest Teacher Is Not the Best Teacher: Student-Centric Answer Selection (SCAS)",
+      "date": "arXiv 2026-05；v5 修订 2026-09-01；本轮未核实正式会议状态",
+      "url": "https://arxiv.org/abs/2605.26872v5",
       "level": "原始正文方法核对；2026-10-27",
       "note": "依据学生相关的学习成本代理，从已验证正确的教师输出中选监督；强教师不必给出最有用的训练答案。I2 不把答案选择或教师强弱比较声称为新机制。",
       "code": ""
