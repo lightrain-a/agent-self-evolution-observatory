@@ -13,42 +13,55 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-27'
 ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']
-LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', '研究方向 · I1–I8', 'I5 · 十模型互教与动态换伴', 'I6 · 失败过程的学习价值', 'I7 · 先试还是先学', 'I8 · 错误可学习性与迁移', '教学反馈诊断 · I5 支线', '归档 · 跨轮瓶颈切换', '实验执行方案', '来源与核验记录']
-EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'I1–I8 · Research Ideas', 'I5 · Rotating Learning Partners', 'I6 · Learning Value of Failure Trajectories', 'I7 · Learning Order', 'I8 · Error Learnability & Transfer', 'I5 · Teaching Feedback Branch', 'Archive · Bottleneck Switching', 'Experiments', 'Sources']
+LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', '研究方向总览', 'I5 · 费曼学习法 · 动态换伴', 'I6 · 失败过程的学习价值', 'I7 · 先试还是先学', 'I8 · 错误可学习性与迁移', '教学反馈诊断 · I5 支线', '归档 · 跨轮瓶颈切换', '实验执行方案', '来源与核验记录']
+EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'Research Ideas Overview', 'I5 · Learning Partners', 'I6 · Learning Value of Failure Trajectories', 'I7 · Learning Order', 'I8 · Error Learnability & Transfer', 'I5 · Teaching Feedback Branch', 'Archive · Bottleneck Switching', 'Experiments', 'Sources']
 # A single, ordered definition of RSI primary and secondary navigation.
 # The same hierarchy is rendered server-side (without JS) and client-side.
 NAV_SECTIONS = [
     {'id':'overview', 'title':{'zh':'专题入口', 'en':'Start Here'}, 'slugs':['index', 'timeline']},
     {'id':'literature', 'title':{'zh':'文献与论文精读', 'en':'Literature & Reading'}, 'slugs':['literature', 'reading-cards', 'reading-notes', 'references']},
     {'id':'methods', 'title':{'zh':'方法与学习科学', 'en':'Methods & Learning Science'}, 'slugs':['cross-domain', 'learning-science']},
-    {'id':'research', 'title':{'zh':'研究方向与实验', 'en':'Ideas & Experiments'}, 'slugs':['ideas', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']},
+    # Public numbered ideas appear exactly once in ascending order.  Historical
+    # I5 teaching feedback and retired I6 bottleneck pages remain accessible
+    # from the related research pages, not as competing sidebar ideas.
+    {'id':'research', 'title':{'zh':'研究方向与实验', 'en':'Ideas & Experiments'}, 'slugs':['ideas', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'experiments']},
 ]
+
+NAV_IDEA_ANCHORS = [
+    ['ideas.html#idea-1', {'zh':'I1 · 脚手架学习', 'en':'I1 · Scaffolding'}],
+    ['ideas.html#idea-2', {'zh':'I2 · 因材施教', 'en':'I2 · Adaptive Teaching'}],
+    ['ideas.html#idea-3', {'zh':'I3 · 温故知新', 'en':'I3 · Retention & Rehearsal'}],
+    ['ideas.html#idea-4', {'zh':'I4 · 生产性失败', 'en':'I4 · Productive Failure'}],
+]
+NAV_ARCHIVED_PAGES = {'teaching':'idea-i5.html', 'idea-i6':'ideas.html'}
 
 
 def build_navigation(pages: list[dict]) -> list[dict]:
     labels = {p['slug']: {'zh': LABELS[i], 'en': EN_LABELS[i]} for i, p in enumerate(pages)}
     flattened = [slug for section in NAV_SECTIONS for slug in section['slugs']]
-    if len(flattened) != len(set(flattened)) or set(flattened) != set(labels):
-        raise ValueError('RSI navigation must cover each page exactly once')
-    return [
-        {
-            'id': section['id'],
-            'title': section['title'],
-            'open': False,
-            'pages': [[slug + '.html', labels[slug]] for slug in section['slugs']],
-        }
-        for section in NAV_SECTIONS
-    ]
+    archived = list(NAV_ARCHIVED_PAGES)
+    if len(flattened + archived) != len(set(flattened + archived)) or set(flattened + archived) != set(labels):
+        raise ValueError('RSI sidebar and linked historical pages must cover every generated page exactly once')
+    groups = []
+    for section in NAV_SECTIONS:
+        entries = []
+        for slug in section['slugs']:
+            entries.append([slug + '.html', labels[slug]])
+            if slug == 'ideas':
+                entries.extend(NAV_IDEA_ANCHORS)
+        groups.append({'id': section['id'], 'title': section['title'], 'open': False, 'pages': entries})
+    return groups
 
 
 def render_navigation(groups: list[dict], current: str) -> str:
     blocks = []
+    selected = NAV_ARCHIVED_PAGES.get(current, current + '.html')
     for group in groups:
-        has_active = any(href == current + '.html' for href, _ in group['pages'])
+        has_active = any(href == selected for href, _ in group['pages'])
         links = ''.join(
-            '<a class="nav-level2' + (' active' if href == current + '.html' else '') +
+            '<a class="nav-level2' + (' active' if href == selected else '') +
             '" href="' + html.escape(href, quote=True) + '"' +
-            (' aria-current="page"' if href == current + '.html' else '') + '>' +
+            (' aria-current="page"' if href == selected else '') + '>' +
             html.escape(label['zh']) + '</a>'
             for href, label in group['pages']
         )

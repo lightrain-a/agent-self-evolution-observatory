@@ -29,7 +29,6 @@ PAGE = {
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
 <a href="cross-domain.html"><b>相邻领域方法</b><span>元学习、课程、知识追踪、双重控制与持续学习。</span></a>
 <a href="learning-science.html"><b>教育学与学习科学</b><span>哪些教育学机制有实证支持，哪些迁移仍是猜想。</span></a>
-<a href="teaching.html"><b>教学反馈诊断 · I5 支线</b><span>此前“学生反馈能否暴露教师盲点”的详细实验草案，保留供比较。</span></a>
 <a href="experiments.html"><b>实验执行方案</b><span>版本控制、持久更新、数据隔离与元学习评估。</span></a>
 <a href="references.html"><b>来源与核验记录</b><span>[[SOURCE_COUNT]] 条论文和官方资源，保留原始链接与阅读深度。</span></a></div>'''),
 ("claims","必须分开的三个研究主张",'''<div class="table-wrap"><table><thead><tr><th>主张</th><th>应观察什么</th><th>不能据什么下结论</th></tr></thead><tbody>
@@ -48,7 +47,7 @@ PAGE = {
 <li><b>再检验长期进步。</b>连续多轮、新任务、旧能力回归，最后才评价改进策略本身有没有变好。</li>
 </ol>'''),
 ("scope","网站范围、历史方案与证据状态",'''<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：<a href="idea-i5.html">I5 主线</a>为“十模型按双向独立学习收益动态配对与决定换伴”；目前 <a href="idea-i6-failure-value.html">I6</a> 聚焦失败轨迹，<a href="idea-i7-learning-order.html">I7</a> 聚焦学习顺序。<a href="idea-i6.html">旧版瓶颈切换</a>已归档，不再占用 I6 编号。</p>
-<p><a href="teaching.html">I5 教学反馈诊断</a>作为此前的独立技术支线保留：研究学生的误解能否暴露教师的隐性缺陷。这个实验与“动态伙伴选择”可以共享学生评估基础设施，但不是同一个问题。</p>
+<p><a href="idea-i5.html#teaching-feedback">I5 统一详情页</a>同时保留“教学反馈诊断”作为历史研究支线：学生的误解能否暴露教师自己的隐性缺陷。它与当前的“动态伙伴选择”有不同的研究问题，因此在详情页中区分，不再在左侧目录重复出现。</p>
 <p><a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
 <div class="status-strip"><b>截至 2026-10-27</b><span>I1–I8 候选研究问题已整理</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]

@@ -52,11 +52,13 @@ def main():
             except Exception: time.sleep(.3)
         session=req('POST','/session',{'capabilities':{'alwaysMatch':{'acceptInsecureCerts':True,'moz:firefoxOptions':{'args':['-headless']}}}})['sessionId']
         req('POST',f'/session/{session}/window/rect',{'width':1440,'height':1050})
+        nav_data=json.loads((ROOT/'rsi/site-nav.js').read_text(encoding='utf-8').split(' = ',1)[1].strip().removesuffix(';'))
+        expected_nav_links=sum(len(group['pages']) for group in nav_data)
         summaries=[]
         for slug in PAGES:
             nav('rsi/'+slug+'.html')
             stats=js("""const groups=[...document.querySelectorAll('#research-nav details.nav-group')];return {title:document.title,h1:document.querySelectorAll('h1').length,active:document.querySelectorAll('#research-nav a[aria-current="page"]').length,nav:document.querySelectorAll('#research-nav .nav-level2').length,groups:groups.length,expanded:groups.filter(g=>g.open).length,activeParents:groups.filter(g=>g.classList.contains('active-group')&&g.open).length,overflow:document.documentElement.scrollWidth>innerWidth+1,cites:document.querySelectorAll('.cite').length,sections:document.querySelectorAll('.research-section').length};""")
-            check(stats['h1']==1 and stats['active']==1 and stats['nav']==len(PAGES) and stats['groups']==4 and stats['expanded']==1 and stats['activeParents']==1,slug+': two-level navigation or title integrity '+str(stats))
+            check(stats['h1']==1 and stats['active']==1 and stats['nav']==expected_nav_links and stats['groups']==4 and stats['expanded']==1 and stats['activeParents']==1,slug+': two-level navigation or title integrity '+str(stats))
             check(not stats['overflow'],slug+': desktop page overflow')
             summaries.append({'page':slug,**stats})
         nav('rsi/index.html')
@@ -193,6 +195,21 @@ def main():
         js("document.querySelector('#nav-language').click()")
         check(js("""return document.querySelector('#research-nav [data-nav-group="literature"] summary span').textContent==='文献与论文精读'"""),'Chinese primary heading not restored')
         nav('rsi/ideas.html')
+        ordered_links=js("return [...document.querySelectorAll('#research-nav [data-nav-group=research] .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
+        numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I')]
+        check(numbers==[f'I{i}' for i in range(1,9)],f'Numbered ideas duplicated or not sorted: {ordered_links}')
+        check(not any(item['href'] in ('teaching.html','idea-i6.html') for item in ordered_links),'Historical pages should not compete in the sidebar')
+        js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
+        time.sleep(.3)
+        check(js("return location.hash==='#idea-3' && document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='ideas.html#idea-3'"),
+              'Current idea anchor not highlighted after same-page navigation')
+        nav('rsi/teaching.html')
+        check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='idea-i5.html'"),
+              'Teaching feedback archive should highlight the sole I5 navigation item')
+        nav('rsi/idea-i6.html')
+        check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='ideas.html'"),
+              'Historic I6 archive must not compete with current numbered I6')
+        nav('rsi/ideas.html')
         for idea_number in range(1, 6):
             steps=js(f"return [...document.querySelector('#idea-{idea_number}').querySelectorAll('.idea-step')].map(e=>({{heading:e.querySelector('h3').textContent.trim(),height:e.getBoundingClientRect().height}}));")
             check(len(steps)==5 and all(s['height']>35 for s in steps),f'I{idea_number} five-stage layout collapsed: {steps}')
@@ -205,6 +222,15 @@ def main():
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
         screenshot('idea-framework-mobile.png')
+        js("document.querySelector('#menu-toggle').click()")
+        time.sleep(.45)
+        check(js("return (()=>{const r=document.querySelector('#sidebar').getBoundingClientRect();return r.right>10 && r.left<innerWidth-10})()"),
+              'Mobile research drawer not visible after transition')
+        screenshot('ideas-numbered-navigation-mobile.png')
+        js("document.querySelector('#research-nav a[href=\"ideas.html#idea-2\"]').click()")
+        time.sleep(.2)
+        check(js("return location.hash==='#idea-2' && !document.querySelector('#sidebar').classList.contains('open')"),
+              'Mobile numbered anchor did not navigate or close the drawer')
         nav('rsi/index.html'); screenshot('overview-mobile.png')
         js("document.querySelector('#menu-toggle').click()")
         check(js("return document.querySelector('#sidebar').classList.contains('open')&&!document.querySelector('#sidebar-overlay').hidden"),'Mobile drawer did not open')
@@ -233,7 +259,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':12}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':13}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

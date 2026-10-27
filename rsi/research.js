@@ -9,10 +9,20 @@
   let navLanguage = 'zh';
   try { navLanguage = localStorage.getItem('agent-evolution-language') || 'zh'; } catch (_) {}
   const text = (value) => typeof value === 'string' ? value : (value[navLanguage] || value.zh || value.en || '');
+  // Numbered I1–I4 links point into the overview; I5 has one main page.
+  // Historical pages stay reachable from their parent idea, not the sidebar.
+  function activeNavHref() {
+    const page = (root.body.dataset.rsiPage || 'index') + '.html';
+    if (page === 'teaching.html') return 'idea-i5.html';
+    if (page === 'idea-i6.html') return 'ideas.html';
+    if (page === 'ideas.html' && /^#idea-[1-4]$/.test(window.location.hash)) return page + window.location.hash;
+    if (page === 'ideas.html' && window.location.hash === '#idea-5') return 'idea-i5.html';
+    return page;
+  }
   function renderNavigation() {
     if (!Array.isArray(window.NAV_GROUPS)) return;
     const nav = $('#research-nav');
-    const current = (root.body.dataset.rsiPage || 'index') + '.html';
+    const current = activeNavHref();
     // Preserve the visitor's expanded sections when switching the navigation language.
     // Without JavaScript, the same grouped <details> navigation remains usable.
     const expanded = new Map([...nav.querySelectorAll('details.nav-group[data-nav-group]')]
@@ -54,6 +64,7 @@
     renderNavigation();
   });
   renderNavigation();
+  window.addEventListener('hashchange', renderNavigation);
   function setMenu(open) {
     sidebar.classList.toggle('open', open);
     overlay.hidden = !open;
@@ -67,7 +78,7 @@
   overlay.addEventListener('click', () => setMenu(false));
   root.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sidebar.classList.contains('open')) setMenu(false); });
   sidebar.addEventListener('click', (e) => {
-    if (e.target.closest('a[href^="#"]') && innerWidth <= 820) setMenu(false);
+    if (e.target.closest('a.nav-level2[href]') && innerWidth <= 820) setMenu(false);
   });
   // A local search corpus; never sends research queries to an external service.
   let indexPromise;

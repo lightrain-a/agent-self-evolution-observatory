@@ -62,4 +62,6 @@ python3 scripts/test_rsi_browser.py
 
 对应源文件是 `scripts/rsi_pages/reading-cards.py`（四步卡片）、`scripts/rsi_pages/reading-notes.py`（四段精读与细节折叠）、`scripts/build_rsi_research.py`（目录与索引）、`rsi/research.js`（浏览器筛选）。后续新增论文只需要写好统一数据；页面不应退回大段摘要堆砌。
 
-RSI 站点使用独立的 `site-nav.js`，不再依赖 Agent 站的 `data.js`。双站架构、入口和单独导出方法参见根目录 `SITES.md`。部署仍使用仓库现有 GitHub Pages workflow：合入 `main` 后先构建 Agent、再构建 RSI；不要把 private 数据或本地路径写入公共卡片。
+RSI 站点使用独立的 `site-nav.js`，不再依赖 Agent 站的 `data.js`。在左侧“研究方向与实验”中，先显示“研究方向总览”，再按 I1→I8 各保留一个编号入口，最后是实验执行方案。I1–I4 跳到 `ideas.html#idea-1` 等完整卡片，I5–I8 各有详情页；浏览器对同页锚点动态更新当前高亮。**I5 教学反馈诊断**和**历史跨轮瓶颈切换**只作为归档页面保留，从所属研究页进入，不在导航重复编号。修改目录必须更新 `scripts/build_rsi_research.py` 和两个 RSI 站点测试，并验证旧 URL 不失效。
+
+双站架构、入口和单独导出方法参见根目录 `SITES.md`。部署仍使用仓库现有 GitHub Pages workflow：合入 `main` 后先构建 Agent、再构建 RSI；不要把 private 数据或本地路径写入公共卡片。

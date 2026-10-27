@@ -98,21 +98,30 @@ def main():
     check(nav_text.startswith('window.NAV_GROUPS = '),'Invalid standalone RSI navigation module')
     groups=json.loads(nav_text[len('window.NAV_GROUPS = '):].strip().removesuffix(';'))
     expected_groups={
-        'overview':['index','timeline'],
-        'literature':['literature','reading-cards','reading-notes','references'],
-        'methods':['cross-domain','learning-science'],
-        'research':['ideas','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments'],
+        'overview':['index.html','timeline.html'],
+        'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
+        'methods':['cross-domain.html','learning-science.html'],
+        'research':['ideas.html',*[f'ideas.html#idea-{i}' for i in range(1,5)],
+                    'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
+                    'i8.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
-    grouped_slugs=[]
+    visible_slugs=[]
     for group in groups:
-        slugs=[href.removesuffix('.html') for href,_ in group['pages']]
-        check(slugs==expected_groups[group['id']],f'Incorrect child menu: {group["id"]}')
+        hrefs=[href for href,_ in group['pages']]
+        check(hrefs==expected_groups[group['id']],f'Incorrect ordered submenu: {group["id"]}')
         check(group['title']['zh'] and group['title']['en'],f'Missing bilingual parent title: {group["id"]}')
-        grouped_slugs.extend(slugs)
-    check(len(grouped_slugs)==len(set(grouped_slugs)) and set(grouped_slugs)==set(PAGES),
-          'RSI page missing or duplicated across primary menus')
-    page_parent={slug:g['id'] for g in groups for slug in expected_groups[g['id']]}
+        visible_slugs.extend(urlsplit(href).path.removesuffix('.html') for href in hrefs)
+    check(set(visible_slugs)==set(PAGES)-{'teaching','idea-i6'},
+          'Visible RSI pages must exclude only linked historical research')
+    research_links=groups[-1]['pages']
+    numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
+    check(numbered==[f'I{i}' for i in range(1,9)],'Research ideas must appear exactly once, ordered I1–I8')
+    check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
+          'Archived I5 or I6 content still duplicated in numbered navigation')
+    page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
+                 for slug in [urlsplit(href).path.removesuffix('.html')]}
+    page_parent.update({'teaching':'research','idea-i6':'research'})
     parsed={}
     site_asset_sources={'site-base.css':ROOT/'style.css', 'site-switch.css':ROOT/'site-switch.css', 'favicon.svg':ROOT/'favicon.svg'}
     for slug in PAGES:
@@ -230,7 +239,9 @@ def main():
     i5_text=(ROOT/'rsi/idea-i5.html').read_text(encoding='utf-8')
     check('href="idea-i5.html"' in ideas_text and 'href="idea-i5.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I5 page not linked from home/ideas')
     check(all(k in i5_text for k in ('十个模型','换舞伴','Bridge ties bind collective memories','PopuLoRA','OPCoD','HACE','I7','未见任务')),'I5 evidence, orthogonal labels or controls missing')
-    check(all(f'id="{x}"' in i5_text for x in ('scene','papers','collisions','challenge','insight','design','experiments','summary')),'I5 required section missing')
+    check(all(f'id="{x}"' in i5_text for x in ('scene','papers','collisions','challenge','insight','design','experiments','teaching-feedback','summary')),'I5 unified sections missing')
+    check('href="teaching.html"' in i5_text and '十模型动态互教' in i5_text,
+          'Historical teaching-feedback branch must remain accessible under the sole I5 entry')
     i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
     for label in ['Observable Phenomenon','Why','Challenge','Insight','Design','决定性实验','Related Work','预注册判断']:
         check(label in i8_html,'I8 research mechanism structure missing: '+label)
@@ -275,8 +286,10 @@ def main():
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')
     check('"rsi/index.html"' not in agent_nav,'Agent navigation still includes RSI pages')
     nav=nav_text
-    for slug in PAGES:
-        check(f'"{slug}.html"' in nav,f'Missing RSI-only navigation: {slug}')
+    for slug in set(PAGES)-{'teaching','idea-i6'}:
+        check(f'"{slug}.html"' in nav,f'Missing active RSI navigation: {slug}')
+    for slug in ('teaching','idea-i6'):
+        check(f'"{slug}.html"' not in nav,f'Archived RSI page must not duplicate a numbered nav item: {slug}')
     records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
     for target in related_data['targets']:
         for work in target['works']:
