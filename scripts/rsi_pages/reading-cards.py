@@ -13,6 +13,8 @@ from pathlib import Path
 SOURCE = Path(__file__).resolve().parents[2] / "rsi" / "reading-cards.json"
 DATA = json.loads(SOURCE.read_text(encoding="utf-8"))
 PAPERS = DATA["papers"]
+RELATED_DATA = json.loads((SOURCE.parent / "related-work.json").read_text(encoding="utf-8"))
+RELATED_IDS = {r["paper_id"] for r in RELATED_DATA["targets"]}
 QUESTIONS = DATA["research_questions"]
 LEVELS = {"core": "重点研究", "partial": "部分涉及", "not_addressed": "未直接研究"}
 STORY_STAGES = [
@@ -139,7 +141,7 @@ def reading_card(p: dict) -> str:
       <div class="reading-next"><b>下一步最值得做的辨别实验</b><p>{esc(p['next_test'])}</p></div>
     </div>
   </details>
-  <div class="links reading-links">{f'<a class="link-btn reading-deep-link" href="reading-notes.html#deep-{esc(p["id"])}">阅读完整精读（公式 · 实验 · 研究缺口）</a>' if p.get("deep_read") else ""}<a class="link-btn" href="#{esc(p['id'])}" aria-label="复制或保存此卡片的锚点链接">卡片定位</a>{external_links}</div>
+  <div class="links reading-links">{f'<a class="link-btn reading-deep-link" href="reading-notes.html#deep-{esc(p["id"])}">完整精读 · 公式与实验</a>' if p.get("deep_read") else ""}{f'<a class="link-btn reading-related-link" href="reading-notes.html#deep-{esc(p["id"])}--stage-related">Related Work · 与前人的区别</a>' if p["id"] in RELATED_IDS else ""}<a class="link-btn" href="#{esc(p['id'])}" aria-label="复制或保存此卡片的锚点链接">卡片定位</a>{external_links}</div>
 </article>'''
 
 

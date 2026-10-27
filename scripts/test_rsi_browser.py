@@ -120,6 +120,8 @@ def main():
         check(js("return document.querySelector('.reading-card').id==='rsi-anything-2610-13912'"),
               'Featured deep-read paper should be the first visible reading card')
         screenshot('reading-cards-desktop.png')
+        check(js("return document.querySelector('#rsi-anything-2610-13912 .reading-related-link')!==null"),
+              'RSI-Anything card missing Related Work shortcut')
         js("document.querySelector('#rsi-anything-2610-13912').scrollIntoView({block:'start'})")
         time.sleep(.8)
         screenshot('reading-first-card-desktop.png')
@@ -140,8 +142,14 @@ def main():
                       'Deep section missing in browser: '+section['id'])
         check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
               'Evidence matrix did not render')
-        check(js("return [...document.querySelectorAll('.deep-stage')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result,next'"),
-              'Long read does not follow C-I-D-R before extensions')
+        check(js("return [...document.querySelectorAll('.deep-stage')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result,related,next'"),
+              'Long read must follow C-I-D-R, Related Work, then future questions')
+        check(js("return document.querySelectorAll('.deep-related > .deep-related-matrix tbody tr').length===7"),
+              'Main closest-work table should include seven papers')
+        check(js("return document.querySelectorAll('#deep-rsi-anything-2610-13912--stage-related .deep-related-paper').length===9"),
+              'Nine source-grounded Related Work comparisons expected')
+        check(js("""return document.querySelector('#related-rsi-anything-2610-13912--rlanything a[href^="https"]').getAttribute('href')==='https://proceedings.mlr.press/v306/wang26jf.html'"""),
+              'RLAnything source must point to official ICML proceedings')
         check(js("return document.querySelectorAll('.deep-chapter[open]').length===0"),
               'Detailed formulas or cases should start collapsed')
         check(js("return document.querySelector('.deep-terms').children.length===3"),
@@ -150,6 +158,12 @@ def main():
         js("document.querySelector('#deep-rsi-anything-2610-13912--stage-challenge').scrollIntoView({block:'start'})")
         time.sleep(.8)
         screenshot('reading-notes-story-desktop.png')
+        js("document.querySelector('#deep-rsi-anything-2610-13912--stage-related').scrollIntoView({block:'start'})")
+        time.sleep(.8)
+        screenshot('reading-related-work-desktop.png')
+        js("document.querySelector('#related-rsi-anything-2610-13912--cure summary').click()")
+        check(js("return document.querySelector('#related-rsi-anything-2610-13912--cure').open"),
+              'CURE difference and evidence did not expand')
         js("document.querySelector('#deep-rsi-anything-2610-13912--example summary').click()")
         check(js("return document.querySelector('#deep-rsi-anything-2610-13912--example').open"),
               'Clicking the example did not expand it')
@@ -219,7 +233,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':11}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':12}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

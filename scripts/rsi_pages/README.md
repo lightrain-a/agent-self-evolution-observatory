@@ -14,6 +14,7 @@
 - **研究转化**：`our_relevance`、`next_test`，写可验证的迁移实验，不能表述成原论文已证明的事情。
 - **发现与检索**：`tags` 供归类，站内全局搜索索引和本页筛选由构建流程自动更新。
 - **完整精读（可选）**：为深入读过的论文追加 `deep_read`（`focus`、`terms` 术语白话解释、`sections`）。每章填写稳定 `id`、短中文 `title`、`stage`（`challenge` / `insight` / `design` / `result` / `next`）及内容 `blocks`，同组可用 `order` 控制显示顺序。正文按四段主线展示短解释，例子、公式、实验证据折叠在相应段落中；`next` 单独承载局限与我们的延伸。通用块类型仍为 `prose`、`steps`、`formula`、`table`、`callout`、`evidence`、`bullets`、`tests`。构建脚本自动生成 `rsi/reading-notes.html`、卡片跳转和章节搜索索引。
+- **Closest Related Work（可选）**：`rsi/related-work.json` 独立于广覆盖来源台账，按论文 `paper_id` 保存经过原文核验的最近邻比较。采用 Obsidian《AI审稿时代的Related Work与Novelty前置》的 `closest work → shared → different → why → decisive evidence`；每行还要保存问题、更新对象、反馈来源、原论文/正式发表状态、与被精读论文的比较关系和是否具有公平直接对照。最近邻仅保留 3–8 项，其余放“领域脉络补充”。网页自动将表格放在 **Result 之后、研究延伸之前**，速览卡片显示直接跳转。
 
 **先说人话，再引入术语**：第一屏应该能让首次阅读者在 60 秒内复述“难在哪里—为什么可解—怎么做—结果怎样”；出现 Policy / World Model / Pair Gate 等术语时，先给一个常见场景和一句白话解释。标题优先用问题句（如“为什么两个模型都变好，系统反而变差？”），不要用“Section 2.5 · 多模态自适应组合增益”式空泛标题。公式放到读者已经理解其必要性之后。
 

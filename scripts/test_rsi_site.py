@@ -179,6 +179,29 @@ def main():
         for section in section_ids:
             check(f'id="deep-{pid}--{section}"' in notes_html,
                   'Deep-read section missing: '+pid+'/'+section)
+    related_data=json.loads((ROOT/'rsi/related-work.json').read_text(encoding='utf-8'))
+    check(related_data['schema_version']==1,'Related-work registry schema changed without migration')
+    check(len(related_data['targets'])>=1,'No audited related-work comparisons')
+    for target in related_data['targets']:
+        pid=target['paper_id']
+        check(any(p['id']==pid and p.get('deep_read') for p in cards),
+              'Related-work target lacks a source reading card: '+pid)
+        closest=[x for x in target['works'] if x['distance']=='closest']
+        check(3<=len(closest)<=8,'Closest work table must contain 3-8 true comparators')
+        check(f'href="reading-notes.html#deep-{pid}--stage-related"' in card_html,
+              'Card lacks Related Work jump link: '+pid)
+        check(f'id="deep-{pid}--stage-related"' in notes_html,
+              'Related Work stage not rendered: '+pid)
+        check(len({x['id'] for x in target['works']})==len(target['works']),
+              'Duplicate related work ID: '+pid)
+        for work in target['works']:
+            check(work['primary_url'].startswith('https://'),'Non-official related source URL: '+work['id'])
+            check(all(work.get(key) for key in ['shared','difference','why','evidence','decisive_test','source_scope']),
+                  'Unverifiable related work comparison: '+work['id'])
+            check(f'id="related-{pid}--{work["id"]}"' in notes_html,
+                  'Related-work paper details missing: '+work['id'])
+    check('读表结论' in notes_html and '不能' in notes_html,
+          'Related-work comparison lacks calibrated conclusion and limitations')
     check('教学示例' in notes_html and '非论文' in notes_html,
           'Deep-read evidence provenance caveat missing')
     check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
@@ -253,6 +276,11 @@ def main():
     for slug in PAGES:
         check(f'"{slug}.html"' in nav,f'Missing RSI-only navigation: {slug}')
     records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
+    for target in related_data['targets']:
+        for work in target['works']:
+            url=f'reading-notes.html#related-{target["paper_id"]}--{work["id"]}'
+            check(sum(r['url']==url for r in records)==1,
+                  'Related-work source missing or repeated in global search: '+work['id'])
     for card in cards:
         indexed=[r for r in records if r['url']==f"reading-cards.html#{card['id']}"]
         check(len(indexed)==1,'Paper missing or duplicated in global search')
@@ -275,6 +303,8 @@ def main():
             check((public/'rsi'/name).is_file(),f'RSI standalone asset missing: {name}')
             check((public/'rsi'/name).read_bytes()==src.read_bytes(),f'RSI standalone asset drift: {name}')
         check((public/'rsi/site-nav.js').read_bytes()==(ROOT/'rsi/site-nav.js').read_bytes(),'RSI nav export drift')
+        check((public/'rsi/related-work.json').read_bytes()==(ROOT/'rsi/related-work.json').read_bytes(),
+              'Published related-work source differs from reviewed registry')
         check(not list(public.rglob('*.py')),'Python leaked into public output')
         check((public/'rsi/sources.json').read_bytes()==(ROOT/'rsi/sources.json').read_bytes(),'Exported source manifest differs')
     print(f'PASS: {len(PAGES)} RSI pages, {len(refs)} sources, {len(records)} search records, local links/anchors, nav and public export.')

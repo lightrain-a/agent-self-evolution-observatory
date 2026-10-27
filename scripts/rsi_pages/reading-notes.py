@@ -7,18 +7,26 @@ from __future__ import annotations
 
 import html
 import json
+import runpy
 import re
 from pathlib import Path
 
 SOURCE = Path(__file__).resolve().parents[2] / "rsi" / "reading-cards.json"
 PAPERS = json.loads(SOURCE.read_text(encoding="utf-8"))["papers"]
 DEEP = [p for p in PAPERS if p.get("deep_read")]
+RELATED_MODULE = runpy.run_path(str(SOURCE.parent.parent / "scripts" / "rsi_pages" / "related_work.py"))
+RELATED = RELATED_MODULE["TARGETS"]
+render_related = RELATED_MODULE["render"]
+validate_related = RELATED_MODULE["validate"]
+related_search_records = RELATED_MODULE["search_records"]
+assert set(RELATED) <= {p["id"] for p in DEEP}, "Related Work must have a deep-read paper"
 TYPES = {"prose", "table", "steps", "formula", "callout", "evidence", "bullets", "tests"}
 STAGES = [
     ("challenge", "Challenge", "难在哪里"),
     ("insight", "Insight", "为什么可解"),
     ("design", "Design", "具体怎么做"),
     ("result", "Result", "结果怎么样"),
+    ("related", "Related Work", "和前人到底哪里不同"),
     ("next", "Next", "哪些问题还没解决"),
 ]
 
@@ -96,6 +104,8 @@ def validate_deep(p: dict) -> None:
     assert {key for key, _, _ in STAGES[:4]} <= {s["stage"] for s in d["sections"]}, (
         f"Challenge, Insight, Design, Result must all be supported: {p['id']}"
     )
+    if p["id"] in RELATED:
+        validate_related(RELATED[p["id"]])
 
 
 def full_text(value) -> str:
@@ -115,7 +125,7 @@ def render_paper(p: dict) -> str:
     stage_nav = "".join(
         f'<a href="#{e(base)}--stage-{stage}">{e(en)} · {e(zh)}</a>'
         for stage, en, zh in STAGES
-        if any(s["stage"] == stage for s in d["sections"])
+        if any(s["stage"] == stage for s in d["sections"]) or (stage == "related" and p["id"] in RELATED)
     )
     terms = "".join(
         f'<div><dt>{e(item["name"])}</dt><dd>{e(item["meaning"])}</dd></div>'
@@ -139,19 +149,23 @@ def render_paper(p: dict) -> str:
     stage_parts = []
     for index, (stage, english, chinese) in enumerate(STAGES, start=1):
         chapters = [s for s in d["sections"] if s["stage"] == stage]
-        if not chapters:
+        if not chapters and not (stage == "related" and p["id"] in RELATED):
             continue
         chapters.sort(key=lambda s: s.get("order", 100))
-        lead = p["story"].get(stage) if stage != "next" else (
-            d.get("afterword") or "这些是尚未解决的科学问题，不应当写成原论文已经证明的结论。"
+        lead = (
+            RELATED[p["id"]]["one_sentence"] if stage == "related" and p["id"] in RELATED
+            else p["story"][stage] if stage not in ("next", "related")
+            else d.get("afterword") or "这些是尚未解决的科学问题，不应当写成原论文已经证明的结论。"
+        )
+        detail_html = (
+            render_related(RELATED[p["id"]], base) if stage == "related" and p["id"] in RELATED
+            else "".join(chapter(s) for s in chapters)
         )
         stage_parts.append(
             f'<section class="deep-stage" id="{e(base)}--stage-{stage}" data-story-stage="{e(stage)}">'
             f'<header class="deep-stage-head"><span>{index:02d} · {e(english)}</span><h4>{e(chinese)}</h4></header>'
             f'<p class="deep-stage-lead">{e(lead)}</p>'
-            '<div class="deep-stage-details">'
-            + "".join(chapter(s) for s in chapters)
-            + '</div></section>'
+            '<div class="deep-stage-details">' + detail_html + '</div></section>'
         )
     links = "".join(
         f'<a class="link-btn" target="_blank" rel="noopener noreferrer" href="{e(p["links"][key])}">{label}</a>'
@@ -195,5 +209,9 @@ PAGE = {
         }
         for p in DEEP
         for section in p["deep_read"]["sections"]
+    ] + [
+        record
+        for p in DEEP
+        for record in related_search_records(p["id"], f'deep-{p["id"]}')
     ],
 }

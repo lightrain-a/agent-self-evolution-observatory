@@ -168,6 +168,43 @@ html{scroll-behavior:smooth;scroll-padding-top:82px}body[data-rsi-page]{font-fam
  .deep-chapter-body{padding:11px 12px 15px}
 }
 
+/* Auditable Related Work: compact comparison first; sources and mechanisms on demand. */
+.reading-related-link{background:#f5f7fb;border-color:#d4dfec;color:#2d597f!important;font-weight:680}
+.deep-related{display:grid;gap:13px;padding-bottom:8px}
+.deep-related-takeaway{margin:2px 0 8px!important;font-size:13px;line-height:1.85;color:#47627e}
+.deep-related h5{margin:8px 0 0;font-size:14px;line-height:1.6;color:#2b4a68}
+.deep-related-evolution{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
+.deep-related-evolution li{border-top:2px solid #a2b8d0;background:#f5f8fc;border-radius:4px;padding:11px 12px;line-height:1.6}
+.deep-related-evolution b{display:block;font-size:11px;color:#33577a}
+.deep-related-evolution span{display:block;margin-top:3px;font-size:11.5px;color:#506681}
+.deep-related-instructions{font-size:12px;color:#60728a;margin:0!important;line-height:1.75}
+.deep-related-matrix{overflow-x:auto;max-width:100%;border:1px solid #dce5ed;border-radius:8px;background:#fff}
+.deep-related-matrix table{border-collapse:collapse;min-width:770px;width:100%;font-size:12px;line-height:1.75}
+.deep-related-matrix th{padding:11px 12px;background:#f1f5f9;color:#2e4b6a;text-align:left;white-space:nowrap;font-size:12px}
+.deep-related-matrix td{padding:12px;border-top:1px solid #e7edf2;vertical-align:top}
+.deep-related-matrix td:nth-child(1){min-width:135px;width:19%}
+.deep-related-matrix td:nth-child(2){min-width:160px;width:21%}
+.deep-related-matrix td:nth-child(3){min-width:175px;width:22%}
+.deep-related-matrix td:nth-child(4){min-width:220px}
+.deep-related-matrix td a{font-weight:730;text-decoration:none}
+.deep-related-matrix td small{font-size:10.5px;color:#6a7d90;line-height:1.6;display:block;margin-top:3px}
+.deep-related-paper{scroll-margin-top:95px;border:1px solid #e1e7ef;border-radius:8px;background:#fbfcfe}
+.deep-related-paper summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px;font-size:12px;color:#315777;font-weight:710}
+.deep-related-paper summary small{font-size:10.5px;color:#748598;font-weight:500}
+.deep-related-paper[open] summary{border-bottom:1px solid #e1e7ef;background:#f2f6fb}
+.deep-related-paper-body{padding:9px 14px 12px}
+.deep-related-paper-body p{font-size:12px;line-height:1.85;margin:7px 0!important;color:#3b536b}
+.deep-related-paper-body p b{color:#2c4c6a}
+.deep-related-paper-body .deep-related-source{padding-top:8px;border-top:1px dashed #dae3ed;font-size:11px;color:#65788b}
+.deep-related-venue{font-size:11px!important;color:#62778b!important}
+.deep-related-context{border:1px solid #dfe7f0;border-radius:9px;padding:0;background:#f8fafc}
+.deep-related-context>summary{cursor:pointer;padding:12px;font-size:12px;font-weight:700;color:#3e5d7b}
+.deep-related-context[open]>summary{border-bottom:1px solid #dfe7f0}
+.deep-related-context>.deep-related-matrix,.deep-related-context>.deep-related-paper{margin:10px}
+.deep-related-boundary{padding:11px 13px;border-left:3px solid #bdcddd;background:#f6f9fc;border-radius:0 6px 6px 0;font-size:12px;line-height:1.8;margin:0!important}
+.deep-related-provenance{color:#6a7d90;font-size:11px;line-height:1.8}
+@media(max-width:900px){.deep-related-evolution{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.deep-related-evolution{grid-template-columns:1fr}.deep-related-matrix table{min-width:720px}.deep-related-paper summary{font-size:11px}}
 /* RSI navigation: Agent-style expandable primary folders, indented page links. */
 [data-rsi-page] #research-nav{padding-top:12px}
 [data-rsi-page] #research-nav .nav-group{margin:5px 0 8px;border:1px solid transparent;border-radius:11px;transition:background .15s,border-color .15s}
