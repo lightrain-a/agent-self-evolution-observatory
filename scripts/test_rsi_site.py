@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -49,7 +49,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)==86 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,18)) and {'M10','M11','M12','M13'}<=refs,'Expected I1–I8 citations including I6 stop/revisit and I8 DATAPROPHET')
+    check(len(refs)==95 and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,18)) and {'M10','M11','M12','M13','S90'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I8 citations plus nine I5 Nature and co-learning sources')
     check(source['review_date']=='2026-10-27','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -101,7 +101,7 @@ def main():
         'overview':['index','timeline'],
         'literature':['literature','reading-cards','reading-notes','references'],
         'methods':['cross-domain','learning-science'],
-        'research':['ideas','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments'],
+        'research':['ideas','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     grouped_slugs=[]
@@ -203,7 +203,11 @@ def main():
               f'I{idea_number}: Challenge -> Related Work -> Insight -> Design -> Experiment order drift')
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
-    check('交流结束后' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
+    check('十模型互教' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
+    i5_text=(ROOT/'rsi/idea-i5.html').read_text(encoding='utf-8')
+    check('href="idea-i5.html"' in ideas_text and 'href="idea-i5.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I5 page not linked from home/ideas')
+    check(all(k in i5_text for k in ('十个模型','换舞伴','Bridge ties bind collective memories','PopuLoRA','OPCoD','HACE','I7','未见任务')),'I5 evidence, orthogonal labels or controls missing')
+    check(all(f'id="{x}"' in i5_text for x in ('scene','papers','collisions','challenge','insight','design','experiments','summary')),'I5 required section missing')
     i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
     for label in ['Observable Phenomenon','Why','Challenge','Insight','Design','决定性实验','Related Work','预注册判断']:
         check(label in i8_html,'I8 research mechanism structure missing: '+label)

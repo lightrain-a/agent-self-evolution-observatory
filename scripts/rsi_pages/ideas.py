@@ -17,7 +17,7 @@ PAGE = {
  <a class="idea-board-card" href="#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，为什么学习方法不同？</b><small>根据真实学习反应选方法</small></a>
  <a class="idea-board-card" href="#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用，却和旧方法冲突怎么办？</b><small>复习并解决适用条件冲突</small></a>
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
- <a class="idea-board-card" href="#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b><small>伙伴选择随能力一起演化</small></a>
+ <a class="idea-board-card" href="idea-i5.html"><span class="idea-id">I5 · 十模型互教</span><b>什么时候交换舞伴，才能一起变强？</b><small>十模型学习网络的动态重组</small></a>
  <a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 失败学习价值</span><b>哪条失败更值得纠正？何时停下再回来？</b><small>固定纠错方式，比较失败的独立收益与继续尝试成本</small></a>
  <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
@@ -66,15 +66,14 @@ PAGE = {
  <div class="flow"><div><b>列出失败原因</b><small>策略错 / 工具故障 / 偶发</small></div><div><b>做辨别性尝试</b><small>只变一个关键条件</small></div><div><b>判断何时停止</b><small>证据是否足够</small></div><div><b>形成新 Skill</b><small>再到未见任务复验</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>在 API 异常、工具使用和代码执行任务上，比较<strong>失败后立即总结、固定重试 N 次、随机补充尝试、针对可能原因选试验并决定停止</strong>。匹配 Token、环境调用和总预算，混合可控故障与自然失败。主要比较写入错误规则的比例、未见场景的迁移、单位成本的学习收益；不把“多试几次自然多成功”误当成新机制。整个过程不需要外部教师告诉标准答案。</p></div>
  </div>'''),
- ("idea-5", "I5：费曼学习法——和谁一起学，自己进步最快？", '''
- <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>和最强模型一起解题，未必最能让我成长。随着我自己越来越强，谁才是最合适的学习伙伴？</p></div>
+ ("idea-5", "I5：十模型互教——什么时候交换舞伴，才能一起变强？", '''
+ <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>十个能力、专长各异的模型像一个学习班，每轮两两互教、各自更新，再交换搭档。我们想知道<strong>什么时候应继续和原伙伴学、什么时候应换人，才能让更多模型长期学到新本领，而不只是一起把眼前的题做对？</strong></p></div>
  <div class="idea-steps">
- <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>伙伴帮我把眼前一道题做对，不等于它离开后我还能独立完成新题。只看参数量、当前回答收益或两个人的分数，可能选到很会帮忙、却不利于我学习的伙伴。而且我变强后，原来的伙伴未必还合适。</p></div>
- <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>PopuLoRA</b> 研究的是谁应该给谁出题；<b>OPCoD</b> 研究的是什么时候应该交换或接受同伴教学反馈；<b>MACE</b> 也做伙伴探索和选择，但更关注交互过程中的协作与当前任务表现。我们希望研究的是<strong>谁能让我下一轮独立解决新问题时学得更快、更好</strong>。[[S32]][[S33]][[S34]]</p></div>
- <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>最强的伙伴可能讲得太难，同水平的伙伴又可能只会重复我已经知道的内容。<strong>用交流结束后独立完成新任务的进步，来判断伙伴是否适合自己</strong>，而不是只看这次合作表现，就可能找到真正有利于自身成长的配对方式。</p></div>
- <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>建立能力水平和擅长领域不同的伙伴池。Agent 与伙伴交流或互教，随后更新自己的 Skill 或参数。每轮把伙伴撤走、清空临时对话，在新题上独立测自己的进步，再据此决定下一轮应该找谁学；自己变强后重新选择。</p>
- <div class="flow"><div><b>选择学习伙伴</b><small>能力、规模与知识互补</small></div><div><b>交流与互教</b><small>相同任务和教学预算</small></div><div><b>自己完成更新</b><small>Skill / 参数分开验证</small></div><div><b>撤走伙伴再测试</b><small>独立进步指导下轮匹配</small></div></div></div>
- <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从不同能力、不同模型家族的伙伴开始，连续多轮比较<strong>随机匹配、同水平匹配、总找最强者、PopuLoRA 式匹配、按当前交互收益选伙伴、按下一轮独立学习收益选伙伴</strong>。控制交流、训练和计算预算，测新题独立成功率、旧能力保持及最佳伙伴是否随能力改变；再做“交流但不更新自己”的对照，排除只是组队把题做对。</p><p class="idea-side-note">此前<a href="teaching.html">I5 教学反馈诊断支线</a>研究的是学生反馈能否暴露教师的知识盲点；当前 I5 主线研究的是与谁学习最有利于自身进步。两者保留为不同研究问题。</p></div>
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>一直与同一模型交流，可能反复交换已经掌握的知识；总跟最强模型，又可能难以吸收它的解法，甚至让十个模型越来越相似。更重要的是，组队答对不代表离开伙伴后学会。不同轮次的交换顺序、知识互补和双方收益都可能影响长期增长。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>NC 2019《Bridge ties》</b> 研究相同交流次数下，先跨圈还是先组内交流如何改变群体记忆；<b>NC 2026</b> 研究多代人机群体如何通过选择示范者传播新策略。<b>PopuLoRA</b> 已做模型群体出题与共同进化；<b>OPCoD</b> 已做双模型互教；<b>MACE</b> 已做合作伙伴选择；<b>HACE</b> 已做异构模型和 Agent 的相互进化。它们不是空白。[[E90]][[E93]][[S32]][[S33]][[S34]][[S90]]</p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>一个伙伴的价值，不在于他有多强，而在于双方交流后<strong>各自能独立学到多少以前不会的东西</strong>。有效的伙伴关系可能随能力和知识变化而变化：需要新方法时跨圈交流，需要消化时保持配对，双方都学不到新东西时再换。Nature 系列关于知识分布、网络结构与收益学习的发现支持研究动机，但未直接验证 LLM 的这种更新。[[E91]][[E92]][[E94]][[E95]]</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>十个模型分成五对，分别交换验证过的正确和错误轨迹，双方使用<strong>相同且固定的更新器</strong>更新自己的 LoRA / Skill（首轮只固定一种更新面）。交流后撤除伙伴、清空临时上下文，在未见题上独立测试新能力和旧能力保持，再估计原配对继续交流与换伴的下一轮收益。在十节点伙伴网络里重配五对，而不是固定让最强模型当老师。</p><div class="flow"><div><b>十个独立模型</b><small>不同能力 × 不同专长</small></div><div><b>五对双向互教</b><small>同预算、同教学协议</small></div><div><b>撤伴独立考试</b><small>双方能力增益与保持</small></div><div><b>重选伙伴与顺序</b><small>边际学习收益决定留伴或换伴</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先用 4 模型做全配对的学习收益测量，再扩展到 10 模型，比较<strong>固定伙伴、随机轮换、round-robin、固定最强教师、同级配对、跨专长配对、先跨组后巩固、PopuLoRA / MACE 风格匹配、学习收益驱动的动态换伴</strong>。各模型交流、参数更新和算力预算匹配，报告个人独立能力、全班净增益、旧能力保持、新解法发现与过早同质化。如果简单轮换已同样有效，就不单独提出复杂路由器。</p><p class="idea-side-note"><b>正交边界：</b>I5 只研究<strong>谁和谁学、何时换伴</strong>；I2 负责如何教学，I3 负责巩固，I6 研究失败轨迹的学习价值，I7 研究先试还是先学，I8 研究高置信错误的迁移。<a href="idea-i5.html">查看 Nature 证据、完整十模型实验与停止条件 →</a>。<a href="teaching.html">教学反馈诊断教师盲点</a>是历史支线，不与 I5 主线混作同一贡献。</p></div>
  </div>'''),
  ("orthogonal", "I6、I7 与 I8：一次只研究一个变量", '''
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>

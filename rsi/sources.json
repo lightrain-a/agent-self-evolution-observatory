@@ -861,6 +861,96 @@
       "level": "ICLR 官方摘要和方法指标核对",
       "note": "在视觉语言模型跨数据集监督迁移中，训练前综合困惑度、相似性和多样性预测各数据集对目标基准的真实训练收益；候选单位是数据集而非当前模型单条错误。",
       "code": ""
+    },
+    {
+      "id": "S90",
+      "group": "RSI",
+      "title": "Heterogeneous Agentic Coevolution (HACE)",
+      "date": "arXiv 26.10",
+      "url": "https://arxiv.org/abs/2610.16078",
+      "level": "作者论文与官方项目页核对；2026-10-27",
+      "note": "专用模型与 LLM Agent 的互惠学习，且通过进化 Harness 调整数据交换与训练样本；I5 不能声称首次异构共进化，须证明十模型间动态接触关系的独立收益。",
+      "code": "https://wenqian-ye.github.io/hace/"
+    },
+    {
+      "id": "E90",
+      "group": "学习科学",
+      "title": "Bridge ties bind collective memories",
+      "date": "Nature Communications 2019",
+      "url": "https://www.nature.com/articles/s41467-019-09452-y",
+      "level": "Nature Communications 正文与方法核对；2026-10-27",
+      "note": "16人网络每人4次轮换对话，只改变跨簇/簇内的先后次序；群体记忆对齐受次序影响，主总体收敛比较p约0.052；不是模型参数学习证据。",
+      "code": ""
+    },
+    {
+      "id": "E91",
+      "group": "学习科学",
+      "title": "Clustering knowledge and dispersing abilities enhances collective problem solving in a network",
+      "date": "Nature Communications 2019",
+      "url": "https://www.nature.com/articles/s41467-019-12650-3",
+      "level": "Nature Communications 原文摘要与模拟结果核对；2026-10-27",
+      "note": "基于 Agent 的群体求解研究知识与能力在网络中的空间分布；支持分别操纵能力差距和专长互补，不能直接当作 LLM 动态换伴训练结果。",
+      "code": ""
+    },
+    {
+      "id": "E92",
+      "group": "学习科学",
+      "title": "Modularity and composite diversity affect the collective gathering of information online",
+      "date": "Nature Communications 2021",
+      "url": "https://www.nature.com/articles/s41467-021-23424-1",
+      "level": "Nature Communications 正文与实验分析核对；2026-10-27",
+      "note": "真实在线信息搜索及预测任务，随机操纵群体多样性与模块化，观察独立和群体预测收益；不是持续权重更新。",
+      "code": ""
+    },
+    {
+      "id": "E93",
+      "group": "学习科学",
+      "title": "Propagation and preservation of AI-discovered problem-solving strategies in human culture",
+      "date": "Nature Communications 2026",
+      "url": "https://www.nature.com/articles/s41467-026-76113-2",
+      "level": "Nature Communications 论文正文与实验流程核对；2026-10-27",
+      "note": "五代人机群体从上一代选择示范者；策略须新颖、可学、有可辨优势才能长久传播；不等于同一代十个模型双向更新。",
+      "code": ""
+    },
+    {
+      "id": "E94",
+      "group": "学习科学",
+      "title": "Feature-based reward learning shapes human social learning strategies",
+      "date": "Nature Human Behaviour 2025",
+      "url": "https://www.nature.com/articles/s41562-025-02269-4",
+      "level": "Nature Human Behaviour 原文方法核对；2026-10-27",
+      "note": "六项人类实验n=1941，社会学习策略可随历史收益而改变；激励学习伙伴选择机制，但不能直接视为 RSI 训练实测。",
+      "code": ""
+    },
+    {
+      "id": "E95",
+      "group": "学习科学",
+      "title": "Copy or collaborate? How networks impact collective problem solving",
+      "date": "npj Complexity 2025",
+      "url": "https://www.nature.com/articles/s44260-025-00058-8",
+      "level": "npj Complexity 原文模型与结果核对；2026-10-27",
+      "note": "基于群体求解模型区分模仿现有较优解与组合知识探新解，两者对群体平均收益与最佳解影响不同；并非真实 LLM 参数共进化。",
+      "code": ""
+    },
+    {
+      "id": "E96",
+      "group": "学习科学",
+      "title": "Payoff selectivity drives collective intelligence during dynamic resource tracking in humans",
+      "date": "Nature Communications 2026",
+      "url": "https://www.nature.com/articles/s41467-026-77762-z",
+      "level": "Nature Communications 正文实验分析核对；2026-10-27",
+      "note": "621人动态群体资源追踪，可信收益信息使其选择性关注表现好的同伴且灵活重组信息流；属于合作表现而非新模型能力的长程学习。",
+      "code": ""
+    },
+    {
+      "id": "E97",
+      "group": "学习科学",
+      "title": "Effects of the Jigsaw method on student educational outcomes: systematic review and meta-analyses",
+      "date": "教育学系统综述 2023",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10436097/",
+      "level": "系统综述摘要与学习流程核对；2026-10-27",
+      "note": "Jigsaw 包含临时专家组与原学习组的往返和互教；只是组织结构启发，不是动态伙伴匹配或 RSI 共进化的直接证据。",
+      "code": ""
     }
   ]
 }

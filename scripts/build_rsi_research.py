@@ -12,16 +12,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-27'
-ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']
-LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', '研究方向 · I1–I8', 'I6 · 失败过程的学习价值', 'I7 · 先试还是先学', 'I8 · 错误可学习性与迁移', '教学反馈诊断 · I5 支线', '归档 · 跨轮瓶颈切换', '实验执行方案', '来源与核验记录']
-EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'I1–I8 · Research Ideas', 'I6 · Learning Value of Failure Trajectories', 'I7 · Learning Order', 'I8 · Error Learnability & Transfer', 'I5 · Teaching Feedback Branch', 'Archive · Bottleneck Switching', 'Experiments', 'Sources']
+ORDER = ['index', 'timeline', 'literature', 'reading-cards', 'reading-notes', 'cross-domain', 'learning-science', 'ideas', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']
+LABELS = ['专题总览', '研究时间轴 · 会议 DDL', '文献与竞争边界', '论文精读卡片', '论文完整精读', '相邻领域方法', '教育学与学习科学', '研究方向 · I1–I8', 'I5 · 十模型互教与动态换伴', 'I6 · 失败过程的学习价值', 'I7 · 先试还是先学', 'I8 · 错误可学习性与迁移', '教学反馈诊断 · I5 支线', '归档 · 跨轮瓶颈切换', '实验执行方案', '来源与核验记录']
+EN_LABELS = ['Overview', 'Research Timeline & DDLs', 'Literature', 'Paper Reading Cards', 'Full Paper Deep Reads', 'Cross-domain Methods', 'Learning Science', 'I1–I8 · Research Ideas', 'I5 · Rotating Learning Partners', 'I6 · Learning Value of Failure Trajectories', 'I7 · Learning Order', 'I8 · Error Learnability & Transfer', 'I5 · Teaching Feedback Branch', 'Archive · Bottleneck Switching', 'Experiments', 'Sources']
 # A single, ordered definition of RSI primary and secondary navigation.
 # The same hierarchy is rendered server-side (without JS) and client-side.
 NAV_SECTIONS = [
     {'id':'overview', 'title':{'zh':'专题入口', 'en':'Start Here'}, 'slugs':['index', 'timeline']},
     {'id':'literature', 'title':{'zh':'文献与论文精读', 'en':'Literature & Reading'}, 'slugs':['literature', 'reading-cards', 'reading-notes', 'references']},
     {'id':'methods', 'title':{'zh':'方法与学习科学', 'en':'Methods & Learning Science'}, 'slugs':['cross-domain', 'learning-science']},
-    {'id':'research', 'title':{'zh':'研究方向与实验', 'en':'Ideas & Experiments'}, 'slugs':['ideas', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']},
+    {'id':'research', 'title':{'zh':'研究方向与实验', 'en':'Ideas & Experiments'}, 'slugs':['ideas', 'idea-i5', 'idea-i6-failure-value', 'idea-i7-learning-order', 'i8', 'teaching', 'idea-i6', 'experiments']},
 ]
 
 
