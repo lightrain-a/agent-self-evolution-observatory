@@ -18,8 +18,8 @@
   const isUpcoming = (row, now) => {
     const official = row.dataset.dueAt;
     if (official) return Date.parse(official) > now;
-    const documented = Date.parse(row.dataset.date + 'T23:59:59Z');
-    return Number.isFinite(documented) && documented > now;
+    // Reading notes and research records are documented events, not future plans.
+    return false;
   };
 
   function refresh() {

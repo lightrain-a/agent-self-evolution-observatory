@@ -78,6 +78,8 @@ def main():
         check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==expected_deadlines,'Deadline filter failed')
         js("const k=document.querySelector('#rsi-tl-kind');k.value='reading';k.dispatchEvent(new Event('change',{bubbles:true}))")
         check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==len(reading_papers),'Reading filter failed')
+        js("const t=document.querySelector('#rsi-tl-time');t.value='upcoming';t.dispatchEvent(new Event('change',{bubbles:true}))")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==0,'Completed reading notes must not appear as upcoming')
         js("document.querySelector('#rsi-tl-reset').click()")
         check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==all_events,'Timeline reset did not restore all events')
         js("const q=document.querySelector('#rsi-tl-query');q.value='CVPR';q.dispatchEvent(new Event('input',{bubbles:true}))")
