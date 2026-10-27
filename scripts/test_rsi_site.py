@@ -4,12 +4,13 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+from datetime import date, datetime, timedelta
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -46,13 +47,54 @@ def main():
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
     check(len(refs)==51,'Expected the audited 51-record source snapshot')
     check(source['review_date']=='2026-10-21','Review date drift')
+    timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
+    check(timeline['schema_version']=='1.0','Timeline schema incompatible')
+    date.fromisoformat(timeline['verified_at'])
+    venues={v['id']:v for v in timeline['venues']}
+    check(set(venues)=={'cvpr-2027','icml-2027','acl-2027'},'Expected three 2027 target conferences')
+    exact={
+        'cvpr-2027':{'cvpr-2027-registration':'2026-11-10',
+                     'cvpr-2027-paper':'2026-11-16',
+                     'cvpr-2027-supplementary':'2026-11-23'},
+        'acl-2027':{'acl-2027-arr':'2027-01-04'},
+        'icml-2027':{},
+    }
+    all_deadlines={}
+    for venue_id,venue in venues.items():
+        check(venue['source_url'].startswith('https://'),'Conference missing official source')
+        for ddl in venue['deadlines']:
+            check(ddl['id'] not in all_deadlines,'Duplicate conference deadline id')
+            all_deadlines[ddl['id']]=ddl
+            if ddl['status']=='official':
+                check(ddl['date']==exact[venue_id][ddl['id']],f'Unverified official DDL drift: {ddl["id"]}')
+                parsed_due=datetime.fromisoformat(ddl['due_at'])
+                check(parsed_due.date()==date.fromisoformat(ddl['date']) and
+                      parsed_due.utcoffset()==timedelta(hours=-12) and
+                      parsed_due.hour==23 and parsed_due.minute==59,
+                      f'Official AoE instant is wrong: {ddl["id"]}')
+            else:
+                check(ddl['status']=='pending' and ddl['date'] is None and ddl['due_at'] is None,
+                      f'Unpublished deadline given a guessed date: {ddl["id"]}')
+    check(len(all_deadlines)==7 and len(exact['cvpr-2027'])+len(exact['acl-2027'])==4,
+          'Timeline DDL snapshot mismatch')
+    timeline_html=(ROOT/'rsi/timeline.html').read_text(encoding='utf-8')
+    for identifier in all_deadlines:
+        check(f'id="{identifier}"' in timeline_html,
+              'Deadline missing from timeline page: '+identifier)
+    for card in cards:
+        check(f'id="reading-{card["id"]}"' in timeline_html,
+              'New reading card not automatically included in timeline: '+card['id'])
+    check('timeline.css' in timeline_html and 'timeline-view.js' in timeline_html,
+          'Timeline runtime assets missing')
+    for id in ['rsi-tl-kind','rsi-tl-time','rsi-tl-query','rsi-tl-count']:
+        check(f'id="{id}"' in timeline_html,f'Timeline filter missing: {id}')
     # Primary groups and second-level pages share one ordered schema, and every
     # page must have exactly one active parent in the no-JavaScript fallback.
     nav_text=(ROOT/'rsi/site-nav.js').read_text(encoding='utf-8')
     check(nav_text.startswith('window.NAV_GROUPS = '),'Invalid standalone RSI navigation module')
     groups=json.loads(nav_text[len('window.NAV_GROUPS = '):].strip().removesuffix(';'))
     expected_groups={
-        'overview':['index'],
+        'overview':['index','timeline'],
         'literature':['literature','reading-cards','references'],
         'methods':['cross-domain','learning-science'],
         'research':['ideas','teaching','experiments'],
@@ -130,10 +172,15 @@ def main():
         u=urlsplit(r['url']); p=ROOT/'rsi'/u.path
         check(p in parsed and u.fragment in parsed[p].ids,'Search result target missing: '+r['url'])
     subprocess.run(['node','--check',str(ROOT/'rsi/research.js')],check=True)
+    subprocess.run(['node','--check',str(ROOT/'rsi/timeline-view.js')],check=True)
     public=ROOT/'_site'
     if public.exists():
         for slug in PAGES:
             check((public/'rsi'/f'{slug}.html').is_file(),f'Not exported: {slug}')
+        for filename in ['timeline-data.json','timeline-view.js','timeline.css']:
+            check((public/'rsi'/filename).is_file(),f'RSI timeline asset not exported: {filename}')
+            check((public/'rsi'/filename).read_bytes()==(ROOT/'rsi'/filename).read_bytes(),
+                  f'RSI timeline export differs from source: {filename}')
         for name,src in site_asset_sources.items():
             check((public/'rsi'/name).is_file(),f'RSI standalone asset missing: {name}')
             check((public/'rsi'/name).read_bytes()==src.read_bytes(),f'RSI standalone asset drift: {name}')

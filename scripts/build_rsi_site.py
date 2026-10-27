@@ -67,7 +67,8 @@ def build(output: Path = DEFAULT_OUTPUT) -> Path:
         )
 
     required = (
-        "index.html", "reading-cards.html", "ideas.html", "site-nav.js",
+        "index.html", "timeline.html", "timeline-data.json", "timeline.css", "timeline-view.js",
+        "reading-cards.html", "ideas.html", "site-nav.js",
         "research.js", "research.css", "site-base.css", "site-switch.css",
         "favicon.svg", "sources.json", "reading-cards.json", "deployment-manifest.json",
     )

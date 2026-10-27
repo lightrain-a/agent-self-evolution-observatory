@@ -8,9 +8,9 @@
 
 <div class="decision"><span class="kicker">RESEARCH POSITION · 2026.10</span><h3>优先检验：帮助是否转化为可保留的独立能力？</h3><p>建议把主线收敛为<strong>跨多轮学习的支持获取、撤除与能力巩固</strong>。相邻备选是<strong>学习者响应建模</strong>：预测某种学习干预对未来多项能力的作用，而不只预测眼前补丁是否通过。</p><p>这是本轮调研后的<strong>研究建议，不是已确认的新颖性或实验结果</strong>。先做短程与长程目标的辨别实验，再决定是否训练完整元策略。</p></div><p>近期近邻已相当具体：ActiveSaddler 覆盖失败驱动课程；SOAR 用真实学习收益训练出题者；前瞻课程工作考虑下游迁移；EduardoRL 已区分帮助完成与学习收益。不能把这些笼统概念单独当创新。<a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S17" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S17]</a><a class="cite" href="references.html#S18" title="Anticipating the Consequences of Curriculum Decisions with Large Language Models">[S18]</a><a class="cite" href="references.html#S19" title="The Assistance Dilemma: Learning to Teach via Multi-Turn Reinforcement Learning">[S19]</a></p>
 
-## RSI × 自主学习研究 / 九个研究页面：证据 → 机制来源 → 方法设计 → 实验
+## RSI × 自主学习研究 / 十个研究页面：时间轴 → 证据 → 方法 → 实验
 
-<div class="route-grid"><a href="literature.html"><b>01 · RSI 文献与竞争边界</b><span>修改什么、学习什么、什么已经有人做。</span></a><a href="reading-cards.html"><b>02 · 论文精读卡片</b><span>长期积累：一眼记住论文问题、机制、证据与对我们的启发。</span></a><a href="cross-domain.html"><b>03 · 相邻领域的方法迁移</b><span>元学习、课程、知识追踪、双重控制、持续学习。</span></a><a href="learning-science.html"><b>04 · 教育学与学习科学</b><span>来源支持什么，哪些机制不能直接照搬给机器。</span></a><a href="ideas.html"><b>05 · 四个候选 Idea</b><span>框架、最近邻、强基线、首轮实验与否定条件。</span></a><a href="teaching.html"><b>06 · I5 教学反馈自进化</b><span>详细机制、学生独立执行、归因矩阵、算法伪代码、两周预实验与否定条件。</span></a><a href="experiments.html"><b>07 · 实验执行方案</b><span>模型、环境、持久更新、数据隔离与元能力重置测试。</span></a><a href="references.html"><b>08 · 来源与核验记录</b><span>51 条论文/官方资源，区分正文、摘要和资源核对。</span></a></div>
+<div class="route-grid"><a href="timeline.html"><b>01 · RSI 研究时间轴</b><span>CVPR / ICML / ACL DDL、精读卡片与研究记录。</span></a><a href="literature.html"><b>02 · RSI 文献与竞争边界</b><span>修改什么、学习什么、什么已经有人做。</span></a><a href="reading-cards.html"><b>03 · 论文精读卡片</b><span>长期积累：一眼记住论文问题、机制、证据与对我们的启发。</span></a><a href="cross-domain.html"><b>04 · 相邻领域的方法迁移</b><span>元学习、课程、知识追踪、双重控制、持续学习。</span></a><a href="learning-science.html"><b>05 · 教育学与学习科学</b><span>来源支持什么，哪些机制不能直接照搬给机器。</span></a><a href="ideas.html"><b>06 · 四个候选 Idea</b><span>框架、最近邻、强基线、首轮实验与否定条件。</span></a><a href="teaching.html"><b>07 · I5 教学反馈自进化</b><span>详细机制、学生独立执行、归因矩阵、算法伪代码、两周预实验与否定条件。</span></a><a href="experiments.html"><b>08 · 实验执行方案</b><span>模型、环境、持久更新、数据隔离与元能力重置测试。</span></a><a href="references.html"><b>09 · 来源与核验记录</b><span>51 条论文/官方资源，区分正文、摘要和资源核对。</span></a></div>
 
 ## RSI × 自主学习研究 / 必须分开的三个研究主张
 
@@ -23,6 +23,126 @@
 ## RSI × 自主学习研究 / 本专题边界与旧站关系
 
 <p>本次是针对选题的<strong>定向、可追踪综述</strong>，不是声称收齐全部 RSI 工作的系统综述。覆盖自修改、学习型 Harness、课程与元学习、学习科学、实验资源；主要依赖原论文、作者机构和官方仓库。逐项阅读深度见来源页。</p><p>新增 <a href="teaching.html"><b>I5：教学反馈驱动教师自改进</b></a>，把学生独立执行、反事实归因、教师可回滚更新与 Meta-reset 明确为可执行实验，不将师生对话本身称作创新。</p><p>原站的 <a href="https://agent-evolution.lightrain.asia/paper-ideas.html">论文 Idea 实验室</a>与<a href="https://agent-evolution.lightrain.asia/selected-paper.html">已选方向</a>保留不变。旧记录已有 Delayed Regression Exams、Regression-Probe Half-Life 等提案。本轮不把“增加延迟考试”重新包装成新 idea；新候选须改变<strong>学习干预本身</strong>。</p><div class="status-strip"><b>当前状态</b><span>文献与方案已整理</span><span>环境运行验证待做</span><span>候选均未通过实验门槛</span><span>未宣称独立专家评审通过</span></div>
+
+## RSI 研究时间轴 / 投稿目标与时间轴概览
+
+<div class="rsi-tl-intro">
+    <div class="rsi-tl-intro-main"><span class="rsi-tl-kicker">RSI / RESEARCH ROADMAP / 2026—2027</span>
+    <h3>研究进展与投稿窗口，在同一条时间轴上。</h3>
+    <p>将 RSI 论文阅读和资料整理记录，与目标会议正式 DDL 分层展示。所有日期都保留原始来源，<b>未公布的截稿日期不采用猜测值</b>。</p></div>
+    <div class="rsi-tl-overview">
+      <div><strong>03</strong><span>目标会议</span></div>
+      <div><strong>04</strong><span>已确认投稿节点</span></div>
+      <div><strong>02</strong><span>精读论文卡片</span></div>
+    </div>
+</div><p class="rsi-tl-validation">信息核验：2026-10-27 · 所有已确认投稿节点均为 23:59 AoE（UTC−12）；倒计时按 UTC−12 的真实截止时刻计算，非本地日历零点。</p>
+
+## RSI 研究时间轴 / 会议 DDL · CVPR / ICML / ACL
+
+<div class="rsi-tl-venue-grid"><article class="rsi-tl-venue rsi-tl-venue--official" id="cvpr-2027">
+        <div class="rsi-tl-venue-top"><span class="rsi-tl-venue-serial">CVPR <small>2027</small></span>
+        <span class="rsi-tl-status rsi-tl-status--official">官方已确认</span></div>
+        <h3>IEEE/CVF Conference on Computer Vision and Pattern Recognition</h3><p class="rsi-tl-track">Computer Vision · Embodied AI</p>
+        <ul class="rsi-tl-deadlines"><li class="rsi-tl-ddl" data-status="official"><span class="rsi-tl-ddl-name">论文注册 / 摘要</span><span class="rsi-tl-ddl-date">2026-11-10 <small>AoE 23:59</small></span><span class="rsi-tl-countdown" data-countdown="2026-11-10T23:59:00-12:00">官方日期</span></li><li class="rsi-tl-ddl" data-status="official"><span class="rsi-tl-ddl-name">主会全文投稿</span><span class="rsi-tl-ddl-date">2026-11-16 <small>AoE 23:59</small></span><span class="rsi-tl-countdown" data-countdown="2026-11-16T23:59:00-12:00">官方日期</span></li><li class="rsi-tl-ddl" data-status="official"><span class="rsi-tl-ddl-name">补充材料</span><span class="rsi-tl-ddl-date">2026-11-23 <small>AoE 23:59</small></span><span class="rsi-tl-countdown" data-countdown="2026-11-23T23:59:00-12:00">官方日期</span></li></ul>
+        <p class="rsi-tl-venue-context">官方公布的 2027 主会投稿节点。注册/全文/补充材料是不同截止时间。</p>
+        <a class="rsi-tl-source-link" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">
+          查看官方投稿日程 ↗</a>
+        </article><article class="rsi-tl-venue rsi-tl-venue--pending" id="icml-2027">
+        <div class="rsi-tl-venue-top"><span class="rsi-tl-venue-serial">ICML <small>2027</small></span>
+        <span class="rsi-tl-status rsi-tl-status--pending">等待官方</span></div>
+        <h3>International Conference on Machine Learning</h3><p class="rsi-tl-track">Machine Learning · RSI</p>
+        <ul class="rsi-tl-deadlines"><li class="rsi-tl-ddl" id="icml-2027-abstract" data-status="pending"><span class="rsi-tl-ddl-name">摘要注册</span><span class="rsi-tl-ddl-date">待公布</span><span class="rsi-tl-pending">不显示预测倒计时</span></li><li class="rsi-tl-ddl" id="icml-2027-paper" data-status="pending"><span class="rsi-tl-ddl-name">主会全文投稿</span><span class="rsi-tl-ddl-date">待公布</span><span class="rsi-tl-pending">不显示预测倒计时</span></li></ul>
+        <p class="rsi-tl-venue-context">截至 2026-10-27，未核实到 ICML 2027 官方投稿日程。第三方预测及 ICML 2026 的日期不能作为 2027 DDL。</p>
+        <a class="rsi-tl-source-link" href="https://icml.cc/" target="_blank" rel="noopener noreferrer">
+          查看会议主办方网站 ↗</a>
+        </article><article class="rsi-tl-venue rsi-tl-venue--official_partial" id="acl-2027">
+        <div class="rsi-tl-venue-top"><span class="rsi-tl-venue-serial">ACL <small>2027</small></span>
+        <span class="rsi-tl-status rsi-tl-status--official_partial">部分确认</span></div>
+        <h3>Annual Meeting of the Association for Computational Linguistics</h3><p class="rsi-tl-track">NLP · LLM Agents</p>
+        <ul class="rsi-tl-deadlines"><li class="rsi-tl-ddl" data-status="official"><span class="rsi-tl-ddl-name">ARR 投稿截止</span><span class="rsi-tl-ddl-date">2027-01-04 <small>AoE 23:59</small></span><span class="rsi-tl-countdown" data-countdown="2027-01-04T23:59:00-12:00">官方日期</span></li><li class="rsi-tl-ddl" id="acl-2027-commit" data-status="pending"><span class="rsi-tl-ddl-name">会议 Commitment</span><span class="rsi-tl-ddl-date">待公布</span><span class="rsi-tl-pending">不显示预测倒计时</span></li></ul>
+        <p class="rsi-tl-venue-context">ACL 2027 使用 ARR 投稿→会议 Commit 的两阶段流程。ARR 最晚投稿轮次已有官方日期；Commitment 截止未公布。</p>
+        <a class="rsi-tl-source-link" href="https://2027.aclweb.org/calls/main/" target="_blank" rel="noopener noreferrer">
+          查看官方投稿日程 ↗</a>
+        </article></div><p class="rsi-tl-notice"><b>ICML 2027:</b> 当前仅可确认会议主办方官方渠道，未确认 2027 摘要或全文截稿日。ACL 2027 的 ARR 截稿与后续 Commitment 不应混为一个节点；日历中仅对有正式日期的节点生成倒计时。</p>
+
+## RSI 研究时间轴 / 研究活动与投稿时间轴 · 7 个已知日期
+
+<div class="rsi-tl-toolbar"><label for="rsi-tl-kind">事件类型<select id="rsi-tl-kind">
+           <option value="all">全部事件</option><option value="deadline">会议 DDL</option>
+           <option value="reading">论文精读</option><option value="research">研究记录</option></select></label>
+           <label for="rsi-tl-time">时间范围<select id="rsi-tl-time">
+           <option value="all">全部时间</option><option value="upcoming">尚未截止</option>
+           <option value="past">已结束／已发生</option></select></label>
+           <label class="rsi-tl-search" for="rsi-tl-query">检索记录<input type="search" id="rsi-tl-query" placeholder="例如 CVPR、R²Orch、实验、ARR"></label>
+           <button type="button" id="rsi-tl-reset">重置</button>
+           <output id="rsi-tl-count" aria-live="polite">显示全部</output></div><div class="rsi-tl-months" id="rsi-tl-months"><section class="rsi-tl-month" data-month="2026-10"><div class="rsi-tl-month-head"><h3>2026 年 10 月</h3><span>3 条记录</span></div><div class="rsi-tl-month-body"><article class="rsi-tl-item rsi-tl-item--research" id="rsi-dossier-20261021"
+      data-kind="research" data-date="2026-10-21" data-due-at="">
+      <div class="rsi-tl-item-date"><time datetime="2026-10-21">10-21</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--research">研究记录</span><span>站内研究记录</span></div>
+        <h3>RSI 自主学习研究专题完成首版资料整理</h3>
+        <p>网站形成 RSI 文献、跨领域学习科学、候选方向和实验方案的资料页；属于研究文档整理，不代表实验验证完成。</p>
+        <div class="rsi-tl-item-footer"><a href="index.html">专题总览 ↗</a></div>
+      </div>
+    </article><article class="rsi-tl-item rsi-tl-item--reading" id="reading-r2orch-2610-22740"
+      data-kind="reading" data-date="2026-10-27" data-due-at="">
+      <div class="rsi-tl-item-date"><time datetime="2026-10-27">10-27</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--reading">论文精读</span><span>阅读卡片已归档</span></div>
+        <h3>精读：R²Orch</h3>
+        <p>任务要按“撤掉 Skill 后还能不能学”来挑；Skill 要靠同题随机对照判断是否真的不再需要。</p>
+        <div class="rsi-tl-item-footer"><a href="reading-cards.html#r2orch-2610-22740">打开精读卡片 ↗</a></div>
+      </div>
+    </article><article class="rsi-tl-item rsi-tl-item--reading" id="reading-rsi-anything-2610-13912"
+      data-kind="reading" data-date="2026-10-27" data-due-at="">
+      <div class="rsi-tl-item-date"><time datetime="2026-10-27">10-27</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--reading">论文精读</span><span>阅读卡片已归档</span></div>
+        <h3>精读：RSI-Anything</h3>
+        <p>先用世界模型挑最值得真实验证的尝试；再用反馈改进策略和预测器，只有重新组合后也更好的版本才进入下一轮。</p>
+        <div class="rsi-tl-item-footer"><a href="reading-cards.html#rsi-anything-2610-13912">打开精读卡片 ↗</a></div>
+      </div>
+    </article></div></section><section class="rsi-tl-month" data-month="2026-11"><div class="rsi-tl-month-head"><h3>2026 年 11 月</h3><span>3 条记录</span></div><div class="rsi-tl-month-body"><article class="rsi-tl-item rsi-tl-item--deadline" id="cvpr-2027-registration"
+      data-kind="deadline" data-date="2026-11-10" data-due-at="2026-11-10T23:59:00-12:00">
+      <div class="rsi-tl-item-date"><time datetime="2026-11-10">11-10</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--deadline">会议 DDL</span><span>官方确认 · AoE</span></div>
+        <h3>CVPR 2027 · 论文注册 / 摘要</h3>
+        <p>Paper Registration Deadline（AoE）。来源：IEEE/CVF Conference on Computer Vision and Pattern Recognition 官方会议日程。</p>
+        <div class="rsi-tl-item-footer"><a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2026-11-10T23:59:00-12:00">AoE · 23:59</span></div>
+      </div>
+    </article><article class="rsi-tl-item rsi-tl-item--deadline" id="cvpr-2027-paper"
+      data-kind="deadline" data-date="2026-11-16" data-due-at="2026-11-16T23:59:00-12:00">
+      <div class="rsi-tl-item-date"><time datetime="2026-11-16">11-16</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--deadline">会议 DDL</span><span>官方确认 · AoE</span></div>
+        <h3>CVPR 2027 · 主会全文投稿</h3>
+        <p>Submission Deadline（AoE）。来源：IEEE/CVF Conference on Computer Vision and Pattern Recognition 官方会议日程。</p>
+        <div class="rsi-tl-item-footer"><a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2026-11-16T23:59:00-12:00">AoE · 23:59</span></div>
+      </div>
+    </article><article class="rsi-tl-item rsi-tl-item--deadline" id="cvpr-2027-supplementary"
+      data-kind="deadline" data-date="2026-11-23" data-due-at="2026-11-23T23:59:00-12:00">
+      <div class="rsi-tl-item-date"><time datetime="2026-11-23">11-23</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--deadline">会议 DDL</span><span>官方确认 · AoE</span></div>
+        <h3>CVPR 2027 · 补充材料</h3>
+        <p>Supplementary Materials Deadline（AoE）。来源：IEEE/CVF Conference on Computer Vision and Pattern Recognition 官方会议日程。</p>
+        <div class="rsi-tl-item-footer"><a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2026-11-23T23:59:00-12:00">AoE · 23:59</span></div>
+      </div>
+    </article></div></section><section class="rsi-tl-month" data-month="2027-01"><div class="rsi-tl-month-head"><h3>2027 年 01 月</h3><span>1 条记录</span></div><div class="rsi-tl-month-body"><article class="rsi-tl-item rsi-tl-item--deadline" id="acl-2027-arr"
+      data-kind="deadline" data-date="2027-01-04" data-due-at="2027-01-04T23:59:00-12:00">
+      <div class="rsi-tl-item-date"><time datetime="2027-01-04">01-04</time></div>
+      <div class="rsi-tl-item-main">
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--deadline">会议 DDL</span><span>官方确认 · AoE</span></div>
+        <h3>ACL 2027 · ARR 投稿截止</h3>
+        <p>ACL 2027 的最晚 ARR 投稿轮次（AoE）；其他更早 ARR 轮次也可能适用。来源：Annual Meeting of the Association for Computational Linguistics 官方会议日程。</p>
+        <div class="rsi-tl-item-footer"><a href="https://2027.aclweb.org/calls/main/" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2027-01-04T23:59:00-12:00">AoE · 23:59</span></div>
+      </div>
+    </article></div></section></div><p class="rsi-tl-no-results" id="rsi-tl-empty" hidden>该筛选条件下没有时间轴记录，请调整类型、时间范围或检索词。</p>
+
+## RSI 研究时间轴 / 来源、时间口径与后续扩展
+
+<p>截至 <strong>2026-10-27</strong>，CVPR 2027 的注册、投稿、补充材料三个日期，以及 ACL 2027 的 ARR 投稿日期已从大会官方页面核实。ICML 2027 及 ACL 2027 Commitment 尚未核实到正式 DDL，因此只标记“待公布”。会议截稿以官方最新通知为准。</p><p>本页面的研究记录来自本站已归档的资料与论文精读卡片，<strong>不暗示实验已经成功、已经投稿或会议已经接收。</strong>论文卡片日期从 <code>reading-cards.json</code> 自动读取。</p><p>扩展方法：向 <code>timeline-data.json</code> 增加正式核对过的会议信息、日期和引用；向 <code>research_events</code> 增加可溯源的 RSI 里程碑；运行站点构建脚本后同步更新本页。未知日期必须保留 <code>null</code>。</p><div class="links"><a class="link-btn" href="timeline-data.json" download>下载时间轴结构化数据</a><a class="link-btn" href="reading-cards.html">查看论文精读卡片</a></div>
 
 ## RSI 文献与竞争边界 / 机制图谱：从提出修改到学习如何学习
 

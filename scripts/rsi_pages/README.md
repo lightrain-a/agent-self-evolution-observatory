@@ -16,6 +16,18 @@
 
 不要写未经核查的成绩或把相近数据集名称擅自扩大。优先固定 arXiv 的版本页面、论文代码链接和阅读日期。
 
+## RSI 研究时间轴与会议 DDL
+
+`rsi/timeline-data.json` 是会议与人工研究里程碑的唯一数据源：
+
+- `venues` 中目前只有 CVPR 2027、ICML 2027、ACL 2027；每个节点保留 `source_url`、`verified_at`（顶层）、`date`、`due_at`、`status`。
+- **已发布官方截止**使用 `status=official`、日期 `YYYY-MM-DD`，以及包含 `-12:00` 的准确 AoE 时间戳 `YYYY-MM-DDT23:59:00-12:00`。
+- **尚未发布**必须设 `status=pending`、`date=null`、`due_at=null`，不可把往届时间或第三方估算写为正式 DDL。
+- `research_events` 仅纳入有证据链接的研究记录；不得把方案、预期结果当成已完成实验。
+- 论文阅读事件不需要重复记录：`scripts/rsi_pages/timeline.py` 自动读取 `rsi/reading-cards.json` 的 `read_on` 和一句话结论，并生成可点击记录。
+- 设计和交互代码分别在 `rsi/timeline.css`、`rsi/timeline-view.js`，无需从 Agent 主站的复杂时间轴依赖。
+- 新增会议时更新 `venues` 与经过核验的日期，执行 `python3 scripts/build_rsi_research.py` 重新生成静态时间轴与全站检索索引。
+
 ## 生成与核查
 
 在仓库根目录执行：

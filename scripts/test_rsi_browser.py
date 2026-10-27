@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','cross-domain','learning-science','ideas','teaching','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -63,6 +63,27 @@ def main():
         rsi_switch=js("return [...document.querySelectorAll('.site-switcher__tab')].map(a=>({href:a.getAttribute('href'),active:a.getAttribute('aria-current')==='true'}));")
         check(rsi_switch==[{'href':'/','active':False},{'href':'/rsi/','active':True}],f'RSI switch destinations incorrect: {rsi_switch}')
         check(js("return [...document.querySelectorAll('#research-nav .nav-level2')].every(a=>!a.getAttribute('href').startsWith('../'))"),'RSI navigation not standalone')
+        nav('rsi/timeline.html')
+        timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
+        expected_deadlines=sum(d['status']=='official' for v in timeline['venues'] for d in v['deadlines'])
+        pending_deadlines=sum(d['status']=='pending' for v in timeline['venues'] for d in v['deadlines'])
+        reading_papers=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))['papers']
+        all_events=expected_deadlines+len(timeline['research_events'])+len(reading_papers)
+        check(js("return document.querySelectorAll('.rsi-tl-venue').length")==3,'Missing target conference cards')
+        check(js("return document.querySelectorAll('.rsi-tl-countdown').length")==expected_deadlines,'Wrong number of official countdowns')
+        check(js("return document.querySelectorAll('.rsi-tl-pending').length")==pending_deadlines,'Unknown dates incorrectly assigned timers')
+        check(js("return document.querySelectorAll('.rsi-tl-item').length")==all_events,'Timeline event count does not match source registry')
+        check(js("return [...document.querySelectorAll('.rsi-tl-countdown')].every(e=>e.dataset.countdown.endsWith('-12:00') && Number.isFinite(Date.parse(e.dataset.countdown)))"),'AoE timestamps not parsed consistently')
+        js("const k=document.querySelector('#rsi-tl-kind');k.value='deadline';k.dispatchEvent(new Event('change',{bubbles:true}))")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==expected_deadlines,'Deadline filter failed')
+        js("const k=document.querySelector('#rsi-tl-kind');k.value='reading';k.dispatchEvent(new Event('change',{bubbles:true}))")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==len(reading_papers),'Reading filter failed')
+        js("document.querySelector('#rsi-tl-reset').click()")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==all_events,'Timeline reset did not restore all events')
+        js("const q=document.querySelector('#rsi-tl-query');q.value='CVPR';q.dispatchEvent(new Event('input',{bubbles:true}))")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==3,'Timeline conference search failed')
+        js("document.querySelector('#rsi-tl-reset').click()")
+        screenshot('timeline-desktop.png')
         nav('rsi/reading-cards.html')
         check(js("return document.querySelectorAll('.reading-card').length>=1"),'Reading-card library is empty')
         js("const q=document.querySelector('#reading-card-filter');q.value='不存在的测试查询';q.dispatchEvent(new Event('input',{bubbles:true}));")
@@ -115,7 +136,7 @@ def main():
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
         screenshot('idea-framework-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','reading-cards','ideas','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','ideas','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/index.html'); screenshot('overview-mobile.png')
@@ -146,7 +167,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':5}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':6}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:
