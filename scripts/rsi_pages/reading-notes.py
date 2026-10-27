@@ -14,6 +14,13 @@ SOURCE = Path(__file__).resolve().parents[2] / "rsi" / "reading-cards.json"
 PAPERS = json.loads(SOURCE.read_text(encoding="utf-8"))["papers"]
 DEEP = [p for p in PAPERS if p.get("deep_read")]
 TYPES = {"prose", "table", "steps", "formula", "callout", "evidence", "bullets", "tests"}
+STAGES = [
+    ("challenge", "Challenge", "难在哪里"),
+    ("insight", "Insight", "为什么可解"),
+    ("design", "Design", "具体怎么做"),
+    ("result", "Result", "结果怎么样"),
+    ("next", "Next", "哪些问题还没解决"),
+]
 
 
 def e(s: str) -> str:
@@ -79,11 +86,16 @@ def validate_deep(p: dict) -> None:
     assert d["focus"] and d["summary"] and d["sections"], f"Empty deep reading: {p['id']}"
     ids = [s["id"] for s in d["sections"]]
     assert len(ids) == len(set(ids)), f"Duplicate section anchor: {p['id']}"
+    valid_stages = {stage for stage, _, _ in STAGES}
     for s in d["sections"]:
         assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", s["id"])
+        assert s.get("stage") in valid_stages, f"Section lacks C-I-D-R stage: {p['id']} / {s['id']}"
         assert s["title"] and s["blocks"], f"Empty section: {p['id']} / {s['id']}"
         for b in s["blocks"]:
             assert b["type"] in TYPES, f"Bad content block: {p['id']} / {b.get('type')}"
+    assert {key for key, _, _ in STAGES[:4]} <= {s["stage"] for s in d["sections"]}, (
+        f"Challenge, Insight, Design, Result must all be supported: {p['id']}"
+    )
 
 
 def full_text(value) -> str:
@@ -100,17 +112,47 @@ def render_paper(p: dict) -> str:
     validate_deep(p)
     d = p["deep_read"]
     base = f"deep-{p['id']}"
-    shortcuts = "".join(
-        f'<a href="#{e(base)}--{e(section["id"])}">{e(section["title"])}</a>'
-        for section in d["sections"]
+    stage_nav = "".join(
+        f'<a href="#{e(base)}--stage-{stage}">{e(en)} · {e(zh)}</a>'
+        for stage, en, zh in STAGES
+        if any(s["stage"] == stage for s in d["sections"])
     )
-    sections = "".join(
-        f'<section class="deep-chapter" id="{e(base)}--{e(section["id"])}">'
-        f'<h3>{e(section["title"])}</h3>'
-        + "".join(render_block(block) for block in section["blocks"])
-        + '</section>'
-        for section in d["sections"]
+    terms = "".join(
+        f'<div><dt>{e(item["name"])}</dt><dd>{e(item["meaning"])}</dd></div>'
+        for item in d.get("terms", [])
     )
+    glossary = (
+        '<div class="deep-glossary"><p class="deep-glossary-title">先记住三个角色</p>'
+        f'<dl class="deep-terms">{terms}</dl></div>'
+        if terms else ""
+    )
+
+    def chapter(s: dict) -> str:
+        return (
+            f'<details class="deep-chapter" id="{e(base)}--{e(s["id"])}">'
+            f'<summary>{e(s["title"])}<span class="deep-chapter-hint">展开细节</span></summary>'
+            '<div class="deep-chapter-body">'
+            + "".join(render_block(b) for b in s["blocks"])
+            + '</div></details>'
+        )
+
+    stage_parts = []
+    for index, (stage, english, chinese) in enumerate(STAGES, start=1):
+        chapters = [s for s in d["sections"] if s["stage"] == stage]
+        if not chapters:
+            continue
+        chapters.sort(key=lambda s: s.get("order", 100))
+        lead = p["story"].get(stage) if stage != "next" else (
+            d.get("afterword") or "这些是尚未解决的科学问题，不应当写成原论文已经证明的结论。"
+        )
+        stage_parts.append(
+            f'<section class="deep-stage" id="{e(base)}--stage-{stage}" data-story-stage="{e(stage)}">'
+            f'<header class="deep-stage-head"><span>{index:02d} · {e(english)}</span><h4>{e(chinese)}</h4></header>'
+            f'<p class="deep-stage-lead">{e(lead)}</p>'
+            '<div class="deep-stage-details">'
+            + "".join(chapter(s) for s in chapters)
+            + '</div></section>'
+        )
     links = "".join(
         f'<a class="link-btn" target="_blank" rel="noopener noreferrer" href="{e(p["links"][key])}">{label}</a>'
         for key, label in (("html", "arXiv 原文"), ("pdf", "PDF 原文"), ("code", "作者代码"))
@@ -121,12 +163,11 @@ def render_paper(p: dict) -> str:
         f'{e(p["publication"])} · arXiv:{e(p["arxiv"])} · {e(p["read_on"])} 精读</p>'
         f'<h3>{e(p["title"])}</h3>'
         f'<p class="deep-focus">{e(d["focus"])}</p>'
-        '<p class="deep-author-note">此页是本站研读记录。论文报告结果、教学示例、研究推断分开标注；未独立复现。</p>'
-        '<div class="deep-summary"><h4>三句话记住</h4><ol>'
-        + "".join(f'<li>{e(item)}</li>' for item in d["summary"])
-        + '</ol></div>'
-        f'<nav class="deep-shortcuts" aria-label="{e(p["short_title"])} 精读章节">{shortcuts}</nav>'
-        + sections
+        '<p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。'
+        '这份笔记区分作者结果、教学举例和我们的研究想法，尚未独立复现。</p>'
+        + glossary
+        + f'<nav class="deep-shortcuts" aria-label="{e(p["short_title"])} 四步精读">{stage_nav}</nav>'
+        + "".join(stage_parts)
         + '<div class="deep-back"><a href="reading-cards.html#'
         + e(p["id"]) + '">返回论文速览卡片</a></div>'
         + f'<div class="links deep-source-links">{links}</div></div>'
@@ -140,16 +181,9 @@ PAGE = {
     "slug": "reading-notes",
     "title": "论文完整精读",
     "en": "Deep reads · mechanisms, equations, evidence and research gaps",
-    "lead": f"已整理 {len(DEEP)} 篇完整精读。先在卡片库建立印象，再按机制公式、受控实验、证据边界与下一步辨别实验深读。",
+    "lead": f"已整理 {len(DEEP)} 篇完整精读。先读 Challenge（困难）、Insight（关键想法）、Design（方法）、Result（结果），再按需展开公式和实验。",
     "updated": max((p["read_on"] for p in DEEP), default="2026-10-27"),
     "sections": [
-        ("how-to-read", "如何使用完整精读",
-         '<p>这里是<strong>可长期复用的精读正文</strong>，与简短卡片分离。'
-         '每一节依次讲“为什么需要、论文怎样做、哪些结果支持、留下什么缺口”。'
-         '所有教学算例均与论文实验数字明确区分。'
-         '每篇均能从卡片库直接跳到对应精读。</p>'
-         '<div class="links"><a class="link-btn" href="reading-cards.html">回到论文卡片库</a></div>'),
-    ] + [
         (f'deep-{p["id"]}', f'精读 · {p["short_title"]}', render_paper(p))
         for p in DEEP
     ],

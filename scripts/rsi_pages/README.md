@@ -8,14 +8,16 @@
 - **作者署名单位**：`lead_institution`（卡片上显示的主要单位）、`institutions`（原文列出的全部单位）、`institution_source`（PDF 中核对位置）、`publication`（技术报告、预印本或正式发表状态）；不要把作者单位混写成录用会议。
 - **五问框架（全库统一）**：根节点 `research_questions` 固定五个问题：信号对不对、有没有新东西、采不采得到、吸收了会不会丢、安全。每篇的 `research_coverage` 必须恰好包含 `signal` / `novelty` / `reach` / `retention` / `safety`，每项写 `level`、`contribution`（论文到底做了什么）和 `open_question`（留下了什么）。
 - **分类边界**：`level` 仅取 `core`（重点研究）、`partial`（部分涉及）、`not_addressed`（未直接研究）。**覆盖不等于已经解决**：在候选集合里排序不代表扩展采样支持集；保留某个版本不等于不会遗忘旧能力；约束声明不代表对抗安全已验证。
-- **记忆点**：`one_sentence`（一句话记住主张），`problem`（具体困难），`setup`（最重要的实验与系统设置）。
+- **速览必须是 C-I-D-R 四句话**：`one_sentence` 保留一句最直白的印象（不超过 100 字），`story` 必须按 `challenge`、`insight`、`design`、`result` 顺序填全，每段不超过 130 字。Challenge 写具体困难，不要提前讲方法；Insight 讲为什么这种思路有用，不复述模块名称；Design 用可想象的动作顺序介绍做法；Result 必须给出作者实际报告的对照或明确说明证据不充分。旧 `problem` / `setup` 字段仅作为扩展记录与检索。
 - **值得复用的机制**：`key_ideas` 数组，每条含 `name`、`summary`、`formula`（纯文本公式，避免直接插 HTML）。
 - **证据与边界**：`evidence`、`boundaries`，分别区分论文报告结果、实现假设、未验证的局限。
 - **研究转化**：`our_relevance`、`next_test`，写可验证的迁移实验，不能表述成原论文已证明的事情。
 - **发现与检索**：`tags` 供归类，站内全局搜索索引和本页筛选由构建流程自动更新。
-- **完整精读（可选）**：为深入读过的论文追加 `deep_read`，包括 `focus`、`summary` 和 `sections`。章节具有稳定 `id`、`title` 与 `blocks`；目前通用块类型为 `prose`（解释）、`steps`（过程）、`formula`（公式及边界）、`table`、`callout`（论文事实/示例/启发/提案）、`evidence`（实验和不能证明什么）、`bullets`、`tests`（决定性实验）。构建脚本自动生成 `rsi/reading-notes.html`，卡片出现“完整精读”入口，并为各章节建立搜索索引；只追加数据，不复制或手改 HTML。
+- **完整精读（可选）**：为深入读过的论文追加 `deep_read`（`focus`、`terms` 术语白话解释、`sections`）。每章填写稳定 `id`、短中文 `title`、`stage`（`challenge` / `insight` / `design` / `result` / `next`）及内容 `blocks`，同组可用 `order` 控制显示顺序。正文按四段主线展示短解释，例子、公式、实验证据折叠在相应段落中；`next` 单独承载局限与我们的延伸。通用块类型仍为 `prose`、`steps`、`formula`、`table`、`callout`、`evidence`、`bullets`、`tests`。构建脚本自动生成 `rsi/reading-notes.html`、卡片跳转和章节搜索索引。
 
-**精读与原文分离**：完整精读严格区分论文原始结果、为解释公式构造的示例数值、本站的学术判断，以及尚未开展的实验构想。不能把“提出 Pair Gate”写成“已有充分的多轮 Pair Gate 因果消融”，也不能把固定 Coder 的代码修复结果当作 Coder 参数进化证据。
+**先说人话，再引入术语**：第一屏应该能让首次阅读者在 60 秒内复述“难在哪里—为什么可解—怎么做—结果怎样”；出现 Policy / World Model / Pair Gate 等术语时，先给一个常见场景和一句白话解释。标题优先用问题句（如“为什么两个模型都变好，系统反而变差？”），不要用“Section 2.5 · 多模态自适应组合增益”式空泛标题。公式放到读者已经理解其必要性之后。
+
+**精读与原文分离**：论文原始实验、解释公式的假设数字、本站的学术判断和待做实验必须清楚标注。不能把“提出 Pair Gate”写成“已经充分证明它有独立收益”，也不能把固定代码生成器的结果当作代码模型本身持续学习的证据。
 
 不要写未经核查的成绩或把相近数据集名称擅自扩大。优先固定 arXiv 的版本页面、论文代码链接和阅读日期。
 
@@ -43,6 +45,6 @@ python3 scripts/test_rsi_site.py
 python3 scripts/test_rsi_browser.py
 ```
 
-对应源文件是 `scripts/rsi_pages/reading-cards.py`（通用渲染器），`scripts/build_rsi_research.py`（左侧目录、HTML 和本地搜索索引），`rsi/research.js`（浏览器筛选）。只要字段符合当前 JSON schema，后续论文无需再修改这些程序。
+对应源文件是 `scripts/rsi_pages/reading-cards.py`（四步卡片）、`scripts/rsi_pages/reading-notes.py`（四段精读与细节折叠）、`scripts/build_rsi_research.py`（目录与索引）、`rsi/research.js`（浏览器筛选）。后续新增论文只需要写好统一数据；页面不应退回大段摘要堆砌。
 
 RSI 站点使用独立的 `site-nav.js`，不再依赖 Agent 站的 `data.js`。双站架构、入口和单独导出方法参见根目录 `SITES.md`。部署仍使用仓库现有 GitHub Pages workflow：合入 `main` 后先构建 Agent、再构建 RSI；不要把 private 数据或本地路径写入公共卡片。

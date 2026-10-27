@@ -39,6 +39,10 @@ def main():
     check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
     check(len({p['id'] for p in cards})==len(cards),'Duplicate reading card ID')
     for card in cards:
+        stages=('challenge','insight','design','result')
+        check(tuple(card.get('story',{}))==stages,'Paper lacks ordered C-I-D-R reading contract: '+card['id'])
+        check(all(0<len(card['story'][stage])<=130 for stage in stages),'C-I-D-R paragraph too long: '+card['id'])
+        check(len(card['one_sentence'])<=100,'Paper opening summary too long: '+card['id'])
         check(card['lead_institution'] in card['institutions'],'Leading author institution not in institution list: '+card['id'])
         check(card['institution_source'] and card['publication'],'Missing institution provenance: '+card['id'])
         check(set(card['research_coverage'])==question_ids,'Paper missing RSI coverage axes: '+card['id'])
@@ -149,6 +153,8 @@ def main():
     check(all(p['id'] in card_ids for p in cards),'Paper not rendered from JSON')
     card_html=(ROOT/'rsi/reading-cards.html').read_text(encoding='utf-8')
     check(card_html.count('class="reading-card"')==len(cards),'Wrong number of rendered paper cards')
+    check(card_html.count('class="reading-story-step"')==4*len(cards),'Each paper must show four clear C-I-D-R steps')
+    check(card_html.count('class="reading-overview"')==0,'Dense old paper overview should not lead the card')
     check('id="reading-question-filter"' in card_html and 'id="reading-coverage-filter"' in card_html,'Missing five-question filters')
     for card in cards:
         check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
@@ -165,6 +171,11 @@ def main():
         section_ids=[s['id'] for s in paper['deep_read']['sections']]
         check(len(section_ids)==len(set(section_ids)) and section_ids,
               'Deep-read sections missing or duplicated: '+pid)
+        stages={s['stage'] for s in paper['deep_read']['sections']}
+        check({'challenge','insight','design','result'}<=stages,'Deep read missing one of four main stages: '+pid)
+        for stage in ['challenge','insight','design','result']:
+            check(f'id="deep-{pid}--stage-{stage}"' in notes_html,
+                  'Visible C-I-D-R heading missing: '+pid+'/'+stage)
         for section in section_ids:
             check(f'id="deep-{pid}--{section}"' in notes_html,
                   'Deep-read section missing: '+pid+'/'+section)

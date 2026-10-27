@@ -98,6 +98,10 @@ def main():
             check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===1"),'Card search did not uniquely find '+paper['short_title'])
             check(js("return document.querySelector('.reading-card:not([hidden])').id")==paper['id'],'Card search matched wrong paper: '+paper['id'])
             check(js("return document.querySelector('.reading-card:not([hidden]) .reading-institution').textContent.includes("+json.dumps(paper['lead_institution'],ensure_ascii=False)+")"),'Institution not visible: '+paper['id'])
+            check(js("return [...document.querySelectorAll('.reading-card:not([hidden]) .reading-story-step')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result'"),
+                  'First-read C-I-D-R steps missing or out of order: '+paper['id'])
+            check(js("return !document.querySelector('.reading-card:not([hidden]) .reading-expand').open"),
+                  'Dense paper evidence unexpectedly visible on card: '+paper['id'])
             js("document.querySelector('.reading-card:not([hidden]) .reading-expand').open=true")
             check(js("return document.querySelector('.reading-card:not([hidden]) .reading-question-details').children.length===5"),'Five-question details incomplete: '+paper['id'])
         js("const q=document.querySelector('#reading-card-filter');q.value='';q.dispatchEvent(new Event('input',{bubbles:true}));")
@@ -112,7 +116,13 @@ def main():
             check(actual==expected,f'Coverage filter mismatch {question}/{level}: {actual} vs {expected}')
         js("const q=document.querySelector('#reading-question-filter');q.value='all';q.dispatchEvent(new Event('change',{bubbles:true}));")
         js("const q=document.querySelector('#reading-coverage-filter');q.value='addressed';q.dispatchEvent(new Event('change',{bubbles:true}));")
+        js("document.querySelectorAll('.reading-expand').forEach(d=>d.open=false)")
+        check(js("return document.querySelector('.reading-card').id==='rsi-anything-2610-13912'"),
+              'Featured deep-read paper should be the first visible reading card')
         screenshot('reading-cards-desktop.png')
+        js("document.querySelector('#rsi-anything-2610-13912').scrollIntoView({block:'start'})")
+        time.sleep(.8)
+        screenshot('reading-first-card-desktop.png')
         for paper in cards:
             deep=paper.get('deep_read')
             if deep:
@@ -130,7 +140,22 @@ def main():
                       'Deep section missing in browser: '+section['id'])
         check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
               'Evidence matrix did not render')
+        check(js("return [...document.querySelectorAll('.deep-stage')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result,next'"),
+              'Long read does not follow C-I-D-R before extensions')
+        check(js("return document.querySelectorAll('.deep-chapter[open]').length===0"),
+              'Detailed formulas or cases should start collapsed')
+        check(js("return document.querySelector('.deep-terms').children.length===3"),
+              'Terms are not explained before jargon')
         screenshot('reading-notes-desktop.png')
+        js("document.querySelector('#deep-rsi-anything-2610-13912--stage-challenge').scrollIntoView({block:'start'})")
+        time.sleep(.8)
+        screenshot('reading-notes-story-desktop.png')
+        js("document.querySelector('#deep-rsi-anything-2610-13912--example summary').click()")
+        check(js("return document.querySelector('#deep-rsi-anything-2610-13912--example').open"),
+              'Clicking the example did not expand it')
+        check(js("return document.querySelector('.deep-stage[data-story-stage=design] .deep-chapter[open]')!==null"),
+              'Design example is not accessible')
+        screenshot('reading-notes-example-desktop.png')
         nav('rsi/index.html'); screenshot('overview-desktop.png')
         js("const q=document.querySelector('#research-search');q.value='SOAR';q.dispatchEvent(new Event('input',{bubbles:true}));")
         for _ in range(25):
@@ -187,7 +212,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':7}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':10}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

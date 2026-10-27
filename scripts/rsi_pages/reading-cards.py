@@ -15,6 +15,12 @@ DATA = json.loads(SOURCE.read_text(encoding="utf-8"))
 PAPERS = DATA["papers"]
 QUESTIONS = DATA["research_questions"]
 LEVELS = {"core": "重点研究", "partial": "部分涉及", "not_addressed": "未直接研究"}
+STORY_STAGES = [
+    ("challenge", "Challenge", "难在哪里"),
+    ("insight", "Insight", "为什么可解"),
+    ("design", "Design", "具体怎么做"),
+    ("result", "Result", "结果怎么样"),
+]
 assert DATA["schema_version"] == 2
 assert [q["id"] for q in QUESTIONS] == ["signal", "novelty", "reach", "retention", "safety"]
 assert len({p["id"] for p in PAPERS}) == len(PAPERS), "Duplicate paper ID"
@@ -26,6 +32,16 @@ def esc(value) -> str:
 
 def make_list(items, kind="ul") -> str:
     return f"<{kind}>" + "".join(f"<li>{esc(item)}</li>" for item in items) + f"</{kind}>"
+
+
+def story_view(p: dict) -> str:
+    rows = "".join(
+        f'<div class="reading-story-step" data-story-stage="{key}">'
+        f'<h4><span>{english}</span>{chinese}</h4><p>{esc(p["story"][key])}</p>'
+        '</div>'
+        for key, english, chinese in STORY_STAGES
+    )
+    return f'<div class="reading-story" aria-label="Challenge Insight Design Result 四步读懂">{rows}</div>'
 
 
 def issue_badges(p: dict) -> str:
@@ -58,7 +74,7 @@ def validate(p: dict) -> None:
         "version", "read_on", "reading_level", "tags", "one_sentence",
         "problem", "setup", "key_ideas", "evidence", "boundaries",
         "our_relevance", "next_test", "links", "lead_institution",
-        "institutions", "institution_source", "publication", "research_coverage",
+        "institutions", "institution_source", "publication", "research_coverage", "story",
     )
     assert all(k in p for k in required), f"Incomplete reading card: {p.get('id')}"
     assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", p["id"])
@@ -69,6 +85,11 @@ def validate(p: dict) -> None:
     assert len(set(p["institutions"])) == len(p["institutions"])
     assert set(p["research_coverage"]) == {q["id"] for q in QUESTIONS}, f"Missing research axis: {p['id']}"
     assert p["key_ideas"] and p["evidence"] and p["tags"]
+    assert set(p["story"]) == {k for k, _, _ in STORY_STAGES}, f"Incomplete C-I-D-R: {p['id']}"
+    assert len(p["one_sentence"]) <= 100, f"Opening sentence too long: {p['id']}"
+    for stage, _, _ in STORY_STAGES:
+        sentence = p["story"][stage]
+        assert sentence.strip() and len(sentence) <= 130, f"Make {stage} more readable: {p['id']}"
     for entry in p["research_coverage"].values():
         assert entry["level"] in LEVELS
         assert entry["contribution"].strip() and entry["open_question"].strip()
@@ -93,26 +114,22 @@ def reading_card(p: dict) -> str:
     all_institutions = " · ".join(p["institutions"])
     return f'''<article class="reading-card" id="{esc(p['id'])}" data-paper-tags="{esc('|'.join(p['tags']))}" data-question-coverage="{esc(coverage)}">
   <div class="reading-card-head">
-    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>arXiv:{esc(p['arxiv'])}</span><span>精读 {esc(p['read_on'])}</span></div>
+    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>arXiv:{esc(p['arxiv'])}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}</div>
     <h3>{esc(p['short_title'])}</h3>
     <p class="reading-full-title">{esc(p['title'])}</p>
     <p class="reading-institution"><b>发表单位（作者署名）</b> {organization_line}</p>
     <div class="reading-tags">{tags}</div>
   </div>
-  <div class="reading-issues"><p class="reading-issues-title">它研究了自我改进的哪些问题？</p><div class="reading-issue-tags">{issue_badges(p)}</div></div>
   <p class="reading-one-sentence">{esc(p['one_sentence'])}</p>
-  <dl class="reading-overview">
-    <div><dt>它解决什么问题</dt><dd>{esc(p['problem'])}</dd></div>
-    <div><dt>它怎么做</dt><dd>{esc(p['setup'])}</dd></div>
-    {f'<div><dt>到底更新了什么</dt><dd>{esc(p["updates"])}</dd></div>' if p.get("updates") else ""}
-    <div><dt>和我们有什么关系</dt><dd>{esc(p['our_relevance'][0])}</dd></div>
-  </dl>
+  {story_view(p)}
+  <div class="reading-issues"><p class="reading-issues-title">自我改进四问 + 安全：这篇研究到哪一步？</p><div class="reading-issue-tags">{issue_badges(p)}</div></div>
   <details class="reading-expand">
-    <summary>展开五问判断、机制、实验证据与局限</summary>
+    <summary>继续看：真实证据、公式和没解决的问题</summary>
     <div class="reading-expanded-content">
       <div class="reading-source-line"><b>作者</b> {esc(p['authors'])} · <b>首发</b> {esc(p['first_posted'])} · <b>版本</b> {esc(p['version'])} · <b>阅读范围</b> {esc(p['reading_level'])}</div>
       <p class="reading-institutions-full"><b>全部作者单位：</b>{esc(all_institutions)}<br><b>发表状态：</b>{esc(p['publication'])} · <b>核对位置：</b>{esc(p['institution_source'])}</p>
-      <h4>自我改进五问 · 论文做到哪里、还缺什么</h4>
+      <h4>更新的是哪一部分？</h4><p>{esc(p.get("updates", p["setup"]))}</p>
+      <h4>自我改进五问：论文做到哪里、还缺什么</h4>
       <p class="reading-taxonomy-caveat">“重点研究”表示直接针对该问题提出机制或证据，不代表问题已被彻底解决。分类属于本站的文献研读判断。</p>
       {issue_details(p)}
       <h4>核心机制 · 记住这几个公式</h4><ol class="reading-mechanisms">{mechanisms}</ol>
@@ -126,7 +143,9 @@ def reading_card(p: dict) -> str:
 </article>'''
 
 
-cards = "\n".join(reading_card(p) for p in PAPERS)
+# Papers with a completed long-form read appear first; the registry ID remains stable.
+DISPLAY_PAPERS = sorted(PAPERS, key=lambda p: (bool(p.get("deep_read")), p["read_on"]), reverse=True)
+cards = "\n".join(reading_card(p) for p in DISPLAY_PAPERS)
 updated = max([p["read_on"] for p in PAPERS], default=DATA["updated"])
 question_guide = "".join(
     f'<div class="reading-question-guide"><b>{esc(q["label"])}</b><p>{esc(q["definition"])}</p></div>'
@@ -140,13 +159,9 @@ PAGE = {
     "slug": "reading-cards",
     "title": "论文精读卡片",
     "en": "Paper reading cards · remember the mechanism, not the abstract",
-    "lead": f"目前收录 {len(PAPERS)} 篇精读论文。统一记录作者单位，并按“信号 / 新信息 / 可采样性 / 内化保留 / 安全”五问标注研究覆盖和仍未解决的问题。",
+    "lead": f"目前收录 {len(PAPERS)} 篇。先用 Challenge、Insight、Design、Result 四个问题读懂，再按自我改进四问 + 安全查看研究边界。",
     "updated": updated,
     "sections": [
-        ("guide", "自我改进系统必须回答的四问，外加安全",
-         '<p>这五个问题是本站对自我改进研究的<strong>统一比较坐标</strong>，并非作者声称已经全部解决。每篇论文分别标注“重点研究 / 部分涉及 / 未直接研究”，展开后对照<strong>论文做到了什么</strong>与<strong>仍未解决什么</strong>。论文作者单位严格按署名，不能与会议发表状态混为一谈。</p>'
-         f'<div class="reading-guide-grid">{question_guide}</div>'
-         '<p class="reading-legend"><strong>标注口径：</strong><span class="reading-level reading-level--core">重点研究</span>直接提出机制或证据；<span class="reading-level reading-level--partial">部分涉及</span>只覆盖该问题的一部分；<span class="reading-level reading-level--not_addressed">未直接研究</span>缺乏专门机制或实验。以上表示研究覆盖程度，不表示已经彻底解决。</p>'),
         ("library", f"论文卡片库 · {len(PAPERS)} 篇",
          '<div class="reading-tools"><label for="reading-card-filter">搜索卡片</label>'
          '<input type="search" id="reading-card-filter" placeholder="论文、单位、方法或机制…" autocomplete="off">'
@@ -158,16 +173,24 @@ PAGE = {
          f'<div class="reading-grid">{cards}</div>'
          '<p class="reading-empty" id="reading-empty" hidden>没有匹配的论文；可更换问题、涉及程度或清空搜索。</p>'
          '<div class="links"><a class="link-btn" href="reading-cards.json" download>下载阅读卡片 JSON（可复用）</a></div>'),
-        ("protocol", "下一篇论文如何进入卡片库",
-         '<p>在 <code>rsi/reading-cards.json</code> 的 <code>papers</code> 数组中追加新条目：包含作者单位、发表状态、原文链接、阅读日期与版本、核心机制及实验证据，并为 <strong>research_coverage</strong> 中的五问逐项填写 <code>level</code>、<code>contribution</code> 和 <code>open_question</code>。运行 <code>python3 scripts/build_rsi_research.py</code> 即可刷新网页、左侧目录和搜索索引。</p>'
-         '<p>把作者实际验证的内容与本站的研究判断明确分开；不能用“相关”替代“解决”，也不能把阅读结论写成已经独立复现的结果。</p>'),
+        ("guide", "五问标签怎么理解？",
+         '<p>四步读懂一篇论文之后，可以用这五个问题比较它研究到哪一步。'
+         '<strong>重点研究</strong>指有直接方法和证据，不代表已经彻底解决。</p>'
+         f'<div class="reading-guide-grid">{question_guide}</div>'
+         '<p class="reading-legend"><span class="reading-level reading-level--core">重点研究</span>直接研究这一问题；'
+         '<span class="reading-level reading-level--partial">部分涉及</span>涉及其中一部分；'
+         '<span class="reading-level reading-level--not_addressed">未直接研究</span>没有专门机制或实验。</p>'
+         '<details class="reading-maintenance"><summary>以后如何新增论文？</summary>'
+         '<p>维护说明在 <code>scripts/rsi_pages/README.md</code>，每篇只需追加结构化记录，'
+         '网页和搜索由构建脚本自动生成。文献事实、阅读判断和待做实验分开记录。</p></details>'),
     ],
     "search_records": [
         {
             "title": f"精读卡片 · {p['short_title']}: {p['title']}",
             "url": f"reading-cards.html#{p['id']}",
             "text": " ".join(
-                [p["one_sentence"], p["problem"], p["setup"], p.get("updates", ""),
+                [p["one_sentence"], *[p["story"][key] for key, _, _ in STORY_STAGES],
+                 p["problem"], p["setup"], p.get("updates", ""),
                  p["lead_institution"], p["publication"], *p["institutions"]]
                 + p["tags"]
                 + [f'{q["label"]} {LEVELS[p["research_coverage"][q["id"]]["level"]]} '

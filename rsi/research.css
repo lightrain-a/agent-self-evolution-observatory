@@ -121,6 +121,53 @@ html{scroll-behavior:smooth;scroll-padding-top:82px}body[data-rsi-page]{font-fam
  .deep-table table{font-size:11px}
 }
 
+/* First-read hierarchy: a short C-I-D-R story before any formulas. */
+.reading-deep-available{font-size:10px;color:#356485;background:#eef5fa;border:1px solid #d7e5ef;border-radius:5px;padding:2px 6px}
+.reading-maintenance{margin-top:16px;border-top:1px solid #e3eaf2;padding-top:9px}
+.reading-maintenance summary{cursor:pointer;font-size:12px;color:#59718b}
+.reading-maintenance p{font-size:12px;color:#586d84}
+.reading-story{display:grid;gap:11px}
+.reading-story-step{border-left:2px solid #cad9e9;padding:0 0 1px 12px}
+.reading-story-step h4{display:flex;align-items:baseline;gap:9px;margin:0 0 3px;font-size:12px;color:#315170;font-weight:740}
+.reading-story-step h4 span{font-size:10px;letter-spacing:.025em;color:#657e97;font-weight:680;min-width:55px}
+.reading-story-step p{margin:0!important;font-size:13px;line-height:1.8;color:#354a64}
+.reading-one-sentence{font-size:14px;line-height:1.8;background:#f3f8fa;border-left-color:#a4c0c6;color:#24455b}
+.reading-issues-title{font-weight:690}
+.reading-issues{background:#fbfcfd;border-color:#e4eaf0}
+.reading-card{gap:14px}
+.reading-card .reading-expanded-content h4{font-size:13px;margin-top:15px}
+.deep-glossary{margin:18px 0 17px;border:1px solid #e1e8f0;border-radius:9px;padding:11px 14px;background:#fbfcfe}
+.deep-glossary-title{font-size:12px;font-weight:720;color:#375575;margin:0 0 8px!important}
+.deep-terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0}
+.deep-terms>div{border-top:1px solid #e4eaf1;padding-top:8px}
+.deep-terms dt{font-size:12px;font-weight:750;color:#2d4e73}
+.deep-terms dd{margin:3px 0 0;font-size:11.5px;line-height:1.65;color:#4d647c}
+.deep-stage{scroll-margin-top:100px;border-top:1px solid #dae4ee;padding:22px 0 12px}
+.deep-stage:first-of-type{border-top:0}
+.deep-stage-head span{display:block;color:#557492;font-size:11px;font-weight:760;letter-spacing:.06em;line-height:1.5}
+.deep-stage-head h4{font-size:20px;color:#203e60;margin:5px 0 9px}
+.deep-stage-lead{font-size:15px;color:#304960;font-weight:590;line-height:1.9;max-width:900px;margin:0 0 14px!important}
+.deep-stage-details{display:grid;gap:8px}
+.deep-stage .deep-chapter{margin:0;border:1px solid #dce6f0;background:#fafbfd;border-radius:9px;padding:0;scroll-margin-top:100px}
+.deep-stage .deep-chapter summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;color:#325475;font-size:13px;font-weight:690;line-height:1.65}
+.deep-stage .deep-chapter summary:hover{background:#f0f5fa}
+.deep-stage .deep-chapter summary:focus-visible{outline:2px solid #78aae5;outline-offset:2px}
+.deep-stage .deep-chapter[open] summary{background:#f0f5fa;border-bottom:1px solid #dce6f0}
+.deep-chapter-hint{font-size:11px;color:#78899a;font-weight:500;flex-shrink:0}
+.deep-stage .deep-chapter[open] .deep-chapter-hint{font-size:0}
+.deep-stage .deep-chapter[open] .deep-chapter-hint::after{content:"收起";font-size:11px}
+.deep-chapter-body{padding:14px 16px 18px;background:white;border-radius:0 0 9px 9px}
+.deep-stage .deep-chapter-body .deep-formula:first-child{margin-top:4px}
+.deep-shortcuts a{background:#fff}
+@media(max-width:820px){
+ .deep-terms{grid-template-columns:1fr;gap:8px}
+ .reading-story-step p{font-size:12.5px}
+ .deep-stage-head h4{font-size:18px}
+ .deep-stage-lead{font-size:14px}
+ .deep-stage .deep-chapter summary{font-size:12px;padding:12px}
+ .deep-chapter-body{padding:11px 12px 15px}
+}
+
 /* RSI navigation: Agent-style expandable primary folders, indented page links. */
 [data-rsi-page] #research-nav{padding-top:12px}
 [data-rsi-page] #research-nav .nav-group{margin:5px 0 8px;border:1px solid transparent;border-radius:11px;transition:background .15s,border-color .15s}
