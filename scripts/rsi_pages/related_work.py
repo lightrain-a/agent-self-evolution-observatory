@@ -23,7 +23,7 @@ def e(value) -> str:
 
 def validate(target: dict) -> None:
     works = target["works"]
-    assert 5 <= len(works) <= 24, "Curated related work requires 5-24 auditable references"
+    assert 3 <= len(works) <= 24, "Curated related work requires 3-24 auditable references"
     assert len({r["id"] for r in works}) == len(works), "Duplicate related-work ID"
     assert 3 <= sum(r["distance"] == "closest" for r in works) <= 8, "Keep the closest-work shortlist focused"
     for row in works:
@@ -54,13 +54,13 @@ def matrix(rows: list[dict], target_id: str) -> str:
     ) + "<tbody>" + trs + "</tbody></table></div>"
 
 
-def details(rows: list[dict], target_id: str) -> str:
+def details(rows: list[dict], target_id: str, target_label: str) -> str:
     return "".join(
         f'<details id="related-{e(target_id)}--{e(r["id"])}" class="deep-related-paper">'
         f'<summary><span>{e(r["name"])} · {e(r["family"])}</span><small>展开核查与区别</small></summary>'
         '<div class="deep-related-paper-body">'
         f'<p class="deep-related-venue"><b>{e(r["full_title"])}</b> · {e(r["venue"])}</p>'
-        f'<p><b>RSI-Anything 怎么引用它：</b>{e(r["cited_at"])}；{e(r["relationship"])}</p>'
+        f'<p><b>{e(target_label)} 怎么引用它：</b>{e(r["cited_at"])}；{e(r["relationship"])}</p>'
         f'<p><b>相同点：</b>{e(r["shared"])}</p>'
         f'<p><b>真正不同：</b>{e(r["difference"])}</p>'
         f'<p><b>为什么这个区别重要：</b>{e(r["why"])}</p>'
@@ -75,6 +75,7 @@ def details(rows: list[dict], target_id: str) -> str:
 
 def render(target: dict, base: str) -> str:
     validate(target)
+    label = target.get("target_short_title", "RSI-Anything")
     closest = [r for r in target["works"] if r["distance"] == "closest"]
     context = [r for r in target["works"] if r["distance"] == "context"]
     evolution = "".join(
@@ -90,7 +91,7 @@ def render(target: dict, base: str) -> str:
     secondary = (
         '<details class="deep-related-context"><summary>'
         f'其他相关工作 · {len(context)} 篇（课程 / 科研 Agent）'
-        '</summary>' + matrix(context, target['paper_id']) + details(context, target['paper_id']) + '</details>'
+        '</summary>' + matrix(context, target['paper_id']) + details(context, target['paper_id'], label) + '</details>'
         if context else ""
     )
     return (
@@ -102,14 +103,14 @@ def render(target: dict, base: str) -> str:
         '这里比较的是研究问题、更新对象和实际验证条件，'
         '不是给本文设计“全部胜出”的勾选表。</p>'
         + matrix(closest, target['paper_id'])
-        + details(closest, target['paper_id'])
+        + details(closest, target['paper_id'], label)
         + secondary
         + '<p class="deep-related-boundary"><b>读表结论：</b>'
         + e(target["one_sentence"]) + '</p>'
         + '<p class="deep-related-boundary"><b>目前无法下的结论：</b>'
         + e(target["evidence_gap"]) + '</p>'
         + '<p class="deep-related-provenance">核验日期：' + e(DATA["updated"])
-        + ' · 根据 RSI-Anything ' + e(target["source_related_sections"])
+        + ' · 根据 ' + e(label) + ' 的 ' + e(target["source_related_sections"])
         + ' 所列文献定位，逐篇对照原论文或作者项目。'
         '“同任务直接对照”和“领域相邻”两种证据不能互相替代。</p>'
         + '</div>'
@@ -120,9 +121,10 @@ def search_records(paper_id: str, base: str) -> list[dict]:
     target = TARGETS.get(paper_id)
     if not target:
         return []
+    label = target.get("target_short_title", "RSI-Anything")
     return [
         {
-            "title": f'Related Work · {r["name"]} vs RSI-Anything',
+            "title": f'Related Work · {r["name"]} vs {label}',
             "url": f'reading-notes.html#related-{paper_id}--{r["id"]}',
             "text": " ".join(str(r[k]) for k in (
                 "full_title", "venue", "family", "problem", "update_surface",

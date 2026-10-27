@@ -230,6 +230,128 @@
           "verification": "官方 arXiv 摘要已核对"
         }
       ]
+    },
+    {
+      "paper_id": "optimal-practice-2020-eglington",
+      "target_short_title": "Optimal Practice Scheduling · npj 2020",
+      "target_venue": "npj Science of Learning 5:15 (2020), DOI:10.1038/s41539-020-00074-4",
+      "source_related_sections": "Introduction / Computational Models / Discussion",
+      "one_sentence": "它不是第一个提出个性化或阈值复习，而是把正确、失败两种结果的时间成本显式纳入阈值选择，并用人类实验验证。",
+      "reading_takeaway": "已有研究分别提出近侧学习区、记忆模型和个性化复习；本研究的重点是“练习收益按时间计价后，哪一个回忆概率阈值更合理”。",
+      "scope_note": "四篇真实相关工作对照；不把所有“模型化间隔复习”都误写成当前文章首次提出。",
+      "evidence_gap": "尚未验证知识项目之间的迁移、未学任务在前置学习后是否变得更可学，更没有检验 LLM/Agent 的持久能力更新。",
+      "evolution": [
+        {
+          "period": "2005 · 学习时间分配",
+          "summary": "Region of Proximal Learning 区分选学什么和学多久，强调近似会而未会的材料。"
+        },
+        {
+          "period": "2008 · 记忆模型驱动复习",
+          "summary": "Pavlik & Anderson 根据记忆状态预测复习间隔与回忆耗时。"
+        },
+        {
+          "period": "2014 · 个性化预测与阈值",
+          "summary": "Lindsey 等按学习者与词汇预测记忆保持；Khajah 等模拟复习阈值。"
+        },
+        {
+          "period": "2020 · 时间成本进入阈值",
+          "summary": "Eglington & Pavlik 模拟不同 OET，并通过日英词汇延迟测试验证，发现高阈值较有效。"
+        }
+      ],
+      "works": [
+        {
+          "id": "rpl-2005",
+          "name": "Region of Proximal Learning",
+          "full_title": "A Region of Proximal Learning model of study time allocation",
+          "year": 2005,
+          "venue": "Journal of Memory and Language 52(4)",
+          "family": "学习策略理论",
+          "distance": "closest",
+          "cited_at": "Introduction：学习时间分配与适宜练习难度",
+          "primary_url": "https://doi.org/10.1016/j.jml.2004.12.001",
+          "source_scope": "正式期刊/ERIC 摘要；npj 2020 引言",
+          "problem": "学习者应该先学哪些材料，什么时候停止当前学习？",
+          "update_surface": "人的学习项目优先级和坚持时间；没有更新 LLM",
+          "supervision": "主观学习判断与受控人类行为实验",
+          "model_tasks": "人类记忆学习与自定学习时间",
+          "shared": "都承认不是最难的项目就最值得持续投入。",
+          "difference": "RPL 描述项目优先级与停止的认知机制；本文把记忆概率、成功失败的时间成本与最终回忆结果量化成计算调度阈值。",
+          "why": "“该学什么”和“实际每秒能多记住多少”是相关但不同的问题。",
+          "evidence": "本研究在固定练习总时间下比较 OET 与固定安排，但不是与 RPL 算法完整同任务复现对比。",
+          "decisive_test": "固定同一词汇、学生和时间预算，比较 RPL 式近侧优先级与考虑反应时的 OET；再检验难度成本关系变化时排名是否改变。",
+          "relationship": "学习项目优先级的理论先例",
+          "verification": "Journal of Memory and Language 正式发表页及 ERIC 摘要核对"
+        },
+        {
+          "id": "pavlik-2008",
+          "name": "Pavlik & Anderson",
+          "full_title": "Using a Model to Compute the Optimal Schedule of Practice",
+          "year": 2008,
+          "venue": "Journal of Experimental Psychology: Applied 14(2)",
+          "family": "间隔与记忆模型",
+          "distance": "closest",
+          "cited_at": "Introduction：记忆模型与反应时间、间隔优化",
+          "primary_url": "https://doi.org/10.1037/1076-898X.14.2.101",
+          "source_scope": "ERIC 摘要、University of Memphis publication；npj 2020 引言",
+          "problem": "怎样利用遗忘与重复间隔模型，安排每个项目的最佳练习时机？",
+          "update_surface": "记忆强度预测与下一次复习安排",
+          "supervision": "回忆成功/失败、复习间隔与反应时间",
+          "model_tasks": "人类词汇记忆与回忆延迟",
+          "shared": "都用每个词的练习历史预测记忆与耗时。",
+          "difference": "2008 年工作已经量化时间成本与最佳间隔；本文不是首次想到“收益÷时间”，而是在新的 OET 阈值策略中系统对比 22 种阈值和固定安排并进行新实验。",
+          "why": "本文的增量应定位在阈值选择的模拟/实验检验和人/词状态敏感性，而非“首次考虑时间成本”。",
+          "evidence": "2008 年文章已有模型驱动最优复习实验；2020 年文章明确比较高 OET（0.86/0.94）与传统、困难及过易阈值。",
+          "decisive_test": "统一练习历史预测器，分别按 2008 最优间隔与 2020 OET 决策安排练习，匹配真实总时间和延迟测试指标。",
+          "relationship": "作者直接继承的研究路线；不应称其为空白领域",
+          "verification": "ERIC 期刊索引与作者机构页面核对"
+        },
+        {
+          "id": "khajah-2014",
+          "name": "Khajah et al. 2014",
+          "full_title": "Maximizing students' retention via spaced review: practical guidance from computational models of memory",
+          "year": 2014,
+          "venue": "Topics in Cognitive Science 6(1)",
+          "family": "阈值调度",
+          "distance": "closest",
+          "cited_at": "Introduction：回忆概率 0.40 的模拟建议",
+          "primary_url": "https://doi.org/10.1111/tops.12077",
+          "source_scope": "PubMed 期刊索引；npj 2020 对 Khajah 等阈值建议的评论",
+          "problem": "给定记忆模型，什么时候复习能提高学生长期保留？",
+          "update_surface": "复习选择/回忆概率阈值，不更改生成式 Agent",
+          "supervision": "记忆历史与模型模拟的延迟回忆结果",
+          "model_tasks": "间隔复习与词汇记忆",
+          "shared": "都采用接近某个预测回忆概率阈值再复习的思路。",
+          "difference": "Khajah 等建议靠近遗忘时复习（约 p=0.40）；本文强调错误回忆和反馈更费时，因此较高 OET 可能更有效。",
+          "why": "只看未来记忆收益与考虑单位时间收益，可能给出不同的练习难度。",
+          "evidence": "npj 2020 真实实验报告 OET 0.86、0.94 优于 OET 0.40；这属于作者条件内的直接阈值对照。",
+          "decisive_test": "在失败反馈时间接近成功时间、或失败后学习增益特别大的新任务中验证较低 OET 是否重新占优。",
+          "relationship": "最直接的阈值选择先例；本文实验含 OET 0.40 对照",
+          "verification": "Topics in Cognitive Science/PubMed 正式索引与 npj 原文阈值对照核对"
+        },
+        {
+          "id": "lindsey-2014",
+          "name": "Lindsey et al. 2014",
+          "full_title": "Improving Students’ Long-Term Knowledge Retention Through Personalized Review",
+          "year": 2014,
+          "venue": "Psychological Science 25(3)",
+          "family": "个性化复习",
+          "distance": "closest",
+          "cited_at": "Introduction：个体/项目记忆预测与自适应实践",
+          "primary_url": "https://journals.sagepub.com/doi/10.1177/0956797613504302",
+          "source_scope": "Psychological Science 出版社摘要；npj 2020 引言",
+          "problem": "根据每名学生的遗忘差异安排复习，能否比统一间隔提高保留？",
+          "update_surface": "学习者—项目记忆估计、练习选择顺序",
+          "supervision": "课堂语言学习的历次练习和长期测试",
+          "model_tasks": "真实初中外语课程的长期保持",
+          "shared": "都强调按个人和单词历史预测下一次练习时机。",
+          "difference": "Lindsey 已实现个性化复习且带来实证效果；本文进一步考察成功/失败不同耗时如何改变最佳练习难度阈值。",
+          "why": "“个性化复习已经有效”与“怎样选出最省时间的阈值”属于不同层次。",
+          "evidence": "Lindsey 的延迟课程测试报告高于固定复习的保持率；npj 2020 研究的是一组日英单词在 22 分钟预算下的阈值差异，不能跨数据集硬比百分比。",
+          "decisive_test": "固定同一记忆模型与练习数据，以有无耗时优化为唯一差异，比较延迟回忆与单位秒收益。",
+          "relationship": "已提出且验证个性化复习，不是当前论文首次提出",
+          "verification": "Psychological Science 出版社记录与 PubMed 元数据核对"
+        }
+      ]
     }
   ]
 }

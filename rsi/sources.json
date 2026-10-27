@@ -1171,6 +1171,16 @@
       "level": "ACL Anthology官方摘要核对；2026-10-28",
       "note": "Jia等比较数学推理后训练课程；最佳方向依赖模型能力和任务复杂度，但未直接验证跨主题集中/交错状态切换的净收益。",
       "code": ""
+    },
+    {
+      "id": "E25",
+      "group": "学习科学",
+      "title": "Optimizing practice scheduling requires quantitative tracking of individual item performance",
+      "date": "npj Science of Learning 5, 15 (2020)",
+      "url": "https://www.nature.com/articles/s41539-020-00074-4",
+      "level": "Nature/npj 原文方法结果核对；2026-10-28",
+      "note": "Eglington/Pavlik 的自适应词汇复习根据学习者-单词历史预测回忆概率并纳入答对与答错的时间成本；在所研究条件下OET 0.94相较固定安排约多记住40%（相对值）。这是选择复习哪项的研究，不是固定材料下的跨主题交错切换。",
+      "code": ""
     }
   ]
 }

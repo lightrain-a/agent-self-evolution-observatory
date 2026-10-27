@@ -23,7 +23,7 @@ STORY_STAGES = [
     ("design", "Design", "具体怎么做"),
     ("result", "Result", "结果怎么样"),
 ]
-assert DATA["schema_version"] == 2
+assert DATA["schema_version"] == 3
 assert [q["id"] for q in QUESTIONS] == ["signal", "novelty", "reach", "retention", "safety"]
 assert len({p["id"] for p in PAPERS}) == len(PAPERS), "Duplicate paper ID"
 
@@ -72,7 +72,7 @@ def issue_details(p: dict) -> str:
 
 def validate(p: dict) -> None:
     required = (
-        "id", "short_title", "title", "authors", "arxiv", "first_posted",
+        "id", "short_title", "title", "authors", "first_posted",
         "version", "read_on", "reading_level", "tags", "one_sentence",
         "problem", "setup", "key_ideas", "evidence", "boundaries",
         "our_relevance", "next_test", "links", "lead_institution",
@@ -80,8 +80,16 @@ def validate(p: dict) -> None:
     )
     assert all(k in p for k in required), f"Incomplete reading card: {p.get('id')}"
     assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", p["id"])
-    assert re.fullmatch(r"\d{4}\.\d{4,5}", p["arxiv"])
-    assert p["links"]["html"].startswith(f"https://arxiv.org/html/{p['arxiv']}")
+    arxiv = p.get("arxiv")
+    doi = p.get("doi")
+    assert bool(arxiv) != bool(doi), f"Specify one primary identifier (arXiv or DOI): {p['id']}"
+    if arxiv:
+        assert re.fullmatch(r"\d{4}\.\d{4,5}", arxiv), p["id"]
+        assert p["links"]["html"].startswith(f"https://arxiv.org/html/{arxiv}"), p["id"]
+    else:
+        assert re.fullmatch(r"10\.\d{4,9}/[-._;()/:A-Za-z0-9]+", doi), p["id"]
+        assert p["links"]["html"] == p["official_url"], f"Published journal URL mismatch: {p['id']}"
+    assert p["links"]["html"].startswith("https://")
     assert all(url.startswith("https://") for url in p["links"].values())
     assert p["lead_institution"] in p["institutions"], f"Leading institution missing: {p['id']}"
     assert len(set(p["institutions"])) == len(p["institutions"])
@@ -107,7 +115,7 @@ def reading_card(p: dict) -> str:
     )
     external_links = "".join(
         f'<a class="link-btn" href="{esc(url)}" target="_blank" rel="noopener noreferrer">{label}</a>'
-        for key, label in (("html", "论文 HTML"), ("pdf", "PDF"), ("code", "GitHub 代码"))
+        for key, label in (("html", "论文原文"), ("pdf", "PDF"), ("code", "代码 / 数据"), ("full_text", "开放全文"))
         if (url := p["links"].get(key))
     )
     coverage = "|".join(f'{q["id"]}:{p["research_coverage"][q["id"]]["level"]}' for q in QUESTIONS)
@@ -116,7 +124,7 @@ def reading_card(p: dict) -> str:
     all_institutions = " · ".join(p["institutions"])
     return f'''<article class="reading-card" id="{esc(p['id'])}" data-paper-tags="{esc('|'.join(p['tags']))}" data-question-coverage="{esc(coverage)}">
   <div class="reading-card-head">
-    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>arXiv:{esc(p['arxiv'])}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}</div>
+    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>{esc('arXiv:'+p['arxiv'] if p.get('arxiv') else p['publication'].split('·')[0].strip())}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}</div>
     <h3>{esc(p['short_title'])}</h3>
     <p class="reading-full-title">{esc(p['title'])}</p>
     <p class="reading-institution"><b>发表单位（作者署名）</b> {organization_line}</p>
@@ -137,7 +145,7 @@ def reading_card(p: dict) -> str:
       <h4>核心机制 · 记住这几个公式</h4><ol class="reading-mechanisms">{mechanisms}</ol>
       <h4>实验证据（作者报告，未复现）</h4>{make_list(p['evidence'])}
       <h4>限制与易错理解</h4>{make_list(p['boundaries'])}
-      <h4>对我们 RSI / I5 的启发</h4>{make_list(p['our_relevance'])}
+      <h4>对我们的 RSI 研究有什么启发？</h4>{make_list(p['our_relevance'])}
       <div class="reading-next"><b>下一步最值得做的辨别实验</b><p>{esc(p['next_test'])}</p></div>
     </div>
   </details>

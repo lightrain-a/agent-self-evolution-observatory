@@ -33,7 +33,7 @@ def main():
     refs={r['id'] for r in source['sources']}
     card_data=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))
     cards=card_data['papers']
-    check(card_data['schema_version']==2 and len(cards)>0,'Invalid reading card registry')
+    check(card_data['schema_version']==3 and len(cards)>0,'Invalid reading card registry')
     questions=card_data['research_questions']
     question_ids={q['id'] for q in questions}
     check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
@@ -45,11 +45,13 @@ def main():
         check(len(card['one_sentence'])<=100,'Paper opening summary too long: '+card['id'])
         check(card['lead_institution'] in card['institutions'],'Leading author institution not in institution list: '+card['id'])
         check(card['institution_source'] and card['publication'],'Missing institution provenance: '+card['id'])
+        check(bool(card.get('arxiv')) != bool(card.get('doi')),
+              'Every reading card must be a preprint or verified publication: '+card['id'])
         check(set(card['research_coverage'])==question_ids,'Paper missing RSI coverage axes: '+card['id'])
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19','E20','E21','E22','E23','E24','M15','M16'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I9 sources, including I9 primary education and LLM curricula')
+    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19','E20','E21','E22','E23','E24','E25','M15','M16'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I9 sources, including I9 primary education and LLM curricula')
     check(source['review_date']=='2026-10-28','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -169,6 +171,14 @@ def main():
         check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
         coverage='|'.join(f'{q["id"]}:{card["research_coverage"][q["id"]]["level"]}' for q in questions)
         check(coverage in card_html,'Missing exact five-question coverage status: '+card['id'])
+    npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
+    check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
+          '2020 npj paper not correctly identified by its real DOI')
+    check(npj['links']['html']=='https://www.nature.com/articles/s41539-020-00074-4'
+          and npj['links']['code']=='https://osf.io/d9rms/',
+          'Publisher original or author-provided simulation materials missing')
+    check('等待' in ' '.join(npj['boundaries']) and '前置' in ' '.join(npj['our_relevance']),
+          'Forgot the distinction between retrieval decay and learning a new skill')
     deep_notes=[p for p in cards if p.get('deep_read')]
     notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
     for paper in deep_notes:
@@ -213,7 +223,12 @@ def main():
           'Related-work comparison lacks calibrated conclusion and limitations')
     check('教学示例' in notes_html and '非论文' in notes_html,
           'Deep-read evidence provenance caveat missing')
-    check(all(p['links']['html'].startswith('https://arxiv.org/') for p in cards),'Paper lacks a verified original link')
+    check(all(
+        (p.get('arxiv') and p['links']['html'].startswith('https://arxiv.org/'))
+        or (p.get('doi') and p.get('official_url') == p['links']['html']
+            and p['official_url'].startswith('https://'))
+        for p in cards
+    ),'Paper lacks a verified arXiv or publisher original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
     check(all(f'idea-{i}' in ideas.ids for i in range(1,10)),'I1–I9 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
@@ -312,8 +327,10 @@ def main():
               ('question','evidence','related','challenge','insight','design','experiments','orthogonal','gate')),
           'I9 scientific argument or experimental section missing')
     check(all(f'href="references.html#{ref}"' in i9_text for ref in
-              ('E20','E21','E22','E23','E24','M15','M16')),
+              ('E20','E21','E22','E23','E24','E25','M15','M16')),
           'I9 primary reference missing')
+    check('deep-optimal-practice-2020-eglington' in i9_text,
+          'I9 must distinguish already-studied item-level scheduling from cross-topic sequencing')
     check(all(term in i9_text for term in
               ('Blocked','Interleaved','Random Interleaved','规则形成','规则辨别','LoRA','I7','P0','P1','P2')),
           'I9 nearest-work, state mechanism or controlled experiments missing')

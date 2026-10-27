@@ -18,6 +18,7 @@ PAGE = {
 ("interleaving","I9｜集中练习与交错练习：什么时候该换方法？",'''
 <p><b>Observable Phenomenon：</b>Samani 与 Pan（<i>npj Science of Learning</i>，2021）在350名大学生、8周物理作业安排中发现，集中练习的作业成绩更高，交错练习却提高了意外延迟测试中的新题表现。学生觉得交错更难，也更容易误以为自己学得差。正式期中考试差异未达显著，论文没有单独隔离复习间隔等所有机制。[[E20]]</p>
 <p><b>相反现象：</b>Beukers 等（<i>Communications Psychology</i>，2024）在需要区分多个潜在事件结构的任务中发现集中安排更好，且在开始阶段就集中比后期才集中更有效。作者以潜在结构分离解释，但不等于 LLM 已拥有对应的内部表征机制。[[E21]]</p>
+<p><b>练什么也已有动态调度研究：</b>Eglington 与 Pavlik（<i>npj Science of Learning</i>，2020）根据个体和词汇项目的记忆状态、练习收益及时间成本来选择下一项复习；这与 I9 固定每项练习次数、只改变跨主题课程次序是两个问题。<a href="reading-notes.html#deep-optimal-practice-2020-eglington">查看既有完整精读</a>。[[E25]]</p>
 <p><b>相关边界：</b>Brunmair 与 Richter 的元分析显示交错收益随学习材料和类别相似度变化；Nemeth 等（2025）发现根据混淆类别调度交错未显著超越随机交错。Xiong 与 Wu（2025）在人类与 LLM 的人工语言示例实验中看到模型间差异，不能据此推断真实 LoRA 更新的效果。[[E23]][[E22]][[E24]]</p>
 <div class="table-wrap"><table><thead><tr><th>难在哪里</th><th>可能的学习机制</th><th>RSI 的可执行对照</th></tr></thead><tbody>
 <tr><td>连续做同类题正确率上升</td><td>可能在记住刚才的解法，而非学会选择规则</td><td>把单主题新题与混合主题新题的后测分开</td></tr>

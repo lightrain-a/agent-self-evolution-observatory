@@ -18,6 +18,7 @@ PAGE = {
 <p><b>Samani &amp; Pan，npj Science of Learning 2021：</b>350 名大学生参加两个物理课程班级的交叉安排，跨 8 周比较交错与集中作业。集中组在作业中更容易答对，而交错组在两次包含新题的意外延迟测试中更好：平均得分分别为 54% 对 43%、47% 对 27%；论文给出的 50% 与 125% 是中位数的相对改善，并非百分点。学生还倾向认为更难的交错练习效果更差。正式期中考试上未见显著差异，远距离迁移证据也仍有边界。[[E20]]</p>
 <p><b>Beukers 等，Communications Psychology 2024：</b>用两个潜在事件结构的叙事学习任务发现集中学习优于持续交错，并在“先集中/中途集中/最后集中”的补充实验中发现早期集中表现最好。作者的贝叶斯模型通过学习者可能把不同潜在规则分成独立表示解释结果。这个机制是关于人类及其模拟模型的研究，<strong>并未证明 LLM 权重自动进行相同的表征分裂</strong>。[[E21]]</p>
 <p><b>值得注意的直接否定例：</b>Nemeth 等 2025 年在 259 名参与者的绘画类别学习实验中发现随机与按混淆自适应交错都比集中更好，但自适应交错未显著优于随机交错。因此，单纯“哪里容易混淆就多交错”不足以构成可靠的新方法。[[E22]]</p>
+<p><b>Eglington &amp; Pavlik，npj Science of Learning 2020：</b>根据每个学习者和项目的回忆概率、练习收益以及答错的时间成本选择<strong>下一个应该复习的项目</strong>；其词汇实验中部分自适应安排比固定安排多回忆约 40% 项目。<a href="reading-notes.html#deep-optimal-practice-2020-eglington">本站已有逐节精读</a>。I9 则固定练习题目与次数，研究多规则主题间的<strong>呈现顺序与切换时点</strong>，不重做它的选题调度器。[[E25]]</p>
 <div class="note"><b>共同启发：</b>练习组织的收益取决于任务的结构和学习者已有的知识。<strong>集中与交错并没有一个永远正确的固定答案</strong>。将这一条件性结论迁移到 LLM 的真实参数更新，需要重新验证。</div>
 '''),
     ("related", "现有工作｜别人已经研究到了哪一步？", '''
@@ -26,11 +27,12 @@ PAGE = {
 <tr><td><a href="https://www.nature.com/articles/s41539-021-00110-x" target="_blank" rel="noopener noreferrer">Samani &amp; Pan · npj 2021</a> [[E20]]</td><td>物理作业和意外新题测验出现反转，学生的即时学习判断可能误导。</td><td>从人类静态课程转向真实参数更新后的独立新题及经历后续更新的保持。</td></tr>
 <tr><td><a href="https://www.nature.com/articles/s44271-024-00079-4" target="_blank" rel="noopener noreferrer">Beukers et al. · Communications Psychology 2024</a> [[E21]]</td><td>多潜在规则学习中集中更好；早期集中阶段优于后期集中。</td><td>不能说首次提出“先集中后交错”；研究哪种模型版本、哪种规则条件下应该切换。</td></tr>
 <tr><td><a href="https://doi.org/10.1016/j.lindif.2025.102804" target="_blank" rel="noopener noreferrer">Nemeth et al. · Learning and Individual Differences 2025</a> [[E22]]</td><td>按错误自适应交错没有显著超过随机交错。</td><td>必须有随机交错强基线；不仅检测混淆，还比较实际参数学习的下一阶段净收益。</td></tr>
+<tr><td><a href="https://www.nature.com/articles/s41539-020-00074-4" target="_blank" rel="noopener noreferrer">Eglington &amp; Pavlik · npj Science of Learning 2020</a> [[E25]]</td><td>根据个体和项目的回忆概率、练习时间成本，动态决定复习哪一项；部分条件下较固定安排约多记住 40% 项目。</td><td>不再声称“用学习状态安排练习”是新方法；I9 固定练习项目和次数，只选择跨主题集中/交错的时点与顺序。</td></tr>
 <tr><td><a href="https://doi.org/10.1016/j.actpsy.2025.105518" target="_blank" rel="noopener noreferrer">Xiong &amp; Wu · Acta Psychologica 2025</a> [[E24]]</td><td>比较人类与多种 LLM 的人工语言形态学习，LLM 对上下文示例顺序反应不同。</td><td>不能把 few-shot 上下文内表现当作持续更新后获得的能力。</td></tr>
 <tr><td><a href="https://aclanthology.org/2026.eacl-long.271/" target="_blank" rel="noopener noreferrer">Zhang et al. · EACL 2026</a> [[M15]]</td><td>在 LLM 预训练中比较课程策略，明确包含交错课程并报告训练效率。</td><td>交错进入 LLM 训练已经有工作；I9 聚焦有限预算持续学习、规则辨别和能力保持，不是单纯预训练加速。</td></tr>
 <tr><td><a href="https://aclanthology.org/2026.acl-long.1591/" target="_blank" rel="noopener noreferrer">Jia et al. · ACL 2026</a> [[M16]]</td><td>数学推理后训练中课程方向依赖模型能力和题目复杂度，没有统一最佳顺序。</td><td>不能把“根据模型状态调整排序”作为唯一创新；必须证明跨主题集中/交错切换机制的独立、可预测收益。</td></tr>
 </tbody></table></div>
-<p><b>最近邻边界：</b>教育心理学已研究集中、交错及二者不同的组合顺序；LLM 领域也已经研究课程、交错预训练和模型相关难度排序。I9 的科学问题应收窄为：<strong>在知识内容、题目数量与更新方式不变时，“规则是否已经形成”和“规则选择是否仍有混淆”，能否预测下一段集中或交错练习的真实收益？</strong></p>
+<p><b>最近邻边界：</b>教育心理学已研究集中、交错、不同阶段组合、根据学习者回忆状态选复习项目；LLM 领域也已经研究课程、交错预训练和模型相关难度排序。I9 的科学问题应收窄为：<strong>在知识内容、题目数量与更新方式不变时，“规则是否已经形成”和“规则选择是否仍有混淆”，能否预测下一段集中或交错练习的真实收益？</strong></p>
 '''),
     ("challenge", "Challenge｜难在哪里？", '''
 <div class="idea-steps">
