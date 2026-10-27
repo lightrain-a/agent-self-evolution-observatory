@@ -17,14 +17,14 @@
 <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先独立尝试，还是先看正确示范？</b></a>
 <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 纠错迁移</span><b>纠正哪个错误，能让我学会一整类题？</b></a>
 </div>
-<p>I1–I5 仍各自研究具体学习机制。<b>I6</b> 固定错误终点与教学过程，仅比较不同失败轨迹的学习价值；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a></p>
+<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开，方便直接汇报与组织论文；它们各自研究具体学习机制。<b>I6</b> 固定错误终点与教学过程，仅比较不同失败轨迹的学习价值；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a><a class="cite" href="references.html#S28" title="RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent">[S28]</a><a class="cite" href="references.html#S29" title="Harness Continual Learning: Continual Adaptation Beyond Model Parameters">[S29]</a><a class="cite" href="references.html#S30" title="Rethinking Self-Evolution: A Constrained Exploration-Exploitation Process for Mitigating Skill Overfitting (SkillBoost)">[S30]</a><a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a><a class="cite" href="references.html#S34" title="Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)">[S34]</a></p>
 
 ## RSI × 自主学习研究 / 研究导航：从证据走到可执行实验
 
 <div class="route-grid">
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
-<a href="ideas.html"><b>I1–I5：具体学习机制</b><span>每项独立的科学问题、最近邻与最小辨别实验。</span></a>
+<a href="ideas.html"><b>I1–I5：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
 <a href="idea-i6-failure-value.html"><b>I6：失败轨迹有什么学习价值？</b><span>相同问题、相同错误终点，不同尝试过程能否产生不同独立迁移收益？</span></a>
 <a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
 <a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
@@ -343,6 +343,7 @@
  <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  </div>
+ <p class="idea-outline-key"><b>I1–I5 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。先说清问题，再谈方法，可直接用于向师兄汇报和论文初稿。</p>
  <p class="status">状态：I1–I8 研究问题已整理；I6 与 I7 正交拆分，I8 保留独立机制验证；尚无本项目的受控实测结果。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
 
@@ -350,73 +351,67 @@
 ## I1–I8：八个研究问题 / I1：脚手架学习法——哪些该自己学会，哪些用时再查？
 
 
- <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>最直观的问题：</b>调试方法最好自己掌握；频繁变化的 API 细节可能用时再查就行。Agent 能不能自己学会这种取舍，并随能力与环境变化调整？</p></div>
- <h3>别人研究的是……</h3>
- <p><b>R²Orch</b> 研究什么时候可以撤掉已被内部能力替代的 Skill，并在自博弈中推动能力内化；<b>PATS</b> 把 Skill 当作训练时的临时支架，能力变强后修订或移除冗余提示。它们都不只是“减少提示词”，而是 I1 必须正面比较的工作。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a></p>
- <h3>我们想研究的是……</h3>
- <p><strong>同一份辅助经验，什么时候该学进自身，什么时候该留在外部、按需读取？</strong>例如稳定的排查步骤值得固化，易变的接口规则可能应保留检索入口。判断取舍的依据不能只看“有帮助时成功了没有”，还要看撤除帮助之后能不能在新任务上独立完成、环境改变后会不会出错。</p>
- <p><b>难点：</b>一次撤除成功，可能只是恰好不需要那个 Skill；完全不依赖 Skill 也不等于能力提高。</p>
- <p><b>可利用的观察：</b>辅助对当前完成任务有用，不代表把它写进长期能力最有用；知识稳定性、已有基础和后续更新都会改变最佳选择。</p>
- <div class="flow"><div><b>列出辅助经验</b><small>稳定规则 / 易变知识 / 临时提示</small></div><div><b>比较三种做法</b><small>内化、外置检索、渐隐</small></div><div><b>独立执行新任务</b><small>清空辅助与任务上下文</small></div><div><b>根据收益调整选择</b><small>新旧任务与成本一起算</small></div></div>
- <h3>最小验证</h3><p>同一 Agent、相同训练和工具预算，将稳定操作经验与会变动的 API 规则分开，比较<strong>全部内化 / 全部外置 / 固定渐隐 / 自适应取舍</strong>。看撤除后的独立正确率、环境变更后的退化、保留成本。再和 R²Orch/PATS 适配版比较。如果一律内化或简单撤除就同样好，我们不应硬说路由策略有新价值。</p>
-
+ <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>调试思路最好自己掌握，但经常变化的 API 规则可以用时再查。Agent 能自己判断哪些该学会、哪些该留作外部帮助吗？</p></div>
+ <div class="idea-steps">
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>在帮助下完成任务，不等于撤掉帮助后还能独立做。什么都写进 Skill，可能把过时规则也记住；什么都留在外部，又要反复查询。难的是还不知道未来任务怎么变，就要先决定哪些知识值得长期掌握。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>R²Orch</b> 研究的是怎样把 Skill 内化、什么时候可以撤掉 Skill；<b>PATS</b> 研究的是随着学习进展怎样调整并撤除临时支架。我们不是再做一次“帮助逐渐减少”，而是研究<strong>不同经验究竟该留在哪里</strong>。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a></p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>外部帮助并不都一样。稳定且反复使用的操作方法可能适合自己学会；容易变化的事实可能更适合按需查询。比较<strong>撤除帮助后的独立能力、知识变化频率和长期成本</strong>，有机会学会这两种方式的取舍。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>将辅助经验分成稳定方法、易变规则和临时提示，让 Agent 选择内化、外置查询或混合保留。分开测“完全不给帮助”和“允许按需查询”的表现，再根据这些结果更新下一轮的选择方式。</p>
+ <div class="flow"><div><b>拆分辅助经验</b><small>稳定方法 / 易变知识</small></div><div><b>选择存放方式</b><small>内化 / 查询 / 混合</small></div><div><b>新任务测能力</b><small>撤辅与查询分开</small></div><div><b>更新取舍规则</b><small>比较收益和成本</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备稳定的调试技巧与会变动的 API 规则，在相同预算下比较<strong>全部内化、全部外置、固定渐隐、自适应取舍</strong>，并与 R²Orch/PATS 的可复现做法比较。重点看无辅助的新任务成功率、API 更新后的适应性、调用成本和旧能力退化。如果固定规则同样好，说明动态选择还没有额外价值。</p></div>
+ </div>
 
 ## I1–I8：八个研究问题 / I2：因材施教——同样犯错，为什么学习方法不同？
 
 
- <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">采不采得到</span><p><b>最直观的问题：</b>两个 Agent 都不会修一个 Bug，一个看一次示范就学会了，另一个要对比几次失败才理解。只看“错在哪里”，够不够决定下一轮该怎么学？</p></div>
- <h3>别人研究的是……</h3>
- <p><b>RSIFlow</b> 根据执行瓶颈选择该改模型、Harness 还是任务产物，并让负责调度的 Meta-Agent 进化；<b>MetaSkill-Evolve</b> 让任务 Skill 与修改 Skill 的元流程在不同时间尺度上改进。它们已经覆盖“动态自我改进”这个大概念。<a class="cite" href="references.html#S28" title="RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent">[S28]</a><a class="cite" href="references.html#S06" title="MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution">[S06]</a></p>
- <h3>我们想研究的是……</h3>
- <p><strong>即使失败类型相同、要更新的对象也相同，Agent 是否仍然有不同的最佳学习方法？</strong>有人更适合看示范，有人更适合自主重试，也有人需要比较正确与错误路径。能不能先花少量预算“试学”一轮，再选能让自己下一轮独立进步最多的方法？能力变了之后，也重新判断。</p>
- <p><b>难点：</b>一次试学效果好未必意味着长期收益好；试学本身花费预算，而且不同 Agent 的基础能力不一致。</p>
- <p><b>可利用的观察：</b>同样的错误标签不能完整预测对不同教学动作的反应；少量有控制的学习尝试可能比静态分类更有信息。</p>
- <div class="flow"><div><b>锁定同类失败</b><small>同一更新对象</small></div><div><b>少量试学</b><small>示范 / 反例 / 独立练习</small></div><div><b>观察独立进步</b><small>不看当前答题小分</small></div><div><b>下轮选更合适的方式</b><small>进化后重估</small></div></div>
- <h3>最小验证</h3><p>从同一快照分叉三种学习处理，先固定“修改 Skill”而不是混入更新表面。让两个当前分数接近的 Agent 学相同类型任务，比较<strong>固定方法 / 错误类型路由 / 通用 bandit / 试学后选择</strong>在未见任务上的等预算进步。再检验能力进化后原来最好的方法是否改变。若简单 bandit 就足够，保留现象但不夸大复杂模型的贡献。</p>
-
+ <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>两个 Agent 都不会修一个 Bug，一个看示范就会了，另一个要比较几次失败才学得会。怎样找到各自最适合的学习方法？</p></div>
+ <div class="idea-steps">
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>知道“错在哪里”，不等于知道“怎么学最快”。同一种错误，换个模型或学习阶段，最有用的学习方式可能不同；但把所有学法试一遍又太贵。还要避免把眼前这道题的进步当成长久的能力提升。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>RSIFlow</b> 研究的是失败后该修改模型、Harness 还是任务产物；<b>MetaSkill-Evolve</b> 研究的是任务 Skill 和改进 Skill 的方法怎样一起演化。我们先固定<strong>更新的是 Skill</strong>，只研究同样的失败该用哪种学习方法，而不是重新做更新对象路由。<a class="cite" href="references.html#S28" title="RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent">[S28]</a><a class="cite" href="references.html#S06" title="MetaSkill-Evolve: Recursive Self-Improvement of LLM Agents via Two-Timescale Meta-Skill Evolution">[S06]</a></p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>只看错误标签，可能看不出 Agent 最适合的学法；但是少量“试学”能告诉我们，<strong>它看示范、做反例对照或自己重试后，哪一种真的学得更快</strong>。Agent 变强后重新测，就能发现原来有效的方式是否还适合。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>对同一种失败，从相同 Skill 快照出发，分叉尝试示范、对比失败和独立练习。用另一批任务检验每种方式学完后的独立能力，再选择下一轮学法，并记录它在不同能力阶段的效果。</p>
+ <div class="flow"><div><b>固定同类失败</b><small>同一个 Skill 更新目标</small></div><div><b>小预算试学</b><small>示范 / 反例 / 重试</small></div><div><b>测独立进步</b><small>测试任务不能参与试学</small></div><div><b>下轮重新选</b><small>随能力更新学法</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>选多个能力阶段的 Agent，在同类任务上比较<strong>固定学法、只按错误类型选、普通 bandit、根据少量试学反应选</strong>。试学本身的费用也计入预算；主要看未见题的独立提升，以及能力变强后最佳学法是否改变。与 <a href="idea-i6.html">I6</a> 分开：I2 只决定当前学习任务该怎么学，不决定跨多轮要转去补知识还是改验证器。</p></div>
+ </div>
 
 ## I1–I8：八个研究问题 / I3：温故知新——新方法有用，却和旧方法冲突怎么办？
 
 
- <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>最直观的问题：</b>Agent 学会更快的处理流程，却把另一种场景下原本正确的规则覆盖了。我们是否只能回滚这次更新？</p></div>
- <h3>别人研究的是……</h3>
- <p><b>Harness Continual Learning（HCL）</b> 在提交 Harness 更新前，同时检查新任务进步、历史能力保持和有效性；<b>SkillBoost</b> 用回归约束筛掉破坏旧能力的修改。它们解决了不少“新改动伤害旧任务”的问题。<a class="cite" href="references.html#S29" title="Harness Continual Learning: Continual Adaptation Beyond Model Parameters">[S29]</a><a class="cite" href="references.html#S30" title="Rethinking Self-Evolution: A Constrained Exploration-Exploitation Process for Mitigating Skill Overfitting (SkillBoost)">[S30]</a></p>
- <h3>我们想研究的是……</h3>
- <p><strong>当新旧 Skill 各自都有效，却会在不同条件下互相干扰时，Agent 能否通过针对性复习把两者都保留下来？</strong>不是每次全部重练，也不只是发现回归就拒绝更新，而是学清楚“这个规则什么时候用、什么时候不能用”。</p>
- <p><b>难点：</b>旧能力退化可能来自检索冲突、适用范围模糊，也可能确实是参数遗忘。需要定位干扰来源，而不是一律新增旧题。</p>
- <p><b>可利用的观察：</b>不少负迁移是两个局部有效策略之间的错误选择；练习条件边界可能比简单重复旧样本更有用。</p>
- <div class="flow"><div><b>检测新旧冲突</b><small>同一新版本 / 旧版本对照</small></div><div><b>找冲突条件</b><small>工具状态、触发与上下文</small></div><div><b>定向复习</b><small>边界任务，不是所有旧题</small></div><div><b>合并保留</b><small>旧、新和组合任务都通过</small></div></div>
- <h3>最小验证</h3><p>制作两组分别成功、混合却容易互相干扰的 Skill，加入自然更新中的同类案例。比较<strong>发现退化即回滚 / 均匀重放 / MIR 风格重放 / 针对冲突条件复习</strong>。固定复习调用数与存储预算，测试旧任务保持、新任务收益及两者组合。若只是因为多存了规则才进步，不属于新机制。</p>
-
+ <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>一句话：</b>Agent 学会一个更快的新方法，却把以前在另一种场景下正确的做法弄坏了。新旧本事能不能都留下来？</p></div>
+ <div class="idea-steps">
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>新 Skill 确实提高了部分任务的成功率，却可能让旧任务变差。直接回滚就失去了新进步；把所有旧题重做一遍又浪费预算。首先得弄清是旧知识真忘了，还是新旧规则用错了地方。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>HCL</b> 研究的是 Harness 更新后如何兼顾新任务与旧任务；<b>SkillBoost</b> 研究的是用回归检查和约束防止新 Skill 伤害旧能力。我们进一步研究<strong>当新旧方法都各有用处时，怎样通过复习修好冲突，而不是只能拒绝新更新</strong>。<a class="cite" href="references.html#S29" title="Harness Continual Learning: Continual Adaptation Beyond Model Parameters">[S29]</a><a class="cite" href="references.html#S30" title="Rethinking Self-Evolution: A Constrained Exploration-Exploitation Process for Mitigating Skill Overfitting (SkillBoost)">[S30]</a></p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>有些退化未必是忘记，而是<strong>两个原本都有效的方法，被用在了不适合的场景</strong>。只要找到“什么时候用旧规则、什么时候用新规则”的区别，少量针对这些边界的练习，可能比全部重放旧经验更有效。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>比较修改前后的失败轨迹，找到出现冲突的条件，自动生成少量只改变一个关键条件的练习。用这些例子修订 Skill 的适用范围或选择规则，必要时再对参数做巩固。最终既要会用新方法，也不能丢旧能力。</p>
+ <div class="flow"><div><b>发现旧任务退化</b><small>新旧版本对比</small></div><div><b>定位冲突条件</b><small>何时该用哪一条</small></div><div><b>有针对性地复习</b><small>只练容易混淆的场景</small></div><div><b>一起检验新旧能力</b><small>旧题 / 新题 / 组合题</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备两套分别有效、合起来容易冲突的 Skill，并加入自然学习中出现的冲突案例。比较<strong>退化即回滚、均匀重放、MIR 风格重放、针对冲突条件复习</strong>；固定复习次数和记忆预算。分别测旧能力保持、新能力增益、组合任务成功率。如果优势只来自存了更多规则或多练了题，就不能归因于我们的复习方法。<a class="cite" href="references.html#M09" title="Online Continual Learning with Maximally Interfered Retrieval">[M09]</a></p></div>
+ </div>
 
 ## I1–I8：八个研究问题 / I4：生产性失败——失败一次就总结，还是再试几次？
 
 
- <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>最直观的问题：</b>API 超时一次，不能马上写进长期 Skill：“这个工具不可靠，以后别用”。Agent 怎么知道自己真的找到了通用规律，而不是遇到了偶然故障？</p></div>
- <h3>别人研究的是……</h3>
- <p><b>ActiveSaddler</b> 研究应该继续优化哪些失败模式；<b>Trace2Skill</b> 研究从很多执行轨迹中提炼统一、可迁移的 Skill。失败选择与跨轨迹总结并不是空白。<a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S31" title="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills">[S31]</a></p>
- <h3>我们想研究的是……</h3>
- <p><strong>对一次失败，应该马上形成经验，还是继续做能辨别原因的尝试？又该在哪一步停下来，认定证据足以修改 Skill？</strong>例如先复现超时，再改变请求大小或重试条件，区分 API 规则错误、环境偶发故障和策略错误。</p>
- <p><b>难点：</b>多试几次自然可能多成功，优势未必来自更好地理解失败。不能让训练时见到的测试答案泄漏给更新器。</p>
- <p><b>可利用的观察：</b>最值得学习的失败不一定最严重；能区分多个原因的下一次试验，可能比立刻反思一句话更有价值。</p>
- <div class="flow"><div><b>遇到失败</b><small>先列几个可检验的原因</small></div><div><b>选择下一次试验</b><small>最能区分解释</small></div><div><b>决定继续或归纳</b><small>证据是否稳定</small></div><div><b>更新 Skill 并外测</b><small>新任务、旧任务均验证</small></div></div>
- <h3>最小验证</h3><p>固定失败家族与执行预算，比较<strong>失败即更新 / 固定多次重试 / 随机补充试验 / 按争议原因选下一次试验并决定停止</strong>。指标是写入错误规则的比例、未见环境的迁移与最终改进效率，不是“试的次数越多越好”。整个过程可使用沙箱执行反馈，不需要外部教师告诉标准答案。</p>
-
+ <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>API 超时一次，Agent 就总结“这个工具以后别用”，可能学错。什么时候应该继续试，什么时候才值得把经验写进 Skill？</p></div>
+ <div class="idea-steps">
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>一次失败可能是策略错了，也可能只是网络偶尔超时。太早总结，会把偶然现象当成通用规律；继续试太久，又会浪费探索预算。RSI 不一定有人告诉它正确做法，需要它自己根据执行反馈辨别原因。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>ActiveSaddler</b> 研究的是哪些失败模式更值得继续训练；<b>Trace2Skill</b> 研究的是怎样从多条执行轨迹提炼可复用 Skill。我们研究的是<strong>面对这一次失败，下一步试什么，什么时候证据够了可以开始总结</strong>。<a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S31" title="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills">[S31]</a></p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>不同失败原因，往往会对下一次尝试给出不同预测。<strong>一次只改变一个关键条件</strong>，就有可能排除错误解释。当继续探索已经很难提供新信息时，再停止并总结经验。关键不是失败越多越好，而是每次尝试能否帮助弄清原因。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>失败后先列出两三个可能原因，选择最能把它们区分开的安全小实验，例如同样条件重试或只改变一个 API 参数。持续记录支持和反对各原因的证据，足够确定再更新 Skill；证据不够时允许暂不总结。所有试验只在受控环境运行。</p>
+ <div class="flow"><div><b>列出失败原因</b><small>策略错 / 工具故障 / 偶发</small></div><div><b>做辨别性尝试</b><small>只变一个关键条件</small></div><div><b>判断何时停止</b><small>证据是否足够</small></div><div><b>形成新 Skill</b><small>再到未见任务复验</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>在 API 异常、工具使用和代码执行任务上，比较<strong>失败后立即总结、固定重试 N 次、随机补充尝试、针对可能原因选试验并决定停止</strong>。匹配 Token、环境调用和总预算，混合可控故障与自然失败。主要比较写入错误规则的比例、未见场景的迁移、单位成本的学习收益；不把“多试几次自然多成功”误当成新机制。整个过程不需要外部教师告诉标准答案。</p></div>
+ </div>
 
 ## I1–I8：八个研究问题 / I5：费曼学习法——和谁一起学，自己进步最快？
 
 
- <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>最直观的问题：</b>同样让我和别的模型交流，最强的模型不一定最能帮助我成长；能力提高后，原来最好的伙伴可能也不再适合。</p></div>
- <h3>别人研究的是……</h3>
- <p><b>PopuLoRA</b> 研究在共同进化的教师与解题者群体中，谁给谁出题更有学习挑战；<b>OPCoD</b> 研究两模型互相教学时，什么时候应该交换和采纳同伴反馈；<b>MACE（Multi-Agent Contextual Exploration）</b> 研究怎样探索和选择协作伙伴，以改善当前交互任务和探索表现。它们各自涉及配对、反馈或伙伴探索，但衡量目标与我们不完全一样。<a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a><a class="cite" href="references.html#S34" title="Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)">[S34]</a></p>
- <h3>我们想研究的是……</h3>
- <p><strong>谁能使我在交流结束后，自己做新任务时进步最多？这种最佳伙伴会不会随着我自己的能力变化而改变？</strong>不只比较参数大小，还看任务互补、对方擅长什么、我能否理解并吸收它的经验。也可以研究我教别人后是否反过来变强。</p>
- <p><b>难点：</b>伙伴可能直接帮我把当前题做对，但我并没有学会。必须撤走伙伴、清空对话，并比较自身新旧版本的独立表现。</p>
- <p><b>可利用的观察：</b>当前回答受益最大的人，未必是下次让我进步最多的人；最合适的差距可能随学习阶段变化。</p>
- <div class="flow"><div><b>能力不同的伙伴池</b><small>规模、领域、强弱互补</small></div><div><b>受控教学交流</b><small>按相同时间和预算</small></div><div><b>我自己的持久更新</b><small>参数、Skill 或 Harness</small></div><div><b>伙伴退出后测试</b><small>新任务进步决定下轮选谁</small></div></div>
- <h3>最小验证</h3><p>从三种能力档位的若干模型开始，控制教师/学生方向、任务、教学 token 和训练预算，比较<strong>随机匹配 / 同级匹配 / 永远找最强者 / PopuLoRA 式能力匹配 / MACE 式当前交互收益匹配 / 以独立学习增益为目标的选择</strong>。连续多轮重选伙伴，记录最佳伙伴的变化、下轮独立成功率和旧能力退化。进一步做“只获得答案、不更新自身”和“更新后撤除伙伴”对照，排除只是在组队解题。</p>
- <div class="note">已有 <a href="teaching.html">教学反馈诊断教师盲点的 I5 早期技术方案</a>独立保留，属于相邻支线：它研究“学生反馈暴露教师哪类缺陷”；本页 I5 主线研究“当前该与谁学，能让自己下一轮变强”。两者不能混成同一项已验证成果。</div>
-
+ <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>和最强模型一起解题，未必最能让我成长。随着我自己越来越强，谁才是最合适的学习伙伴？</p></div>
+ <div class="idea-steps">
+ <div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>伙伴帮我把眼前一道题做对，不等于它离开后我还能独立完成新题。只看参数量、当前回答收益或两个人的分数，可能选到很会帮忙、却不利于我学习的伙伴。而且我变强后，原来的伙伴未必还合适。</p></div>
+ <div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>PopuLoRA</b> 研究的是谁应该给谁出题；<b>OPCoD</b> 研究的是什么时候应该交换或接受同伴教学反馈；<b>MACE</b> 也做伙伴探索和选择，但更关注交互过程中的协作与当前任务表现。我们希望研究的是<strong>谁能让我下一轮独立解决新问题时学得更快、更好</strong>。<a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a><a class="cite" href="references.html#S34" title="Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)">[S34]</a></p></div>
+ <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>最强的伙伴可能讲得太难，同水平的伙伴又可能只会重复我已经知道的内容。<strong>用交流结束后独立完成新任务的进步，来判断伙伴是否适合自己</strong>，而不是只看这次合作表现，就可能找到真正有利于自身成长的配对方式。</p></div>
+ <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>建立能力水平和擅长领域不同的伙伴池。Agent 与伙伴交流或互教，随后更新自己的 Skill 或参数。每轮把伙伴撤走、清空临时对话，在新题上独立测自己的进步，再据此决定下一轮应该找谁学；自己变强后重新选择。</p>
+ <div class="flow"><div><b>选择学习伙伴</b><small>能力、规模与知识互补</small></div><div><b>交流与互教</b><small>相同任务和教学预算</small></div><div><b>自己完成更新</b><small>Skill / 参数分开验证</small></div><div><b>撤走伙伴再测试</b><small>独立进步指导下轮匹配</small></div></div></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从不同能力、不同模型家族的伙伴开始，连续多轮比较<strong>随机匹配、同水平匹配、总找最强者、PopuLoRA 式匹配、按当前交互收益选伙伴、按下一轮独立学习收益选伙伴</strong>。控制交流、训练和计算预算，测新题独立成功率、旧能力保持及最佳伙伴是否随能力改变；再做“交流但不更新自己”的对照，排除只是组队把题做对。</p><p class="idea-side-note">此前<a href="teaching.html">I5 教学反馈诊断支线</a>研究的是学生反馈能否暴露教师的知识盲点；当前 I5 主线研究的是与谁学习最有利于自身进步。两者保留为不同研究问题。</p></div>
+ </div>
 
 ## I1–I8：八个研究问题 / I6、I7 与 I8：一次只研究一个变量
 
