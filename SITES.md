@@ -11,6 +11,8 @@
 
 两侧边栏最上方都有 Agent / RSI 切换。切换地址分别是 `/` 和 `/rsi/`，不会将原有 Agent URL 搬迁，也不会破坏 `/rsi/*.html` 的旧深链接。
 
+RSI 左侧导航和 Agent 站一样分两级：**一级为可展开的目录**（专题入口、文献与论文精读、方法与学习科学、研究方向与实验），**二级为实际页面**。当前页面所属目录默认展开，点击一级标题可折叠；语言切换保留手动展开状态。目录结构的唯一源码是 `scripts/build_rsi_research.py` 中的 `NAV_SECTIONS`，同一结构同时生成无 JS 也能使用的 HTML 与独立的 `rsi/site-nav.js`。新增 RSI 页面时，须同步更新 `ORDER`、`LABELS`、`EN_LABELS` 与 `NAV_SECTIONS`；构建器会拒绝遗漏或重复的二级页面。
+
 ## 生产构建
 
 ```bash

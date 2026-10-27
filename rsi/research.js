@@ -12,15 +12,27 @@
   function renderNavigation() {
     if (!Array.isArray(window.NAV_GROUPS)) return;
     const nav = $('#research-nav');
-    nav.replaceChildren();
     const current = (root.body.dataset.rsiPage || 'index') + '.html';
+    // Preserve the visitor's expanded sections when switching the navigation language.
+    // Without JavaScript, the same grouped <details> navigation remains usable.
+    const expanded = new Map([...nav.querySelectorAll('details.nav-group[data-nav-group]')]
+      .map((item) => [item.dataset.navGroup, item.open]));
+    nav.replaceChildren();
     window.NAV_GROUPS.forEach((group) => {
+      const active = group.pages.some(([href]) => href === current);
       const details = root.createElement('details');
-      details.className = 'nav-group';
-      details.open = group.pages.some(([href]) => href === current) || Boolean(group.open);
+      details.className = 'nav-group' + (active ? ' active-group' : '');
+      details.dataset.navGroup = group.id;
+      details.open = expanded.has(group.id) ? expanded.get(group.id) : active || Boolean(group.open);
       const summary = root.createElement('summary');
       summary.className = 'nav-level1';
-      summary.textContent = text(group.title);
+      const heading = root.createElement('span');
+      heading.textContent = text(group.title);
+      const chevron = root.createElement('span');
+      chevron.className = 'nav-chevron';
+      chevron.textContent = '⌄';
+      chevron.setAttribute('aria-hidden', 'true');
+      summary.append(heading, chevron);
       const children = root.createElement('div');
       children.className = 'nav-children';
       group.pages.forEach(([href, label]) => {

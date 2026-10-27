@@ -46,6 +46,27 @@ def main():
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
     check(len(refs)==51,'Expected the audited 51-record source snapshot')
     check(source['review_date']=='2026-10-21','Review date drift')
+    # Primary groups and second-level pages share one ordered schema, and every
+    # page must have exactly one active parent in the no-JavaScript fallback.
+    nav_text=(ROOT/'rsi/site-nav.js').read_text(encoding='utf-8')
+    check(nav_text.startswith('window.NAV_GROUPS = '),'Invalid standalone RSI navigation module')
+    groups=json.loads(nav_text[len('window.NAV_GROUPS = '):].strip().removesuffix(';'))
+    expected_groups={
+        'overview':['index'],
+        'literature':['literature','reading-cards','references'],
+        'methods':['cross-domain','learning-science'],
+        'research':['ideas','teaching','experiments'],
+    }
+    check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
+    grouped_slugs=[]
+    for group in groups:
+        slugs=[href.removesuffix('.html') for href,_ in group['pages']]
+        check(slugs==expected_groups[group['id']],f'Incorrect child menu: {group["id"]}')
+        check(group['title']['zh'] and group['title']['en'],f'Missing bilingual parent title: {group["id"]}')
+        grouped_slugs.extend(slugs)
+    check(len(grouped_slugs)==len(set(grouped_slugs)) and set(grouped_slugs)==set(PAGES),
+          'RSI page missing or duplicated across primary menus')
+    page_parent={slug:g['id'] for g in groups for slug in expected_groups[g['id']]}
     parsed={}
     site_asset_sources={'site-base.css':ROOT/'style.css', 'site-switch.css':ROOT/'site-switch.css', 'favicon.svg':ROOT/'favicon.svg'}
     for slug in PAGES:
@@ -58,6 +79,14 @@ def main():
         check('lang="zh-CN"' in text,f'{slug}: wrong content language')
         check('class="site-switcher"' in text and 'href="/rsi/"' in text and 'href="/"' in text,f'{slug}: missing two-site switch')
         check('src="site-nav.js"' in text and 'src="../data.js"' not in text,f'{slug}: navigation depends on Agent')
+        fallback_groups=re.findall(r'<details class="nav-group([^"]*)" data-nav-group="([^"]+)"([^>]*)>',text)
+        check(len(fallback_groups)==len(groups),f'{slug}: fallback navigation lacks primary levels')
+        check([name for _,name,_ in fallback_groups]==list(expected_groups),f'{slug}: fallback group order differs')
+        active_parents=[name for classes,name,_ in fallback_groups if 'active-group' in classes]
+        open_parents=[name for _,name,attrs in fallback_groups if ' open' in attrs]
+        check(active_parents==[page_parent[slug]] and open_parents==[page_parent[slug]],
+              f'{slug}: current page parent must be active and expanded')
+        check(text.count('class="nav-level2 active"')==1,f'{slug}: only one current submenu link is expected')
     for path,p in parsed.items():
         for href in p.links:
             u=urlsplit(href)
@@ -88,7 +117,7 @@ def main():
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')
     check('"rsi/index.html"' not in agent_nav,'Agent navigation still includes RSI pages')
-    nav=(ROOT/'rsi/site-nav.js').read_text(encoding='utf-8')
+    nav=nav_text
     for slug in PAGES:
         check(f'"{slug}.html"' in nav,f'Missing RSI-only navigation: {slug}')
     records=json.loads((ROOT/'rsi/search-index.json').read_text(encoding='utf-8'))
