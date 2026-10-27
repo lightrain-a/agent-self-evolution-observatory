@@ -34,7 +34,7 @@
 - 设计和交互代码分别在 `rsi/timeline.css`、`rsi/timeline-view.js`，无需从 Agent 主站的复杂时间轴依赖。
 - 新增会议时更新 `venues` 与经过核验的日期，执行 `python3 scripts/build_rsi_research.py` 重新生成静态时间轴与全站检索索引。
 
-## I1–I5 研究卡片的写作结构
+## I1–I8 研究卡片的统一写作结构
 
 源文件为 `scripts/rsi_pages/ideas.py`，生成后展示在 `rsi/ideas.html`，不要直接编辑生成的 HTML。每条 Idea 固定五段，保持自然语言、清楚的前作边界：
 
@@ -44,9 +44,9 @@
 4. **Design（如何做）**：解释 Agent 真正会做的 3–4 步，说明修改什么（Skill / Memory / Harness / 参数），但不把控制图当贡献。
 5. **实验设计**：相同任务、学习器与预算下的强基线、独立测试、关键指标，以及效果不出现时如何解释。
 
-I5 当前主线是**按自身学习增益动态选择伙伴**；`teaching.py` 保存早期“教学反馈发现教师盲点”的独立支线。I6 是跨轮瓶颈切换，单独保存在 `idea-i6.py`，不要为了统一外观修改其研究定义。
+I5 当前主线是**十模型双向互教与动态交换伙伴**；`teaching.py` 保存早期教学反馈诊断教师盲点的支线。当前 I6 只研究**同题不同失败轨迹的学习价值、停止与重访**（`idea-i6-failure-value.py`）；I7 只改变**先独立尝试还是先看同一示范**（`idea-i7-learning-order.py`）；I8 只研究**当前错误在固定纠错后能否迁移到同规则新题**（`i8.py`）。三条在 `ideas.html` 也都完整显示五段，但保留独立详情页。旧 `idea-i6.py` 是历史跨轮瓶颈切换草案，不能冒充当前 I6。
 
-自动核查应验证 I1–I5 的五段顺序、最近邻来源链接以及 I6 的正交边界。后续修改请先运行 RSI 生成、独立站构建和 RSI 站点测试。
+自动核查必须覆盖 I1–I8 的五段顺序、相关工作出处、四步方法流程、同页入口、独立详情页，以及 I6/I7/I8 改变变量互不混淆。后续修改先运行 RSI 生成、独立站构建、静态断言和浏览器检查。
 
 ## 生成与核查
 
@@ -62,7 +62,7 @@ python3 scripts/test_rsi_browser.py
 
 对应源文件是 `scripts/rsi_pages/reading-cards.py`（四步卡片）、`scripts/rsi_pages/reading-notes.py`（四段精读与细节折叠）、`scripts/build_rsi_research.py`（目录与索引）、`rsi/research.js`（浏览器筛选）。后续新增论文只需要写好统一数据；页面不应退回大段摘要堆砌。
 
-RSI 站点使用独立的 `site-nav.js`，不再依赖 Agent 站的 `data.js`。在左侧“研究方向与实验”中，先显示“研究方向总览”，再按 I1→I8 各保留一个编号入口，最后是实验执行方案。I1–I4 跳到 `ideas.html#idea-1` 等完整卡片，I5–I8 各有详情页；浏览器对同页锚点动态更新当前高亮。**I5 教学反馈诊断**和**历史跨轮瓶颈切换**只作为归档页面保留，从所属研究页进入，不在导航重复编号。修改目录必须更新 `scripts/build_rsi_research.py` 和两个 RSI 站点测试，并验证旧 URL 不失效。
+RSI 站点使用独立的 `site-nav.js`，不再依赖 Agent 站的 `data.js`。在左侧“研究方向与实验”中，先显示“研究方向总览”，再按 I1→I8 各保留一个编号入口，最后是实验执行方案。I1–I4 跳到 `ideas.html#idea-1` 等完整卡片，I5–I8 保留详情页；`ideas.html` 同时为 I1–I8 都提供完整的五段式内容，页面顶部 I6–I8 的速览入口指向同页卡片，正文仍可进入详情页。浏览器对同页锚点动态更新当前高亮。**I5 教学反馈诊断**和**历史跨轮瓶颈切换**只作为归档页面保留，从所属研究页进入，不在导航重复编号。修改目录必须更新 `scripts/build_rsi_research.py` 和两个 RSI 站点测试，并验证旧 URL 不失效。
 
 双站架构、入口和单独导出方法参见根目录 `SITES.md`。部署仍使用仓库现有 GitHub Pages workflow：合入 `main` 后先构建 Agent、再构建 RSI；不要把 private 数据或本地路径写入公共卡片。
 

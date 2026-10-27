@@ -218,18 +218,36 @@ def main():
         check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='ideas.html'"),
               'Historic I6 archive must not compete with current numbered I6')
         nav('rsi/ideas.html')
-        for idea_number in range(1, 6):
+        for idea_number in range(1, 9):
             steps=js(f"return [...document.querySelector('#idea-{idea_number}').querySelectorAll('.idea-step')].map(e=>({{heading:e.querySelector('h3').textContent.trim(),height:e.getBoundingClientRect().height}}));")
             check(len(steps)==5 and all(s['height']>35 for s in steps),f'I{idea_number} five-stage layout collapsed: {steps}')
             check([s['heading'].split(' ')[0] for s in steps]==['Challenge','现有工作','Insight','Design','实验设计'],f'I{idea_number} argument order wrong')
-        js("document.querySelector('#idea-1').scrollIntoView()")
+            check(js(f"return document.querySelectorAll('#idea-{idea_number} .flow>div').length>=4"),
+                  f'I{idea_number} missing four-step design diagram')
+        for i,detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html')):
+            check(js(f"return document.querySelector('#idea-{i} .idea-side-note a[href=\"{detail}\"]')!==null"),
+                  f'I{i} full research page link missing')
+        js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
+        time.sleep(.5)
         screenshot('idea-framework-desktop.png')
+        js("document.querySelector('#idea-6').scrollIntoView({block:'start'})")
+        time.sleep(.5)
+        screenshot('idea-i6-five-stage-desktop.png')
+        js("document.querySelector('#idea-8').scrollIntoView({block:'start'})")
+        time.sleep(.5)
+        screenshot('idea-i8-five-stage-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
         for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
-        nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView()")
+        nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
+        time.sleep(.5)
         screenshot('idea-framework-mobile.png')
+        js("document.querySelector('#idea-7').scrollIntoView({block:'start'})")
+        time.sleep(.5)
+        check(not js('return document.documentElement.scrollWidth>innerWidth+1'),
+              'I7 on mobile must not create horizontal page overflow')
+        screenshot('idea-i7-five-stage-mobile.png')
         js("document.querySelector('#menu-toggle').click()")
         time.sleep(.45)
         check(js("return (()=>{const r=document.querySelector('#sidebar').getBoundingClientRect();return r.right>10 && r.left<innerWidth-10})()"),
@@ -267,7 +285,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':14}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':17}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

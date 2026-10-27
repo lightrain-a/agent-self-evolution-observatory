@@ -578,8 +578,8 @@
       "title": "PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play",
       "date": "arXiv 26.05",
       "url": "https://arxiv.org/abs/2605.16727",
-      "level": "原始摘要与作者说明核对；2026-10-27",
-      "note": "教师 LoRA 生成任务，匹配学生求解，通过跨群体评估促进共同进化；I5 改问伙伴给我带来的后续独立学习收益。",
+      "level": "原文机制及附录计算口径核对；2026-10-27；未复现",
+      "note": "教师/学生独立 LoRA 群体通过匹配、自博弈和交叉评估更新，并带权重空间进化。按每适配器匹配训练量；1.31倍墙钟不能理解为相同总计算量。I5固定互教更新器，检验撤伴后的双向净学习收益。",
       "code": ""
     },
     {
@@ -588,8 +588,8 @@
       "title": "Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)",
       "date": "arXiv 26.06",
       "url": "https://arxiv.org/abs/2606.14368",
-      "level": "原始摘要核对；2026-10-27",
-      "note": "两个跨领域互补模型互相教学；通过认知门控决定是否给反馈并以问题锚定反馈。I5 要研究学习伙伴本身的跨阶段选择。",
+      "level": "原文 Section 3、实验域与限制核对；2026-10-27；未复现",
+      "note": "双模型通过受门控同伴反馈进行 on-policy 自蒸馏，self-teacher同时以自身正确rollout和同伴反馈为条件；Science Q&A验证不自动外推到十模型数学/代码。I5采用固定适配底座，单独比较伙伴关系。",
       "code": ""
     },
     {
@@ -598,7 +598,7 @@
       "title": "Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)",
       "date": "arXiv 26.07",
       "url": "https://arxiv.org/abs/2607.11250",
-      "level": "原始摘要核对；2026-10-27",
+      "level": "此前原始摘要核对；2026-10-27本轮正文页面访问受限",
       "note": "以结构化同伴选择促进探索和协作任务表现；I5 必须区分当前协作收益与伙伴退出后的独立能力增长，且不与同名记忆方法混淆。",
       "code": "https://github.com/deeplearning-wisc/mace"
     },
@@ -1020,6 +1020,76 @@
       "url": "https://openreview.net/forum?id=HJewuJWCZ",
       "level": "正式会议条目与原始摘要核对；2026-10-27",
       "note": "用学生反馈优化教师策略，已明确提出 teacher–student co-evolution。属于一般机器学习的先驱，而非 LLM 共进化首作；双边更新与双层优化本身不能作为 I2 新颖性。",
+      "code": ""
+    },
+    {
+      "id": "S200",
+      "group": "RSI",
+      "title": "Coevolving with the Other You: Fine-Tuning LLM with Sequential Cooperative Multi-Agent Reinforcement Learning (CORY)",
+      "date": "NeurIPS 2024 · Main Conference Track",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/1c2b1c8f7d317719a9ce32dd7386ba35-Abstract-Conference.html",
+      "level": "NeurIPS 官方发表页与摘要核对；2026-10-27；未复现",
+      "note": "Pioneer 与 Observer 两个模型联合 RL，并周期性交换角色；I5 不把双模型共训练或角色交换作为新颖性，固定对内教学协议后研究群体配对。",
+      "code": ""
+    },
+    {
+      "id": "S201",
+      "group": "RSI",
+      "title": "LLM Agents Learn Effective Partner Selection for Mutual Cooperation in Social Dilemmas",
+      "date": "AAMAS 2026 SE Workshop；不是主会",
+      "url": "https://openreview.net/forum?id=Q2zS4ZHjJ0",
+      "level": "官方 Workshop 录用名单、题录与检索摘要核对；正文网页访问受限；2026-10-27",
+      "note": "社会困境中的动态伙伴关系与合作。发表状态已由 SE @ AAMAS 2026 官方 accepted-papers 页面确认；本次不补写无法核验的网络规模、参数共享或精确重连超参，不作为知识互教效果的直接证据。",
+      "code": ""
+    },
+    {
+      "id": "S202",
+      "group": "RSI",
+      "title": "CERA-MoA: Co-Evolving Routing Mechanisms with Continually Learning LLM Agents",
+      "date": "arXiv 26.09 · v1",
+      "url": "https://arxiv.org/html/2609.18779v1",
+      "level": "原文 Section 3 路由与 Agent 更新、反馈定义核对；2026-10-27；未复现",
+      "note": "隐藏状态熟悉度支持动态样本路由，路由与各 Agent 策略共同更新。I5 需与当前表现路由比较，并隔离伙伴关系与任务分发两个变量；不能声称首次动态路由共进化。",
+      "code": ""
+    },
+    {
+      "id": "S203",
+      "group": "RSI",
+      "title": "Nature-Inspired Population-Based Evolution of Large Language Models (GENOME / GENOME+)",
+      "date": "ACL 2026 · Long Papers",
+      "url": "https://aclanthology.org/2026.acl-long.2044/",
+      "level": "ACL 官方摘要与发表记录核对；2026-10-27；未复现",
+      "note": "以模型权重交叉、变异、选择和继承进行群体进化；I5 以各自持续训练和文本互教为边，不用群体人数或能力组合本身声称创新。",
+      "code": "https://github.com/ZhangYiqun018/GENOME"
+    },
+    {
+      "id": "S204",
+      "group": "RSI",
+      "title": "Off-Trajectory Reasoning: Can LLMs Collaborate on Reasoning Trajectories?",
+      "date": "ICLR 2026 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/93f3ac5bb6d24ed7cec95ae11209ca34-Abstract-Conference.html",
+      "level": "ICLR 官方状态与 arXiv 2510.06410v2 的方法/结论核对；2026-10-27",
+      "note": "区分从错误外部轨迹恢复与利用正确引导；solo 分数不能代表协作轨迹可用性。为 I5 提供可传性与负迁移检查，不证明所有互教训练都无效。",
+      "code": ""
+    },
+    {
+      "id": "S205",
+      "group": "RSI",
+      "title": "R-Diverse: Mitigating Diversity Illusion in Self-Play LLM Training",
+      "date": "arXiv 26.02；本轮未确认会议版本",
+      "url": "https://arxiv.org/abs/2602.13103",
+      "level": "原始摘要与方法描述核对；2026-10-27；未复现",
+      "note": "跨轮记忆和技能层面多样性用于缓解 self-play 表面多样而底层重复；I5 应以验证过的技能覆盖测群体同质化。本轮不沿用尚未核验的 ICML 录用标签。",
+      "code": "https://github.com/Gengsheng-Li/R-Diverse"
+    },
+    {
+      "id": "B200",
+      "group": "实验资源",
+      "title": "Qwen3: Think Deeper, Act Faster — official dense-model release",
+      "date": "官方模型发布 2025-04-29；核对 2026-10-27",
+      "url": "https://qwenlm.github.io/blog/qwen3/",
+      "level": "官方发布页的模型规格核对；训练兼容性和本地资源未验证",
+      "note": "确认 Qwen3-1.7B/4B/8B/14B/32B 的公开规格，支持既定五规模×两专长的十模型实验候选；不是最新性能推荐，不代表十模型可以同时装入当前显存。",
       "code": ""
     }
   ]
