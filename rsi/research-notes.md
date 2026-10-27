@@ -4,7 +4,7 @@
 
 本文件包含证据综述与待验证提案，不包含本项目实验结果。
 
-## RSI × 自主学习研究 / 当前研究池：I1–I6 与 I8
+## RSI × 自主学习研究 / 当前研究池：I1–I8 八个问题
 
 <p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
 <div class="idea-board">
@@ -13,10 +13,11 @@
 <a class="idea-board-card" href="ideas.html#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用却伤了旧能力，怎么办？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b></a>
 <a class="idea-board-card" href="ideas.html#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b></a>
-<a class="idea-board-card" href="idea-i6.html"><span class="idea-id">I6 · 瓶颈诊断</span><b>停止进步后，什么时候该更换学习模式？</b></a>
+<a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 错误轨迹</span><b>同题都答错，为什么有些失败过程更值得学习？</b></a>
+<a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先独立尝试，还是先看正确示范？</b></a>
 <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 纠错迁移</span><b>纠正哪个错误，能让我学会一整类题？</b></a>
 </div>
-<p>I1–I5 各自负责具体学习方式；I6 只负责跨轮判定哪类瓶颈成为主要限制，避免与 I2 的单轮试学选择重复。每个方向都写清最近邻工作、独立实验与停止条件。<a href="ideas.html">进入研究方向总览</a> · <a href="idea-i6.html">I6 完整构思</a> · <a href="i8.html">I8 完整构思</a></p>
+<p>I1–I5 仍各自研究具体学习机制。<b>I6</b> 固定错误终点与教学过程，仅比较不同失败轨迹的学习价值；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a><a class="cite" href="references.html#S28" title="RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent">[S28]</a><a class="cite" href="references.html#S29" title="Harness Continual Learning: Continual Adaptation Beyond Model Parameters">[S29]</a><a class="cite" href="references.html#S30" title="Rethinking Self-Evolution: A Constrained Exploration-Exploitation Process for Mitigating Skill Overfitting (SkillBoost)">[S30]</a><a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a><a class="cite" href="references.html#S34" title="Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)">[S34]</a></p>
 
 ## RSI × 自主学习研究 / 研究导航：从证据走到可执行实验
@@ -24,8 +25,10 @@
 <div class="route-grid">
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
 <a href="ideas.html"><b>I1–I5：具体学习机制</b><span>每项独立的科学问题、最近邻与最小辨别实验。</span></a>
-<a href="idea-i6.html"><b>I6：瓶颈诊断与策略切换</b><span>知识—搜索—选择—吸收的主导瓶颈何时转移？怎样证明跨轮切换有增益？</span></a>
-<a href="i8.html"><b>I8：错误可学习性与跨题迁移</b><span>Hypercorrection、前置知识与共同错误规则，为什么导致不同的真实迁移收益？</span></a>
+<a href="idea-i6-failure-value.html"><b>I6：失败轨迹有什么学习价值？</b><span>相同问题、相同错误终点，不同尝试过程能否产生不同独立迁移收益？</span></a>
+<a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
+<a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
+<a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>
 <a href="literature.html"><b>RSI 文献与竞争边界</b><span>改什么、如何改，哪些研究已进入元层自进化。</span></a>
 <a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
@@ -58,11 +61,11 @@
 
 ## RSI × 自主学习研究 / 网站范围、历史方案与证据状态
 
-<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：I5 主线为“按自身学习增益动态选择伙伴”；<a href="idea-i6.html">I6</a> 只分析连续学习的瓶颈转移与模式切换，不重复单任务诊断或具体学习算法。</p>
+<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：I5 主线为“按自身学习增益动态选择伙伴”；目前 <a href="idea-i6-failure-value.html">I6</a> 聚焦失败轨迹，<a href="idea-i7-learning-order.html">I7</a> 聚焦学习顺序。<a href="idea-i6.html">旧版瓶颈切换</a>已归档，不再占用 I6 编号。</p>
 <p><a href="teaching.html">I5 教学反馈诊断</a>作为此前的独立技术支线保留：研究学生的误解能否暴露教师的隐性缺陷。这个实验与“动态伙伴选择”可以共享学生评估基础设施，但不是同一个问题。</p>
-<p><a href="i8.html">I8</a> 研究当前错误在固定更新方式下的跨题可迁移收益，与 I6 的跨轮策略切换、I2 的因材施教学习方法选择相区别；尚无本项目真实训练验证。</p>
+<p><a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
-<div class="status-strip"><b>截至 2026-10-27</b><span>I1–I6 与 I8 已归档</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
+<div class="status-strip"><b>截至 2026-10-27</b><span>I1–I8 候选研究问题已整理</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
 
 ## RSI 研究时间轴 / 投稿目标与时间轴概览
 
@@ -326,24 +329,25 @@
 
 <p><b>强示范最好：</b>强教师示范加固定蒸馏可能在所有保持测试上占优。接受结果，不强行宣称“适度困难”有效。</p><p><b>延迟只是更多训练：</b>控制曝光、梯度步数和更新顺序后差异若消失，不能归因于间隔机制。</p><p><b>只有上下文记住了：</b>清空会话后增益消失，就属于上下文适应，不能改写为持久自进化。</p><div class="note">人类学习效应有任务、先备知识和教学设计条件。机器研究也要找适用边界，而不是只挑支持类比的例子。</div>
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / 研究方向，一眼看懂
+## I1–I8：八个研究问题 / 研究方向，一眼看懂
 
 
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 研究各自的学习机制；I6 研究跨轮瓶颈阶段的转换判断，不能替代其他五项。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较学习顺序，I8 从知识准备与共同错误规则解释迁移。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，为什么学习方法不同？</b><small>根据真实学习反应选方法</small></a>
  <a class="idea-board-card" href="#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用，却和旧方法冲突怎么办？</b><small>复习并解决适用条件冲突</small></a>
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
  <a class="idea-board-card" href="#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b><small>伙伴选择随能力一起演化</small></a>
- <a class="idea-board-card" href="idea-i6.html"><span class="idea-id">I6 · 跨轮瓶颈切换</span><b>模型停滞后，究竟该换哪一类学习机制？</b><small>诊断知识、搜索、选择、吸收中的主导瓶颈迁移</small></a>
+ <a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 失败学习价值</span><b>同题都答错，为什么有些失败过程更值得学习？</b><small>固定错误结果与教学方式，比较失败轨迹的增量收益</small></a>
+ <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  </div>
- <p class="status">状态：I1–I6 与 I8 已归档；相关工作存在交集；各方案尚无本站的受控实测结果，不能宣称首次或已验证。</p>
+ <p class="status">状态：I1–I8 研究问题已整理；I6 与 I7 正交拆分，I8 保留独立机制验证；尚无本项目的受控实测结果。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / I1：脚手架学习法——哪些该自己学会，哪些用时再查？
+## I1–I8：八个研究问题 / I1：脚手架学习法——哪些该自己学会，哪些用时再查？
 
 
  <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>最直观的问题：</b>调试方法最好自己掌握；频繁变化的 API 细节可能用时再查就行。Agent 能不能自己学会这种取舍，并随能力与环境变化调整？</p></div>
@@ -357,7 +361,7 @@
  <h3>最小验证</h3><p>同一 Agent、相同训练和工具预算，将稳定操作经验与会变动的 API 规则分开，比较<strong>全部内化 / 全部外置 / 固定渐隐 / 自适应取舍</strong>。看撤除后的独立正确率、环境变更后的退化、保留成本。再和 R²Orch/PATS 适配版比较。如果一律内化或简单撤除就同样好，我们不应硬说路由策略有新价值。</p>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / I2：因材施教——同样犯错，为什么学习方法不同？
+## I1–I8：八个研究问题 / I2：因材施教——同样犯错，为什么学习方法不同？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">采不采得到</span><p><b>最直观的问题：</b>两个 Agent 都不会修一个 Bug，一个看一次示范就学会了，另一个要对比几次失败才理解。只看“错在哪里”，够不够决定下一轮该怎么学？</p></div>
@@ -371,7 +375,7 @@
  <h3>最小验证</h3><p>从同一快照分叉三种学习处理，先固定“修改 Skill”而不是混入更新表面。让两个当前分数接近的 Agent 学相同类型任务，比较<strong>固定方法 / 错误类型路由 / 通用 bandit / 试学后选择</strong>在未见任务上的等预算进步。再检验能力进化后原来最好的方法是否改变。若简单 bandit 就足够，保留现象但不夸大复杂模型的贡献。</p>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / I3：温故知新——新方法有用，却和旧方法冲突怎么办？
+## I1–I8：八个研究问题 / I3：温故知新——新方法有用，却和旧方法冲突怎么办？
 
 
  <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>最直观的问题：</b>Agent 学会更快的处理流程，却把另一种场景下原本正确的规则覆盖了。我们是否只能回滚这次更新？</p></div>
@@ -385,7 +389,7 @@
  <h3>最小验证</h3><p>制作两组分别成功、混合却容易互相干扰的 Skill，加入自然更新中的同类案例。比较<strong>发现退化即回滚 / 均匀重放 / MIR 风格重放 / 针对冲突条件复习</strong>。固定复习调用数与存储预算，测试旧任务保持、新任务收益及两者组合。若只是因为多存了规则才进步，不属于新机制。</p>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / I4：生产性失败——失败一次就总结，还是再试几次？
+## I1–I8：八个研究问题 / I4：生产性失败——失败一次就总结，还是再试几次？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>最直观的问题：</b>API 超时一次，不能马上写进长期 Skill：“这个工具不可靠，以后别用”。Agent 怎么知道自己真的找到了通用规律，而不是遇到了偶然故障？</p></div>
@@ -399,7 +403,7 @@
  <h3>最小验证</h3><p>固定失败家族与执行预算，比较<strong>失败即更新 / 固定多次重试 / 随机补充试验 / 按争议原因选下一次试验并决定停止</strong>。指标是写入错误规则的比例、未见环境的迁移与最终改进效率，不是“试的次数越多越好”。整个过程可使用沙箱执行反馈，不需要外部教师告诉标准答案。</p>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / I5：费曼学习法——和谁一起学，自己进步最快？
+## I1–I8：八个研究问题 / I5：费曼学习法——和谁一起学，自己进步最快？
 
 
  <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>最直观的问题：</b>同样让我和别的模型交流，最强的模型不一定最能帮助我成长；能力提高后，原来最好的伙伴可能也不再适合。</p></div>
@@ -414,17 +418,28 @@
  <div class="note">已有 <a href="teaching.html">教学反馈诊断教师盲点的 I5 早期技术方案</a>独立保留，属于相邻支线：它研究“学生反馈暴露教师哪类缺陷”；本页 I5 主线研究“当前该与谁学，能让自己下一轮变强”。两者不能混成同一项已验证成果。</div>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / I8：Hypercorrection——为什么改正一种错误能学会一类题？
+## I1–I8：八个研究问题 / I6、I7 与 I8：一次只研究一个变量
+
+
+<div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
+<tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
+<tr><td><a href="idea-i7-learning-order.html">I7 · 学习顺序</a></td><td>先尝试 / 先看正确示范</td><td>题目、示范内容、更新器与预算</td><td>撤掉教师后的独立能力、有效探索与多轮迁移</td></tr>
+<tr><td><a href="i8.html">I8 · 规则级错误迁移</a></td><td>知识准备、错误规则覆盖范围和更新兼容性</td><td>对应的纠错/更新方法</td><td>哪些错误修复后能迁移到一整类题</td></tr>
+</tbody></table></div>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+
+
+## I1–I8：八个研究问题 / I8：Hypercorrection——为什么改正一种错误能学会一类题？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">吸收了会不会丢</span><p><b>具体问题：</b>同样一道数学错题，一个模型得到正确反馈后只记住答案，另一个却能举一反三。纠正哪种错误值得投入下一轮学习预算？</p></div>
  <h3>Observable Phenomenon / Why</h3><p>Hypercorrection 的人类学习研究发现，高置信度错误经正确反馈后有时更容易被纠正；已有知识可能是重要解释。由此提出待验证的模型假设：前置知识是否充分、错误是否由影响多题的共同规则造成，可能共同决定一次纠错的跨题收益。<a class="cite" href="references.html#E12" title="Errors committed with high confidence are hypercorrected">[E12]</a><a class="cite" href="references.html#E13" title="Hypercorrection of high-confidence errors in the classroom">[E13]</a><a class="cite" href="references.html#E14" title="Prior knowledge is more predictive of error correction than subjective confidence">[E14]</a></p>
  <h3>Challenge / Insight / Design</h3><p><b>Challenge：</b>置信度不等于学得会；修复原题不等于迁移；真实收益通常要在更新后才能观察。<b>Insight：</b>已有知识准备程度 × 规则影响范围 × 更新兼容性，可能解释实际收益差异。<b>Design：</b>学习前诊断知识与错误模式，固定纠错方式和训练预算，在独立模型副本上检验跨题真实收益。</p>
  <h3>别人研究的是……；我们研究的是……</h3><p><b>Self-Error-Instruct</b> 已按错误类型合成题目，并用 one-shot 示例帮助筛选数据；<b>LESS</b> 已用梯度影响选择训练数据。I8 研究的是当前错误怎样转化为真实持久的跨题学习，以及能否提前预测。<a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a><a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a></p>
- <div class="links"><a class="link-btn" href="i8.html">阅读 I8：现象、原因、完整实验与否定条件</a></div>
+ <p><b>与 I6 的区别：</b>I8 研究哪些错误规则更有可迁移性；<a href="idea-i6-failure-value.html">I6</a> 尽量保持错误规则与最终答案一致，单独研究失败过程作为学习材料的作用。</p><div class="links"><a class="link-btn" href="i8.html">阅读 I8：现象、原因、完整实验与否定条件</a></div>
 
 
-## I1–I6 与 I8：相互独立的 RSI 研究方向 / 这些 Idea 如何证明真的用于 RSI？
+## I1–I8：八个研究问题 / 这些 Idea 如何证明真的用于 RSI？
 
 
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>
@@ -437,115 +452,248 @@
  <p class="status">截至 2026-10-27：这些是有明确近邻的研究提案，不能声称“首次把教育学用于 RSI”；也不能因为已有相关组件，就断言上述更细化的问题已被解决。</p>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / 研究问题：同样 70 分，为什么下一轮不该用同一种方法？
+## I6 · 为什么有些错误更值得学习？ / 一句话科学问题
 
 
- <p class="thesis"><b>I6 的问题：</b>一个自我改进系统已经进入平台期，能否用少量可复验的干预确定当前最限制<strong>后续独立能力增长</strong>的环节，并在主要瓶颈发生转移时及时切换学习模式？</p>
- <p>例子：两个数学 Agent 的单次正确率都是 70%。A 多次采样常能产生正确解，但自己的答案选择器总选错；B 不论怎么重采样都很少成功，但补一条前置定理后明显改善。继续统一做 GRPO、统一增加教师示范，甚至只按“70 分应该练什么”选任务，都可能用错力。</p>
- <p><b>研究定位：</b>I6 是<strong>跨轮学习闭环的元控制问题</strong>（什么时候应该从补知识切到搜索、从搜索切到修验证或巩固等），不是发明四个底层学习算法。四个环节是能力形成的先后依赖，<strong>不是</strong>所有模型必经的四个时间阶段，也不是排他的四选一错误标签。</p>
- <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p>考试 0–60 / 60–80 / 80–90 / 90–100 的分段仅用来提出“学习方式可能反转”的启发性假设；实际切换依据是可观测的瓶颈与干预收益，不是固定成绩阈值、模型参数规模或“智力”标签。</p></div>
+<p class="thesis"><b>I6：</b>同一模型面对同一道题，甚至最终给出相同的错误答案，却可能经历不同的失败过程。为什么使用其中一条失败轨迹纠错，比使用另一条更能帮助模型在后续独立解题时进步？</p>
+<p>这里的“学习”必须对应可持续的参数或外置技能更新，之后撤掉原题答案与教师提示再测新题；单次纠错后能复述答案不算学会。</p>
+<div class="note"><b>研究边界：</b>本篇只改变提供给固定学习器的<b>失败轨迹</b>，固定教学顺序、反馈形式、示范信息、更新器和训练预算。<a href="idea-i7-learning-order.html">I7</a> 才研究“先看示范还是先自主尝试”，不把两者塞入同一个 Router。</div>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / Challenge：同一个平台期，可能卡在四个不同环节
+## I6 · 为什么有些错误更值得学习？ / 一个可观察的现象
 
 
- <div class="table-wrap"><table><thead><tr><th>环节 / 可观察现象</th><th>最小受控检查</th><th>可调用的动作族</th></tr></thead><tbody>
- <tr><td><b>① 知识不足</b><br>基础前置题、概念题也失败</td><td>保持搜索与验证预算不变，随机对照“给经过核验的缺失知识”与“不给”；测可迁移解题率，而不是只看同一题的抄答。</td><td>知识补充、简短示例、前置任务学习、按需查询（必要时调用 I1）</td></tr>
- <tr><td><b>② 搜索不足</b><br>多次采样偶尔正确，单次命中很低</td><td>固定信息与验证器，提高候选数或加入回溯；比较 pass@1、固定 k 下候选覆盖及新增有效路径。</td><td>探索、对比成功与失败路径、搜索或强化学习</td></tr>
- <tr><td><b>③ 选择不足</b><br>正确候选已经产生，却没有被选中</td><td>冻结同一批候选，比较原验证器与可信独立验证/排序；不能把重新生成更好候选算成验证改进。</td><td>校准验证器、候选排序、独立测试反馈</td></tr>
- <tr><td><b>④ 吸收不足</b><br>答案或 Skill 在手，但撤除后仍不会</td><td>冻结已验证示例与训练预算，允许真实更新后清空提示/伙伴/临时记忆；用未见题和后续回归测持久收益。</td><td>技能或权重更新、针对性训练、撤辅评测；具体学习方式由 I2/I3 实现</td></tr>
- </tbody></table></div>
- <p><b>关键困难：</b>单个测试的失败不能证明某类能力绝对不存在。有限 pass@k=0 不等于正确路径不可采样；外部知识带来的即时成功不等于知识已内化；验证器本身可能被污染。四项检查应记录对照差、样本量、成本、置信区间和互相干扰，允许“多重瓶颈 / 无法判定”。</p>
+<div class="card-grid"><article class="research-card"><b>轨迹 A · 直接猜错</b><h3>没有形成有效中间过程</h3><p>模型面对一道多元积分题，直接套用错误公式，给出错误结果。</p></article><article class="research-card"><b>轨迹 B · 尝试后答错</b><h3>形成部分有效步骤</h3><p>同一模型在同题上尝试坐标变换、检查边界，却最终仍得到相同的错误结果。</p></article></div>
+<p>两条轨迹从同一个模型检查点产生，问题与最终答案都一致。假设分别用它们作为学习材料，且获得<b>相同正确解法与等预算更新</b>，模型在新积分题上的收益仍可能不同。这是<b>待验证现象</b>，并不是断言 B 一定优于 A。</p>
+<p><b>与 I8 不同：</b><a href="i8.html">I8</a> 以高置信度错误、前置知识与规则适用范围为切口，解释什么错误规则经纠正后能够跨题迁移；I6 则尽量固定题目和错误结果，只比较<b>不同失败过程本身</b>作为纠错材料的增量学习收益。高置信度与规则范围不作为 I6 的主要处理变量。</p>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / Insight：更有用的是发现瓶颈何时发生转移
+## I6 · 为什么有些错误更值得学习？ / 先解释原因，再定义模块
 
 
- <h3>原因先于模块</h3>
- <p>对于停滞模型，增加数据、搜索次数、验证精度或参数更新并不等价。如果知识已经足够，但候选长期被评估器错选，继续补教材可能无法提高最终表现；如果验证器已可靠、训练后仍忘记新方法，就需要改善吸收与巩固环节。<b>同一模型连续进步时，曾经最有效的干预可能失效，因为瓶颈已经转移。</b></p>
- <p>学习科学中的 <b>Region of Proximal Learning</b> 提醒我们，单位时间内最值得学的内容不必是最难的；但这来自人类实验，只支持研究动机，不直接证明 LLM 的最优学习区域。<a class="cite" href="references.html#E11" title="The Dynamics of Learning and Allocation of Study Time to a Region of Proximal Learning">[E11]</a></p>
- <div class="flow">
- <div><b>知识可用？</b><small>若缺失，先补前置条件</small></div>
- <div><b>路径可采？</b><small>若可采但稀少，加强探索</small></div>
- <div><b>候选可选？</b><small>若错选，修验证与排序</small></div>
- <div><b>更新可留？</b><small>若撤辅仍失败，改变吸收过程</small></div>
+<div class="table-wrap"><table><thead><tr><th>Challenge · 难在哪里</th><th>Insight · 为什么可能解决</th><th>Design · 如何验证</th></tr></thead><tbody>
+<tr><td>当前正确率只能告诉我们“没做对”，不能告诉我们一次纠错将改变多少未来能力。</td><td>错误过程可能暴露已具备的子步骤、错误的知识规则以及缺口与其他题的共享程度。</td><td>先随机抽取失败轨迹，采用固定纠错程序逐条更新；再用未见题的独立增益为每条失败定价。</td></tr>
+<tr><td>失败轨迹越长、越接近答案、越自信，可能只是更耗 token 或原本更接近正确。</td><td>学习价值应由更新后的因果收益定义，不能由“表面离正确答案多远”替代。</td><td>匹配题目、初始检查点、错误长度、教师反馈、更新步数与评测；增加错误严重度、置信度、语义相似度强基线。</td></tr>
+<tr><td>纠正同一道题不代表学会同一规则，更不代表跨任务迁移。</td><td>某条轨迹可改写只针对原题的模式，也可能揭示跨题共用的推理规则。</td><td>把原题重做、同模板新题、结构变形题和旧能力回归分开统计，并评估多个后续更新之后是否保持。</td></tr>
+</tbody></table></div>
+<p><b>方法只放最必要的部分：</b>先用标准化纠错更新建立每条失败的实际学习价值，再训练一个轻量 Failure Value Estimator。预测器只能读取<b>纠错前</b>的轨迹特征与历史，不得偷看纠错答案或最终后测。</p>
+
+
+## I6 · 为什么有些错误更值得学习？ / 最小辨别实验：同题、同反馈、不同错误
+
+
+<div class="flow"><div><b>冻结学习者版本</b><small>同模型与参数检查点</small></div><div><b>同题采集失败轨迹</b><small>多种随机种子，先核实均错误</small></div><div><b>固定纠错更新</b><small>同一个教师答案 / LoRA 配置</small></div><div><b>无提示后测</b><small>新题迁移、旧能力回归</small></div><div><b>学习价值分析</b><small>解释差异与事前预测</small></div></div>
+<p><b>P0：</b>先选一个数学任务族及一组跨题共享规则，收集同一检查点在同一道题上的多条自然失败轨迹。随机指定某条失败轨迹为学习材料；另一分支只读正确解法作基线。每个分支从<b>同一初始检查点</b>重新开始，而不是顺序累积训练。</p>
+<p><b>配对控制：</b>优先匹配同一目标题、同一错误终点与已知错误规则，只让失败轨迹的中间过程不同；固定教师正确解法、训练器、token 上限、学习率、更新步数和测试集，并对轨迹长度/额外解释文本做预算敏感性分析。保留“只看答案”“随机失败”“按置信度选错误”“按答案距离选错误”等对照。</p>
+<p><b>定义：</b>G(f)=Acc_after(f, D_holdout) − Acc_before(D_holdout)，并同时报告相对于“只看正确解法”的增量；D_holdout 按知识点与模板去重。分层估计同题组内的学习收益差，不把一题上的多个 Probe 当成独立样本。</p>
+<p><b>下一步：</b>用不同题/不同模型上的纠错前轨迹预测 G(f)，比较随机选错误、按难度/置信度/长度选错误与收益预测选择；报告预算相同时的迁移增益和选择 regret。</p>
+
+
+## I6 · 为什么有些错误更值得学习？ / 最近邻：做到了哪里、我们还要回答什么
+
+
+<div class="table-wrap"><table><thead><tr><th>相关工作</th><th>已研究的关系</th><th>I6 的独立问题</th></tr></thead><tbody>
+<tr><td><a href="i8.html">I8：高置信度错误与规则级迁移</a></td><td>针对错误的知识准备程度、规则覆盖范围以及持久更新后的跨题净收益。</td><td>固定题目与错误终点，仅研究<b>失败轨迹过程</b>是否提供额外有用信息。</td></tr>
+<tr><td><a href="https://aclanthology.org/2024.acl-long.45/" target="_blank" rel="noopener noreferrer">Learn from Failure · ACL 2024</a></td><td>形式定理证明中，失败搜索轨迹可成为有价值的训练数据。</td><td>不是证明失败“可以用”，而是研究<b>哪条失败更值得用</b>。</td></tr>
+<tr><td><a href="https://arxiv.org/abs/2610.13594" target="_blank" rel="noopener noreferrer">MENTOR: Learning from Failure with On-Policy Pedagogical Intervention · 2026 预印本</a></td><td>训练停滞时依据失败原因生成教学提示，帮助恢复学习信号。</td><td>固定教学方式后，仅比较失败轨迹本身的可学习价值，避免归功于更好的提示。</td></tr>
+<tr><td><a href="references.html#E08">Productive / Unproductive Failure 学习科学文献</a></td><td>失败及其后续整合可能有不同教学结果。</td><td>把启发转为可审计的模型更新与无教师后测，不声称人类结论自动迁移到 LLM。</td></tr>
+</tbody></table></div>
+<p class="status">文献证据支持研究动机；同题失败价值差异、预测有效性和跨模型迁移尚待本项目验证。</p>
+
+
+## I6 · 为什么有些错误更值得学习？ / 怎样决定继续还是停止
+
+
+<p><b>继续：</b>匹配题目、示范与计算预算后，失败轨迹之间仍有可重复的迁移增益差异；简单的错误严重度、置信度、轨迹长度无法解释全部差异；预测器在未见任务上能减少同预算的错误选择。</p>
+<p><b>缩题：</b>只发现纠错收益差异而无法事前预测时，优先做现象与机制分析，不夸大为学习策略优化系统。</p>
+<p><b>停止：</b>不同错误的差异在同反馈/同预算后消失，或只在原题重复出现、撤掉教师后失效。</p>
+<div class="links"><a class="link-btn" href="ideas.html">返回研究候选池</a><a class="link-btn" href="idea-i7-learning-order.html">查看正交方向 I7：学习顺序</a><a class="link-btn" href="experiments.html">通用实验隔离契约</a></div>
+
+
+## I7 · 先尝试，还是先看示范？ / 一句话科学问题
+
+
+<p class="thesis"><b>I7：</b>面对相同题目、相同教师示范，先独立尝试再学习，与先看示范再练习，为什么可能造成不同的后续独立能力？这种顺序效应会不会随模型持续更新而改变？</p>
+<p>本篇的处理变量只有<b>尝试与正确示范的先后次序</b>。不按错误类型给失败打价值分，不训练 I6 的 Failure Value Estimator。短期分数、解法探索和长期迁移形成一条需要逐步验证的机制链，不是三个同时优化的模块。</p>
+<div class="note"><b>与 I6 正交：</b><a href="idea-i6-failure-value.html">I6</a> 在固定教学顺序和方式下，比较哪条失败轨迹值得纠正；I7 固定学习材料与预算，比较先尝试和先看示范。两者共享评测基础设施，但不互为前提。</div>
+
+
+## I7 · 先尝试，还是先看示范？ / 已有论文研究到了哪一步
+
+
+<div class="table-wrap"><table><thead><tr><th>论文</th><th>已回答什么</th><th>I7 不能重复什么</th></tr></thead><tbody>
+<tr><td><a href="https://doi.org/10.3102/00346543211019105" target="_blank" rel="noopener noreferrer">Sinha &amp; Kapur · Review of Educational Research 2021</a></td><td>53 项研究、166 组比较：在概念知识与迁移指标上，先解题后教学（PS-I）总体优于先教学后解题（I-PS），g = 0.36；程序性知识的汇总差异则不显著。存在任务和学习者边界。</td><td>不能再把“先试错通常更好”直接当成新发现。</td></tr>
+<tr><td><a href="https://ijcai.org/proceedings/2015/614" target="_blank" rel="noopener noreferrer">Najar et al. · IJCAI 2015</a></td><td>按学生先前需要多少帮助，动态决定给完整例题、渐隐例题或自主解题。</td><td>简单按正确率/帮助次数分流已经有直接前作。</td></tr>
+<tr><td><a href="https://doi.org/10.1109/TLT.2019.2896080" target="_blank" rel="noopener noreferrer">Chen et al. · IEEE TLT 2020</a></td><td>将正确例题、错误例题与自主解题作为可自适应选择的学习活动。</td><td>换成 LLM 四选一教学活动本身不是充分的新颖性。</td></tr>
+<tr><td><a href="https://doi.org/10.1007/s10648-025-09993-3" target="_blank" rel="noopener noreferrer">He et al. · Educational Psychology Review 2025</a></td><td>在两个先验知识不同的群体中观察到相反的顺序优势，作者并未证明差异由先验知识单独造成。</td><td>不能武断地说“弱模型先示范、强模型先尝试”。</td></tr>
+<tr><td><a href="https://doi.org/10.1007/s11251-020-09528-z" target="_blank" rel="noopener noreferrer">Hartmann et al. · Instructional Science 2021</a></td><td>区分亲自尝试与观察他人失败；准备性学习效果不一定来自自己先失败。</td><td>必须区分“亲自试过”与“额外看过一段失败解法”。</td></tr>
+</tbody></table></div>
+<p>以上是人类学习/教学系统证据，不等价于 LLM 参数更新的因果效果。I7 的新问题必须落到<b>更新后的模型在没有教师时还能做什么</b>。</p>
+
+
+## I7 · 先尝试，还是先看示范？ / Challenge → Insight → Design
+
+
+<div class="table-wrap"><table><thead><tr><th>Challenge · 难在哪里</th><th>Insight · 为什么值得研究</th><th>Design · 怎样解决</th></tr></thead><tbody>
+<tr><td>看了示范后正确率更高，可能只是照着答案复现；先试后学的收益又可能仅来自多思考了一次。</td><td>当前表现与真正形成的独立能力不同；顺序必须通过<b>撤掉示范后的持久更新</b>衡量。</td><td>同一检查点做两个随机分支，教师内容、token、训练器、学习步数对齐；清空上下文后用新题后测。</td></tr>
+<tr><td>两种顺序短期正确率相近，也可能让模型以后更容易或更难自主找到新解法。</td><td>示范优先可能快速集中概率质量；先尝试可能先激活多条候选路径。但两种方向都只是待检验假设。</td><td>测 pass@1 / 固定 k 的 pass@k、有效不同解法数量、正确路径分布，而不是把无效的多样性当进步。</td></tr>
+<tr><td>某一轮有效的顺序，可能在多轮自我改进后不再有效。</td><td>一次教学改变模型内部状态，因而可能改变下一轮适合的学习顺序。</td><td>固定后续任务流，在多次版本更新后测试迁移与旧能力保持；先建立顺序效应，再考虑事前选择器。</td></tr>
+</tbody></table></div>
+
+
+## I7 · 先尝试，还是先看示范？ / 两条学习顺序：只改变先后，不改变教材
+
+
+<div class="card-grid"><article class="research-card"><b>A · Instruction First</b><h3>先学再做</h3><p>展示同一完整例题与关键步骤 → 再让模型独立完成等价练习 → 统一更新 → 关掉示范、独立后测。</p></article><article class="research-card"><b>B · Problem Solving First</b><h3>先做再学</h3><p>先允许同预算独立尝试 → 展示与 A 完全相同的教师例题 → 统一更新 → 关掉示范、独立后测。</p></article></div>
+<p><b>要控制的变量：</b>原始模型检查点、知识点和任务配对、相同正确示范、教师调用次数、训练 token 与更新步数、采样/温度、后测题和外部工具。报告尝试轨迹长度不齐造成的残余预算差异，额外做计算量严格匹配试验。</p>
+<p><b>一个容易漏掉的陷阱：</b>不能先让模型在<b>目标题</b>上做一次诊断，再根据这次尝试决定它是否应该“先尝试”。因为诊断本身已经构成处理。事前顺序选择必须基于此前的题目历史或独立诊断题，不能泄漏目标题的先试轨迹。</p>
+<p><b>学习载体：</b>首选固定 LoRA 或同一外置技能写入器，分别报告；一次在上下文里读到答案不叫 RSI。学习后清空上下文，冻结独立测试。</p>
+
+
+## I7 · 先尝试，还是先看示范？ / 决定性实验：短期表现相近，未来能力是否不同？
+
+
+<div class="flow"><div><b>同版随机分叉</b><small>两种学习顺序</small></div><div><b>固定学习更新</b><small>等教师信息、等预算</small></div><div><b>即时无提示后测</b><small>新题 pass@1 / pass@k</small></div><div><b>多轮后测</b><small>正确解法覆盖与迁移</small></div><div><b>顺序选择</b><small>仅在可复现异质性后尝试</small></div></div>
+<p><b>P0：</b>先在一类多步骤数学题上，从同一检查点建立“先看再做 / 先做再看”配对分支。前测、近迁移与结构变形题分开；用固定 k 和固定推理预算评估不同且<b>正确</b>的解法路径。按知识点为统计单位而非题目重复采样次数。</p>
+<p><b>机制区分：</b>如果 A 的 pass@1 升高、B 的 pass@k 或正确解法覆盖扩大，需要再检验是否源于采样温度、示范污染或有效样本数不同；多样性变大但正确率下降不能称探索改进。</p>
+<p><b>长期检验：</b>继续以冻结任务序列更新多个版本，比较新任务迁移、旧能力回归及学习效率曲线。实验前定义“长期”为经历了多少次<b>新学习更新</b>，不是静态等待多少天。</p>
+<p><b>选择策略作为第二阶段：</b>只有不同任务或学习者状态出现稳定的最佳顺序切换，且事前信号可预测时，再用历史状态训练轻量顺序选择器，与固定 A、固定 B、简单按正确率规则和普通 contextual bandit 同预算比较。</p>
+
+
+## I7 · 先尝试，还是先看示范？ / 什么时候值得继续做成一篇 RSI 论文
+
+
+<p><b>继续：</b>两种顺序在匹配预算下，对独立更新后的能力出现稳定差异，并且这种差异不能仅由额外练习、教师信息量、采样长度解释；至少有一个关于探索空间或后续轮次迁移的独立、可复验发现。</p>
+<p><b>缩题：</b>若只发现短期迁移差异，则只报告有边界的顺序效应；没有可预测的异质性就不强行引入 Router。</p>
+<p><b>停止：</b>在清空教师上下文、等学习预算后，先后顺序完全不影响独立能力；或任何优势都可由重复采样数量解释。</p>
+<div class="links"><a class="link-btn" href="ideas.html">返回研究候选池</a><a class="link-btn" href="idea-i6-failure-value.html">查看正交方向 I6：错误学习价值</a><a class="link-btn" href="learning-science.html">学习科学基础</a></div>
+
+
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 一句话问题与研究定位
+
+
+ <div class="decision"><span class="kicker">I8 · MECHANISM VALIDATION · 2026-10-27</span>
+ <h3>Why does correcting one mistake sometimes fix a whole class of problems?</h3>
+ <p>两个模型都做错同一道题：一个看完答案只能重新答对原题，另一个却能解决几十道共享同一规则的新题。<strong>为什么会有这种差别？我们能否在真正更新参数之前预测？</strong></p>
+ <p><b>本研究首先解释学习收益的差异，而不是先发明一个错题排序器。</b>特别区分原题纠正、同规则新题迁移、跨模板迁移、长期保持与旧能力损失。</p>
  </div>
- <p class="note"><b>递进不等于固定顺序训练：</b>这里描述的是能力产出的依赖链。模型可以同时缺知识又选错答案，也可能在任何一轮回到前面环节。I6 的可检验贡献应是<strong>准确发现主导瓶颈的切换时刻</strong>，并把这种发现转化成下轮的独立学习收益。</p>
+ <p><b>研究状态：</b>机制假设与受控实验协议已形成；尚无本站 I8 的真实训练结果。研究单位是<strong>模型快照 × 当前错误 × 固定反馈/更新操作</strong>；不能将人类学习效应直接宣称为模型已具有的性质。</p>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / Design：低成本探测 + 跨轮切换，而非又造一个万能 Learner
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Observable Phenomenon｜最自信的错题，未必最难纠正
+
+
+ <p>Butterfield 与 Metcalfe（2001）观察到：在得到正确反馈后，人类对原本<strong>高置信度</strong>的错误，有时反而比低置信度错误纠正得更好，即 <b>Hypercorrection Effect</b>。<a class="cite" href="references.html#E12" title="Errors committed with high confidence are hypercorrected">[E12]</a></p>
+ <p>Carpenter 等（2018）将这一现象带入大学园艺课程，学生答题、报告置信度、获得正确反馈并参加后测，观察到显著的超纠正现象。<a class="cite" href="references.html#E13" title="Hypercorrection of high-confidence errors in the classroom">[E13]</a></p>
+ <p>这里不是说“越自信就一定越有学习价值”。Sitzman 等（2014）发现，<b>已有领域知识</b>可能比主观置信度更能预测错误纠正；置信度的独立解释力有限。<a class="cite" href="references.html#E14" title="Prior knowledge is more predictive of error correction than subjective confidence">[E14]</a></p>
+ <p>Foster 等（2022）在中小学在线数学诊断题中研究了置信度与后续类似题表现，但这种相似题纠正不等于复杂规则在 LLM 中已被更新，也不能直接推断因果。<a class="cite" href="references.html#E15" title="School students’ confidence when answering diagnostic questions online">[E15]</a></p>
+ <div class="note"><b>可观察矛盾：</b>错误有多“自信”、一次反馈能否修复该题、以及修复后能迁移多少题，是三个不同的量。Hypercorrection 是提出机制假说的线索，不是已经证明的 LLM 结论。</div>
+
+
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Why｜为什么有些错误可能具有更大的学习杠杆？
+
+
+ <p>考虑同一条积分规则的两种错误。<b>模型 A</b> 缺乏指数运算和基本积分等前置知识，单次反馈难以被有效吸收。<b>模型 B</b> 已具备相关基础，却稳定地遗漏幂函数积分公式中的关键分母；若能真正修复这条规则，可能同时改善不同数字与题型中的一批错误。</p>
+ <p>这只是<strong>待验证的机制例子</strong>。它提示一次错误纠正的学习价值至少有两个来源：模型有多接近掌握正确规则，以及该规则是否反复影响其他问题。第三个限制是：目前的更新方式能不能实际改变模型在推理时使用该规则的行为。</p>
+ <div class="table-wrap"><table><thead><tr><th>可能的错误状态</th><th>已有基础</th><th>共享规则影响范围</th><th>待验证的预测</th></tr></thead><tbody>
+ <tr><td>偶然算术失误</td><td>较充分</td><td>小</td><td>容易修复原题，但跨题收益可能很小</td></tr>
+ <tr><td>稳定误用共同公式</td><td>较充分</td><td>大</td><td>具有较高规则级纠错潜力</td></tr>
+ <tr><td>缺多个前置知识的系统性错误</td><td>不足</td><td>大</td><td>潜在覆盖广，但单次纠正可能难以吸收</td></tr>
+ <tr><td>不稳定、难复现的局部错误</td><td>待判定</td><td>小</td><td>不应只因当前失分就优先训练</td></tr>
+ </tbody></table></div>
+ <p>因此我们的科学问题不是“高置信度错题要不要加权”，而是<strong>同样难度和置信度的错误，为什么具有不同的可学习性与迁移性？</strong></p>
+
+
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Challenge｜真正困难的三个地方
+
+
+ <h3>C1｜错误表象不等于模型的知识状态</h3>
+ <p>相同错误可能来自前置知识缺失、稳定的错误规则或偶然失误；置信度、自评“我会了”和单次采样一致率都不等于知识准备程度。</p>
+ <h3>C2｜原题纠正不等于规则内化</h3>
+ <p>记住公式、在当前上下文仿照示范作答，并不意味着参数更新后能把规则用于不同结构的新题。RULE-EDIT 已在抽象规则编辑场景中观察到公式层修复与实例迁移之间的落差；不同更新范式不能直接混同。<a class="cite" href="references.html#S41" title="RULE-EDIT: Benchmarking Rule-Level Knowledge Editing in Large Language Models">[S41]</a><a class="cite" href="references.html#S42" title="Editing Rules in LLMs Requires More Than a Localized Update">[S42]</a></p>
+ <h3>C3｜学习价值是更新后的反事实结果</h3>
+ <p>真正的收益取决于模型、学习材料、优化器、更新预算以及后续任务分布。逐条训练才能测准，但成本高；仅用 one-shot 提示收益、梯度相似性或损失作为替代，则可能测错目标。<a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a><a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a><a class="cite" href="references.html#M11" title="What Do Learning Dynamics Reveal About Generalization in LLM Mathematical Reasoning?">[M11]</a></p>
+
+
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Insight｜可学性 × 规则影响范围 × 更新兼容性
+
+
+ <p><b>核心假设：</b>某个错误的跨题收益，受到三个可以部分观察、但不可直接互相替代的条件影响：</p>
+ <div class="flow">
+ <div><b>Readiness</b><small>是否具备理解正确规则的前置基础</small></div>
+ <div><b>Rule Scope</b><small>错误规则是否共同影响大量新题</small></div>
+ <div><b>Update Compatibility</b><small>当前更新能否真正改变规则的使用</small></div>
+ </div>
+ <p><b>Readiness</b> 可以由与最终测试集分离的前置技能探针估计；<b>Rule Scope</b> 可以由规则图、错误在独立变体中复现的频度估计；<b>Update Compatibility</b> 可以由小预算诊断更新或局部学习信号估计，但不能把探针数据、验证数据泄露进最终测试。</p>
+ <p>操作性目标不是简单的三因子乘积。固定模型 <code>θ</code> 和更新算子 <code>u</code> 后，候选错误 <code>e</code> 的价值应由<strong>真实未见题增益 − 旧能力回归 − 更新成本</strong>定义；上述三因素只是待证实的预测解释变量。</p>
+ <div class="equation">V(e | θ, u) = E[Δ Unseen-Rule-Accuracy] − λ E[Regression] − μ Update-Cost</div>
+ <p><b>为什么可能提前判断：</b>如果已有知识与错误结构在训练前就含有与实际迁移收益相关的信息，我们无需对全部候选做完整权重更新，而可以先筛出少量最值得验证的错误。该推断需要受控实验确认。</p>
+
+
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Design｜先原因后模块：学习前判断，再有限预算纠错
 
 
  <div class="flow">
- <div><b>冻结学习状态</b><small>版本、任务与预算锚定</small></div>
- <div><b>四组局部 Probe</b><small>测候选覆盖、错选、知识与撤辅</small></div>
- <div><b>判断瓶颈变化</b><small>对照差 + 不确定性 + 切换成本</small></div>
- <div><b>路由到动作族</b><small>执行已有 I1–I5 或工具模块</small></div>
- <div><b>未见题独立复测</b><small>收益、遗忘、安全回归后再判断</small></div>
+ <div><b>诊断错误状态</b><small>前置知识、置信度、稳定性、错误规则</small></div>
+ <div><b>估计迁移潜力</b><small>Readiness / Rule Scope / Compatibility</small></div>
+ <div><b>选择学习对象</b><small>与随机、难度、one-shot、梯度基线比较</small></div>
+ <div><b>固定预算的持久更新</b><small>同一 SFT / LoRA 优化器与反馈协议</small></div>
+ <div><b>独立验证</b><small>原题、异结构同规则、保持、遗忘</small></div>
  </div>
- <h3>机制：发现“继续沿用当前学习模式不划算”的证据</h3>
- <p>对每轮学习状态保留 <b>Probe Report</b>，记录各环节可恢复的错误质量与估计误差。只在某类干预的预期净收益超过当前模式，并通过最小持续性/置信门槛时切换，避免一次随机错题就频繁改策略。低置信度时允许继续诊断、复习或暂不更新。</p>
- <div class="equation">next_mode = switch_if( gain(new mode) − gain(current mode) &gt; cost_of_switch + uncertainty_margin )</div>
- <p>此式是待评估的控制原则，不代表已经训练出模型。实际增益指<strong>未来未见任务、撤除临时帮助后的能力变化</strong>，估计用开发任务，最终测试集绝不参与路由决策。诊断开销和多分支试训均计入总预算。</p>
- <h3>组件协议：只决定“下一轮修哪一环”</h3>
- <div class="table-wrap"><table><thead><tr><th>I6 接口</th><th>职责</th><th>明确不做</th></tr></thead><tbody>
- <tr><td>输入</td><td>冻结版本 ID、各类 Probe 证据、学习历史、可调用动作族、成本与安全限额</td><td>不直接修改执行器、权重、Skill 或线上权限</td></tr>
- <tr><td>输出</td><td>瓶颈假设（可多标签）、置信度、切换/继续原因、下一动作族及试验预算</td><td>不选择 I5 具体伙伴、不制定 I3 巩固内容、不实现 I2 学习算法</td></tr>
- <tr><td>反馈</td><td>跨轮无辅助能力增益、保持率、诊断成本、版本回归和安全门</td><td>不以当前答题总分或自我解释替代外部验证</td></tr>
+ <p>首版不同时更换教师、模型规模、训练器与提示模板：固定正确反馈质量和更新方式，只研究<strong>选哪一个错误</strong>。外置 Skill 更新可在后续单独跑，但不能与 LoRA 参数学习混算。</p>
+ <p>一旦发现前置知识不足，就先验证“补基础”是否真比“重复给原题反馈”更有效；不能把“错误类型诊断”的分类准确率直接当作学习收益。</p>
+
+
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 决定性实验｜能否在更新前预测跨题收益？
+
+
+ <h3>实验 A：验证高置信度与已有知识到底是什么关系</h3>
+ <p>选取具有规则与前置技能注释的数学题，构造知识准备程度（较高 / 较低）× 规则影响范围（较大 / 较小）的受控分组。报告真实错误来源与受控构造错误分开；匹配题目难度、初始准确率、模型置信度、反馈质量和更新 token。不要用最终测试集来定义规则影响范围。</p>
+ <p>每次从同一个模型快照复制独立分支，在候选错误上做固定预算的持久更新。测试时撤掉答案、例题和辅助 Prompt，分别测原题、同规则不同数字、异结构同规则、其他规则以及经过中间训练后的保持。</p>
+ <h3>实验 B：真实学习收益预测与选择</h3>
+ <div class="table-wrap"><table><thead><tr><th>选择策略</th><th>检验什么</th></tr></thead><tbody>
+ <tr><td>Random、Hardest-first</td><td>是否只是比随便挑题更好</td></tr>
+ <tr><td>Confidence-first / Stable-error-first</td><td>是否只靠置信度或重复频率就能解释</td></tr>
+ <tr><td>Self-Error-Instruct one-shot selection <a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a></td><td>即时示例迁移能否替代真实权重更新预测</td></tr>
+ <tr><td>LESS gradient-based selection <a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a></td><td>梯度对齐是否已经足够</td></tr>
+ <tr><td>LENS / ACE（学习目标对照）<a class="cite" href="references.html#S43" title="Don&#x27;t Waste Mistakes: Leveraging Negative RL-Groups via Confidence Reweighting">[S43]</a><a class="cite" href="references.html#S44" title="Overconfident Errors Need Stronger Correction: Asymmetric Confidence Penalties for Reinforcement Learning">[S44]</a></td><td>自信错误再加权改善训练信号，是否足够解释收益</td></tr>
+ <tr><td>I8：Readiness + Rule Scope + Compatibility</td><td>是否新增可迁移、可解释的预测信息</td></tr>
  </tbody></table></div>
+ <p><b>主指标：</b>学习前预测分数与真实未见同规则收益的排序相关；固定训练预算下的净迁移增益；跨模板、跨模型稳定性；回归率。额外报告原题修复率及单条样本筛选成本，防止以更多诊断调用换取假提升。</p>
+ <div class="note"><b>强约束：</b>按规则族和模板族划分训练 / 诊断 / 选择验证 / 最终测试；每条候选的训练结果只能用于开发集建模，不能窥视最终测试。按独立规则族聚类计算区间，并单独报告自然错误与注入式错误的结果。</div>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / 与 I1–I5 的正交边界：调用它们，不接管它们
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Related Work｜不能重复的已有贡献
 
 
- <div class="table-wrap"><table><thead><tr><th>已有 Idea 的独立研究对象</th><th>I6 与它的关系</th><th>不可重复声称的贡献</th></tr></thead><tbody>
- <tr><td><a href="ideas.html#idea-1"><b>I1 · 脚手架学习</b></a>：哪些知识应内化，哪些适合外部检索/撤辅？</td><td>I6 只检测当前是否主要受知识/支架依赖限制；需要内化还是查询，由 I1 决策。</td><td>不能把“支持获取与撤除”作为 I6 的新机制。</td></tr>
- <tr><td><a href="ideas.html#idea-2"><b>I2 · 因材施教</b></a>：同样失败、同一更新对象，哪一种试学方法最有效？</td><td><b>最需解耦：</b>I2 做给定学习需求下的局部教学动作优化与响应估计；I6 只研究跨环节主导瓶颈的检测、持续性与跨轮模式切换。可以把 I2 作为“吸收环节”的已固定子模块和强基线。</td><td>不能把“试学→比较收益→选更好教学法”重新包装成 I6。</td></tr>
- <tr><td><a href="ideas.html#idea-3"><b>I3 · 温故知新</b></a>：新旧 Skill/能力冲突时怎么定向巩固？</td><td>I6 把旧能力退化作为状态与硬约束，必要时把处理请求交给 I3。</td><td>不提出新型重放/抗遗忘算法。</td></tr>
- <tr><td><a href="ideas.html#idea-4"><b>I4 · 生产性失败</b></a>：单次失败后是否继续试验，何时足以写 Skill？</td><td>I6 在<strong>多轮学习</strong>尺度上决定应不应该从搜索转到验证/补知识/吸收。单个失败链的试验与证据停止规则仍由 I4 负责。</td><td>不抢“失败后什么时候总结”的贡献。</td></tr>
- <tr><td><a href="ideas.html#idea-5"><b>I5 · 费曼学习法</b></a>：与哪个伙伴互教，才能让自己独立能力增长最多？</td><td>I6 判断是否需要外部教学/协作；若需要，I5 负责伙伴匹配与交换。</td><td>不学习伙伴图或声称发现最佳能力差。</td></tr>
+ <div class="table-wrap"><table><thead><tr><th>工作</th><th>已经做了什么</th><th>I8 需要额外解决什么</th></tr></thead><tbody>
+ <tr><td>Hypercorrection 2001 / 2018 <a class="cite" href="references.html#E12" title="Errors committed with high confidence are hypercorrected">[E12]</a><a class="cite" href="references.html#E13" title="Hypercorrection of high-confidence errors in the classroom">[E13]</a></td><td>人类高置信度错误在正确反馈后的超纠正现象</td><td>检验 LLM 上是否成立，以及真正决定迁移的知识状态</td></tr>
+ <tr><td>Prior Knowledge 2014 <a class="cite" href="references.html#E14" title="Prior knowledge is more predictive of error correction than subjective confidence">[E14]</a></td><td>领域知识与纠错关系可能强于主观置信度</td><td>从人类单题纠正推进到机器参数更新与跨题迁移</td></tr>
+ <tr><td>Self-Error-Instruct（ACL 2025）<a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a></td><td>按错误类型合成数据，用 one-shot 帮助效果筛选样本</td><td>区分上下文即时帮助与持久参数更新的真实收益</td></tr>
+ <tr><td>LESS（ICML 2024）<a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a></td><td>梯度相似性影响力数据选择</td><td>能否从错误知识结构提供额外、低成本的预测信息</td></tr>
+ <tr><td>RULE-EDIT（EMNLP 2026）<a class="cite" href="references.html#S41" title="RULE-EDIT: Benchmarking Rule-Level Knowledge Editing in Large Language Models">[S41]</a></td><td>规则编辑的实例可迁移性评测</td><td>学习前预测哪些错误规则能被特定更新有效修复</td></tr>
+ <tr><td>LENS / ACE（2025 / 2026）<a class="cite" href="references.html#S43" title="Don&#x27;t Waste Mistakes: Leveraging Negative RL-Groups via Confidence Reweighting">[S43]</a><a class="cite" href="references.html#S44" title="Overconfident Errors Need Stronger Correction: Asymmetric Confidence Penalties for Reinforcement Learning">[S44]</a></td><td>按错误置信度改变 RL 更新惩罚</td><td>目标并非“罚得更重”，而是预测哪些错误值得学习</td></tr>
+ <tr><td>Learning Dynamics（ICML 2025）<a class="cite" href="references.html#M11" title="What Do Learning Dynamics Reveal About Generalization in LLM Mathematical Reasoning?">[M11]</a></td><td>训练过程的预记忆表现可以预测泛化</td><td>用尚未进行完整更新的诊断信号预测单次纠错的净收益</td></tr>
  </tbody></table></div>
- <p class="note"><b>正交判据：</b>只保留 I6 的变化检测器与模式切换规则，其余每个动作均调用固定实现，仍能单独检验“何时换模式”带来的增量；反过来固定 I6，I1–I5 每项方法也必须能各自检验自身研究问题。如果 I6 的全部优势只是更好的 I2 单轮动作预测，就应合并而不是新立方法。</p>
+ <p>因此 I8 <strong>不声称首次利用高置信度错误、首次按错误类别造数据、首次预测数据有用性或首次评估规则级迁移</strong>。可争取的新增贡献是经过严格控制的<strong>错误学习潜力与真实迁移收益之间的机制关系</strong>。</p>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / Related Work：已有诊断与动态路由，我们还差在哪？
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 预注册判断｜出现什么结果就停止？
 
 
- <div class="table-wrap"><table><thead><tr><th>直接前作</th><th>他们研究的是什么</th><th>I6 额外必须证明</th></tr></thead><tbody>
- <tr><td><b>Mind the Gap</b>，ICLR 2025 <a class="cite" href="references.html#S35" title="Mind the Gap: Examining the Self-Improvement Capabilities of Large Language Models">[S35]</a></td><td>生成—验证差距、可改进性与迭代收益；生成/验证/更新的模块分析已有基础。</td><td>不是首次分瓶颈，而是跨轮检测主瓶颈转移并改善后续选择。</td></tr>
- <tr><td><b>FlyBy</b>，2026 <a class="cite" href="references.html#S36" title="Knowing When Thinking Is Not Enough: Teaching Small Reasoning Models to Reason Beyond Their Parametric Knowledge (FlyBy)">[S36]</a></td><td>以受控推理状态区分知识与执行瓶颈，再选择是否向强模型查询。</td><td>从一次推理中的查询决策推进到经过持久更新的下一轮学习机制切换。</td></tr>
- <tr><td><b>Why SFT Fails to Learn</b>，ACL 2026 <a class="cite" href="references.html#S37" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[S37]</a></td><td>诊断监督训练无法吸收数据的多种具体原因，并试验对应干预。</td><td>不限于 SFT 的内化子问题，比较知识/生成/选择/吸收跨环节瓶颈迁移。</td></tr>
- <tr><td><b>SRPO</b>，COLM 2026 <a class="cite" href="references.html#S38" title="Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing (SRPO)">[S38]</a></td><td>按样本正确/错误，将 GRPO 和自蒸馏目标路由，抑制后期不稳定。</td><td>需要证明比固定样本级优化路由更有效的<strong>跨轮诊断重分配</strong>。</td></tr>
- <tr><td><b>From Rollouts to Recipes</b>，EMNLP 2026 <a class="cite" href="references.html#S39" title="From Rollouts to Recipes: Self-Contained Post-Training for LLMs">[S39]</a></td><td>按 rollout 正确性与置信度路由 GRPO、蒸馏、正则化或跳过，路由比例随训练改变。</td><td>这是最强近邻之一：必须控制相同动作集与预算，证明因果 Probe 和瓶颈变迁信息具有额外价值。</td></tr>
- <tr><td><b>R²Orch</b>，2026 <a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a></td><td>根据 Skill Withdrawal 的可学习性选任务，撤 Skill 后检验独立能力。</td><td>在技能撤辅之外，独立识别并切换验证/搜索/知识等主环节。</td></tr>
- </tbody></table></div>
- <p>上述工作已经覆盖失败分类、试训干预和动态优化目标。因此 I6 的贡献门槛不能是“四类标签”“根据错误给建议”或“会变化的训练配方”。还需要额外排除仅多采样、仅更大的验证器和仅增加训练数据带来的收益。</p>
+ <p><b>H1：</b>控制已有知识后，高置信度错误的纠正优势可能明显减弱。若无差异，也应如实报告。</p>
+ <p><b>H2：</b>在相同更新预算下，知识准备程度与共同错误规则影响范围，对未见题迁移有可复现的交互作用。<strong>这是最核心的机制实验。</strong></p>
+ <p><b>H3：</b>学习前诊断相较难度、置信度、SEI one-shot 和 LESS 梯度策略，能够改善真实净迁移收益的预测与学习预算分配。</p>
+ <p><b>继续：</b>H2 关系在独立规则族与至少两个模型配置复现，且 H3 对强基线有稳定增益。<b>缩题：</b>只有机制成立、排序方法没优势，则作为实证机制研究。<b>停止：</b>收益仅限原题或近似改写；在控制知识状态、诊断成本和预算后关系消失。</p>
+ <div class="status">当前仅完成文献核对、机制假设、对照与门槛设计；无 I8 训练结果、无已证实的新模型能力增益。</div>
 
 
-## I6：瓶颈诊断驱动的动态自学策略切换 / 决定性实验：验证切换的必要性，而不是做一个花哨路由器
+## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 与其他 Idea 的边界｜只研究“纠错能否迁移”
 
 
- <h3>E1 · 同分不同因</h3>
- <p>选数学与代码任务，构造<strong>初始 pass@1 相近</strong>但验证错选、知识缺失、搜索稀缺或内化失败各不相同的冻结状态；加入未经人工注入的自然失败状态。对每个状态随机进行四类有限预算干预，并在独立新题上确认实际最佳动作。核心是同分条件下出现可复验的<strong>跨环节最优动作差异</strong>，而不是分类器拟合人工标签。</p>
- <h3>E2 · 同一模型能力变化后的策略反转</h3>
- <p>冻结多个连续训练检查点，考察某环节已经修复后，继续沿用原模式与切换新模式的等预算后续收益。记录预先固定的 Probe 阈值、切换延迟、误报率、模式抖动和切换成本。以只看当前总分、只看 rollout 成败、LLM 自述原因、I2 风格单轮试学/通用 bandit 作为强对照。</p>
- <h3>E3 · 多轮能力平台期能否真实突破</h3>
- <p>弱/中/强学习者按<strong>预先独立测得的能力</strong>分组，而非直接按参数量代表智力；使用同一模型家族与跨家族复核。固定候选动作实现、教师预算、总训练 token、探测成本与计算开销，对比<strong>固定策略 / 成绩分段规则 / 样本状态路由 / 单轮 I2 / I6 的跨轮切换</strong>。只在未见题的独立能力、旧能力保持和多轮有效收益上作主要结论。</p>
- <h3>Go / Merge / Stop</h3>
- <div class="table-wrap"><table><thead><tr><th>裁决</th><th>预先需要的证据</th></tr></thead><tbody>
- <tr><td>继续 I6</td><td>自然失败中能稳定观察到瓶颈主导关系变化；跨轮诊断比静态规则和等预算 I2/样本路由有可重复的独立收益。</td></tr>
- <tr><td>并入 I2</td><td>收益完全由单轮试学/上下文 bandit 解释，诊断历史与瓶颈切换并无增量信息。</td></tr>
- <tr><td>停止或缩题</td><td>瓶颈不可辨、切换成本超过收益、优势只在当前题/保留提示时出现，或旧能力/安全回归无法通过。</td></tr>
- </tbody></table></div>
- <p class="status">状态：研究假设与实验方案；截至 2026-10-27 尚未开展 I6 的受控实验，图表不含虚构成绩。</p>
-
-
-## I6：瓶颈诊断驱动的动态自学策略切换 / 安全与实验口径：成绩上升不等于 RSI 成立
-
-
- <p>所有 Probe 和候选更新先在受控环境运行，冻结外部独立验证器及任务划分；开发集可用于模式切换，最终测试只能在策略冻结后运行。相同初始状态的干预分支必须共享数据拆分、执行预算与可访问工具。多种模式一起改变时，要记录交互效应，不能把增益简单归因于单个原因。</p>
- <p><b>跨轮安全硬门：</b>验证器被绕过、Agent 越权执行、恶意轨迹写入长期 Skill/Memory、旧能力出现不可接受退化时拒绝晋级并保留回滚。这里是在给出安全协议要求，不是声称已经解决自进化安全。</p>
- <p><b>成功的定义：</b>移除教师、临时提示与多余在线计算后，允许保留的模型/Skill/Memory/Harness 版本在不同、未见的任务上仍能持续进步；不能用分数波动、一次 pass@k 提高、或增加测试调用替代能力增长。<a href="ideas.html">返回 I1–I5 研究主线</a> · <a href="experiments.html">现有实验协议</a>。</p>
+ <p><b>I5</b> 问学生的独立执行能否帮助教师发现并修复自己的盲点；<b>I6</b> 的关注点是跨轮失败瓶颈诊断及下一步学习策略；<b>I7</b> 研究“先尝试还是先看示例”的学习次序；<b>I8</b> 固定学习方式之后，研究哪种<strong>模型当前错误</strong>可以被真正学会、迁移到多少未见题。</p>
+ <p>I8 可以给 I6 提供一种学习价值信号，但不是 I6 的通用调度器，也不改变 I7 的教学顺序。网站目前保留独立编号，不因其他候选尚未纳入本站而重新编号。</p>
+ <div class="links"><a class="link-btn" href="ideas.html">返回候选 Idea</a><a class="link-btn" href="learning-science.html">查看学习科学来源</a><a class="link-btn" href="references.html">查看全部原始来源</a></div>
 
 
 ## 教学反馈诊断 · I5 的早期研究支线 / 研究目标：更新教师，而不是帮学生提高分数
@@ -724,131 +872,121 @@
  <div class="note">这三个主张递进但不等价。论文初期应只承诺前两层；看到 P0 / P1 结果后再决定第三层。与 2024 LbT、AAAI 2026 MARS、SKILL-KD 和学生提问研究的逐实验对比仍需要在正式投稿前持续更新。<a class="cite" href="references.html#S20" title="Can LLMs Learn by Teaching for Better Reasoning? A Preliminary Study">[S20]</a><a class="cite" href="references.html#S21" title="MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization">[S21]</a><a class="cite" href="references.html#S22" title="SKILL-KD: Contrastive Skill Distillation for LLM Agents">[S22]</a><a class="cite" href="references.html#S24" title="Socratic Students: Teaching Language Models to Learn by Asking Questions">[S24]</a></div>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 一句话问题与研究定位
+## 历史草案：跨轮瓶颈诊断（原 I6） / 编号更新说明：这不是当前 I6
 
 
- <div class="decision"><span class="kicker">I8 · MECHANISM VALIDATION · 2026-10-27</span>
- <h3>Why does correcting one mistake sometimes fix a whole class of problems?</h3>
- <p>两个模型都做错同一道题：一个看完答案只能重新答对原题，另一个却能解决几十道共享同一规则的新题。<strong>为什么会有这种差别？我们能否在真正更新参数之前预测？</strong></p>
- <p><b>本研究首先解释学习收益的差异，而不是先发明一个错题排序器。</b>特别区分原题纠正、同规则新题迁移、跨模板迁移、长期保持与旧能力损失。</p>
- </div>
- <p><b>研究状态：</b>机制假设与受控实验协议已形成；尚无本站 I8 的真实训练结果。研究单位是<strong>模型快照 × 当前错误 × 固定反馈/更新操作</strong>；不能将人类学习效应直接宣称为模型已具有的性质。</p>
+ <p class="thesis"><b>历史版本：</b>以下“瓶颈诊断”曾临时被编号为 I6。2026-10-27 研究拆分后，当前 <a href="idea-i6-failure-value.html">I6</a> 只研究失败过程的学习价值，<a href="idea-i7-learning-order.html">I7</a> 研究先做还是先学，<a href="i8.html">I8</a> 研究 Hypercorrection 与规则级迁移。本页作为旧版构思归档，不占用 I6 编号，也没有改名为新的 I9。</p>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Observable Phenomenon｜最自信的错题，未必最难纠正
+## 历史草案：跨轮瓶颈诊断（原 I6） / 历史问题：同样 70 分，为什么下一轮不该用同一种方法？
 
 
- <p>Butterfield 与 Metcalfe（2001）观察到：在得到正确反馈后，人类对原本<strong>高置信度</strong>的错误，有时反而比低置信度错误纠正得更好，即 <b>Hypercorrection Effect</b>。<a class="cite" href="references.html#E12" title="Errors committed with high confidence are hypercorrected">[E12]</a></p>
- <p>Carpenter 等（2018）将这一现象带入大学园艺课程，学生答题、报告置信度、获得正确反馈并参加后测，观察到显著的超纠正现象。<a class="cite" href="references.html#E13" title="Hypercorrection of high-confidence errors in the classroom">[E13]</a></p>
- <p>这里不是说“越自信就一定越有学习价值”。Sitzman 等（2014）发现，<b>已有领域知识</b>可能比主观置信度更能预测错误纠正；置信度的独立解释力有限。<a class="cite" href="references.html#E14" title="Prior knowledge is more predictive of error correction than subjective confidence">[E14]</a></p>
- <p>Foster 等（2022）在中小学在线数学诊断题中研究了置信度与后续类似题表现，但这种相似题纠正不等于复杂规则在 LLM 中已被更新，也不能直接推断因果。<a class="cite" href="references.html#E15" title="School students’ confidence when answering diagnostic questions online">[E15]</a></p>
- <div class="note"><b>可观察矛盾：</b>错误有多“自信”、一次反馈能否修复该题、以及修复后能迁移多少题，是三个不同的量。Hypercorrection 是提出机制假说的线索，不是已经证明的 LLM 结论。</div>
+ <p class="thesis"><b>I6 的问题：</b>一个自我改进系统已经进入平台期，能否用少量可复验的干预确定当前最限制<strong>后续独立能力增长</strong>的环节，并在主要瓶颈发生转移时及时切换学习模式？</p>
+ <p>例子：两个数学 Agent 的单次正确率都是 70%。A 多次采样常能产生正确解，但自己的答案选择器总选错；B 不论怎么重采样都很少成功，但补一条前置定理后明显改善。继续统一做 GRPO、统一增加教师示范，甚至只按“70 分应该练什么”选任务，都可能用错力。</p>
+ <p><b>研究定位：</b>I6 是<strong>跨轮学习闭环的元控制问题</strong>（什么时候应该从补知识切到搜索、从搜索切到修验证或巩固等），不是发明四个底层学习算法。四个环节是能力形成的先后依赖，<strong>不是</strong>所有模型必经的四个时间阶段，也不是排他的四选一错误标签。</p>
+ <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p>考试 0–60 / 60–80 / 80–90 / 90–100 的分段仅用来提出“学习方式可能反转”的启发性假设；实际切换依据是可观测的瓶颈与干预收益，不是固定成绩阈值、模型参数规模或“智力”标签。</p></div>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Why｜为什么有些错误可能具有更大的学习杠杆？
+## 历史草案：跨轮瓶颈诊断（原 I6） / Challenge：同一个平台期，可能卡在四个不同环节
 
 
- <p>考虑同一条积分规则的两种错误。<b>模型 A</b> 缺乏指数运算和基本积分等前置知识，单次反馈难以被有效吸收。<b>模型 B</b> 已具备相关基础，却稳定地遗漏幂函数积分公式中的关键分母；若能真正修复这条规则，可能同时改善不同数字与题型中的一批错误。</p>
- <p>这只是<strong>待验证的机制例子</strong>。它提示一次错误纠正的学习价值至少有两个来源：模型有多接近掌握正确规则，以及该规则是否反复影响其他问题。第三个限制是：目前的更新方式能不能实际改变模型在推理时使用该规则的行为。</p>
- <div class="table-wrap"><table><thead><tr><th>可能的错误状态</th><th>已有基础</th><th>共享规则影响范围</th><th>待验证的预测</th></tr></thead><tbody>
- <tr><td>偶然算术失误</td><td>较充分</td><td>小</td><td>容易修复原题，但跨题收益可能很小</td></tr>
- <tr><td>稳定误用共同公式</td><td>较充分</td><td>大</td><td>具有较高规则级纠错潜力</td></tr>
- <tr><td>缺多个前置知识的系统性错误</td><td>不足</td><td>大</td><td>潜在覆盖广，但单次纠正可能难以吸收</td></tr>
- <tr><td>不稳定、难复现的局部错误</td><td>待判定</td><td>小</td><td>不应只因当前失分就优先训练</td></tr>
+ <div class="table-wrap"><table><thead><tr><th>环节 / 可观察现象</th><th>最小受控检查</th><th>可调用的动作族</th></tr></thead><tbody>
+ <tr><td><b>① 知识不足</b><br>基础前置题、概念题也失败</td><td>保持搜索与验证预算不变，随机对照“给经过核验的缺失知识”与“不给”；测可迁移解题率，而不是只看同一题的抄答。</td><td>知识补充、简短示例、前置任务学习、按需查询（必要时调用 I1）</td></tr>
+ <tr><td><b>② 搜索不足</b><br>多次采样偶尔正确，单次命中很低</td><td>固定信息与验证器，提高候选数或加入回溯；比较 pass@1、固定 k 下候选覆盖及新增有效路径。</td><td>探索、对比成功与失败路径、搜索或强化学习</td></tr>
+ <tr><td><b>③ 选择不足</b><br>正确候选已经产生，却没有被选中</td><td>冻结同一批候选，比较原验证器与可信独立验证/排序；不能把重新生成更好候选算成验证改进。</td><td>校准验证器、候选排序、独立测试反馈</td></tr>
+ <tr><td><b>④ 吸收不足</b><br>答案或 Skill 在手，但撤除后仍不会</td><td>冻结已验证示例与训练预算，允许真实更新后清空提示/伙伴/临时记忆；用未见题和后续回归测持久收益。</td><td>技能或权重更新、针对性训练、撤辅评测；具体学习方式由 I2/I3 实现</td></tr>
  </tbody></table></div>
- <p>因此我们的科学问题不是“高置信度错题要不要加权”，而是<strong>同样难度和置信度的错误，为什么具有不同的可学习性与迁移性？</strong></p>
+ <p><b>关键困难：</b>单个测试的失败不能证明某类能力绝对不存在。有限 pass@k=0 不等于正确路径不可采样；外部知识带来的即时成功不等于知识已内化；验证器本身可能被污染。四项检查应记录对照差、样本量、成本、置信区间和互相干扰，允许“多重瓶颈 / 无法判定”。</p>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Challenge｜真正困难的三个地方
+## 历史草案：跨轮瓶颈诊断（原 I6） / Insight：更有用的是发现瓶颈何时发生转移
 
 
- <h3>C1｜错误表象不等于模型的知识状态</h3>
- <p>相同错误可能来自前置知识缺失、稳定的错误规则或偶然失误；置信度、自评“我会了”和单次采样一致率都不等于知识准备程度。</p>
- <h3>C2｜原题纠正不等于规则内化</h3>
- <p>记住公式、在当前上下文仿照示范作答，并不意味着参数更新后能把规则用于不同结构的新题。RULE-EDIT 已在抽象规则编辑场景中观察到公式层修复与实例迁移之间的落差；不同更新范式不能直接混同。<a class="cite" href="references.html#S41" title="RULE-EDIT: Benchmarking Rule-Level Knowledge Editing in Large Language Models">[S41]</a><a class="cite" href="references.html#S42" title="Editing Rules in LLMs Requires More Than a Localized Update">[S42]</a></p>
- <h3>C3｜学习价值是更新后的反事实结果</h3>
- <p>真正的收益取决于模型、学习材料、优化器、更新预算以及后续任务分布。逐条训练才能测准，但成本高；仅用 one-shot 提示收益、梯度相似性或损失作为替代，则可能测错目标。<a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a><a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a><a class="cite" href="references.html#M11" title="What Do Learning Dynamics Reveal About Generalization in LLM Mathematical Reasoning?">[M11]</a></p>
-
-
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Insight｜可学性 × 规则影响范围 × 更新兼容性
-
-
- <p><b>核心假设：</b>某个错误的跨题收益，受到三个可以部分观察、但不可直接互相替代的条件影响：</p>
+ <h3>原因先于模块</h3>
+ <p>对于停滞模型，增加数据、搜索次数、验证精度或参数更新并不等价。如果知识已经足够，但候选长期被评估器错选，继续补教材可能无法提高最终表现；如果验证器已可靠、训练后仍忘记新方法，就需要改善吸收与巩固环节。<b>同一模型连续进步时，曾经最有效的干预可能失效，因为瓶颈已经转移。</b></p>
+ <p>学习科学中的 <b>Region of Proximal Learning</b> 提醒我们，单位时间内最值得学的内容不必是最难的；但这来自人类实验，只支持研究动机，不直接证明 LLM 的最优学习区域。<a class="cite" href="references.html#E11" title="The Dynamics of Learning and Allocation of Study Time to a Region of Proximal Learning">[E11]</a></p>
  <div class="flow">
- <div><b>Readiness</b><small>是否具备理解正确规则的前置基础</small></div>
- <div><b>Rule Scope</b><small>错误规则是否共同影响大量新题</small></div>
- <div><b>Update Compatibility</b><small>当前更新能否真正改变规则的使用</small></div>
+ <div><b>知识可用？</b><small>若缺失，先补前置条件</small></div>
+ <div><b>路径可采？</b><small>若可采但稀少，加强探索</small></div>
+ <div><b>候选可选？</b><small>若错选，修验证与排序</small></div>
+ <div><b>更新可留？</b><small>若撤辅仍失败，改变吸收过程</small></div>
  </div>
- <p><b>Readiness</b> 可以由与最终测试集分离的前置技能探针估计；<b>Rule Scope</b> 可以由规则图、错误在独立变体中复现的频度估计；<b>Update Compatibility</b> 可以由小预算诊断更新或局部学习信号估计，但不能把探针数据、验证数据泄露进最终测试。</p>
- <p>操作性目标不是简单的三因子乘积。固定模型 <code>θ</code> 和更新算子 <code>u</code> 后，候选错误 <code>e</code> 的价值应由<strong>真实未见题增益 − 旧能力回归 − 更新成本</strong>定义；上述三因素只是待证实的预测解释变量。</p>
- <div class="equation">V(e | θ, u) = E[Δ Unseen-Rule-Accuracy] − λ E[Regression] − μ Update-Cost</div>
- <p><b>为什么可能提前判断：</b>如果已有知识与错误结构在训练前就含有与实际迁移收益相关的信息，我们无需对全部候选做完整权重更新，而可以先筛出少量最值得验证的错误。该推断需要受控实验确认。</p>
+ <p class="note"><b>递进不等于固定顺序训练：</b>这里描述的是能力产出的依赖链。模型可以同时缺知识又选错答案，也可能在任何一轮回到前面环节。I6 的可检验贡献应是<strong>准确发现主导瓶颈的切换时刻</strong>，并把这种发现转化成下轮的独立学习收益。</p>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Design｜先原因后模块：学习前判断，再有限预算纠错
+## 历史草案：跨轮瓶颈诊断（原 I6） / Design：低成本探测 + 跨轮切换，而非又造一个万能 Learner
 
 
  <div class="flow">
- <div><b>诊断错误状态</b><small>前置知识、置信度、稳定性、错误规则</small></div>
- <div><b>估计迁移潜力</b><small>Readiness / Rule Scope / Compatibility</small></div>
- <div><b>选择学习对象</b><small>与随机、难度、one-shot、梯度基线比较</small></div>
- <div><b>固定预算的持久更新</b><small>同一 SFT / LoRA 优化器与反馈协议</small></div>
- <div><b>独立验证</b><small>原题、异结构同规则、保持、遗忘</small></div>
+ <div><b>冻结学习状态</b><small>版本、任务与预算锚定</small></div>
+ <div><b>四组局部 Probe</b><small>测候选覆盖、错选、知识与撤辅</small></div>
+ <div><b>判断瓶颈变化</b><small>对照差 + 不确定性 + 切换成本</small></div>
+ <div><b>路由到动作族</b><small>执行已有 I1–I5 或工具模块</small></div>
+ <div><b>未见题独立复测</b><small>收益、遗忘、安全回归后再判断</small></div>
  </div>
- <p>首版不同时更换教师、模型规模、训练器与提示模板：固定正确反馈质量和更新方式，只研究<strong>选哪一个错误</strong>。外置 Skill 更新可在后续单独跑，但不能与 LoRA 参数学习混算。</p>
- <p>一旦发现前置知识不足，就先验证“补基础”是否真比“重复给原题反馈”更有效；不能把“错误类型诊断”的分类准确率直接当作学习收益。</p>
-
-
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 决定性实验｜能否在更新前预测跨题收益？
-
-
- <h3>实验 A：验证高置信度与已有知识到底是什么关系</h3>
- <p>选取具有规则与前置技能注释的数学题，构造知识准备程度（较高 / 较低）× 规则影响范围（较大 / 较小）的受控分组。报告真实错误来源与受控构造错误分开；匹配题目难度、初始准确率、模型置信度、反馈质量和更新 token。不要用最终测试集来定义规则影响范围。</p>
- <p>每次从同一个模型快照复制独立分支，在候选错误上做固定预算的持久更新。测试时撤掉答案、例题和辅助 Prompt，分别测原题、同规则不同数字、异结构同规则、其他规则以及经过中间训练后的保持。</p>
- <h3>实验 B：真实学习收益预测与选择</h3>
- <div class="table-wrap"><table><thead><tr><th>选择策略</th><th>检验什么</th></tr></thead><tbody>
- <tr><td>Random、Hardest-first</td><td>是否只是比随便挑题更好</td></tr>
- <tr><td>Confidence-first / Stable-error-first</td><td>是否只靠置信度或重复频率就能解释</td></tr>
- <tr><td>Self-Error-Instruct one-shot selection <a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a></td><td>即时示例迁移能否替代真实权重更新预测</td></tr>
- <tr><td>LESS gradient-based selection <a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a></td><td>梯度对齐是否已经足够</td></tr>
- <tr><td>LENS / ACE（学习目标对照）<a class="cite" href="references.html#S43" title="Don&#x27;t Waste Mistakes: Leveraging Negative RL-Groups via Confidence Reweighting">[S43]</a><a class="cite" href="references.html#S44" title="Overconfident Errors Need Stronger Correction: Asymmetric Confidence Penalties for Reinforcement Learning">[S44]</a></td><td>自信错误再加权改善训练信号，是否足够解释收益</td></tr>
- <tr><td>I8：Readiness + Rule Scope + Compatibility</td><td>是否新增可迁移、可解释的预测信息</td></tr>
+ <h3>机制：发现“继续沿用当前学习模式不划算”的证据</h3>
+ <p>对每轮学习状态保留 <b>Probe Report</b>，记录各环节可恢复的错误质量与估计误差。只在某类干预的预期净收益超过当前模式，并通过最小持续性/置信门槛时切换，避免一次随机错题就频繁改策略。低置信度时允许继续诊断、复习或暂不更新。</p>
+ <div class="equation">next_mode = switch_if( gain(new mode) − gain(current mode) &gt; cost_of_switch + uncertainty_margin )</div>
+ <p>此式是待评估的控制原则，不代表已经训练出模型。实际增益指<strong>未来未见任务、撤除临时帮助后的能力变化</strong>，估计用开发任务，最终测试集绝不参与路由决策。诊断开销和多分支试训均计入总预算。</p>
+ <h3>组件协议：只决定“下一轮修哪一环”</h3>
+ <div class="table-wrap"><table><thead><tr><th>I6 接口</th><th>职责</th><th>明确不做</th></tr></thead><tbody>
+ <tr><td>输入</td><td>冻结版本 ID、各类 Probe 证据、学习历史、可调用动作族、成本与安全限额</td><td>不直接修改执行器、权重、Skill 或线上权限</td></tr>
+ <tr><td>输出</td><td>瓶颈假设（可多标签）、置信度、切换/继续原因、下一动作族及试验预算</td><td>不选择 I5 具体伙伴、不制定 I3 巩固内容、不实现 I2 学习算法</td></tr>
+ <tr><td>反馈</td><td>跨轮无辅助能力增益、保持率、诊断成本、版本回归和安全门</td><td>不以当前答题总分或自我解释替代外部验证</td></tr>
  </tbody></table></div>
- <p><b>主指标：</b>学习前预测分数与真实未见同规则收益的排序相关；固定训练预算下的净迁移增益；跨模板、跨模型稳定性；回归率。额外报告原题修复率及单条样本筛选成本，防止以更多诊断调用换取假提升。</p>
- <div class="note"><b>强约束：</b>按规则族和模板族划分训练 / 诊断 / 选择验证 / 最终测试；每条候选的训练结果只能用于开发集建模，不能窥视最终测试。按独立规则族聚类计算区间，并单独报告自然错误与注入式错误的结果。</div>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / Related Work｜不能重复的已有贡献
+## 历史草案：跨轮瓶颈诊断（原 I6） / 与 I1–I5 的正交边界：调用它们，不接管它们
 
 
- <div class="table-wrap"><table><thead><tr><th>工作</th><th>已经做了什么</th><th>I8 需要额外解决什么</th></tr></thead><tbody>
- <tr><td>Hypercorrection 2001 / 2018 <a class="cite" href="references.html#E12" title="Errors committed with high confidence are hypercorrected">[E12]</a><a class="cite" href="references.html#E13" title="Hypercorrection of high-confidence errors in the classroom">[E13]</a></td><td>人类高置信度错误在正确反馈后的超纠正现象</td><td>检验 LLM 上是否成立，以及真正决定迁移的知识状态</td></tr>
- <tr><td>Prior Knowledge 2014 <a class="cite" href="references.html#E14" title="Prior knowledge is more predictive of error correction than subjective confidence">[E14]</a></td><td>领域知识与纠错关系可能强于主观置信度</td><td>从人类单题纠正推进到机器参数更新与跨题迁移</td></tr>
- <tr><td>Self-Error-Instruct（ACL 2025）<a class="cite" href="references.html#S40" title="Self-Error-Instruct: Generalizing from Errors for LLMs Mathematical Reasoning">[S40]</a></td><td>按错误类型合成数据，用 one-shot 帮助效果筛选样本</td><td>区分上下文即时帮助与持久参数更新的真实收益</td></tr>
- <tr><td>LESS（ICML 2024）<a class="cite" href="references.html#M10" title="LESS: Selecting Influential Data for Targeted Instruction Tuning">[M10]</a></td><td>梯度相似性影响力数据选择</td><td>能否从错误知识结构提供额外、低成本的预测信息</td></tr>
- <tr><td>RULE-EDIT（EMNLP 2026）<a class="cite" href="references.html#S41" title="RULE-EDIT: Benchmarking Rule-Level Knowledge Editing in Large Language Models">[S41]</a></td><td>规则编辑的实例可迁移性评测</td><td>学习前预测哪些错误规则能被特定更新有效修复</td></tr>
- <tr><td>LENS / ACE（2025 / 2026）<a class="cite" href="references.html#S43" title="Don&#x27;t Waste Mistakes: Leveraging Negative RL-Groups via Confidence Reweighting">[S43]</a><a class="cite" href="references.html#S44" title="Overconfident Errors Need Stronger Correction: Asymmetric Confidence Penalties for Reinforcement Learning">[S44]</a></td><td>按错误置信度改变 RL 更新惩罚</td><td>目标并非“罚得更重”，而是预测哪些错误值得学习</td></tr>
- <tr><td>Learning Dynamics（ICML 2025）<a class="cite" href="references.html#M11" title="What Do Learning Dynamics Reveal About Generalization in LLM Mathematical Reasoning?">[M11]</a></td><td>训练过程的预记忆表现可以预测泛化</td><td>用尚未进行完整更新的诊断信号预测单次纠错的净收益</td></tr>
+ <div class="table-wrap"><table><thead><tr><th>已有 Idea 的独立研究对象</th><th>I6 与它的关系</th><th>不可重复声称的贡献</th></tr></thead><tbody>
+ <tr><td><a href="ideas.html#idea-1"><b>I1 · 脚手架学习</b></a>：哪些知识应内化，哪些适合外部检索/撤辅？</td><td>I6 只检测当前是否主要受知识/支架依赖限制；需要内化还是查询，由 I1 决策。</td><td>不能把“支持获取与撤除”作为 I6 的新机制。</td></tr>
+ <tr><td><a href="ideas.html#idea-2"><b>I2 · 因材施教</b></a>：同样失败、同一更新对象，哪一种试学方法最有效？</td><td><b>最需解耦：</b>I2 做给定学习需求下的局部教学动作优化与响应估计；I6 只研究跨环节主导瓶颈的检测、持续性与跨轮模式切换。可以把 I2 作为“吸收环节”的已固定子模块和强基线。</td><td>不能把“试学→比较收益→选更好教学法”重新包装成 I6。</td></tr>
+ <tr><td><a href="ideas.html#idea-3"><b>I3 · 温故知新</b></a>：新旧 Skill/能力冲突时怎么定向巩固？</td><td>I6 把旧能力退化作为状态与硬约束，必要时把处理请求交给 I3。</td><td>不提出新型重放/抗遗忘算法。</td></tr>
+ <tr><td><a href="ideas.html#idea-4"><b>I4 · 生产性失败</b></a>：单次失败后是否继续试验，何时足以写 Skill？</td><td>I6 在<strong>多轮学习</strong>尺度上决定应不应该从搜索转到验证/补知识/吸收。单个失败链的试验与证据停止规则仍由 I4 负责。</td><td>不抢“失败后什么时候总结”的贡献。</td></tr>
+ <tr><td><a href="ideas.html#idea-5"><b>I5 · 费曼学习法</b></a>：与哪个伙伴互教，才能让自己独立能力增长最多？</td><td>I6 判断是否需要外部教学/协作；若需要，I5 负责伙伴匹配与交换。</td><td>不学习伙伴图或声称发现最佳能力差。</td></tr>
  </tbody></table></div>
- <p>因此 I8 <strong>不声称首次利用高置信度错误、首次按错误类别造数据、首次预测数据有用性或首次评估规则级迁移</strong>。可争取的新增贡献是经过严格控制的<strong>错误学习潜力与真实迁移收益之间的机制关系</strong>。</p>
+ <p class="note"><b>正交判据：</b>只保留 I6 的变化检测器与模式切换规则，其余每个动作均调用固定实现，仍能单独检验“何时换模式”带来的增量；反过来固定 I6，I1–I5 每项方法也必须能各自检验自身研究问题。如果 I6 的全部优势只是更好的 I2 单轮动作预测，就应合并而不是新立方法。</p>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 预注册判断｜出现什么结果就停止？
+## 历史草案：跨轮瓶颈诊断（原 I6） / Related Work：已有诊断与动态路由，我们还差在哪？
 
 
- <p><b>H1：</b>控制已有知识后，高置信度错误的纠正优势可能明显减弱。若无差异，也应如实报告。</p>
- <p><b>H2：</b>在相同更新预算下，知识准备程度与共同错误规则影响范围，对未见题迁移有可复现的交互作用。<strong>这是最核心的机制实验。</strong></p>
- <p><b>H3：</b>学习前诊断相较难度、置信度、SEI one-shot 和 LESS 梯度策略，能够改善真实净迁移收益的预测与学习预算分配。</p>
- <p><b>继续：</b>H2 关系在独立规则族与至少两个模型配置复现，且 H3 对强基线有稳定增益。<b>缩题：</b>只有机制成立、排序方法没优势，则作为实证机制研究。<b>停止：</b>收益仅限原题或近似改写；在控制知识状态、诊断成本和预算后关系消失。</p>
- <div class="status">当前仅完成文献核对、机制假设、对照与门槛设计；无 I8 训练结果、无已证实的新模型能力增益。</div>
+ <div class="table-wrap"><table><thead><tr><th>直接前作</th><th>他们研究的是什么</th><th>I6 额外必须证明</th></tr></thead><tbody>
+ <tr><td><b>Mind the Gap</b>，ICLR 2025 <a class="cite" href="references.html#S35" title="Mind the Gap: Examining the Self-Improvement Capabilities of Large Language Models">[S35]</a></td><td>生成—验证差距、可改进性与迭代收益；生成/验证/更新的模块分析已有基础。</td><td>不是首次分瓶颈，而是跨轮检测主瓶颈转移并改善后续选择。</td></tr>
+ <tr><td><b>FlyBy</b>，2026 <a class="cite" href="references.html#S36" title="Knowing When Thinking Is Not Enough: Teaching Small Reasoning Models to Reason Beyond Their Parametric Knowledge (FlyBy)">[S36]</a></td><td>以受控推理状态区分知识与执行瓶颈，再选择是否向强模型查询。</td><td>从一次推理中的查询决策推进到经过持久更新的下一轮学习机制切换。</td></tr>
+ <tr><td><b>Why SFT Fails to Learn</b>，ACL 2026 <a class="cite" href="references.html#S37" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[S37]</a></td><td>诊断监督训练无法吸收数据的多种具体原因，并试验对应干预。</td><td>不限于 SFT 的内化子问题，比较知识/生成/选择/吸收跨环节瓶颈迁移。</td></tr>
+ <tr><td><b>SRPO</b>，COLM 2026 <a class="cite" href="references.html#S38" title="Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing (SRPO)">[S38]</a></td><td>按样本正确/错误，将 GRPO 和自蒸馏目标路由，抑制后期不稳定。</td><td>需要证明比固定样本级优化路由更有效的<strong>跨轮诊断重分配</strong>。</td></tr>
+ <tr><td><b>From Rollouts to Recipes</b>，EMNLP 2026 <a class="cite" href="references.html#S39" title="From Rollouts to Recipes: Self-Contained Post-Training for LLMs">[S39]</a></td><td>按 rollout 正确性与置信度路由 GRPO、蒸馏、正则化或跳过，路由比例随训练改变。</td><td>这是最强近邻之一：必须控制相同动作集与预算，证明因果 Probe 和瓶颈变迁信息具有额外价值。</td></tr>
+ <tr><td><b>R²Orch</b>，2026 <a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a></td><td>根据 Skill Withdrawal 的可学习性选任务，撤 Skill 后检验独立能力。</td><td>在技能撤辅之外，独立识别并切换验证/搜索/知识等主环节。</td></tr>
+ </tbody></table></div>
+ <p>上述工作已经覆盖失败分类、试训干预和动态优化目标。因此 I6 的贡献门槛不能是“四类标签”“根据错误给建议”或“会变化的训练配方”。还需要额外排除仅多采样、仅更大的验证器和仅增加训练数据带来的收益。</p>
 
 
-## I8 · 哪些错误纠正一次，能让模型学会一类题？ / 与其他 Idea 的边界｜只研究“纠错能否迁移”
+## 历史草案：跨轮瓶颈诊断（原 I6） / 决定性实验：验证切换的必要性，而不是做一个花哨路由器
 
 
- <p><b>I5</b> 问学生的独立执行能否帮助教师发现并修复自己的盲点；<b>I6</b> 的关注点是跨轮失败瓶颈诊断及下一步学习策略；<b>I7</b> 研究“先尝试还是先看示例”的学习次序；<b>I8</b> 固定学习方式之后，研究哪种<strong>模型当前错误</strong>可以被真正学会、迁移到多少未见题。</p>
- <p>I8 可以给 I6 提供一种学习价值信号，但不是 I6 的通用调度器，也不改变 I7 的教学顺序。网站目前保留独立编号，不因其他候选尚未纳入本站而重新编号。</p>
- <div class="links"><a class="link-btn" href="ideas.html">返回候选 Idea</a><a class="link-btn" href="learning-science.html">查看学习科学来源</a><a class="link-btn" href="references.html">查看全部原始来源</a></div>
+ <h3>E1 · 同分不同因</h3>
+ <p>选数学与代码任务，构造<strong>初始 pass@1 相近</strong>但验证错选、知识缺失、搜索稀缺或内化失败各不相同的冻结状态；加入未经人工注入的自然失败状态。对每个状态随机进行四类有限预算干预，并在独立新题上确认实际最佳动作。核心是同分条件下出现可复验的<strong>跨环节最优动作差异</strong>，而不是分类器拟合人工标签。</p>
+ <h3>E2 · 同一模型能力变化后的策略反转</h3>
+ <p>冻结多个连续训练检查点，考察某环节已经修复后，继续沿用原模式与切换新模式的等预算后续收益。记录预先固定的 Probe 阈值、切换延迟、误报率、模式抖动和切换成本。以只看当前总分、只看 rollout 成败、LLM 自述原因、I2 风格单轮试学/通用 bandit 作为强对照。</p>
+ <h3>E3 · 多轮能力平台期能否真实突破</h3>
+ <p>弱/中/强学习者按<strong>预先独立测得的能力</strong>分组，而非直接按参数量代表智力；使用同一模型家族与跨家族复核。固定候选动作实现、教师预算、总训练 token、探测成本与计算开销，对比<strong>固定策略 / 成绩分段规则 / 样本状态路由 / 单轮 I2 / I6 的跨轮切换</strong>。只在未见题的独立能力、旧能力保持和多轮有效收益上作主要结论。</p>
+ <h3>Go / Merge / Stop</h3>
+ <div class="table-wrap"><table><thead><tr><th>裁决</th><th>预先需要的证据</th></tr></thead><tbody>
+ <tr><td>继续 I6</td><td>自然失败中能稳定观察到瓶颈主导关系变化；跨轮诊断比静态规则和等预算 I2/样本路由有可重复的独立收益。</td></tr>
+ <tr><td>并入 I2</td><td>收益完全由单轮试学/上下文 bandit 解释，诊断历史与瓶颈切换并无增量信息。</td></tr>
+ <tr><td>停止或缩题</td><td>瓶颈不可辨、切换成本超过收益、优势只在当前题/保留提示时出现，或旧能力/安全回归无法通过。</td></tr>
+ </tbody></table></div>
+ <p class="status">状态：研究假设与实验方案；截至 2026-10-27 尚未开展 I6 的受控实验，图表不含虚构成绩。</p>
+
+
+## 历史草案：跨轮瓶颈诊断（原 I6） / 安全与实验口径：成绩上升不等于 RSI 成立
+
+
+ <p>所有 Probe 和候选更新先在受控环境运行，冻结外部独立验证器及任务划分；开发集可用于模式切换，最终测试只能在策略冻结后运行。相同初始状态的干预分支必须共享数据拆分、执行预算与可访问工具。多种模式一起改变时，要记录交互效应，不能把增益简单归因于单个原因。</p>
+ <p><b>跨轮安全硬门：</b>验证器被绕过、Agent 越权执行、恶意轨迹写入长期 Skill/Memory、旧能力出现不可接受退化时拒绝晋级并保留回滚。这里是在给出安全协议要求，不是声称已经解决自进化安全。</p>
+ <p><b>成功的定义：</b>移除教师、临时提示与多余在线计算后，允许保留的模型/Skill/Memory/Harness 版本在不同、未见的任务上仍能持续进步；不能用分数波动、一次 pass@k 提高、或增加测试调用替代能力增长。<a href="ideas.html">返回 I1–I5 研究主线</a> · <a href="experiments.html">现有实验协议</a>。</p>
 
 
 ## 实验方案与推进门槛 / 少量主环境，明确版本

@@ -1,27 +1,28 @@
-"""I1–I5: concrete education-inspired RSI hypotheses; I6 is a separate cross-round controller.
+"""I1–I5 concrete learning ideas, current I6 failure trajectories, I7 learning order, I8 error-rule transfer.
 
-These are research candidates, not verified experimental findings or novelty claims.
-Paper comparisons are limited to the linked abstracts/method descriptions as dated.
+The earlier bottleneck-switching proposal remains accessible as a historical draft.
+Research hypotheses are separate from measured findings.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I6 与 I8：相互独立的 RSI 研究方向",
- "en": "I1–I6 plus I8 · mechanisms, bottlenecks and transferable error learning",
- "lead": "I1–I5 研究具体学习机制，I6 研究跨轮瓶颈切换；I8 独立研究哪些错误能产生真实跨题迁移。先验证现象与原因，而非拼接多个模块。",
+ "title": "I1–I8：八个研究问题",
+ "en": "I1–I8 · distinguish failure paths, learning order, and rule transfer",
+ "lead": "保留 I1–I5 的具体学习机制；I6 研究同题不同失败过程的学习价值，I7 研究学习顺序，I8 研究高置信度错误和规则级迁移。三个问题各自验证。",
  "updated": "2026-10-27",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 研究各自的学习机制；I6 研究跨轮瓶颈阶段的转换判断，不能替代其他五项。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较学习顺序，I8 从知识准备与共同错误规则解释迁移。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="#idea-2"><span class="idea-id">I2 · 因材施教</span><b>同样犯错，为什么学习方法不同？</b><small>根据真实学习反应选方法</small></a>
  <a class="idea-board-card" href="#idea-3"><span class="idea-id">I3 · 温故知新</span><b>新方法有用，却和旧方法冲突怎么办？</b><small>复习并解决适用条件冲突</small></a>
  <a class="idea-board-card" href="#idea-4"><span class="idea-id">I4 · 生产性失败</span><b>失败一次就总结，还是再试几次？</b><small>判断何时证据足够更新 Skill</small></a>
  <a class="idea-board-card" href="#idea-5"><span class="idea-id">I5 · 费曼学习法</span><b>和谁一起学，自己进步最快？</b><small>伙伴选择随能力一起演化</small></a>
- <a class="idea-board-card" href="idea-i6.html"><span class="idea-id">I6 · 跨轮瓶颈切换</span><b>模型停滞后，究竟该换哪一类学习机制？</b><small>诊断知识、搜索、选择、吸收中的主导瓶颈迁移</small></a>
+ <a class="idea-board-card" href="idea-i6-failure-value.html"><span class="idea-id">I6 · 失败学习价值</span><b>同题都答错，为什么有些失败过程更值得学习？</b><small>固定错误结果与教学方式，比较失败轨迹的增量收益</small></a>
+ <a class="idea-board-card" href="idea-i7-learning-order.html"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  </div>
- <p class="status">状态：I1–I6 与 I8 已归档；相关工作存在交集；各方案尚无本站的受控实测结果，不能宣称首次或已验证。</p>
+ <p class="status">状态：I1–I8 研究问题已整理；I6 与 I7 正交拆分，I8 保留独立机制验证；尚无本项目的受控实测结果。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -80,12 +81,20 @@ PAGE = {
  <h3>最小验证</h3><p>从三种能力档位的若干模型开始，控制教师/学生方向、任务、教学 token 和训练预算，比较<strong>随机匹配 / 同级匹配 / 永远找最强者 / PopuLoRA 式能力匹配 / MACE 式当前交互收益匹配 / 以独立学习增益为目标的选择</strong>。连续多轮重选伙伴，记录最佳伙伴的变化、下轮独立成功率和旧能力退化。进一步做“只获得答案、不更新自身”和“更新后撤除伙伴”对照，排除只是在组队解题。</p>
  <div class="note">已有 <a href="teaching.html">教学反馈诊断教师盲点的 I5 早期技术方案</a>独立保留，属于相邻支线：它研究“学生反馈暴露教师哪类缺陷”；本页 I5 主线研究“当前该与谁学，能让自己下一轮变强”。两者不能混成同一项已验证成果。</div>
  '''),
- ("idea-8", "I8：Hypercorrection——为什么改正一种错误能学会一类题？", '''
+ ("orthogonal", "I6、I7 与 I8：一次只研究一个变量", '''
+<div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
+<tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
+<tr><td><a href="idea-i7-learning-order.html">I7 · 学习顺序</a></td><td>先尝试 / 先看正确示范</td><td>题目、示范内容、更新器与预算</td><td>撤掉教师后的独立能力、有效探索与多轮迁移</td></tr>
+<tr><td><a href="i8.html">I8 · 规则级错误迁移</a></td><td>知识准备、错误规则覆盖范围和更新兼容性</td><td>对应的纠错/更新方法</td><td>哪些错误修复后能迁移到一整类题</td></tr>
+</tbody></table></div>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+'''),
+("idea-8", "I8：Hypercorrection——为什么改正一种错误能学会一类题？", '''
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">吸收了会不会丢</span><p><b>具体问题：</b>同样一道数学错题，一个模型得到正确反馈后只记住答案，另一个却能举一反三。纠正哪种错误值得投入下一轮学习预算？</p></div>
  <h3>Observable Phenomenon / Why</h3><p>Hypercorrection 的人类学习研究发现，高置信度错误经正确反馈后有时更容易被纠正；已有知识可能是重要解释。由此提出待验证的模型假设：前置知识是否充分、错误是否由影响多题的共同规则造成，可能共同决定一次纠错的跨题收益。[[E12]][[E13]][[E14]]</p>
  <h3>Challenge / Insight / Design</h3><p><b>Challenge：</b>置信度不等于学得会；修复原题不等于迁移；真实收益通常要在更新后才能观察。<b>Insight：</b>已有知识准备程度 × 规则影响范围 × 更新兼容性，可能解释实际收益差异。<b>Design：</b>学习前诊断知识与错误模式，固定纠错方式和训练预算，在独立模型副本上检验跨题真实收益。</p>
  <h3>别人研究的是……；我们研究的是……</h3><p><b>Self-Error-Instruct</b> 已按错误类型合成题目，并用 one-shot 示例帮助筛选数据；<b>LESS</b> 已用梯度影响选择训练数据。I8 研究的是当前错误怎样转化为真实持久的跨题学习，以及能否提前预测。[[S40]][[M10]]</p>
- <div class="links"><a class="link-btn" href="i8.html">阅读 I8：现象、原因、完整实验与否定条件</a></div>
+ <p><b>与 I6 的区别：</b>I8 研究哪些错误规则更有可迁移性；<a href="idea-i6-failure-value.html">I6</a> 尽量保持错误规则与最终答案一致，单独研究失败过程作为学习材料的作用。</p><div class="links"><a class="link-btn" href="i8.html">阅读 I8：现象、原因、完整实验与否定条件</a></div>
  '''),
  ("shared", "这些 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>

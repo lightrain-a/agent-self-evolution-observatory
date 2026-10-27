@@ -5,12 +5,15 @@ hypotheses, not results. Existing education/RSI work is credited by source ID.
 """
 PAGE = {
  "slug": "idea-i6",
- "title": "I6：瓶颈诊断驱动的动态自学策略切换",
- "en": "Bottleneck-Aware Strategy Switching · from a stalled learner to the next useful intervention",
- "lead": "模型停止进步时，别只看分数或继续沿用原来的训练方法。先查清能力增长卡在知识、搜索、验证选择还是吸收环节，再决定下一轮该修哪一环；模型变强后重新诊断。",
+ "title": "历史草案：跨轮瓶颈诊断（原 I6）",
+ "en": "Archived RSI proposal · bottleneck-aware switching",
+ "lead": "历史研究草案：模型停滞后根据知识、搜索、选择和吸收瓶颈切换学习模式。当前 I6 已改为失败轨迹学习价值，I7 为学习顺序，原方案保留供溯源。",
  "updated": "2026-10-27",
  "sections": [
- ("question", "研究问题：同样 70 分，为什么下一轮不该用同一种方法？", '''
+ ("archive", "编号更新说明：这不是当前 I6", '''
+ <p class="thesis"><b>历史版本：</b>以下“瓶颈诊断”曾临时被编号为 I6。2026-10-27 研究拆分后，当前 <a href="idea-i6-failure-value.html">I6</a> 只研究失败过程的学习价值，<a href="idea-i7-learning-order.html">I7</a> 研究先做还是先学，<a href="i8.html">I8</a> 研究 Hypercorrection 与规则级迁移。本页作为旧版构思归档，不占用 I6 编号，也没有改名为新的 I9。</p>
+ '''),
+ ("question", "历史问题：同样 70 分，为什么下一轮不该用同一种方法？", '''
  <p class="thesis"><b>I6 的问题：</b>一个自我改进系统已经进入平台期，能否用少量可复验的干预确定当前最限制<strong>后续独立能力增长</strong>的环节，并在主要瓶颈发生转移时及时切换学习模式？</p>
  <p>例子：两个数学 Agent 的单次正确率都是 70%。A 多次采样常能产生正确解，但自己的答案选择器总选错；B 不论怎么重采样都很少成功，但补一条前置定理后明显改善。继续统一做 GRPO、统一增加教师示范，甚至只按“70 分应该练什么”选任务，都可能用错力。</p>
  <p><b>研究定位：</b>I6 是<strong>跨轮学习闭环的元控制问题</strong>（什么时候应该从补知识切到搜索、从搜索切到修验证或巩固等），不是发明四个底层学习算法。四个环节是能力形成的先后依赖，<strong>不是</strong>所有模型必经的四个时间阶段，也不是排他的四选一错误标签。</p>

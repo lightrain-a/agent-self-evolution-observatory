@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6','teaching','i8','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -101,7 +101,7 @@ def main():
         'overview':['index','timeline'],
         'literature':['literature','reading-cards','reading-notes','references'],
         'methods':['cross-domain','learning-science'],
-        'research':['ideas','idea-i6','teaching','i8','experiments'],
+        'research':['ideas','idea-i6-failure-value','idea-i7-learning-order','i8','teaching','idea-i6','experiments'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     grouped_slugs=[]
@@ -195,10 +195,23 @@ def main():
         check(f'href="references.html#{ref}"' in i8_html,'I8 reference missing: '+ref)
     check('href="i8.html"' in ideas_text,'I8 missing from idea board')
     check('href="i8.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I8 missing from homepage')
-    i6_text=(ROOT/'rsi/idea-i6.html').read_text(encoding='utf-8')
-    check('href="idea-i6.html"' in ideas_text,'I6 missing from I1–I6 idea board')
-    check(all(k in i6_text for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),'I6 four probes, orthogonality, or closest-work missing')
-    check(all(f'id="{x}"' in i6_text for x in ('question','challenge','insight','design','orthogonality','related','experiments','safety')),'I6 required sections missing')
+    i6_text=(ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8')
+    i7_text=(ROOT/'rsi/idea-i7-learning-order.html').read_text(encoding='utf-8')
+    historical_i6=(ROOT/'rsi/idea-i6.html').read_text(encoding='utf-8')
+    overview=(ROOT/'rsi/index.html').read_text(encoding='utf-8')
+    for href in ['idea-i6-failure-value.html','idea-i7-learning-order.html']:
+        check(f'href="{href}"' in ideas_text and f'href="{href}"' in overview,
+              'Current I6/I7 page not reachable from board and homepage: '+href)
+    check('失败轨迹' in i6_text and '固定教学顺序' in i6_text and 'I8' in i6_text,
+          'Current I6 must isolate failed-process effects from learning order and I8')
+    check('先独立尝试' in i7_text and '先看示范' in i7_text and 'I6' in i7_text,
+          'Current I7 must isolate learning-order effects')
+    check('历史版本' in historical_i6 and f'href="idea-i6-failure-value.html"' in historical_i6,
+          'Historical bottleneck draft must have a clear link to the current I6')
+    check(all(k in historical_i6 for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),
+          'Preserved bottleneck probes or citations missing')
+    check(all(f'id="{x}"' in historical_i6 for x in ('archive','question','challenge','insight','design','orthogonality','related','experiments','safety')),
+          'Historical bottleneck sections missing')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')
