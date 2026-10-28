@@ -1036,6 +1036,553 @@
       }
     },
     {
+      "id": "mosaic-memory-2026-shilov",
+      "short_title": "Mosaic Memory",
+      "title": "The mosaic memory of large language models",
+      "authors": "Igor Shilov; Matthieu Meeus; Yves-Alexandre de Montjoye",
+      "lead_institution": "帝国理工学院 · Department of Computing and Data Science Institute",
+      "institutions": [
+        "帝国理工学院 · Department of Computing and Data Science Institute"
+      ],
+      "institution_source": "Nature Communications Authors and Affiliations；PubMed PMID 41611688",
+      "publication": "Nature Communications · 2026 · 17:2142",
+      "doi": "10.1038/s41467-026-68603-0",
+      "official_url": "https://www.nature.com/articles/s41467-026-68603-0",
+      "first_posted": "2026-01-29",
+      "version": "期刊正式版 · 2026-01-29",
+      "read_on": "2026-10-28",
+      "reading_level": "Nature Communications 原始 Results / Methods / Discussion 与 Fig.1–6、Table 1/3 精读；未独立复现",
+      "tags": [
+        "Memory",
+        "Fuzzy Duplicates",
+        "Memorization",
+        "Training Data",
+        "RSI Novelty",
+        "Deduplication"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "用成员推断 AUC 及精确重复等效系数ρ校准模糊副本的记忆贡献，并做跨模型与攻击方法核验。",
+          "open_question": "ρ不是新知识量或独立任务能力，不能据此判断自我改进是否增加了新的本事。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "发现非完全相同的样本仍可能重复强化某个原文，精确去重会低估这种重叠。",
+          "open_question": "没有研究新样本是否增加规则知识，也未量化更新后未见题能力的净提升。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "研究续训后的文本记忆信号，没有设计扩展模型可采样解法空间的方法。",
+          "open_question": "模糊变体是否让模型首次解出以前不会的题，论文没有测试。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "对真实参数继续训练后的原文记忆和续写抽取风险进行检测。",
+          "open_question": "未检查经历其他学习更新后的长期旧能力保持或规则迁移。"
+        },
+        "safety": {
+          "level": "core",
+          "contribution": "测成员推断和抽取风险，并讨论隐私、训练数据去重、基准污染及机器遗忘。",
+          "open_question": "不是一套经过对抗评估的完整去重或Unlearning防御系统。"
+        }
+      },
+      "one_sentence": "不同措辞或乱序片段仍能强化对同一原文的记忆；新文本不等于新知识。",
+      "story": {
+        "challenge": "精确去重后，模型仍可能记住敏感或测试文本；仅数一段话原样出现了几次，可能遗漏隐藏重复。",
+        "insight": "多个不完全一样的副本保留相同的Token或局部片段，能够共同强化模型对一段原文的记忆。",
+        "design": "向公版图书加入原始100-Token Canary及九份模糊变体，真实续训模型，用MIA AUC校准精确重复等效ρ。",
+        "result": "替换10% Token时ρ约0.60–0.65；替换50%仍约0.13–0.19。该实验的记忆与词序重叠更相关。"
+      },
+      "problem": "完全相同的训练片段容易被去重，但改写、删改或乱序的相似片段仍可能重复提供相同证据，影响文本记忆、隐私风险和评测污染。",
+      "setup": "Llama-2 7B生成200条100-Token Canary（100成员/100非成员）。向100本Project Gutenberg图书（约8.8M Token）插入成员原文与9个模糊副本，非成员及其副本不注入；各目标模型继续预训练1 epoch。用MIA AUC和精确重复校准ρ；主实验5次独立重复，涉及GPT-Neo 1.3B、Gemma-2B、Phi-2、Llama-3.2-1B。",
+      "updates": "更新载体是目标模型参数（continued pretraining），不是上下文或外置Skill；研究没有训练新的RSI课程选择器。",
+      "key_ideas": [
+        {
+          "name": "Mosaic Memory",
+          "summary": "模糊重复样本可凭共享Token及片段增强对已出现原文的记忆。",
+          "formula": "一个原文 + 九个模糊变体 → 原文MIA AUC变化"
+        },
+        {
+          "name": "精确重复等效系数ρ",
+          "summary": "先找到达到同一MIA AUC需要的精确重复次数ν_eq，再校准模糊重复贡献。",
+          "formula": "ρ=(ν_eq−1)/(n_dup−1)，主实验n_dup=10"
+        },
+        {
+          "name": "新颖性三层划分（本站延伸）",
+          "summary": "文本变了、规则变了、真实独立能力增长，是三种不同的实验对象。",
+          "formula": "Text novelty ≠ Rule novelty ≠ Verified capability gain"
+        }
+      ],
+      "evidence": [
+        "Fig.1a：四个主要模型替换10% Token时ρ约0.60–0.65；替换50%仍约0.13–0.19。",
+        "Table 1：GPT-Neo 1.3B上，三种语义改写ρ为0.13、0.21、0.34；随机替换15% Token约为0.43，指向主要受Token重叠影响。",
+        "Fig.2：对SlimPajama中预选的约1000次精确重复文本，编辑距离≤14平均累计约5000处相似，≤50超过25000；该统计只扫随机打乱语料的5%后外推。"
+      ],
+      "boundaries": [
+        "Member始终包含一份完整原文加九个变体；这是模糊副本强化已见原文记忆的证据，不是“从未见过原文也能完全还原”的直接证明。",
+        "ρ是相对记忆效应，不是背诵概率，更不是新增知识或推理能力比例。",
+        "语义记忆未被证明为零；模型规模、继续预训练条件及目标原文选择限制了外推。",
+        "SlimPajama的>25000模糊重复来自高精确重复目标序列，不能推广为任意随机文本平均值。"
+      ],
+      "our_relevance": [
+        "I5：伙伴提供表面不同的问题，可能仍是在交换已有规则的变体，须测撤伴后的独立新能力。",
+        "I6：失败轨迹不同，不代表暴露新的失败根因；将不同轨迹按根规则归组再测学习收益。",
+        "I8：原题记忆、近改写题与同规则新题迁移必须分开报告。",
+        "I9：交错的不同题面未必属于不同规则，先检查规则族是否真正独立。"
+      ],
+      "next_test": "固定模型、LoRA和训练预算，构造「词面相似高/低 × 规则是否新增」四种材料；分别测文本记忆、同规则新题、跨规则新题与后续更新后旧能力保持。若只有原题记忆增加，就不能宣称RSI学到了新知识。",
+      "deep_read": {
+        "focus": "原论文证明模糊副本强化文本记忆；本站进一步讨论这种重复何时可能误导RSI的“新样本”和“新知识”判断。",
+        "summary": "先以精确重复作为记忆校准基准，再分别改变Token替换、插入、顺序与语义，最后在SlimPajama实测模糊重复；将实验结果与RSI的规则泛化和未来独立能力分开。",
+        "terms": [
+          {
+            "name": "Canary",
+            "meaning": "由研究者合成并控制是否加入训练集的100-Token参考文本。"
+          },
+          {
+            "name": "Fuzzy Duplicate",
+            "meaning": "原文Token被替换、插入噪声、分块打乱或改写后的相似样本。"
+          },
+          {
+            "name": "MIA AUC",
+            "meaning": "利用模型输出分数判断原文是否曾进入训练集的成员区分能力。"
+          },
+          {
+            "name": "ν_eq",
+            "meaning": "要达到相同MIA AUC所需的精确原文重复次数。"
+          },
+          {
+            "name": "ρ",
+            "meaning": "模糊副本相对完整副本的记忆贡献；不等于背诵概率。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "phenomenon",
+            "stage": "challenge",
+            "title": "Challenge：表面文字不同，为什么还会产生重复记忆？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "过去常用精确重复解释LLM对训练文本的记忆：一段话出现得越多次，越容易留下可检测的成员信号。因此去重和训练集污染检查常从逐字匹配开始。作者提出更具体的问题：如果原文被改写、插入噪声或调换局部顺序，模型能否依靠共同片段继续强化对原文的记忆？"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "直观类比（我们构造，不是论文原始Canary）",
+                "text": "“with open会自动关闭文件”被写成“退出with语句会释放文件句柄”等数段话：文字不同，但局部Token或同一方法反复出现。这个例子只帮助理解重复，不表示作者测试了Python规则的学习。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "原论文研究对象",
+                "text": "真正的被解释变量是对特定原文的文本记忆，用成员推断与抽取来衡量；不是模型是否获得了新知识或新的解题规则。"
+              }
+            ]
+          },
+          {
+            "id": "insight",
+            "stage": "insight",
+            "title": "Insight：重叠Token片段可能共同强化已出现原文",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者称其为Mosaic Memory：不同样本没有逐字重复，但共享的Token及短n-gram仍可能给模型提供重复的学习信号。必须让这些副本真的进入参数训练，再测它们对同一原文成员信号的边际贡献，不能只比较两段文字的相似分数。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "层次",
+                  "要回答的问题",
+                  "不能由什么代替"
+                ],
+                "rows": [
+                  [
+                    "文本新颖性",
+                    "文字、Token、n-gram与历史样本有多大重叠",
+                    "换变量名、换词序就必然是全新数据"
+                  ],
+                  [
+                    "规则新颖性（RSI）",
+                    "是否引入新的适用条件、关键反例或可迁移规则",
+                    "新场景就一定引入新知识"
+                  ],
+                  [
+                    "能力新增（RSI）",
+                    "真实更新后，撤掉示范能否解决过去不会的新任务",
+                    "训练样本数量、当前训练正确率或ρ"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要提前替论文扩大结论",
+                "text": "论文只直接验证了文本记忆及模糊副本对原文记忆的影响。规则新颖性和跨题净学习收益是本站后续需要测试的问题。"
+              }
+            ]
+          },
+          {
+            "id": "protocol",
+            "stage": "design",
+            "title": "Design 1：200条Canary、两个成员组、同一继续预训练协议",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "构造原始标记文本",
+                    "text": "Llama-2 7B生成200条恰好100 Token的参考Canary；其中100条随机设为Member，100条作为Non-member。"
+                  },
+                  {
+                    "title": "控制训练材料",
+                    "text": "Member的完整原文及九个变体进入100本Project Gutenberg公版图书（约8.8M Token）；Non-member及变体均不进入。"
+                  },
+                  {
+                    "title": "真正更新模型参数",
+                    "text": "从相同目标模型起点继续预训练1个epoch，主模型为GPT-Neo 1.3B、Gemma-2B、Phi-2、Llama-3.2-1B；主图报告五次独立重复。"
+                  },
+                  {
+                    "title": "以成员推断测原文记忆",
+                    "text": "对参考Canary进行MIA，计算成员与非成员的ROC AUC，并用“精确原文重复几次时达到同一AUC”作为标尺。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "实验控制最重要的限制",
+                "text": "所有Member样本都出现一份完整原始Canary。证据支持“模糊变体进一步强化已经出现的原文”，不能直接写成“即使原文从未出现，模型也能从碎片准确重组”。"
+              }
+            ]
+          },
+          {
+            "id": "metric",
+            "stage": "design",
+            "title": "Design 2：把模糊重复转换成精确重复等效ρ",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "Exact Duplicate Equivalent",
+                "expression": "ρ = (ν_eq − 1)/(n_dup − 1) = (ν_eq − 1)/9，主实验n_dup=10",
+                "meaning": "首先用不同的精确重复次数建立MIA AUC校准曲线；再找到模糊重复组对应的等效精确次数ν_eq。扣掉原本就有的1份原文，得到九个模糊副本平均保留多少精确副本效应。",
+                "boundary": "ρ不是背诵正确率、不是训练损失缩减比例、也不是新增知识占比。"
+              },
+              {
+                "type": "prose",
+                "text": "举例说，若ρ=0.65，一个原文加九个模糊副本，在这个MIA量表上的效应近似等价于1+9×0.65=6.85份精确原文。这个解释依赖当次模型和训练设置的校准曲线。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "可迁移的实验写法",
+                "text": "先用可控、可解释的基线建立量纲，再把复杂现象映射到同一量纲；这比只报一个高低不同的AUC更能回答“到底相当于什么”。"
+              }
+            ]
+          },
+          {
+            "id": "perturbations",
+            "stage": "design",
+            "title": "Design 3：把“重复”拆成四种可控变化",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "生成模糊副本的方法",
+                  "改变什么",
+                  "想排除的解释"
+                ],
+                "rows": [
+                  [
+                    "Token replacement",
+                    "随机替换R个原始Token",
+                    "共享字词变少时记忆如何衰减"
+                  ],
+                  [
+                    "Noise insertion",
+                    "在完整n-gram之间加入无关Token",
+                    "噪声打断局部片段后是否仍记忆"
+                  ],
+                  [
+                    "n-gram shuffling",
+                    "保留块内顺序但改变块的排列",
+                    "原始整句词序是否必需"
+                  ],
+                  [
+                    "Semantic replacement / paraphrase",
+                    "保留意思但换掉部分措辞，或让指令模型改写",
+                    "是共同意义还是共同字词主导记忆"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "作者还改变初始学习率、模型规模、Canary采样温度和成员推断方法作为消融。注意：模型参数和语料条件不变，并不意味着所有模糊处理都保留完全相同的Token长度或训练成本，实际比较需看对应实验的固定项。"
+              }
+            ]
+          },
+          {
+            "id": "controlled-results",
+            "stage": "result",
+            "title": "Result 1：词语替换一半，记忆效应仍可能明显",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "实验条件",
+                  "论文给出的ρ",
+                  "可支持的结论"
+                ],
+                "rows": [
+                  [
+                    "100 Token中替换10%，四个主要模型",
+                    "0.60–0.65",
+                    "小幅改写保留相当强的记忆强化"
+                  ],
+                  [
+                    "100 Token中替换50%，四个主要模型",
+                    "0.13–0.19",
+                    "变化很大也并非完全没有共享记忆"
+                  ],
+                  [
+                    "在n-gram间插入10个随机Token的部分条件",
+                    "可达约0.70",
+                    "局部结构被噪声隔开仍可能强化原文"
+                  ],
+                  [
+                    "每个Token之间插入1个随机Token（极端设置）",
+                    "约0.21",
+                    "局部相邻关系严重破坏也没有全部归零"
+                  ]
+                ],
+                "caption": "ρ来自Fig.1及相应文字；不是原文被成功背出的概率。"
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "跨模型证据",
+                    "setup": "GPT-Neo 1.3B、Gemma-2B、Phi-2和Llama-3.2-1B；同样的Token替换比率，五个独立重复。",
+                    "result": "10%替换时ρ约0.60–0.65，50%替换时仍有0.13–0.19。",
+                    "supports": "原文记忆可以在不完全一样的文本之间被显著强化。",
+                    "not_proven": "模糊样本提高推理规则学习或所有更大模型的记忆水平相同。"
+                  },
+                  {
+                    "domain": "扰动结构证据",
+                    "setup": "用额外噪声隔开n-gram，或改变短语块的相对顺序。",
+                    "result": "强扰动条件的额外记忆贡献仍显著高于0。",
+                    "supports": "精确句法顺序不是形成此记忆效应的必要条件。",
+                    "not_proven": "具体神经注意力路径是唯一机制；原文关于attention的解释尚属假设。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "syntactic-results",
+            "stage": "result",
+            "title": "Result 2：语义相同未必胜过保留原始Token",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "模糊副本来源",
+                  "ρ（GPT-Neo 1.3B）",
+                  "平均重合4-gram数"
+                ],
+                "rows": [
+                  [
+                    "Llama-3-8B-Instruct改写",
+                    "0.13 ± 0.01",
+                    "7.70"
+                  ],
+                  [
+                    "Mistral-7B-Instruct改写",
+                    "0.21 ± 0.02",
+                    "15.54"
+                  ],
+                  [
+                    "GPT-4o改写",
+                    "0.34 ± 0.02",
+                    "29.44"
+                  ],
+                  [
+                    "随机替换15% Token",
+                    "约0.43",
+                    "未与改写组在Table 1并列"
+                  ]
+                ],
+                "caption": "论文Table 1、Fig.1d；语义改写组和随机替换组的自然语言流畅度不相同。"
+              },
+              {
+                "type": "prose",
+                "text": "三个改写模型都被要求保持原义，然而改写后与原文的4-gram重合越多，ρ越大；反过来，随机替换15% Token（破坏部分意义）仍得到ρ约0.43，高于三种释义改写。这支持本实验的文本记忆主要与Token和局部词序重叠有关。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "句法优先不等于语义不起作用",
+                "text": "作者没有证明语义记忆为零。受限于目标模型约1–3B量级和继续预训练，较大模型或从头预训练可能有不同表现；也不能由此推断所有LLM只会死记硬背。"
+              }
+            ]
+          },
+          {
+            "id": "real-world",
+            "stage": "result",
+            "title": "Result 3：真实去重语料仍保留大量模糊重复",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者分析已做文档级去重的SlimPajama（约627B Token）。他们特意挑选精确出现约1000次的高重复100-Token序列，扫描随机打乱语料的5%并外推到全库。这个选择用于证明“有一类高重复文本确实还包含更多模糊副本”，不是统计任意随机文本的平均重复次数。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "目标与编辑距离",
+                  "平均累计相似序列数",
+                  "解读"
+                ],
+                "rows": [
+                  [
+                    "预选高重复目标",
+                    "约1000个精确重复",
+                    "人为选择的频率桶"
+                  ],
+                  [
+                    "Levenshtein距离≤14",
+                    "约5000个（含精确重复）",
+                    "约4000个额外模糊副本"
+                  ],
+                  [
+                    "Levenshtein距离≤50",
+                    "超过25000个",
+                    "比精确重复多很多，但不能外推给随机任意文本"
+                  ]
+                ]
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "自然语料中的记忆信号",
+                    "setup": "从SlimPajama实际取参考序列与模糊副本，在GPT-Neo 1.3B继续预训练中重新校准。",
+                    "result": "编辑距离[1,10]时ρ约0.708；[41,50]时ρ约0.319。",
+                    "supports": "自然语料中的模糊副本也会强化原文的MIA记忆信号。",
+                    "not_proven": "所有真实训练数据都存在相同的重复强度，或全部高重复样本都含隐私。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "量化口径",
+                "text": "作者只扫描随机打乱语料中的5%再外推，并按精确重复频率选定目标；不要把“超过25000”写成整个SlimPajama任意样本的平均重复数。"
+              }
+            ]
+          },
+          {
+            "id": "limitations",
+            "stage": "next",
+            "title": "Discussion：它证实了什么，仍有哪些边界？",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "已证实：Member原文出现时，模糊副本继续增强MIA可检测的原文记忆，部分条件还增加续写抽取风险；精确去重不足以覆盖所有模糊重复。",
+                  "没有单独证实：训练从未包含完整原文时，模型仅靠碎片一定能准确还原从未见过的整段文本。",
+                  "没有直接验证：LLM通过这些材料获得新的解题规则、跨题迁移或多轮参数更新后的净能力保持。",
+                  "没有证明：只要语义相同就一定能记忆，或者所有语义记忆都不存在。",
+                  "现实数据结果是针对高精确重复文本的样本与5%扫描外推，不是整个语料的随机平均。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "Nature Communications的直接价值",
+                "text": "把模糊重复记忆做成一个受控现象，使用精确重复校准、不同扰动轴和真实语料交叉验证，为隐私、基准去污染、数据处理及机器遗忘指出现有做法的不足。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "本站RSI延伸",
+                "text": "不要依据题面不同或n-gram距离就宣布“学到了新东西”；应单独测试规则新颖性与撤辅后独立能力新增。反过来，词面相似的关键反例仍有可能提供新规则。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-transfer",
+            "stage": "next",
+            "title": "对 RSI I5/I6/I8/I9 的实验提醒",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "方向",
+                  "哪种伪新颖性需要注意",
+                  "建议的独立验证"
+                ],
+                "rows": [
+                  [
+                    "I5 十模型互教",
+                    "伙伴各自出题，却可能都在提供同一种旧规则的改写",
+                    "固定交换材料预算，测新增规则覆盖与撤伴后的双向净学习收益"
+                  ],
+                  [
+                    "I6 失败轨迹价值",
+                    "两条轨迹很不同，修正它们却仍依赖同一错误根因",
+                    "对轨迹按根因分组，再比较同题同错的固定纠错收益"
+                  ],
+                  [
+                    "I8 错误可学习性",
+                    "改正原题/近改写题，被误当作迁移到新规则",
+                    "分开测原题、近改写、异结构同规则题、新规则组合题"
+                  ],
+                  [
+                    "I9 集中与交错练习",
+                    "不同主题标签实际共享核心规则，交错不等于跨知识",
+                    "先确保规则族分离，再做集中/交错的等预算真实训练"
+                  ]
+                ]
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0：词面重合 × 规则是否新增",
+                    "design": "从同一模型检查点分叉，构造词面重合高/低 × 是否引入新规则的四格训练材料，固定题数、反馈、LoRA与总Token/梯度步数。",
+                    "decisive": "若低词面重合组只是记住同一规则，而高词面重合的关键反例反倒带来新规则迁移，就证明文本距离不能替代真实学习价值。"
+                  },
+                  {
+                    "name": "P1：三个独立终点",
+                    "design": "分开测原文记忆、未见同规则/新规则题、经历其他任务更新后的旧能力保持。任务族按根规则拆分训练、诊断和测试。",
+                    "decisive": "只有在撤去教师和训练上下文后，新规则题正确率有独立净提升且旧能力不显著受损，才将其记为RSI能力增长。"
+                  },
+                  {
+                    "name": "Stop：与简单去重和规则分组对比",
+                    "design": "比较完全重复去重、n-gram/MinHash近似去重、已知规则模板分组、随机等预算训练，不立即训练复杂新颖性估计器。",
+                    "decisive": "如果简单规则分组已解释全部收益，则只保留现象和审计方法；复杂调度器没有必要。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最重要的一句话",
+                "text": "文字不一样不代表知识不同；知识不同也不代表已经学会。RSI新颖性必须最终回到未来独立能力的净增长。"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41467-026-68603-0",
+        "pdf": "https://www.nature.com/articles/s41467-026-68603-0.pdf",
+        "code": "https://github.com/computationalprivacy/mosaic_memory",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12957333/"
+      }
+    },
+    {
       "id": "hypothesis-testing-2026-ding",
       "short_title": "Hypothesis Testing in Motor Learning",
       "title": "Hypothesis testing governs strategic motor learning",

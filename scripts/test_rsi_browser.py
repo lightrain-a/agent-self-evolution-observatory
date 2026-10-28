@@ -152,11 +152,14 @@ def main():
                       'Deep section missing in browser: '+section['id'])
         check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
               'Evidence matrix did not render')
+        related_papers={t['paper_id'] for t in json.loads((ROOT/'rsi/related-work.json').read_text(encoding='utf-8'))['targets']}
         for paper in deep_cards:
             selector=json.dumps('#deep-'+paper['id'])
             actual_stages=js("return [...document.querySelector("+selector+").querySelectorAll('.deep-stage')].map(s=>s.dataset.storyStage).join(',')")
-            check(actual_stages=='challenge,insight,design,result,related,next',
-                  'Paper long read must follow C-I-D-R, Related Work, then future questions: '+paper['id'])
+            has_related = (paper['id'] in related_papers or any(s['stage']=='related' for s in paper['deep_read']['sections']))
+            expected_stages='challenge,insight,design,result'+(',related' if has_related else '')+',next'
+            check(actual_stages==expected_stages,
+                  'Paper long read must follow C-I-D-R, optional Related Work, then future questions: '+paper['id'])
         check(js("return document.querySelectorAll('#deep-rsi-anything-2610-13912--stage-related > .deep-stage-details > .deep-related > .deep-related-matrix tbody tr').length===7"),
               'RSI-Anything closest-work table should include seven papers')
         check(js("return document.querySelectorAll('#deep-optimal-practice-2020-eglington--stage-related .deep-related-matrix tbody tr').length===4"),

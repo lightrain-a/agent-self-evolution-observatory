@@ -1183,6 +1183,16 @@
       "code": ""
     },
     {
+      "id": "M17",
+      "group": "相邻领域",
+      "title": "The mosaic memory of large language models",
+      "date": "Nature Communications 17, Article 2142 (2026); 2026-01-29",
+      "url": "https://www.nature.com/articles/s41467-026-68603-0",
+      "level": "Nature Communications 原文 Abstract/Results/Methods/Discussion + PMC 期刊全文；2026-10-28",
+      "note": "Shilov、Meeus、de Montjoye 在4个模型上用200条100-token canary、成员推断AUC及精确重复等效系数ρ测量模糊副本对原文记忆的贡献；替换10% Token时ρ约0.60–0.65，替换50%仍约0.13–0.19；语法词序重叠影响强于语义一致；SlimPajama高重复文本中仍有大量模糊重复。主指标是记忆风险，不直接证明RSI中的新规则学习或持久净增益。",
+      "code": "https://github.com/computationalprivacy/mosaic_memory"
+    },
+    {
       "id": "E26",
       "group": "学习科学",
       "title": "Hypothesis testing governs strategic motor learning",
