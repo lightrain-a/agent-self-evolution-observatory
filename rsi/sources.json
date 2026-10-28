@@ -1261,6 +1261,36 @@
       "level": "ACL Anthology 正式摘要核对；2026-10-28",
       "note": "PaRSP 在 LLM 持续学习中同时考虑旧知识保持、当前新能力和未来容量；不是单纯当前成绩。I9 不重新设计参数分区，而是测试固定参数更新器下 A/B 顺序如何影响 C 学习。",
       "code": "https://github.com/JinhuiBot/PaRSP"
+    },
+    {
+      "id": "M24",
+      "group": "相邻领域",
+      "title": "Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs",
+      "date": "ICLR 2026 · official paper; arXiv 2507.21914",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/08a362bd4ae1934e099ce025f06039fe-Abstract-Conference.html",
+      "level": "官方会议 PDF Section 3–7 / Figure 2,6 / Table 3 / Appendix G.6 / Table 13 核对；2026-10-28",
+      "note": "Wu 等：先用无语义 token 记关系再以少量示范学习自然语义；在语义事实调用上有效，但两跳生成仅0.14→0.36，多选0.08→0.16；ICL直给两条事实为0.95，信息访问条件不同；推理拓展属于初步证据。",
+      "code": "https://github.com/QinyuanWu0710/memorize-then-generalize"
+    },
+    {
+      "id": "M25",
+      "group": "相邻领域",
+      "title": "Why Knowing Both Hops Is Not Enough: Understanding Two-Hop Generalization in Language Models",
+      "date": "EMNLP Findings 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.1523/",
+      "level": "ACL Anthology 官方摘要与发表信息核对；2026-10-28；未复现",
+      "note": "研究模型已掌握原子事实却无法跨层组合的机制，指出中间实体表示不一致/层级映射错位；作为两跳能力边界的相邻工作，不是 Rote Learning 论文作者的追加实验。",
+      "code": "https://github.com/zzl-strong/two_hop"
+    },
+    {
+      "id": "M26",
+      "group": "相邻领域",
+      "title": "Reason to Rote: Rethinking Memorization in Reasoning",
+      "date": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.437/",
+      "level": "ACL Anthology 原文摘要核对；2026-10-28",
+      "note": "研究噪声标签记忆与中间推理机制如何共存，区别于先无语义记忆再少量语义重解释的两阶段知识注入。",
+      "code": "https://github.com/mainlp/memorized_reasonings"
     }
   ]
 }
