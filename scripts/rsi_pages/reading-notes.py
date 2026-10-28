@@ -188,7 +188,7 @@ def render_paper(p: dict) -> str:
         )
     links = "".join(
         f'<a class="link-btn" target="_blank" rel="noopener noreferrer" href="{e(p["links"][key])}">{label}</a>'
-        for key, label in (("html", "官方论文页"), ("pdf", "论文 PDF"), ("code", "代码 / 数据"), ("full_text", "其他开放版本"))
+        for key, label in (("html", "官方论文页"), ("pdf", "论文 PDF"), ("code", "代码"), ("data", "公开数据"), ("full_text", "其他开放版本"))
         if p["links"].get(key)
     )
     return (

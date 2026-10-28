@@ -110,6 +110,15 @@ PAGE = {
 <p><b>给 I8 的最小实验：</b>同一个模型检查点、同一类错误，构造两组当前正确率相近的练习题。一组允许局部捷径一直做对；另一组必须通过区分性反馈才能排除竞争规则。统一正确答案、训练 token、更新步数及独立测试，比较未见同规则新题的净迁移与旧能力回归。</p>
 <p class="note"><b>证据边界：</b>这是人类动作规则学习，不是 LLM 持久参数更新的直接结果；作者将假设检验视为 model-based RL 的一种实现，不能据此声称 RL 无效，也不能单凭对错轨迹证明 Agent 内部有显式假设。[[E26]]</p>
  '''),
+ ("nc2025-task-similarity","NC 2025｜底层规则相同，也可能在情境选择时相互干扰", '''
+<p><b>原论文研究到哪一步：</b><a href="https://www.nature.com/articles/s41467-025-66849-8" target="_blank" rel="noopener noreferrer">Menghi 等（Nature Communications 2025）</a>将两个表面输入不同的分类任务设为相同或正交的决策结构。相同结构组交错训练初期正确率更低（60.44% vs 66.61%，p=0.005），但后期新刺激泛化差异不显著（p=0.709）。网络模型发现<strong>输入特征部分重叠</strong>时最容易出现特殊干扰；完全正交与完全相同则呈不同关系。[[E99]]</p>
+<div class="table-wrap"><table><thead><tr><th>训练中可能出错的环节</th><th>该论文的证据</th><th>我们 I8 的独立问题</th></tr></thead><tbody>
+<tr><td>原规则根本不会</td><td>作者不是在研究纠正一条数学错误公式，不能直接推断</td><td>用前置知识探针判断基础是否缺失</td></tr>
+<tr><td>规则存在，但用错任务情境</td><td>同/正交结构的 MEG 表征与交错初期干扰有关</td><td>区分单任务掌握与混合规则选择错误</td></tr>
+<tr><td>当前任务修好了，未见变体仍不会</td><td>作者将训练表现与新刺激泛化分开测量</td><td>训练后清空示范，在异结构同规则新题、旧能力题上测真正迁移</td></tr>
+</tbody></table></div>
+<p><b>不改变 I8 主线：</b>I8 继续研究哪条错误值得纠正，以及纠正后能否改善多道未见同规则题。此文只提供一个必要的测量控制：<strong>表面特征相似 ≠ 底层规则共享；规则本身会做 ≠ 混合情境会选对规则</strong>。课程安排与任务切换仍由 <a href="idea-i9-practice-switching.html#nc2025-task-similarity">I9</a> 单独研究。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">阅读相关完整精读</a>。[[E99]]</p>
+ '''),
  ("related","Related Work｜最近邻做到了哪一步，I8 真正差在哪里？", '''
  <p>按照 <b>研究问题与假设 → 选择时能看到什么 → 实际修改什么 → 用什么结果证明学会</b> 对照最近邻。这几项不一定谁更强：有的工作研究如何更新，有的研究如何选数据，还有的专门研究规则迁移。<strong>最接近 I8 的不是某一个模型模块，而是 SEI 的错误驱动训练、LESS / DATAPROPHET 的训练前价值预测，以及 RULE-EDIT 的规则级迁移。</strong></p>
  <div class="table-wrap"><table id="i8-related-matrix"><thead><tr>

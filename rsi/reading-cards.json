@@ -6026,6 +6026,148 @@
         "pdf": "https://aclanthology.org/2026.acl-long.1393.pdf",
         "code": "https://github.com/xccc-8071/why-supervised-fine-tuning-fails-to-learn"
       }
+    },
+    {
+      "id": "nc2025-task-similarity-menghi",
+      "short_title": "Task Similarity · Representation Learning",
+      "title": "The effects of task similarity during representation learning in brains and neural networks",
+      "authors": "Nicholas Menghi; W. Jeffrey Johnston; Simone Vigano’; Max Andreas Bosse Hinrichs; Burkhard Maess; Stefano Fusi; Christian F. Doeller",
+      "lead_institution": "Max Planck Institute for Human Cognitive and Brain Sciences",
+      "institutions": [
+        "Max Planck Institute for Human Cognitive and Brain Sciences",
+        "Columbia University",
+        "University of Trento",
+        "Norwegian University of Science and Technology (NTNU)"
+      ],
+      "institution_source": "Nature Communications 期刊正式版 Authors and Affiliations；PubMed PMID 41318594",
+      "publication": "Nature Communications · 2025 · Vol.16, Article 10812",
+      "doi": "10.1038/s41467-025-66849-8",
+      "official_url": "https://www.nature.com/articles/s41467-025-66849-8",
+      "first_posted": "2025-11-29",
+      "version": "2025-11-29 在线发表；2025-12-01 version of record",
+      "read_on": "2026-10-28",
+      "reading_level": "期刊原文 Introduction / Results（Figs. 1–6）/ Discussion / Methods；实验数字与前作官方出处核对，尚未独立复现",
+      "tags": [
+        "Learning Science",
+        "Task Similarity",
+        "Representational Interference",
+        "Interleaved Learning",
+        "MEG",
+        "I9"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "partial",
+          "contribution": "将训练期表现、后期测试、未见刺激泛化及 MEG 表征分析分开，证明训练初期受干扰不等于最终泛化变差。",
+          "open_question": "MEG 相关或反相关是神经表征统计关系，不是 LLM 内部规则选择的直接测量，更不是评估器自我校准。"
+        },
+        "novelty": {
+          "level": "not_addressed",
+          "contribution": "提供固定人类刺激与规则结构，没有让学习系统自主创造新知识或任务。",
+          "open_question": "没有研究自生成题目能否提供真实新知识。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "实验研究共享表示及类别学习，并未直接测生成模型的正确解法采样支持集。",
+          "open_question": "任务表示变化不能自动解释哪些正确推理路径可从 LLM 采样到。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "比较交错学习期间跨任务干扰，以及后续旧/新刺激分类与泛化。",
+          "open_question": "没有 Blocked/Interleaved 直接随机对照，也没有多轮 LLM 参数更新后的长期遗忘与新任务 C 的学习能力。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "受控人类类别学习与简单神经网络模拟，不涉及 Agent 对真实系统的权限或有害持久化。",
+          "open_question": "未测恶意经验、工具调用越权或评估器攻击。"
+        }
+      },
+      "one_sentence": "两任务共享底层规则，初期竟可能学得更慢；关键是共享哪些表示、又必须区分哪些任务情境。",
+      "story": {
+        "challenge": "两个任务底层判断规则相同，理应更容易互相帮助，为什么交错学习时反而更容易出错？",
+        "insight": "规则能共享，不代表输入特征与任务情境可以混用；部分重叠可能产生干扰，练习后再逐渐分开表征。",
+        "design": "54 名参与者交错学习概念和空间分类，比较相同与正交规则；用 MEG 观察表征，再让神经网络改变输入特征重叠程度。",
+        "result": "SameSt 训练期 60.44%、DiffSt 66.61%（p=0.005）；测试期差异消失，新刺激泛化无显著组间差异；网络中部分特征重叠特别易干扰。"
+      },
+      "problem": "共享低维结构通常被认为促进迁移，但交错学习两个不同情境时，尚不清楚共享与任务区分如何随时间共同形成并改变学习表现。",
+      "setup": "60 人参与，排除 6 人后 54 人（SameSt 与 DiffSt 各 27）。两个种子情境：conceptual 依太阳/水滴透明度，spatial 依地图位置；输入特征不同，分类结构相同或正交，均交错练习。训练与测试分开；MEG-RSA 检测跨情境表征关系。简单前馈网络改变相关特征的编码角度，三类设置各 50 次重复。",
+      "updates": "这是人类表征学习和简化神经网络模型研究。人脑在练习期改变任务表示，神经网络更新参数；论文没有在线微调 LLM，也没有让 Agent 自改写 Skill/Workflow。",
+      "key_ideas": [
+        {
+          "name": "规则结构相同 ≠ 必然更容易一起学",
+          "summary": "同一底层规则可在不同输入情境中共享，但共同编码也可能需要额外的任务区分，训练期出现干扰。",
+          "formula": "SameSt vs DiffSt under interleaved learning"
+        },
+        {
+          "name": "任务结构与输入特征重叠是两个维度",
+          "summary": "保持规则相同/正交，对网络的跨情境特征编码设为完全正交、部分重叠、完全相同，学习顺序出现非单调关系。",
+          "formula": "feature overlap: orthogonal / semi-orthogonal / identical"
+        },
+        {
+          "name": "训练即时成功与最终迁移需分开",
+          "summary": "SameSt 训练期较差，后期组间差异消失；新刺激泛化没有显著差异。",
+          "formula": "Train: 60.44% vs 66.61%; novel-stimulus group difference p=0.709"
+        }
+      ],
+      "evidence": [
+        "Figure 2A：54 人（各 27）交错训练，SameSt 0.6044±0.0783 SD，DiffSt 0.6661±0.0770 SD，差 6.17 pp，t(52)=−2.91，p=0.005。",
+        "Figure 2：后期测试组间差异不再显著（p=0.159）；新刺激上都高于机会水平、两组泛化差异不显著（p=0.709）。这不是 SameSt 长期泛化较差的证据。",
+        "Figures 4–5：训练期 SameSt 跨任务神经表征倾向正相关、DiffSt 倾向反相关；随着练习 SameSt 的神经表征逐步转向更可区分、接近反相关的形态。MEG 相关不等于直接因果操纵。",
+        "Figure 6：简单前馈神经网络每条件 50 次重复：完全正交特征下 SameSt/DiffSt 学习速度近似；部分重叠特征下 DiffSt 更快；特征完全相同时 SameSt 反而显著更快。"
+      ],
+      "boundaries": [
+        "研究的两个组都采用交错训练，并没有随机比较 Blocked vs Interleaved；“先集中后交错最好”只是可测试的延伸假设。",
+        "SameSt 在训练中低约 6.17 个百分点，但测试期和新刺激泛化的组间差异不显著；不能写成持续的泛化损伤，也不能由不显著直接宣称统计等价。",
+        "人类 MEG 表征相关性与网络参数表征机制彼此支持，但没有直接操纵人的神经表征，也不能直接证明同样机制适用于 LLM。",
+        "Figure 6 两个自变量必须区分：不同任务的决策结构是否相同，以及模型输入特征编码是否重叠。不能简单总结为任务越相似越有害。",
+        "简单网络的输入重叠由研究者人为控制；模型 50 次重复不等于 50 个人类实验，也不是大规模语言模型的证据。"
+      ],
+      "our_relevance": [
+        "I9（主线）：任务结构相同与特征重叠是不同变量，建议在现有 Blocked/Interleaved 试验上增加高/低结构关系；但保留 I9 当前的核心——同等 A/B 能力下，训练历史是否影响后续学习 C 的真实能力。",
+        "I3（辅助）：独立 A、独立 B、混合 A/B 应分开评估。混合时选错规则不等于参数中旧规则已经被忘掉；不要用更多 replay 掩盖规则选择错误。",
+        "I8（辅助）：错误规则在原任务上被修复不等于会区分相似新任务的适用条件；区分输入外观相似与规则结构相似，并在异结构同规则题上测迁移。",
+        "与 Holton 等 Nature Human Behaviour 2025 在线/2026 期刊版相比：前者是顺序 A→B→A 的迁移—遗忘权衡，本文是 A/B 交错同时学习时早期干扰及表征重组，两者不能互相替代。"
+      ],
+      "next_test": "在 I9 已有固定材料、同预算 LoRA 的 A/B 课程实验里加入任务结构（same/related-but-distinct）×呈现方式（blocked/interleaved）因子。用独立探针区分单题掌握与混合选规则，在同等 A/B 能力的模型快照上安排同预算新任务 C，比较后续学习速度、远迁移和旧能力保持；同时控制间隔、题型外观和 token 数。无稳定交互则不增加复杂路由器。",
+      "deep_read": {
+        "focus": "最值得学的不是“相似任务更差”，而是为什么部分特征重叠会使共享表示变成暂时干扰，并且为何最终表现不一定受损。",
+        "terms": [
+          {
+            "name": "SameSt / DiffSt",
+            "meaning": "两种任务的决策结构相同 / 正交；不是指两套输入内容完全一样或完全无关"
+          },
+          {
+            "name": "MEG / RSA",
+            "meaning": "用脑磁记录神经反应，再测不同任务的表征关系；相关与反相关是分析结果而非直接读出内部规则"
+          },
+          {
+            "name": "Feature Overlap",
+            "meaning": "不同任务的输入特征编码在网络里是否方向重合；它与任务规则是否相同是两个可分开的变量"
+          }
+        ],
+        "summary": [
+          "人类交错实验中，同结构的两任务训练期反而更难，但训练结束后差距不显著、未见刺激泛化没有组间显著差异。",
+          "MEG 看到 SameSt 早期跨任务表征相关，练习后逐渐分离；简单网络在部分重叠特征条件下复制了该干扰现象。",
+          "对 RSI 的启发是把“规则能共享”与“情境必须区分”分开，I9 重点继续验证学习历史是否改变未来学习 C 的能力。"
+        ],
+        "sections": [
+          {"id":"challenge","stage":"challenge","title":"两个任务遵循同一条规则，为什么交错练反而更难？","blocks":[{"type":"prose","text":"设想两种植物：一种看太阳和水滴图案判断能否生长，另一种看地图位置。两套输入看起来不同，但分类边界可以遵循相同的二维结构。如果模型共享规则，理论上应减少重新学习，可实验却发现 SameSt（相同结构）在交错训练期间表现更差。"},{"type":"callout","kind":"example","label":"先区别“学得快”和“最终会不会”","text":"相同结构组训练期平均正确率 60.44%，不同结构组 66.61%；可是后期测试与新刺激泛化组间差异都没有达到显著。论文解释的是初期干扰的形成和缓解，并未证明相似任务永久破坏迁移。"}]},
+          {"id":"two-similarities","stage":"insight","title":"关键不是“有多相似”，而是相似在哪一层","blocks":[{"type":"table","headers":["需要区分的变量","Same / Different 表示什么","为什么不可混为一谈"],"rows":[["决策结构相似性","两个任务依据输入判断生长/死亡的二维边界相同或正交","结构相同可能允许共享规则，但也可能把不同情境混在一起"],["输入特征的表征重叠","两个情境的特征在神经网络编码中完全正交、部分重叠或完全相同","相同结构但部分重叠时，网络仍要学会区分情境；完全相同且规则一致时可能根本不必区分"],["训练顺序","人类实验全部使用交错呈现","不能由 SameSt 与 DiffSt 的差别得出先集中/后交错的因果结论"]]},{"type":"callout","kind":"insight","label":"一句话 Insight","text":"共享有用的规律与区分不同任务的适用条件，是两个同时需要的能力；部分共享最容易让两者互相拉扯。"},{"type":"callout","kind":"boundary","label":"为什么这个发现不像“越像越坏”那么简单","text":"Figure 6 的输入特征完全正交时两组学习速度接近；部分重叠时 DiffSt 更快；完全相同而规则也相同时 SameSt 更快。三个区间的关系不是单调的。"}]},
+          {"id":"human-task","stage":"design","order":1,"title":"Figure 1：两项任务究竟怎样控制规则相似性？","blocks":[{"type":"steps","items":[{"title":"54 人完成分析","text":"招募 60 名成年人，排除 6 名未过机会水平的参与者，SameSt 和 DiffSt 各 27 人。"},{"title":"两个情境使用不同的输入","text":"概念任务：太阳与水滴图案的不透明度；空间任务：种子在二维地图中的位置。都回答生长或死亡。"},{"title":"只改变两任务的决策结构","text":"SameSt 使用相同的低维分类边界；DiffSt 将两套边界设为正交。练习统一交错进行，然后测试旧刺激和新刺激。"}]},{"type":"formula","label":"Methods · 刺激—结果映射的二次函数","expression":"logit P(grow | u) = (u−μ)ᵀ W (u−μ) + w₀","meaning":"u 是两维输入，W 的交叉项确定分类边界的方向。SameSt 和 DiffSt 改变的是低维边界关系，不是简单把某组题目改得更容易。","boundary":"作者使用二次函数的确定性映射并呈现近似对角结构；教学上的直线示意不能代替真实实验边界。"}]},
+          {"id":"meg-measurement","stage":"design","order":2,"title":"Figures 4–5：怎么观察“共享表征”逐渐被分开？","blocks":[{"type":"prose","text":"作者同步采集 MEG 脑磁信号，计算不同任务刺激在神经活动空间中的相似性（RSA）。训练时和测试时分别分析，让“当下表现”与“内部表示如何变化”有了不同的证据。"},{"type":"table","headers":["术语","通俗理解","不能误解为"],"rows":[["MEG","从头皮附近记录不同时间的脑磁信号","直接读出学习者思考时使用的数学规则"],["RSA","比较不同条件的神经活动模式彼此多像","两种任务激活了完全相同/相反的神经元"],["相关 / 反相关","跨情境表征的统计关系是相似还是被区分","已经直接证明某条神经连接造成了学习干扰"]]},{"type":"callout","kind":"boundary","label":"人脑因果证据的上限","text":"研究操纵了任务结构并观察到表征变化，但没有直接把某个人的共享神经表示改变后再测学习效果。其机制解释由行为、MEG 和模型模拟联合支持。"}]},
+          {"id":"nn-test","stage":"design","order":3,"title":"Figure 6：神经网络怎样单独改变特征重叠程度？","blocks":[{"type":"prose","text":"作者建立带一个隐藏层和一个输出的前馈神经网络，输入包含两种任务各自的两个潜在特征、无关特征和情境变量。保持分类任务结构为 SameSt/DiffSt，单独改变跨情境的输入特征编码关系，每种设置重复 50 次。"},{"type":"table","headers":["输入编码条件","两任务输入特征怎样相互关联","为模型带来的计算要求"],"rows":[["① 完全正交（Orthogonal）","两组相关输入特征在彼此独立的维度上","原本无共享偏置，SameSt/DiffSt 差别难体现"],["② 部分重叠（Semi-orthogonal）","两组特征向量有非零余弦相似度","相似表征可能干扰，需要逐步将任务相关维度分开"],["③ 完全相同（Identical）","两任务共用同一组两个相关特征","若结构也相同，完全不必利用情境变量就能完成分类"]]},{"type":"callout","kind":"insight","label":"作者真正操纵的是两个维度","text":"一个是任务决策结构相同/正交，另一个是网络输入特征的跨情境几何重叠。两者分开后，才能解释为什么“部分相似”反而更难。"}]},
+          {"id":"human-results","stage":"result","order":1,"title":"Figure 2：训练时差 6.17 个百分点，后测却没有显著组间差异","blocks":[{"type":"table","headers":["实验指标","SameSt · 相同结构","DiffSt · 正交结构","统计判断"],"rows":[["训练期平均正确率","60.44%","66.61%","差 6.17 pp；t(52)=−2.91，p=0.005"],["后期测试正确率","两组差距缩小","两组差距缩小","p=0.159（未达显著）"],["未见刺激的泛化","均能超过机会水平","均能超过机会水平","两组比较 p=0.709（未达显著）"]],"caption":"n=54，SameSt/DiffSt 各 27。Figure 2A,B；新刺激总体平均准确率约 0.66。"},{"type":"callout","kind":"paper","label":"作者实证支持的结论","text":"共享相同低维分类结构在交错训练初期产生了额外干扰；经过练习后，训练差距明显缩小。这不是长期泛化必然受损的证据。"},{"type":"callout","kind":"boundary","label":"“未显著”不等于完全相同","text":"p=0.159 与 p=0.709 意味着该研究未能检测出可靠的组间差异，不能因此断言两组表现严格统计等价，更不能宣称在任何后续学习中都相同。"}]},
+          {"id":"meg-results","stage":"result","order":2,"title":"Figures 4–5：人类学习期间，跨任务神经表征怎样变化？","blocks":[{"type":"table","headers":["阶段","SameSt","DiffSt","论文如何解释"],"rows":[["交错训练中","跨任务活动在任务相关空间中倾向正相关","倾向反相关","SameSt 的共享编码可能暂时加大情境区分难度"],["训练后测试","相关性下降并向反相关方向变化","仍呈现较强区分趋势","练习减少两任务间表示干扰"],["新刺激泛化","与 DiffSt 无显著差异","与 SameSt 无显著差异","神经表示重组可能解释行为差距消失"]]},{"type":"callout","kind":"boundary","label":"神经相关性仍是观察证据","text":"RSA 的相关/反相关是任务相关神经活动模式的统计关系；作者没有直接因果干预人脑里的重叠表征，不能把它写成唯一神经机制。"}]},
+          {"id":"nn-results","stage":"result","order":3,"title":"Figure 6：三种特征关系为什么产生三种相反结果？","blocks":[{"type":"table","headers":["输入编码关系","SameSt vs DiffSt 训练速度","机制解释"],"rows":[["① 完全正交","两者速度基本接近","两个任务特征没有共享偏置，模型必须分别学习"],["② 部分相似（非正交）","DiffSt 比 SameSt 快","SameSt 会先混用近似特征，随后更慢完成任务表征分离"],["③ 输入特征完全相同","SameSt 比 DiffSt 快","规则也相同则可忽略任务情境、直接复用同一映射"]],"caption":"神经网络模型每条件 50 次独立训练，Figure 6d,e；这是模拟学习轨迹，不是 50 组独立人类数据。"},{"type":"callout","kind":"insight","label":"真正的结论不是“相似不好”","text":"任务是否共享决策规则、输入是否部分重叠、以及是否必须区分上下文，这三者共同决定学习干扰。完全相同的任务甚至可以直接复用，只有部分重叠可能特别麻烦。"},{"type":"callout","kind":"boundary","label":"简单网络的外推边界","text":"模型仅一隐藏层、专门设定输入几何，与预训练 LLM 的高维表示和复杂任务不同；本研究没有直接测 LoRA 多轮更新与旧技能长时间保持。"}]},
+          {"id":"rsi-boundaries","stage":"next","title":"接到 I9、I3、I8：最便宜的决定性实验怎么设计？","blocks":[{"type":"table","headers":["我们的 Idea","论文提供的机制线索","仍需独立证明"],"rows":[["I9 · 集中与交错（主线）","部分特征重叠的共享规则可能加大早期切换成本","blocked/interleaved 是否因任务结构发生交互；匹配当前 A/B 能力后，新任务 C 的学习是否仍不同"],["I3 · 温故知新","相似任务可能发生错误的规则选择，而不只是遗忘","旧 A 与新 B 分别做对时，混合 A/B 是否误选规则；恢复旧题不能取代情境辨别"],["I8 · 纠错后迁移","表面相似与底层规则共享不是一回事","纠错是否改变了规则适用条件，还是仅改进一部分原题与近改写题"]]},{"type":"tests","items":[{"name":"I9 P0 · 任务关系 × 练习顺序","design":"固定基础模型、同一训练题库和 LoRA 更新器，按两套任务规则（相同/相近但条件不同）×课程（Blocked/Interleaved）分叉。预注册间隔、训练 token、示范、随机种子与独立新题。","decisive":"独立 A、独立 B、混合 A/B 的正确规则选择与旧能力退化。若两种任务关系的 Blocked/Interleaved 效应不同，才支持结构依赖的顺序机制。"},{"name":"I9 P1 · 当前 A/B 能力相近，未来 C 仍有差异吗？","design":"保持 A/B 规则族和后测能力可比，固定全新的 C 训练题、训练器与预算，在不同顺序形成的模型检查点上测 C 的完整学习曲线。","decisive":"从相同 C 前测水平出发，学习曲线、独立 C 新题迁移及 A/B 保留是否依赖先前顺序；不以最终某一道题的正确率替代持续可学习性。"}]},{"type":"callout","kind":"boundary","label":"不要把推论写成论文结果","text":"Menghi 等的人类实验全程交错；没有直接比较先集中再交错，也没有测 LLM 学新任务 C。所有 I9/I3/I8 相关内容属于我们后续的实验设计，不是论文已经做出的因果结论。"}]}
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41467-025-66849-8",
+        "pdf": "https://www.nature.com/articles/s41467-025-66849-8.pdf",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12669730/",
+        "data": "https://doi.org/10.6084/m9.figshare.30353515"
+      }
     }
   ]
 }

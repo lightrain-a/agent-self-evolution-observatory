@@ -55,6 +55,17 @@ PAGE = {
 <p><b>科研边界：</b><a href="idea-i2.html">I2</a>不能再把“真实学生增益更新教师”当作首次；<a href="idea-i6-failure-value.html">I6</a>研究固定题目的失败过程价值而不是再生成课程；<a href="i8.html">I8</a>分辨正确性、规则结构与跨题净收益；<a href="idea-i9-practice-switching.html">I9</a>固定材料，研究跨主题集中/交错的状态切换。<a href="reading-notes.html#deep-soar-2601-18778"><b>阅读SOAR的14节完整精读、最近邻与原始实验表 →</b></a>。</p>
 <div class="note">SOAR原论文尚未完整证明长期Meta-RSI，也没有直接因果隔离“多样性坍缩是否导致性能坍缩”；不能把单组训练结果改写成普适定律。</div>
 '''),
+    ("task-similarity-nc2025", "NC 2025｜任务规则相同，为什么交错学习初期反而更慢？", '''
+<p><b>Observable Phenomenon：</b>Menghi 等在 <i>Nature Communications</i>（2025）让两组参与者交错学习概念和空间分类，控制两任务低维决策结构相同（SameSt）或正交（DiffSt）。54 名参与者的训练期平均正确率分别为 <b>60.44% vs 66.61%</b>（p=0.005）。但后期测试组间差异未达显著（p=0.159），新刺激泛化也无显著差异（p=0.709）：这说明<strong>早期干扰，不等于长期泛化较差</strong>。[[E99]]</p>
+<div class="table-wrap"><table><thead><tr><th>作者操纵的变量</th><th>观察到什么</th><th>我们应怎样理解</th></tr></thead><tbody>
+<tr><td>任务的决策规则是否相同</td><td>SameSt 训练早期表现更差；MEG 中跨任务表征从相关向可区分的反相关变化</td><td>共享规则仍可能需要独立的情境编码，但神经统计相关不是直接因果干预</td></tr>
+<tr><td>输入特征的跨情境重叠程度（神经网络 Figure 6）</td><td>完全正交时两组接近，部分重叠时 DiffSt 更快，完全相同时 SameSt 更快</td><td>“越相似越干扰”不是单调规律；结构相似与特征重叠要分开</td></tr>
+<tr><td>训练顺序</td><td>人类两组都交错训练；没有直接比较 Blocked vs Interleaved</td><td>不能据此宣布“先集中再交错最好”</td></tr>
+</tbody></table></div>
+<p><b>Related Work：</b><a href="https://www.nature.com/articles/s41562-025-02318-y" target="_blank" rel="noopener noreferrer">Holton 等（NHB 2025 在线/2026 期刊）</a>的 <b>A→B→A</b> 顺序训练发现相似任务更易迁移、但也更易遗忘先前 A；Menghi 研究的是 A/B <b>共同形成表示</b>时的短期干扰，两种实验时序不同。[[E100]]</p>
+<p><b>更早的表征研究：</b><b>Niv（Nature Neuroscience 2019）</b>讨论任务状态应该保留哪些特征与隐变量；<b>Yang 等（Nature Neuroscience 2019）</b>在多任务 RNN 观察共享与专门化表示；<b>Mill &amp; Cole（Nature Communications 2025）</b>发现练习伴随从可复用组合表示转向任务特定联合表示。Menghi 的增量是将任务结构关系作为实验变量，结合交错训练行为、MEG 与输入重叠的神经网络模拟来解释初期干扰。[[E103]][[E102]][[E101]]</p>
+<p><b>对应我们 I9：</b>在固定 A/B 材料和 LoRA 预算的集中/交错试验里，可同时操纵任务底层结构是否相同。后测区分单题规则掌握、混合题规则选择和学习 C 的曲线。对 <a href="ideas.html#idea-3">I3</a>，应区分旧规则真的丢了与混合场景选错规则；对 <a href="i8.html">I8</a>，同一题修复不等于不同情境能选对规则。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi"><b>阅读 C-I-D-R 完整精读（Figures 2 / 4–6）</b></a>。</p>
+'''),
 ("interleaving","I9｜集中练习与交错练习：什么时候该换方法？",'''
 <p><b>Observable Phenomenon：</b>Samani 与 Pan（<i>npj Science of Learning</i>，2021）在350名大学生、8周物理作业安排中发现，集中练习的作业成绩更高，交错练习却提高了意外延迟测试中的新题表现。学生觉得交错更难，也更容易误以为自己学得差。正式期中考试差异未达显著，论文没有单独隔离复习间隔等所有机制。[[E20]]</p>
 <p><b>相反现象：</b>Beukers 等（<i>Communications Psychology</i>，2024）在需要区分多个潜在事件结构的任务中发现集中安排更好，且在开始阶段就集中比后期才集中更有效。作者以潜在结构分离解释，但不等于 LLM 已拥有对应的内部表征机制。[[E21]]</p>

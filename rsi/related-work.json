@@ -725,6 +725,132 @@
           "verification": "ACL Anthology 正式出版摘要核对"
         }
       ]
+    },
+    {
+      "paper_id": "nc2025-task-similarity-menghi",
+      "target_short_title": "Task Similarity · Nature Communications 2025",
+      "target_venue": "Nature Communications 16, Article 10812 (2025); DOI 10.1038/s41467-025-66849-8",
+      "source_related_sections": "Introduction / Discussion / Figs. 2, 4–6",
+      "one_sentence": "既有研究已证明顺序学习中的共享表示有迁移—遗忘权衡；这篇论文重点研究交错训练时两个任务表示如何形成、部分特征重叠为何造成暂时性干扰。",
+      "reading_takeaway": "前人已经研究任务表征、顺序学习的迁移与遗忘、练习后任务特定表示。本文的独特控制是交错同时学习 SameSt/DiffSt，以及用简单网络区分规则相似性与输入特征重叠。",
+      "scope_note": "最近邻 3 项，一项表征学习综述背景。区分人类交错、顺序 A→B→A、fMRI 随练习改变及多任务 RNN：不能跨论文直接比较准确率。",
+      "evidence_gap": "缺少同一人类任务的 Blocked vs Interleaved 随机对照；MEG 表征与行为干扰是相关证据，不是直接操纵表征的因果实验；未做 LLM 参数更新后新任务 C 的可学习性测试。",
+      "evolution": [
+        {
+          "period": "2019 · 状态表征",
+          "summary": "Niv 强调从高维感知中选择任务相关信息，形成可泛化的状态表示。",
+          "source_url": "https://www.nature.com/articles/s41593-019-0470-8"
+        },
+        {
+          "period": "2019 · 多任务网络",
+          "summary": "Yang 等在多任务 RNN 中观察可复用与专门化的任务相关神经表示。",
+          "source_url": "https://www.nature.com/articles/s41593-018-0310-2"
+        },
+        {
+          "period": "2025 · 动态任务分化",
+          "summary": "Mill & Cole 发现练习会使任务表示从组合式向更有情境特异性的联合式形式转变。",
+          "source_url": "https://www.nature.com/articles/s41467-025-65041-2"
+        },
+        {
+          "period": "2025 · 相似性与顺序/交错",
+          "summary": "Holton 用顺序 A→B→A 研究迁移和遗忘；Menghi 在 A/B 交错下研究早期干扰与表征几何。",
+          "source_url": "https://www.nature.com/articles/s41562-025-02318-y"
+        }
+      ],
+      "works": [
+        {
+          "id": "holton-2025",
+          "name": "Holton et al. · NHB",
+          "full_title": "Humans and neural networks show similar patterns of transfer and interference during continual learning",
+          "year": 2025,
+          "venue": "Nature Human Behaviour · 2025-10 online / 2026 issue 10:111–125",
+          "family": "顺序学习与干扰",
+          "distance": "closest",
+          "cited_at": "Discussion 对照的连续学习 / 转移干扰最近邻（ref.42）",
+          "primary_url": "https://www.nature.com/articles/s41562-025-02318-y",
+          "source_scope": "Nature Human Behaviour 官方正文与 PubMed 正式出版记录",
+          "problem": "先学习 A，再学习 B，最后返回 A：相似任务是否促进 B 却破坏 A？",
+          "update_surface": "人类动作规则/简单线性网络隐藏表征的顺序更新",
+          "supervision": "分阶段 A→B→A 的反馈和回测",
+          "model_tasks": "人类与 ANN 的相似/近似/相反规则学习",
+          "shared": "两项研究都发现共享表示可以带来帮助，也可能产生任务干扰。",
+          "difference": "Holton 先稳定学完 A，再用 B 检验迁移与旧任务干扰；Menghi 让 A/B 自始交错学习，观察暂时性初期干扰与两任务表示的共建、分离。",
+          "why": "先学后用的迁移优势，与两个任务尚未稳定时的交错干扰，属于不同的时间条件，结果不必互相矛盾。",
+          "evidence": "Holton 报告 Near 相对 Far 更易迁移但旧 A 干扰更高；Menghi 报告 SameSt 训练正确率 60.44% vs DiffSt 66.61%，后期新刺激差异不显著。",
+          "decisive_test": "统一规则与输入几何，把训练日程 Blocked/Interleaved 作为随机操纵因素，分开测 A/B 规则掌握、混合选择、干扰后保持以及学习 C 的曲线。",
+          "relationship": "最直接的顺序学习迁移—干扰对照",
+          "verification": "2025-10 在线发布、2026 期刊卷期已核对；非同数据集直接性能比较"
+        },
+        {
+          "id": "mill-cole-2025",
+          "name": "Mill & Cole · NC",
+          "full_title": "Dynamically shifting from compositional to conjunctive brain representations supports cognitive task learning",
+          "year": 2025,
+          "venue": "Nature Communications 16, Article 10084 (2025)",
+          "family": "随练习的表征改变",
+          "distance": "closest",
+          "cited_at": "Discussion 中作为练习使任务表示更专门化的机制前作（ref.33）",
+          "primary_url": "https://www.nature.com/articles/s41467-025-65041-2",
+          "source_scope": "Nature Communications 官方全文、fMRI 结果和任务表征几何",
+          "problem": "任务学得更熟后，脑内表征怎样从易共享的组合形式变为任务特定、能减少相互干扰的形式？",
+          "update_surface": "人脑学习期间的任务神经表征，非人工参数修改",
+          "supervision": "多个复杂任务的练习与行为表现",
+          "model_tasks": "多任务认知学习、fMRI 表征变化",
+          "shared": "都观察练习后任务表示逐渐分离、干扰减少。",
+          "difference": "Mill & Cole 主要观察组合式到联合式表示转变；Menghi 明确操纵两任务决策结构同/正交，结合 MEG 与输入重叠模拟解释初期干扰。",
+          "why": "表示更专门化有证据先例；本文的新问题是不同任务结构关系下为何开始时有更多干扰。",
+          "evidence": "两篇分别在 fMRI 与 MEG 观察表征重组，并均连接行为表现，但不是对同一神经机制的直接干预对照。",
+          "decisive_test": "同一任务关系的两个训练阶段分开测试表示和规则选择，看早期跨任务正相关是否预测具体的错选规则错误。",
+          "relationship": "表征分离随练习发生的直接机制邻近",
+          "verification": "正式 Nature Communications 2025 原文核对"
+        },
+        {
+          "id": "yang-2019",
+          "name": "Yang et al. · NN",
+          "full_title": "Task representations in neural networks trained to perform many cognitive tasks",
+          "year": 2019,
+          "venue": "Nature Neuroscience 22, 297–306 (2019)",
+          "family": "多任务神经网络共享表征",
+          "distance": "closest",
+          "cited_at": "相关多任务网络表征前作；本站补充最近邻，未作为相同刺激直接基线",
+          "primary_url": "https://www.nature.com/articles/s41593-018-0310-2",
+          "source_scope": "Nature Neuroscience 正式论文摘要",
+          "problem": "单一递归网络训练 20 个认知任务后，是否会形成共享/专门的任务相关表示？",
+          "update_surface": "RNN 单元活动与任务子结构的训练形成",
+          "supervision": "多种认知任务的监督与表现",
+          "model_tasks": "20 个认知任务，工作记忆/分类/抑制控制",
+          "shared": "都把跨任务共享的内部表示当作解释多任务表现的重要变量。",
+          "difference": "Yang 描述多任务训练后形成的表示结构；Menghi 关注相同/正交规则的交错学习期动态，以及部分输入特征重叠为何导致暂时干扰。",
+          "why": "结果状态的共享结构与学习过程中临时冲突不是同一个问题。",
+          "evidence": "Yang 的 20 任务 RNN 表示分析与 Menghi 的两任务实验分属不同任务和模型，没有直接预算可比。",
+          "decisive_test": "在相同网络架构中冻结最终任务内容，只操纵输入特征的相关性和规则结构，观察学习期干扰是否复现。",
+          "relationship": "跨任务共享表示的机制先例",
+          "verification": "Nature Neuroscience 2019 原始出版摘要核对"
+        },
+        {
+          "id": "niv-2019",
+          "name": "Niv · Task-state representations",
+          "full_title": "Learning task-state representations",
+          "year": 2019,
+          "venue": "Nature Neuroscience 22, 1544–1553 (2019)",
+          "family": "表征学习理论",
+          "distance": "context",
+          "cited_at": "Introduction ref.1 的任务状态表示理论起点",
+          "primary_url": "https://www.nature.com/articles/s41593-019-0470-8",
+          "source_scope": "Nature Neuroscience 2019 综述/理论文章原文",
+          "problem": "智能体如何从高维刺激中选择真正决定任务结果的特征与隐变量？",
+          "update_surface": "学习者的任务状态编码和注意力/隐状态模型",
+          "supervision": "认知任务观察与行为数据的综述",
+          "model_tasks": "人类/动物任务状态学习",
+          "shared": "都强调正确任务表示可让少量经验泛化到新情境。",
+          "difference": "Niv 阐述任务状态表示为何重要；Menghi 用相同/正交的受控结构和 MEG + 简单网络实证观察共同学习中的干扰与缓解。",
+          "why": "表示为何存在与不同任务表示为何难共同形成，是两个层级的科学问题。",
+          "evidence": "理论起点不提供 Menghi 两组 54 人行为对比或 Figure 6 输入重叠三条件的同任务数据。",
+          "decisive_test": "区分只学到共同低维结构与知道具体情境适用条件，比较训练期分类与后期新刺激迁移。",
+          "relationship": "背景性框架，不是直接 baseline",
+          "verification": "Nature Neuroscience 官方综述与 PubMed 记录"
+        }
+      ]
     }
   ]
 }

@@ -23,6 +23,17 @@ PAGE = {
 <p><b>SOAR，ICML 2026：</b>作者还比较了先用64步合成题再转真实困难题，与从一开始混合两类题的训练安排：在MATH中前者较合适，在HARP/OlympiadBench中混合更稳定。<strong>这说明训练安排可能依赖任务分布，但还不是按“规则掌握—规则选择”状态切换的实验</strong>。<a href="reading-notes.html#deep-soar-2601-18778">SOAR完整精读（含Appendix B.6）</a>。[[S47]]</p>
 <div class="note"><b>共同启发：</b>练习组织的收益取决于任务的结构和学习者已有的知识。<strong>集中与交错并没有一个永远正确的固定答案</strong>。将这一条件性结论迁移到 LLM 的真实参数更新，需要重新验证。</div>
 '''),
+    ("nc2025-task-similarity", "NC 2025｜相同规则为什么交错学习初期反而更慢？", '''
+<p><b>Observable Phenomenon：</b>Menghi 等（<i>Nature Communications</i> 2025）让两组人交错学习概念和空间分类；两任务底层决策结构相同（SameSt）时，训练期平均正确率 <b>60.44%</b>，低于结构正交组（DiffSt）的 <b>66.61%</b>（p=0.005）。但测试期两组 p=0.159，新刺激泛化 p=0.709，均未发现显著组间差异。结论是<strong>暂时性干扰及随练习缓解</strong>，不是长期泛化变差。[[E99]]</p>
+<div class="table-wrap"><table><thead><tr><th>研究控制了什么</th><th>实证结果</th><th>对 I9 的含义</th></tr></thead><tbody>
+<tr><td>决策规则 SameSt / DiffSt</td><td>交错学习初期 SameSt 较差；MEG 显示其跨任务表征由相关逐渐转向更可区分</td><td>规则共享有可能增加最初的情境区分负担，但不能直接宣布“交错不好”</td></tr>
+<tr><td>神经网络的特征重叠程度（Figure 6）</td><td>完全正交时两组接近；部分重叠时 DiffSt 更快；完全相同特征时 SameSt 更快</td><td>必须把题目外观相似、底层规则是否相同分开控制</td></tr>
+<tr><td>训练顺序</td><td>论文的人类参与者都采取交错训练</td><td>尚无它自己的 Blocked/Interleaved 直接对照；正好是 I9 可以验证的实验空缺</td></tr>
+</tbody></table></div>
+<p><b>最相近 Related Work：</b><a href="https://www.nature.com/articles/s41562-025-02318-y" target="_blank" rel="noopener noreferrer">Holton 等（NHB 2025 在线/2026 期刊）</a>采用 <b>A→B→A</b> 顺序学习，相似任务通常更快迁移但也干扰旧 A；Menghi 研究 A/B <b>从零交错共同形成表示</b>的初期干扰。两者的任务顺序和测量时间不同，不能直接当成相反结果。[[E100]]</p>
+<p><b>建议只给 I9 增一个最小受控因素：</b>保持题目池、正确答案、训练 Token、LoRA 更新器不变，以任务规则关系（相同 / 条件相近但不同）×课程顺序（集中 / 交错）做 2×2 分叉；先测独立 A、独立 B、混合规则选择，再在 A/B 当前能力可比时测新 C 的同预算学习曲线。没有稳定的结构×顺序交互，就不增加新的课程 Router。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">查看完整精读与 Figure 2、4–6</a>。</p>
+<div class="note"><b>不应归因过度：</b>原论文使用 MEG / 简单神经网络分析表征，不能直接证明现代 LLM 参数的表示机制，也不证明“部分相似”会造成不可恢复的遗忘。[[E99]]</div>
+'''),
     ("related", "现有工作｜别人已经研究到了哪一步？", '''
 <div class="table-wrap"><table><thead><tr><th>研究</th><th>已有证据或机制</th><th>我们与它的实际差异</th></tr></thead><tbody>
 <tr><td><a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener noreferrer">Brunmair &amp; Richter · Psychological Bulletin 2019</a> [[E23]]</td><td>59 项研究的元分析；总体交错有益，但材料类型、类别间相似度与类别内差异调节效果；单词材料甚至更适合集中。</td><td>不重复“相似类别值得交错”；测试当前模型是否已掌握规则，以及这种掌握能否预测切换收益。</td></tr>

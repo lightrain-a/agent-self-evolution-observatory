@@ -202,6 +202,23 @@ def main():
         check('reading-notes.html#deep-inventive-production-pf-2023-kapur'
               in (ROOT/'rsi'/page).read_text(encoding='utf-8'),
               'Missing practical RSI cross-link to Inventive Production note: '+page)
+    similarity=next((p for p in cards if p['id']=='nc2025-task-similarity-menghi'),None)
+    check(similarity is not None
+          and similarity.get('doi')=='10.1038/s41467-025-66849-8'
+          and similarity['official_url']=='https://www.nature.com/articles/s41467-025-66849-8'
+          and similarity['lead_institution']=='Max Planck Institute for Human Cognitive and Brain Sciences',
+          'Task similarity NC 2025 source or affiliations missing')
+    check(all(f'E{i}' in refs for i in (99,100,101,102,103)),
+          'NC 2025 target and four verified background sources missing')
+    similarity_text=json.dumps(similarity,ensure_ascii=False)
+    check(len(similarity['deep_read']['sections'])>=9
+          and all(token in similarity_text for token in
+                  ('60.44%','66.61%','6.17','0.005','0.159','0.709',
+                   'Figure 6','完全正交','部分重叠','完全相同','50 次')),
+          'NC 2025 figure-specific results or non-monotonic input geometry missing')
+    check('没有 Blocked/Interleaved 直接随机对照' in similarity_text
+          or '没有 Blocked/Interleaved 直接随机对照' in ''.join(similarity['boundaries']),
+          'NC 2025 must not be mistaken for a blocked/interleaved study')
     npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
     check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
           '2020 npj paper not correctly identified by its real DOI')
@@ -429,6 +446,9 @@ def main():
     for boundary in ['Same','Different','Why','Evidence','没有结果']:
         check(boundary in i8_html,'I8 missing honest closest-work boundary: '+boundary)
     check('href="i8.html"' in ideas_text,'I8 missing from idea board')
+    check('reading-notes.html#deep-nc2025-task-similarity-menghi' in ideas_text
+          and all(f'href="references.html#E{i}"' in ideas_text for i in (28,29)),
+          'I9 and I3 overview must link to NC 2025 and sequential-learning contrast')
     check('href="i8.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I8 missing from homepage')
     i6_text=(ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8')
     i7_text=(ROOT/'rsi/idea-i7-learning-order.html').read_text(encoding='utf-8')
@@ -451,9 +471,16 @@ def main():
           'I3 must separate observed LP change from retained net capability gain')
     check('href="references.html#E19"' in i8_html and 'idea-i6-failure-value.html#nc2021' in i8_html,
           'I8 must distinguish learning-progress task choice from error-specific transfer')
+    check('id="nc2025-task-similarity"' in i8_html
+          and 'reading-notes.html#deep-nc2025-task-similarity-menghi' in i8_html,
+          'I8 must clarify surface feature versus rule structure and transfer')
     learn_sci=(ROOT/'rsi/learning-science.html').read_text(encoding='utf-8')
     check('id="learning-progress"' in learn_sci and 'href="references.html#E19"' in learn_sci,
           'Learning science must include Ten et al. 2021 with primary citation')
+    check('id="task-similarity-nc2025"' in learn_sci
+          and 'reading-notes.html#deep-nc2025-task-similarity-menghi' in learn_sci
+          and '完全正交' in learn_sci and '部分重叠' in learn_sci,
+          'NC 2025 learning-science evidence must include three feature overlap conditions')
     check('先独立尝试' in i7_text and '先看示范' in i7_text and 'I6' in i7_text,
           'Current I7 must isolate learning-order effects')
     i9_text=(ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8')
@@ -468,6 +495,11 @@ def main():
           'I9 primary reference missing')
     check('deep-optimal-practice-2020-eglington' in i9_text,
           'I9 must distinguish already-studied item-level scheduling from cross-topic sequencing')
+    check('id="nc2025-task-similarity"' in i9_text
+          and 'reading-notes.html#deep-nc2025-task-similarity-menghi' in i9_text
+          and 'Blocked' in i9_text and 'Interleaved' in i9_text
+          and '规则关系' in i9_text and '顺序' in i9_text,
+          'I9 must preserve similarity x schedule experiment and its evidence limit')
     check(all(term in i9_text for term in
               ('Blocked','Interleaved','Random Interleaved','规则形成','规则辨别','LoRA','I7','P0','P1','P2')),
           'I9 nearest-work, state mechanism or controlled experiments missing')
