@@ -1195,6 +1195,155 @@
           "verification": "Personality and Social Psychology Review / PubMed 官方期刊记录已核对"
         }
       ]
+    },
+    {
+      "paper_id": "nature2025-centaur-binz",
+      "target_short_title": "Centaur · Nature 2025",
+      "target_venue": "Nature 644, 1002–1009 (2025) · DOI 10.1038/s41586-025-09215-4",
+      "source_related_sections": "Introduction / Discussion / Methods / references / Figure 3",
+      "one_sentence": "Binz et al. (ICLR 2024) 已探索将 LLM 变成认知行为模型；Centaur 将这一方向扩展到 160 项实验和多层 OOD、开放环与脑活动分析。StudentSim 则进一步模拟个体学生的即时指导响应，但两者都没有直接预测 LLM 真实权重更新后的持久学习收益。",
+      "reading_takeaway": "Centaur 的进步是规模、统一语言轨迹和跨范式预测证据；模拟学生如何立即回应教师已有 StudentSim 前作。I2 要保留的不同问题是教学方式对真实学习后的独立新能力是否可事前预测。",
+      "scope_note": "三篇 closest：ICLR 2024 认知模型原型、StudentSim 指导后响应、SOAR 真实试训教师奖励；两篇 contextual：LESS 梯度近似、学生模拟真实性。它们的数据对象和评测不同，没有同一基准上的直接数值排名。",
+      "evidence_gap": "Centaur 的 NLL 与开放环不评估真实学生 LoRA/Skill 更新；StudentSim 的 F/R 是即时行为响应，SOAR 的真实试训成本高；尚缺等预算、同检查点、独立未见题净学习收益预测的决定性证据。",
+      "evolution": [
+        {
+          "period": "2024 · LLM → Cognitive Model",
+          "summary": "Binz & Schulz 用少数心理学实验行为微调 LLM，已显示有限任务及某些未见任务的人类行为拟合优势。",
+          "source_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/84b686f7cc7b7751e9aaac0da74f755a-Abstract-Conference.html"
+        },
+        {
+          "period": "2025 · Centaur",
+          "summary": "Psych-101 统一160项实验，使行为预测器跨被试、跨范式，并接受开放环、fMRI与模型辅助发现的不同测试。",
+          "source_url": "https://www.nature.com/articles/s41586-025-09215-4"
+        },
+        {
+          "period": "2026 · StudentSim",
+          "summary": "Microsoft 的学生模拟器同时测具体学生的 Behavioral Fidelity 和接受指导后的 Guidance Responsiveness。",
+          "source_url": "https://www.microsoft.com/en-us/research/publication/studentsim-training-llm-based-student-simulators/"
+        },
+        {
+          "period": "2026 · SOAR",
+          "summary": "SOAR 已让教师通过真实 Student 试训的独立收益学习出题，但需要支付试训成本。",
+          "source_url": "https://proceedings.mlr.press/v306/sundaram26a.html"
+        }
+      ],
+      "works": [
+        {
+          "id": "binz-schulz-iclr2024",
+          "name": "Turning LLMs into Cognitive Models",
+          "full_title": "Turning large language models into cognitive models",
+          "year": 2024,
+          "venue": "ICLR 2024 · Conference",
+          "family": "认知建模 LLM 微调",
+          "distance": "closest",
+          "cited_at": "Nature Introduction/References 的先前研究路线（Binz & Schulz 2024）",
+          "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/84b686f7cc7b7751e9aaac0da74f755a-Abstract-Conference.html",
+          "source_scope": "ICLR 2024 官方会议论文页、摘要与正式论文",
+          "problem": "自然语言 LLM 能否通过心理学行为微调成为可预测人类选择的认知模型？",
+          "update_surface": "LLM 预测器参数与隐表示，不改变真实人类行为",
+          "supervision": "不同实验的人类逐试次选择及行为微调",
+          "model_tasks": "两类人类决策任务与跨任务行为预测",
+          "shared": "二者都把预训练语言模型微调成人类行为预测器，并开始检验跨实验泛化。",
+          "difference": "ICLR 2024 已经验证两个决策领域与初步跨任务预测；Nature Centaur 用 Psych-101 扩展到160项实验、60,092被试，并系统评测三类 OOD、开放环、人脑对齐与机制修订。",
+          "why": "Centaur 不是第一次提出认知模型 LLM 微调，它新的强证据来自规模和测试层次。",
+          "evidence": "ICLR 2024 原论文展示有限跨任务/被试预测；Centaur Figure 2a NLL 0.44 vs Llama 0.58，Figure 3 OOD 与开放环是新增全面评测。",
+          "decisive_test": "在相同160项数据与基座模型上，同预算比较领域分开微调、少数任务迁移与统一行为轨迹微调，明确多少增益来自数据规模。",
+          "relationship": "Centaur 的直接方法前作",
+          "verification": "ICLR 2024 官方大会页及 Nature 引用位置核对"
+        },
+        {
+          "id": "studentsim-2026",
+          "name": "StudentSim",
+          "full_title": "StudentSim: Training LLM-based Student Simulators",
+          "year": 2026,
+          "venue": "Microsoft Research · arXiv 2609.01591 (preprint, September 2026)",
+          "family": "个体学生模拟及即时教学响应",
+          "distance": "closest",
+          "cited_at": "本站2026增补最新近邻；2025 Centaur 不可能在发表时引用 StudentSim",
+          "primary_url": "https://arxiv.org/abs/2609.01591",
+          "source_scope": "arXiv 原始摘要、Microsoft Research 官方项目页与作者仓库",
+          "problem": "怎样同时模拟具体学生原本会犯什么错，以及接受某条自然语言指导后会如何更正？",
+          "update_surface": "学生模拟器的专门化权重；用于教师优化的模拟反馈",
+          "supervision": "真实学生稀疏行为记录和教师指导前后行为",
+          "model_tasks": "国际象棋、二语写作、数学；60位评测学生",
+          "shared": "都建模具体学习者的选择或回答，并跨任务/历史调节预测。",
+          "difference": "Centaur 预测人类在心理学实验历史下下一次行为；StudentSim 更聚焦个体学生的能力拟真与受到教师指导后的即时响应，F/R 分开评价。二者都没有测预测一个真实LLM经过LoRA参数更新后的长期迁移收益。",
+          "why": "若 I2 仅让 LLM 模拟学生看完提示后的修正，它已经与 StudentSim 大量重合；必须把真实更新后的独立学习作为差别。",
+          "evidence": "StudentSim 棋类 F=0.51/R=0.91，GPT-5.4角色扮演0.23/0.72、Maia2 0.45/0.27；这些指标不与 Centaur NLL 同义。",
+          "decisive_test": "从同一学生检查点进行教学提示与真实 LoRA 更新，比较即时 StudentSim 预测和真实跨题学习增益排序，必须按规则族/学生分开测试并计成本。",
+          "relationship": "I2 学生模拟器最重要的碰撞前作",
+          "verification": "Microsoft Research 2026 官方项目及 arXiv 原始摘要核对；仅预印本，不虚构会议"
+        },
+        {
+          "id": "soar-2026",
+          "name": "SOAR · True Student Gain",
+          "full_title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability",
+          "year": 2026,
+          "venue": "ICML 2026 · PMLR 306, pp.117557–117592",
+          "family": "以真实学习结果奖励教师",
+          "distance": "closest",
+          "cited_at": "本站2026增补 RSI 最近邻；Nature 2025 未讨论 SOAR",
+          "primary_url": "https://proceedings.mlr.press/v306/sundaram26a.html",
+          "source_scope": "PMLR ICML 2026 正式出版摘要和作者项目页",
+          "problem": "教师怎样生成使学生摆脱困难题平台期的练习题，而不被当前成功率代理奖励欺骗？",
+          "update_surface": "教师课程生成策略与学生模型后续真实更新",
+          "supervision": "在同一 Student checkpoint 的短期试训后，困难任务上的独立收益",
+          "model_tasks": "LLM 数学推理困难题与后训练",
+          "shared": "都关心预测/选择学生后续行为的反馈是否可信，且 Student 实际进步是教师有效性的重要证据。",
+          "difference": "SOAR 不用未来收益预测器替代真实试训，而是直接真实更新学生来构造教师奖励；Centaur 是行为拟合，而不是 meta-learning gain predictor。",
+          "why": "预测器是否值得训练，必须在等总成本下战胜更便宜的真实试训与已经可靠的选择方式。",
+          "evidence": "SOAR 实验报告 grounded 学生真实收益比 intrinsic proxy 更稳健；Centaur Figure 2/3 没有任何真实学习后净增益的监督。",
+          "decisive_test": "同一教师候选池与固定 Student checkpoints，比较少量真实试训、简单诊断、代理预测和全试训 oracle 的费用/迁移收益。",
+          "relationship": "真实学生收益标签与教师改进的直接 RSI 前作",
+          "verification": "PMLR ICML 2026 正式出版页核对"
+        },
+        {
+          "id": "less-icml2024",
+          "name": "LESS",
+          "full_title": "LESS: Selecting Influential Data for Targeted Instruction Tuning",
+          "year": 2024,
+          "venue": "ICML 2024 · PMLR 235, pp.54104–54132",
+          "family": "梯度代理预测训练样本影响",
+          "distance": "context",
+          "cited_at": "本站额外纳入学习收益预测的成熟梯度基线，并非 Centaur 引用的同任务实验",
+          "primary_url": "https://proceedings.mlr.press/v235/xia24c.html",
+          "source_scope": "PMLR ICML 2024 正式论文摘要",
+          "problem": "如何低成本估计哪些训练样本会提升某种指定任务能力？",
+          "update_surface": "数据选择策略，训练目标为后续模型权重更新",
+          "supervision": "优化器感知的低秩梯度相似度与小规模能力示例",
+          "model_tasks": "LLM instruction tuning 与定向下游技能",
+          "shared": "都希望在完整训练之前，从额外信号推断会发生什么；但实际预测目标不同。",
+          "difference": "LESS 不拟合人类行为，而用梯度代理选择有影响力的训练数据；Centaur 不考虑真实后训练收益，I2 应把 LESS 当作廉价量化基线。",
+          "why": "如果梯度分数或先修知识探针已经能预测教学收益，复杂学习者模型没有新的计算价值。",
+          "evidence": "LESS 在部分下游任务用选出的5%训练数据可优于使用全部数据，但它不是针对某个持续成长学生的个性化教法预测实验。",
+          "decisive_test": "固定同一学生、同一个目标规则族、相同 LoRA 更新器，比较 LESS 梯度分数与状态敏感的教学收益预测，计入梯度提取成本。",
+          "relationship": "低成本训练价值预测的背景竞争线",
+          "verification": "PMLR ICML 2024 官方正文摘要核对"
+        },
+        {
+          "id": "valid-student-simulation-2026",
+          "name": "Towards Valid Student Simulation",
+          "full_title": "Towards Valid Student Simulation with Large Language Models",
+          "year": 2026,
+          "venue": "arXiv 2601.05473 · conceptual framework (January 2026)",
+          "family": "学生模拟器有效性评测原则",
+          "distance": "context",
+          "cited_at": "本站对当前研究范围补充；Centaur 发表时尚无此稿",
+          "primary_url": "https://arxiv.org/abs/2601.05473",
+          "source_scope": "arXiv 原始摘要：ESS / competence paradox / Epistemic Fidelity",
+          "problem": "让能力很强的基础LLM模拟不完全掌握知识的学生时，如何避免给出不真实的错误与学习轨迹？",
+          "update_surface": "模拟学生的可用知识与错误状态约束，非真实学习者参数",
+          "supervision": "模拟行为的证据边界和 Epistemic State Specification (ESS)",
+          "model_tasks": "教育学 LLM 学生模拟研究框架",
+          "shared": "同样重视模拟器应忠实于目标学习者的真实能力，不可只产生流畅回答。",
+          "difference": "该文主要是设计/测量框架而非训练新模拟器；Centaur 给出跨160项实验的行为预测结果；I2 还需真实 LoRA 更新后的独立迁移验证。",
+          "why": "模拟器表现像学生不意味着它能预言学生真实训练会学到什么；能力约束和训练结果正确性是不同问题。",
+          "evidence": "文章提出 ESS 和 competence paradox 机制边界，尚无与 Centaur/Nature 等价的大规模行为模型实验。",
+          "decisive_test": "测验是否可通过改变学生状态而不改变任务表面，将模拟器即时回答的准确性和对真实训练收益的预测分离。",
+          "relationship": "背景性有效性框架，不当成直接性能 SOTA",
+          "verification": "2026-01 arXiv 摘要核对"
+        }
+      ]
     }
   ]
 }

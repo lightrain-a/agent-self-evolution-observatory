@@ -13499,6 +13499,194 @@
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12957312/",
         "code": "https://github.com/kathytian-kx/DomainSpecific_SchemaReuse"
       }
+    },
+    {
+      "id": "nature2025-centaur-binz",
+      "short_title": "Centaur · Nature 2025",
+      "title": "A foundation model to predict and capture human cognition",
+      "authors": "Marcel Binz et al. · Eric Schulz (senior author)",
+      "lead_institution": "Helmholtz Munich · Institute for Human-Centered AI",
+      "institutions": [
+        "Helmholtz Munich · Institute for Human-Centered AI",
+        "University of Tübingen",
+        "Max Planck Institute for Biological Cybernetics",
+        "Princeton University",
+        "New York University",
+        "University of California San Diego"
+      ],
+      "institution_source": "Nature 2025 正式论文 PDF p.1：作者机构 1–18；此处仅列代表机构，完整联合署名见官方论文",
+      "publication": "Nature · 644, 1002–1009 (2025) · Published online 2 July 2025",
+      "doi": "10.1038/s41586-025-09215-4",
+      "official_url": "https://www.nature.com/articles/s41586-025-09215-4",
+      "first_posted": "2025-07-02",
+      "version": "Nature version of record · 2025-07-02",
+      "read_on": "2026-10-28",
+      "reading_level": "Nature 正式正文及 Figures 1–5、Extended Data Fig. 4、Methods、Data/Code availability 核对；未独立复现",
+      "tags": [
+        "Human Cognition",
+        "Centaur",
+        "Psych-101",
+        "Behavior Prediction",
+        "Student Model",
+        "Teaching Response",
+        "I2"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "用真实人类逐次响应的条件概率及真实行为统计检测预测器，分别测试留出被试、改故事、改结构、未见范式和自主模拟轨迹。",
+          "open_question": "选择 NLL 下降不能直接确认预测了真实学习后独立能力增益，也未优化自主变化的教学评分器。"
+        },
+        "novelty": {
+          "level": "not_addressed",
+          "contribution": "训练材料是既有人类心理学实验的动作与反馈，不是自主发明新知识或给学生合成新课程。",
+          "open_question": "未来学习者模型须验证指导是否真的带来新能力，而不是重述训练时可见的正确行为。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "在自然语言描述下预测没有见过的故事与实验结构，甚至逻辑推理中的人类选择。",
+          "open_question": "未证明 LLM 训练之后增加自身可采样正确解法集合，逻辑领域相对于行为微调新但不一定相对于预训练新。"
+        },
+        "retention": {
+          "level": "not_addressed",
+          "contribution": "对未见实验及部分逐步开放环模拟具有行为分布泛化，但没有研究学生真实 LoRA 更新后跨轮旧能力保持。",
+          "open_question": "不能将长程行为模拟视为持续参数学习，更未测试教学后的遗忘与未来学习速度。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "认知模型与开放人类行为数据研究，没有研究 Agent 真实权限、安全约束或恶意教学。",
+          "open_question": "预测器不得成为自动放宽授权、修改可信评价或跳过真实独立验证的理由。"
+        }
+      },
+      "one_sentence": "把 160 项人类实验统一为语言轨迹后，一个 LLM 能跨实验预测下一步行为；预测回答仍不同于预测真实教学后的持久学习。",
+      "story": {
+        "challenge": "心理学模型多按任务单独构建，往往难以预测另一种实验里的人的选择。能否只靠实验说明和历史行为建立统一的预测器？",
+        "insight": "不同实验虽然输入形式不同，却都包含“情境—动作—反馈—下一步”；用自然语言统一这些序列，预训练模型可以学习跨范式行为规律。",
+        "design": "把 160 项实验的 1,068 万次选择转成 Psych-101，在 Llama 3.1 70B 上用 QLoRA 微调，再测未见被试、改故事、改结构与新领域。",
+        "result": "留出被试 NLL 为 0.44，低于原始 Llama 的 0.58 和专用模型的 0.56；改故事、改结构和新逻辑任务上仍有优势。"
+      },
+      "problem": "从狭窄的认知模型走向可跨实验预测人类行为的通用模型：先建立可复用的行为序列格式，再分别判断单步预测、未见实验、开放环轨迹和科学理论改进。",
+      "setup": "Psych-101 收录 160 项实验、60,092 名参与者、10,681,650 次选择、253,597,411 文本 token；每实验按参与者 90%/10% 训练/测试。Llama 3.1 70B 以 QLoRA rank=8 微调全部非 embedding 线性层（0.15% 参数），训练 1 epoch，只对人类响应 tokens 计算损失。使用 NLL、开放环模拟、O.O.D.、神经数据表征对齐、模型辅助理论修订。",
+      "updates": "Centaur 自己的更新对象是认知行为预测器的 LoRA adapter，而不是被模拟的每个人的参数；模型在实验内滚动预测人类行为，不意味着它执行人类/LLM 教学者的持久参数更新。",
+      "key_ideas": [
+        {
+          "name": "统一行为格式",
+          "summary": "把不同认知实验转成有任务说明、行动历史、反馈和下一步选择的统一自然语言序列。",
+          "formula": "p(next human response | experiment, choices, outcomes, history)"
+        },
+        {
+          "name": "单步预测与开放环预测分离",
+          "summary": "用真实历史条件评估 NLL，再让模型以自己的生成选择继续推进，检验长期行为分布是否仍像人类。",
+          "formula": "teacher-forced prediction ≠ self-conditioned open-loop trajectory"
+        },
+        {
+          "name": "预测器作为科学反例定位器",
+          "summary": "利用 Centaur 与简单启发式模型的分歧找到旧机制解释不了的案例，再由研究者修订可解释模型。",
+          "formula": "AIC: initial heuristic 181.7 → refined heuristic 71.7 (Centaur 72.5)"
+        }
+      ],
+      "evidence": [
+        "Figure 1：Psych-101 包含 160 个实验、60,092 位被试、10,681,650 次选择、253,597,411 tokens；QLoRA rank 8，0.15% 新参数；只在响应 token 上训练一个 epoch。",
+        "Figure 2a：已见实验范式的 10% 留出被试上，平均 NLL（越低越好）：Centaur 0.44、Llama 0.58、专用认知模型 0.56。NLL 不是正确率；专用模型只覆盖有实现基线的实验。",
+        "Figure 2b/d：Horizon 任务开放环奖励 Centaur 54.12±2.89、人类 52.78±2.90，预设±3边界内等效性检验 p=0.02；人工代理 vs 人类的社会预测正确率 Centaur 35% vs 64%。",
+        "Figure 3：故事改写 NLL Centaur/Llama/专用模型=0.51/0.63/0.61；三选项任务 0.42/0.62/0.98；从未进入 Psych-101 行为微调的逻辑推理 1.65/1.92（无专用模型）。",
+        "Extended Data Fig. 4：另有6种未见实验类别；其中深层序贯决策与基础 Llama 的差异 p=0.144，不能称所有 OOD 条件均有显著优势。",
+        "Figure 4：在两步任务脑信号与句子阅读 fMRI 检验内部表示；跨层聚合的模型微调提升 β=0.007、p=0.045，而每个单独层不显著。行为神经相关不是机制同一。",
+        "Figure 5：由 DeepSeek-R1 提出、研究者形式化的初始启发式 AIC=181.7；Centaur AIC=72.5；利用差异案例修订后的可解释组合模型 AIC=71.7，Pxp=0.83。不是 Centaur 独自做了全自动理论发现。"
+      ],
+      "boundaries": [
+        "最强证据是预测人类行为分布及部分未见范式；未证明可以预测真实 LLM 经相同教学和固定 LoRA/Skill 更新后的未见题净增益。",
+        "“逻辑推理新领域”指 Psych-101 行为微调数据未包括相关实验，不代表 Llama 预训练完全没见过逻辑知识。",
+        "0.44、0.58、0.56 是负对数似然，不是 44%/58%/56% 的做题准确率；实验间和图间的 NLL 不应随意当成同等任务性能。",
+        "开放环任务比较的是生成行为统计，未改变被模拟的人类或学生模型的真实学习参数；短期响应预测不等于持久学习。",
+        "fMRI 对齐是统计相关，跨层整体显著、逐层不显著，不能声称 Centaur 与人类使用同一神经算法。",
+        "全新范式并非全部显著超过基础 Llama（深序列决策 p=0.144）；不能把“任何实验”当成已经穷尽验证的能力。",
+        "作者公布 Psych-101 训练集、受访问控制的测试集、QLoRA adapter 和代码；测试集的使用许可与训练集不同。"
+      ],
+      "our_relevance": [
+        "I2（主线）：Centaur 证明可由跨任务序列预测学习者当前行为，不能直接推出哪些教法在真实更新后最好。需要 Learner State × Teaching Intervention × Update Contract 的配对真实训练收益标签。",
+        "StudentSim（2026）是必须对照的最近邻：已经模拟个体学生的错误与接受指导后的即时修正；不能把“学生回答拟真+响应教学”当成新颖性。",
+        "SOAR（ICML 2026）已用真实学生试训收益奖励教师；如果预测器不能比少量真实试训、P50 或梯度代理更节省总预算，就没理由额外训练。",
+        "I6/I8 可借鉴同模型状态下的真实更新前测与分布外预测，但不得将 I2 的教法选择混成选失败轨迹或错误类型的主线。"
+      ],
+      "next_test": "P0：同一学生模型的两个知识状态检查点 × 10 个规则族 × 3种教学（Answer-only、Rule Explanation、Diagnostic Counterexample）× 2 seeds，等预算 LoRA 更新并清空提示独立后测；先证明状态×教学方式存在可重复交互。P1：在随机/固定教法、当前正确率/P50、先修知识探针、LESS 梯度分数、StudentSim 式即时响应与少量真实试训对照下，预测新规则迁移、旧能力回归、总成本。失败则保留 I2 的研究问题，不新增学习者模拟器。",
+      "deep_read": {
+        "focus": "一篇预测人类行为的基础模型，不是已经能预言 LLM 经过教学和真实参数更新的学习收益；关键要分清五个证据层级与必须的最近邻 StudentSim。",
+        "metric_summary_title": "五层证据 · 从预测行为到修订理论",
+        "metric_summary_intro": "下列结果来自 Nature 原论文不同图/任务；NLL、奖励、AIC、脑信号并非同一指标，也不能横向比较数值大小。展开下面的章节查看每项实验和局限。",
+        "metric_summary": [
+          {
+            "family": "① 留出被试",
+            "metrics": "Figure 2a · 平均 NLL",
+            "meaning": "在已出现过的实验范式上，预测没见过的人怎样选择。",
+            "result": "Centaur 0.44 / 原 Llama 0.58 / 专用认知模型 0.56（越低越好）"
+          },
+          {
+            "family": "② 未见实验",
+            "metrics": "Figure 3 · OOD NLL",
+            "meaning": "改故事、改选择结构和行为微调数据没出现过的逻辑领域。",
+            "result": "故事 0.51 vs 0.63；三选项 0.42 vs 0.62；逻辑 1.65 vs 1.92（Centaur vs Llama）"
+          },
+          {
+            "family": "③ 自主轨迹",
+            "metrics": "Figure 2b–d · 开放环",
+            "meaning": "不再喂真实人的下一步行为，而用模型自己生成的动作续跑。",
+            "result": "Horizon 奖励人类 52.78±2.90、Centaur 54.12±2.89，等效性检验 p=0.02"
+          },
+          {
+            "family": "④ 神经表征",
+            "metrics": "Figure 4 · fMRI",
+            "meaning": "行为微调是否改变模型表示与人脑活动的线性对应关系。",
+            "result": "跨层 β=0.007、p=0.045；逐个网络层未达显著"
+          },
+          {
+            "family": "⑤ 科学模型",
+            "metrics": "Figure 5 · AIC",
+            "meaning": "通过预测器揭示旧理论解释不了的案例，再修订可解释规则。",
+            "result": "R1 初版启发式 181.7 → 修订后 71.7；Centaur 72.5（越低越好）"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Psych-101",
+            "meaning": "统一转换为自然语言的多范式心理学逐试次行为库，不是一个单独的问答 benchmark"
+          },
+          {
+            "name": "NLL / Open-loop",
+            "meaning": "NLL 评价给真实选择分配概率是否合理；开放环还要让模型自己的决策反复成为下一轮历史"
+          },
+          {
+            "name": "Learner Response Model（本站建议）",
+            "meaning": "预测真实学生在固定更新器接受某种教学后会有什么独立新能力；这不是 Centaur 已实现的模型"
+          }
+        ],
+        "summary": [
+          "160 项实验/60,092 位被试的 1,068 万次选择，统一序列化后可以让 Llama 70B 更好预测已见和部分未见范式的人的下一步选择。",
+          "对未见故事/任务结构/新领域都有优于基座的 NLL，但不是所有 OOD 条件显著；开放环更强的模拟测试也有清晰任务边界。",
+          "学生模拟器 StudentSim 已研究即时指导响应；我们只有证明真实 LoRA/Skill 更新后的独立学习收益可在训练前准确预测，才有可能形成区别于已有工作的 RSI 贡献。"
+        ],
+        "sections": [
+          {"id":"challenge-unified-cognition","stage":"challenge","title":"为什么专门的认知模型很难预测另一种实验？","blocks":[{"type":"prose","text":"多臂老虎机可用 RL 模型、风险选择可用效用模型、类别学习可用类别模型解释，但一套模型常不能直接预测完全不同任务中的人。作者的科学问题是：把心理学实验都写成自然语言，能否用同一个预训练模型学习人类行为规律，并预测不在训练数据中的实验？"},{"type":"table","headers":["区分的三个任务","评估的对象","不能混作"],"rows":[["预测已见范式中的新被试","条件于真实的过往行为，预测下一次人类选择","训练集上拟合参与者的记忆"],["预测改变后的新范式","改故事、改选项结构、逻辑领域的真实人类选择","证明模型从头掌握新学科"],["让模型持续模拟","自己生成的选择反复输入下一轮，比较整段轨迹统计","学生 LLM 完成参数更新后的学习收益"]]},{"type":"callout","kind":"boundary","label":"本文“预测认知”与“让学生真正学会”不同","text":"Centaur 本身的 LoRA 被训练来拟合人类行为；被模拟的某个人、某个学生或 Agent 并没有因此被作者实际训练更新。这是迁移到 RSI 时必须保留的界限。"}]},
+          {"id":"insight-common-language","stage":"insight","title":"一个简单但关键的洞察：不同实验都有动作与反馈历史","blocks":[{"type":"prose","text":"Psych-101 将情境说明、可选动作、参与者的具体选择以及后果转成同一种语言序列。模型不必为每一种实验重新编写输入编码器，已有 LLM 又带有关于语言和世界的大量预训练知识。跨任务统一表达使它有机会提取反复出现的行为模式。"},{"type":"formula","label":"Centaur 的核心预测量（教学性简写）","expression":"p(human_actionₜ | task_instruction, action_and_feedback_history₁:ₜ₋₁)","meaning":"预测一个人在当前情境和过去反馈下下次会选什么；训练只对真实响应的 tokens 计算交叉熵。","boundary":"公式是对论文训练目标的简化描述，不是作者提出的专门心理学机制方程，也没有包含 LoRA 参数更新后学习收益。"},{"type":"callout","kind":"insight","label":"统一输入格式的重要性","text":"真正值得学的不是把所有问题说成一样，而是把异构实验都整理成能够判定“什么历史让下一次选择不同”的序列数据。原文仍需依赖实验提供的正确流程及行为数据。"}]},
+          {"id":"dataset-and-training","stage":"design","order":1,"title":"Figure 1：Psych-101 怎样构建？Centaur 怎样训练？","blocks":[{"type":"table","headers":["原文数量/配置","值","说明"],"rows":[["心理学实验","160 项","选择、记忆、强化学习、类别学习和多步骤序列决策"],["人类参与者","60,092 人","独立研究中汇总，实验与被试分离"],["逐次人类选择","10,681,650 次","不是一千万个不同的理论问题"],["序列化语言长度","253,597,411 tokens","实验描述、历史和行动响应，非仅动作数"],["骨干模型","Llama 3.1 70B","原有预训练知识会影响新范式能力"],["QLoRA","rank=8 · 0.15% trainable","非 embedding 线性层增加低秩适配器，基座冻结"],["训练","1 epoch · 只对回答 token 计损失","作者报告约一张 A100 80GB 上训练五天"]]},{"type":"steps","items":[{"title":"统一每个实验的说明与选项","text":"多臂老虎机、记忆、监督学习、两步决策等实验先转成语言化的逐试次轨迹。"},{"title":"分离被试并用 QLoRA 拟合选择","text":"每个实验约90%的被试用于训练，10%留出；模型预测真实的人类选择，历史由真实记录提供。"},{"title":"分别做未见被试、未见范式和开放环测验","text":"先衡量给真实历史时的条件概率，再让模型自己走完整段，最后检查改变故事/规则结构/实验领域后的泛化。"}]},{"type":"callout","kind":"boundary","label":"数据公开范围","text":"Psych-101 训练数据和 LoRA 适配器有公开地址，测试数据通过 gated 访问并受 CC-BY-ND-4.0 许可约束；不能把开放链接理解成所有数据都能自由二次分发。"}]},
+          {"id":"evaluation-contract","stage":"design","order":2,"title":"Figure 2 和 Figure 3 如何设计不泄漏的预测评测？","blocks":[{"type":"table","headers":["评测层级","历史是否来自真实人类？","评测是否在行为微调中出现过？"],"rows":[["留出参与者 · Figure 2a","是，真实参与者前面的选择作条件","实验范式见过，人没见过"],["改故事 · Figure 3a","是","外层规则近似相同，故事没见过"],["三选项 · Figure 3b","是","该具体三选项范式未见过，但训练中有其他多臂数目"],["逻辑推理 · Figure 3c","是","Psych-101 行为微调刻意排除逻辑推理实验"],["开放环 · Figure 2b–d","否，模型生成选择会进入下一轮历史","检验长轨迹生成的分布，而不是人真实经过训练后能力如何变化"]]},{"type":"formula","label":"用来比较人类响应预测的 NLL","expression":"NLL = − E_human[ log p_model(actual_response | observed_history) ]","meaning":"对真实人类做出的选择分配的概率越大，NLL 越低。0.44 绝对不是 44% 的做题正确率。","boundary":"不同实验的选择空间和回答长度不一样，不能随意把故事、逻辑与三选项条件的 NLL 跨任务当成绝对胜负指标。"}]},
+          {"id":"heldout-results","stage":"result","order":1,"title":"Figure 2：留出被试时，Centaur 的真实行为 NLL 有多好？","blocks":[{"type":"table","headers":["Figure 2a · 已见范式／未见被试","平均 NLL","方向"],"rows":[["Centaur · 70B + Psych-101 QLoRA","0.44","最好（越低越好）"],["基础 Llama 3.1 70B","0.58","比 Centaur 高 0.14"],["专用心理学认知模型","0.56","比 Centaur 高约 0.12–0.13"]],"caption":"专用模型只覆盖论文实现的可比范式；原文图2a中有 992,867 个响应，不能把这一子集和 Psych-101 总选择数混为一谈。"},{"type":"prose","text":"作者逐次计算真实人类回答的概率，并在约90/10的独立被试划分上评价。Centaur 在有专用认知模型比较的实验中，除一项外均取得更好平均拟合。此处确实验证了“同类实验、不同人”的行为预测能力。"},{"type":"callout","kind":"boundary","label":"为什么 NLL 不等于知识掌握分数","text":"模型猜测某个参与者会选择错误选项，也可能是正确预测人的行为。NLL 不是任务正确率，所以不能据此宣称 Centaur 比人类更会做每一种心理学实验。"}]},
+          {"id":"ood-results","stage":"result","order":2,"title":"Figure 3：改故事、改任务结构、换新领域，三种泛化有何差异？","blocks":[{"type":"table","headers":["跨分布外条件","Centaur NLL","原 Llama NLL","专用认知模型 NLL"],"rows":[["飞船 → 魔毯 · 改故事","0.51","0.63","0.61"],["两选项 → 新三选项范式","0.42","0.62","0.98"],["逻辑推理新领域（LSAT 类型）","1.65","1.92","无对应模型"]],"caption":"作者原文 Figure 3a–c，不同任务可选项数量不同，数字只应在同行条件内比较；论文并未声称逻辑能力是从零产生。"},{"type":"evidence","items":[{"domain":"Cover-story generalization","setup":"两步任务的经典飞船故事已在 Psych-101 内；新魔毯故事未在训练实验中。","result":"Centaur 0.51、Llama 0.63、传统混合 RL 模型 0.61。","supports":"自然语言中不同故事外观的行为泛化。","not_proven":"所有规则结构发生实质变化时仍能预测。"},{"domain":"Structural modification","setup":"Maggie's Farm：Horizon 范式从两臂改为三臂；数据中并非从未出现其它臂数的赌博任务。","result":"Centaur 0.42、Llama 0.62、专用模型 0.98。","supports":"对未见具体三臂范式的行为迁移。","not_proven":"面对任意多臂数或全新游戏规则同样可靠。"},{"domain":"Novel cognitive domain","setup":"Psych-101 行为微调刻意不包含逻辑推理实验。","result":"Centaur NLL 1.65 vs Llama 1.92。","supports":"认知微调使基座在行为训练未见的新实验领域更符合人类选择。","not_proven":"Llama 预训练从未见过任何逻辑题或产生全新逻辑知识。"}]},{"type":"callout","kind":"boundary","label":"不是全部未见任务都显著优于基座","text":"Extended Data Figure 4 进一步检验6种未见范式，但深层序贯决策的 Centaur 与原 Llama 比较 p=0.144；不可写成所有6种均显著获胜。"}]},
+          {"id":"openloop-simulation","stage":"result","order":3,"title":"Figure 2b–d：预测下一步，与自己模拟完整轨迹是两种难度","blocks":[{"type":"table","headers":["开放环实验","Centaur","人类或对照","评价"],"rows":[["Horizon 两臂老虎机平均奖励","54.12±2.89","人类 52.78±2.90","±3 奖励内等效性检验 p=0.02"],["预测真实人类游戏中的下一步","64%","—","可较好预测人类行为"],["预测统计特征匹配的人工 Agent","35%","—","没有简单把所有轨迹都预测成一样"]]},{"type":"prose","text":"开放环中，模型生成的回答与后果反复作为下一轮上下文，让早期偏差有机会累积。作者同时比较模型在探索奖励、model-based/model-free 两步任务和社会预测任务上的轨迹分布。"},{"type":"callout","kind":"insight","label":"为什么它更接近我们关心的动态预测","text":"如果只在给定真实历史时预测得好，模拟器可能在自己生成几步后迅速偏移。开放环提供更严格的行为动态测验。但人类/模型本身并未接受真实权重更新，仍不能替代“教学后学生真正学会了什么”。"}]},
+          {"id":"fmri-and-response-times","stage":"result","order":4,"title":"Figure 4：行为预测好，是不是就采用了人脑的学习机制？","blocks":[{"type":"table","headers":["作者分析","报告的关键结果","能支持什么"],"rows":[["反应时（约400万条记录）","混合模型条件 R²：Centaur 0.87、Llama 0.75、认知模型 0.77","Centaur 的响应熵可以更好解释人的反应耗时"],["fMRI 两步任务与句子阅读","跨层元分析 β=0.007，p=0.045","行为微调后表示与脑活动的线性对应有小幅改善"],["分别检验单个 LLM 层","逐层未达显著","不能断言每一层都出现了可靠神经机制相似性"]]},{"type":"callout","kind":"boundary","label":"“和人脑更像”仍然是统计对应","text":"行为预测的网络隐表示可更好预测某些脑信号，不等于 Centaur 真的使用与人类相同的神经算法；没有直接操纵人脑相应表征来验证因果机制。"}]},
+          {"id":"scientific-discovery","stage":"result","order":5,"title":"Figure 5：为什么高性能模拟器也能帮助改进一条简单理论？","blocks":[{"type":"steps","items":[{"title":"让 DeepSeek-R1 解释一个多属性选择实验","text":"它提出一条可解释规则：先数正面专家评分，多数相同时看最可靠专家。研究者将其形式化。"},{"title":"让 Centaur 检查“简单规则解释不了、但有规律”的选择","text":"比较两模型对真实人类选择的对数似然，发现一批被试会重视可靠专家，即使专家总体支持数较少。"},{"title":"把硬切换改为有权重的组合","text":"研究者根据这些反例，把“两个启发式二选一”改成“两个启发式可连续混合”。"}]},{"type":"table","headers":["Figure 5 · 该实验的模型","AIC（越低越好）"],"rows":[["DeepSeek-R1 初步启发式","181.7"],["Centaur","72.5"],["基于差异案例修订的解释性模型","71.7"]]},{"type":"callout","kind":"paper","label":"可迁移的研究组织方式","text":"高容量预测器不需要代替机制论文。它可以找出传统规则在真实行为上可解释不足的样本，再帮助提出更简单、可验证的新机制。形式化、检查和修订仍由研究者参与，不是全自动“科学发现”。"}]},
+          {"id":"simulation-is-not-learning","stage":"next","order":1,"title":"与 StudentSim：预测学生当前回答，为什么不等于预测真学习？","blocks":[{"type":"table","headers":["工作与层级","预测或优化的对象","当前证据能支持到哪里"],"rows":[["Centaur · Nature 2025","给定实验历史后的人类下一步选择，以及部分开放环行为轨迹","跨人、跨故事、跨实验的人类行为预测"],["StudentSim · Microsoft 2026","某个具体学生的错误与指导后即时修正行为","棋类/语言/数学的学生拟真和指导响应；尚不是对 LLM 参数更新的收益预测"],["SOAR · ICML 2026","教师生成的练习题经过学生真实试训后带来的收益","真实更新可用来奖励教师，但每轮试训成本高"],["I2 · 本站研究提案","学生状态 × 教学方式 × 固定更新器后的新题净学习收益","尚未验证，不能把它说成现有 Centaur 或 StudentSim 已证明"]]},{"type":"callout","kind":"boundary","label":"StudentSim 不是一个可以略过的小前作","text":"StudentSim 已有 Behavioral Fidelity / Guidance Responsiveness 双指标，还用学生模拟奖励训练教师。我们的独立研究价值只能来自真实 LoRA/Skill 更新之后的独立学习收益及预算节约，而不是再做一个 LLM 角色扮演学生。"}]},
+          {"id":"rsi-learner-model","stage":"next","order":2,"title":"I2 的下一步：先证明“学习状态×教学方式”确实影响真学习","blocks":[{"type":"formula","label":"研究提案，不是 Centaur 的原论文目标","expression":"ΔLearn(θ,d,u)=Acc_unseen(Update(θ,d,u))−Acc_unseen(θ)","meaning":"θ 为固定学生检查点，d 为候选教学，u 是统一的 LoRA/Skill 更新协议；独立测试题必须对教学与模型预测器保密。","boundary":"旧能力回归与诊断、训练成本要另外报告；不能用模型当场改正的答案代替这个变量。"},{"type":"tests","items":[{"name":"P0 · 先验证学生状态与教学方式的交互是否存在","design":"同一开源学生模型取两个前置知识状态、10个独立数学规则族、三种等预算教学（只给答案/解释规则/辨别反例），每格2个随机种子。每次从相同检查点做真实 LoRA 更新，撤去示范后测未见异结构同规则题及旧能力保持。","decisive":"在控制当前正确率、题目族和训练成本后，不同学生状态的最佳教学选择仍存在稳定可复现的交互；如果没有，先不要训练 Learner Response Model。"},{"name":"P1 · 真正训练前预测真实更新后收益","design":"若 P0 成立，采集独立开发规则族上的真实更新收益标签；用学生历史、独立知识探针、教学类型、固定更新器预测每种候选的净增益。比较 Random/Fixed、当前正确率/P50、先修知识、LESS 梯度、StudentSim 式当场响应、少量真实试训。","decisive":"在从未见过的规则族/检查点上，同总 FLOPs/Token 预算选择的教学方案优于简单基线，预测器的训练和探针成本也计入总账。"},{"name":"P2 · 才讨论持续变化的学习者","design":"当学生从 θₜ 更新到 θₜ₊₁ 后，用冻结的预测器重新预测不同教法的收益；对照固定旧教法和只用即时回答的模拟器。","decisive":"跨多个真实学生版本仍然预测后续未见题独立增益和旧能力回归，而非只利用某轮训练数据泄漏标签。"}]},{"type":"callout","kind":"boundary","label":"保持 I2 原有研究主线","text":"I2 仍然研究学生真实回应是否给教师提供增量信息以及教师能否随学生成长改进教法。Centaur 是行为建模机制参考，StudentSim 是最重要的近邻；预测器若无独立增量价值，就不单开 Idea 或增加复杂路由器。"}]}
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41586-025-09215-4",
+        "pdf": "https://www.nature.com/articles/s41586-025-09215-4.pdf",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12390832/",
+        "code": "https://github.com/marcelbinz/Llama-3.1-Centaur-70B",
+        "data": "https://huggingface.co/datasets/marcelbinz/Psych-101",
+        "adapter": "https://huggingface.co/marcelbinz/Llama-3.1-Centaur-70B-adapter"
+      }
     }
   ]
 }

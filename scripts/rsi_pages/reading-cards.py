@@ -119,7 +119,7 @@ def reading_card(p: dict) -> str:
     )
     external_links = "".join(
         f'<a class="link-btn" href="{esc(url)}" target="_blank" rel="noopener noreferrer">{label}</a>'
-        for key, label in (("html", "论文原文"), ("pdf", "PDF"), ("code", "代码"), ("data", "公开数据"), ("full_text", "开放全文"))
+        for key, label in (("html", "论文原文"), ("pdf", "PDF"), ("code", "代码"), ("data", "公开数据"), ("adapter", "模型适配器"), ("full_text", "开放全文"))
         if (url := p["links"].get(key))
     )
     coverage = "|".join(f'{q["id"]}:{p["research_coverage"][q["id"]]["level"]}' for q in QUESTIONS)

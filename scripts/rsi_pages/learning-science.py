@@ -9,6 +9,16 @@ PAGE = {
 <p><b>容易漏掉的两项结果：</b>IF / OF 中 Ignore 比例约 <b>46.26% / 47.32%</b>，Copy 约 <b>32.84% / 41.07%</b>，Apply 约 <b>20.90% / 11.61%</b>。研究发现 IF 的 <strong>Apply 数量</strong>和反馈总量较高，但不能直接把百分比差异或脑同步视为“互动必然让学生理解”的因果证明。Apply 与原题习得指标呈显著正相关，研究<strong>没有观察到 Apply 与迁移成绩的显著直接相关</strong>。[[E27]]</p>
 <p><b>关键测量限制：</b>Ignore / Copy / Apply 是评分者结合<strong>对话和鞋子后测回答</strong>才标出来的。因而它是反馈使用方式的事后编码，不是教师在教学进行中可直接使用的、与后测独立的“学生已掌握”预测信号。真正要研究双向交流的额外信息价值，必须让教学器只读更新前的学生实际回应或独立诊断题，不能在试教期间看最终测试。[[E27]]</p>
 <div class="note"><b>对 RSI 的正交落点：</b><a href="idea-i2.html#dialogue-p0">I2</a> 固定教学伙伴，检验真实学生回应对下一轮教学是否有独立帮助，并训练教师持久更新；<a href="i8.html#insight">I8</a> 固定纠错方式，测接受反馈和跨题净迁移之间的差别；<a href="idea-i5.html">I5</a> 继续研究十个模型的动态换伴，不因这项人类研究改变主线。双向互动、错误解释和学生知识诊断在现有 LLM 文献中均有直接近邻。[[S105]][[S106]][[S103]]</div>'''),
+("centaur-cognitive-model","Nature 2025｜Centaur：会预测下一步，不等于知道学生真的学进了什么",'''
+<p><b>Observable Phenomenon：</b>Binz 等（<i>Nature</i> 2025）将 160 种心理学实验统一为 Psych-101 语言轨迹，涉及 <b>60,092 人、10,681,650 次选择</b>。在 Llama 3.1 70B 进行 rank=8 的 QLoRA 微调后，留出被试上的平均 NLL 为 <b>0.44</b>，优于原始 Llama 的 <b>0.58</b> 和已实现的领域模型 <b>0.56</b>。NLL 是对真实选择的预测概率，不是做题正确率。[[E701]]</p>
+<div class="table-wrap"><table><thead><tr><th>预测层级</th><th>论文已经做到的</th><th>I2 还需要什么</th></tr></thead><tbody>
+<tr><td>行为预测</td><td>给定真实历史预测下一次人类选择；能迁移到改故事、三选项任务和行为微调未见过的逻辑任务</td><td>观察当前学生状态时，它真的会怎样回应</td></tr>
+<tr><td>即时教学响应</td><td><b>StudentSim（2026）</b> 已预测个体学生收到自然语言指导后的回答；棋类 F/R=0.51/0.91 [[E702]]</td><td>不能将看完提示后的修正当作持久参数学习</td></tr>
+<tr><td>真实持久学习收益</td><td>Centaur 与 StudentSim 没有测试真实 LLM 经固定 LoRA/Skill 更新后未见题的净增益</td><td>固定学生检查点、候选教法与更新协议，独立测跨题迁移、旧能力回归和总成本</td></tr>
+</tbody></table></div>
+<p><b>Related Work：</b>Binz 与 Schulz 的 <i>ICLR 2024 Turning large language models into cognitive models</i> 已研究行为微调与有限跨实验泛化，Centaur 的推进在于 160 实验和系统 OOD/开放环证据。[[E703]] 2026 年学生模拟有效性研究还提出 <b>competence paradox</b>：强基础 LLM 扮演弱学生时可能不真实地“懂得太多”，因此不能只看语言角色扮演的流畅程度。[[E704]]</p>
+<p><b>对 I2 的最小研究建议：</b>先通过真实试训验证“同水平但知识准备不同的学生，哪种教法更有用”；只有存在交互，才考虑构建更新前收益预测器，并与 <b>SOAR 的真实学生学习收益奖励</b>及 <b>LESS 梯度代理</b>在同一总预算下比较。[[S47]][[M10]] 当前仍是 I2 的机制参考，不单开 Idea、不更换教师或更新器。<a href="reading-notes.html#deep-nature2025-centaur-binz"><b>完整精读：Figure 1–5、未见实验三层测试、StudentSim 最近邻 →</b></a></p>
+'''),
 ("moral-strategy-learning","Nature Human Behaviour 2025｜从动作纠错，到学习依赖哪种决策策略",'''
 <p><b>Challenge：</b>一次好结果究竟强化了“这个动作”，还是强化了产生动作的<strong>整个决策方法</strong>？Maier、Cheung 与 Lieder 将二者拆开：13 次道德两难题中，遵循规则（Rule）和成本—收益推理（CBR）有时对应行动、有时对应不行动，反馈条件则随机控制哪种策略持续得到好结果。四项预注册实验共 <b>2,328 人</b>。[[E311]]</p>
 <p><b>Insight &amp; Design：</b>结果可以更新具体动作的价值，也可能更新上层“下一题依赖 Rule 还是 CBR”的信任。作者比较 model-free / model-based / 无学习 × 行动层 / 策略层的六种计算模型；并用新道德问题、态度量表、真实经济激励捐赠和看似独立的后续实验判断转移。<b>CBR 是被选的策略，不等于元控制器的 model-based 学习</b>。[[E311]]</p>

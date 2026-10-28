@@ -104,16 +104,21 @@ def main():
         check(js("return document.querySelectorAll('.reading-card').length")==len(cards),'Rendered card count does not match registry')
         for paper in cards:
             query=json.dumps(paper['short_title'],ensure_ascii=False)
+            selector=json.dumps('#'+paper['id'])
             js(f"const q=document.querySelector('#reading-card-filter');q.value={query};q.dispatchEvent(new Event('input',{{bubbles:true}}));")
-            check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===1"),'Card search did not uniquely find '+paper['short_title'])
-            check(js("return document.querySelector('.reading-card:not([hidden])').id")==paper['id'],'Card search matched wrong paper: '+paper['id'])
-            check(js("return document.querySelector('.reading-card:not([hidden]) .reading-institution').textContent.includes("+json.dumps(paper['lead_institution'],ensure_ascii=False)+")"),'Institution not visible: '+paper['id'])
-            check(js("return [...document.querySelectorAll('.reading-card:not([hidden]) .reading-story-step')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result'"),
+            # Paper names can occur in nearest-work summaries of other papers.
+            # The search is intentionally full-text, so require the target to be
+            # visible without inventing a uniqueness guarantee for common titles.
+            check(js(f"return !!document.querySelector({selector} + ':not([hidden])')"),
+                  'Card search did not find target '+paper['id'])
+            check(js("return document.querySelector("+selector+"+' .reading-institution').textContent.includes("+json.dumps(paper['lead_institution'],ensure_ascii=False)+")"),'Institution not visible: '+paper['id'])
+            check(js("return [...document.querySelectorAll("+selector+"+' .reading-story-step')].map(s=>s.dataset.storyStage).join(',')==='challenge,insight,design,result'"),
                   'First-read C-I-D-R steps missing or out of order: '+paper['id'])
-            check(js("return !document.querySelector('.reading-card:not([hidden]) .reading-expand').open"),
+            check(js("return !document.querySelector("+selector+"+' .reading-expand').open"),
                   'Dense paper evidence unexpectedly visible on card: '+paper['id'])
-            js("document.querySelector('.reading-card:not([hidden]) .reading-expand').open=true")
-            check(js("return document.querySelector('.reading-card:not([hidden]) .reading-question-details').children.length===5"),'Five-question details incomplete: '+paper['id'])
+            js("document.querySelector("+selector+"+' .reading-expand').open=true")
+            check(js("return document.querySelector("+selector+"+' .reading-question-details').children.length===5"),
+                  'Five-question details incomplete: '+paper['id'])
         js("const q=document.querySelector('#reading-card-filter');q.value='';q.dispatchEvent(new Event('input',{bubbles:true}));")
         for question,level in [('signal','core'),('novelty','partial'),('reach','core'),('retention','core'),('safety','addressed'),('safety','not_addressed')]:
             js(f"const q=document.querySelector('#reading-question-filter');q.value={json.dumps(question)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
@@ -189,6 +194,19 @@ def main():
             for section in paper['deep_read']['sections']:
                 check(js("return document.querySelector("+json.dumps('#'+identifier+'--'+section['id'])+")!==null"),
                       'Deep section missing in browser: '+section['id'])
+        check(js("return document.querySelectorAll('#deep-nature2025-centaur-binz .deep-metric-item').length===5"),
+              'Centaur paper must show five compact, primary-source-grounded evidence layers')
+        check(js("return document.querySelector('#deep-nature2025-centaur-binz .deep-metric-overview').textContent.includes('0.44')"),
+              'Centaur evidence summary missing original held-out NLL')
+        check(js("return document.querySelector('#deep-nature2025-centaur-binz .deep-metric-overview').textContent.includes('1.65')"),
+              'Centaur evidence summary missing actual unseen-domain NLL')
+        check(js("return document.querySelectorAll('#deep-nature2025-centaur-binz--stage-related .deep-related-paper').length===5"),
+              'Centaur deep reading needs five prior-work comparisons, including StudentSim')
+        check(js("return document.querySelector('#deep-nature2025-centaur-binz .deep-source-links').textContent.includes('模型适配器')"),
+              'Centaur LoRA adapter must be linked separately from dataset and code')
+        js("document.querySelector('#deep-nature2025-centaur-binz .deep-metric-overview').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('centaur-five-level-evidence-desktop.png')
         check(js("return document.querySelectorAll('#deep-nhb2025-moral-strategy-maier--experiment-two .deep-table tbody tr').length===5"),
               'Model-family percentages and donation results must be displayed')
         check(js("return document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-three').textContent.includes('p=0.061')"),
@@ -325,7 +343,7 @@ def main():
         nav('rsi/ideas.html')
         ordered_links=js("return [...document.querySelectorAll('#research-nav [data-nav-group=research] .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
         numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I')]
-        check(numbers==[f'I{i}' for i in range(1,10)]+['I11','I12'],f'Published ideas duplicated or not sorted (I10 reserved): {ordered_links}')
+        check(numbers==[f'I{i}' for i in range(1,10)]+['I11','I12','I13'],f'Published ideas duplicated or not sorted (I10 reserved): {ordered_links}')
         check(not any(item['href'] in ('teaching.html','idea-i6.html') for item in ordered_links),'Historical pages should not compete in the sidebar')
         js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
         time.sleep(.3)
@@ -435,7 +453,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':25}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':26}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

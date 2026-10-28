@@ -247,6 +247,34 @@ def main():
         check('reading-notes.html#deep-inventive-production-pf-2023-kapur'
               in (ROOT/'rsi'/page).read_text(encoding='utf-8'),
               'Missing practical RSI cross-link to Inventive Production note: '+page)
+    centaur=next((p for p in cards if p['id']=='nature2025-centaur-binz'),None)
+    check(centaur is not None
+          and centaur.get('doi')=='10.1038/s41586-025-09215-4'
+          and centaur.get('official_url')=='https://www.nature.com/articles/s41586-025-09215-4'
+          and 'Helmholtz Munich' in centaur['lead_institution'],
+          'Centaur Nature 2025 official DOI or leading affiliation is missing')
+    check(all(f'E{i}' in refs for i in (701,702,703,704)),
+          'Centaur, StudentSim, ICLR precursor or simulation-validity primary sources missing')
+    centaur_text=json.dumps(centaur,ensure_ascii=False)
+    check(len(centaur['deep_read']['metric_summary'])==5
+          and len(centaur['deep_read']['sections'])>=10
+          and all(token in centaur_text for token in
+                  ('160','60,092','10,681,650','253,597,411',
+                   '0.15%','rank=8','0.44','0.58','0.56',
+                   '0.51','0.63','0.42','0.62','1.65','1.92',
+                   '54.12','52.78','0.144','0.007','0.045',
+                   '181.7','72.5','71.7','StudentSim',
+                   '独立','持久','不等于')),
+          'Centaur key quantitative evidence and real-update scientific boundary missing')
+    check(centaur['links']['data']=='https://huggingface.co/datasets/marcelbinz/Psych-101'
+          and centaur['links']['adapter']=='https://huggingface.co/marcelbinz/Llama-3.1-Centaur-70B-adapter',
+          'Centaur public data and adapter source links missing')
+    for page in ('learning-science.html','idea-i2.html'):
+        source_html=(ROOT/'rsi'/page).read_text(encoding='utf-8')
+        check('reading-notes.html#deep-nature2025-centaur-binz' in source_html
+              and 'href="references.html#E701"' in source_html
+              and 'href="references.html#E702"' in source_html,
+              'Centaur / StudentSim I2 and learning science cross-links missing on '+page)
     moral=next((p for p in cards if p['id']=='nhb2025-moral-strategy-maier'),None)
     check(moral is not None
           and moral.get('doi')=='10.1038/s41562-025-02271-w'
