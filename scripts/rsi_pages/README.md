@@ -13,7 +13,7 @@
 - **证据与边界**：`evidence`、`boundaries`，分别区分论文报告结果、实现假设、未验证的局限。
 - **研究转化**：`our_relevance`、`next_test`，写可验证的迁移实验，不能表述成原论文已证明的事情。
 - **发现与检索**：`tags` 供归类，站内全局搜索索引和本页筛选由构建流程自动更新。
-- **五类指标专用速览（可选）**：实证测量型论文可以在 `deep_read.metric_summary` 提供恰好五个 `family` / `metrics` / `meaning` / `result` 记录。完整精读正文前显示五项“是什么 + 实验结果”的短表，不必先读长段或展开公式；不同模型、数据集上的改善不得拿来作跨指标强弱排名。示例是 ACL 2026 `What Makes a Good Curriculum?`，其五类包含 10 个具体难度量。
+- **五类指标/五类原因速览（可选）**：要保留的五种实验维度可在 `deep_read.metric_summary` 提供恰好五项 `family` / `metrics` / `meaning` / `result`。`metric_summary_title` / `metric_summary_intro` 可以改成适合论文的白话标题；页面先给读者看“是什么 + 原文对应结果”，详细公式和反例折叠在 Design。ACL 2026 Curriculum 的五类是难度量；ACL 2026 Why SFT Fails to Learn 的五类是诊断模式，不能当成相互独立、完整覆盖的根因标签。不同数据集/模型的增益不可直接横向排名。
 - **完整精读（可选）**：为深入读过的论文追加 `deep_read`（`focus`、`terms` 术语白话解释、`sections`）。每章填写稳定 `id`、短中文 `title`、`stage`（`challenge` / `insight` / `design` / `result` / `next`）及内容 `blocks`，同组可用 `order` 控制显示顺序。正文按四段主线展示短解释，例子、公式、实验证据折叠在相应段落中；`next` 单独承载局限与我们的延伸。通用块类型仍为 `prose`、`steps`、`formula`、`table`、`callout`、`evidence`、`bullets`、`tests`。构建脚本自动生成 `rsi/reading-notes.html`、卡片跳转和章节搜索索引。
 - **Closest Related Work（可选）**：`rsi/related-work.json` 独立于广覆盖来源台账，按论文 `paper_id` 保存经过原文核验的最近邻比较。采用 Obsidian《AI审稿时代的Related Work与Novelty前置》的 `closest work → shared → different → why → decisive evidence`；每行还要保存问题、更新对象、反馈来源、原论文/正式发表状态、与被精读论文的比较关系和是否具有公平直接对照。最近邻仅保留 3–8 项，其余放“领域脉络补充”。网页自动将表格放在 **Result 之后、研究延伸之前**，速览卡片显示直接跳转。
 

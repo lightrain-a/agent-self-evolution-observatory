@@ -150,9 +150,8 @@ def render_paper(p: dict) -> str:
         for m in d.get("metric_summary", [])
     )
     metric_overview = (
-        '<section class="deep-metric-overview"><h4>五类指标 · 一眼看懂含义与实验结果</h4>'
-        '<p>下列数字取自不同模型、基准和主表，不能直接拿来横向排名。'
-        '展开 Design 可逐项看公式、反例与证据边界。</p>'
+        f'<section class="deep-metric-overview"><h4>{e(d.get("metric_summary_title", "五类指标 · 一眼看懂含义与实验结果"))}</h4>'
+        f'<p>{e(d.get("metric_summary_intro", "下列数字取自不同模型、基准和主表，不能直接拿来横向排名；展开 Design 可逐项看公式、反例与证据边界。"))}</p>'
         f'<div class="deep-metric-list">{metric_items}</div></section>'
         if metric_items else ""
     )

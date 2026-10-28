@@ -4135,6 +4135,708 @@
         "html": "https://arxiv.org/html/2601.18778v3",
         "pdf": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/sundaram26a/sundaram26a.pdf"
       }
+    },
+    {
+      "id": "acl2026-sft-ilp-xue",
+      "short_title": "Why SFT Fails to Learn",
+      "title": "Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models",
+      "authors": "Chao Xue, Yao Wang, Mengqiao Liu et al.",
+      "lead_institution": "University of New South Wales（新南威尔士大学）",
+      "institutions": [
+        "University of New South Wales（新南威尔士大学）",
+        "Tencent Hunyuan（腾讯混元）",
+        "Tencent Yuanbao（腾讯元宝）",
+        "University of Electronic Science and Technology of China（电子科技大学）",
+        "Peking University（北京大学）"
+      ],
+      "institution_source": "ACL 2026 官方 PDF p.1，作者脚注 1–5；完整作者列表见 ACL Anthology",
+      "publication": "ACL 2026 · Long Papers · pp.30186–30213",
+      "doi": "10.18653/v1/2026.acl-long.1393",
+      "official_url": "https://aclanthology.org/2026.acl-long.1393/",
+      "first_posted": "2026-07",
+      "version": "ACL Anthology 正式版 · 2026-07",
+      "read_on": "2026-10-28",
+      "reading_level": "官方 PDF §3.1–4.5 / Tables 1,2,4,10,11 / Figure 2 / 附录精读；未独立复现",
+      "tags": [
+        "Incomplete Learning",
+        "Supervised Fine-Tuning",
+        "Five Failure Modes",
+        "Knowledge Conflict",
+        "Forgetting",
+        "Data Diagnostics"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "把 SFT 训练样本变成四选一问题，模型训练收敛后重测；以重复回答稳定性、原模型知识状态和分布变化诊断 ILP。",
+          "open_question": "选择题重测不等于原自由文本技能未掌握；检测器需排除干扰项质量、答题格式和采样噪声影响。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "基础知识缺失时使用外部领域材料作 CPT；实验显示补知识比简单加 SFT 轮次效果更大。",
+          "open_question": "额外外部语料不是完全自生成新知识；未隔离相关知识、无关语料和计算预算的独立作用。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "研究已给监督内容未能稳定恢复，没有研究高质量答案是否始终可从生成分布采样。",
+          "open_question": "多选题判错不等于开放式生成空间没有正确路径。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "检测顺序训练中早期内容的退化，并用全局 Shuffle + 动态重采样改善前部样本表现。",
+          "open_question": "缓解早期数据遗忘不等于所有旧能力无损保持；最后 10% 样本还有轻微下降。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "把错误标注、冲突样本和低可信数据列为可能原因，部分处理避免直接丢弃有效监督。",
+          "open_question": "没有对抗投毒、评估器被绕过或恶意长期技能写入的专项安全检验。"
+        }
+      },
+      "one_sentence": "SFT 损失已经收敛，训练题却仍有一部分答错；论文把这种“学不全”拆成五种可检查的原因。",
+      "story": {
+        "challenge": "模型已学过正确答案，SFT 收敛后重新考试仍有约 15.3% 的训练样本无法稳定答对。只看训练 Loss 找不到原因。",
+        "insight": "同样答错，可能缺基础、旧知识冲突、训练数据互相矛盾、先学后忘，或只是训练不够；不能统一多训几轮。",
+        "design": "把训练样本转成选择题，重复测试找未学会样本；再检查基础知识、监督冲突和训练历史，针对五种模式分别干预。",
+        "result": "缺知识时 MedQA Learn Rate 经 CPT+SFT 从 65.3% 到 82.1%，只加 SFT 轮次到 66.8%；其余四类也报告不同改善。"
+      },
+      "problem": "SFT 收敛不意味着所有监督样本都能在训练后重新恢复；残余失败可能来自不同机制，仅靠整体 Loss 或训练准确率难以判断。",
+      "setup": "在 Qwen / LLaMA / OLMo2 与多领域 SFT 数据上收敛后用四选一重测；pass@N 定义为 N 次回答正确的比例，BoN-5、T=0.2；对严重失败候选进一步按五类诊断与干预。",
+      "updates": "论文更新的是模型训练流程（CPT、冲突校准或分桶、全局重排与重采样、增加 epoch），不是 Agent 的 Prompt/Skill 路由。五种失败是可能原因，不是一个已经验证可准确自动分类的五选一路由器。",
+      "key_ideas": [
+        {
+          "name": "不完全学习 ILP",
+          "summary": "先看已经训练过的题还能否稳定做对，不把一般测试集表现与训练内容是否恢复混为一谈。",
+          "formula": "pass@N(x) = (1/N) Σ_k 1[answer_k correct]; ILP if pass@N<T"
+        },
+        {
+          "name": "原模型知识与训练分布探针",
+          "summary": "检查基础模型是否已会、SFT 前后预测分布变化多大；两者都是诊断线索而非充分因果证据。",
+          "formula": "P_exist = 1[Acc(base)>0.8]; D_JS(P_base,P_SFT)"
+        },
+        {
+          "name": "诊断之后再做干预",
+          "summary": "针对知识缺失、冲突、前期遗忘或训练不足选不同操作，再看真实指标能否改善；不能凭改善直接证明诊断必然正确。",
+          "formula": "Observe → Diagnose → Intervention → Independent evaluation"
+        }
+      ],
+      "evidence": [
+        "检测协议：10 个 SFT 数据集上的训练后未学会率 15.3%±2.1%（BoN-5、T=0.2），主实验进一步选严重失败的 1,000 条做归因。",
+        "原因 I（Table 4）：MedQA Learn Rate 2-epoch SFT 65.3%，10-epoch SFT 66.8%，CPT+SFT 82.1%；LegalBench 62.5/63.8/80.5；TechFAQ 68.1/69.5/83.6；FinanceBench 63.8/65.4/81.7。",
+        "原因 II（Table 1）：冲突校准 CPT 后 Qwen-7B ARC 68.1→70.9（+2.8 pp）；原因 III（Table 2）：Qwen-7B 数据冲突处理 82.3→85.1（+2.8 pp）。",
+        "原因 IV（Table 2/11）：Qwen-7B 78.5→79.8，前 10% 数据 ROUGE-L 0.41→0.53，中部 0.57→0.59、末尾 0.61→0.60。",
+        "原因 V（Table 2）：Qwen-7B 88.2→90.1（+1.9 pp）；Table 10 的五类占比 18.7/13.2/14.1/17.4/14.6，总和 78%（该附录 OLMo2 相关分析，不能当全域互斥分解）。"
+      ],
+      "boundaries": [
+        "15.3% 是重构多选题与反复采样协议下的未学会比例，不是 15.3% 的参数知识完全不存在，更不是未见题失败率。",
+        "Table 10 五类占比仅合计 78%；没有完整说明类别能否交叉与剩余比例，不能强行解释为互斥因果归因。",
+        "某种补救方法有效只是支持其合理性，不足以排除额外训练 token、语料质量、数据组成等混杂因素；CPT+SFT 与多训 SFT 未匹配全成本。",
+        "原训练题修复、近似改写、未见同规则题迁移、长期旧能力保持必须分开报告。",
+        "Table 4 的 Acc 与 pass@10 对 Baseline 置 0.0、其他组报告增量，不是基础模型实际准确率为 0。"
+      ],
+      "our_relevance": [
+        "I3 · 温故知新：借鉴 left-side forgetting 与动态重采样（Table 11），但继续聚焦“旧新技能各自有效却适用条件冲突”，不能把简单重放当新贡献。",
+        "I6 · 失败轨迹价值：论文从训练后题目错误诊断原因，I6 则固定题目、错误终点和反馈，只改变纠错前失败过程。五类状态可用于分层匹配而不是让 I6 改做错误类型分类。",
+        "I8 · 错误迁移：把知识准备、冲突和训练不足作为前测标签/分层对照；做真实固定预算参数更新后，以未见同规则题的净提升作为主要指标，不把训练题补对视作已经迁移。"
+      ],
+      "next_test": "先从同一模型检查点按前置知识高低×监督冲突有无做受控配对，在等预算下分别进行普通 SFT 与知识增强 SFT；保持目标任务纠错材料、优化器和评估独立，检验“诊断类型×纠错方式”的交互效应以及异结构同规则题迁移。",
+      "deep_read": {
+        "focus": "它研究的是“训练过的内容为什么没有学全”，最重要的是五种失败原因的诊断与补救证据，而不是再设计一个更复杂的 SFT 学习器。",
+        "metric_summary_title": "五种学不会的原因 · 对应诊断与实验",
+        "metric_summary_intro": "Table 10 的比例来自附录 OLMo2 分析，五项仅合计 78%。下面五组结果来自不同数据集/任务，不能直接比较哪类补救方法最好；展开 Design 可看具体设置。",
+        "metric_summary": [
+          {
+            "family": "① 基础知识不足",
+            "metrics": "Table 10：18.7% · Table 4",
+            "meaning": "基础模型没有所需知识，直接重复 SFT 也可能难吸收。",
+            "result": "MedQA Learn Rate：65.3%→66.8%（多 SFT）vs 82.1%（CPT+SFT）"
+          },
+          {
+            "family": "② 与预训练旧知识冲突",
+            "metrics": "Table 10：13.2% · Table 1",
+            "meaning": "旧答案或高置信信念与新监督不一致。",
+            "result": "Qwen-7B ARC：68.1%→70.9%（知识校准 CPT，+2.8 pp）"
+          },
+          {
+            "family": "③ SFT 内部数据矛盾",
+            "metrics": "Table 10：14.1% · Table 2",
+            "meaning": "相近题目出现矛盾答案，训练信号互相干扰。",
+            "result": "Qwen-7B 混合数据：82.3%→85.1%（冲突分桶，+2.8 pp）"
+          },
+          {
+            "family": "④ 学得早、后面忘",
+            "metrics": "Table 10：17.4% · Table 11",
+            "meaning": "后续数据覆盖先前训练内容。",
+            "result": "前 10% ROUGE-L：0.41→0.53；后 10%：0.61→0.60"
+          },
+          {
+            "family": "⑤ 训练时间不够",
+            "metrics": "Table 10：14.6% · Table 2",
+            "meaning": "稀有或复杂模式没有得到充分优化。",
+            "result": "Qwen-7B：88.2%→90.1%（自适应加 epoch，+1.9 pp）"
+          }
+        ],
+        "terms": [
+          {
+            "name": "ILP",
+            "meaning": "Incomplete Learning：已经训练过，训练后仍不能稳定恢复对应监督内容"
+          },
+          {
+            "name": "CPT",
+            "meaning": "Continued Pre-training：先用领域知识继续预训练，再做原来的 SFT"
+          },
+          {
+            "name": "Left-side Forgetting",
+            "meaning": "顺序训练中先出现的样本被后面内容覆盖，后测表现下降"
+          }
+        ],
+        "summary": [
+          "同样的训练后答错，可能对应五种不同失败状态，不能统一用“继续多训”解决。",
+          "最明确对照是缺知识：MedQA 多 SFT 只 65.3→66.8，而额外 CPT+SFT 达 82.1，但计算量和语料不同。",
+          "五类归因仍是证据支持的诊断假设：15.3% 是选择题重测失败；五类总和 78%，训练题修复不等于新题迁移。"
+        ],
+        "sections": [
+          {
+            "id": "what-unlearned-means",
+            "stage": "challenge",
+            "title": "训练 Loss 收敛了，为什么训练题还会答错？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "论文研究的是“明明提供过正确监督，训练后还是不能稳定恢复”，不是一般意义上的未见题泛化失败。作者先把自由文本 SFT 问答转成四选一，原答案是正确选项、另外三项是干扰项；模型收敛后才重测。"
+              },
+              {
+                "type": "formula",
+                "label": "Section 3.1 · 不完全学习的操作判据",
+                "expression": "pass@N(x)=1/N × Σₖ 1[answerₖ correct];  unlearned if pass@N(x)<T",
+                "meaning": "主实验采用 BoN-5 与 T=0.2，十个 SFT 数据集平均 15.3%±2.1% 的样本被归为未学会，随后挑选 1,000 条严重案例诊断。",
+                "boundary": "本论文 pass@N 写的是正确次数比例，和代码生成常用“至少一次成功”口径不同。多选题失败不直接证明原自由文本知识未入权重。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "混淆在一起的三种情况",
+                  "本文有没有直接证明？"
+                ],
+                "rows": [
+                  [
+                    "训练题重新做仍稳定错",
+                    "有：在转换后的多选题评估协议下测量"
+                  ],
+                  [
+                    "训练题做对却不会未见同规则题",
+                    "不是本文主要评测对象"
+                  ],
+                  [
+                    "训练新知识导致旧任务能力退化",
+                    "部分涉及：Left-side forgetting 的特定顺序训练实验"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "15.3% 的解释边界",
+                "text": "它是训练后按指定重测协议筛出的失败比例，不是“模型有 15.3% 的参数知识完全没有学入”，也不是对模型长期新知识学习能力的普适估计。"
+              }
+            ]
+          },
+          {
+            "id": "five-causes",
+            "stage": "insight",
+            "title": "为什么不能把所有未学会题统一加训？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "同样是训练题答错",
+                  "可能的真实情况",
+                  "该怎样进一步检查"
+                ],
+                "rows": [
+                  [
+                    "基础知识缺失",
+                    "正确答案依赖模型原本不会的基础事实/概念",
+                    "独立前置知识探针与增补语料对照"
+                  ],
+                  [
+                    "与预训练旧知识冲突",
+                    "模型原先相信另一答案，并在 SFT 后仍偏向旧信念",
+                    "SFT 前后预测分布与冲突样本核验"
+                  ],
+                  [
+                    "SFT 内部矛盾",
+                    "相近问题有相反标注或多种答案位置",
+                    "重复/相似输入的独立标签审计"
+                  ],
+                  [
+                    "先学后忘",
+                    "训练开头学会，继续训练时被后期材料覆盖",
+                    "时间位置切片与重采样对照"
+                  ],
+                  [
+                    "优化不足",
+                    "稀有/复杂模式的梯度曝光尚不够",
+                    "递增 epochs 与独立验证集早停"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "原文最重要的科学观点",
+                "text": "当前表现相同，不等于原因相同，也不等于下一次采取相同更新动作会产生同样的收益。五种模式是可检查的假设，尚未证明它们完全互斥。"
+              }
+            ]
+          },
+          {
+            "id": "cause-1-prerequisite",
+            "stage": "design",
+            "order": 1,
+            "title": "① 缺基础知识：为什么再训八轮也难学会？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "如果基础模型连目标概念的前置知识也不会，直接把一个复杂正确答案重复交给它，可能只能记住表面表达。作者使用原模型 zero-shot 的“知识存在”代理检查，先检索基础事实再引入相关语料做 CPT，然后继续原 SFT。"
+              },
+              {
+                "type": "formula",
+                "label": "Eq. (2) · 作者用于判断基础模型是否“已知”的代理",
+                "expression": "P_exist(x)=1[Acc(M_base(x))>0.8]",
+                "meaning": "它根据基础模型在给定测试中的正确率，给知识状态一个粗略二值标签。",
+                "boundary": "原模型没答对 ≠ 参数里完全不存在相应知识。仍需不同格式和前置技能探针。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 4 · Learn Rate（%）",
+                  "普通 2轮 SFT",
+                  "增加到 10轮",
+                  "先 CPT 再 SFT"
+                ],
+                "rows": [
+                  [
+                    "MedQA",
+                    "65.3",
+                    "66.8",
+                    "82.1"
+                  ],
+                  [
+                    "LegalBench",
+                    "62.5",
+                    "63.8",
+                    "80.5"
+                  ],
+                  [
+                    "TechFAQ",
+                    "68.1",
+                    "69.5",
+                    "83.6"
+                  ],
+                  [
+                    "FinanceBench",
+                    "63.8",
+                    "65.4",
+                    "81.7"
+                  ]
+                ],
+                "caption": "按作者 Table 4 的 Learn Rate 报告。Acc / pass@10 的 0.0 是基线归零后的相对增量列，不代表真实准确率为零。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "能证明什么，不能证明什么？",
+                "text": "补充相关语料后的结果明显高于重复同样 SFT 数据，但 CPT 同时改变了语料内容、训练目标和计算量；若要归因于“特定前置知识”，还应在相同 CPT 预算下比较相关与无关知识语料。"
+              }
+            ]
+          },
+          {
+            "id": "cause-2-prior-conflict",
+            "stage": "design",
+            "order": 2,
+            "title": "② 旧知识与新监督冲突：模型为什么坚持旧答案？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "模型预训练时形成的答案可能与新监督矛盾；即使 SFT 提供正确选项，旧信念仍可能干扰。作者测基础模型与 SFT 模型预测分布之间的 JS Divergence，并采用 CPT 校准相关知识，再完成监督微调。"
+              },
+              {
+                "type": "formula",
+                "label": "Eq. (3) · JS Divergence（分布改变的指标）",
+                "expression": "D_JS(P_base || P_SFT)=1/2 KL(P_base||M)+1/2 KL(P_SFT||M); M=(P_base+P_SFT)/2",
+                "meaning": "原模型与微调后模型对答案的预测分布差多少；Table 10 的相关分类使用 D_JS>0.3。",
+                "boundary": "分布差异不直接等于“知识冲突”；也可能来自提示格式或模型信心变化，需要独立事实核验。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 1 · CPT 冲突校准",
+                  "原准确率",
+                  "处理后",
+                  "变化"
+                ],
+                "rows": [
+                  [
+                    "Qwen-7B · ARC",
+                    "68.1%",
+                    "70.9%",
+                    "+2.8 pp"
+                  ],
+                  [
+                    "Qwen-14B · ARC",
+                    "71.2%",
+                    "73.7%",
+                    "+2.5 pp"
+                  ],
+                  [
+                    "LLaMA2-13B · SocialIQA",
+                    "70.5%",
+                    "72.1%",
+                    "+1.6 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "它不同于补前置知识",
+                "text": "“没有知识”和“已有相反信念”都是训练后答错的可能原因，但需要不同前测和事实标签。CPT 可能同时补知识与改信念，因此本实验还不能严格分离二者的唯一贡献。"
+              }
+            ]
+          },
+          {
+            "id": "cause-3-sft-conflict",
+            "stage": "design",
+            "order": 3,
+            "title": "③ SFT 数据内部矛盾：同样的问题给了互相冲突的答案",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "例如两个语义几乎相同的训练问题，一个标成 A、一个标成 B。模型收到相互矛盾的监督，难以稳定学到同一规则。作者先发现标签/位置冲突，再把冲突样本分到不同训练桶，动态调整，而不是将所有冲突样本粗暴删除。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 2 · 训练数据冲突处理",
+                  "Baseline",
+                  "处理后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Qwen-7B",
+                    "82.3%",
+                    "85.1%",
+                    "+2.8 pp"
+                  ],
+                  [
+                    "Qwen-14B",
+                    "84.5%",
+                    "87.2%",
+                    "+2.7 pp"
+                  ],
+                  [
+                    "LLaMA2-7B",
+                    "81.8%",
+                    "84.3%",
+                    "+2.5 pp"
+                  ],
+                  [
+                    "LLaMA2-13B",
+                    "83.6%",
+                    "86.5%",
+                    "+2.9 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为何不能统一认定“错误太难”",
+                "text": "如果原数据本身矛盾，继续训练会强化互斥答案；先核实监督冲突和错误标签，往往比给失败题更多梯度更有意义。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "适用范围",
+                "text": "处理后总体准确率提升，不能直接证明每一个被判冲突的样本都由冲突造成；也不代表所有样本都应分桶。"
+              }
+            ]
+          },
+          {
+            "id": "cause-4-forgetting",
+            "stage": "design",
+            "order": 4,
+            "title": "④ Left-side Forgetting：为什么学在前面的反而被忘掉？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "多任务数据按顺序训练时，较早出现的技能可能在后续梯度更新中受到覆盖。作者在整个数据池做全局打乱，监测不同任务的表现，下降明显的旧任务在后续批次中增加重采样。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 11 · 分位置 ROUGE-L",
+                  "原结果",
+                  "打乱+重采样后",
+                  "相对变化"
+                ],
+                "rows": [
+                  [
+                    "前 10% 数据",
+                    "0.41",
+                    "0.53",
+                    "+29%"
+                  ],
+                  [
+                    "中部",
+                    "0.57",
+                    "0.59",
+                    "+3.5%"
+                  ],
+                  [
+                    "最后 10%",
+                    "0.61",
+                    "0.60",
+                    "−1.6%"
+                  ]
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 2 · 整体准确率",
+                  "原结果",
+                  "处理后"
+                ],
+                "rows": [
+                  [
+                    "Qwen-7B",
+                    "78.5%",
+                    "79.8%"
+                  ],
+                  [
+                    "Qwen-14B",
+                    "79.3%",
+                    "80.5%"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "这与 I3 的区别",
+                "text": "作者解决的是顺序数据中早期训练样本的恢复；I3 要验证当新旧 Skill 各自合理却适用条件相冲突时，是否能学会场景边界并长期同时保持，而不只是多次 replay。"
+              }
+            ]
+          },
+          {
+            "id": "cause-5-insufficient-training",
+            "stage": "design",
+            "order": 5,
+            "title": "⑤ 训练不够：什么时候确实应该多训一点？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "有的稀有模式或复杂组合只是训练曝光不足，并非知识缺失。作者逐步增加 epoch，每次看验证指标，改善则继续，没有改善就停止；关键是区分“值得增加梯度”与“重复训练无效”的错误类型。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 2 · Progressive Epoch",
+                  "Baseline",
+                  "处理后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Qwen-7B",
+                    "88.2%",
+                    "90.1%",
+                    "+1.9 pp"
+                  ],
+                  [
+                    "Qwen-14B",
+                    "89.5%",
+                    "91.3%",
+                    "+1.8 pp"
+                  ],
+                  [
+                    "LLaMA2-7B",
+                    "87.8%",
+                    "89.7%",
+                    "+1.9 pp"
+                  ],
+                  [
+                    "LLaMA2-13B",
+                    "88.9%",
+                    "90.8%",
+                    "+1.9 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "与第①类的决定性对照",
+                "text": "部分题增加训练轮次有效，但在作者筛出的知识盲区上，MedQA 2轮到10轮只从65.3%升到66.8%。因此不能见到错误就统一加 epoch；也不能因补知识有效便将所有错误归为前置知识不足。"
+              }
+            ]
+          },
+          {
+            "id": "diagnosis-and-prevalence",
+            "stage": "result",
+            "order": 1,
+            "title": "Table 10 五类占比：为什么不能把 78% 当完整分类？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "Table 10 · 诊断标签",
+                  "论文比例",
+                  "主要代理条件"
+                ],
+                "rows": [
+                  [
+                    "① Base Model Knowledge Limitations",
+                    "18.7%",
+                    "P_exist(x)=0；模型前测不正确"
+                  ],
+                  [
+                    "② Conflicts Between SFT and Base Model",
+                    "13.2%",
+                    "D_JS>0.3 等信号"
+                  ],
+                  [
+                    "③ Knowledge Conflicts Between SFT Data",
+                    "14.1%",
+                    "错误标注、相近样本多种标签"
+                  ],
+                  [
+                    "④ Left-side Forgetting",
+                    "17.4%",
+                    "前期训练数据后期退化"
+                  ],
+                  [
+                    "⑤ Insufficient Training",
+                    "14.6%",
+                    "训练数据仍未充分优化"
+                  ],
+                  [
+                    "五项合计",
+                    "78.0%",
+                    "剩余 22% 及类别重叠未充分解释"
+                  ]
+                ],
+                "caption": "附录 Table 10 是 OLMo2 相关分析的一部分，不是全部 10 个 SFT 数据集上的同一原因比例。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "真正重要的统计警告",
+                "text": "这五项不能直接当作相互独立且覆盖全部失败的“真实根因标签”。题目可能同时缺知识、含有标注冲突又训练不足。改善单项补救指标也不等于证明诊断无误。"
+              }
+            ]
+          },
+          {
+            "id": "controlled-evidence",
+            "stage": "result",
+            "order": 2,
+            "title": "最有说服力的对照与还欠缺的实验",
+            "blocks": [
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "补基础 vs 多训几轮（Table 4）",
+                    "setup": "MedQA/LegalBench/TechFAQ/FinanceBench：2-epoch SFT、10-epoch SFT、CPT+SFT。",
+                    "result": "MedQA Learn Rate 分别 65.3%、66.8%、82.1%；四个数据集 CPT+SFT 都明显高于多训。",
+                    "supports": "对作者定义的知识盲区，单纯重复 SFT 不是充分补救。",
+                    "not_proven": "相关知识是唯一原因；CPT 与 SFT 比较未匹配全部语料量和训练成本。"
+                  },
+                  {
+                    "domain": "数据冲突、忘旧与优化不足（Table 2）",
+                    "setup": "四种模型各自按不同模式采用冲突分桶、shuffle+重采样或渐进 epoch。",
+                    "result": "Qwen-7B 三项分别 82.3→85.1、78.5→79.8、88.2→90.1。",
+                    "supports": "不同补救策略在其对应的子实验中有改善。",
+                    "not_proven": "三行百分比代表同一批错误的公平处理方法排名，或任意新错误都能自动诊断正确。"
+                  },
+                  {
+                    "domain": "顺序遗忘位置切片（Table 11）",
+                    "setup": "多任务顺序训练下比较全局 shuffle+重采样前后的前、中、后三部分。",
+                    "result": "ROUGE-L：前10% 0.41→0.53，中部0.57→0.59，末10% 0.61→0.60。",
+                    "supports": "较早样本受训练顺序影响，重采样可有针对性恢复。",
+                    "not_proven": "没有牺牲任何后期能力，或者旧知识在跨很多更新后都不会丢。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "why-not-direct-transfer",
+            "stage": "next",
+            "title": "和我们的 I3 / I6 / I8 有什么关系？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "我们的方向",
+                  "这篇论文已经做到什么",
+                  "仍要自己验证什么"
+                ],
+                "rows": [
+                  [
+                    "I3：温故知新",
+                    "对先训练的旧数据做 shuffle + 重采样改善保持",
+                    "旧/新规则都正确但适用条件不同，是否能靠条件辨别训练同时保留"
+                  ],
+                  [
+                    "I6：失败轨迹价值",
+                    "训练结束后定位低通过率样本并给失败原因标签",
+                    "同一题、同一终点、同一个纠错方式，只改变失败过程后会不会产生不同迁移收益"
+                  ],
+                  [
+                    "I8：错误迁移",
+                    "区分前置知识、先验冲突与监督冲突，补救后恢复训练数据",
+                    "前置知识状态×错误规则范围×固定更新，在未见同规则题上是否有特异性净迁移"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "I8 应先做最小决定性实验",
+                "text": "从同一模型快照分叉，匹配目标题正确率与训练预算。按是否具备前置知识与是否存在经人工确认的监督冲突分层，让各组分别接受普通纠错和相关知识补充后纠错。后测必须清空示范，分开测原题、同规则异结构新题和旧能力。"
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "相关前置知识 × 干预方式交互实验",
+                    "design": "同一模型检查点，Relevant CPT vs 无关等预算 CPT；两组再固定 SFT 更新器与目标错误。控制额外 tokens、训练步、正确答案与验证次数。",
+                    "decisive": "若只在缺前置知识的组中，相关 CPT 才特别改善未见同规则题，就更支持知识准备的机制解释；若两组增益相同，不能把 CPT 收益归因为特定前置知识。"
+                  },
+                  {
+                    "name": "区分 ILP 检测器和规则内化",
+                    "design": "对同一批训练题同时使用四选一、自由文本等价判断、原始格式续写，并做不同难度干扰项对照。",
+                    "decisive": "若不同题型下的“未学会”集合差异很大，先修正诊断协议，不应直接用其标签调度 RSI 训练。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把题目学会与模型持续自我改进混为一谈",
+                "text": "训练题重新答对只是最低层级的修复；未来同类题迁移、旧能力保持和下一轮还能继续学习才是我们的独立指标。I3、I6、I8 的核心变量保持不变。"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://aclanthology.org/2026.acl-long.1393/",
+        "pdf": "https://aclanthology.org/2026.acl-long.1393.pdf",
+        "code": "https://github.com/xccc-8071/why-supervised-fine-tuning-fails-to-learn"
+      }
     }
   ]
 }

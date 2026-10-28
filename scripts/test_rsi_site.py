@@ -214,11 +214,30 @@ def main():
           'One or more of five main-table metric result examples missing')
     check('Online P50' in allblocks and '不是' in allblocks,
           'Missing static VACC vs online P50 distinction')
+    ilp=next((p for p in cards if p['id']=='acl2026-sft-ilp-xue'),None)
+    check(ilp is not None and ilp.get('doi')=='10.18653/v1/2026.acl-long.1393'
+          and ilp.get('official_url')=='https://aclanthology.org/2026.acl-long.1393/',
+          'ACL 2026 SFT paper source or DOI not verified')
+    check(len(ilp['deep_read']['metric_summary'])==5
+          and len({s['id'] for s in ilp['deep_read']['sections']})==len(ilp['deep_read']['sections']),
+          'Five causes or unique section anchors missing from ILP deep read')
+    ilptext=json.dumps(ilp,ensure_ascii=False)
+    check(all(token in ilptext for token in (
+        '15.3%','18.7%','13.2%','14.1%','17.4%','14.6%',
+        '65.3','66.8','82.1','68.1','70.9','82.3','85.1','0.41','0.53',
+        '88.2','90.1','78%'
+    )), 'Incomplete learning 5-category empirical evidence missing or altered')
+    check(all(token in ilptext for token in ('多选题','训练题','迁移','未见','预算','不等于')),
+          'ILP causal and training-item versus transfer boundary missing')
     deep_notes=[p for p in cards if p.get('deep_read')]
     notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    expected_metric_items=sum(len(p.get('deep_read',{}).get('metric_summary',[])) for p in deep_notes)
     check('id="deep-acl2026-good-curriculum-jia"' in notes_html
-          and notes_html.count('class="deep-metric-item"')==5,
-          'ACL 2026 five-metric summary does not render before detailed chapters')
+          and notes_html.count('class="deep-metric-item"')==expected_metric_items,
+          'Five-item overviews must render once for each compatible reading')
+    check('id="deep-acl2026-sft-ilp-xue"' in notes_html
+          and '五种学不会的原因 · 对应诊断与实验' in notes_html,
+          'ILP must show its own five-causes summary before detailed sections')
     for paper in deep_notes:
         pid=paper['id']
         check(f'href="reading-notes.html#deep-{pid}"' in card_html,
@@ -339,6 +358,16 @@ def main():
     check('href="references.html#E27"' in i8_html and 'idea-i2.html#dialogue-p0' in i8_html,
           'I8 must distinguish feedback application evidence from I2 interaction mechanism')
     check('id="i8-related-matrix"' in i8_html, 'I8 closest-work comparison table missing')
+    check('M27' in refs
+          and 'reading-notes.html#deep-acl2026-sft-ilp-xue' in i8_html
+          and '训练题' in i8_html and '异结构' in i8_html,
+          'I8 must explicitly compare ILP training-example repairs against rule transfer')
+    check('reading-notes.html#deep-acl2026-sft-ilp-xue' in ideas_text
+          and all(f'idea-{i}' in ideas.ids for i in (3,6,8)),
+          'I3, I6 and I8 overview must use ILP primary evidence and keep idea boundaries')
+    check('reading-notes.html#deep-acl2026-sft-ilp-xue'
+          in (ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8'),
+          'I6 detail must include ILP as a matching/confounding baseline')
     for axis in ['研究对象与条件','用什么信号判断','操作与实际评价','与 I8 相同 / 不同之处']:
         check(axis in i8_html,'I8 related-work scientific comparison axis missing: '+axis)
     for close in ['Self-Error-Instruct','LESS','DATAPROPHET','SOAR','RULE-EDIT','Learning Dynamics','LENS / ACE','I8（待验证）']:

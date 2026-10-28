@@ -88,11 +88,30 @@ PAGE = {
  <p><b>主指标：</b>学习前预测分数与真实未见同规则收益的排序相关；固定训练预算下的净迁移增益；跨模板、跨模型稳定性；回归率。额外报告原题修复率及单条样本筛选成本，防止以更多诊断调用换取假提升。</p>
  <div class="note"><b>强约束：</b>按规则族和模板族划分训练 / 诊断 / 选择验证 / 最终测试；每条候选的训练结果只能用于开发集建模，不能窥视最终测试。按独立规则族聚类计算区间，并单独报告自然错误与注入式错误的结果。</div>
  '''),
+ ("ilp-acl2026", "ACL 2026｜训练过仍不会：五种失败原因怎样接到 I8？", '''
+<p><b>最近邻事实：</b><i>Why Supervised Fine-Tuning Fails to Learn</i>（ACL 2026）观察到：SFT 收敛后，在重新构造的多选题测试中平均约 15.3%±2.1% 的监督样本仍无法稳定恢复。作者按基础知识缺失、旧知识与新监督冲突、SFT 内部冲突、先学后忘和训练不足，提出五种诊断方向。它研究<strong>已给训练内容的恢复</strong>，不是我们 I8 的<strong>异结构同规则新题迁移</strong>。[[M27]] <a href="reading-notes.html#deep-acl2026-sft-ilp-xue">阅读五类原因、Table 1/2/4/10/11 完整精读</a>。</p>
+<div class="table-wrap"><table><thead><tr><th>作者讨论的状态</th><th>代表结果</th><th>I8 应怎样处理</th></tr></thead><tbody>
+<tr><td>缺基础知识</td><td>MedQA Learn Rate：2轮SFT 65.3%，10轮SFT 66.8%，CPT+SFT 82.1%（Table 4）</td><td>单独验证<strong>相关前置知识</strong>是否改变之后同预算纠错的迁移，而非直接引入更强教师</td></tr>
+<tr><td>旧知识与新监督冲突</td><td>Qwen-7B ARC：68.1% → 70.9%（Table 1）</td><td>把高置信旧信念和可核验的错误规则分开诊断；不得只靠 JS Divergence 认定原因</td></tr>
+<tr><td>SFT 训练数据内部矛盾</td><td>冲突分桶：Qwen-7B 82.3% → 85.1%（Table 2）</td><td>先审计答案可信度与标签矛盾，错误标注不应被当作“可迁移规则错误”训练</td></tr>
+<tr><td>早期样本被覆盖</td><td>前10% ROUGE-L 0.41 → 0.53（Table 11）</td><td>作为旧能力回归的负面检查；与 <a href="ideas.html#idea-3">I3</a> 区分</td></tr>
+<tr><td>训练不充分</td><td>Qwen-7B 88.2% → 90.1%（Table 2）</td><td>多训即可改善的失败要与规则性缺口匹配，不让额外梯度冒充规则迁移</td></tr>
+</tbody></table></div>
+<p><b>最便宜的机制辨别：</b>固定同一模型快照和目标题难度，按<b>前置知识高/低 × 监督可靠/冲突</b>分层，分别做普通纠错与相关/无关的等预算知识补充，再统一执行目标更新。要先确认诊断类型和干预存在交互效果，再去比较未见同规则题、远变体以及旧能力保持。</p>
+<p class="note"><b>别混报：</b>Table 10 的五类比例合计仅78%，且没有充分解释剩余及重叠；这些是可检查的候选失败模式，不是可靠互斥真值标签。补救后训练题重新正确，不等于跨题规则已经内化；本站 I8 尚无实际训练结果。[[M27]]</p>
+ '''),
  ("related","Related Work｜最近邻做到了哪一步，I8 真正差在哪里？", '''
  <p>按照 <b>研究问题与假设 → 选择时能看到什么 → 实际修改什么 → 用什么结果证明学会</b> 对照最近邻。这几项不一定谁更强：有的工作研究如何更新，有的研究如何选数据，还有的专门研究规则迁移。<strong>最接近 I8 的不是某一个模型模块，而是 SEI 的错误驱动训练、LESS / DATAPROPHET 的训练前价值预测，以及 RULE-EDIT 的规则级迁移。</strong></p>
  <div class="table-wrap"><table id="i8-related-matrix"><thead><tr>
  <th>代表工作</th><th>研究对象与条件</th><th>用什么信号判断</th><th>操作与实际评价</th><th>与 I8 相同 / 不同之处</th>
  </tr></thead><tbody>
+ <tr>
+ <td>Why Supervised Fine-Tuning Fails to Learn<br><small>ACL 2026 [[M27]]</small></td>
+ <td>给定 SFT 训练数据后仍不能稳定重现的样本，按知识缺口、冲突、遗忘、训练不足等原因诊断。</td>
+ <td>训练后多选题重测、原模型知识状态、JS Divergence、标注冲突、训练位置。</td>
+ <td>CPT、分桶、Shuffle/重采样或增加 Epoch；主要报告训练样本恢复和任务准确率。</td>
+ <td><b>相同：</b>同样失败可能由不同知识状态造成。<b>差异：</b>I8 固定纠错方式，研究<strong>纠错后未见同规则题</strong>的净收益，而非把训练题恢复当成规则内化；必须有相同预算与诊断特异性对照。</td>
+ </tr>
  <tr>
  <td>Self-Error-Instruct<br><small>ACL 2025 [[S40]]</small></td>
  <td>模型已犯的数学错题；使用教师模型分析错误、聚类错误类型。</td>

@@ -599,6 +599,132 @@
           "verification": "PubMed及OpenAI作者项目摘要核对"
         }
       ]
+    },
+    {
+      "paper_id": "acl2026-sft-ilp-xue",
+      "target_short_title": "Why Supervised Fine-Tuning Fails to Learn · ACL 2026",
+      "target_venue": "ACL 2026 Long Papers · DOI 10.18653/v1/2026.acl-long.1393",
+      "source_related_sections": "Introduction / §2 Related Works / §3–4 Results",
+      "one_sentence": "此前已经有人研究数据难度、领域 CPT、SFT 数据配比和灾难性遗忘；本文将“训练后仍不会已给监督样本”作为统一现象，按五种可能原因进行诊断和干预。",
+      "reading_takeaway": "这篇论文最有价值的是“同一失败现象不能统一处理”的系统分类。它不是首次发现难数据、CPT 或遗忘，也没有完全证明五类原因可以可靠互斥归因。",
+      "scope_note": "三个与问题直接重合的前作、一个同问题邻近的训练动态方法；引文位置逐条标注，非原文直接引用时写本站增补。",
+      "evidence_gap": "还缺同一错误群体中诊断分组×补救方式的预算匹配交互实验，以及原题重新答对与未见同规则题迁移的分离评测。",
+      "evolution": [
+        {
+          "period": "2020 · 训练动态诊断",
+          "summary": "Dataset Cartography 观察每个样本的训练期信心与变化，而非只看总体分数。",
+          "source_url": "https://aclanthology.org/2020.emnlp-main.746/"
+        },
+        {
+          "period": "2020 · 继续预训练",
+          "summary": "Don't Stop Pretraining 已证明目标领域 CPT 可以改善下游任务。",
+          "source_url": "https://aclanthology.org/2020.acl-main.740/"
+        },
+        {
+          "period": "2024 · 数据组合与遗忘",
+          "summary": "SFT Data Composition 与 Revisiting Catastrophic Forgetting 分别研究能力干扰和旧能力退化。",
+          "source_url": "https://aclanthology.org/2024.acl-long.12/"
+        },
+        {
+          "period": "2026 · 五种 ILP 失败模式",
+          "summary": "Xue 等检测训练后没稳定恢复的样本，区分五类可能原因并做针对性干预。",
+          "source_url": "https://aclanthology.org/2026.acl-long.1393/"
+        }
+      ],
+      "works": [
+        {
+          "id": "dataset-cartography",
+          "name": "Dataset Cartography",
+          "full_title": "Dataset Cartography: Mapping and Diagnosing Datasets with Training Dynamics",
+          "year": 2020,
+          "venue": "EMNLP 2020",
+          "family": "样本训练动态",
+          "distance": "closest",
+          "cited_at": "本站新增近邻；原文没有以 Data Maps 为主要直接对照",
+          "primary_url": "https://aclanthology.org/2020.emnlp-main.746/",
+          "source_scope": "EMNLP 正式出版页；本站补充",
+          "problem": "训练数据中的容易、模糊、困难样本怎样区分？",
+          "update_surface": "按训练期间置信度与波动构造 Data Maps，指导数据分析与抽样",
+          "supervision": "训练期间每个样本的模型置信度轨迹",
+          "model_tasks": "NLP 分类数据分析",
+          "shared": "都反对只用总体训练 Loss 衡量每条样本是否真的学到。",
+          "difference": "Dataset Cartography 研究训练动态中的样本区域；本文看 SFT 收敛后训练样本仍不能恢复，并提出五类原因与补救。",
+          "why": "困难样本地图是观察指标，不自动等于知识缺失或某个可修复根因。",
+          "evidence": "2020 工作已在数据选择与数据质量上实验验证；本文 15.3% 是另一个重测协议，二者没有同基准诊断比较。",
+          "decisive_test": "对相同 SFT 样本记录训练动态和后测 ILP，比较预测失败与具体补救选择的准确度。",
+          "relationship": "样本层面失败诊断的早期先例",
+          "verification": "ACL Anthology 官方论文摘要核对"
+        },
+        {
+          "id": "dont-stop-pretraining",
+          "name": "Don't Stop Pretraining",
+          "full_title": "Don't Stop Pretraining: Adapt Language Models to Domains and Tasks",
+          "year": 2020,
+          "venue": "ACL 2020",
+          "family": "继续预训练",
+          "distance": "closest",
+          "cited_at": "Introduction 已引用 Gururangan et al. (2020)",
+          "primary_url": "https://aclanthology.org/2020.acl-main.740/",
+          "source_scope": "ACL 正式论文与当前论文 Intro",
+          "problem": "通用预训练模型是否仍需要按领域或任务继续预训练？",
+          "update_surface": "预训练模型权重 / 领域与任务 CPT",
+          "supervision": "任务/领域无监督文本和下游监督任务",
+          "model_tasks": "多个 NLP 领域的下游测试",
+          "shared": "两者都通过目标领域知识继续预训练改善任务表现。",
+          "difference": "2020 研究 CPT 整体下游收益；本文把某些已监督但学不牢的样本归为知识缺口，并用 CPT vs 更多 SFT 做诊断性对照。",
+          "why": "不能把 CPT 的存在及有效性视为本文首次提出；本文的新问题是哪些残余失败可能适合 CPT。",
+          "evidence": "Table 4：MedQA 的 Learn Rate 65.3→66.8（多 SFT）对比 82.1（CPT+SFT）；额外语料和算力未严格匹配。",
+          "decisive_test": "同目标数据相同总 tokens，比较相关 CPT、无关 CPT、直接增加 SFT 后的训练样本恢复及跨题收益。",
+          "relationship": "补知识方案的直接方法先例",
+          "verification": "ACL Anthology 官方出处与当前论文 §1 引文核对"
+        },
+        {
+          "id": "sft-composition",
+          "name": "SFT Data Composition",
+          "full_title": "How Abilities in Large Language Models are Affected by Supervised Fine-tuning Data Composition",
+          "year": 2024,
+          "venue": "ACL 2024",
+          "family": "数据配比与能力干扰",
+          "distance": "closest",
+          "cited_at": "论文参考文献含 Dong et al. 2023 预印本，正式版 ACL 2024",
+          "primary_url": "https://aclanthology.org/2024.acl-long.12/",
+          "source_scope": "ACL 2024 正式原文与当前论文参考文献",
+          "problem": "数学、代码、指令等不同 SFT 数据混合与排序怎样改变模型各项能力？",
+          "update_surface": "SFT 任务数据比例与训练顺序",
+          "supervision": "多任务 SFT 数据与任务级准确率",
+          "model_tasks": "大模型多技能微调",
+          "shared": "都承认训练样本之间存在干扰，后训练的能力可能挤占旧能力。",
+          "difference": "2024 的分析单位主要是任务级能力和数据组成；本文进一步用训练样本后测识别 left-side forgetting 与残余未学会样本。",
+          "why": "训练数据排列影响能力不是新现象；需要证明细粒度诊断比任务级重采样额外有效。",
+          "evidence": "Table 11：早期 10% ROUGE-L 0.41→0.53，末尾略降 0.61→0.60；没有直接与 2024 方法等预算对比。",
+          "decisive_test": "在同一多任务数据池，对照 task-wise mixture、普通 shuffle、动态重采样与 I3 条件边界巩固。",
+          "relationship": "顺序与数据混合的直接先例",
+          "verification": "ACL 2024 正式出版页核对"
+        },
+        {
+          "id": "revisiting-cf",
+          "name": "Revisiting Catastrophic Forgetting",
+          "full_title": "Revisiting Catastrophic Forgetting in Large Language Model Tuning",
+          "year": 2024,
+          "venue": "Findings of EMNLP 2024",
+          "family": "灾难性遗忘",
+          "distance": "closest",
+          "cited_at": "本站补充近邻；当前论文 Introduction 引用遗忘研究但不是此篇的直接实验基线",
+          "primary_url": "https://aclanthology.org/2024.findings-emnlp.249/",
+          "source_scope": "EMNLP Findings 正式论文与当前论文 Introduction",
+          "problem": "微调损害旧能力与损失景观平坦性之间有什么关系？",
+          "update_surface": "模型参数的持续训练、遗忘控制",
+          "supervision": "多任务训练前后的保留任务表现",
+          "model_tasks": "LLM tuning 的旧能力保留",
+          "shared": "都观察到新训练可能损害之前学会的任务。",
+          "difference": "Revisiting CF 解释与缓解整体旧能力丢失；本文强调先学的 SFT 数据在同轮序列训练结束后可能重新答错。",
+          "why": "left-side forgetting 是已知遗忘问题的具体时间位置切片，不是新提出“模型会忘记”。",
+          "evidence": "本文 Table 11 早期样本 +29% ROUGE-L 但末尾 −1.6%；缺少长期多轮保持及与平坦化正交基线比较。",
+          "decisive_test": "固定完整多轮任务，比较普通 replay、MIR/遗忘干预与冲突条件复习，分开报告新技能与旧技能。",
+          "relationship": "I3 方向必需的长期遗忘邻近研究",
+          "verification": "ACL Anthology 正式出版摘要核对"
+        }
+      ]
     }
   ]
 }

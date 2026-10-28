@@ -126,9 +126,18 @@ def main():
               'Journal card should display its real venue, not a made-up arXiv ID')
         check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-metadata').textContent.includes('ACL 2026')"),
               'ACL conference paper should show its actual venue')
+        check(js("return document.querySelector('#acl2026-sft-ilp-xue .reading-metadata').textContent.includes('ACL 2026')"),
+              'Incomplete Learning paper must have correct ACL 2026 venue')
+        check(js("return document.querySelectorAll('#acl2026-sft-ilp-xue .reading-story-step').length===4"),
+              'Incomplete Learning paper must have four readable summary stages')
         check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-story-step').textContent.includes('难在哪里')"),
               'ACL conference reading card missing four-stage readable summary')
         screenshot('reading-cards-desktop.png')
+        js("document.querySelector('#acl2026-sft-ilp-xue').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('reading-ilp-card-desktop.png')
+        check(js("return document.querySelector('#acl2026-sft-ilp-xue .reading-related-link')!==null"),
+              'ILP card needs direct nearest Related Work jump')
         check(js("return document.querySelector('#rote-learning-iclr2026-wu .reading-metadata').textContent.includes('ICLR 2026')"),
               'Published Rote Learning card must name ICLR rather than looking like an unpublished preprint')
         check(js("return document.querySelector('#rote-learning-iclr2026-wu .reading-story-step[data-story-stage=result]').textContent.includes('36%')"),
@@ -170,6 +179,12 @@ def main():
               'Evidence matrix did not render')
         check(js("return document.querySelectorAll('#deep-acl2026-good-curriculum-jia .deep-metric-item').length===5"),
               'ACL curriculum five metrics should be visible without expanding chapters')
+        check(js("return document.querySelectorAll('#deep-acl2026-sft-ilp-xue .deep-metric-item').length===5"),
+              'ILP five causes with results should be visible without expanding chapters')
+        check(js("return document.querySelector('#deep-acl2026-sft-ilp-xue .deep-metric-overview').textContent.includes('82.1%')"),
+              'ILP five-cause summary missing the decisive knowledge-gap result')
+        check(js("return document.querySelector('#deep-acl2026-sft-ilp-xue .deep-metric-overview').textContent.includes('0.53')"),
+              'ILP five-cause summary missing left-side forgetting effect')
         check(js("return [...document.querySelectorAll('#deep-acl2026-good-curriculum-jia .deep-metric-result')].every((e,i)=>e.textContent.includes('Table '+(i+1)))"),
               'Each visible metric must include the matching table and result')
         related_papers={t['paper_id'] for t in json.loads((ROOT/'rsi/related-work.json').read_text(encoding='utf-8'))['targets']}
@@ -199,6 +214,9 @@ def main():
         check(js("return document.querySelector('.deep-terms').children.length===3"),
               'Terms are not explained before jargon')
         screenshot('reading-notes-desktop.png')
+        js("document.querySelector('#deep-acl2026-sft-ilp-xue .deep-metric-overview').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('reading-ilp-five-causes-desktop.png')
         js("document.querySelector('#deep-acl2026-good-curriculum-jia .deep-metric-overview').scrollIntoView({block:'start'})")
         time.sleep(.6)
         screenshot('reading-acl2026-metrics-desktop.png')
@@ -347,7 +365,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':19}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':21}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

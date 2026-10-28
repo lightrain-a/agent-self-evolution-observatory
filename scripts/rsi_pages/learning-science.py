@@ -63,6 +63,15 @@ PAGE = {
 <div class="table-wrap"><table><thead><tr><th>区分什么</th><th>为什么重要</th><th>怎样在 RSI 中验证</th></tr></thead><tbody><tr><td>文本新颖</td><td>换词、换变量、乱序仍可能是旧内容的重复</td><td>保留 Token/n-gram 相似度与模糊重复审计</td></tr><tr><td>规则新颖</td><td>外观变化不一定引入新的适用条件；相近措辞也可能包含关键反例</td><td>固定原题数量，按规则族与反例条件分组</td></tr><tr><td>能力新增</td><td>记住文本与能在新题中独立应用，是两种不同结果</td><td>真实更新并撤辅后，分别测同规则与跨规则新题净增益</td></tr></tbody></table></div>
 <p><b>与当前 Idea 的关系：</b><a href="idea-i5.html">I5</a> 互教不能把不同题面当新增知识；<a href="idea-i6-failure-value.html">I6</a> 不宜把不同失败轨迹直接当不同规则；<a href="i8.html">I8</a> 应排除原题/近改写题记忆；<a href="idea-i9-practice-switching.html">I9</a> 应验证交错主题确实不同规则。<a href="reading-notes.html#deep-mosaic-memory-2026-shilov"><b>进入10节完整精读与受控实验 →</b></a>；<a href="reading-cards.html#mosaic-memory-2026-shilov">阅读C-I-D-R速览卡片</a>。</p>
 <div class="note"><b>证据边界：</b>原论文的目标是文本记忆、隐私风险、去重与基准去污染；“模糊重复不是新知识”是对RSI的待验证推断，不能直接代替新规则后测。</div>'''),
+("sft-incomplete-learning","ACL 2026｜为什么训练题给了正确答案，模型仍可能学不会？",'''
+<p><b>Observable Phenomenon：</b>Xue 等（<i>ACL 2026</i>）在 SFT 收敛后，将原监督样本转换成四选一，重复测试，平均 <b>15.3%±2.1%</b> 的样本未被稳定恢复。原文区分基础知识不足、预训练旧信念冲突、SFT 数据内部矛盾、顺序训练造成的前期遗忘，以及稀有模式训练不充分；五种模式的 Table 10 占比合计只有 78%，不能把这些诊断当作互斥根因真值。[[M27]]</p>
+<div class="table-wrap"><table><thead><tr><th>论文证据</th><th>作者结果</th><th>对应我们的问题</th></tr></thead><tbody>
+<tr><td>缺基础知识 · Table 4</td><td>MedQA Learn Rate：2轮SFT 65.3%，10轮 66.8%，CPT+SFT 82.1%</td><td><b>I8</b>：前置知识与目标规则迁移的交互是否真实存在？</td></tr>
+<tr><td>Left-side forgetting · Table 11</td><td>前10% ROUGE-L：0.41→0.53；末尾0.61→0.60</td><td><b>I3</b>：普通 replay 恢复旧题，与条件冲突巩固有何区别？</td></tr>
+<tr><td>同样失败、可能不同原因</td><td>五种潜在原因需由原模型状态、标签审计和训练顺序分别检查</td><td><b>I6</b>：先匹配这些状态，才能隔离“失败轨迹过程本身”的价值</td></tr>
+</tbody></table></div>
+<p><b>最重要的边界：</b>训练后在选择题上重新做对、自由文本恢复和未见同规则题真正掌握，不是同一个结果。补知识还增加了语料及训练计算，不能直接宣称“相关前置知识”是唯一原因。完整证据与原表见 <a href="reading-notes.html#deep-acl2026-sft-ilp-xue"><b>五种 ILP 原因精读</b></a>，<a href="reading-cards.html#acl2026-sft-ilp-xue">速览卡片</a>。</p>
+'''),
 ("rote-learning","ICLR 2026｜先记忆再泛化：能调用旧事实，不等于会做两跳推理",'''
 <p><b>Challenge：</b>Wu 等的 <i>Rote Learning Considered Useful</i>（ICLR 2026）研究先用无语义 token [X] 记住一批实体关联，再以少量自然语言示范学会关系含义。关键区别是：<strong>Phase 2 的“未见事实”早在 Phase 1 已被模型记忆过</strong>，因此不是学会全训练未出现的新事实。[[M24]]</p>
 <p><b>Insight / Design：</b>同类事实共享 [X]，少量语义训练可能一次性让许多已记忆事实可通过不同问法取回。作者在8个LLM的合成事实设置中测试 Phase 1 参数记忆、Phase 2 语义映射和后续语义调用；这和 Agent 把轨迹放进外部 Memory 的做法不是一回事。</p>
