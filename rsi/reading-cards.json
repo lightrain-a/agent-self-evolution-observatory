@@ -1989,6 +1989,855 @@
         "code": "https://osf.io/aknqj/",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13346944/"
       }
+    },
+    {
+      "id": "acl2026-good-curriculum-jia",
+      "short_title": "What Makes a Good Curriculum?",
+      "title": "What Makes a Good Curriculum? Disentangling the Effects of Data Ordering on LLM Mathematical Reasoning",
+      "authors": "Yaning Jia, Chunhui Zhang, Xingjian Diao, Xiangchi Yuan, Zhongyu Ouyang, Chiyu Ma, Soroush Vosoughi",
+      "lead_institution": "Dartmouth College",
+      "institutions": [
+        "Dartmouth College",
+        "Georgia Institute of Technology"
+      ],
+      "institution_source": "ACL 2026 正式 PDF 首页作者单位标记（1 Dartmouth / 2 Georgia Tech）",
+      "publication": "ACL 2026 · Long Papers · pp. 34472–34488",
+      "doi": "10.18653/v1/2026.acl-long.1591",
+      "official_url": "https://aclanthology.org/2026.acl-long.1591/",
+      "first_posted": "2026-07",
+      "version": "ACL Anthology 正式版（2026-07）",
+      "read_on": "2026-10-28",
+      "reading_level": "§2.1、§3.2 Tables 1–5、§3.3 Fig.2、附录；尚未独立复现",
+      "tags": [
+        "Curriculum Learning",
+        "Five Difficulty Families",
+        "Data Ordering",
+        "VACC",
+        "Mathematical Reasoning"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "partial",
+          "contribution": "对比正确率、困惑度、置信间隔、熵和重复作答结果方差，研究哪种难度信号有利于训练排序。",
+          "open_question": "仍依赖固定数学正确性验证，不涉及会变化或受攻击的评估器。"
+        },
+        "novelty": {
+          "level": "not_addressed",
+          "contribution": "固定 MetaMathQA 训练样本，只调整顺序或分层选择。",
+          "open_question": "没有研究 Agent 自主产生新信息。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "VACC 对应同题有时对有时错的状态，排序可能改善最终数学表现。",
+          "open_question": "离线排序不证明在线 P50 有效，也不扩展初始采样支持集。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "在同分布与四种分布外数学数据上比较训练后能力。",
+          "open_question": "未评测多轮更新中的长期遗忘、旧 Skill 保持。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "离线数学 SFT 研究，未涉及真实系统操作。",
+          "open_question": "无越权、投毒、恶意记忆持久化的安全测试。"
+        }
+      },
+      "one_sentence": "同样的数学训练题，仅改变顺序就可能改变效果；核心是弄清“难度”其实有五种不同量法。",
+      "story": {
+        "challenge": "已有课程论文分别用题目复杂度、模型信心、困惑度来排题，训练设置也不同，很难单独比较先后顺序。",
+        "insight": "一题步骤多不代表模型不会；模型犹豫也不代表答案错。需要把难度分成五类并固定其余训练条件。",
+        "design": "对 2 万道数学题计算五类难度量，做升序、降序、随机排序；用三个基座模型、五个数学基准比较。",
+        "result": "没有一种排序普遍最优。VACC 高值优先在 15 组方向比较中赢 12 组，但不代表全都胜过随机。"
+      },
+      "problem": "难度定义不一致，训练方法同时变化，使得课程顺序的影响缺乏可比证据。",
+      "setup": "从 MetaMathQA-40K 抽取 20k；Gemma3-4B、Mistral-7B、Llama3.1-8B 基座模型；LoRA SFT 3 epochs；Random/↑/↓，5 benchmark 各 512 题；单独做 Low/Medium/High 三分层。",
+      "updates": "更新的是模型 LoRA 权重；五类度量在训练前计算，主实验是静态离线排序，不在线重新估计成功率。",
+      "key_ideas": [
+        {
+          "name": "五类十种难度量",
+          "summary": "题目复杂度 RS/SC/CD/ACC；意外程度 SLP/TLP；信心差 LG；预测熵 SLE/TLE；决策波动 VACC。",
+          "formula": "5 categories: 4 + 2 + 1 + 2 + 1 = 10 concrete metrics"
+        },
+        {
+          "name": "只改顺序的受控比较",
+          "summary": "相同训练数据和 LoRA 预算，比随机、指标升序↑和降序↓；方向不等于所有指标统一的易到难。",
+          "formula": "Same 20K examples, same SFT; ascending vs descending vs shuffled"
+        },
+        {
+          "name": "P50 与 VACC",
+          "summary": "反复采样同题正确率 p，结果方差为 p(1-p)，0.5 时最大；不等于训练中实时选择 P50。",
+          "formula": "VACC = p̂(1−p̂), maximum 0.25 at p̂=0.5"
+        }
+      ],
+      "evidence": [
+        "Table 1：Llama GSM8K 62.50%→70.90%（RS↓，+8.40 pp）；Gemma MATH 21.68%→25.78%（RS↑，+4.10 pp）。",
+        "Table 2：Llama MATH 18.55%→24.02%（TLP↓，+5.47 pp）；SLP↑ 在 15 组方向比较中 11 组胜过 SLP↓。",
+        "Table 3：Llama GSM8K 62.50%→69.92%（LG↑，+7.42 pp），但高信心优先并非总是有效。",
+        "Table 4：Llama ASDiv 74.02%→79.49%（SLE↑，+5.47 pp）；Mistral MATH 18.75%→14.84%（SLE↑，−3.91 pp）。",
+        "Table 5：Gemma MMQA 51.17%→60.16%（VACC↓，+8.99 pp）；VACC↓ 12/15 组优于 VACC↑，不是 12 组均胜随机。",
+        "Figure 2：Llama 分档实验中 ACC/TLP/LG/VACC 的主要收益多在中档；熵的有利难度区间随任务复杂程度变化。"
+      ],
+      "boundaries": [
+        "五类共十个具体指标；ACC 被归入题目侧，但由目标模型多次答题估算，并非严格模型无关。",
+        "TLP 实际由 top-5 token 分布熵指数化，非传统 sequence perplexity。",
+        "↑/↓ 是数值升/降序。对 ACC 或 LG，不等于普适的“先易后难/先难后易”。",
+        "VACC↓ 的 12/15 指两种排序方向互相比，不代表 12/15 都超越 Random。",
+        "主实验一次性静态排序，未测试模型每轮更新后重新选 p≈0.5 的在线 P50。",
+        "课程训练题目之间的顺序与 I7 同一题的先尝试/先看示范顺序不同。"
+      ],
+      "our_relevance": [
+        "这五类指标可作为 RSI 训练数据排序的诊断维度，而不能因同名或同量纲就混为“难度”。",
+        "I7 仍只研究同一道题的教学先后次序，论文研究题目之间的训练排列。",
+        "Online P50 应成为一个简洁强基线；除非证明其稳定失败，否则没必要额外发明收益预测器。"
+      ],
+      "next_test": "同模型、同题库和真实训练成本，比较 Random、静态 ACC/VACC 升降序、SGC 中档、Online P50；包含估计 p 的额外采样成本，最终只用独立数学题测能力。",
+      "deep_read": {
+        "focus": "这篇论文的最大贡献是把数学题的难度分成五类，逐类比较排序后的效果，而不是发明一个统一适用的课程策略。",
+        "terms": [
+          {
+            "name": "↑ / ↓",
+            "meaning": "表示按指标数值升序 / 降序；不要一概译成先易后难 / 先难后易"
+          },
+          {
+            "name": "FCL / RCL",
+            "meaning": "论文把升序/降序称为 Forward/Reverse；真正的题目难度方向依赖指标"
+          },
+          {
+            "name": "VACC",
+            "meaning": "同题采样的正确/错误结果方差，p≈0.5 时最大"
+          }
+        ],
+        "metric_summary": [
+          {
+            "family": "① Problem Difficulty · 题目难度",
+            "metrics": "RS/SC/CD/ACC（4 项）",
+            "meaning": "解题步骤、符号、理解复杂度、目标模型的多次作答正确率。",
+            "result": "Table 1 · Llama GSM8K RS↓：62.50%→70.90%（+8.40 pp）"
+          },
+          {
+            "family": "② Model Surprisal · 模型意外程度",
+            "metrics": "SLP/TLP（2 项）",
+            "meaning": "答案在模型看来多不熟悉，或每个 token 的候选是否分散。",
+            "result": "Table 2 · Llama MATH TLP↓：18.55%→24.02%（+5.47 pp）"
+          },
+          {
+            "family": "③ Confidence Margin · 信心间隔",
+            "metrics": "LG（1 项）",
+            "meaning": "生成下一个 token 时，第一选择领先第二选择多少。",
+            "result": "Table 3 · Llama GSM8K LG↑：62.50%→69.92%（+7.42 pp）"
+          },
+          {
+            "family": "④ Predictive Uncertainty · 预测不确定性",
+            "metrics": "SLE/TLE（2 项）",
+            "meaning": "候选 token 概率分布有多分散；整段累积与局部程度不同。",
+            "result": "Table 4 · Llama ASDiv SLE↑：74.02%→79.49%（+5.47 pp）"
+          },
+          {
+            "family": "⑤ Decision Variability · 决策波动",
+            "metrics": "VACC（1 项）",
+            "meaning": "同一道题反复做，是总对/总错，还是时对时错。",
+            "result": "Table 5 · VACC↓ 方向对比胜出 12/15（不代表全超 Random）"
+          }
+        ],
+        "summary": [
+          "五类十种指标：题面复杂度、生成意外度、信心差、预测熵、同题成败波动。",
+          "相同 20k 道题只改排序方向，最终结果在不同模型和测试任务上不一致。",
+          "VACC 高值优先在 12/15 组方向对比胜出，但不是训练中实时选择 p≈0.5。"
+        ],
+        "sections": [
+          {
+            "id": "why-metrics",
+            "stage": "challenge",
+            "title": "同一题到底有多难？为什么现有论文对不上？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "有的研究用推理步骤数量定义难度，有的看答案的模型概率，有的根据模型反复回答的正确率排序。同一道题可能步骤很多但模型已很熟悉，也可能步骤很少却反复时对时错。因此，不能用一个笼统的“难”字解释所有课程实验。"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "先用例子理解差别",
+                "text": "十步计算题：模型 20 次答对 19 次，RS 高但 ACC 也高；三步概率题：20 次答对 10 次，RS 低却有最高 VACC。不同难度指标会把两道题排到不同位置。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "作者真正控制的变量",
+                "text": "主实验保持 20k 训练题、优化目标、LoRA 设置不变，只改变排序；SGC 分层实验则只用三分之一题库，是不同的实验。"
+              }
+            ]
+          },
+          {
+            "id": "five-facets",
+            "stage": "insight",
+            "title": "五类十指标：它们实际上问的是五个不同的问题",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "五类难度",
+                  "具体指标",
+                  "它想回答什么"
+                ],
+                "rows": [
+                  [
+                    "① Problem Difficulty",
+                    "RS、SC、CD、ACC",
+                    "步骤多吗？符号复杂吗？理解难吗？模型答对几次？"
+                  ],
+                  [
+                    "② Model Surprisal",
+                    "SLP、TLP",
+                    "模型对完整答案和局部候选有多意外？"
+                  ],
+                  [
+                    "③ Confidence Margin",
+                    "LG",
+                    "第一选择比第二选择高出多少？"
+                  ],
+                  [
+                    "④ Predictive Uncertainty",
+                    "SLE、TLE",
+                    "下一步 token 的概率分布有多分散？"
+                  ],
+                  [
+                    "⑤ Decision Variability",
+                    "VACC",
+                    "同一道题多次做，结果是不是忽对忽错？"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么五类不可互换",
+                "text": "ACC 越高意味着做对越多；LG 越高意味着首选更有把握；困惑度和熵高代表模型更意外或更不确定；VACC 在 p≈0.5 时最高。把所有指标统一“从低到高=从易到难”会误读结果。"
+              },
+              {
+                "type": "prose",
+                "text": "五类共 10 项具体量。论文用 RS/SC/CD 辅助描述题面复杂度，用目标模型多次采样得到 ACC/VACC，并根据模型 token 概率计算 SLP/TLP/LG/SLE/TLE。不同指标包含的模型条件和测量成本并不相同。"
+              }
+            ]
+          },
+          {
+            "id": "problem-difficulty",
+            "stage": "design",
+            "order": 1,
+            "title": "① Problem Difficulty：步骤、符号、理解、答对率不是一回事",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "指标",
+                  "作者怎样测",
+                  "关键区别"
+                ],
+                "rows": [
+                  [
+                    "RS · Reasoning Steps",
+                    "解题需要多少独立逻辑步骤",
+                    "步骤多≠这个模型一定不会"
+                  ],
+                  [
+                    "SC · Symbol Complexity",
+                    "符号复杂度 1–5 分",
+                    "使用高阶数学符号不等于推理路径难"
+                  ],
+                  [
+                    "CD · Comprehension Difficulty",
+                    "题意理解难度 1–5 分，涵盖歧义、背景和前置知识",
+                    "理解困难可能不同于运算困难"
+                  ],
+                  [
+                    "ACC · Acc@K",
+                    "目标模型 K 次独立生成中答对的比例",
+                    "表中归为题目侧，但实际依赖目标模型"
+                  ]
+                ],
+                "caption": "RS/SC/CD 由 Qwen2.5-Math-72B-Instruct 辅助评估；ACC 来自目标模型采样。原文 §2.1.1。"
+              },
+              {
+                "type": "formula",
+                "label": "Eq. (1) · ACC",
+                "expression": "ACC = p̂ = (1/K)Σₛ 1[第 s 次生成正确]",
+                "meaning": "例如 20 次答对 14 次，ACC=0.70。此时难度是当前模型的经验成功率，而不是题目本身独立于模型的复杂度。",
+                "boundary": "不同模型的 ACC 可能不同；成功率高低不能直接推出“训练收益大小”。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 1 · 代表性原始结果",
+                  "Random",
+                  "顺序",
+                  "训练后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Llama3.1-8B · GSM8K",
+                    "62.50%",
+                    "RS↓",
+                    "70.90%",
+                    "+8.40 pp"
+                  ],
+                  [
+                    "Gemma3-4B · MATH",
+                    "21.68%",
+                    "RS↑",
+                    "25.78%",
+                    "+4.10 pp"
+                  ],
+                  [
+                    "Mistral-7B · MATH",
+                    "18.75%",
+                    "RS↑",
+                    "16.41%",
+                    "−2.34 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "读表结论",
+                "text": "对 Llama 的 GSM8K，多步骤优先很有效；对 Gemma 的 MATH，少步骤优先也很有效。没有统一的方向，不应凭一组最大提升断言先难后易最好。"
+              }
+            ]
+          },
+          {
+            "id": "model-surprisal",
+            "stage": "design",
+            "order": 2,
+            "title": "② Model Surprisal：模型觉得答案多“意外”？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "指标",
+                  "怎么计算",
+                  "用人话解释"
+                ],
+                "rows": [
+                  [
+                    "SLP · Sequence-Level Perplexity",
+                    "整条解答的平均负 log 概率指数化",
+                    "完整答案在当前模型看来有多不熟悉"
+                  ],
+                  [
+                    "TLP · Token-Level Perplexity",
+                    "取 top-5 候选 token 概率的熵，聚合后指数化",
+                    "局部候选是否不集中；并非标准的 token 困惑度"
+                  ]
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "Eqs. (2)–(3) · SLP / TLP",
+                "expression": "SLP=exp(−mean_t log p(yₜ|x,y<t)); TLP=exp(mean_t H(qₜ,top5))",
+                "meaning": "SLP 看已经生成的解答概率，TLP 看多个候选 token 的局部概率分布，两者计算对象不同。",
+                "boundary": "TLP 虽叫 Perplexity，但本质上基于 top-5 截断分布熵，不能当成标准语言建模 perplexity。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 2 · 代表性原始结果",
+                  "Random",
+                  "顺序",
+                  "训练后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Llama3.1-8B · MATH",
+                    "18.55%",
+                    "TLP↓",
+                    "24.02%",
+                    "+5.47 pp"
+                  ],
+                  [
+                    "Llama3.1-8B · GSM8K",
+                    "62.50%",
+                    "SLP↑",
+                    "65.43%",
+                    "+2.93 pp"
+                  ],
+                  [
+                    "Mistral-7B · GSM8K",
+                    "60.35%",
+                    "SLP↓",
+                    "63.09%",
+                    "+2.74 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "哪种排序更稳定？",
+                "text": "SLP↑ 在 15 组“升序 vs 降序”比较中有 11 组占优；TLP 方向不那么稳定，在部分复杂基准中 TLP↓ 反而更好。"
+              }
+            ]
+          },
+          {
+            "id": "confidence-margin",
+            "stage": "design",
+            "order": 3,
+            "title": "③ Confidence Margin：第一选择比第二选择坚定多少？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "假设生成下一 token 时首选 A 的概率明显高于次选 B，模型就比较“坚定”；若两者接近则犹豫。但是坚定可能也在自信地犯错，所以 LG 不是实际答题准确率。"
+              },
+              {
+                "type": "formula",
+                "label": "Eq. (4) · LG / Logit Gap",
+                "expression": "LG = mean_t [log p(top1) − log p(top2)]",
+                "meaning": "把有两个以上候选的位置的首选和次选 log 概率差取平均；LG 越高代表首选越突出。",
+                "boundary": "LG↓ 表示从高信心到低信心排题，不应自动叫“难题优先”；LG↑ 是从低信心到高信心。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 3 · 代表性原始结果",
+                  "Random",
+                  "顺序",
+                  "训练后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Llama3.1-8B · GSM8K",
+                    "62.50%",
+                    "LG↑",
+                    "69.92%",
+                    "+7.42 pp"
+                  ],
+                  [
+                    "Gemma3-4B · MATH",
+                    "21.68%",
+                    "LG↓",
+                    "24.72%",
+                    "+3.04 pp"
+                  ],
+                  [
+                    "Mistral-7B · MATH",
+                    "18.75%",
+                    "LG↑",
+                    "16.21%",
+                    "−2.54 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "结论不要写过头",
+                "text": "论文讨论 LG↓ 的潜力，但原始表格也有 LG↑ 占优和课程两方向均低于随机的情况。方向与模型、评测任务有关。"
+              }
+            ]
+          },
+          {
+            "id": "predictive-uncertainty",
+            "stage": "design",
+            "order": 4,
+            "title": "④ Predictive Uncertainty：概率分布是集中还是分散？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "指标",
+                  "怎么算",
+                  "区别"
+                ],
+                "rows": [
+                  [
+                    "SLE · Sequence-Level Entropy",
+                    "沿整段答案累计各 token 的 top-5 分布熵",
+                    "整段累积不确定性，也会受生成长度影响"
+                  ],
+                  [
+                    "TLE · Token-Level Entropy",
+                    "单个位置的 top-5 token 分布熵",
+                    "局部这一步是否有多个差不多概率的候选"
+                  ]
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "Eqs. (5)–(6) · 熵",
+                "expression": "H(qₜ)=−Σᵢ qₜᵢ log₂ qₜᵢ ; SLE=Σₜ H(qₜ) ; TLE=H(qₜ)",
+                "meaning": "分布越平，模型越不确定，熵通常越大。SLE 跨位置累积，TLE 观察位置上的局部不确定性。",
+                "boundary": "熵越高不一定错得越多，也不一定学习收益越大；SLE 和 TLE 数值不处于完全同样的计量口径。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 4 · 代表性原始结果",
+                  "Random",
+                  "顺序",
+                  "训练后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Llama3.1-8B · ASDiv",
+                    "74.02%",
+                    "SLE↑",
+                    "79.49%",
+                    "+5.47 pp"
+                  ],
+                  [
+                    "Llama3.1-8B · GSM8K",
+                    "62.50%",
+                    "TLE↑",
+                    "70.12%",
+                    "+7.62 pp"
+                  ],
+                  [
+                    "Mistral-7B · MATH",
+                    "18.75%",
+                    "SLE↑",
+                    "14.84%",
+                    "−3.91 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "熵类别的实验发现",
+                "text": "高熵样本优先在部分简单任务上有效，但 MATH 这类难任务会出现明显退化。相较 LG 与困惑度，熵类排序的稳定性更弱。"
+              }
+            ]
+          },
+          {
+            "id": "decision-variability",
+            "stage": "design",
+            "order": 5,
+            "title": "⑤ Decision Variability：时对时错究竟意味着什么？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "VACC 不看模型口头说自己多自信，而是同一题独立做 K 次，计算正确/错误的波动。一直全对或全错时 VACC 为零，一半对一半错时最高。"
+              },
+              {
+                "type": "formula",
+                "label": "Eq. (7) · VACC",
+                "expression": "VACC = p̂(1−p̂); p̂=0.5 时 VACC=0.25",
+                "meaning": "20 次里答对 10 次，p̂=0.5、VACC=0.25；答对 4 次或 16 次，VACC 都是 0.16。它不能区分“太难”和“很容易”。",
+                "boundary": "论文 VACC 是训练前采样后固定排序，不是每轮更新 p 再选 p≈0.5 的 Online P50。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Table 5 · 代表性原始结果",
+                  "Random",
+                  "顺序",
+                  "训练后",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "Gemma3-4B · MMQA",
+                    "51.17%",
+                    "VACC↓",
+                    "60.16%",
+                    "+8.99 pp"
+                  ],
+                  [
+                    "Llama3.1-8B · MBench",
+                    "38.09%",
+                    "VACC↓",
+                    "41.02%",
+                    "+2.93 pp"
+                  ],
+                  [
+                    "Mistral-7B · MATH",
+                    "18.75%",
+                    "VACC↓",
+                    "16.80%",
+                    "−1.95 pp"
+                  ],
+                  [
+                    "Gemma3-4B · MATH",
+                    "21.68%",
+                    "VACC↑",
+                    "26.17%",
+                    "+4.49 pp"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "“12/15”必须正确理解",
+                "text": "VACC↓（高波动先训）在 3 模型×5 基准的 15 组升/降序方向对比中赢 12 组；不表示其中 12 组都超过随机基线。"
+              }
+            ]
+          },
+          {
+            "id": "ordering-explained",
+            "stage": "design",
+            "order": 6,
+            "title": "升序、降序、分档与 Online P50，不要当成同一种算法",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "策略",
+                  "究竟改了什么",
+                  "作者测过吗"
+                ],
+                "rows": [
+                  [
+                    "Random",
+                    "固定训练题库，随机打乱",
+                    "是"
+                  ],
+                  [
+                    "FCL ↑",
+                    "按指标数值从低到高排序",
+                    "是；并非所有指标都代表先易后难"
+                  ],
+                  [
+                    "RCL ↓",
+                    "按指标数值从高到低排序",
+                    "是；并非所有指标都代表先难后易"
+                  ],
+                  [
+                    "SGC 三分档",
+                    "只取 Low/Medium/High 中一个 1/3 子集训练",
+                    "是；是数据选择对照"
+                  ],
+                  [
+                    "Online P50",
+                    "模型每轮更新后重新估计 p，挑最接近 0.5 的题",
+                    "否；论文主实验静态排题"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "最容易误判的地方",
+                "text": "RS ↑ 常对应少步骤→多步骤，但 ACC ↑ 是低正确率→高正确率，LG ↓ 是高信心→低信心。箭头标的是数值，不是统一的“难度方向”。"
+              }
+            ]
+          },
+          {
+            "id": "experiment-setup",
+            "stage": "result",
+            "order": 1,
+            "title": "训练控制是什么：一样的数据，只改变排列顺序",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "固定 20,000 道数学训练题",
+                    "text": "从 MetaMathQA-40K 中随机抽取 20k；不引入新的题目，测试集中包含 MMQA、ASDiv、GSM8K、MBench、MATH，每个 512 题。"
+                  },
+                  {
+                    "title": "使用三个非指令微调的基座模型",
+                    "text": "Gemma3-4B-pt、Mistral-7B-v0.3、Llama3.1-8B；LoRA SFT 3 epochs，训练目标与预算固定。"
+                  },
+                  {
+                    "title": "比较指标升序、降序、随机",
+                    "text": "分别按同一个指标从低到高、从高到低排题。分档 SGC 则只取一档 1/3 训练，与等数据量随机子集比。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "数据顺序与数据子集别混报",
+                "text": "主表只改同一批 20k 样本的排序；Figure 2 的 SGC 使用不同难度子集。后者证明“选什么样的题”有关系，并不能直接证明“同一批题如何排”有同等效果。"
+              }
+            ]
+          },
+          {
+            "id": "results-five-families",
+            "stage": "result",
+            "order": 2,
+            "title": "五种指标分别有没有帮助？按 Tables 1–5 看",
+            "blocks": [
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "① Problem Difficulty · Table 1",
+                    "setup": "RS / SC / CD / ACC；Llama3.1-8B GSM8K 的 RS↓。",
+                    "result": "62.50% → 70.90%（+8.40 pp）；Gemma MATH 的 RS↑ 为 21.68%→25.78%。",
+                    "supports": "题面和正确率指标的排序影响测试结果，最佳方向随模型与任务变化。",
+                    "not_proven": "长推理链一定应优先学；Mistral 的部分高难基准反而退步。"
+                  },
+                  {
+                    "domain": "② Model Surprisal · Table 2",
+                    "setup": "SLP / TLP；Llama3.1-8B MATH 的 TLP↓。",
+                    "result": "18.55% → 24.02%（+5.47 pp）；SLP↑ 在 15 组升降序比较中 11 次高于 SLP↓。",
+                    "supports": "模型自身的意外程度可成为训练顺序信号。",
+                    "not_proven": "TLP 是标准困惑度，或 SLP 在全部基准中都应低值优先。"
+                  },
+                  {
+                    "domain": "③ Confidence Margin · Table 3",
+                    "setup": "LG；Llama3.1-8B GSM8K 的 LG↑。",
+                    "result": "62.50% → 69.92%（+7.42 pp）；Gemma MATH 的 LG↓ 为 21.68%→24.72%。",
+                    "supports": "首选与次选概率差距可能提供排序信息。",
+                    "not_proven": "较高 LG 总是代表正确，也不代表始终 LG↓ 最佳。"
+                  },
+                  {
+                    "domain": "④ Predictive Uncertainty · Table 4",
+                    "setup": "SLE / TLE；Llama3.1-8B ASDiv 的 SLE↑。",
+                    "result": "74.02% → 79.49%（+5.47 pp）；Mistral MATH 的 SLE↑ 从 18.75% 降到 14.84%。",
+                    "supports": "熵在部分相对简单任务上有用，但在复杂任务不够稳定。",
+                    "not_proven": "越不确定的题一定越值得优先训练。"
+                  },
+                  {
+                    "domain": "⑤ Decision Variability · Table 5",
+                    "setup": "VACC；Gemma MMQA 的 VACC↓。",
+                    "result": "51.17% → 60.16%（+8.99 pp）；高 VACC 优先的 12/15 是方向比较，不是相对随机的 12 次胜利。",
+                    "supports": "先用时对时错的题，有时明显优于低波动优先。",
+                    "not_proven": "VACC↓ 在所有模型都优于随机，或已验证动态 Online P50。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "类别",
+                  "主表",
+                  "最快复习的结论"
+                ],
+                "rows": [
+                  [
+                    "题目难度",
+                    "Table 1",
+                    "RS/SC 有效实例，但先高还是先低取决于模型和任务"
+                  ],
+                  [
+                    "模型意外",
+                    "Table 2",
+                    "SLP↑ 较多胜，TLP 对局部变化更敏感"
+                  ],
+                  [
+                    "信心差",
+                    "Table 3",
+                    "LG 可用，但方向不统一"
+                  ],
+                  [
+                    "预测不确定性",
+                    "Table 4",
+                    "熵指标好坏波动较大"
+                  ],
+                  [
+                    "决策波动",
+                    "Table 5",
+                    "VACC↓ 12/15 个方向对比胜出，不等于 12 组超随机"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "metric-tiers",
+            "stage": "result",
+            "order": 3,
+            "title": "Figure 2：为什么中档练习常常更有效？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者把题目按某一指标分成 Low/Medium/High 三档，在 Llama3.1-8B 上每次只训练其中 1/3，与同样数量随机题对照。这是控制数据量的数据选择实验，而非在线更新一个难度阈值。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "五类代表指标",
+                  "Figure 2 主要现象",
+                  "实验边界"
+                ],
+                "rows": [
+                  [
+                    "ACC、TLP、LG、VACC",
+                    "收益大多集中在 Medium 档；较容易任务偏 Low/Medium，困难任务偏 Medium/High",
+                    "只在 Llama3.1-8B 做此组分档"
+                  ],
+                  [
+                    "TLE",
+                    "ASDiv/GSM8K 等简单任务倾向高熵档；MBench/MATH 等困难任务反而倾向低熵档",
+                    "不能把图直接推广到所有架构"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "与 P50 的联系",
+                "text": "中档有效只说明静态指标分层可能改善训练，并不意味着该档恰好 p=0.5，更不等于每次 LoRA 更新后动态选择 p≈0.5 的效果已被证明。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-boundaries",
+            "stage": "next",
+            "title": "和我们 P50 / I7 的关系：哪些问题还没有研究？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "问题",
+                  "ACL 论文做了什么",
+                  "我们不该误读成什么"
+                ],
+                "rows": [
+                  [
+                    "数学训练题目顺序",
+                    "相同题库按指标升序 / 降序",
+                    "不是证明必须设计复杂收益预测器"
+                  ],
+                  [
+                    "单一道题的教学顺序（I7）",
+                    "没有比较先独立尝试、还是先看示范",
+                    "不能直接拿本文代替 I7 的受控实验"
+                  ],
+                  [
+                    "分档学习",
+                    "Llama 模型的三分之一数据子集实验",
+                    "并非每轮实时 P50"
+                  ],
+                  [
+                    "持续 Online P50",
+                    "没有跟随学习者更新反复测 p，再动态选接近 0.5 的题",
+                    "与静态 VACC↓ 仍需独立实测"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "我们目前最简单、最值得做的对照",
+                "text": "固定真实训练总预算，对比 Random、静态 RS/VACC 排序、SGC 中档、Online P50。Online P50 的额外采样估计费用也要算进预算。若 P50 已经足够好，就不要继续叠加收益预测器。"
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "动态 P50 vs 静态 VACC 的辨别实验",
+                    "design": "固定模型起点、数学训练题池、LoRA 更新器、训练与正确性验证；静态策略使用训练前一次 VACC，动态策略每轮重估当前 p。",
+                    "decisive": "独立新题准确率、总 token/FLOPs、旧能力回归。若 P50 相同甚至更好，无额外复杂算法的必要。"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://aclanthology.org/2026.acl-long.1591/",
+        "pdf": "https://aclanthology.org/2026.acl-long.1591.pdf",
+        "code": "https://github.com/karpning/Curriculum_evaluation",
+        "full_text": "https://arxiv.org/abs/2510.19099"
+      }
     }
   ]
 }

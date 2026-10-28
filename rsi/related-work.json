@@ -352,6 +352,132 @@
           "verification": "Psychological Science 出版社记录与 PubMed 元数据核对"
         }
       ]
+    },
+    {
+      "paper_id": "acl2026-good-curriculum-jia",
+      "target_short_title": "What Makes a Good Curriculum? · ACL 2026",
+      "target_venue": "ACL 2026 Long Papers · DOI: 10.18653/v1/2026.acl-long.1591",
+      "source_related_sections": "§1、§2、§4 及原文参考文献",
+      "one_sentence": "它没有首次发明难度估计或在线课程，而是统一比较五类指标，在固定 20k 数学题及 SFT 协议下测量排序方向本身的效果。",
+      "reading_takeaway": "传统课程强调易到难，后续研究已经用模型自身信号与技能学习动态选题；本论文的增量是五类十指标的受控离线排序比较，而非复杂的在线课程路由。",
+      "scope_note": "三篇最贴近课程选择/难度测量的论文，加一篇理论起点；因研究任务不同，不用跨论文分数判断胜负。",
+      "evidence_gap": "没有在同任务、同总采样和训练预算下将在线 P50 与静态 VACC↓ 比较；部分排序表现较差，不能声称统一最佳课程。",
+      "evolution": [
+        {
+          "period": "2009 · 课程起点",
+          "summary": "Bengio 等把从简单到复杂安排训练样本形式化。",
+          "source_url": "https://icml.cc/Conferences/2009/abstracts.html"
+        },
+        {
+          "period": "2023 · 技能依赖与在线数据选择",
+          "summary": "Skill-it 根据技能之间的作用，在线分配训练数据。",
+          "source_url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/70b8505ac79e3e131756f793cd80eb8d-Abstract-Conference.html"
+        },
+        {
+          "period": "2025–26 · 模型状态与动态课程",
+          "summary": "Feng 等用预训练模型估计难度；SEC 使用在线策略选课程。",
+          "source_url": "https://aclanthology.org/2025.acl-srw.15/"
+        },
+        {
+          "period": "2026 · 多维受控比较",
+          "summary": "Jia 等固定数学题库和训练方法，分别比较五类难度指标与顺序。",
+          "source_url": "https://aclanthology.org/2026.acl-long.1591/"
+        }
+      ],
+      "works": [
+        {
+          "id": "feng-2025",
+          "name": "Feng et al. 2025",
+          "full_title": "Your Pretrained Model Tells the Difficulty Itself: A Self-Adaptive Curriculum Learning Paradigm for Natural Language Understanding",
+          "year": 2025,
+          "venue": "ACL 2025 Student Research Workshop",
+          "family": "模型难度估计",
+          "distance": "closest",
+          "cited_at": "§1 引言引用与相关难度测量背景",
+          "primary_url": "https://aclanthology.org/2025.acl-srw.15/",
+          "source_scope": "ACL Anthology 正式论文和 ACL 2026 原文引言",
+          "problem": "用预训练模型自己预测样本难度，比较先易、先难与混合课程。",
+          "update_surface": "语言理解任务的微调样本顺序",
+          "supervision": "模型难度分数、分类数据标签",
+          "model_tasks": "四项 NLU 分类任务",
+          "shared": "都认为题目难度应考虑模型状态，也比较先易或先难。",
+          "difference": "Feng 重点提出 PLM 自适应难度估计与课程设计；Jia 固定数学推理 SFT，系统比较五类难度量及模型/任务差异。",
+          "why": "一种模型难度分数有效，不代表其他量度或数学推理任务采用同样的最佳排序。",
+          "evidence": "两篇原文都报告各自基准上的课程收益，但并未在相同题库和预算下直接比赛。",
+          "decisive_test": "固定相同数学训练数据和模型，把 Feng 评分器映射到同一题库，比较五类指标和对照。",
+          "relationship": "模型驱动难度测量的最近邻",
+          "verification": "ACL 官方出版页和本文引言已核对"
+        },
+        {
+          "id": "skillit-2023",
+          "name": "Skill-it!",
+          "full_title": "Skill-it! A data-driven skills framework for understanding and training language models",
+          "year": 2023,
+          "venue": "NeurIPS 2023",
+          "family": "技能依赖课程",
+          "distance": "closest",
+          "cited_at": "§4 Related Work 引用，技能顺序与数据选择方向",
+          "primary_url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/70b8505ac79e3e131756f793cd80eb8d-Abstract-Conference.html",
+          "source_scope": "NeurIPS 官方摘要及原文 Related Work",
+          "problem": "前置技能学习如何改变目标技能，怎样按技能关系在线分配训练数据？",
+          "update_surface": "训练数据 mixture 的在线抽样权重",
+          "supervision": "各技能的验证损失和任务关联",
+          "model_tasks": "持续预训练、指令微调等",
+          "shared": "都研究训练数据的出现顺序和有限预算利用。",
+          "difference": "Skill-it 显式利用跨技能关系动态分配；Jia 不建依赖图，保持数据固定，用五类指标隔离排序方向效果。",
+          "why": "“技能之间的关联”与“同一数学数据的离线排序”是不同实验对象；后者不解决前者。",
+          "evidence": "Skill-it 的多技能效果有独立实验；Jia Tables 1–5 展示数学 SFT 方向变化，没有同预算直接比较。",
+          "decisive_test": "在有技能依赖的同一数据集上冻结总预算，对照固定指标排序与在线技能 mixture，并隔离前置知识效果。",
+          "relationship": "课程学习的跨技能邻近方法，不是数学主实验的直接 baseline",
+          "verification": "NeurIPS 正式论文页已核对"
+        },
+        {
+          "id": "sec-2026",
+          "name": "Self-Evolving Curriculum",
+          "full_title": "Self-Evolving Curriculum for LLM Reasoning",
+          "year": 2026,
+          "venue": "COLM 2026（预印本 2025）",
+          "family": "在线自适应课程",
+          "distance": "closest",
+          "cited_at": "相关方向的在线课程；本文 §1 讨论在线动态采样但未把 SEC 作为等预算 baseline",
+          "primary_url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/409fcc9d24b549969b8b9be68b56a7be-Abstract-Conference.html",
+          "source_scope": "COLM 官方论文摘要与 Jia 论文的在线/离线边界",
+          "problem": "训练过程中动态选择题型，让强化学习课程随着能力变化更新。",
+          "update_surface": "非平稳 bandit 的在线课程选择策略及 RL Policy",
+          "supervision": "策略梯度的 advantage 代理奖励",
+          "model_tasks": "规划、归纳推理、数学等 RL 任务",
+          "shared": "都研究下一批训练题怎样安排、不同难度下收益会不会变化。",
+          "difference": "SEC 在线调整课程并把选择和 RL 联动；Jia 的主实验预先计算指标、静态排序，以便只分析顺序效应。",
+          "why": "Jia 不能直接证明 SEC 一类在线策略应该用何种指标，也未证明 Online P50 的优劣。",
+          "evidence": "COLM 官方摘要报告多任务在线课程收益；Jia 报告三模型五评测集的静态排序对照。不同学习范式不能硬比较最终分数。",
+          "decisive_test": "统一模型、任务与训练计算量，加上在线诊断成本，比较静态 VACC 与在线 P50/SEC。",
+          "relationship": "同领域在线策略对照，研究协议并不相同",
+          "verification": "COLM 2026 正式发表状态核对"
+        },
+        {
+          "id": "bengio-2009",
+          "name": "Bengio et al. 2009",
+          "full_title": "Curriculum Learning",
+          "year": 2009,
+          "venue": "ICML 2009",
+          "family": "课程学习起点",
+          "distance": "context",
+          "cited_at": "Introduction / Related Work 起点",
+          "primary_url": "https://icml.cc/Conferences/2009/abstracts.html",
+          "source_scope": "ICML 官方 2009 论文摘要",
+          "problem": "为什么从简单到复杂的训练顺序可能改变非凸优化与泛化？",
+          "update_surface": "数据展示顺序",
+          "supervision": "传统监督学习数据/训练损失",
+          "model_tasks": "语言与其他机器学习问题",
+          "shared": "都将训练样本的顺序视作有意义的学习设计。",
+          "difference": "Bengio 奠定课程理念；Jia 以同一数学样本池研究五类指标、双向排序及任务条件。",
+          "why": "从“课程有可能有效”推进到“哪种难度和顺序在什么场景有效”。",
+          "evidence": "两者都是各自设置中的实验；本文并非第一次发明升降序。",
+          "decisive_test": "在统一数学 SFT 设置下比较传统简易课程与五类量度，检查哪些结果并非仅来自样本构成。",
+          "relationship": "理论起点，非最近邻直接 baseline",
+          "verification": "ICML 2009 官方会议摘要核对"
+        }
+      ]
     }
   ]
 }

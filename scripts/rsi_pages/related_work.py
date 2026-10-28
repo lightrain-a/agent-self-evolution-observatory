@@ -90,7 +90,7 @@ def render(target: dict, base: str) -> str:
     )
     secondary = (
         '<details class="deep-related-context"><summary>'
-        f'其他相关工作 · {len(context)} 篇（课程 / 科研 Agent）'
+        f'其他相关工作 · {len(context)} 篇（背景文献）'
         '</summary>' + matrix(context, target['paper_id']) + details(context, target['paper_id'], label) + '</details>'
         if context else ""
     )

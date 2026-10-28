@@ -94,6 +94,12 @@ def validate_deep(p: dict) -> None:
     assert d["focus"] and d["summary"] and d["sections"], f"Empty deep reading: {p['id']}"
     ids = [s["id"] for s in d["sections"]]
     assert len(ids) == len(set(ids)), f"Duplicate section anchor: {p['id']}"
+    metrics = d.get("metric_summary", [])
+    if metrics:
+        assert len(metrics) == 5 and all(
+            all(m.get(k) for k in ("family", "metrics", "meaning", "result"))
+            for m in metrics
+        ), f"Five metric families each need a definition and grounded result: {p['id']}"
     valid_stages = {stage for stage, _, _ in STAGES}
     for s in d["sections"]:
         assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", s["id"])
@@ -132,9 +138,23 @@ def render_paper(p: dict) -> str:
         for item in d.get("terms", [])
     )
     glossary = (
-        '<div class="deep-glossary"><p class="deep-glossary-title">先记住三个角色</p>'
+        '<div class="deep-glossary"><p class="deep-glossary-title">先记住这些术语</p>'
         f'<dl class="deep-terms">{terms}</dl></div>'
         if terms else ""
+    )
+    metric_items = "".join(
+        '<article class="deep-metric-item">'
+        f'<h4>{e(m["family"])}</h4><p class="deep-metric-subtypes">{e(m["metrics"])}</p>'
+        f'<p>{e(m["meaning"])}</p><p class="deep-metric-result">{e(m["result"])}</p>'
+        '</article>'
+        for m in d.get("metric_summary", [])
+    )
+    metric_overview = (
+        '<section class="deep-metric-overview"><h4>五类指标 · 一眼看懂含义与实验结果</h4>'
+        '<p>下列数字取自不同模型、基准和主表，不能直接拿来横向排名。'
+        '展开 Design 可逐项看公式、反例与证据边界。</p>'
+        f'<div class="deep-metric-list">{metric_items}</div></section>'
+        if metric_items else ""
     )
 
     def chapter(s: dict) -> str:
@@ -169,7 +189,7 @@ def render_paper(p: dict) -> str:
         )
     links = "".join(
         f'<a class="link-btn" target="_blank" rel="noopener noreferrer" href="{e(p["links"][key])}">{label}</a>'
-        for key, label in (("html", "期刊 / 原文"), ("pdf", "论文 PDF"), ("code", "代码 / 数据"), ("full_text", "开放全文"))
+        for key, label in (("html", "官方论文页"), ("pdf", "论文 PDF"), ("code", "代码 / 数据"), ("full_text", "其他开放版本"))
         if p["links"].get(key)
     )
     return (
@@ -179,7 +199,7 @@ def render_paper(p: dict) -> str:
         f'<p class="deep-focus">{e(d["focus"])}</p>'
         '<p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。'
         '这份笔记区分作者结果、教学举例和我们的研究想法，尚未独立复现。</p>'
-        + glossary
+        + glossary + metric_overview
         + f'<nav class="deep-shortcuts" aria-label="{e(p["short_title"])} 四步精读">{stage_nav}</nav>'
         + "".join(stage_parts)
         + '<div class="deep-back"><a href="reading-cards.html#'

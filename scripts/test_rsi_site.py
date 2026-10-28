@@ -192,8 +192,33 @@ def main():
           'npj 2026 must be linked to SOAR and the difficulty proxy in closest-work discussion')
     check('reading-notes.html#deep-hypothesis-testing-2026-ding' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8'),
           'Mechanism transfer not linked from learning-science page')
+    curriculum=next((p for p in cards if p['id']=='acl2026-good-curriculum-jia'),None)
+    check(curriculum is not None and curriculum.get('doi')=='10.18653/v1/2026.acl-long.1591',
+          'ACL 2026 curriculum paper must use the official anthology DOI')
+    check(curriculum['links']['html']=='https://aclanthology.org/2026.acl-long.1591/'
+          and curriculum['lead_institution']=='Dartmouth College',
+          'ACL venue or leading affiliation mismatch')
+    dims=curriculum['deep_read']['metric_summary']
+    check(len(dims)==5,'Curriculum five-metric-family overview missing')
+    check(all('Table '+str(i) in dims[i-1]['result'] for i in range(1,6)),
+          'Each curriculum dimension must point to its original main-result table')
+    sections=curriculum['deep_read']['sections']
+    check(all(any(s['id']==id for s in sections) for id in (
+        'problem-difficulty','model-surprisal','confidence-margin',
+        'predictive-uncertainty','decision-variability','results-five-families','metric-tiers')),
+        'Curriculum must explain all five measurements and their results')
+    allblocks=json.dumps(sections,ensure_ascii=False)
+    check(all(k in allblocks for k in ('RS','SC','CD','ACC','SLP','TLP','LG','SLE','TLE','VACC')),
+          'One or more of the ten concrete metrics missing')
+    check(all(k in allblocks for k in ('70.90%','24.02%','69.92%','79.49%','60.16%','12/15')),
+          'One or more of five main-table metric result examples missing')
+    check('Online P50' in allblocks and '不是' in allblocks,
+          'Missing static VACC vs online P50 distinction')
     deep_notes=[p for p in cards if p.get('deep_read')]
     notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    check('id="deep-acl2026-good-curriculum-jia"' in notes_html
+          and notes_html.count('class="deep-metric-item"')==5,
+          'ACL 2026 five-metric summary does not render before detailed chapters')
     for paper in deep_notes:
         pid=paper['id']
         check(f'href="reading-notes.html#deep-{pid}"' in card_html,

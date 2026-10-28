@@ -142,6 +142,17 @@ html{scroll-behavior:smooth;scroll-padding-top:82px}body[data-rsi-page]{font-fam
 .deep-terms>div{border-top:1px solid #e4eaf1;padding-top:8px}
 .deep-terms dt{font-size:12px;font-weight:750;color:#2d4e73}
 .deep-terms dd{margin:3px 0 0;font-size:11.5px;line-height:1.65;color:#4d647c}
+.deep-metric-overview{margin:16px 0 24px}
+.deep-metric-overview>h4{font-size:15px;color:#284866;margin:0 0 7px;font-weight:750}
+.deep-metric-overview>p{font-size:12px;line-height:1.8;color:#63768b;margin:0 0 11px!important}
+.deep-metric-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.deep-metric-item{background:#fbfcfe;border:1px solid #dde6ee;border-radius:9px;padding:12px 14px;min-width:0}
+.deep-metric-item:first-child{grid-column:span 2}
+.deep-metric-item h4{font-size:12.5px;line-height:1.5;color:#244f71;font-weight:740;margin:0 0 5px}
+.deep-metric-item p{font-size:11.5px;line-height:1.75;margin:5px 0!important;color:#435c72}
+.deep-metric-item .deep-metric-subtypes{font-size:10.5px;color:#72859b;font-weight:640}
+.deep-metric-item .deep-metric-result{border-top:1px solid #e4ebf1;margin-top:8px!important;padding-top:7px;color:#254d6f;font-weight:650}
+@media(max-width:740px){.deep-metric-list{grid-template-columns:1fr}.deep-metric-item:first-child{grid-column:span 1}}
 .deep-stage{scroll-margin-top:100px;border-top:1px solid #dae4ee;padding:22px 0 12px}
 .deep-stage:first-of-type{border-top:0}
 .deep-stage-head span{display:block;color:#557492;font-size:11px;font-weight:760;letter-spacing:.06em;line-height:1.5}

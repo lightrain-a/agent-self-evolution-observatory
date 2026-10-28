@@ -124,7 +124,16 @@ def main():
               'Reading cards must show latest deep-read papers first')
         check(js("return document.querySelector('#optimal-practice-2020-eglington .reading-metadata').textContent.includes('npj Science of Learning')"),
               'Journal card should display its real venue, not a made-up arXiv ID')
+        check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-metadata').textContent.includes('ACL 2026')"),
+              'ACL conference paper should show its actual venue')
+        check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-story-step').textContent.includes('难在哪里')"),
+              'ACL conference reading card missing four-stage readable summary')
         screenshot('reading-cards-desktop.png')
+        js("document.querySelector('#acl2026-good-curriculum-jia').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('reading-acl2026-card-desktop.png')
+        check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-related-link')!==null"),
+              'ACL curriculum card missing its Related Work jump')
         js("document.querySelector('#optimal-practice-2020-eglington').scrollIntoView({block:'start'})")
         time.sleep(.7)
         screenshot('reading-npj-card-desktop.png')
@@ -152,6 +161,10 @@ def main():
                       'Deep section missing in browser: '+section['id'])
         check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
               'Evidence matrix did not render')
+        check(js("return document.querySelectorAll('#deep-acl2026-good-curriculum-jia .deep-metric-item').length===5"),
+              'ACL curriculum five metrics should be visible without expanding chapters')
+        check(js("return [...document.querySelectorAll('#deep-acl2026-good-curriculum-jia .deep-metric-result')].every((e,i)=>e.textContent.includes('Table '+(i+1)))"),
+              'Each visible metric must include the matching table and result')
         related_papers={t['paper_id'] for t in json.loads((ROOT/'rsi/related-work.json').read_text(encoding='utf-8'))['targets']}
         for paper in deep_cards:
             selector=json.dumps('#deep-'+paper['id'])
@@ -175,6 +188,12 @@ def main():
         check(js("return document.querySelector('.deep-terms').children.length===3"),
               'Terms are not explained before jargon')
         screenshot('reading-notes-desktop.png')
+        js("document.querySelector('#deep-acl2026-good-curriculum-jia .deep-metric-overview').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('reading-acl2026-metrics-desktop.png')
+        js("document.querySelector('#deep-acl2026-good-curriculum-jia--decision-variability summary').click()")
+        check(js("return document.querySelector('#deep-acl2026-good-curriculum-jia--decision-variability').open"),
+              'VACC formula and 12/15 caution did not expand')
         js("document.querySelector('#deep-rsi-anything-2610-13912--stage-challenge').scrollIntoView({block:'start'})")
         time.sleep(.8)
         screenshot('reading-notes-story-desktop.png')
@@ -313,7 +332,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':17}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':19}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:
