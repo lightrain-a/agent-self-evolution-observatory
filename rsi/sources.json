@@ -1248,9 +1248,9 @@
       "title": "Loss of plasticity in deep continual learning",
       "date": "Nature 632, 768–774 (2024)",
       "url": "https://www.nature.com/articles/s41586-024-07711-7",
-      "level": "Nature 正文与实验摘要核对；2026-10-28",
-      "note": "Dohare 等证明深度网络持续训练时可能失去学习新任务的可塑性，并提出 continual backprop 缓解。研究已区分当前能力与未来可学习性；I9 比较同预算不同课程顺序。",
-      "code": ""
+      "level": "Nature 正文 Fig.1–4、Methods（ImageNet/CIFAR-100/Ant-v3/Permuted MNIST）与作者代码核对；2026-10-28；未复现",
+      "note": "Dohare 等对5,000个连续 ImageNet 二分类任务、每5类增加的 CIFAR-100 ResNet-18 以及 PPO 控制任务测后续学习；CIFAR-100 保留全部已见类数据并和同类从头训练比较，普通训练到100类低约5个百分点。CBP 以极少量低使用率单元重置缓解，但不保证旧知识保持；对 I9 属于未来可塑性背景，对 Learning Admission 属于未检验的更新接纳假设。",
+      "code": "https://github.com/shibhansh/loss-of-plasticity"
     },
     {
       "id": "M23",

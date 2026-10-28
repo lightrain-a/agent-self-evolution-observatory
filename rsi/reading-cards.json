@@ -31,6 +31,517 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "nature2024-loss-plasticity-dohare",
+      "short_title": "Loss of Plasticity · Nature 2024",
+      "title": "Loss of plasticity in deep continual learning",
+      "authors": "Shibhansh Dohare, J. Fernando Hernandez-Garcia, Qingfeng Lan, Parash Rahman, A. Rupam Mahmood, Richard S. Sutton",
+      "lead_institution": "University of Alberta · Department of Computing Science",
+      "institutions": [
+        "University of Alberta · Department of Computing Science",
+        "Alberta Machine Intelligence Institute (Amii)"
+      ],
+      "institution_source": "Nature 632, 768–774 (2024)，Author information / Affiliations；所有作者均署名 University of Alberta，Mahmood 与 Sutton 兼署 Amii",
+      "publication": "Nature · 632, 768–774 (2024)",
+      "doi": "10.1038/s41586-024-07711-7",
+      "official_url": "https://www.nature.com/articles/s41586-024-07711-7",
+      "first_posted": "2024-08-21",
+      "version": "Nature 正式论文 · Published Online 2024-08-21",
+      "read_on": "2026-10-28",
+      "reading_level": "Nature 正文 Fig.1–4、Methods（Continual ImageNet / CIFAR-100 / PPO / Permuted MNIST）、Discussion 与 Code availability 核对；未复现",
+      "tags": [
+        "Nature 2024",
+        "Continual Learning",
+        "Loss of Plasticity",
+        "Continual Backprop",
+        "Future Learnability",
+        "I9",
+        "Learning Admission"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "在连续新任务中测网络重新学习的表现；对 CIFAR-100 在每阶段保留旧数据，并与相同类别数据从头训练的网络比较。",
+          "open_question": "新任务学习曲线是更新后的真实测量，不是成本低廉的事前可塑性预测器；并非 RSI 下一代元策略的检验。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "在长期训练中保持部分低使用率随机特征，有助于新任务持续学习。",
+          "open_question": "注入随机特征不等于创建真实的新知识或扩大 LLM 的语义解法支持集。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "多个数据集、网络架构与强化学习环境下都观察到后期适应能力变差。",
+          "open_question": "没有直接研究 LLM 训练后新规则的可达性、Skill 搜索覆盖或 Agent 调用外部模型。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "显示未来新任务学习能力下降与旧任务遗忘属于不同问题；CBP 在所测设置缓解可塑性丧失。",
+          "open_question": "CBP 只根据当前使用价值选择重置单元，并不保证长时间旧任务记忆不被遗忘。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "研究训练优化与表示动态，并未分析安全关键 Agent 的权限与可靠性。",
+          "open_question": "随机重置在安全关键模型中可能伤害旧规则；必须另外做回归和安全门控。"
+        }
+      },
+      "one_sentence": "长期学习会让网络逐渐学不进新任务；CBP 维持可塑性，但没有验证 RSI 何时拒绝、外置或恢复内化。",
+      "story": {
+        "challenge": "网络连续学了许多新任务后，即使反复提供监督，为什么以后越来越难学？这与单纯遗忘旧知识不同。",
+        "insight": "梯度训练中的特征多样性可能逐渐丢失；少量持续随机替换低使用率单元，可为后续学习保留变化空间。",
+        "design": "连续 ImageNet 5,000 次二分类、CIFAR-100 逐次加5类、PPO Ant-v3、Permuted MNIST；测新任务学习并比较 CBP。",
+        "result": "标准网络后期新任务表现明显退化；CIFAR-100 训练到100类时较同数据从头训练低约5个百分点，CBP 缓解退化。"
+      },
+      "problem": "持续学习长期进行时，正常反向传播能否一直保持快速适应新任务的能力？表现下降究竟是旧知识未保留还是学习新东西的塑性发生变化？",
+      "setup": "标准监督学习采用每题固定训练的 Continual ImageNet、保留所有已见类别的 CIFAR-100 增量训练，并在 Online Permuted MNIST 中重复全新像素置换；强化学习使用长期 PPO Ant-v3 与静态/变化摩擦环境。比较 BP、L2、Shrink and Perturb、Continual Backpropagation 等；主要测当前新任务学习及对应网络表示状态。",
+      "updates": "连续更新 CNN/ResNet/RL 策略网络权重；Continual Backpropagation 在普通梯度步之外，以很小概率持续重置已成熟、低使用率的隐藏单元。研究没有 Agent 元控制器、跨轮外部专家委托、Skill 存储或 RSI 自修改决策。",
+      "key_ideas": [
+        {
+          "name": "可塑性不是旧知识回忆",
+          "summary": "可塑性是固定任务训练预算下学好当前新任务的能力；CIFAR-100 让旧类别数据一直参与训练以减弱遗忘混淆。",
+          "formula": "plasticity(t) ≈ accuracy(after fixed training on a new task at t)"
+        },
+        {
+          "name": "保留多样性的持续随机性",
+          "summary": "从已成熟单元中择低使用价值者重置少量权重；新单元输出权重置零、经过成熟期才再参与选择。",
+          "formula": "replacement fraction ρ ≪ 1 ; CIFAR-100 ρ = 10^-5"
+        },
+        {
+          "name": "跨代未来学习价值（我们的外推）",
+          "summary": "已有能力保持相同，不代表未来学新任务仍相同；需要从冻结 checkpoint 分叉真实训练才能测量。",
+          "formula": "L(M_k,C,B) = Perf(Train_B(copy(M_k), C), held-out C)"
+        }
+      ],
+      "evidence": [
+        "Continual ImageNet（Fig.1）：每个二分类任务训练1200图、测试200图，训练250 epochs，重复30个随机运行；标准 BP 约2000任务后显著丧失新任务学习能力，CBP 在作者5,000任务窗口内保持表现。",
+        "CIFAR-100（Fig.2）：ResNet-18，每次新增5类，20阶段×200 epochs；每阶段继续使用所有已见类别数据，并与同样类别从头训练比较。40类之后普通连续训练相对恶化，最终100类约低5个百分点；CBP 缓解。",
+        "PPO（Fig.3–4）：Ant-v3 在每200万步更换摩擦系数的条件，以及不更换摩擦的长时固定环境，普通 PPO 性能均可能明显退化；CBP/L2 等缓解部分条件下的表现下降。",
+        "机制记录：失活神经元比例升高、表示有效秩下降、权重幅度增长与后期学习性能变差同时出现；补充 Permuted MNIST 800任务进一步系统验证。"
+      ],
+      "boundaries": [
+        "Nature 2024 不是 LLM 论文，也没有研究语言模型的自我迭代、Meta-Admission 规则或外部专家委托。",
+        "网络可塑性下降的三个表征相关量并非逐个随机操纵的充分因果解释；CBP 改善结果不意味着所有大型 Transformer 都适宜简单随机重置。",
+        "CIFAR-100 中绝对正确率随类别增加自然变难，作者使用同类数据从头训练的相对对照；不应直接把类别数变多的原始准确率下降当作可塑性损失。",
+        "CBP 在一定范围维持可塑性，但并不单独保证旧任务的长期保持；持续随机性有潜在遗忘与安全风险。",
+        "ImageNet 的5,000任务和PPO长期步数是作者所测观察窗口；不等于已经在所有规模模型上严格证明无限期保持可塑性。"
+      ],
+      "our_relevance": [
+        "Learning Admission：预先选择内部学习或外部承接时，除了当前新能力增益、旧能力回归、成本，还需要考虑未来继续学习的能力；但外包并不能修复已经塑性下降的核心。",
+        "I9：它提供“未来可学习性”与旧知识遗忘不同的诊断；I9 的独立处理变量仍是 A/B 学习顺序，不是训练神经元重置算法。",
+        "Agent 的 Prompt/Memory/Skill 更新不一定改变底座权重；只有真实权重/LoRA 更新时，才能直接沿用这篇参数可塑性机制；其他更新表面需要独立定义 future learnability。",
+        "不主张仅凭 dormant units / rank 等低成本代理直接决定停止学习；先做复制 checkpoint 的等预算真实试训与已知诊断基线。",
+        "真正 RSI 研究：经过多轮实际更新后，Meta-Admission Skill 是否能在未见任务上更好预测可塑性损失并选择内化、隔离、外包或暂缓，从而提高后代单位成本净学习收益。"
+      ],
+      "next_test": "从同一基座产生不同更新历史，匹配当前 A/B 能力、旧任务保持与总训练预算；在未来独立任务 C 上重置优化器、等预算试训、撤掉辅助看学习曲线；只在真实未来学习差异成立后对照接纳、隔离、可塑性修复、外包和重访。",
+      "deep_read": {
+        "focus": "最值得学的不是随机重置参数本身，而是作者通过“持续学习新任务表现 + 同数据从头训练”区分可塑性与遗忘。RSI 继承其测量问题：当前都变强了，下一代还学得动吗？",
+        "summary": "Nature 2024 展示标准深度网络长期持续训练可能失去新任务适应力，CBP 以持续少量特征多样性缓解。RSI 侧仅提出“学习接纳应考虑未来可学习性”的新假设，尚无 LLM 多轮验证。",
+        "terms": [
+          {
+            "name": "Plasticity",
+            "meaning": "固定训练器和预算下，模型在后续新任务上的可学习程度，不等于当场会不会答对。"
+          },
+          {
+            "name": "Catastrophic Forgetting",
+            "meaning": "新训练破坏旧任务能力；可以与可塑性丧失同时发生，也可能分离。"
+          },
+          {
+            "name": "Continual Backpropagation (CBP)",
+            "meaning": "在普通反向传播之外，极低比例地重新初始化低使用价值且已成熟的隐藏单元。"
+          },
+          {
+            "name": "Future Learnability",
+            "meaning": "在冻结新任务族与训练预算下，从当前检查点继续学习后得到的独立新任务能力。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "challenge-what-is-lost",
+            "stage": "challenge",
+            "title": "Challenge｜不是不会当前题，而是经过训练越来越难学下一题",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "通常衡量持续学习时，研究者会检测新任务训练是否使旧任务退步（catastrophic forgetting）。本文另问一个更基础的问题：同样网络、同样每题训练预算、难度基本稳定的后续任务，为什么模型越训练越难得到好的新任务结果？"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "区分对象",
+                  "可观察定义",
+                  "不能混为一谈"
+                ],
+                "rows": [
+                  [
+                    "旧知识遗忘",
+                    "学习 B 后旧任务 A 的独立成绩下降",
+                    "旧数据未回放会放大遗忘，但不是全部可塑性问题"
+                  ],
+                  [
+                    "未来可塑性丧失",
+                    "对新任务 C 的固定预算学习收益或达到目标表现速度下降",
+                    "即使旧数据仍可用，或不需要复用旧任务，也可能出现"
+                  ],
+                  [
+                    "模型原来就不会",
+                    "某一时刻 C 的初始正确率低",
+                    "初始不会不等于经过充分、高质量监督后仍无法学会"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么对 RSI 重要",
+                "text": "两个版本当前准确率和旧能力保持都一样，未来新任务学习曲线却可能不同。单轮净能力不是自我改进系统完整的健康指标。"
+              }
+            ]
+          },
+          {
+            "id": "insight-diversity",
+            "stage": "insight",
+            "title": "Insight｜梯度优化可能逐步耗尽有利于后续训练的表示多样性",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "起点有随机多样性",
+                    "text": "初始化的不同特征让网络有多条可变表示方向。最初若干任务甚至可能从旧训练中受益。"
+                  },
+                  {
+                    "title": "长期训练形成不易改变的网络状态",
+                    "text": "实验证据显示失活神经元比例上升、权重绝对幅度增加与表示有效秩下降，常与可塑性丧失同步出现。"
+                  },
+                  {
+                    "title": "少量持续注入新特征",
+                    "text": "CBP 只对已经成熟且低使用价值的隐藏单元重新初始化，输出连接置零，给新单元一个成熟期，避免每次重置立即破坏现有函数。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "因果边界",
+                "text": "观察到的失活比例/有效秩/权重幅度是相关特征。CBP 在作者任务上改善学习，但不意味着某一个统计量单独导致所有可塑性下降，也不能直接推广到大规模 Transformer。"
+              }
+            ]
+          },
+          {
+            "id": "design-main",
+            "stage": "design",
+            "title": "Design｜两条关键监督学习实验的严格控制",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "设计",
+                  "Continual ImageNet（Fig.1）",
+                  "Class-incremental CIFAR-100（Fig.2）"
+                ],
+                "rows": [
+                  [
+                    "持续任务",
+                    "不断更换两类 ImageNet 图像的分类任务；统计至5,000任务",
+                    "每次新增5类，5→10→…→100类，共20阶段"
+                  ],
+                  [
+                    "模型/数据",
+                    "3层卷积+3层全连接；每任务1,200训练/200测试，32×32",
+                    "ResNet-18；每类450训练/50验证/100测试"
+                  ],
+                  [
+                    "固定预算",
+                    "每任务250 epochs、batch=100；输出二分类头按任务重置",
+                    "每阶段200 epochs，共4,000；每阶段包含全部已见类别"
+                  ],
+                  [
+                    "关键对照",
+                    "相似规模的当前新任务，在不同历史阶段能学多好",
+                    "与同一批当前类别、随机重新初始化从头训练的 ResNet-18 比较"
+                  ],
+                  [
+                    "重复与方法",
+                    "30 runs；BP、L2、Shrink and Perturb、CBP",
+                    "多随机重复；标准 ResNet 训练、Shrink and Perturb、CBP"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "ImageNet 控制每次任务的规模，排除“后期任务天生变难”。CIFAR-100 让旧类别数据一直参加每阶段训练，且与同类数据从头训练比较，尽量剥离旧知识遗忘和类别数量增长两种混淆。"
+              },
+              {
+                "type": "formula",
+                "label": "CIFAR-100 中的关键相对比较",
+                "expression": "Delta_t = accuracy(incrementally trained on seen classes t) - accuracy(from-scratch trained on same classes t)",
+                "meaning": "若 Delta 早期为正、后期转负，说明旧训练历史先有正迁移，后来反而阻碍当前任务继续学习。",
+                "boundary": "并不是严格保证两条训练历史的全部计算量一致；它是作者用于比较相同当前数据集的训练结果的控制。"
+              }
+            ]
+          },
+          {
+            "id": "design-rl-extra",
+            "stage": "design",
+            "title": "Design｜强化学习和补充实验排除单一任务结构的解释",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "实验",
+                  "具体操作",
+                  "为什么需要"
+                ],
+                "rows": [
+                  [
+                    "非平稳 PPO Ant-v3（Fig.3）",
+                    "地面摩擦系数每200万环境步重新抽取，范围0.02–2.0；观察机器人调整步态和长期回报",
+                    "检验环境不断变化时，新策略是否仍学得动"
+                  ],
+                  [
+                    "固定环境 PPO Ant-v3（Fig.4）",
+                    "摩擦保持不变，持续训练数千万环境步",
+                    "表明表现下降不一定需要显式任务切换；但奖励下降也有策略退化混淆"
+                  ],
+                  [
+                    "Online Permuted MNIST（Extended Data Fig.3–4）",
+                    "持续800种像素随机置换，每种60,000样本，逐样本更新一次",
+                    "用几乎独立的新任务与大规模重复试验观察可塑性变化"
+                  ],
+                  [
+                    "Slowly-Changing Regression（补充）",
+                    "监督目标缓慢变化，对多个激活函数做敏感性检验",
+                    "排除仅 ReLU 或某种分类标签分布导致问题"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "强化学习实验涉及策略改变带来的经验分布变化，因此作者特别指出其证据不如受控监督学习实验那样易于因果解释。固定环境下 PPO 退化本身不能单独证明学新任务能力下降；需要与参数/特征分析共同解释。"
+              }
+            ]
+          },
+          {
+            "id": "result-four-figures",
+            "stage": "result",
+            "title": "Result｜主图到底支持了什么？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "图",
+                  "作者实际结果",
+                  "证据分量"
+                ],
+                "rows": [
+                  [
+                    "Figure 1：Continual ImageNet",
+                    "标准反向传播早期当前题测试准确率可达约88%，约2,000个新任务后明显下降；CBP 在5,000任务的观察窗口内保持性能",
+                    "控制新任务难度和单轮训练预算，说明后续学新任务能力下降"
+                  ],
+                  [
+                    "Figure 2：Class-incremental CIFAR-100",
+                    "前40类旧训练历史帮助学习；到100类时普通持续训练相对同类从头训练约低5个百分点，CBP 基本避免相对退化",
+                    "区分网络持续训练历史的坏处与类别数增加的自然变难"
+                  ],
+                  [
+                    "Figure 3：变化摩擦的 Ant-v3",
+                    "标准 PPO 最初适应良好，环境变化后适应/回报越来越差；CBP 与 L2 等干预在作者设置缓解下降",
+                    "说明问题可能涉及持续 RL，但存在数据与策略相互影响"
+                  ],
+                  [
+                    "Figure 4：固定 Ant-v3",
+                    "没有外部任务切换也可观察长期 PPO 回报退化；部分可塑性保护策略持续改善",
+                    "提示训练动态本身可能失稳，但不能简单等同于独立新任务适应能力"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "原文主张",
+                "text": "在作者实验范围内，常规梯度方法在长期持续学习中显著失去可塑性，持续少量随机注入特征的 CBP 以及部分正则/扰动基线能缓解。作者没有直接验证 LLM RSI 过程。"
+              }
+            ]
+          },
+          {
+            "id": "cbp-details",
+            "stage": "result",
+            "title": "CBP 为什么有效？与直接重置整个模型有何不同？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "先持续更新真实任务",
+                    "text": "CBP 仍执行普通反向传播，不以随机重置替代梯度学习。"
+                  },
+                  {
+                    "title": "只更新成熟、低使用价值单元",
+                    "text": "为每个单元追踪长期贡献/年龄，排除刚添加、尚未成熟的单元，按极小 replacement rate 重置。"
+                  },
+                  {
+                    "title": "把新单元输出连接清零",
+                    "text": "新随机特征刚加入时不立即改变当前函数，随后由梯度学习逐步使用这些单元。"
+                  },
+                  {
+                    "title": "与其他稳定化方法比较",
+                    "text": "比较 L2 正则、Shrink and Perturb 和 ReDo 等，显示 CBP 的效果依赖任务和超参数，并非一切方法都失效。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "原文 CIFAR-100 参数示例",
+                "expression": "rho = 10^-5; 512 * rho = 0.00512 replacements per update (≈ one unit / 200 updates)",
+                "meaning": "概率非常小，目的不是不断删除已学知识，而是持续提供一小部分可学习的新表示。",
+                "boundary": "ρ 为作者实验的具体设置，不能照搬至 LoRA 或大模型层级，不保证旧任务保持。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "论文的限制",
+                "text": "作者强调 CBP 面向可塑性维持，不是能同时解决全部灾难性遗忘与知识复用问题。对 RSI 中的知识保持，应另外添加冻结旧任务回归和安全验证。"
+              }
+            ]
+          },
+          {
+            "id": "closest-works",
+            "stage": "related",
+            "title": "与现有 LLM/RSI 研究区分：可塑性不是新的发明",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "来源",
+                  "已经研究的对象",
+                  "我们不能重复声称的新意"
+                ],
+                "rows": [
+                  [
+                    "Nature 2024 · Dohare 等",
+                    "深度网络可塑性衰减、CBP 特征重置与长任务流诊断",
+                    "不能把发现 loss of plasticity 或定期重置网络当作 RSI 首次贡献"
+                  ],
+                  [
+                    "Learning Dynamics of Continual Learning（2026）",
+                    "LLM 训练动力学、读出层可塑性与未来可学习性诊断",
+                    "未来学习速度的指标本身已经有直接方法近邻"
+                  ],
+                  [
+                    "PaRSP · ACL 2026",
+                    "持续学习的旧知识保持、当前新能力、未来容量三者权衡",
+                    "不能将保持参数空间/容量视为首创"
+                  ],
+                  [
+                    "I9 · 学习顺序",
+                    "A→B 与 B→A 对未来 C 学习速度的作用",
+                    "其处理变量是历史课程顺序，不是恢复神经元可塑性的 CBP"
+                  ],
+                  [
+                    "Learning Admission · RSI 候选",
+                    "内化/隔离/外包/暂缓的接纳方式与元策略跨代更新",
+                    "还需要证明学会了更好的更新选择，而非把 CBP 包一层 Router"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "论文没有做的事",
+                "text": "Nature 2024 未检验模型自主决定是否学习某种能力、何时调用外部专家或何时重新内化；也没有比较 Meta-Admission Skill 新旧版本对未来未见任务的决策收益。这些属于 RSI 的待验证命题。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-diagnostic",
+            "stage": "next",
+            "title": "给 RSI 的直接 Insight：新能力没学会，不一定因为知识不足",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "观察",
+                  "可能解释",
+                  "最低成本判别手段"
+                ],
+                "rows": [
+                  [
+                    "当前题错，正确示范后可快速修复",
+                    "欠缺具体知识或策略",
+                    "固定训练预算的监督修复，独立同规则新题后测"
+                  ],
+                  [
+                    "知道候选正确答案，但执行时经常选错",
+                    "搜索/路由/验证不足",
+                    "固定候选池，改变验证与选择而非先调整权重"
+                  ],
+                  [
+                    "新能力学会但旧能力退步",
+                    "旧新冲突或灾难性遗忘",
+                    "A/B 任务回归、必要时隔离模块或定向修复"
+                  ],
+                  [
+                    "多个不相关新任务经过充分监督仍训练很慢",
+                    "参数/优化器可塑性不足（待诊断）",
+                    "冻结 checkpoint，重置优化器，独立 C 规则族等预算试训与学习率扫描"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "真正要继承的不是一个低秩或失活单元阈值，而是“区分当前未掌握 vs 更新后难以掌握”。只有当多个预注册新任务族的学习曲线一致变差，且优化器/学习率等简单因素已控制，才能更谨慎地把现象归于未来可塑性损失。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "已发生损害 vs 尚未执行更新",
+                "text": "I3 修复已损失的旧能力；Learning Admission 要在执行新内化前估计可能损失的旧能力和后续可学习性。若模型已损失可塑性，委托外部专家只是维持系统任务能力，并不会自动修复底座。"
+              }
+            ]
+          },
+          {
+            "id": "cheap-rsi-test",
+            "stage": "next",
+            "title": "P0/P1｜怎样用最小真实更新检验未来可学习性的 RSI 意义？",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0 · Matching checkpoints",
+                    "design": "同一开源模型从相同初始快照分叉；固定训练材料与 FLOPs，比较普通连续更新、可塑性保护更新或受控不同训练历史。挑选并报告达到预注册 A/B 当前能力匹配的分支；不事后只挑好看的种子。",
+                    "decisive": "在同等 A/B 当前能力、旧能力保持、训练预算下，完全未见 C 的相同监督和优化器重置后学习曲线是否不同？不能只报告当前准确率。"
+                  },
+                  {
+                    "name": "P0-A · 排除低级混淆",
+                    "design": "跨 C₁共享规则、C₂冲突规则、C₃无关新规则进行固定预算试训，学习率扫描、AdamW 状态重置/继承、新 LoRA 与全参数更新单列；Probe 在复制 checkpoint 运行且不回写系统。",
+                    "decisive": "如果差异只在继承优化器动量、旧 LoRA 冻结或单个 C 模板上出现，不得称为底层未来可塑性损失。"
+                  },
+                  {
+                    "name": "P1 · Learning Admission 增量",
+                    "design": "只在 P0 通过后，固定候选内化、隔离 Adapter、外部专家、暂缓和可塑性修复方法；对照无未来能力指标、静态阈值、训练前少量真实 Probe 和事后 oracle 上界，测累计成本。",
+                    "decisive": "新策略必须在旧能力与当前任务匹配后降低未来新能力学习成本；若只是多调用专家或更多试训导致当前成功率上升，不支持 RSI 增量。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "不是 Nature 论文实验结果",
+                "text": "上述 LLM 任务 C、Meta-Admission 预判和后代更新均是本项目研究方案；原论文没有执行这些实验。P0 的复制/丢弃 Probe 只作为测量，不能暗中改变主线训练分布。"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41586-024-07711-7",
+        "pdf": "https://www.nature.com/articles/s41586-024-07711-7.pdf",
+        "code": "https://github.com/shibhansh/loss-of-plasticity",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11338828/"
+      }
+    },
+    {
       "id": "discorl-nature2025-oh",
       "short_title": "DiscoRL · Nature 2025",
       "title": "Discovering state-of-the-art reinforcement learning algorithms",

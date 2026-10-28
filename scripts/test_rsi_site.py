@@ -294,6 +294,28 @@ def main():
           and 'reading-notes.html#deep-nc2026-schema-reuse-tian'
           in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8'),
           'Schema research is not linked from learning science and I3')
+    plasticity=next((p for p in cards if p['id']=='nature2024-loss-plasticity-dohare'),None)
+    check(plasticity is not None and plasticity['doi']=='10.1038/s41586-024-07711-7'
+          and plasticity['official_url']=='https://www.nature.com/articles/s41586-024-07711-7'
+          and plasticity['links']['code']=='https://github.com/shibhansh/loss-of-plasticity',
+          'Nature 2024 plasticity paper, DOI or primary code source missing')
+    pl_text=json.dumps(plasticity,ensure_ascii=False)
+    check('M22' in refs and len(plasticity['deep_read']['sections'])>=9
+          and all(t in pl_text for t in ('ImageNet','CIFAR-100','Ant-v3','Permuted MNIST',
+                                        '250 epochs','200 epochs','40','5个百分点',
+                                        '10^-5','因果','RSI','未来可学习性')),
+          'Nature plasticity experiment design or RSI uncertainty missing')
+    notes=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    check('id="deep-nature2024-loss-plasticity-dohare"' in notes
+          and 'id="deep-nature2024-loss-plasticity-dohare--cheap-rsi-test"' in notes,
+          'Nature plasticity full reading or P0 falsifier not built')
+    admission_text=(ROOT/'rsi/learning-admission.html').read_text(encoding='utf-8')
+    i9_plasticity=(ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8')
+    check('id="plasticity"' in admission_text
+          and 'reading-notes.html#deep-nature2024-loss-plasticity-dohare' in admission_text
+          and 'reading-notes.html#deep-nature2024-loss-plasticity-dohare' in i9_plasticity
+          and 'learning-admission.html#plasticity' in i9_plasticity,
+          'Missing cross-links to the Nature reading, Learning Admission and I9 note')
     npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
     check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
           '2020 npj paper not correctly identified by its real DOI')

@@ -114,6 +114,7 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 <tr><td><b>PaRSP · ACL 2026</b> [[M23]]</td><td>LLM 持续学习同时优化旧知识、当前新能力和未来参数容量。</td><td>主实验不另发明参数保护模块，只检测固定更新器之下的顺序可学习性；保留未来容量作为竞争解释。</td></tr>
 <tr><td><b>Ding et al. · npj 2026</b> [[E26]]</td><td>人类视觉运动任务中，原位置成功与未反馈新位置的规则迁移可能分离。</td><td>只提供局部捷径 / 抽象规则的机制动机；不能当作 A/B→C 的 LLM 现成结果或通用 p≈0.5 最优的证明。</td></tr>
 </tbody></table></div>
+<p class="note"><b>Nature 2024 · 可塑性备注：</b>Dohare 等在 Continual ImageNet、持续 CIFAR-100 与 PPO 中观察到长期训练后新任务学习能力下降；CIFAR-100 每阶段继续训练所有旧类别，并与同样当前数据从头训练对照，明确区别“学新东西变慢”与“忘了旧知识”。<a href="reading-notes.html#deep-nature2024-loss-plasticity-dohare">完整阅读笔记、Fig.1–4 和 CBP 机制</a>。[[M22]] 对 I9 来说，<strong>未来学习速度下降是已有现象，课程顺序引起的额外差异才是待验证的新问题</strong>。固定 A/B 训练材料与计算、重置 C 优化器，并在无关新规则 C₃ 上检验整体可塑性退化；不能据此把 I9 改成神经元随机重置算法。另一个 <a href="learning-admission.html#plasticity">Learning Admission 候选</a>改变的是新能力的接纳方式，不是 A/B 课程排列。</p>
 <p><b>新颖性边界：</b>非交换的训练顺序、未来可塑性、快速元适应都已有直接工作。若无法证明“当前能力相近，但相同新任务的真实学习速度不同”，以及该效应不能被现有可塑性诊断或普通课程排序完全解释，就应退回 I9 的现象分析，而不包装一个新 Router。</p>
 '''),
     ("future-p0", "决定性实验｜冻结 A/B→C，真实更新后比较第三任务的学习曲线", '''
