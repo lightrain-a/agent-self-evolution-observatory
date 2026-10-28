@@ -478,6 +478,127 @@
           "verification": "ICML 2009 官方会议摘要核对"
         }
       ]
+    },
+    {
+      "paper_id": "soar-2601-18778",
+      "target_short_title": "SOAR · ICML 2026",
+      "target_venue": "ICML 2026 Spotlight · PMLR 306:117557–117592",
+      "source_related_sections": "SOAR §2、§3、§5及Appendix A/B/C；对应工作各自官方论文和作者项目页面",
+      "one_sentence": "SOAR用真实训练后的困难题增益来训练生成课程的教师，并通过Promotion跟随学生成长；新意不在首次自生成训练题或首次跟踪学习进度。",
+      "reading_takeaway": "区分当前可解性代理、真实短期更新收益、长期净能力与资源成本；Intrinsic对照的真实公式不是p(1-p)。",
+      "scope_note": "选择4个最近邻：两个自生成/自博弈课程直接前作（Absolute Zero、R-Zero），SeRL的自生成自奖励基线，以及更早的TSCL学习进度课程。不同任务下不可用原表横向比较。",
+      "evidence_gap": "SOAR未隔离组内单题边际价值、长期干扰后的收益排序、同题数量匹配的答案正确性效应，以及同预算跨教师和不同Student状态的独立迁移。",
+      "evolution": [
+        {
+          "period": "2017–2020 · 学习进展课程",
+          "summary": "TSCL使用学生学习曲线选择已有子任务，解决静态课程次序但不训练生成新题的语言模型。",
+          "source_url": "https://openai.com/index/teacher-student-curriculum-learning/"
+        },
+        {
+          "period": "2025 · 自生成任务与内在评分",
+          "summary": "Absolute Zero用代码执行提供验证；R-Zero用Challenger/Solver共演化；SeRL利用现有少量种子和自奖励补题。",
+          "source_url": "https://arxiv.org/abs/2508.05004"
+        },
+        {
+          "period": "2026 · Grounded teacher meta-RL",
+          "summary": "SOAR在无生成题自动正确性验证的数学场景下，使用Student在真实困难题上的更新收益训练Teacher。",
+          "source_url": "https://proceedings.mlr.press/v306/sundaram26a.html"
+        }
+      ],
+      "works": [
+        {
+          "id": "absolute-zero",
+          "name": "Absolute Zero",
+          "full_title": "Absolute Zero: Reinforced Self-play Reasoning with Zero Data",
+          "year": 2025,
+          "venue": "NeurIPS 2025",
+          "family": "自博弈/验证反馈",
+          "distance": "closest",
+          "cited_at": "§2、Appendix A",
+          "primary_url": "https://papers.nips.cc/paper_files/paper/2025/hash/9837dc00ff67d176373268ed48042d49-Abstract-Conference.html",
+          "source_scope": "NeurIPS 2025官方摘要与SOAR §2/Appendix A",
+          "problem": "没有外部题目/答案时如何从可验证的代码推理任务中产生学习信号？",
+          "update_surface": "自提问/推理模型参数",
+          "supervision": "代码执行器验证生成的任务与答案",
+          "model_tasks": "代码推理、数学推理",
+          "shared": "都利用模型自生成训练任务，试图减少专家标注中间题的依赖。",
+          "difference": "Absolute Zero可以对生成任务借助代码执行器获得强验证；SOAR不要求生成数学题答案有独立正确性标签，而用Student在真实困难题上的学习增益奖励教师。",
+          "why": "生成题是否能验证与训练后对目标任务是否有用，是不同的奖励设计问题；SOAR不是完全无外部标准答案。",
+          "evidence": "Absolute Zero有代码执行闭环；SOAR在fail@128数学任务对照Intrinsic-T/SeRL等基线，不能把跨论文结果当作等预算胜负。",
+          "decisive_test": "在同一数学/代码任务、同一生成题池和预算下，对比可验证答案奖励与真实下游增益奖励。",
+          "relationship": "自博弈任务生成和可验证学习信号的直接前作",
+          "verification": "NeurIPS 2025官方论文页与SOAR正文核对"
+        },
+        {
+          "id": "r-zero",
+          "name": "R-Zero",
+          "full_title": "R-Zero: Self-Evolving Reasoning LLM from Zero Data",
+          "year": 2026,
+          "venue": "ICLR 2026（项目确认；原始预印本2025）",
+          "family": "自博弈/挑战难度",
+          "distance": "closest",
+          "cited_at": "§2、Appendix A",
+          "primary_url": "https://arxiv.org/abs/2508.05004",
+          "source_scope": "arXiv官方摘要、作者项目更新及SOAR §2",
+          "problem": "没有预置训练题时，Challenger如何给Solver持续生成适度有挑战的题目？",
+          "update_surface": "Challenger与Solver参数",
+          "supervision": "自生成任务难度/成功情况形成内在训练信号",
+          "model_tasks": "数学与通用推理",
+          "shared": "两者均让教师/挑战者与学生/解题者分别学习，并动态生成新的题目。",
+          "difference": "R-Zero的Challenger以Solver可学边界等Intrinsic信号设计题目；SOAR使用真实困难训练集上的Student参数更新效果作为教师奖励，并设置Promotion。",
+          "why": "当前奖励差异大或题难度合适，并不等于后续真实困难题能力净增长。",
+          "evidence": "SOAR的Intrinsic-T发生高方差与Vendi Score坍缩；这属于SOAR具体的对照，不能声称直接复现并否定R-Zero的完整系统。",
+          "decisive_test": "同一Teacher/Student底座及相同任务和计算条件，比较Intrinsic和Grounded教师奖励；另外固定概念覆盖检验收益差。",
+          "relationship": "最近邻：自生成挑战题与双边更新",
+          "verification": "arXiv摘要、作者项目与SOAR正文核对"
+        },
+        {
+          "id": "serl",
+          "name": "SeRL",
+          "full_title": "SeRL: Self-Play Reinforcement Learning for Large Language Models with Limited Data",
+          "year": 2025,
+          "venue": "arXiv 2025-05（本文不推断正式会议）",
+          "family": "自指令与自奖励",
+          "distance": "closest",
+          "cited_at": "§2、§4.3、§5.1及Appendix C.2",
+          "primary_url": "https://arxiv.org/abs/2505.20347",
+          "source_scope": "原始arXiv摘要与SOAR实验基线描述",
+          "problem": "只有有限真实题库时如何扩充练习题，并用自奖励筛选有效数据？",
+          "update_surface": "学习模型与自生成题集合",
+          "supervision": "多数投票奖励和多样性/难度筛选",
+          "model_tasks": "数学等推理基准",
+          "shared": "都在原有困难/有限数据条件下生成额外的训练问题，改善后续RL。",
+          "difference": "SeRL利用多数投票与可学性过滤得到新数据；SOAR对每组64题真正更新Student，再由其目标任务增益训练Teacher。",
+          "why": "估计题面难度或自评分数成本较低，真实试训更贴目标，但产生更高计算成本。",
+          "evidence": "SOAR Table 4：MATH SeRL step100 pass@32=12.4%，SOAR-PQ=18.9%；均为SOAR论文作者按其协议的适配实验结果。",
+          "decisive_test": "锁定相同题池、学生起点、教师生成与总试训预算，比较多数投票/难度过滤与下游真实增益训练教师。",
+          "relationship": "SOAR正文直接评估的最接近自生成课程基线",
+          "verification": "SeRL arXiv官方摘要与SOAR §4.3/C.2直接对照核对"
+        },
+        {
+          "id": "tscl",
+          "name": "Teacher-Student Curriculum Learning",
+          "full_title": "Teacher-Student Curriculum Learning",
+          "year": 2020,
+          "venue": "IEEE TNNLS 2020（早期作者论文与2017项目页）",
+          "family": "学习进展调度",
+          "distance": "context",
+          "cited_at": "§2、Appendix A",
+          "primary_url": "https://pubmed.ncbi.nlm.nih.gov/31502993/",
+          "source_scope": "PubMed论文条目与OpenAI作者项目公开摘要",
+          "problem": "给定子任务集合时，如何按学生学习曲线和遗忘情况安排练习？",
+          "update_surface": "课程选择策略与Student",
+          "supervision": "各子任务最近学习进展/退步",
+          "model_tasks": "小数加法与Minecraft导航",
+          "shared": "都认为课程应该基于学生实际表现，而不是只依靠固定难度顺序。",
+          "difference": "TSCL从预置子任务中选择练习，着眼学习曲线斜率；SOAR训练LLM教师生成新题，并使用短内环真实参数更新后的目标困难题增益。",
+          "why": "学习进展调度是已有思想，SOAR不能声称首次通过学生进步决定课程。",
+          "evidence": "TSCL使用学习速率信号；SOAR Table 1/Fig 5对Intrinsic与Grounded的对照在不同任务体系中报告，不是与TSCL同预算实验。",
+          "decisive_test": "在同一个冻结可用任务池上同时运行TSCL风格选择和SOAR组试训反馈，控制诊断/生成成本，检验是否需要新题生成。",
+          "relationship": "基础邻近：学习曲线进展驱动课程安排",
+          "verification": "PubMed及OpenAI作者项目摘要核对"
+        }
+      ]
     }
   ]
 }

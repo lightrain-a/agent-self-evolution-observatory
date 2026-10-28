@@ -2838,6 +2838,862 @@
         "code": "https://github.com/karpning/Curriculum_evaluation",
         "full_text": "https://arxiv.org/abs/2510.19099"
       }
+    },
+    {
+      "id": "soar-2601-18778",
+      "short_title": "SOAR · ICML 2026",
+      "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability",
+      "authors": "Shobhita Sundaram; John Quan; Ariel Kwiatkowski; Kartik Ahuja; Yann Ollivier; Julia Kempe",
+      "lead_institution": "麻省理工学院（MIT）",
+      "institutions": [
+        "麻省理工学院（MIT）",
+        "Meta FAIR",
+        "纽约大学（NYU）"
+      ],
+      "institution_source": "arXiv 2601.18778v3 论文首页作者署名：MIT / Meta FAIR / NYU；PMLR 正式论文作者列表",
+      "publication": "ICML 2026（Spotlight）· PMLR 306:117557–117592",
+      "arxiv": "2601.18778",
+      "first_posted": "2026-01-26",
+      "version": "arXiv v3 · 2026-06-30；ICML 2026 正式发表",
+      "read_on": "2026-10-28",
+      "reading_level": "§1–6、Appendix B–E 与 PMLR 官方摘要精读；尚未独立复现代码或结果",
+      "tags": [
+        "RSI",
+        "SOAR",
+        "Meta-RL",
+        "Self-Play",
+        "Teacher–Student",
+        "Curriculum",
+        "Grounded Reward",
+        "Learning Progress"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "教师奖励采用学生在候选题集上真实RLOO更新后、对抽样真实困难题的准确率增益；每组4次重复减少噪声。",
+          "open_question": "奖励只看短内环与训练困难题抽样，不保证预测更远期、跨任务或低成本的学习收益；组奖励也不能识别每道题的边际价值。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "同一预训练模型的教师从隐含知识生成用于突破困难题停滞的中间训练题，外层优化使题目更有用。",
+          "open_question": "没有证明生成题对应全新知识；也没有排除与预训练信息重组、内容重叠的关系。"
+        },
+        "reach": {
+          "level": "core",
+          "contribution": "对基础模型采样128次仍未答对的数学题，用自生成课程提供内环非零训练信号，提升后测pass@k。",
+          "open_question": "fail@128是经验筛选，不能当作真实成功概率严格为0；也不是一般解法支持集可扩展的形式化保证。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "Teacher和Student真实更新；Promotion保存进步后的Student与有效题集，并在新学生及OOD数学集复测。",
+          "open_question": "缺少跨多轮无关学习后旧能力保持与跨学生教学策略稳定性的系统检验。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "比较Intrinsic与Grounded奖励的训练坍缩风险；生成题仅做格式解析并不能确保答案正确。",
+          "open_question": "未测Agent真实工具权限、评估器被利用、错误答案持续污染或恶意教学资料。"
+        }
+      },
+      "one_sentence": "难题完全做不对时，模型也能通过真实学生学习增益训练出题教师，生成帮助突破停滞的中间练习。",
+      "story": {
+        "challenge": "学生在一类数学题上128次采样全错，直接RL很难得到有效奖励；怎么靠自己生成题目继续学习？",
+        "insight": "模型可能不会直接解难题，却已具备生成有用基础题的知识；当前成功率不等于训练后的真实收益。",
+        "design": "教师每轮生成4组各64道题；学生从同一检查点分别试训，按真实困难题准确率增益奖励教师，并在增益足够时晋升学生。",
+        "result": "MATH pass@32：Hard-Only 9.6%，SOAR-PQ 18.9%，Grounded-T 19.1%；Intrinsic教师语义多样性从34.91降至10.82。"
+      },
+      "problem": "在模型原本很难答对的数学题上，RLVR奖励稀疏。自博弈虽能自生成数据，但成功率、难度等Intrinsic代理可能与真实学生进步脱钩并导致课程坍缩。",
+      "setup": "主要使用Llama-3.2-3B-Instruct（8B另做规模验证）。在MATH、HARP、OlympiadBench筛选基础模型fail@128题，并随机分出内部训练/测试。教师和学生同源初始化；外层RLOO，g=4、n=64、r=4，内层每支约10步RLOO，奖励在64道真实困难训练题上用更新前后贪心准确率差计算；超过3步移动平均阈值τ=0.01时晋升。训练教师主要在MATH/HARP，OlympiadBench作为OOD。",
+      "updates": "Teacher的生成策略权重由外层RLOO更新；Student参数由内层RLOO更新。普通候选试训后Student回到当前基准，仅Promotion更新后续基准；累积成功晋升的题目为PQ。Grounded reward有外部真实困难题正确答案，不是完全无外部验证的闭环。",
+      "key_ideas": [
+        {
+          "name": "Grounded Reward：按真实学习增益奖励课程",
+          "summary": "从同一Student起点试训候选数据集，再在同一批困难训练题上比较贪心准确率变化。",
+          "formula": "R(X_k)=Acc(S'_k,Q_R)−Acc(S,Q_R)，重复r=4次后取均值"
+        },
+        {
+          "name": "双层RLOO与Promotion",
+          "summary": "外层学会出题，内层学会解题；只有收益门槛满足时保存新的Student基准与晋升题集。",
+          "formula": "g=4; n=64; r=4; MA_3(reward)>0.01 ⇒ Promote"
+        },
+        {
+          "name": "Intrinsic Reward 的真正实现",
+          "summary": "论文附录的Intrinsic对照偏好至少一次成功、但成功率较低的题；并不在p=0.5达到最大。",
+          "formula": "r_i=0 if sbar_i=0 else 1−sbar_i；32次采样估计sbar_i"
+        },
+        {
+          "name": "课程坍缩与结构质量",
+          "summary": "Grounded策略保留语义多样性；Intrinsic策略约损失69%多样性。较高答案正确率也未必带来较高学习收益。",
+          "formula": "Vendi: Base 34.91 / Grounded-HARP 34.66 / Intrinsic 10.82"
+        }
+      ],
+      "evidence": [
+        "ICML 2026/PMLR 306 与 arXiv v3 Appendix Table 4：MATH fail@128 pass@32为Hard-Only 9.6±2.6、Intrinsic-T 14.1±7.5、SOAR-PQ 18.9±5.3、Grounded-T 19.1±3.7。",
+        "HARP：Hard-Only 8.2±1.0、SOAR-PQ 12.3±2.0、Grounded-T 11.2±1.7；OlympiadBench OOD：Hard-Only 6.9±2.7、PQ-HARP 12.0±3.0。",
+        "论文Table 1：Vendi Score，Base-T 34.91、Grounded-HARP 34.66、Grounded-MATH 31.99、PQ 28.33、Intrinsic 10.82；个别Intrinsic教师种子导致学生坍缩。",
+        "Appendix B.4 Eq.(8)：Intrinsic奖励是0 if sbar=0 else 1−sbar，不等于p(1−p)且不是严格50%最优。",
+        "Appendix Table 7：Base/Intrinsic/Grounded/PQ题目well-posed分别53.6/63.5/70.0/64.6%，答案正确23.2/55.5/36.5/32.8%。C.5新增错误答案且well-posed题82→144，同时改变样本量。"
+      ],
+      "boundaries": [
+        "fail@128只说明按既定采样协议128次没成功；后续换随机种子可观察非零pass@k，不是“严格成功率为零”。",
+        "论文主要是数学相关题目，外层教师奖励依赖已标注的真实困难训练题；不能称完全无外部监督，或一般化到任意开放Agent任务。",
+        "SOAR奖励是候选64题的整体学习增益；均摊组奖励不等于每题独立边际价值，也未在匹配总元训练费用下证明比所有简单方法更省算力。",
+        "Grounded在测试的随机种子与任务上更稳定，但不能证明Intrinsic奖励总会坍缩或Grounded永远避免奖励黑客行为。",
+        "Correct-only 82题与Well-posed 144题比较存在题数、概念覆盖等混淆；不能断言“错误答案本身带来增益”。",
+        "短内环真实增益不代表多轮后净能力增长；课程混合时间表在不同数学集效果不同，仍需与I9的跨主题编排机制区分。"
+      ],
+      "our_relevance": [
+        "I2：SOAR已经用真实学生收益更新Teacher并进行Student Promotion；I2新意必须落在固定题目、教法改变和教师跨学生泛化，不再声称首次师生共进化。",
+        "I6：SOAR衡量64题作为整体的真实增益；I6固定同题错误终点，只比较不同失败轨迹的因果学习价值与停止/重访。",
+        "I8：答案正确率并非学习价值的充要条件；I8重点是纠正哪一类具体错误可产生规则级迁移，不能把生成题的格式或错误答案直接等同正向监督。",
+        "I9：SOAR比较先合成后真实与混合训练，MATH/HARP选择不同；I9固定样本与题内教学过程，研究跨规则主题何时集中或交错及后续保持。",
+        "补充：用短期真实进步作奖励已被SOAR覆盖；未来值得研究跨训练窗口的持续净学习收益和短程奖励的排序反转。"
+      ],
+      "next_test": "固定同一初始Student与候选课程、教师奖励集，比较即时真实收益排序与经历若干无关学习后的独立净收益排序；并以题数/Token/规则覆盖严格匹配正确答案题与well-posed错误答案题。若差异只由更多题目或更宽覆盖解释，不再增设复杂奖励预测器。",
+      "deep_read": {
+        "focus": "为什么当前能做对50%左右的题，不一定促进未来学习？SOAR如何通过真实Student试训训练Teacher，并在哪些因果边界上仍有缺口？",
+        "summary": "SOAR面对fail@128数学题的RL稀疏奖励，用外层RLOO训练出题Teacher，内层真实更新Student，以困难训练题上的准确率增益奖励教师；通过Promotion累计学生进步。核心结果是更强的困难题pass@k、Grounded训练的稳定性和多样性，以及well-posed题目在答案有错时仍可能有价值。需要区分短期增益、组奖励、数据量混淆和未来能力迁移。",
+        "terms": [
+          {
+            "name": "fail@128",
+            "meaning": "按固定推理协议对一道题采样128次全部失败；不是数学上成功概率严格等于0。"
+          },
+          {
+            "name": "RLVR / RLOO",
+            "meaning": "用可验证答案奖励做强化学习；RLOO使用同组其他样本的平均奖励作基线。"
+          },
+          {
+            "name": "Grounded Reward",
+            "meaning": "学生真实训练后，在真实困难题上的准确率增量，不是教师对生成题的打分。"
+          },
+          {
+            "name": "Intrinsic Learnability",
+            "meaning": "使用学生对生成题当下的成功频率构造内在奖励；SOAR附录的具体函数不是p(1-p)。"
+          },
+          {
+            "name": "Promotion",
+            "meaning": "当近期教师奖励超过阈值，选定一位更新后的学生作为下一阶段的基准，并累积相应有效题目。"
+          },
+          {
+            "name": "PQ / PS / Grounded-T",
+            "meaning": "PQ是晋升题集；PS是晋升后的学生；Grounded-T是经Grounded奖励训练后的出题教师。"
+          },
+          {
+            "name": "Vendi Score",
+            "meaning": "使用语义嵌入估计有效的概念多样性；不是题目总数，也不能单独证明因果坍缩。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "phenomenon",
+            "stage": "challenge",
+            "title": "Introduction：不会做的难题，真的完全学不了吗？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "当RLVR对同一道数学题采样很多次都无法答对时，二元正确性奖励几乎不提供组内差异，直接优化会陷入平台期。SOAR用fail@128数学题制造这一研究场景：初始模型在固定采样协议中128次都答错，但并非真实正确概率严格为0。"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "生活化解释（本站构造）",
+                "text": "模型不会一道复杂组合数学题，但能生成基本计数、简单递推和局部恒等式的练习。教师的能力不必等于最终解题能力；中间题若能改变Student参数，就可能让原本困难题出现成功轨迹。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "论文的科学问题",
+                "text": "在不提供新的人类编写的中间题的情况下，模型能否通过生成训练材料，突破自身在已有带标准答案的困难问题上的RL停滞？"
+              }
+            ]
+          },
+          {
+            "id": "insight",
+            "stage": "insight",
+            "title": "Insight：出题能力可能先于直接解难题的能力",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者提出潜在教学知识假设：预训练模型即使不能完整求解某道高难度题，仍可能包含生成其基础子题的知识。有效训练题可以把Student的采样/梯度信号引入新的区域，让困难题开始产生非零有效反馈。这里强调的是“可学习性边界”而非仅从同题多次采样提升pass@k。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "区别",
+                  "它问什么",
+                  "SOAR的处理"
+                ],
+                "rows": [
+                  [
+                    "当前难度",
+                    "学生现在做这道生成题有多大概率成功",
+                    "作为Intrinsic对照，而非教师主目标"
+                  ],
+                  [
+                    "课程真实收益",
+                    "学生练这组题后，在真实困难题上是否多做对",
+                    "Grounded Reward，驱动Teacher更新"
+                  ],
+                  [
+                    "教师教学能力",
+                    "换成未经历过外层试训的新学生，教师还能生成有用题吗",
+                    "从Grounded-T单独采样并训练fresh Student"
+                  ],
+                  [
+                    "长期净学习收益（本站延伸）",
+                    "经历后续无关更新后，能力还保留吗",
+                    "SOAR未完整检验，不能直接声称持久Meta-RSI"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "SOAR真正的新意",
+                "text": "不是首次让教师和学生双边训练，也不是首次按成功率选题；它使用真实Student更新的困难题收益作为外层出题奖励，验证有用中间题可从预训练教师中学出。"
+              }
+            ]
+          },
+          {
+            "id": "bilevel",
+            "stage": "design",
+            "title": "Method §3.1–3.3：双层Meta-RL分别更新Teacher和Student",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "原文 Eq.(1) · Bilevel Optimization",
+                "expression": "max_φ E_{X~π^T_φ}[R(π^S_{θ'(X)}, D_train)]，s.t. θ'(X)=RL-update(θ,X)",
+                "meaning": "Teacher采样一组训练题X，Student从当前固定快照用X做真实RL更新；外层优化的是更新后的Student在真实困难题上的表现，而不是Teacher自己的答题分。",
+                "boundary": "每次生成的Student只是局部分叉；除Promotion外，不把每次试训得到的Student永久累积。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "Teacher提出候选",
+                    "text": "每个外层RLOO步生成g×n=4×64=256条可解析的问答，再分为4组各64题。"
+                  },
+                  {
+                    "title": "Student分别试训",
+                    "text": "对每组从同一Student基准分叉，用RLOO训练约10步（随Student晋升可加长），各重复r=4次。每个外层步需16次Student试训。"
+                  },
+                  {
+                    "title": "抽样真实困难题打分",
+                    "text": "从D_train选64道fail@128真实困难题，计算更新前后的贪心准确率差；对4个Student重复取平均，作为这组训练题的奖励。"
+                  },
+                  {
+                    "title": "Teacher更新并决定Promotion",
+                    "text": "外层RLOO用四组相对奖励更新出题策略；若近3步平均奖励超过阈值，才接纳最优组的中位奖励Student作为下一基准。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "组奖励而非逐题价值",
+                "text": "64道生成题分享同一组平均收益。论文验证了一个题集是否有用，并未严格识别组内每道题独立的边际学习贡献；这与I6固定失败轨迹价值的研究有本质差异。"
+              }
+            ]
+          },
+          {
+            "id": "grounded",
+            "stage": "design",
+            "title": "Grounded Reward：为什么必须真实训练学生？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "原文 Eq.(2) · 课程收益",
+                "expression": "R(X_k)=Acc_greedy(S'_k,Q_R) − Acc_greedy(S,Q_R);  R_k=(1/r)Σ_j R_(k,j), r=4",
+                "meaning": "在同一批随机抽出的64道真实困难训练题上，比较学生参数更新前后的贪心解题率，四次独立试训平均得到课程奖励。",
+                "boundary": "Q_R来自真实困难训练集，不是最终冻结测试集；它能对齐当前目标，但会成为被Teacher反复优化的奖励信息。"
+              },
+              {
+                "type": "prose",
+                "text": "Teacher本身不看到真实困难题内容，只收到由学生试训产生的标量学习增益。生成题的数学答案不是预先用标准答案逐一严格验证。所谓grounded，是目标通过真实困难题的可核验成绩锚定，而不是保证所有生成题都正确。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "有代价的强监督",
+                "text": "在相同起点对课程做实际更新，比预测“这个题现在做对概率是多少”更接近目标学习收益，但每次Teacher更新要付出许多Student分支训练与诊断成本。"
+              }
+            ]
+          },
+          {
+            "id": "intrinsic",
+            "stage": "design",
+            "title": "Appendix B.4：50%成功率不是SOAR实际Intrinsic奖励的峰值",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "直觉难度代理",
+                "expression": "Var(correct)=p(1−p), argmax_p Var=0.5",
+                "meaning": "成功和失败都有一定占比时，二元奖励方差较大。这有利于当前组内训练信号，但只刻画“当前做题”而非“训练以后迁移”。",
+                "boundary": "p(1−p)不是SOAR在Appendix B.4真正实现的Intrinsic-T奖励。"
+              },
+              {
+                "type": "formula",
+                "label": "原文 Appendix B.4, Eq.(8)",
+                "expression": "r_i=0 if sbar_i=0; otherwise r_i=1−sbar_i, where sbar_i is success rate over 32 samples",
+                "meaning": "如果32次一次也没成功，奖励0；只成功1次则奖励31/32；成功16次（50%）奖励0.5；全部成功奖励0。",
+                "boundary": "因此实际实现并不在50%处达到最大；其偏好有非零成功但低成功率的题目。文中“约50%”是一般化的内在可学习性直觉，不能用来当作实测奖励公式。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "32次采样的成功数",
+                  "成功率",
+                  "论文实际Intrinsic奖励"
+                ],
+                "rows": [
+                  [
+                    "0/32",
+                    "0%",
+                    "0"
+                  ],
+                  [
+                    "1/32",
+                    "3.125%",
+                    "0.96875"
+                  ],
+                  [
+                    "8/32",
+                    "25%",
+                    "0.75"
+                  ],
+                  [
+                    "16/32",
+                    "50%",
+                    "0.50"
+                  ],
+                  [
+                    "24/32",
+                    "75%",
+                    "0.25"
+                  ],
+                  [
+                    "32/32",
+                    "100%",
+                    "0"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "对我们的I6/I8很关键",
+                "text": "“当前能不能做对”与“完成一次真实更新后是否能学会更多新题”不是同一被解释变量。SOAR已直接比较了Intrinsic与Grounded，不能把“从50%阈值换成真实增益”作为我们的新主张。"
+              }
+            ]
+          },
+          {
+            "id": "promotion",
+            "stage": "design",
+            "title": "Promotion：临时试训什么时候变成下一轮Student？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "计算三步移动平均",
+                    "text": "在外层训练中，计算各候选数据集奖励的平均，再对最近m=3步做移动平均。"
+                  },
+                  {
+                    "title": "超过τ=0.01才晋升",
+                    "text": "如果移动平均高于门槛，选择当轮平均Grounded奖励最高的64题。"
+                  },
+                  {
+                    "title": "选择一个代表性学生快照",
+                    "text": "在该组r=4个试训Student中选择奖励处于中位水平者，而非最幸运的最优种子，以降低过度选择噪声。"
+                  },
+                  {
+                    "title": "保留Student与Promotion Questions",
+                    "text": "接纳新的Student参数基准，并将促成该次晋升的64道题累计进PQ；后续教师面对能力已变化的学生继续学习出题。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "真正的持续更新对象",
+                "text": "外层Teacher训练跨步持续进行；Student也通过Promotion获得参数演进。但每个候选组内的短试训默认从同一Student基准复制，试训本身不会无限累积。I2若研究学生变化引起的最佳教法变化，必须保持固定教材与跨Student交叉评价。"
+              },
+              {
+                "type": "prose",
+                "text": "PQ、PS、Grounded-T是三个不同的输出：PQ是晋升过程中留下的训练题集合；PS是已晋升的学生；Grounded-T是能够再生成新题的Teacher模型。分别评估有助于辨别“特定训练题有效”与“教师已经学会有效出题”"
+              }
+            ]
+          },
+          {
+            "id": "protocol",
+            "stage": "design",
+            "title": "Experiment Setup：fail@128的筛选、模型、数据和测试隔离",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "数据集",
+                  "候选题池",
+                  "筛选后train",
+                  "筛选后test"
+                ],
+                "rows": [
+                  [
+                    "MATH（原始官方test题池）",
+                    "5000",
+                    "359",
+                    "360"
+                  ],
+                  [
+                    "HARP",
+                    "4768",
+                    "714",
+                    "714"
+                  ],
+                  [
+                    "OlympiadBench（英文、可验证、纯文本）",
+                    "674",
+                    "158",
+                    "158"
+                  ]
+                ],
+                "caption": "论文 Appendix Table 2。筛选时对Llama-3.2-3B-Instruct采样128次，全部失败才保留；保留集按50:50划分内部训练与测试。"
+              },
+              {
+                "type": "prose",
+                "text": "主模型Llama-3.2-3B-Instruct，另有Llama-3.1-8B-Instruct规模验证。Teacher仅在MATH和HARP的内部训练集得到奖励，OlympiadBench作为OOD数学任务。MATH的筛选题来自官方test题池再随机内部划分，原因是作者发现官方train/test的基础零样本分数差异明显，并担心训练数据暴露；不能把结果称为使用MATH官方train/test标准划分。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "参数",
+                  "外层Teacher",
+                  "内层Student"
+                ],
+                "rows": [
+                  [
+                    "优化算法",
+                    "RLOO",
+                    "RLOO"
+                  ],
+                  [
+                    "每组数量",
+                    "4组×64题",
+                    "每候选组约10步"
+                  ],
+                  [
+                    "重复次数",
+                    "每组r=4学生试训",
+                    "每次从当前基准启动"
+                  ],
+                  [
+                    "学习率",
+                    "1e-5",
+                    "1e-5"
+                  ],
+                  [
+                    "KL系数",
+                    "0.001",
+                    "0.001"
+                  ],
+                  [
+                    "Promotion",
+                    "m=3, τ=0.01",
+                    "接纳中位奖励Student"
+                  ],
+                  [
+                    "训练预算",
+                    "最多200外层步",
+                    "正式新学生评估最多1500步"
+                  ]
+                ],
+                "caption": "论文 Appendix B.7。外层成本远高于单次Student训练；统计时应把试训、验证、Teacher更新全部计入。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不能把fail@128说成零概率",
+                "text": "基础模型在筛选所用采样种子下128次全错，不代表其真实正确解概率严格为零；论文也报告在不同种子上的base pass@k并非0。"
+              }
+            ]
+          },
+          {
+            "id": "main-results",
+            "stage": "result",
+            "title": "Results §5.1：真实课程是否突破Hard-Only停滞？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "任务 · pass@32（%）",
+                  "Hard-Only",
+                  "Intrinsic-T",
+                  "SOAR-PQ",
+                  "Grounded-T"
+                ],
+                "rows": [
+                  [
+                    "MATH fail@128",
+                    "9.6 ± 2.6",
+                    "14.1 ± 7.5",
+                    "18.9 ± 5.3",
+                    "19.1 ± 3.7"
+                  ],
+                  [
+                    "HARP fail@128",
+                    "8.2 ± 1.0",
+                    "9.6 ± 2.1",
+                    "12.3 ± 2.0",
+                    "11.2 ± 1.7"
+                  ]
+                ],
+                "caption": "Appendix Table 4、5。PQ是晋升题集；Grounded-T是训练后的教师再生成题目并用于训练全新学生。"
+              },
+              {
+                "type": "prose",
+                "text": "在MATH上，SOAR-PQ相对Hard-Only提高9.3个百分点，Grounded-T提高9.5个百分点。HARP中SOAR-PQ从8.2%升至12.3%。对新Student也有效，证明增益不是只来自先前某个被晋升Student的幸运轨迹。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "OlympiadBench OOD · pass@32",
+                  "结果",
+                  "意义"
+                ],
+                "rows": [
+                  [
+                    "Hard-Only",
+                    "6.9 ± 2.7",
+                    "没有使用额外生成课程"
+                  ],
+                  [
+                    "SOAR-PQ（MATH）",
+                    "10.6 ± 2.7",
+                    "来自另一个数学任务的课程迁移"
+                  ],
+                  [
+                    "SOAR-PQ（HARP）",
+                    "12.0 ± 3.0",
+                    "未把OlympiadBench用于Teacher奖励"
+                  ]
+                ]
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "扩大直接训练计算",
+                    "setup": "Hard-Only在MATH把单题RLOO采样组从32增到128。",
+                    "result": "pass@32从9.6%增到12.4%，仍低于SOAR-PQ的18.9%。",
+                    "supports": "课程收益不只是对原始困难题多采样一点。",
+                    "not_proven": "SOAR整体计算效率必然更高；完整Meta-RL包含大量额外Student训练。"
+                  },
+                  {
+                    "domain": "更长直接RL",
+                    "setup": "HARP Hard-Only由1500步延长到6500步。",
+                    "result": "没有恢复SOAR那样的改进，后期性能甚至可能下降。",
+                    "supports": "部分难题的直接训练确实表现为稳定平台期。",
+                    "not_proven": "该结论自动适用于所有模型和所有高难任务。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么Teacher自身解题变强不是主因",
+                "text": "Grounded-T在MATH上直接推理的pass@32约8.3%，只略高于基础模型7.5%，远低于它生成题目所训练Student的19.1%。体现了“会生成有效练习”与“自己直接解难题”的能力分离。"
+              }
+            ]
+          },
+          {
+            "id": "stability",
+            "stage": "result",
+            "title": "Results §5.2：Grounded为什么比Intrinsic更稳定？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "生成题目来源",
+                  "Vendi Score",
+                  "标准差"
+                ],
+                "rows": [
+                  [
+                    "Base-T",
+                    "34.91",
+                    "1.74"
+                  ],
+                  [
+                    "Grounded-T（HARP）",
+                    "34.66",
+                    "1.74"
+                  ],
+                  [
+                    "Grounded-T（MATH）",
+                    "31.99",
+                    "1.54"
+                  ],
+                  [
+                    "Promotion Questions",
+                    "28.33",
+                    "1.55"
+                  ],
+                  [
+                    "Intrinsic-T",
+                    "10.82",
+                    "1.01"
+                  ]
+                ],
+                "caption": "论文Table 1，Qwen3-8B语义嵌入计算Vendi Score，标准化128题。Intrinsic相对Base下降约69%。"
+              },
+              {
+                "type": "prose",
+                "text": "作者分别训练多个随机种子的教师，再用这些教师生成题目训练全新Student。Grounded-T对应的学生学习轨迹比较一致；Intrinsic-T在种子间差异更大，三位Intrinsic教师中有一位使多个数学数据集的Student表现坍缩。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "作者的机制解释",
+                "text": "内在奖励会偏好当前较容易取得高代理分数的题型，教师分布可能收缩到少数概念，脱离真正困难题的学习需求；Grounded把奖励绑在目标任务上的真实学生进步，减少这种漂移。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "还未做完的因果识别",
+                "text": "多样性坍缩与Student学习不稳定共同出现，并不证明前者是性能下降的唯一原因。更强的验证需要匹配题目数量、概念覆盖和训练预算，再操纵奖励形式；不能断言所有Intrinsic奖励一定坍缩。"
+              }
+            ]
+          },
+          {
+            "id": "correctness",
+            "stage": "result",
+            "title": "Results §5.3：答案正确率高，为什么仍不如结构合理的题？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "生成题来源",
+                  "Well-posed（%）",
+                  "答案正确（%）"
+                ],
+                "rows": [
+                  [
+                    "Base-T",
+                    "53.6",
+                    "23.2"
+                  ],
+                  [
+                    "Intrinsic-T",
+                    "63.5",
+                    "55.5"
+                  ],
+                  [
+                    "Grounded-T",
+                    "70.0",
+                    "36.5"
+                  ],
+                  [
+                    "SOAR-PQ",
+                    "64.6",
+                    "32.8"
+                  ]
+                ],
+                "caption": "Appendix Table 7：由Claude-4.5-Sonnet自动评判是否数学上完整可解以及答案是否正确。不是人工逐题独立验证。"
+              },
+              {
+                "type": "prose",
+                "text": "Intrinsic-T生成题的答案正确率最高（55.5%），但它带来的学生收益不及Grounded-T。这与仅按答案正确性挑选训练材料的直觉相反：对停滞学生而言，题目是否概念相关、数学结构是否完整、是否覆盖不同规则也可能很重要。"
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "Well-posed但答案错误也可能有用",
+                    "setup": "Appendix C.5：对HARP-PQ选择Correct-only共82题；再扩成包括这些题在内、题目数学完整但答案未必对的Well-posed共144题。",
+                    "result": "扩展到Well-posed后，Student训练曲线和测试表现提高。",
+                    "supports": "只保留完全正确的生成答案可能丢掉一些有益训练材料。",
+                    "not_proven": "错误答案本身有益；两组题量和概念覆盖也变多，不能把结果归因于“喂错答案”。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "评价器和标签误差",
+                "text": "这些Well-posed/Correct百分比来自Claude-4.5-Sonnet评判，论文未证明每个标签都无误。Student的训练奖励还包含格式奖励与部分正确性/解析逻辑，不是简单把错误标签直接当唯一正监督。"
+              }
+            ]
+          },
+          {
+            "id": "ablations",
+            "stage": "result",
+            "title": "Appendix：课程顺序、样本规模、计算量与种子如何影响结论？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "消融",
+                  "论文观察",
+                  "对RSI的解释边界"
+                ],
+                "rows": [
+                  [
+                    "Synthetic→Real vs Mixed",
+                    "MATH上先合成后真实的基线课程更好；HARP/OlympiadBench混合更稳定，避免早涨后崩",
+                    "SOAR已比较合成/真实的训练次序，但没有研究I9的跨规则主题切换时机"
+                  ],
+                  [
+                    "Grounded-T样本量32/64/128",
+                    "样本量更大通常降低结果波动；128题与64题均值相近但方差较小",
+                    "课程效率与可靠性需分开计量，不是题越多越强"
+                  ],
+                  [
+                    "Teacher晋升阈值τ、每组n",
+                    "默认τ=0.01与n=64在所测范围较好，具有一定超参数敏感性",
+                    "不能把某固定阈值宣称为通用难度规则"
+                  ],
+                  [
+                    "8B模型验证",
+                    "Grounded-T在8B上改善MATH，但在原训练超参下没有观察到Promotion",
+                    "3B上晋升机制的行为不能直接跨模型规模外推"
+                  ],
+                  [
+                    "资源",
+                    "Teacher元训练约32张H100/H200、48–60小时；单次新Student评估约8张、12小时",
+                    "Grounded监督更强，但真实试训成本很高，必须报告元训练和诊断开销"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "数据分布选择值得学习",
+                "text": "MATH的fail@128题从官方test题池筛选后再进行内部train/test划分；作者解释是为了减轻基础模型可能接触过官方训练题的混淆。论文报告的是自定义内部划分，不等于官方MATH划分的标准结果。"
+              }
+            ]
+          },
+          {
+            "id": "related-scope",
+            "stage": "next",
+            "title": "Related Work：SOAR已经覆盖哪些新意？",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "R-Zero、Absolute Zero、SeRL等已利用LLM自生成训练任务和各种内在奖励；SOAR的关键增量是把教师奖励接到真实Student的有限步参数更新及困难任务成绩。",
+                  "教师学会生成有效课程 ≠ 教师自己变得会直接解难题；Grounded-T直接推理约8.3%与它所生成课程训练Student达19.1%要分开说。",
+                  "与I2最近：它已经完成“Teacher从Student真实学习收益中优化、Student经Promotion成长”的双层闭环，不可仅改个教学标签再声称首次。",
+                  "与I6不同：SOAR奖励的是64题集合的联合收益，而非同一道错题的不同失败轨迹；二者可共享真实试训范式，但处理变量不同。",
+                  "与I8不同：SOAR发现答案正确性不能单独预测题集价值，未对同规则错误和规则级跨题迁移做固定反馈因果配对。",
+                  "与I9不同：SOAR对比合成/真实混合日程，没有系统研究“规则形成—规则辨别”状态驱动的跨主题切换。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "参考文献与创新边界",
+                "text": "SOAR不是首次自生成题目，也不是首次使用双层优化、教师—学生共同更新或学生学习进展信号。研究新意在具体外层真实收益奖励和稀疏数学任务上的有效实现；本研究站任何新方案都要避开这条已证实的主张。"
+              }
+            ]
+          },
+          {
+            "id": "next-test",
+            "stage": "next",
+            "title": "对RSI的决定性实验：真实短期进步是否等于持久净收益？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "研究方向",
+                  "SOAR已做什么",
+                  "后续最值得检验"
+                ],
+                "rows": [
+                  [
+                    "I2 · 教法共进化",
+                    "用Student真实收益训练教师，Student晋升后教师继续出题",
+                    "固定教材/答案，只改变解释与纠错；教师版本×冻结学生快照交叉检验跨学生教学能力"
+                  ],
+                  [
+                    "I6 · 失败学习价值",
+                    "用整个64题集合的实际收益给Teacher反馈",
+                    "固定题目与最终错误，比较不同失败轨迹在统一纠错后的跨题净收益及停止/重访"
+                  ],
+                  [
+                    "I8 · 纠错迁移",
+                    "生成题数学结构重要，答案正确率不是唯一指标",
+                    "事前诊断某错误知识状态，固定反馈与预算，测独立同规则新题迁移和旧能力退化"
+                  ],
+                  [
+                    "I9 · 集中与交错",
+                    "合成题优先或混合真实题在不同数学集表现不同",
+                    "固定训练题集合与题内顺序，仅研究跨规则主题切换时点与规则选择能力"
+                  ]
+                ]
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "E1：同一Student的短/长期收益排序反转",
+                    "design": "同一参数检查点上，对每组候选课程做相同短内环真实更新，并保存分支；继续用冻结的同一后续任务流进行多轮其他知识更新，不改变教师与更新器。",
+                    "decisive": "比较短期奖励、独立新题迁移与后续旧能力净保持的排序是否反转；若一致，就不必引入更复杂长期预测器。"
+                  },
+                  {
+                    "name": "E2：控制Concept Diversity再比较Intrinsic/Grounded",
+                    "design": "从两种Teacher各自生成题目，按类别/难度/题数/Token等匹配分布，固定Student训练和后测预算；不从最终测试反向挑题。",
+                    "decisive": "如果匹配概念覆盖后差异消失，则多样性可能解释大量收益；如果仍有差异，需要进一步分析题目结构与规则相关性。"
+                  },
+                  {
+                    "name": "E3：错误答案的真正因果贡献",
+                    "design": "选择相同的well-posed题目集合，分别给正确答案、原生成的错误答案、无答案；统一学生更新器和预算，并报告题目数量和格式通过率。",
+                    "decisive": "只有同题同预算下准确答案状态仍改变跨题净收益，才能归因于答案是否正确；82题vs144题不能支持这个归因。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最后只保留一条问题",
+                "text": "真实学生进步比内在难度代理更接近学习目标，但它仍依赖任务、模型阶段、内环长度、课程分布与评价窗口；值得研究的是何时能够代表未来可保留的能力，而不是再次发明“用真实收益训练教师”。"
+              }
+            ]
+          },
+          {
+            "id": "limits",
+            "stage": "next",
+            "title": "Discussion与投稿判断：这篇论文到哪里为止？",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "论文有较强证据支持：学习不到的数学难题可以经自生成中间课程突破、Grounded教师比论文实现的Intrinsic对照更稳定、教育能力与直接解题能力可以分离。",
+                  "不能写成“模型0%可能性也能学会”：fail@128只是一次采样筛选；不同种子依然有小概率正确解。",
+                  "不能写成“完全无需外部监督”：真实困难题的标准答案与数学验证器用于Student训练/Teacher Grounded奖励，Teacher只是看不到题目的内容。",
+                  "不能写成“错误答案对学习越多越好”：原文比较同时改变82→144题的数量与概念覆盖，且正确率由Claude审查。",
+                  "不能写成“真实奖励天然稳健且零成本”：内外层计算很大，Teacher会反复利用训练奖励分布，跨任务与长期保持仍需复测。",
+                  "模型规模与任务范围主要限于Llama 3B、8B数学题，缺少真实工具环境与跨学科任务的同等强度验证。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "论文值得直接复用的方法论",
+                "text": "先证实问题处于普通RL难以进步的区间；用同检查点分叉测课程因果增益；用新Student区分题目集合与Teacher策略；用随机种子与OOD数据避免只看一次幸运轨迹；在附录报告失败与计算成本。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "本站论文写作提醒",
+                "text": "I2–I9写作应把Challenge（为何不能学）→Why（已有教学能力与解题能力不同）→Insight（真实学生增益是可执行校准信号）→Design（分叉训练/晋升）→证据（pass@k/多样性/错误答案对照）连成逻辑，但明确哪些已有SOAR覆盖、我们的科学问题如何独立。"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://arxiv.org/html/2601.18778v3",
+        "pdf": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/sundaram26a/sundaram26a.pdf"
+      }
     }
   ]
 }

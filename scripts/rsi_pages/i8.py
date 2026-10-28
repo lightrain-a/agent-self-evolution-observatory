@@ -80,7 +80,7 @@ PAGE = {
  <tr><td>Self-Error-Instruct one-shot selection [[S40]]</td><td>即时示例迁移能否替代真实权重更新预测</td></tr>
  <tr><td>LESS gradient-based selection [[M10]]</td><td>梯度对齐是否已经足够；可用相同小样本目标能力集合</td></tr>
  <tr><td>DATAPROPHET-style 价值特征 [[M13]]</td><td>困惑度、相似性和多样性等数据集特征在单错误设置下能否解释收益；仅比较经过同任务适配的版本</td></tr>
- <tr><td>SOAR-style 真实学习进步 [[S17]]</td><td>将实际试训收益作为有成本的参照，不当成训练前无成本预测</td></tr>
+ <tr><td><a href="reading-notes.html#deep-soar-2601-18778">SOAR-style 真实学习进步</a> [[S17]]</td><td>将整组64题的实际试训收益作为有成本的参照，不能当成逐个错误的训练前无成本预测；Intrinsic代理与短期真实收益的差别见完整精读。</td></tr>
  <tr><td>LENS / ACE（学习目标对照）[[S43]][[S44]]</td><td>改变错误惩罚是否已能解释收益；与纯样本排序分别报告</td></tr>
  <tr><td>I8：Readiness + Rule Scope + Compatibility</td><td>是否新增可迁移、可解释的预测信息</td></tr>
  </tbody></table></div>
@@ -114,11 +114,11 @@ PAGE = {
  <td><b>相同：</b>训练前预测真实训练收益，<strong>这不是 I8 首创</strong>。<b>差异：</b>不同数据粒度与任务条件；I8 研究单个当前错误的可纠正性和规则级迁移。跨域结果不能直接当公平的同任务胜负。</td>
  </tr>
  <tr>
- <td>SOAR<br><small>ICML 2026 [[S17]]</small></td>
+ <td><a href="reading-notes.html#deep-soar-2601-18778">SOAR · 完整精读</a><br><small>ICML 2026 [[S17]][[S47]]</small></td>
  <td>极难数学任务的自动课程；教师生成帮助学生越过学习停滞的新题。</td>
  <td>用<strong>真实训练后的学生进步</strong>奖励教师，而非只用难度代理指标。</td>
  <td>更新出题教师及学生；评价困难题上的实际学习进步。</td>
- <td><b>相同：</b>看真实学习，而不只看当前答题。<b>差异：</b>SOAR 利用已观测的训练收益改进出题；I8 问能否在给定更新预算<strong>花出去之前</strong>预测哪条既有错误更值得纠正。</td>
+ <td><b>相同：</b>通过真实参数更新测学习收益，而不只看当下正确率。<b>差异：</b>SOAR用64题组联合增益训练生成课程的Teacher，且已证明生成答案正确率高不代表课程最有用；I8固定更新器研究某个已存在错误的规则级迁移与训练前可预测性，需控制题数和反馈正确性。</td>
  </tr>
  <tr>
  <td>RULE-EDIT / DMLE<br><small>EMNLP 2026 [[S41]][[S42]]</small></td>

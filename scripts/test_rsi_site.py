@@ -390,6 +390,32 @@ def main():
           'Learning science needs the primary Mosaic Memory source citation')
     check('deep-mosaic-memory-2026-shilov' in overview,
           'New Nature Communications reading note must be discoverable from the homepage')
+    soar = next((p for p in cards if p['id']=='soar-2601-18778'), None)
+    check(soar is not None and soar.get('arxiv')=='2601.18778' and
+          'ICML 2026' in soar['publication'], 'SOAR original paper and venue metadata missing')
+    check(len(soar['deep_read']['sections'])==14 and
+          {'challenge','insight','design','result','next'} <=
+          {s['stage'] for s in soar['deep_read']['sections']},
+          'SOAR full reading needs the original argument chain and appendices')
+    check('id="soar-2601-18778"' in card_html and
+          'id="deep-soar-2601-18778"' in notes_html and
+          'id="deep-soar-2601-18778--intrinsic"' in notes_html,
+          'SOAR reading card, deep read or exact intrinsic formula section missing')
+    check('1−sbar_i' in notes_html and '34.91' in notes_html and '10.82' in notes_html,
+          'SOAR actual intrinsic reward and diversity collapse evidence must remain')
+    check('82' in notes_html and '144' in notes_html and 'fail@128' in notes_html,
+          'SOAR incorrect-answer sample-size boundary or hard filtering missing')
+    check('id="soar-grounded"' in learn_sci and
+          'deep-soar-2601-18778' in learn_sci and
+          'deep-soar-2601-18778' in overview,
+          'SOAR must be reachable from learning science and home')
+    for slug in ('idea-i2','idea-i6-failure-value','i8','idea-i9-practice-switching'):
+        page_text=(ROOT/'rsi'/f'{slug}.html').read_text(encoding='utf-8')
+        check('reading-notes.html#deep-soar-2601-18778' in page_text,
+              'SOAR evidence and related-idea boundaries must crosslink: '+slug)
+    check(any(t['paper_id']=='soar-2601-18778' and len(t['works'])==4
+              for t in related_data['targets']),
+          'SOAR must have a source-verified closest-work comparison')
     check('历史版本' in historical_i6 and f'href="idea-i6-failure-value.html"' in historical_i6,
           'Historical bottleneck draft must have a clear link to the current I6')
     check(all(k in historical_i6 for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),

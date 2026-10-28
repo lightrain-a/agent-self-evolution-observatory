@@ -17,14 +17,26 @@ PAGE = {
 <div class="note"><b>证据边界：</b>本文是人类行为与计算模型拟合，原任务的 A4 真正随机不可学习，不能把真实 LLM 暂时低分一概视为不可学习。论文没有检验模型权重更新，也没有证明 Agent 会因为绝对 LP 奖励反复遗忘。以上 RSI 实验属于本站的待验证构想。</div>'''),
 ("hypothesis-testing","npj 2026｜为什么 p≈0.5 仍可能只学到局部技巧？",'''
 <p><b>Observable Phenomenon：</b>Ding 等（<i>npj Science of Learning</i> 2026）把 560 名参与者分为两项 60° 光标旋转实验。训练目标很近时，利用局部技巧可以较快减少错误；目标排列更能排除错误的平移/镜像等假设时，早期训练较慢，却在没有反馈的新目标上更接近真实旋转规则。实验 2 通过八个训练目标把最近训练点至探针的距离统一为 110°，仍出现迁移差异。[[E26]]</p>
-<p><b>与“难度 0.5”的关系：</b>SOAR 对比过将学生当前成功率推向约 50% 的 intrinsic learnability 奖励与真实学生学习增益奖励；后者更稳健。此篇 npj 研究提供一个不同维度：<strong>即使当前题同样能做对，反馈是否有助于排除错误规则，也可能不同</strong>。但 npj 论文没有测 p=0.5、也没有测 LLM 参数更新；不能说它证明了 50% 是最优值。[[S17]][[S47]]</p>
+<p><b>与“难度 0.5”的关系：</b>SOAR 对比过基于当前成功率的 intrinsic learnability 奖励与真实学生学习增益奖励；后者在所研究条件下更稳健。注意 <code>p(1−p)</code> 在成功率 50% 时最大，但 SOAR 附录真正的 Intrinsic-T 奖励是 <code>r=0 (p=0)，否则 r=1−p</code>，不以 50% 为最大值。此篇 npj 研究提供一个不同维度：<strong>即使当前题同样能做对，反馈是否有助于排除错误规则，也可能不同</strong>。但 npj 论文没有测 p=0.5、也没有测 LLM 参数更新；不能说它证明了 50% 是最优值。[[S17]][[S47]]</p>
 <div class="table-wrap"><table><thead><tr><th>需要分开的量</th><th>可能出现什么情况</th><th>如何在 RSI 验证</th></tr></thead><tbody>
 <tr><td>当前题成功率 p</td><td>同 p≈0.5 的两组题，正确率相同</td><td>同检查点用独立采样估计并匹配 p</td></tr>
 <tr><td>规则可辨识性</td><td>一组有局部捷径，另一组能区分竞争假设</td><td>事先由验证器核对竞争规则在训练/新位置的预测是否冲突</td></tr>
 <tr><td>训练后的真实收益</td><td>局部成功率高，但未见变形题可能更差</td><td>固定教材量、LoRA 更新、总成本后撤辅外测</td></tr>
 </tbody></table></div>
-<p><b>最近邻与 RSI：</b><a href="literature.html#nearest">SOAR 的 50% 代理与真实进步对照</a>最直接；<a href="idea-i6-failure-value.html#related">I6</a>研究不同失败过程纠错后的学习价值，<a href="idea-i9-practice-switching.html">I9</a>研究同材料的跨主题练习顺序。人类运动任务的目标排列不是交错课程，更不能直接归入 I9 的实验结果。<a href="reading-notes.html#deep-hypothesis-testing-2026-ding">阅读全文的 C-I-D-R 笔记</a>。</p>
+<p><b>最近邻与 RSI：</b><a href="reading-notes.html#deep-soar-2601-18778">SOAR 的内在成功率代理与真实进步对照</a>最直接；<a href="idea-i6-failure-value.html#related">I6</a>研究不同失败过程纠错后的学习价值，<a href="idea-i9-practice-switching.html">I9</a>研究同材料的跨主题练习顺序。人类运动任务的目标排列不是交错课程，更不能直接归入 I9 的实验结果。<a href="reading-notes.html#deep-hypothesis-testing-2026-ding">阅读全文的 C-I-D-R 笔记</a>。</p>
 <div class="note">最值得迁移的是<strong>成功率相近时再操纵规则辨别难度</strong>的受控实验，而非为任务难度增加未经验证的固定数值或假设检验模块。</div>
+'''),
+("soar-grounded","SOAR · ICML 2026｜难度合适，不等于能带来真实学习",'''
+<p><b>Observable Phenomenon：</b>在基础模型对某些数学题采样128次全错的情况下，直接RL几乎没有有效奖励差异。SOAR（<i>ICML 2026</i>）让教师生成中间题，并从相同Student检查点真实训练多个分支，再用真实困难训练题上的准确率增益来奖励教师，帮助学生突破停滞。主结果MATH pass@32：Hard-Only 9.6%、SOAR-PQ 18.9%、Grounded-T 19.1%。[[S17]][[S47]]</p>
+<p><b>为什么不能把p=0.5当成万能的最佳难度？</b>二元正确性奖励方差<code>p(1−p)</code>确实在0.5最大，但SOAR的Intrinsic对照采用的是Appendix B.4 Eq.(8)：<code>r=0 (p=0); r=1−p (p&gt;0)</code>，其中p由32次采样估计。它实际偏好至少有一次成功、成功率较低的题。Grounded奖励则来自Student在64道真实困难训练题上的更新前后准确率差，比较的是<strong>结果能不能转移</strong>。<a href="reading-notes.html#deep-soar-2601-18778--intrinsic">查看实际公式与逐步推导</a>。</p>
+<div class="table-wrap"><table><thead><tr><th>需要分开的信号</th><th>论文结果或限制</th><th>RSI怎么验证</th></tr></thead><tbody>
+<tr><td>即时成功率/内在可学习性</td><td>Intrinsic-T在一些教师种子上不稳定，Vendi Score从34.91降到10.82</td><td>同难度且同生成预算下，比较不同训练题的独立新题收益</td></tr>
+<tr><td>短期真实Student增益</td><td>Grounded-T更稳定，保留原题目语义覆盖，但每组64题分享一个奖励</td><td>固定Student检查点试训，检查组内单题贡献是否仍存在差异</td></tr>
+<tr><td>答案正确性与题目结构</td><td>Intrinsic-T正确率55.5%高于Grounded的36.5%，却不如后者促进学习；错误答案消融82题vs144题存在数量差</td><td>同题同量严格操纵答案正确性，并测试跨题规则迁移</td></tr>
+<tr><td>未来持久净学习</td><td>论文重点是短内环及数学OOD成绩，不等于长期旧能力保持</td><td>经历其他学习更新后撤辅复测旧/新能力和总成本</td></tr>
+</tbody></table></div>
+<p><b>科研边界：</b><a href="idea-i2.html">I2</a>不能再把“真实学生增益更新教师”当作首次；<a href="idea-i6-failure-value.html">I6</a>研究固定题目的失败过程价值而不是再生成课程；<a href="i8.html">I8</a>分辨正确性、规则结构与跨题净收益；<a href="idea-i9-practice-switching.html">I9</a>固定材料，研究跨主题集中/交错的状态切换。<a href="reading-notes.html#deep-soar-2601-18778"><b>阅读SOAR的14节完整精读、最近邻与原始实验表 →</b></a>。</p>
+<div class="note">SOAR原论文尚未完整证明长期Meta-RSI，也没有直接因果隔离“多样性坍缩是否导致性能坍缩”；不能把单组训练结果改写成普适定律。</div>
 '''),
 ("interleaving","I9｜集中练习与交错练习：什么时候该换方法？",'''
 <p><b>Observable Phenomenon：</b>Samani 与 Pan（<i>npj Science of Learning</i>，2021）在350名大学生、8周物理作业安排中发现，集中练习的作业成绩更高，交错练习却提高了意外延迟测试中的新题表现。学生觉得交错更难，也更容易误以为自己学得差。正式期中考试差异未达显著，论文没有单独隔离复习间隔等所有机制。[[E20]]</p>

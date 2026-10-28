@@ -20,6 +20,7 @@ PAGE = {
 <p><b>机制补充：Hypothesis Testing，npj Science of Learning 2026：</b>同样在训练位置成功，可以学到局部技巧，也可以学到跨位置可迁移的旋转规律。更能排除竞争假设的训练排列，初期进步反而可能慢。它不是 Blocked/Interleaved 直接对照，也没有检验 p=0.5；对 I9 的启发仅是<strong>独立新题上的规则选择</strong>应与训练正确率分开测量。[[E26]] <a href="reading-notes.html#deep-hypothesis-testing-2026-ding">完整精读</a>。</p>
 <p><b>值得注意的直接否定例：</b>Nemeth 等 2025 年在 259 名参与者的绘画类别学习实验中发现随机与按混淆自适应交错都比集中更好，但自适应交错未显著优于随机交错。因此，单纯“哪里容易混淆就多交错”不足以构成可靠的新方法。[[E22]]</p>
 <p><b>Eglington &amp; Pavlik，npj Science of Learning 2020：</b>根据每个学习者和项目的回忆概率、练习收益以及答错的时间成本选择<strong>下一个应该复习的项目</strong>；其词汇实验中部分自适应安排比固定安排多回忆约 40% 项目。<a href="reading-notes.html#deep-optimal-practice-2020-eglington">本站已有逐节精读</a>。I9 则固定练习题目与次数，研究多规则主题间的<strong>呈现顺序与切换时点</strong>，不重做它的选题调度器。[[E25]]</p>
+<p><b>SOAR，ICML 2026：</b>作者还比较了先用64步合成题再转真实困难题，与从一开始混合两类题的训练安排：在MATH中前者较合适，在HARP/OlympiadBench中混合更稳定。<strong>这说明训练安排可能依赖任务分布，但还不是按“规则掌握—规则选择”状态切换的实验</strong>。<a href="reading-notes.html#deep-soar-2601-18778">SOAR完整精读（含Appendix B.6）</a>。[[S47]]</p>
 <div class="note"><b>共同启发：</b>练习组织的收益取决于任务的结构和学习者已有的知识。<strong>集中与交错并没有一个永远正确的固定答案</strong>。将这一条件性结论迁移到 LLM 的真实参数更新，需要重新验证。</div>
 '''),
     ("related", "现有工作｜别人已经研究到了哪一步？", '''
@@ -31,6 +32,7 @@ PAGE = {
 <tr><td><a href="https://www.nature.com/articles/s41539-020-00074-4" target="_blank" rel="noopener noreferrer">Eglington &amp; Pavlik · npj Science of Learning 2020</a> [[E25]]</td><td>根据个体和项目的回忆概率、练习时间成本，动态决定复习哪一项；部分条件下较固定安排约多记住 40% 项目。</td><td>不再声称“用学习状态安排练习”是新方法；I9 固定练习项目和次数，只选择跨主题集中/交错的时点与顺序。</td></tr>
 <tr><td><a href="https://doi.org/10.1016/j.actpsy.2025.105518" target="_blank" rel="noopener noreferrer">Xiong &amp; Wu · Acta Psychologica 2025</a> [[E24]]</td><td>比较人类与多种 LLM 的人工语言形态学习，LLM 对上下文示例顺序反应不同。</td><td>不能把 few-shot 上下文内表现当作持续更新后获得的能力。</td></tr>
 <tr><td><a href="https://aclanthology.org/2026.eacl-long.271/" target="_blank" rel="noopener noreferrer">Zhang et al. · EACL 2026</a> [[M15]]</td><td>在 LLM 预训练中比较课程策略，明确包含交错课程并报告训练效率。</td><td>交错进入 LLM 训练已经有工作；I9 聚焦有限预算持续学习、规则辨别和能力保持，不是单纯预训练加速。</td></tr>
+<tr><td><a href="reading-notes.html#deep-soar-2601-18778">SOAR · ICML 2026</a> [[S47]]</td><td>在MATH、HARP、OlympiadBench比较合成题优先与合成/真实题混合训练，最佳安排依任务而异；使用真实Student增益训练出题Teacher。</td><td>I9不优化题目生成或Teacher奖励，固定跨主题材料与每题教学方式，验证规则状态是否决定Blocked/Interleaved切换及长期独立收益。</td></tr>
 <tr><td><a href="https://aclanthology.org/2026.acl-long.1591/" target="_blank" rel="noopener noreferrer">Jia et al. · ACL 2026</a> [[M16]]</td><td>数学推理后训练中课程方向依赖模型能力和题目复杂度，没有统一最佳顺序。</td><td>不能把“根据模型状态调整排序”作为唯一创新；必须证明跨主题集中/交错切换机制的独立、可预测收益。</td></tr>
 </tbody></table></div>
 <p><b>最近邻边界：</b>教育心理学已研究集中、交错、不同阶段组合、根据学习者回忆状态选复习项目；LLM 领域也已经研究课程、交错预训练和模型相关难度排序。I9 的科学问题应收窄为：<strong>在知识内容、题目数量与更新方式不变时，“规则是否已经形成”和“规则选择是否仍有混淆”，能否预测下一段集中或交错练习的真实收益？</strong></p>
