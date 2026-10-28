@@ -1201,6 +1201,96 @@
       "level": "Nature 正文 Results/Methods/Figs. 1–4 与 PMC 全文核对；2026-10-28",
       "note": "Ding 等用 560 人的两项视觉运动旋转实验改变目标几何；近目标组训练时进步较快但无反馈新位置迁移较差，8 目标实验匹配探针距离后仍有差异。支持局部成功与规则辨别需分开，但未检验 LLM 或难度 p=0.5。",
       "code": ""
+    },
+    {
+      "id": "M18",
+      "group": "相邻领域",
+      "title": "The Geometry of Sequential Learning: Lie-Bracket Prediction of Transfer Order",
+      "date": "ICML 2026 · PMLR 306:117806–117825",
+      "url": "https://proceedings.mlr.press/v306/sweeney26a.html",
+      "level": "PMLR 正式摘要、方法范围与数据核对；2026-10-28",
+      "note": "Sweeney 用梯度更新场 Lie bracket 估计 A→B 与 B→A 在指定目标上的后训练损失排序，并用 Lie-Bracket Tournament 做多任务课程排序。SFT/DPO k=1 成对方向准确率98.1%/98.9%，k=20 为73.1%/72.2%；未直接研究在 A/B 后实际继续学习新任务 C 的速度。",
+      "code": ""
+    },
+    {
+      "id": "M19",
+      "group": "相邻领域",
+      "title": "Optimal Task Order for Continual Learning of Multiple Tasks",
+      "date": "ICML 2025 · PMLR 267:34578–34603",
+      "url": "https://proceedings.mlr.press/v267/li25z.html",
+      "level": "PMLR 正式摘要与任务设置核对；2026-10-28",
+      "note": "Li 与 Hiratani 研究线性 teacher-student 模型及任务顺序对最终持续学习表现的影响，提出从低代表性到典型、相邻任务不相似等排序原则，并在图像任务验证。不是能力匹配后的未知 C 学习曲线。",
+      "code": ""
+    },
+    {
+      "id": "M20",
+      "group": "相邻领域",
+      "title": "Learning Dynamics of Continual Learning: A Unified View of Data Attribution, Forgetting, and Plasticity Loss",
+      "date": "arXiv 2026-09 · 预印本",
+      "url": "https://arxiv.org/abs/2609.33620",
+      "level": "原始预印本摘要和作者项目页核对；2026-10-28",
+      "note": "Ren 等解析 LLM 更新与预测行为的交互，提出 readout-based future learnability 诊断，已直接研究未来可塑性；I9 不把未来学习能力指标本身当首次，需与其诊断直接比较。",
+      "code": "https://joshua-ren.github.io/learning-dynamics-cl/"
+    },
+    {
+      "id": "M21",
+      "group": "相邻领域",
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "date": "ICML 2017 · PMLR 70:1126–1135",
+      "url": "https://proceedings.mlr.press/v70/finn17a.html",
+      "level": "PMLR 正式摘要核对；2026-10-28",
+      "note": "MAML 显式优化快速适应新任务的初始化；未来任务学习速度并非空白。I9 限定为固定 A/B 材料顺序带来的非交换性和对新 C 的因果效应，不重做元学习优化。",
+      "code": ""
+    },
+    {
+      "id": "M22",
+      "group": "相邻领域",
+      "title": "Loss of plasticity in deep continual learning",
+      "date": "Nature 632, 768–774 (2024)",
+      "url": "https://www.nature.com/articles/s41586-024-07711-7",
+      "level": "Nature 正文与实验摘要核对；2026-10-28",
+      "note": "Dohare 等证明深度网络持续训练时可能失去学习新任务的可塑性，并提出 continual backprop 缓解。研究已区分当前能力与未来可学习性；I9 比较同预算不同课程顺序。",
+      "code": ""
+    },
+    {
+      "id": "M23",
+      "group": "相邻领域",
+      "title": "Harmonizing the Past, Present, and Future: A Null-Space Constrained Region-Specific Method for Continual Learning in LLMs",
+      "date": "ACL 2026 · Long Paper 1244",
+      "url": "https://aclanthology.org/2026.acl-long.1244/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-28",
+      "note": "PaRSP 在 LLM 持续学习中同时考虑旧知识保持、当前新能力和未来容量；不是单纯当前成绩。I9 不重新设计参数分区，而是测试固定参数更新器下 A/B 顺序如何影响 C 学习。",
+      "code": "https://github.com/JinhuiBot/PaRSP"
+    },
+    {
+      "id": "M24",
+      "group": "相邻领域",
+      "title": "Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs",
+      "date": "ICLR 2026 · official paper; arXiv 2507.21914",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/08a362bd4ae1934e099ce025f06039fe-Abstract-Conference.html",
+      "level": "官方会议 PDF Section 3–7 / Figure 2,6 / Table 3 / Appendix G.6 / Table 13 核对；2026-10-28",
+      "note": "Wu 等：先用无语义 token 记关系再以少量示范学习自然语义；在语义事实调用上有效，但两跳生成仅0.14→0.36，多选0.08→0.16；ICL直给两条事实为0.95，信息访问条件不同；推理拓展属于初步证据。",
+      "code": "https://github.com/QinyuanWu0710/memorize-then-generalize"
+    },
+    {
+      "id": "M25",
+      "group": "相邻领域",
+      "title": "Why Knowing Both Hops Is Not Enough: Understanding Two-Hop Generalization in Language Models",
+      "date": "EMNLP Findings 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.1523/",
+      "level": "ACL Anthology 官方摘要与发表信息核对；2026-10-28；未复现",
+      "note": "研究模型已掌握原子事实却无法跨层组合的机制，指出中间实体表示不一致/层级映射错位；作为两跳能力边界的相邻工作，不是 Rote Learning 论文作者的追加实验。",
+      "code": "https://github.com/zzl-strong/two_hop"
+    },
+    {
+      "id": "M26",
+      "group": "相邻领域",
+      "title": "Reason to Rote: Rethinking Memorization in Reasoning",
+      "date": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.437/",
+      "level": "ACL Anthology 原文摘要核对；2026-10-28",
+      "note": "研究噪声标签记忆与中间推理机制如何共存，区别于先无语义记忆再少量语义重解释的两阶段知识注入。",
+      "code": "https://github.com/mainlp/memorized_reasonings"
     }
   ]
 }

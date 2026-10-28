@@ -2840,6 +2840,447 @@
       }
     },
     {
+      "id": "rote-learning-iclr2026-wu",
+      "short_title": "Rote Learning · 先记忆再泛化",
+      "title": "Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs",
+      "authors": "Qinyuan Wu, Soumi Das, Mahsa Amani, Bishwamitra Ghosh, Mohammad Aflah Khan, Krishna P. Gummadi, Muhammad Bilal Zafar",
+      "lead_institution": "Max Planck Institute for Software Systems",
+      "institutions": [
+        "Max Planck Institute for Software Systems",
+        "Ruhr University Bochum",
+        "UAR RC Trust"
+      ],
+      "institution_source": "ICLR 2026 官方 PDF 第1页作者与署名机构",
+      "publication": "ICLR 2026 · Conference",
+      "arxiv": "2507.21914",
+      "conference_official_primary": true,
+      "official_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/08a362bd4ae1934e099ce025f06039fe-Abstract-Conference.html",
+      "first_posted": "2025-07-29",
+      "version": "ICLR 2026 正式论文 · Appendix G.6 / Table 13",
+      "read_on": "2026-10-28",
+      "reading_level": "ICLR 官方全文 Section 3–7、Figure 1–6、Table 3 及 Appendix G.6–G.8 核对；未独立复现",
+      "tags": [
+        "ICLR 2026",
+        "记忆与语义",
+        "事实调用",
+        "两跳推理",
+        "RSI 假设",
+        "结果边界"
+      ],
+      "one_sentence": "先记住无语义事实，再学关系含义能调用旧事实；但两跳仅36%，不能等同于复杂推理能力。",
+      "story": {
+        "challenge": "模型记住大量没有语义的实体关联后，能否只通过少量语义示范就正确调用旧事实？进一步能否组合两条事实？",
+        "insight": "关系共享一个无语义键 [X]，少量语义例子可能同时解释许多已记忆事实；但能取回事实不代表能组合事实。",
+        "design": "Phase 1 反复训练 (subject,[X],object)，Phase 2 用少量自然语言关系问答微调；分开测试新问法、Phase 2 留出关联和两跳。",
+        "result": "简单语义调用可达76%；两跳生成从14%到36%，多选16%。给出两条事实的 ICL 为95%，但信息条件并不一样。"
+      },
+      "problem": "已记住的关联能否被后来才学到的语义重新调用？这种重解释会延伸到可靠的跨事实推理吗？",
+      "setup": "8个LLM、4个模型家族；合成的5类实体关系、每关系100条。阶段一共享无语义 [X] 训练事实关联，阶段二对部分已记忆关联用语义提示微调；测试未进入第二阶段的事实、改写、反向与两跳。",
+      "updates": "模型参数（Phase 1 无语义记忆 + Phase 2 语义微调），不是外部 Agent Memory 或 Skill，未训练自主 RSI 改进策略。",
+      "key_ideas": [
+        {
+          "name": "语义重解释",
+          "summary": "先用 [X] 把一组事实组织起来，再让少量自然语言关系示范对这批事实生效。",
+          "formula": "Phase1 (s,[X],o) → Phase2 relation_prompt(s) → o"
+        },
+        {
+          "name": "Phase 2 留出 ≠ 从未出现",
+          "summary": "泛化事实必须标记第一阶段已见而第二阶段未见；不能误称训练全程未见。",
+          "formula": "seen_in_phase1 = true; seen_in_phase2 = false"
+        },
+        {
+          "name": "两跳能力缺口",
+          "summary": "记忆深度带来增益，但跨关系组合明显不可靠。",
+          "formula": "2-hop generation 0.14 → 0.36; MC 0.08 → 0.16; ICL 0.95 (facts in context)"
+        },
+        {
+          "name": "RSI 核心区分",
+          "summary": "正确回忆、语义访问、组合推理和未来持久收益是不同指标。",
+          "formula": "Recall ≠ semantic access ≠ two-hop reasoning ≠ lasting learning"
+        }
+      ],
+      "evidence": [
+        "Figure 2（官方PDF第5页）：Phase 2用50条已记忆事实、1种语义提示训练1 epoch，留出关联在语义测试下生成准确率约76%。",
+        "Section 6.1 / Figure 6（第8–9页）：在合成事实学习、相同训练token的对照下，短键记忆可比重复长语义提示的SFT节省训练token。",
+        "Section 6.2 / Table 3（第9页）：两跳生成14%→36%、多选8%→16%；在直接提供两条事实的ICL中两跳准确率95%。",
+        "Section 6.2 / Appendix G.7（第9页/第41页）：反向关系从0提升至约26%，直接给出事实的ICL约100%。",
+        "Appendix G.6（第41页）：作者将组合推理称为初步结果，并明确尚不足以证明Phase 2完全恢复模型原有通用能力。"
+      ],
+      "boundaries": [
+        "“未见事实”是没有参加Phase 2语义示范，并非Phase 1也从未出现。",
+        "两跳36%是生成准确率，同条件多选只有16%；不能只看增幅声称解决复杂推理。",
+        "ICL95%直接在提示里提供两条事实，与参数内回忆不是等信息条件；作为可解性参照，不是公平的总体性能排行。",
+        "主要实验是合成事实关联；数学、代码、真实Agent多步骤决策和RSI的持久能力尚未验证。",
+        "表征聚类支持解释，但不足以证明语义对齐是唯一因果机制；应单独测试旧能力退化。"
+      ],
+      "our_relevance": [
+        "I7：两阶段参数记忆与先尝试/先看示范不是同一研究变量；可作为额外学习顺序基线。",
+        "I8：原事实调用、同规则新题与复杂组合需要分别报告，避免把答案记忆当作规则纠正。",
+        "I6：过去失败可能在后来学会新规则后才有用，必须通过真实更新后的独立任务验证。",
+        "RSI迁移需控制存储载体：参数记忆、外部轨迹检索与Skill写入不是同一机制。"
+      ],
+      "next_test": "等预算比较即时总结、先记录后语义学习、联合训练与原轨迹检索；用新任务单事实调用、两跳组合、旧能力保持及总推理成本四组指标验证，不只看原题命中率。",
+      "links": {
+        "html": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/08a362bd4ae1934e099ce025f06039fe-Abstract-Conference.html",
+        "pdf": "https://proceedings.iclr.cc/paper_files/paper/2026/file/08a362bd4ae1934e099ce025f06039fe-Paper-Conference.pdf",
+        "code": "https://github.com/QinyuanWu0710/memorize-then-generalize",
+        "full_text": "https://arxiv.org/abs/2507.21914"
+      },
+      "deep_read": {
+        "focus": "在“记忆事实能被语义重新调用”的有效结果之外，认真审视两跳36%、多选16%和有事实上下文ICL95%的差距。",
+        "summary": "本篇研究的强项是用两阶段训练把无语义参数记忆映射到自然语言；复杂推理仍弱。对RSI必须区分记住历史经历、调用旧经验、真正组合规则与长期独立能力提升。",
+        "terms": [
+          {
+            "name": "无语义 [X]",
+            "meaning": "第一阶段给同类事实使用的特殊关系键；此时没有预定义 mother 等含义。"
+          },
+          {
+            "name": "Phase 2 留出事实",
+            "meaning": "第一阶段已经见过、但未参加第二阶段语义微调的关联，绝非全训练未见事实。"
+          },
+          {
+            "name": "两跳组合",
+            "meaning": "联合两条事实 A→B 和 B→C，得到新的 A→C 结论；难于单条检索。"
+          },
+          {
+            "name": "ICL 信息差异",
+            "meaning": "ICL测试直接给两条原始事实，另一组需要从参数回忆事实；不能视为完全公平输入。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "problem",
+            "stage": "challenge",
+            "title": "Challenge：事实背下来了，换一种问法还能用吗？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者把事实记忆与事实意义的学习分开。真正值得研究的是：用无意义关系符号记下大量关联后，只用少量有语义的示范，能否重新调用这些已记住的关联？"
+              }
+            ]
+          },
+          {
+            "id": "hypothesis",
+            "stage": "insight",
+            "title": "Insight：一个共同关系键可能一次解释许多旧记忆",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "Phase 1 的 [X] 把同类关联组织在一起；Phase 2 学会 [X] 所指向的自然语言关系。这个结构有助于语义调用，但并不自动提供两跳组合所需的推理过程。"
+              }
+            ]
+          },
+          {
+            "id": "protocol",
+            "stage": "design",
+            "title": "Design：先学占位关系，再给少量语义示范",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "先记关联",
+                    "text": "合成多个subject-object对，训练模型对每组事实使用共享特殊键 [X]。"
+                  },
+                  {
+                    "title": "再解释关系",
+                    "text": "挑少量Phase 1已见的事实，改成mother、author等自然语言问答微调。"
+                  },
+                  {
+                    "title": "拆开测试",
+                    "text": "将单事实回忆、Phase 2留出事实、改写提问与跨关系两跳分别评估。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "two-hop",
+            "stage": "result",
+            "title": "Result：两跳36%，暴露出记忆与推理之间的缺口",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "设置",
+                  "生成准确率",
+                  "多选准确率"
+                ],
+                "rows": [
+                  [
+                    "无Phase 1记忆，Phase 2 15 epochs",
+                    "14%",
+                    "8%"
+                  ],
+                  [
+                    "Phase 1记忆20 epochs，Phase 2 15 epochs",
+                    "36%",
+                    "16%"
+                  ],
+                  [
+                    "ICL直接看到两条事实",
+                    "95%",
+                    "未报告该对照"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "关键限制",
+                "text": "ICL看到两条原始事实，参数内化模型须自己取回事实；差距不构成严格等信息比较，但说明本文远未证明可靠两跳推理。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "next-rsi",
+            "stage": "next",
+            "title": "Next：RSI 应检验旧记忆何时才真正变得有用",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "比较即时归纳、先记后学、联合训练与带来源的原始经历检索；在相同预算下分测事实回忆、语义调用、两跳组合与旧能力保持。若只有单事实取回改进，没有未见任务的独立组合收益，就不主张复杂推理或RSI能力进化。"
+              }
+            ]
+          },
+          {
+            "id": "scope",
+            "stage": "challenge",
+            "order": 2,
+            "title": "先说清楚“泛化”的三种含义",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "评测目标",
+                  "训练时有没有见过？",
+                  "为什么不能混在一起"
+                ],
+                "rows": [
+                  [
+                    "单事实取回",
+                    "第一阶段已见",
+                    "只说明原子关系记在模型参数中。"
+                  ],
+                  [
+                    "换提示或另一语言访问",
+                    "第一阶段已见；第二阶段的提示/事实可以留出",
+                    "主要测试如何解释、调用原来存的事实。"
+                  ],
+                  [
+                    "反向与两跳组合",
+                    "原子事实已见；目标组合未以完整答案共同出现",
+                    "还要测试是否真正组合事实与规则。"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "“unseen facts”不等于“全训练未见”",
+                "text": "Figure 1/2 所谓泛化到其他事实，通常是 Phase 2 未用该关联教语义；它在 Phase 1 已经被记过。因此不能声称模型凭少量例子掌握全新事实。"
+              }
+            ]
+          },
+          {
+            "id": "representation",
+            "stage": "insight",
+            "order": 2,
+            "title": "表征分析支持关系对齐，但不是组合推理机制的证明",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者对比原始模型、无语义记忆后和语义微调后，发现关系相关的隐藏表示逐步聚类，特殊键与自然语言问法的表示趋近。这与“已记住的关联被重新命名/解释”相吻合。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不能跳过因果验证",
+                "text": "余弦相似度增加不自动保证两条事实间的桥接实体可被可靠使用；需要直接干预中间实体表示、控制原子事实取回准确率，才能定位两跳失败机制。"
+              }
+            ]
+          },
+          {
+            "id": "fact-generalization",
+            "stage": "result",
+            "order": 1,
+            "title": "Result 1：简单事实迁移确实成立",
+            "blocks": [
+              {
+                "type": "table",
+                "caption": "论文 Figure 2（官方PDF第5页）：Phase 1 每关系100条事实、20 epochs；Phase 2 训练1 epoch。",
+                "headers": [
+                  "Phase 2 语义事实数",
+                  "不同语义提示数",
+                  "生成准确率",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "10",
+                    "1",
+                    "58%",
+                    "单提示、少量事实的迁移"
+                  ],
+                  [
+                    "50",
+                    "1",
+                    "76%",
+                    "仅50条用于语义微调，另一半只是Phase 1见过"
+                  ],
+                  [
+                    "50",
+                    "2",
+                    "93%",
+                    "多一种问法能明显提高结果"
+                  ],
+                  [
+                    "100",
+                    "10",
+                    "95%",
+                    "语义示范与问法都更丰富"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这是论文最值得保留的实验结论：对早先记下的关系，只用少量语义示范就可能恢复大量事实的可用性。这里的76%不是两跳推理成绩，更不是新事实的无监督发现。"
+              }
+            ]
+          },
+          {
+            "id": "reverse",
+            "stage": "result",
+            "order": 3,
+            "title": "Result 3：反向推理的改进依然有限",
+            "blocks": [
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "Reverse relation / mother",
+                    "setup": "先记前向 A→B，再在一部分事实中教授 B→A 的关系问法，在另一半测试。",
+                    "result": "原始条件接近0；Phase 2 后部分检查点可到约26%。同节报告将原事实直接放到问句前的ICL为100%，普通SFT约1%。",
+                    "supports": "记忆后少量语义重解释有时促进关系反转。",
+                    "not_proven": "反向关系已普遍解决；26%不足以支撑强反向推理主张。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "cost-and-limit",
+            "stage": "result",
+            "order": 4,
+            "title": "Result 4：事实注入效率的优势不能外推成系统总收益",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "论文 Section 6.1 / Figure 6 在受控合成事实上，对比同一训练 token 预算下的直接SFT以及把事实放在上下文的ICL。共享短键[X]可节约长自然语言提示反复出现的训练token；这是有用的工程取舍，但不自动意味着推理阶段总成本最低、旧能力不下降或真实Agent任务更好。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "旧能力保留尚无确定结论",
+                "text": "附录 G.6 附近的恢复实验说明作者并不声称已经强有力地证明 Phase 2 完全恢复原有能力；因此RSI必须另测真实参数更新对旧能力的净影响。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "论文作者自己的限定",
+                "text": "Section 6.2 将两跳结果作为初步推理证据，而不是将36%展示为复杂推理SOTA。"
+              }
+            ]
+          },
+          {
+            "id": "related-works",
+            "stage": "related",
+            "order": 1,
+            "title": "Related Work：为什么“知道两跳”仍可能“不会推两跳”？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "EMNLP Findings 2026《Why Knowing Both Hops Is Not Enough》研究即使原子两跳信息已经存入模型，也可能在组合推理时因中间实体表示不一致而失败；它说明本文 36% 的瓶颈值得单独研究，但不是本篇 ICLR 的追加实验或已验证修复方案。"
+              },
+              {
+                "type": "prose",
+                "text": "EMNLP 2025《Reason to Rote》讨论语言模型记住噪声标签时内部推理过程与记忆的关系；它与本篇的“之后用语义提示重新解释先前事实”问题并不等价。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "与 RSI 已有方向的边界",
+                "text": "这里既不是 I7 单题内先尝试还是先示范，也不是 I8 哪些错误值得纠正：更具体的可检验问题是旧经验后来能否被新学到的共同规则激活，并真正提升后续独立组合能力。"
+              }
+            ]
+          },
+          {
+            "id": "decisive-rsi-tests",
+            "stage": "next",
+            "order": 2,
+            "title": "如果用来做 RSI，应怎样验证这个机制？",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "T1：先记忆后学和立即总结，谁能学会新规则？",
+                    "design": "同一个 Coding/Tool Agent、同样100条执行经历与总更新预算，随机对照逐条即时归纳、先记录后统一对照、联合训练和外部事实检索；Skill/LoRA分别实验。",
+                    "decisive": "撤掉原始示例后在同规则新题上获得真实独立净收益，且与增加样本/训练步数区分。"
+                  },
+                  {
+                    "name": "T2：把“事实没取回”和“事实会了但不会组合”分开",
+                    "design": "相同留出两跳题，在无事实提示、只给第一跳、给两跳完整事实、提供推理步骤模板等条件下测试，报告在线Token及工具成本。",
+                    "decisive": "分别计算原子事实回忆准确率、给足事实时的组合正确率，找到主导瓶颈，而不是把36%归咎于泛泛的“不够理解”。"
+                  },
+                  {
+                    "name": "T3：后来的新规则真的激活了旧经验吗？",
+                    "design": "冻结已存历史经历，随机注入经过核验的共享规则/无关规则，再做参数或Skill更新；不允许最终测试进入更新器。",
+                    "decisive": "只有适配规则能让原来的不同经历同时带来未见任务收益，旧能力不显著退化，才可归因于后验语义激活。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "当前研究建议",
+                "text": "暂时不新增编号；将这篇文章作为 I7/I8 的机制参考和负结果边界。比“先背后学”更有研究价值的是：旧知识什么时候能被真正用来完成新组合推理，以及何时不如直接检索。"
+              }
+            ]
+          }
+        ],
+        "afterword": "先记忆、再学语义的简单事实迁移很有价值；但组合推理并不可靠，36%/16%的两跳结果须与给事实的ICL95%区分条件。迁移到 RSI 前应先找到原子事实取回与组合推理的真实瓶颈。"
+      },
+      "research_coverage": {
+        "signal": {
+          "level": "partial",
+          "contribution": "区分生成准确率、多选准确率、对象概率与不相关提示，附录有多种语言及训练设置；两跳报告14→36%生成、多选8→16%。",
+          "open_question": "没有统一评估语义调用与多跳能力；ICL 95%直接看到两条事实，需匹配信息和成本再比较。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "用合成新实体关联和无语义键研究后来的语义重解释，Phase 2留出关联仍来自Phase 1。",
+          "open_question": "新事实或新规则是否被发现、训练外新组合是否真的掌握，仍没有充分证明。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "研究参数记忆和语义微调，不研究复杂任务中候选解法的产生、覆盖与修复。",
+          "open_question": "即使原子事实可用，推理路径是否可采样并正确选择，本文未系统拆分。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "真实更新模型参数，验证有语义的新问法能重新调用先前记忆；附录进行了旧知识表现的初步检查。",
+          "open_question": "未证明旧能力完整保持、环境变化后的长期稳健性或 Agent 的持续净改进。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "Section 6.3 在受控合成事实中展示无害关联可被少量微调重新解释成不恰当关联的双重泛化风险。",
+          "open_question": "只说明潜在风险，不是可靠的在线检测或防止恶意经验内化的 RSI 防线。"
+        }
+      }
+    },
+    {
       "id": "soar-2601-18778",
       "short_title": "SOAR · ICML 2026",
       "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability",
