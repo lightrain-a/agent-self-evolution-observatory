@@ -9,6 +9,114 @@
   },
   "entries": [
     {
+      "id": "memory-retrieval-causal-utility",
+      "title": "Experience-Following 与单条 Memory 的反事实使用价值",
+      "category": "Episodic Retrieval / Causal Utility",
+      "status": "teaching-derivation",
+      "source_paper_id": "memory-management-acl2026-xiong",
+      "source_anchor": "experience-following",
+      "source_locator": "Xiong et al. ACL 2026 §3.3 Fig.3 与§4.1–4.3；随机do检索是本站进一步设计",
+      "question": "检索一次正确但条件失配的经验，是否会改变未来任务表现？怎样区分过去的调用相关性与该条记录的真实作用？",
+      "insight": "Experience-following说明输入相似时输出倾向模仿召回示范；但历史效用指标受任务难度、其他检索项和分布变化影响，严格因果贡献需要同任务随机保留/遮蔽。",
+      "equations": [
+        {
+          "name": "经验相似关联（论文行为现象）",
+          "expression": "sim(q,q_i) ↑ ⇒ sim(e,e_i) ↑ (association)",
+          "latex": "\\operatorname{sim}(q,q_i)\\uparrow\\quad\\Longrightarrow\\quad\\operatorname{sim}(e,e_i)\\uparrow\\ \\ (\\mathrm{observed\\ association})",
+          "meaning": "任务q和召回旧任务q_i越相似，Agent输出e也更趋向旧执行e_i；只是行为关联。",
+          "boundary": "相似不等于正确和有益，也不等于对每条Memory都已证明因果影响。"
+        },
+        {
+          "name": "History-based delete（论文方法简写）",
+          "expression": "Delete(m_i)=1[N_retrieved>n] × 1[mean(Φ_downstream)≤β]",
+          "latex": "\\mathrm{Delete}(m_i)=\\mathbf 1[N_i>n]\\,\\mathbf 1[\\overline{\\Phi}_{i}\\le\\beta]",
+          "meaning": "先要求有足够的使用次数，再按召回后的下游执行质量均值筛选删除。",
+          "boundary": "原文效用来自关联的后续执行，不是随机排除这条Memory得到的个体贡献。"
+        },
+        {
+          "name": "单条记忆的反事实使用价值（本站推导）",
+          "expression": "ATE(m_i|q,s)=E[Y|do(retrieve m_i)]−E[Y|do(withhold m_i)]",
+          "latex": "\\tau(m_i\\mid q,s)=\\mathbb E[Y\\mid\\operatorname{do}(\\operatorname{retrieve}(m_i))]-\\mathbb E[Y\\mid\\operatorname{do}(\\operatorname{withhold}(m_i))]",
+          "meaning": "从同Agent快照、同一任务与相同预算随机控制该条Memory是否可见，比较真实执行效用。",
+          "boundary": "该ATE不是ACL作者实验公式；要固定其他检索样例、prompt长度和调用额度才能解释为该条记录的贡献。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "原始质量与使用条件分开",
+          "text": "一条成功轨迹可以在当时正确，但新任务若约束改变仍可能误导。"
+        },
+        {
+          "label": "历史使用均值不是个人因果效应",
+          "text": "高难任务更可能召回某条记忆，造成调用后低分的选择偏差。"
+        },
+        {
+          "label": "从同快照配对随机化",
+          "text": "对同一q与检索背景，随机包含/遮蔽m_i；应添加等token占位，以免上下文预算变成额外变量。"
+        },
+        {
+          "label": "未来任务流验证条件性",
+          "text": "在新规则族、任务漂移、干扰后分别估计效应；若效应反转，不能赋予记忆单一永恒效用分数。"
+        }
+      ],
+      "when_to_use": "I6经验效用、跨任务Memory Add/Delete、失败轨迹价值估计，以及研究真实“能不能帮后代”时引用。",
+      "caution": "随机召回与阻断要保护独立测试集；即使推理期召回有益，也不能证明权重出现持久学习。"
+    },
+    {
+      "id": "memory-consolidation-fidelity",
+      "title": "有损巩固的保真性：初次抽象、旧摘要污染与原地重写",
+      "category": "Memory Consolidation / Fidelity",
+      "status": "paper-mechanism",
+      "source_paper_id": "faulty-memory-arxiv2026-zhang",
+      "source_anchor": "table-five-causal",
+      "source_locator": "Zhang et al. arXiv:2605.12978v2 §6.4 / Table 5 / L.2 控制实验",
+      "question": "输入全部是正确经验，为什么从原始轨迹提炼的记忆越改越有害？",
+      "insight": "错误不一定来自原始Episode：摘要第一遍可能丢前提，旧摘要可能污染下一次总结，原地修改再不断覆盖细节；保真性需要利用原始证据、规则适用条件和反例独立校验。",
+      "equations": [
+        {
+          "name": "相同轨迹下的处理变量（结构表示）",
+          "expression": "Abstract = C(episodes; grouping, prior_context, rewrite_permission)",
+          "latex": "\\widetilde M=\\mathcal C(E;\\mathrm{grouping},\\mathrm{prior\\ context},\\mathrm{rewrite\\ policy})",
+          "meaning": "对同一Episode池改变任务分族、历史摘要是否可见、旧条目能否直接覆写，形成可对照记忆。",
+          "boundary": "表示的是论文实验设计，不是作者提出的单个闭式巩固算法。"
+        },
+        {
+          "name": "Table 5 Step400 正确率对照",
+          "expression": "default=43.2; append_visible=50.0; add_delete=64.0; append_blind=70.0; raw=76.6",
+          "latex": "\\mathrm{Acc}_{400}:\\ 43.2,\\ 50.0,\\ 64.0,\\ 70.0,\\ 76.6",
+          "meaning": "GPT-5.4 ARC-AGI Stream, bsz=1；限制覆写与旧摘要条件通常缓解退化，直接用原始轨迹最强。",
+          "boundary": "五组存储大小/检索及上下文不同，不能把残余差异完全归因于初次压缩损失；作者项目后续复现实验提示删记录收益并不总稳定。"
+        },
+        {
+          "name": "保真性测试建议（本站候选）",
+          "expression": "ScopeError = P(rule applies on negative-scope task) − P(rule applies on positive-scope task) (sign diagnostic)",
+          "latex": "\\mathrm{MisuseRate}(m)=\\Pr[\\text{apply }m\\mid\\text{out-of-scope cases}]",
+          "meaning": "更直接测抽象规则在明确不满足前提的新任务上被误用的频率，而不仅看表面语言质量。",
+          "boundary": "本项目提议的评测指标，不是v2作者原文公式；同族泛化还须单列正样本成功率。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "锁定原始经历质量",
+          "text": "使用完全正确的GT演示，仍在19题100%→54%发现性能损害，排除简单的坏数据解释。"
+        },
+        {
+          "label": "分别改变巩固日程",
+          "text": "Static-All/Static-Group/Stream控制相同轨迹怎样被分批或按族压缩。"
+        },
+        {
+          "label": "拆开三类损坏",
+          "text": "原始信息第一轮丢失、旧摘要偏置新抽象、旧条目被逐轮原地改写；需控制彼此对检索与存储量的影响。"
+        },
+        {
+          "label": "不要丢弃原始证据",
+          "text": "Raw Episode是强对照，允许检验每条抽象新规则的前提、适用范围和具体反例。"
+        }
+      ],
+      "when_to_use": "讨论Episode何时升级Skill、强制抽象为何有害、如何给长期Agent Memory设立写回验证和版本回滚条件时引用。",
+      "caution": "2026年预印本不是通用禁止抽象结论；一些任务里摘要仍胜出。外部文本记忆的退化也不是权重灾难遗忘。"
+    },
+    {
       "id": "awake-ripple-memory-tagging",
       "title": "清醒重放作为候选记忆标签：预测的是睡眠重放而非任务收益",
       "category": "Memory Tagging / Neural Replay",

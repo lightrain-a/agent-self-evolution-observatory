@@ -41,6 +41,14 @@
 - **第三批理论（2026-10-29）**：Science 2024 Yang 等小鼠海马清醒 SPW-R—事后睡眠选择性重放，理论链接 `#awake-ripple-memory-tagging`，另有明确标为本站假设的经验标签 vs 真实巩固效用 `#experience-tag-vs-consolidation-utility`。务必写出分析层级：6只小鼠/26会话/4,469细胞；Fig.4H为5只/16会话，R=0.86。原文没直接测长期行为能力也没对不同成功/失败类型做随机选择实验。I6以 `science2024-memory-tagging` 章节建立入口；本次仅发表该 Science 精读，ACL2026 与 arXiv2026 作为最近邻指路。
 - **验证**：执行 `python3 scripts/build_rsi_research.py && python3 scripts/build_rsi_site.py && python3 scripts/test_rsi_site.py`，会检测唯一 ID、公式/LaTeX、论文锚点、双向链接以及公开输出。
 
+## 经验到长期能力研究候选（2026-10-29 新增）
+
+- **两篇原论文精读**：`memory-management-acl2026-xiong` 是 ACL 2026 正式论文（4 Agent 的 Add/Delete、严格评估Oracle、历史效用与误召回）；`faulty-memory-arxiv2026-zhang` 是 arXiv:2605.12978v2（固定正确轨迹的压缩日程、Force/Auto、ARC 19/33任务、Table 5 固定输入消融）。两者必须标明外部Memory而非权重更新。
+- **数字冲突注记**：2605.12978v2 摘要“fails on 54%”与正文“accuracy 100%→54%”不一致。正文Fig.2支持下降 **46 pp**，公开笔记保留矛盾，不以摘要替换正文。
+- **理论扩充**：`memory-retrieval-causal-utility`（ACL 2026 的经验跟随/历史效用 vs 本站独立随机调用效应）与 `memory-consolidation-fidelity`（2026 v2 的初次压缩、旧摘要污染、原地修改；不把残余差距全部归因于初次损失）。两个主题均有固定锚点。
+- **未编号研究提案**：`scripts/rsi_pages/experience-consolidation.py` → `rsi/experience-consolidation.html`，P0/P1/P2 设计分别验证固定正确Episode下巩固正负效应、Memory选择与巩固的正交因果作用、Skill/LoRA撤辅后的独立能力。与I6错误轨迹价值、I8单点非局部迁移、I13安全接纳保持边界；不能把已有Auto/Force/History-Deletion包装成首创。
+- **测试契约**：`scripts/test_rsi_site.py` 检查新论文/版本、原始结果统计口径、Theory对应来源、候选页及导航，生成产物统一来自结构源与页面源，不直接编辑静态HTML。
+
 ## RSI 研究时间轴与会议 DDL
 
 `rsi/timeline-data.json` 是会议与人工研究里程碑的唯一数据源：

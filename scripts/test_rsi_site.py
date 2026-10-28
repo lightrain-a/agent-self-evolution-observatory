@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','experience-consolidation','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -96,6 +96,42 @@ def main():
           and 'reading-notes.html#deep-nonlocal-replay-science2021-liu' in i8_text
           and 'theory-notes.html#need-gain-prioritized-replay' in i8_text,
           'I8 nonlocal learning reading/protocol/theory links missing')
+    memory_cards={p['id']:p for p in cards if p['id'] in
+                  ('memory-management-acl2026-xiong','faulty-memory-arxiv2026-zhang')}
+    check(set(memory_cards)=={'memory-management-acl2026-xiong','faulty-memory-arxiv2026-zhang'},
+          'Missing two LLM memory deep reads')
+    acl=memory_cards['memory-management-acl2026-xiong']
+    faulty=memory_cards['faulty-memory-arxiv2026-zhang']
+    check(acl['doi']=='10.18653/v1/2026.acl-long.27' and
+          len(acl['deep_read']['sections'])>=11 and
+          '38.67/42.06' in ' '.join(acl['evidence']),
+          'ACL 2026 result / provenance contract drift')
+    check(faulty['arxiv']=='2605.12978' and 'v2' in faulty['version'] and
+          faulty['links']['html']=='https://arxiv.org/html/2605.12978v2' and
+          len(faulty['deep_read']['sections'])>=14 and
+          '100%→54%' in ' '.join(faulty['evidence']) and
+          '54%' in ' '.join(faulty['boundaries']),
+          'Faulty Memory v2 result or abstract/body contradiction missing')
+    check({'memory-retrieval-causal-utility','memory-consolidation-fidelity'}<=theory_ids,
+          'Experience/memory causal-utility and fidelity theories missing')
+    for paper_id,anchor in (('memory-management-acl2026-xiong','table-two'),
+                             ('faulty-memory-arxiv2026-zhang','table-five-causal')):
+        check('deep-'+paper_id+'--'+anchor in deep_page,
+              'Missing primary-paper experiment anchor: '+paper_id)
+    candidate=(ROOT/'rsi/experience-consolidation.html').read_text(encoding='utf-8')
+    check(all('id="'+x+'"' in candidate for x in
+              ('question','evidence','mechanism','formal','p0','p1','p2','closest','research-boundary','decision')),
+          'Experience-to-competence candidate missing causal experiment sections')
+    check(all(anchor in candidate for anchor in (
+              'deep-memory-management-acl2026-xiong',
+              'deep-faulty-memory-arxiv2026-zhang',
+              'deep-sharp-wave-ripples-science2024-yang',
+              'memory-retrieval-causal-utility',
+              'memory-consolidation-fidelity')),
+          'Experience-to-competence candidate missing source and theory backlinks')
+    check('experience-consolidation.html' in
+          (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'Missing homepage entry to unnumbered experience research')
     for card in cards:
         stages=('challenge','insight','design','result')
         check(tuple(card.get('story',{}))==stages,'Paper lacks ordered C-I-D-R reading contract: '+card['id'])
@@ -180,7 +216,7 @@ def main():
         'methods':['cross-domain.html','theory-notes.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experience-consolidation.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]

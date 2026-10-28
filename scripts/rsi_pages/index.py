@@ -36,6 +36,7 @@ PAGE = {
 <a href="idea-i10-learning-novelty.html"><b>I10：规则区分、参数吸收与组合泛化</b><span>Nature 2023 MLC、100%正确监督与20%人类式错误标签的区别；T1/T2对照及受控 P0。</span></a>
 <a href="idea-i11-emotional-rsi.html"><b>I11：哪种情绪反馈能改善长期自我迭代？</b><span>固定真实反馈，只改鼓励/批评/紧迫/中性措辞；测校准、学习动作及 Skill/LoRA 多轮净增益。</span></a>
 <a href="idea-i12-prerequisite-bottleneck.html"><b>I12：发现共同前置知识瓶颈</b><span>Nature 高阶知识骨架与真实 RSI 因果验证：为什么先补一个关键规则，会让多任务下游训练变得有效？</span></a>
+<a href="experience-consolidation.html"><b>研究候选：经验何时升级成长期能力？</b><span>结合Science 2024、ACL 2026与Faulty Memory预印本；保留原始Episode、抽象Skill或真实LoRA更新怎样选择、验证与继承？</span></a>
 <a href="learning-admission.html"><b>I13：Safe to Inherit？RSI 安全更新接纳</b><span>已核对跨代故障与 Skill 持久风险；固定独立硬门，学习风险诊断和选择性测试，比较漏放、误拒及长期安全净能力。</span></a>
 <a href="reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal"><b>NC 2025 · 局部信心与整体自评</b><span>真实反馈选择如何改变总体自评？全文精读、D1/D2/D3 与 I11 实验。[[E29]]</span></a>
 <a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>

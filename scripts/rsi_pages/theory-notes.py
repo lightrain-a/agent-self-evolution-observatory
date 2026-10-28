@@ -58,7 +58,7 @@ index += '<div class="route-grid theory-directory">' + ''.join(
     e(item["category"]) + ' · ' + e(item["question"]) + '</span></a>'
     for item in ENTRIES
 ) + '</div>'
-index += '<p class="note"><b>当前主题：</b>DiscoRL（Nature 2025）的目标生成与元梯度、Science 2021 的非局部信用分配与 Need × Gain、Science 2024 的清醒SPW-R候选记忆标签，以及 GradSim（EMNLP 2024）的一阶传播解释。实验结论、教学推导及未来 RSI 净迁移/巩固效用始终分层标注。</p>'
+index += '<p class="note"><b>当前主题：</b>DiscoRL的目标生成与元梯度、Science 2021/2024的非局部信用与记忆标记、ACL 2026的经验跟随和反事实效用、2026年Faulty Memory的抽象保真性。作者机制、本站教学推导及未验证的RSI巩固策略始终分层标注；详见<a href="experience-consolidation.html">经验到长期能力候选</a>。</p>'
 
 
 def render(entry: dict) -> str:
@@ -79,7 +79,7 @@ def render(entry: dict) -> str:
     cite = ('<div class="links theory-references">'
         '<a class="link-btn" href="' + e(link_to_deep(entry)) + '">返回原论文精读的对应章节</a>'
         '<a class="link-btn" href="reading-cards.html#' + e(entry["source_paper_id"]) + '">论文速览卡片</a>'
-        '<a class="link-btn" href="' + e(paper["official_url"]) +
+        '<a class="link-btn" href="' + e(paper.get("official_url") or paper["links"]["html"]) +
         '" target="_blank" rel="noopener noreferrer">正式论文原文</a></div>')
     extra_sources = '<div class="links theory-references">' + ''.join(
         '<a class="link-btn" target="_blank" rel="noopener noreferrer" href="' +

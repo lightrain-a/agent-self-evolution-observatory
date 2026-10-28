@@ -77,7 +77,8 @@ PAGE = {
 <tr><td><b>实际巩固产生能力</b></td><td>Memory调用/Skill执行/LoRA更新后，独立未来任务能否增益且不伤旧能力</td><td>在同一经历上正交比较原始Episode、一次抽象、反复合并、真实权重更新</td></tr>
 </tbody></table></div>
 <p><b>最近邻研究必须正面比较：</b><a href="https://aclanthology.org/2026.acl-long.27/" target="_blank" rel="noopener noreferrer">Xiong 等 · ACL 2026</a> 已系统研究query–execution原始记忆的选择性增加、删除、experience-following、错误传播和利用下游调用质量做清退；<a href="https://arxiv.org/html/2605.12978v2" target="_blank" rel="noopener noreferrer">Zhang 等 · 2026 arXiv v2</a> 发现对真实有用的经历反复做文本抽象/合并，也可能丢失适用条件、形成错误规则，原始轨迹保存是很强的简单对照。两篇都不涉及小鼠SPW-R，也未证明LLM参数必然遗忘。</p>
-<p><b>研究组织：</b>I6仍先固定同题与终点，判断不同失败过程的纠错价值；这里仅作为<b>后续经验巩固的机制分支</b>，不把I6改成通用Memory工程。<a href="theory-notes.html#awake-ripple-memory-tagging">Memory Tagging原文证据</a> · <a href="theory-notes.html#experience-tag-vs-consolidation-utility">候选净收益与随机实验设计</a>。</p>
+<p><b>新增正式精读：</b><a href="reading-notes.html#deep-memory-management-acl2026-xiong">ACL 2026 · How Memory Management Impacts LLM Agents</a>提供四类Agent的Add/Delete、经验跟随及失配传播证据；<a href="reading-notes.html#deep-faulty-memory-arxiv2026-zhang">Useful Memories Become Faulty · 2026 v2</a>提供真实正确经验在反复改写中被损坏的固定来源对照。两者分别回答“保留什么原始经验”和“如何不要把正确经验抽象错”。</p>
+<p><b>研究组织：</b>I6仍先固定同题与终点，判断不同失败过程的纠错价值；这里仅作为<b>后续经验巩固的机制分支</b>，不把I6改成通用Memory工程。更完整的实验协议已放在<a href="experience-consolidation.html"><b>经验到长期能力 · 未编号候选</b></a>。<a href="theory-notes.html#awake-ripple-memory-tagging">Memory Tagging原文证据</a> · <a href="theory-notes.html#experience-tag-vs-consolidation-utility">候选净收益与随机实验设计</a>。</p>
 <div class="note">关键Go/No-Go：当选择数量、写回方式及总token/FLOPs固定后，如果“先标记哪段经历”的预测能力不能稳定解释未来独立净收益，就不增加昂贵的Memory Consolidator。不能把“睡眠再次重放”解释为“独立能力一定变好”。</div>
 """),
         ("related", "最近邻：做到了哪里、我们还要回答什么", """

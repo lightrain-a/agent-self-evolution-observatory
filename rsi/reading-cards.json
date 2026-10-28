@@ -31,6 +31,1572 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "faulty-memory-arxiv2026-zhang",
+      "short_title": "Faulty Consolidated Memory · 2026",
+      "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",
+      "authors": "Dylan Zhang; Yanshan Lin; Zhengkun Wu; Yihang Sun; Bingxuan Li; Dianqi Li; Hao Peng",
+      "lead_institution": "University of Illinois Urbana-Champaign",
+      "institutions": [
+        "University of Illinois Urbana-Champaign",
+        "Institute for Interdisciplinary Information Sciences, Tsinghua University（部分作者，研究在UIUC完成）"
+      ],
+      "institution_source": "arXiv:2605.12978v2 HTML 首页作者机构与“Work done at UIUC”标注",
+      "publication": "arXiv:2605.12978v2 · 2026 preprint, not confirmed as a peer-reviewed venue paper",
+      "arxiv": "2605.12978",
+      "first_posted": "2026-05-13",
+      "version": "arXiv v2 · 2026-08-29，摘要/正文关于54%存在不一致，正文与Fig.2的100%→54%为正确率下降46个百分点",
+      "read_on": "2026-10-29",
+      "reading_level": "逐节核对arXiv v2 HTML §3–6、Table 1–5/17、Fig.1–11、L.2/L.4附录及作者项目页；无代码复现，结论仅按v2实验合同",
+      "tags": [
+        "Agent Memory",
+        "Memory Consolidation",
+        "Episodic vs Abstract Memory",
+        "Error Amplification",
+        "Abstraction Drift",
+        "ARC-AGI Stream",
+        "Raw Trajectory Baseline",
+        "Experience Gating",
+        "RSI Experience Memory"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "将同一批ground-truth正确轨迹送入不同抽象日程，比较性能和摘要 lineage；以可追踪ARC-AGI任务家族判断失配、跨家族融合和原地改写损坏。",
+          "open_question": "虽然固定了原始证据和批处理顺序，很多实验仍在特定模型/任务上，不说明所有知识抽象一般都会退化；缺可靠预先判断何时巩固会有益。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "呈现强可重复的正确经验→错误摘要过程及其三层来源：初始压缩损失、旧摘要引导下一次抽象、原地覆盖。",
+          "open_question": "研究是揭示已有自动摘要系统的失败与简单缓解，不是提出并验证跨模型可泛化的新知识学习理论。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "ARC-AGI Stream采用明确的6个任务族及7类技能结构，观察错误合并对家族内变体和跨家族任务的影响。",
+          "open_question": "有时正确抽象能帮助组合泛化，但原文主要展示损坏条件，不等于让LLM参数学习未见规则。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "比较静态一次抽象、按族分组、分批Streaming、Auto/Force/Episodic-only，发现强制多轮抽象会使已成功任务也退化。",
+          "open_question": "外部文本记忆的回归不是模型参数遗忘；Episode-only短期强但长期容量、检索成本、信息冗余仍未根本解决。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "指出‘成功经验’经过不可靠抽象可以变成错误策略，污染之后的执行；支持保留原始出处和限制直接覆盖。",
+          "open_question": "没有系统攻击者的恶意记忆投毒威胁模型，也没有证明任何特定抽象门控已能防止未来的非平稳误用。"
+        }
+      },
+      "one_sentence": "2026预印本发现：即使全部输入是正确经验，LLM反复将轨迹改写为抽象规则也可能让记忆效用先升后降；原始Episode-only通常是强对照。",
+      "story": {
+        "challenge": "把一次次成功经验总结成长期策略看似能提高效率，但为什么继续抽象、合并旧摘要后，Agent反而开始做错原来会做的题？",
+        "insight": "新摘要会丢失适用条件，旧摘要又成为后续改写的偏差来源；损坏不一定来自坏经验，而可能来自巩固流程本身。",
+        "design": "在ALFWorld、ScienceWorld、WebShop、AppWorld及可追踪ARC-AGI Stream中固定正确轨迹，比较一次/分族/流式抽象、强制或自主巩固、原始Episode保留。",
+        "result": "ARC 19题的正确率从无记忆100%降至反复巩固后54%；Table5原地改写43.2、仅原始轨迹76.6，显示损坏可来自压缩过程。"
+      },
+      "problem": "常见Agentic Memory把执行轨迹通过LLM抽象为自然语言规则，并随经验到来不断对旧规则合并改写。即使轨迹真实正确，记忆也可能混入无关条件、过度概括、丢失细节，从而使未来推理退化。论文试图把原始经验质量与巩固过程本身分离。",
+      "setup": "先用ALFWorld、ScienceWorld、WebShop、AppWorld（及其他扩展Agent设置）比较真实经验记忆框架，再构造ARC-AGI Stream：已知6类任务家族、7类操作技能、可获得ground-truth程序。使用同一原始轨迹数据，比较Static-All全池一次抽象、Static-Group按类型抽象、Stream分批连续抽象；在ARC-AGI Stream中另提供Force（每步强制抽象，无跨轮Episode）、Auto（保留/删除/抽象由Agent决策）和Episodic Management Only（只保留/删除原始经历）对照。通过固定评测任务和不同记忆构造策略评价回归。",
+      "updates": "主要改变的是外部文本记忆/摘要策略，不是基础LLM权重；所谓forgetting是使用某种文本记忆之后的性能回退或抽象内容损坏。包含离线GT演示和online self-solve两种轨迹来源，必须分开解读。",
+      "key_ideas": [
+        {
+          "name": "正确经验仍可能产生错误的巩固产物",
+          "summary": "摘要模型把多个正确轨迹合并时也会丢失前提、误分任务族或过度概括，原始证据不会自动保证抽象正确。",
+          "formula": "Correct episodes + lossy consolidation ⇏ correct reusable skill"
+        },
+        {
+          "name": "更新日程本身构成因果变量",
+          "summary": "固定相同轨迹池，Static-Group、Static-All、Stream不同日程形成不同记忆；任务族混合和多轮改写加速损坏。",
+          "formula": "Memory_output = Consolidate(episodes; grouping, order, history_context, rewrite_permission)"
+        },
+        {
+          "name": "巩固损坏的三层来源",
+          "summary": "第一次压缩的信息丢失、旧错误摘要影响新摘要、对同一条目反复原地改写，三者可以在固定输入/更新顺序条件下分别消融。",
+          "formula": "Error = initial compression + cross-update conditioning + destructive rewrite (conceptual decomposition)"
+        },
+        {
+          "name": "双存储并非自动解决全部问题",
+          "summary": "对ARC实验，允许原始Episode留在buffer使表现改善；Episodic-only匹配或超过Auto，但原始经验累积会遇到容量和组合复用问题。",
+          "formula": "Episodic buffer: trace evidence; Abstract store: proposed reusable schema"
+        },
+        {
+          "name": "必须审计摘要的适用条件",
+          "summary": "不同任务家族若共享表面动作但约束不同，摘要可能将规则错误融合；保留原始Episode和反例有助于判断是否应拒绝升级。",
+          "formula": "Consolidate only after validating scope + counterexamples + provenance (RSI proposal)"
+        }
+      ],
+      "evidence": [
+        "arXiv:2605.12978v2 §3：Static-All对整个经验池一次摘要，Static-Group按任务族摘要，Stream按批次不断重写；实验包括ALFWorld、ScienceWorld、WebShop、AppWorld及可追踪ARC-AGI Stream。",
+        "ARC-AGI Stream任务生成器提供6个家族、7种技能，并支持GT轨迹（正确程序）与模型自运行轨迹两种输入，评测可区分任务族混淆与跨步误写。",
+        "Fig.1a ScienceWorld：分批4条记忆摘要，收益约20次更新后达到峰值，随后至100步下降，在部分设置中低于无记忆基线。",
+        "Fig.1b WebShop AWM：8条样例时score 0.64，128条时0.20，近似无记忆0.20；该分数是WebShop reward，不是0.64%或统一准确率。",
+        "Fig.2 ARC-AGI Stream：GPT-5.4在无记忆条件可全部解出的19题子集上，反复用GT演示巩固后正确率100%→54%；降幅46个百分点。v2摘要‘fails on 54%’与正文/图表口径冲突。",
+        "Table 2 ARC-AGI Stream 33任务，10 runs：NoMem pass@1 58.5±5.4、pass@10 33/33；Epoch1 55.1±4.9、22/33；Epoch10 38.5±5.3、20/33。是两种不同统计量。",
+        "Fig.3/4：相同轨迹池下Static-Group、Static-All、Stream形成不同记忆；按族分组通常更稳，异构batch与逐步流式改写更容易融合无关规则。",
+        "Fig.5/9：ARC-AGI Stream允许Retain/Delete/Consolidate时Auto优于Force，Episodic-only与Auto接近或更好；Force每轮强制改写且不跨轮保留Episode，机制不是只多一个按钮。",
+        "Table 5 GPT-5.4，ARC-AGI Stream，batch=1，step 400：Default in-place 43.2；Append-only+可见旧摘要50.0；Add/Delete不原地改写64.0；Append-only且隐藏旧摘要70.0；原始轨迹不做摘要76.6。",
+        "Fig.7a：在GT Stream的6个任务家族中，Auto需到约71步（568个例子）才涵盖全部6类；强制每8个新样例就抽象时，更易把不应相并的规则合并。",
+        "Table 3：OpenCode多模型自主改Memory环境中，从峰值到step400均有回退，例如GPT-5.5 80→68、Claude Sonnet5 58→48、GLM5.2 44→22、DeepSeek V4 Pro 40→18，不能把某个模型回退解释为所有模型统一比例。",
+        "Appendix H/Tab 4和Table6：原始轨迹（或保留的精简记录）在ALFWorld、AppWorld、WebShop等常是强基线，但并非每个模型/基准都击败全部抽象方法；实际容量/成本需匹配。"
+      ],
+      "boundaries": [
+        "本研究为2026年arXiv v2预印本，截至笔记日期未将其标为某正式会议录用；结果应标明版本，不引用未核实未来修订。",
+        "v2摘要写‘GPT-5.4 fails on 54%’，正文§1/§4.1和Fig.2写的是19题正确率100%→54%，对应46个百分点下降。后续应按正文/图表口径引用并保留摘要矛盾提示。",
+        "模型原始参数并未因为这些文本记忆实验发生梯度更新，不能与参数层的catastrophic forgetting直接混报。",
+        "Force不仅强制抽象，还不跨轮保留原始Episode，因此Auto vs Force的整体差异不能单独归因于摘要动作；Table5的同输入/顺序消融提供更细的归因。",
+        "ARC 19题是研究者选出的无记忆全部可解子集；33题Table2的pass@1和pass@10不能混为一个100%基础准确率。",
+        "原始Episode-only在某些实验可显著超过摘要，但在长时部署中原始轨迹不可能无界保留；检索预算、存储增长、组合泛化能力尚需考虑。",
+        "表5中Append-only prior store hidden设定不让之前摘要参与下一次抽象，它在长程融合信息的能力与默认方案不同；不应只当作严格同功能的无成本优化。",
+        "作者对过度概括、过度具体化和无用垃圾记忆的文本归类部分使用LLM Judge，属于内容分析证据而非逐条人工核验的机制真值。",
+        "某些摘要方法/模型在特定AppWorld等任务上仍具有优势，因此论文不支持绝对结论‘永远不应抽象经验’。",
+        "论文研究外部文本记忆转写与摘要，未直接测量抽象Skill编译为可执行程序或LoRA/SFT权重真正内化的长期结果。"
+      ],
+      "our_relevance": [
+        "与ACL2026 Xiong等不同：ACL研究原始q-e记录要不要Add/Delete，而本文固定正确经验，研究把它变成抽象规则的过程可能自行产生错误，两组变量正交。",
+        "Science2024小鼠清醒SPW-R到睡眠重放可启发‘候选/巩固’两阶段，但没有AI文本摘要和真实学习效用证据；需分层引用。",
+        "I6固定失败轨迹研究材料的学习价值；本方向研究已有成功/失败Episode在Memory→Skill→权重不同写回机制下的净效用，不能不固定选择集合就归因于抽象策略。",
+        "I13侧重高风险更新接纳：即使入口Episode通过真实性审核，也应对抽象新规则的适用条件、逻辑一致性与潜在错误传播单独检查；先候选、隔离测试、再接纳。",
+        "新的科学切口不是提出‘保留原始轨迹’，而是何时抽象可超越原始Episode以及抽象损坏能否在发生之前预测；需要跨模型、未见规则族及模型状态改变后的验收。",
+        "建议原始Episode不可变且可追踪来源；抽象为新artifact必须可回退，使用条件与反例保持可验证，避免让错误摘要成为下一次摘要的唯一事实来源。",
+        "如研究权重内化，须独立比较固定token和更新FLOPs下，Skill/Memory是否只是推理期提供正确示范，而非模型真正学会规则。"
+      ],
+      "next_test": "P0固定原始轨迹池与任务家族，跨随机种子比较NoMem、Raw Episode、Once Abstract、Static-group、Stream in-place、Append only、Retain/Delete、可执行Skill、LoRA writeback；单一模型/同预算报告即刻与独立未来效用，按不同任务族、表面相似规则不同的负例统计误迁移。P1按候选经验随机分配不同巩固动作，并仅用训练前/刚结束时可见的结构兼容性、反例、覆盖与先前变更历史预测哪次抽象有独立收益。原始轨迹保留证据链；最终测试完全隔离。",
+      "deep_read": {
+        "focus": "这篇2026年v2预印本研究固定LLM权重下的文本记忆巩固损坏。先弄懂Static-All/Group/Stream，再看19题100→54、33题10runs与Table5控制；“经验本身正确”不保证“摘要规则正确”。最后区分强制抽象与保留原始Episode及其资源成本。",
+        "metric_summary_title": "五组关键结果：效用非单调、已会题退化、失败拆解与双Memory对照",
+        "metric_summary_intro": "同样的输入经验不等于同样的巩固产物。19题/33题/Step400是不同合同，WebShop score不是准确率；v2摘要与正文54%表述矛盾需注明。",
+        "metric_summary": [
+          {
+            "family": "① WebShop AWM",
+            "metrics": "Fig1b · 8 vs128条",
+            "meaning": "经验数量/记忆巩固规模增长，检验是否单调受益。",
+            "result": "0.64→0.20；无记忆约0.20（reward）。"
+          },
+          {
+            "family": "② ARC 19条GT",
+            "metrics": "Fig2 · GPT-5.4",
+            "meaning": "预选无记忆全部可解题，反复用真实正确解答巩固。",
+            "result": "100%→54%正确率：46个百分点下降；摘要‘失败54%’与正文冲突。"
+          },
+          {
+            "family": "③ ARC 33题重复10次",
+            "metrics": "Table2 · pass@1/pass@10",
+            "meaning": "拆分平均单次准确率与10次覆盖率。",
+            "result": "58.5±5.4→38.5±5.3（epoch10），pass@10 33/33→20/33。"
+          },
+          {
+            "family": "④ Step400拆组件",
+            "metrics": "Table5 · batch1",
+            "meaning": "固定更新batch顺序，消除某些写回操作并追踪退化。",
+            "result": "Default43.2；append50；add-delete64；hide prior70；raw76.6。"
+          },
+          {
+            "family": "⑤ 存储管理门控",
+            "metrics": "Auto/Force/Episodic-only",
+            "meaning": "模型能否选择保留原始轨迹或抽象。",
+            "result": "Auto一般优于Force；Episodic-only匹配或胜过Auto，说明强制抽象不是必要收益来源。"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Episodic Memory",
+            "meaning": "保留每段任务的原始轨迹、程序或必要操作证据，以便未来召回比对。"
+          },
+          {
+            "name": "Consolidated/Abstract Memory",
+            "meaning": "由LLM把多个经验提炼为自然语言规则/策略，以期跨任务复用。"
+          },
+          {
+            "name": "Static-All / Static-Group / Stream",
+            "meaning": "全经验池一次抽象、按家族一次抽象、不断在已有摘要基础上分批更新。"
+          },
+          {
+            "name": "ARC-AGI Stream",
+            "meaning": "作者构建的可编程任务族控制集，任务包含6个家族和7个技能维度，可跟踪真实规则边界。"
+          },
+          {
+            "name": "Force / Auto / Episodic-only",
+            "meaning": "强制每步抽象、不保留原始跨步记录；自主决定保留/删除/抽象；或仅保留/删除原始经验。"
+          },
+          {
+            "name": "In-place rewrite",
+            "meaning": "直接编辑之前的抽象内容，新版本取代旧版本，可能引起条件逐轮流失。"
+          },
+          {
+            "name": "Cross-update conditioning",
+            "meaning": "后面的摘要器把以前可能已错的摘要当输入，进一步将偏差传递和放大。"
+          },
+          {
+            "name": "Memory utility",
+            "meaning": "让固定解题模型携带某个外部记忆后，独立任务的实际表现；不是模型参数已学习的同义词。"
+          },
+          {
+            "name": "Pass@1 vs Pass@10",
+            "meaning": "分别表示一次测试平均成功概率和多次尝试中至少成功一次的覆盖比例，绝不可混用。"
+          }
+        ],
+        "summary": [
+          "论文是2026 arXiv预印本，研究固定LLM+文本Memory的反复巩固，不是权重持续训练。",
+          "相同有效Episode，经过Static/Stream及不同批处理顺序，可形成差异很大的摘要规则；性能可能先升再跌。",
+          "在19道原本全部可解的ARC任务中100%→54%是正确率下降46pp；33题10runs由58.5→38.5且pass@10覆盖缩水。",
+          "Table5把错误分成初始压缩损失、旧摘要污染后续抽象、原地改写损伤，Raw trajectory 76.6显著强于Default 43.2。",
+          "RSI应把Episode保存、Skill候选抽象、真正参数内化拆开，先验证‘抽象何时比原始经验更有价值’，再设计门控。"
+        ],
+        "afterword": "本论文的外部文本摘要退化不等于模型参数灾难遗忘。以下 Memory→Skill→LoRA 干预方案和可学习巩固门控属于本站研究设计，尚未运行。",
+        "sections": [
+          {
+            "id": "why-good-memory-fails",
+            "stage": "insight",
+            "order": 1,
+            "title": "核心洞察：有用的Episode与正确的抽象规则不是同一种证据",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "原始Episode是某个具体状态、操作、反馈的记录；抽象记忆要压缩多个Episode并扩大适用范围。即使每条原始记录都真实正确，把它们压缩为统一规则仍需要回答‘哪些前提不变、哪些情况不能用这条规则’。这些条件一旦在摘要中丢失，错误的抽象可能覆盖原本可用的执行记忆。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "原始经验的内容",
+                  "可能出现的错误抽象",
+                  "未来会怎样失败"
+                ],
+                "rows": [
+                  [
+                    "任务A：只需找到并放置物品",
+                    "找到了就直接放置",
+                    "遇到先清洗的任务B会跳过必要步骤"
+                  ],
+                  [
+                    "任务B：找到物品、清洗后放置",
+                    "放置前总要清洗",
+                    "遇到不需清洗的任务A增加错误操作"
+                  ],
+                  [
+                    "多个任务共享一个工具动作",
+                    "相同动作就应合并成统一策略",
+                    "遗漏了在哪类条件下才允许执行"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "可检验的机制链",
+                "text": "同一批经过验证的Episode→不同分组/顺序/旧摘要可见性→不同文本规则→新任务不同结果。核心失效不是记录一开始就错，而是抽象规则与原始证据之间的条件/适用范围偏移。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "这不是证明绝对不能摘要",
+                "text": "好摘要在某些基准上仍可能胜过纯Raw；论文展示的是当前模型与巩固策略不够可靠，并建议让Episode保留为第一类证据。"
+              }
+            ]
+          },
+          {
+            "id": "what-is-updated",
+            "stage": "challenge",
+            "title": "实验对象是什么？原始Episode与抽象Memory有何区别？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "论文的LLM Solver在大多数实验中保持权重不变；变化的是与模型一起提供的记忆文档。Episodic store保存任务输入、原始解答或代码轨迹；Abstract store通过另一个LLM把多个Episode转成可复用的自然语言策略，后续继续改写。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "类型",
+                  "保留内容",
+                  "优点",
+                  "风险"
+                ],
+                "rows": [
+                  [
+                    "Episode",
+                    "原始任务、环境、执行程序与结果",
+                    "条件完整、有来源、可对照",
+                    "体量大、检索花钱、组合复用未必好"
+                  ],
+                  [
+                    "Abstract Memory",
+                    "多条经验中的统一策略文本",
+                    "短小、跨实例复用",
+                    "错误分族、丢掉特定条件、污染下一轮"
+                  ],
+                  [
+                    "参数能力（本文未测）",
+                    "通过SFT/LoRA写入模型权重",
+                    "可能撤去外部帮助而仍掌握",
+                    "需防遗忘，无法以本文数据证明"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "哪一个对象被持续更新？",
+                "text": "作者不是让GPT-5.4不断微调旧权重，因此文中forgetting主要是‘读取损坏外部摘要后变差’，不是神经参数发生了灾难性遗忘。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "benchmarks-and-three-schedules",
+            "stage": "design",
+            "title": "§3：怎样用同一批经历检验‘改写流程’本身的影响？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "选定经验来源",
+                    "text": "ALFWorld、ScienceWorld、WebShop、AppWorld等真实Agent基准以及ARC-AGI Stream；尽量使用成功/GT任务轨迹。"
+                  },
+                  {
+                    "title": "Static-All",
+                    "text": "一次性把全部轨迹交给摘要器，获得总体文本记忆。"
+                  },
+                  {
+                    "title": "Static-Group",
+                    "text": "预先按任务族把轨迹分组，各族独立抽象后组合。"
+                  },
+                  {
+                    "title": "Stream",
+                    "text": "按时间每次增添一批并继续改写旧Memory，改变batch大小和异质程度。"
+                  },
+                  {
+                    "title": "统一评估",
+                    "text": "固定待测任务，用不同生成出的Memory作为Solver上下文，对比任务表现与误巩固类型。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "同样的事实也会因为处理顺序而变坏",
+                "text": "如果错误完全来自噪声输入，那么换一批处理顺序不应出现显著差异；相同轨迹不同Memory产物暴露了摘要操作本身的机制。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "arc-generator",
+            "stage": "design",
+            "title": "ARC-AGI Stream：为什么需要6类问题和7种技能？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "ARC-AGI Stream是作者专门构造的可追踪基准。6类问题家族约束对象选择规则，7类技能决定怎样变化。任务间可以共享表面变换却依赖不同的选择条件，因此能判断两个经验是否真的可以被压缩成同一条规则。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "一个任务属性",
+                  "真实例子（示意）",
+                  "容易发生的错误摘要"
+                ],
+                "rows": [
+                  [
+                    "对象选择规则",
+                    "选择最大物体 vs 选择框内物体",
+                    "混合成一条不含选择条件的泛用规则"
+                  ],
+                  [
+                    "变换操作",
+                    "重新着色、移动或清空物体",
+                    "记住操作但错误扩大适用范围"
+                  ],
+                  [
+                    "同族变体",
+                    "物体颜色/数量改变，规则没变",
+                    "过拟合具体颜色/数字"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "任务生成有结构真值，不等于现实任务自动知道家族",
+                "text": "通过程序化分类能可靠定位摘要跨家族错误。真实Agent环境中必须另外设计结构核验器，不能直接假设能够观察到所有规则真值。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "nonmonotonic",
+            "stage": "result",
+            "title": "Fig.1：为什么Memory收益先升后降？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "ScienceWorld中，随着分批不断累积经验，抽象记忆在前期约第20步达到较高效用，之后到100步下降，有些设置低于无记忆基线。WebShop的AWM，在8条经验时reward 0.64，到128条下降到0.20，几乎等于无记忆0.20。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "环境/对照",
+                  "早期表现",
+                  "后期",
+                  "解释"
+                ],
+                "rows": [
+                  [
+                    "ScienceWorld（多种记忆长度）",
+                    "约20步附近达到峰值",
+                    "至100步效用下滑",
+                    "累积抽象未必持续变好"
+                  ],
+                  [
+                    "WebShop AWM",
+                    "8条时0.64",
+                    "128条时0.20",
+                    "不保证更多记录产生更好抽象"
+                  ],
+                  [
+                    "WebShop NoMemory",
+                    "约0.20",
+                    "不随抽象变化",
+                    "在该设置下后期记忆几乎失去优势"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是记忆容量增加单独造成全部退化",
+                "text": "同时改变了新增证据与文本抽象更新次数，作者用后面的同轨迹/不同日程控制进一步定位机制。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "strong-memory-can-break",
+            "stage": "result",
+            "title": "Fig.4：已经是强Memory，继续加工还会退化吗？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者先让更强的GPT-5.4对ALFWorld轨迹按家族建立较好记忆，再用GPT-5-nano对相同轨迹池继续分批更新。分别给Qwen3.5-27B/9B/4B评估，三种Solver均会出现性能退化。说明损坏不一定是初始经验本来很差。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "好的起点不是巩固的固定点",
+                "text": "一份高质量摘要继续被另一个不可靠Consolidator修改时，可能离原始真实规则更远；版本冻结/候选验证是必要对照。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "arc-19-contradiction",
+            "stage": "result",
+            "title": "Fig.2：19道本来都能做对的题，怎么变成54%？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者先挑选GPT-5.4在没有记忆时能100%解出的19道ARC任务，用这些任务的正确GT程序持续对文本Memory做流式巩固。之后同样测试这批题，成功率仅54%。由于原始经历被固定且正确，不能将退化简单归因于错误的输入轨迹。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "记录位置",
+                  "写了什么",
+                  "应当怎样引用"
+                ],
+                "rows": [
+                  [
+                    "arXiv v2摘要",
+                    "fails on 54%",
+                    "该措辞与正文相矛盾，不宜直接引用"
+                  ],
+                  [
+                    "正文§1和§4.1 / Fig.2",
+                    "accuracy 100%→54%",
+                    "正确率下降46个百分点（46%失去原先正确表现）"
+                  ],
+                  [
+                    "Static vs Stream同池实验",
+                    "一轮整体抽象比多次流式更稳定",
+                    "更新日程是可测机制，不能只归因数据本身"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是发生了46%的权重遗忘",
+                "text": "GPT-5.4的权重未因本实验被梯度更新；加上错误记忆以后变差，不代表在无记忆下不再能做对这些任务。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "arc-33-repeated",
+            "stage": "result",
+            "title": "Table 2：19题之外，33题十次重复的数字如何正确读？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "实验条件",
+                  "Pass@1 平均±std",
+                  "Pass@10 覆盖"
+                ],
+                "rows": [
+                  [
+                    "无Memory",
+                    "58.5±5.4",
+                    "100%（33/33）"
+                  ],
+                  [
+                    "Consolidated epoch1",
+                    "55.1±4.9",
+                    "66.7%（22/33）"
+                  ],
+                  [
+                    "Consolidated epoch10",
+                    "38.5±5.3",
+                    "60.6%（20/33）"
+                  ]
+                ],
+                "caption": "ARC-AGI Stream 33个可解任务、10次完整运行；Pass@10不是Pass@1的百分比。"
+              },
+              {
+                "type": "prose",
+                "text": "对33题，多次试验的平均单次成功率从58.5下滑至38.5，至少一次解出的覆盖从33降到20。它比只拿19题精挑子集更能说明记忆引发的表现回退。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把19题和33题的100%混报",
+                "text": "19题子集无记忆时Pass@1=100%；33题的100%指Pass@10覆盖。数据集、样本和统计量都不同。"
+              }
+            ],
+            "order": 4
+          },
+          {
+            "id": "schedules-and-families",
+            "stage": "result",
+            "title": "Fig.3/4：为什么分组、合并顺序、异构batch决定巩固质量？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "控制",
+                  "固定的东西",
+                  "改变的东西",
+                  "现象"
+                ],
+                "rows": [
+                  [
+                    "Static-All vs Static-Group",
+                    "原始轨迹池",
+                    "是否按正确任务族分组",
+                    "分族通常更能保留具体规则"
+                  ],
+                  [
+                    "Static vs Stream",
+                    "原始轨迹池",
+                    "一次全部见到 vs 逐批重写",
+                    "Stream更容易退化"
+                  ],
+                  [
+                    "Homogeneous vs heterogeneous batch",
+                    "总经历",
+                    "每批是否混合不同任务族",
+                    "异构加速规则错误融合"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这部分展示了重要的因果变量：Task Family Segmentation。即使抽象模型有一定能力区分家族，在8条新证据就被要求总结一次时，仍容易把不同前提的解法捏成一个“广泛适用”的错误规则。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "我们可以研究可靠的‘何时允许抽象’而不必直接发明更强摘要器",
+                "text": "如果本轮出现的是无法确定任务族的新经历，合理行动可能是先保存原始Episode并继续收集反例，而不是马上转成永久Skill。"
+              }
+            ],
+            "order": 5
+          },
+          {
+            "id": "force-auto-episodic",
+            "stage": "design",
+            "title": "Fig.5/9：Force、Auto和Episodic-only究竟各允许什么？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "策略",
+                  "允许保留原始经历？",
+                  "允许抽象？",
+                  "关键差异"
+                ],
+                "rows": [
+                  [
+                    "Force",
+                    "跨轮不保留",
+                    "必须每轮抽象",
+                    "所有新轨迹必须经过有损重写"
+                  ],
+                  [
+                    "Auto",
+                    "可保留/删除",
+                    "自行决定是否抽象",
+                    "把原始Episode和摘要分开存"
+                  ],
+                  [
+                    "Episodic Management Only",
+                    "可保留/删除",
+                    "不允许",
+                    "只使用原始轨迹作为检索证据"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "作者在400步流中观察到Auto总体优于Force；关闭抽象的Episodic-only可以匹配或超过Auto。研究同时发现Auto会倾向让原始Episode Buffer迅速饱和，摘要Store较稀疏。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "Auto vs Force不是只差一个Gate按钮",
+                "text": "Force也不允许原始Episode跨轮保留，所以差异含有存储能力的变化；更严谨的抽象原因分析要看固定输入/顺序的Table5。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "table-five-causal",
+            "stage": "result",
+            "title": "Table 5：能不能把记忆损坏分成几个独立的来源？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "写入方式",
+                  "Step400准确率",
+                  "相对默认"
+                ],
+                "rows": [
+                  [
+                    "默认流式原地改写",
+                    "43.2",
+                    "—"
+                  ],
+                  [
+                    "Append-only；旧摘要可见",
+                    "50.0",
+                    "+6.8"
+                  ],
+                  [
+                    "Add+Delete；不原地编辑",
+                    "64.0",
+                    "+20.8"
+                  ],
+                  [
+                    "Append-only；旧摘要隐藏",
+                    "70.0",
+                    "+26.8"
+                  ],
+                  [
+                    "只用原始Episode；不抽象",
+                    "76.6",
+                    "+33.4"
+                  ]
+                ],
+                "caption": "GPT-5.4，ARC-AGI Stream，batch size=1，step400。"
+              },
+              {
+                "type": "prose",
+                "text": "作者将更新退化分成：初次压缩即损坏、旧摘要作为上下文污染新摘要、原地覆盖造成累计信息丢失。最后一个控制即使删掉其他两项也没达到Raw 76.6，与初次压缩信息丢失一致，但也可能混有存储冗余和检索阶段的影响，不能把全部残余差距都归因于第一次摘要。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "三个错误机制不是同义词",
+                "text": "把不同任务族放一起是分组错误；让旧摘要干扰新抽象是跨更新条件污染；直接改写旧条目是破坏性覆盖。只有分离它们才能决定应该什么时候保留Episode、何时编译Skill。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "failure-taxonomy",
+            "stage": "result",
+            "title": "§6：实际记录里最常见的三种错误是什么？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "错误类型",
+                  "具体症状",
+                  "怎么测"
+                ],
+                "rows": [
+                  [
+                    "Misgrouping",
+                    "把不同选择条件的任务归入同一类策略",
+                    "任务族真值、跨类混合率"
+                  ],
+                  [
+                    "Overgeneralization / Interference",
+                    "在不合适的任务里套用看似通用的旧规则",
+                    "相似表面/相反约束配对任务"
+                  ],
+                  [
+                    "Overfitting / Overspecificity",
+                    "总结只适用于已见示例的操作，变式无法复用",
+                    "同族未见变体/异结构测试"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "Appendix还给出vacuous abstraction、foreign-family injection、phantom strategies以及单一策略坍塌等具体记忆快照。ScienceWorld文本分类有一部分采用LLM-as-judge，不能把每一个自动标签直接当作人工真值。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "一段正确轨迹≠可传播规则",
+                "text": "压缩是否正确，不取决于原题成功率，还取决于提取出来的前提、排除条件和其他任务族中的反例。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "strong-baselines",
+            "stage": "result",
+            "title": "Table 4/6：原始Episode保留是强基线，但不是绝对赢家",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "任务/模型",
+                  "原始轨迹选项",
+                  "部分抽象方案",
+                  "结论"
+                ],
+                "rows": [
+                  [
+                    "ALFWorld GPT-5.4-mini",
+                    "Raw 全池90，Raw 64条92",
+                    "ACE_GT 85，ACE79，AWM65",
+                    "在此行原始轨迹更好"
+                  ],
+                  [
+                    "AppWorld Qwen3.5-27B",
+                    "Raw全池73",
+                    "ACE_GT 76",
+                    "抽象正确时可能更好"
+                  ],
+                  [
+                    "AppWorld Claude Haiku4.5",
+                    "Raw全池66，Raw 16条70",
+                    "ACE 74",
+                    "不能写成Raw在任何条件下绝对领先"
+                  ],
+                  [
+                    "WebShop GPT-5-mini",
+                    "Raw32条63",
+                    "AWM59",
+                    "最强原始选项较好"
+                  ]
+                ],
+                "caption": "不同任务SR/TGC/reward度量与模型规模；不同原始轨迹库容量与prompt长度。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "支持保留原始证据，而不是‘永远不抽象’",
+                "text": "长期Episode积累会产生容量、检索和组合迁移问题；只有在明确定义的未来任务收益/成本协议里，才能判断抽象是否值得。"
+              }
+            ],
+            "order": 4
+          },
+          {
+            "id": "rsi-hypothesis",
+            "stage": "next",
+            "title": "RSI应该研究什么？何时让Episode成为Skill或参数能力？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "我们需要问的是：同样一条成功或失败经历，什么时候只需要随时查阅原始证据，什么时候可以经独立验证抽象成具有条件与反例的Skill，什么时候值得进一步参数内化？这是候选科研问题，不是这篇文献已经解决的系统。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "选择层",
+                    "text": "固定经验池，随机比较哪些Episode被标记为候选，分离成功/失败标签与后续真实收益。"
+                  },
+                  {
+                    "title": "巩固层",
+                    "text": "在同一Episode上随机分配Raw、一次摘要、按族摘要、反复原地改写、Append-only、Skill编译等干预。"
+                  },
+                  {
+                    "title": "内化层",
+                    "text": "在相同token/更新FLOPs约束下比较LoRA写回；撤掉外置Memory/Skill再测未见题与旧能力保持。"
+                  },
+                  {
+                    "title": "未来任务流",
+                    "text": "跨规则族测试、任务分布改变后的适用性、旧规则冲突与可回滚性。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "候选巩固净收益（本站假设）",
+                "expression": "U(e,m)=ΔAcc_future(e,m)−λ·Forget_old−β·TotalCost−γ·MisuseRisk",
+                "meaning": "同一经验e与巩固动作m分别随机分配，避免将选择收益误报为巩固收益；m可以是Raw、Skill或LoRA。",
+                "boundary": "这个公式不来自本文；Memory检索带来的眼前成功与模型权重独立能力增长应分开测。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "最小先测的决定性现象",
+                "text": "如果某些经验即使完全正确，经过抽象也损坏跨题适用条件，而另一些经验在相同预算下抽象后确有明显泛化净增益，才有研究‘何时抽象’的因果现象基础。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "what-not-to-claim",
+            "stage": "next",
+            "title": "与ACL2026和Science2024怎么分工？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "研究",
+                  "直接测什么",
+                  "没有测什么"
+                ],
+                "rows": [
+                  [
+                    "Science2024小鼠",
+                    "清醒SPW-R选中哪些经历，之后睡眠还是否重放",
+                    "LLM文本策略/任务正确率"
+                  ],
+                  [
+                    "ACL2026 Memory Management",
+                    "新增/删除原始q-e记忆对后续执行的影响",
+                    "对成功Episode进行反复抽象的损坏"
+                  ],
+                  [
+                    "本文 arXiv 2026",
+                    "相同正确轨迹经不同摘要方式造成性能退化",
+                    "LoRA写回是否真的形成独立技能"
+                  ],
+                  [
+                    "RSI候选实验",
+                    "选择候选、巩固动作与权重内化的交互",
+                    "目前没有真实模型更新结果"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要用“升级记忆”掩盖对象变化",
+                "text": "Raw Episode检索、文本Skill压缩、外部工具代码Skill执行和参数LoRA写回，其成本、权限、可回滚性和可测试能力均不同；需分支实验。"
+              }
+            ],
+            "order": 2
+          }
+        ]
+      },
+      "links": {
+        "html": "https://arxiv.org/html/2605.12978v2",
+        "full_text": "https://arxiv.org/abs/2605.12978",
+        "code": "https://github.com/DylanZSZ/Memory-Collapse-Eval"
+      }
+    },
+    {
+      "id": "memory-management-acl2026-xiong",
+      "short_title": "Memory Management · ACL 2026",
+      "title": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+      "authors": "Zidi Xiong; Yuping Lin; Wenya Xie; Pengfei He; Zirui Liu; Jiliang Tang; Himabindu Lakkaraju; Zhen Xiang",
+      "lead_institution": "Harvard University",
+      "institutions": [
+        "Harvard University",
+        "University of Georgia",
+        "Michigan State University",
+        "University of Minnesota–Twin Cities"
+      ],
+      "institution_source": "ACL 2026 官方论文 PDF 首页作者编号与单位：Harvard (1), Georgia (2), Michigan State (3), Minnesota–Twin Cities (4)",
+      "publication": "ACL 2026 Long Papers · pp. 623–645",
+      "doi": "10.18653/v1/2026.acl-long.27",
+      "official_url": "https://aclanthology.org/2026.acl-long.27/",
+      "first_posted": "2026-07-02",
+      "version": "ACL 2026 同行评审正式版 · Anthology ID 2026.acl-long.27；2025 arXiv稿与正式论文作者列表/结果口径以ACL为准",
+      "read_on": "2026-10-29",
+      "reading_level": "逐页核对ACL 2026官方PDF §3–5、Table 1/2、Fig. 3–7 和主要方法公式；未复现实验",
+      "tags": [
+        "LLM Agent Memory",
+        "Experience Following",
+        "Episodic Memory",
+        "Memory Addition",
+        "Memory Deletion",
+        "Error Propagation",
+        "Misaligned Replay",
+        "I6 Experience Quality",
+        "RSI Memory"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "用四类Agent和可控记忆添加/删除干预分析任务输入相似度与检索轨迹输出相似度，并利用后续调用的外部评估质量对记忆做筛选。",
+          "open_question": "按调用后结果归因到某条记忆的历史效用只是代理；尚缺随机拿掉同条记忆的反事实增益验证。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "发现看起来相似的请求更容易诱发经验模仿，并将记忆污染、错误传播与当前任务失配区分。",
+          "open_question": "没有学习新的抽象规则、更新知识表示或训练LLM权重，也不能证明加了更多执行记录就是RSI。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "记忆记录从已有任务流中提取并用于未来相似请求，测试多个Agent场景。",
+          "open_question": "没有展示新的训练任务类或模型可达采样支持集扩展。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "定量比较固定记忆、全部添加、不同质量筛选以及周期/历史/组合删除对长期任务流成绩与容量的影响。",
+          "open_question": "没有验证Memory凝练为Skill或参数的真正独立内化；基于检索的改进依赖相关轨迹继续可访问。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "表明错误轨迹会被经验跟随性反复复制，造成记忆污染/任务失配风险；后续执行结果可作为有限的低成本质量标签。",
+          "open_question": "没有攻击者故意植入错误记忆的完整威胁模型，且用当前执行质量评分删记忆会受任务分布及归因偏差影响。"
+        }
+      },
+      "one_sentence": "ACL 2026 在四类Agent上发现：相似查询会诱导模仿旧轨迹；全部添加记忆反而降低表现，选择性添加和可靠的历史效用删除可改善长期任务执行。",
+      "story": {
+        "challenge": "Agent会把过去的任务执行当示范，但旧记录可能错误或只适合当时情境；记得越多，为什么反而更容易做错？",
+        "insight": "检索到的相似经历会强烈影响当前输出；因此记忆质量、适用范围和被后续任务实际使用时的表现比简单数量更重要。",
+        "design": "四种GPT-4o-mini为主的Agent比较固定、全部和按不同评价器选择性添加；再比较周期删除、历史效用删除及组合删除。",
+        "result": "全部添加均弱于固定记忆；严格筛选四类Agent分别达70.95/38.50/51.00/85.40，可靠历史删除进一步改善部分真实Agent。"
+      },
+      "problem": "LLM Agent通过检索过去q-e任务执行对当前任务做示范，记忆容量扩展既能覆盖更多情况，也会增强对相似但错误/失配执行的模仿；应区分添加策略、删除策略、检索后的实际作用，而不是一律追加Memory。",
+      "setup": "四类场景：可控制的线性映射RegAgent、电子病历EHRAgent、自动驾驶AgentDriver、IoT安全CIC-IoT Agent；主要骨干GPT-4o-mini。每条记忆m=(q,e)保存任务输入和执行输出。固定初始记忆，依次比较固定、全部添加、自动评价器C1/C2/C3、以真实标签模拟严格判定的增量添加。随后在粗/严格添加条件下比较周期删除、历史效用删除和组合删除；观察任务流表现与最终存储条数。还研究任务分布偏移及有限存储预算。",
+      "updates": "Agent底座模型不持续参数更新；写入、检索、删除的是外部query-execution记忆，属于执行期上下文复用，而非通过SFT/LoRA使模型本身获得持久新技能。",
+      "key_ideas": [
+        {
+          "name": "经验跟随性",
+          "summary": "新任务与召回记录输入越接近，生成执行也越趋向同记录接近；即使相似记录本身带有错误，也会被复制放大。",
+          "formula": "similarity(current q, retrieved q_i) ↑ ⇒ similarity(current e, retrieved e_i) ↑ (empirical correlation)"
+        },
+        {
+          "name": "记忆添加的判别函数",
+          "summary": "对已完成执行(q,e)，评价器π(q,e)判断是否录入，严格Oracle由真实标签模拟，且不同粗评价器的错漏会污染记忆。",
+          "formula": "π_add(q,e) ∈ {0,1}; π_all=1; π_fixed=0; π_strict=ground-truth oracle"
+        },
+        {
+          "name": "按历史调用效果清退",
+          "summary": "某条记忆至少被使用n次之后，若后续调用任务的平均评价分低于β，则考虑删除；任务效用与单条记忆因果贡献不完全相同。",
+          "formula": "φ_hist(m_i,t)=1[retrieval_count(m_i)>n]·1[mean downstream utility_i≤β]"
+        },
+        {
+          "name": "容量和质量的双重制约",
+          "summary": "减少无关或失配经验有助于部分Agent，但高质量原始大容量库在特定回归任务上仍可能优于删除，说明不能一律删旧。",
+          "formula": "Memory Value = f(coverage, quality, task-match, retrieval budget)"
+        },
+        {
+          "name": "选择性添加与技能巩固分层",
+          "summary": "本论文证明外部执行样例的添加和删除影响后续Agent行为，但没有测试自动抽象或实际权重更新。",
+          "formula": "Record inclusion ≠ verified skill consolidation ≠ parameter learning"
+        }
+      ],
+      "evidence": [
+        "ACL 2026 PDF §3.1：RegAgent（可控线性函数）、EHRAgent、AgentDriver、CIC-IoT四场景；多数实验底座GPT-4o-mini，记忆单位(q,e)。严格评估通过比较真实标签模拟，无逐条人工上线审查。",
+        "Table 1：固定/全部添加/严格选择时RegAgent 67.53/55.48/70.95；EHRAgent 16.75/13.05/38.50；AgentDriver 40.11/32.32/51.00；CIC-IoT 71.50/59.90/85.40（按各任务SR或ACC）。",
+        "Table 1：粗评估C1→C3提高通常改善效果，例如AgentDriver 36.92→47.37，EHRAgent 26.19→34.66；C3使用300条经审核数据微调GPT-4.1-mini评价器。",
+        "Fig. 3：RegAgent和AgentDriver上，召回记录输入与当前输入越相似，生成输出通常也与历史执行越相似；RegAgent在较高输入相似度条件Pearson r接近1，属于行为相关而非强迫模仿的随机因果操作。",
+        "Fig. 4：将检索的旧执行替换为无错误（ground-truth）版本，能够缓解记忆错误传播；但任务失配可能仍在，不能只用存储时的最终正确性充分判断。",
+        "Table 2（严格添加）：不删除 vs历史删除：RegAgent 70.95/69.80（容量2938→2286）；EHRAgent 38.67/42.06（1012→784）；AgentDriver 51.00/51.81（1178→846）；CIC-IoT 85.40/89.60（904→788）。",
+        "Table 2（严格添加）：组合删除对EHRAgent 42.34，高于历史删除42.06，但AgentDriver 49.97低于无删除51.00；“历史删除对所有任务都最好”不符合原表。",
+        "§4.1：History-based deletion在某记忆被检索超过n次后，按该记忆被召回时后续任务效用的平均分与阈值β比较；Combined是周期删除和历史删除的逻辑或。",
+        "§4.3/Fig.6：即使严格添加的记忆，在其他任务上仍可能误导。被清退记录通常包含更高的执行误差或当前任务失配；当前原始质量和使用时适用性应分开。",
+        "§5/Fig.7及附录：研究任务分布变化/记忆容量受限时的添加和删除策略，说明近期/使用频率也不是不受任务分布影响的普遍标记器。"
+      ],
+      "boundaries": [
+        "没有LLM权重持续训练；性能随任务序列改变是固定底座+外部检索记忆的执行效果，不能写成模型参数递归自我改进。",
+        "论文称作Human/Strict的评价器是实验中通过真实标签比较模拟的严格Oracle，并非部署时每条真的由人亲审。",
+        "Table 1各Agent结果是不同SR/ACC度量，适合各Agent内部比较，不能把四项数字直接平均宣称通用增长。",
+        "Table 2的增删口径与Table 1略有差异（如EHRAgent严格No del 38.67 vs添加表38.50），保留各表原始值，不能随意替换。",
+        "删除不总是增益：RegAgent严格No del 70.95 高于History 69.80；EHRAgent严格Combined 42.34略高于History 42.06；粗评估时删除可降低部分Agent表现。",
+        "被检索后任务表现好坏并非单个Memory的严格反事实贡献：可能同时召回多条记忆，且任务难度与分布随时间变化。",
+        "所谓‘看似正确的记录仍可能有害’是针对新任务的情境错配或中间过程质量，不表示作者已经证明所有成功执行都应该被淘汰。",
+        "不直接测试动态抽象更新（memory condensation），因而不能将另一篇Useful Memories Become Faulty的反复摘要漂移当成该论文所做实验。"
+      ],
+      "our_relevance": [
+        "I6研究失败轨迹本身的学习价值；本文提醒：轨迹一次性得到正确评价并不保证未来调用有益，需有任务适用条件与真实执行后效用。",
+        "RSI长期记忆线最先区分原始Episode与抽象后的Skill：本文只覆盖原始记录的增删，验证的是检索期示范效用。",
+        "历史效用删除是强基线而不是我们的独立创新，若研究Memory使用与清退，必须超越固定、Add-all、Strict、History和Combined。",
+        "与Science 2024的区别：小鼠清醒SPW-R预测哪些经历被后续睡眠重放；本文直接有Agent任务效用读数，但不是该经历因果独立贡献或Skill巩固收益。",
+        "对未来研究，分别随机控制“有没有这段Memory”与“是否把它抽象成Skill/写入参数”，否则把选择收益与巩固收益混算。",
+        "与I13安全更新接纳：不可靠、任务失配的记忆应隔离/降级而不是无条件写入模型；安全标记与可学习性评分分别校验。"
+      ],
+      "next_test": "同一冻结Agent快照、同一任务输入，随机检索或不检索一条通过初筛的记忆m，保持其他retrieval、token和工具预算相同，估计m在不同任务族的反事实实际效用。再用相同原始Episode随机分为raw-only、一次抽象、反复抽象、Skill、LoRA分支，观察未来独立净收益和误传播；记忆增删以及抽象操作必须有独立识别的因果贡献。",
+      "deep_read": {
+        "focus": "ACL 2026已测四类真实/合成LLM Agent。先明白记录是(q,e)、严格判断为何是标签模拟，再读Table1添加和Table2删除；重点学习Experience-Following、Error Propagation和Misaligned Replay三者差异，不能将任务流表现误当权重内化。",
+        "metric_summary_title": "五组决定性证据：四Agent添加、粗评价、历史清退与错误传播",
+        "metric_summary_intro": "分别保留原文Table1与Table2口径；SR与ACC是不同任务指标，无法相加出一个跨任务统一百分比。",
+        "metric_summary": [
+          {
+            "family": "① RegAgent 添加",
+            "metrics": "Table1 · SR (%)",
+            "meaning": "可控线性映射Agent在固定与不断添加示范之间比较。",
+            "result": "Fixed 67.53；All 55.48；Strict 70.95。"
+          },
+          {
+            "family": "② EHRAgent 添加",
+            "metrics": "Table1 · ACC (%)",
+            "meaning": "真实医疗记录任务，评估加入多少历史执行样例。",
+            "result": "Fixed 16.75；All 13.05；Strict 38.50。"
+          },
+          {
+            "family": "③ AgentDriver 添加",
+            "metrics": "Table1 · SR (%)",
+            "meaning": "自动驾驶决策任务中的执行记忆检索。",
+            "result": "Fixed 40.11；All 32.32；Strict 51.00。"
+          },
+          {
+            "family": "④ CIC-IoT 添加",
+            "metrics": "Table1 · ACC (%)",
+            "meaning": "IoT安全分析任务。",
+            "result": "Fixed 71.50；All 59.90；Strict 85.40。"
+          },
+          {
+            "family": "⑤ 严格添加后的删除",
+            "metrics": "Table2 · History / Combined",
+            "meaning": "记忆已通过可靠筛选，但新分布里可能失配，比较不同删除策略。",
+            "result": "History相对No del：EHRAgent 38.67→42.06，AgentDriver 51→51.81，IoT 85.40→89.60；RegAgent略降。"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Episodic memory (q,e)",
+            "meaning": "将任务查询q及完成的执行e保存为外部记忆，之后以相似查询检索并作上下文示范。"
+          },
+          {
+            "name": "Experience-following",
+            "meaning": "新输入越像被检索的旧输入，当前输出越可能模仿旧执行结果；是观测相关而不是对每种情况都成立的决定律。"
+          },
+          {
+            "name": "Error propagation",
+            "meaning": "错误旧执行被检索、模仿并再存成新记录，导致记忆污染被反复放大。"
+          },
+          {
+            "name": "Misaligned experience replay",
+            "meaning": "旧轨迹自身可能正确，但使用时的任务目标、上下文或约束不同，仍误导本次执行。"
+          },
+          {
+            "name": "Strict evaluator",
+            "meaning": "使用真实答案作判据模拟的严格评估器，不是每天都有专家手工逐条审核。"
+          },
+          {
+            "name": "History-based deletion",
+            "meaning": "只在足够多次被检索后，根据关联的未来执行质量低于阈值清退旧记录。"
+          },
+          {
+            "name": "Counterfactual memory utility",
+            "meaning": "我们的研究目标：同任务同版本，有/无某条记忆时的真实收益差；该论文没有严格提供这种随机差分。"
+          }
+        ],
+        "summary": [
+          "四类LLM Agent均为固定底座、外部q-e执行记忆；不是参数内化或抽象Skill。",
+          "全部添加记忆在四种任务上比原本固定记忆更差，严格筛选添加则在四Agent都获得更高表现；严格筛选是标签Oracle模拟。",
+          "输入越相似，输出越跟随旧经验；错误示范和情境失配都可能导致错误传播。",
+          "可靠的历史效用删除在部分真实任务上提升表现并减少容量，但不是处处胜出，效果依赖评价器可靠性和任务分布。",
+          "建议I6/Memory方向进一步用同版本随机有/无调用来测单条记忆的真实贡献，并对照长期Skill/LoRA巩固。"
+        ],
+        "afterword": "本论文没有研究LLM权重更新或反复文本抽象；以下Memory→Skill→LoRA与因果评估是本站研究提案，不是ACL作者已完成实验。",
+        "sections": [
+          {
+            "id": "what-is-memory",
+            "stage": "challenge",
+            "title": "实验对象是什么？一条Memory到底存了什么？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "论文中绝大多数Agent实验的底座是GPT-4o-mini。记录不是人类的神经记忆，更不是模型权重，而是一组外部任务输入q和执行e：存进库、未来相似任务召回、作为上下文示范继续执行。每条执行后还可以决定是否添加记录。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "RegAgent",
+                    "text": "控制简单线性映射，能直接量化旧示范输出的噪声，便于研究经验模仿。"
+                  },
+                  {
+                    "title": "EHRAgent",
+                    "text": "医疗记录相关任务，需用多步执行与验证。"
+                  },
+                  {
+                    "title": "AgentDriver",
+                    "text": "自动驾驶场景下的多步规划与行动。"
+                  },
+                  {
+                    "title": "CIC-IoT Agent",
+                    "text": "物联网安全诊断和分类任务。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "没有真实权重自更新",
+                "text": "正文的self-improvement是动态外部Memory带来的执行成绩变化；不能把它写作LLM持续微调或某条规则已经内化。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "add-setup",
+            "stage": "design",
+            "title": "添加实验怎么做？严格评价为何是模拟而非真实人工？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "组别",
+                  "添加决策",
+                  "该组对照什么"
+                ],
+                "rows": [
+                  [
+                    "Fixed",
+                    "初始Memory不增加",
+                    "观察固定高质量上下文的基线"
+                  ],
+                  [
+                    "Add all",
+                    "每条新执行全部进入",
+                    "最大覆盖量同时累积错误风险"
+                  ],
+                  [
+                    "Coarse C1/C2/C3",
+                    "不同自动评价器决定新增",
+                    "判断评价器错误与容量的影响"
+                  ],
+                  [
+                    "Strict",
+                    "与真实标签对照模拟Oracle判断",
+                    "质量上限，不意味着现实人力零成本"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "自动评价器方面，C1/C2为GPT-4o-mini与GPT-4.1-mini，C3是在300条独立训练集正确评判材料上微调的GPT-4.1-mini；RegAgent粗评价则用不同误差门槛。"
+              },
+              {
+                "type": "formula",
+                "label": "Memory Add Rule",
+                "expression": "π_add(q,e)∈{0,1}; add_all=1; fixed=0",
+                "meaning": "完成一次任务后，用评价器判断该(q,e)是否值得保存；这里的“保存”没有任何参数梯度步骤。",
+                "boundary": "严格组需访问实验真实标签；不能被当成无外部验证成本、现实可部署的零错误记忆管理器。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "table-one",
+            "stage": "result",
+            "title": "Table 1：为什么越记越多，四个Agent反而都下降？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "Agent",
+                  "固定Memory",
+                  "全部添加",
+                  "严格选择",
+                  "原表指标"
+                ],
+                "rows": [
+                  [
+                    "RegAgent",
+                    "67.53",
+                    "55.48",
+                    "70.95",
+                    "SR (%)"
+                  ],
+                  [
+                    "EHRAgent",
+                    "16.75",
+                    "13.05",
+                    "38.50",
+                    "ACC (%)"
+                  ],
+                  [
+                    "AgentDriver",
+                    "40.11",
+                    "32.32",
+                    "51.00",
+                    "SR (%)"
+                  ],
+                  [
+                    "CIC-IoT",
+                    "71.50",
+                    "59.90",
+                    "85.40",
+                    "ACC (%)"
+                  ]
+                ],
+                "caption": "Table1，均是同一Agent的不同记忆策略；不是四个可直接比较的统一指标。"
+              },
+              {
+                "type": "prose",
+                "text": "在所有四种Agent中，All低于Fixed，严格筛选高于Fixed。不是越大的库越强，也不是经验必须越少：严格筛选组同样在不断增加记录，只是降低了错误污染率。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "quality-vs-volume",
+            "stage": "result",
+            "title": "Table 1的细节：自动评价器只要有错，就可能造成记忆污染",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "Agent",
+                  "Coarse C1",
+                  "Coarse C2",
+                  "Coarse C3",
+                  "Strict"
+                ],
+                "rows": [
+                  [
+                    "EHRAgent",
+                    "26.19",
+                    "32.21",
+                    "34.66",
+                    "38.50"
+                  ],
+                  [
+                    "AgentDriver",
+                    "36.92",
+                    "40.01",
+                    "47.37",
+                    "51.00"
+                  ],
+                  [
+                    "CIC-IoT",
+                    "74.00",
+                    "68.80",
+                    "79.50",
+                    "85.40"
+                  ],
+                  [
+                    "RegAgent",
+                    "63.18",
+                    "65.78",
+                    "67.35",
+                    "70.95"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "总体上更强评价器提高了保留轨迹质量和未来执行表现，但并非严格单调（例如CIC-IoT C2低于C1）。存储容量与内容质量是同时变化的；需要容量匹配或同长度库的附加分析。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "注意噪声反馈形成正反馈回路",
+                "text": "不准的评价器让坏轨迹进入库；与之后任务相似时坏轨迹再次被模仿，然后新的错误也可能被保存。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "experience-following",
+            "stage": "insight",
+            "title": "Fig. 3：Experience-Following到底是什么证据？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者对新任务q与被检索记忆q_i的相似度、当前输出e与记忆e_i的相似度作逐次汇总；RegAgent和AgentDriver的变化显示，输入相似度较高时输出趋向旧示范，某些RegAgent设置下Pearson r接近1。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "观测",
+                  "可支持",
+                  "不能支持"
+                ],
+                "rows": [
+                  [
+                    "输入相似→输出相似",
+                    "LLM会依赖和模仿过去的执行样例",
+                    "某条示范一定导致本次执行正确/错误"
+                  ],
+                  [
+                    "记忆增长→更相似的示范",
+                    "覆盖增加，旧经验影响更强",
+                    "增大容量一定有利"
+                  ],
+                  [
+                    "错误记录→错误传播",
+                    "不可靠示范能误导并被再次写回",
+                    "仅靠旧执行的最终Success就足以判定使用价值"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么这比“记忆越多越差”更值得学",
+                "text": "论文识别了可能的行为中介：相似输入唤起相似执行；因此正确但上下文不合的过去行动，也有可能被错误调用。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "error-free",
+            "stage": "result",
+            "title": "Fig. 4：把旧示范的错误去掉，是否足以解决问题？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "研究对RegAgent/AgentDriver将真实轨迹替换为无错误（ground-truth）示范，观察持续添加后是否更可靠。通常有效，但并不能消除所有误匹配：示范可能在自身任务里正确，却不适合当前环境条件和行动目标。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "记忆内容质量与条件适用性是两条轴",
+                "text": "“原题成功”只是保存入口条件；未来新任务中适用何种前提，是另外需要测试的能力。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "deletion-formula",
+            "stage": "design",
+            "title": "删除实验的三个规则和关键公式",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "周期删除（原文的形式）",
+                "expression": "φ_per(m_i,t,t′)=1[ fr_t(m_i)−fr_t′(m_i)≤α ]",
+                "meaning": "若一个窗口内检索频率太低则清退；这是控制覆盖与容量的简便规则。",
+                "boundary": "不等于很久没用就一定没用；任务分布变化下罕见的关键知识可能被误删。"
+              },
+              {
+                "type": "formula",
+                "label": "历史效用删除（简化等价形式）",
+                "expression": "φ_hist(m_i,t)=1[retrieval_i>n] · 1[mean_{j≤retrieval_i} Φ_j≤β]",
+                "meaning": "对被使用次数足够的记忆，评估其相关未来任务的平均质量，过低就删除。",
+                "boundary": "原文条件使用“>n”；被检索后的Φ分数并非严格反事实贡献。"
+              },
+              {
+                "type": "formula",
+                "label": "组合删除",
+                "expression": "φ_comb(m_i)=φ_per(m_i)∨φ_hist(m_i)",
+                "meaning": "周期规则和历史质量规则满足任一即删除，更容易压缩存储规模。",
+                "boundary": "增加容量效率不保证改进所有任务的最终成绩。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "table-two",
+            "stage": "result",
+            "title": "Table 2：哪种删除真有效？为什么不是每个任务都一样？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "Strict添加后",
+                  "不删除",
+                  "历史删除",
+                  "组合删除"
+                ],
+                "rows": [
+                  [
+                    "RegAgent",
+                    "70.95",
+                    "69.80",
+                    "66.58"
+                  ],
+                  [
+                    "EHRAgent",
+                    "38.67",
+                    "42.06",
+                    "42.34"
+                  ],
+                  [
+                    "AgentDriver",
+                    "51.00",
+                    "51.81",
+                    "49.97"
+                  ],
+                  [
+                    "CIC-IoT",
+                    "85.40",
+                    "89.60",
+                    "85.50"
+                  ]
+                ],
+                "caption": "Table 2；Strict条件下的各任务分数。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "任务",
+                  "不删除库大小",
+                  "历史删除库大小",
+                  "主要权衡"
+                ],
+                "rows": [
+                  [
+                    "RegAgent",
+                    "2938",
+                    "2286",
+                    "容量下降、绝对成绩略降"
+                  ],
+                  [
+                    "EHRAgent",
+                    "1012",
+                    "784",
+                    "质量提高并减小库"
+                  ],
+                  [
+                    "AgentDriver",
+                    "1178",
+                    "846",
+                    "两者改善"
+                  ],
+                  [
+                    "CIC-IoT",
+                    "904",
+                    "788",
+                    "两者改善"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "历史删除改善了三个非合成任务的成绩，但对RegAgent低于保留全库。组合删除在EHRAgent略高于历史删除，AgentDriver则明显更差，因此不能写“历史删除在所有Agent上最佳”或“合并永远最好”。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "misalignment",
+            "stage": "result",
+            "title": "Fig. 6：为什么通过了严格检查的经历仍可能误导后续任务？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者把‘经历自己是不是正确’与‘该经历在当前被检索任务中是否适用’分开。即使初次通过误差≤1的RegAgent严格评价，仍可能有误差较大的样例在新的输入上产生误导。历史删除后，保留样例整体误差通常低于被删除样例。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "真实的效用不是一个不变属性",
+                "text": "一条成功Episode是否有用，应当条件化在当前任务、模型状态、其他召回内容和后续目标上；基于过去平均值的评分仍可能忽视分布变化。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "limits-and-transfer",
+            "stage": "next",
+            "title": "最近邻边界：它研究的是记忆增删，不是记忆如何抽象成Skill",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "证据对象",
+                  "ACL 2026已验证",
+                  "我们要另外验证"
+                ],
+                "rows": [
+                  [
+                    "Memory Admission",
+                    "严格质量筛选优于全部添加",
+                    "适用条件/安全性是否能在没有Oracle标签下预测"
+                  ],
+                  [
+                    "Memory Eviction",
+                    "可靠历史效用可改善部分任务",
+                    "因果意义上的单条记忆贡献与跨任务变化"
+                  ],
+                  [
+                    "Skill Consolidation",
+                    "没有直接实验",
+                    "同Episode生成一次规则还是反复改写，哪种最终有益"
+                  ],
+                  [
+                    "Weight Internalization",
+                    "没有直接实验",
+                    "外置帮助撤掉后LoRA/SFT是否留下独立能力"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "第二篇arXiv:2605.12978v2恰好研究反复抽象损坏，所以两篇论文是两组相邻证据，不要互换实验数字。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是已经证明递归进化",
+                "text": "原作者仍使用固定LLM与执行期Memory，未训练可代际累积的改进器。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "rsi-p0",
+            "stage": "next",
+            "title": "RSI的最小新问题：成功但失配的记录，哪些该升级为Skill？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "锁定基线",
+                    "text": "冻结同一Agent任务流与一批已核验Episode，保留raw证据和任务约束标签。"
+                  },
+                  {
+                    "title": "区别选择与使用",
+                    "text": "同一Episode随机有/无检索，在固定其它召回、token和工具预算下估计真实执行收益。"
+                  },
+                  {
+                    "title": "区别使用与巩固",
+                    "text": "同一Episode对比raw-only、一次抽象、反复抽象、参数更新（各自同预算）。"
+                  },
+                  {
+                    "title": "检查应用边界",
+                    "text": "设计相似任务但关键约束相反的配对条件，观察经验模仿与误召回是否翻转。"
+                  },
+                  {
+                    "title": "长期验收",
+                    "text": "旧能力回归、未来任务独立增益、总成本和真实参数写回单列。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "与现有工作不同的潜在现象",
+                "text": "不是再设计一次历史效用删除，而是问：初始正确且有用的Episode，在什么任务分布和抽象操作下变得不安全/不再有利，并能否提前判断升格到Skill/LoRA的实际净收益？"
+              }
+            ],
+            "order": 2
+          }
+        ]
+      },
+      "links": {
+        "html": "https://aclanthology.org/2026.acl-long.27/",
+        "pdf": "https://aclanthology.org/2026.acl-long.27.pdf",
+        "code": "https://github.com/yuplin2333/agent_memory_manage"
+      }
+    },
+    {
       "id": "sharp-wave-ripples-science2024-yang",
       "short_title": "Hippocampal Memory Tagging · Science 2024",
       "title": "Selection of experience for memory by hippocampal sharp wave ripples",
