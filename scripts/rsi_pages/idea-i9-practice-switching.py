@@ -34,6 +34,11 @@ PAGE = {
 <p><b>建议只给 I9 增一个最小受控因素：</b>保持题目池、正确答案、训练 Token、LoRA 更新器不变，以任务规则关系（相同 / 条件相近但不同）×课程顺序（集中 / 交错）做 2×2 分叉；先测独立 A、独立 B、混合规则选择，再在 A/B 当前能力可比时测新 C 的同预算学习曲线。没有稳定的结构×顺序交互，就不增加新的课程 Router。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">查看完整精读与 Figure 2、4–6</a>。</p>
 <div class="note"><b>不应归因过度：</b>原论文使用 MEG / 简单神经网络分析表征，不能直接证明现代 LLM 参数的表示机制，也不证明“部分相似”会造成不可恢复的遗忘。[[E99]]</div>
 '''),
+    ("nature2025-orthogonalized-state", "Nature 2025｜训练历史会不会改变规则的状态划分？", '''
+<p><b>人类/动物原始证据：</b>Sun、Winnubst 等在小鼠虚拟任务中长期追踪到 CA1 表征由相似走廊响应逐渐分离为 Near/Far 奖励相关的潜在状态；新视觉提示还能与旧任务结构绑定。但 Nature 论文并未比较 Blocked/Interleaved，也没有让 LLM 继续学习一个全新规则 C。[[E353]] <a href="reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun">读原文完整精读</a>。</p>
+<p><b>对 I9 新的机制检验：</b>在现有 A→B / B→A 当前能力匹配实验中，进一步按任务关系分成（1）同观察不同历史、必须分离的状态；（2）外观不同但规则同构、应该复用的状态。比较课程顺序是否影响这两种状态划分，并且是否影响真正继续学习 C 的速度、未见规则迁移和旧能力保持。<strong>先对照仅看当前 C 前测 Loss、间隔效应及模型优化器状态</strong>，不能把任意隐藏状态正交化当成提前验证的机制。</p>
+<p><b>已经存在的强前作：</b>ICML 2025 的 LM State Tracking 已证明不同内部状态追踪算法与训练迁移有关；ICML 2026 Reusable Modules 已证明可以学习并组合路由模块。I9 不声称首次发现“历史会改变状态表征”，而是研究当前能力相近时，状态规则的划分是否进一步预测<strong>下次真实学习增益</strong>。[[M66]][[M67]] <a href="i8.html#nature2025-state-machine">与 I8 的状态别名／错误拆分机制区分</a>。</p>
+    '''),
     ("related", "现有工作｜别人已经研究到了哪一步？", '''
 <div class="table-wrap"><table><thead><tr><th>研究</th><th>已有证据或机制</th><th>我们与它的实际差异</th></tr></thead><tbody>
 <tr><td><a href="https://doi.org/10.1037/bul0000209" target="_blank" rel="noopener noreferrer">Brunmair &amp; Richter · Psychological Bulletin 2019</a> [[E23]]</td><td>59 项研究的元分析；总体交错有益，但材料类型、类别间相似度与类别内差异调节效果；单词材料甚至更适合集中。</td><td>不重复“相似类别值得交错”；测试当前模型是否已掌握规则，以及这种掌握能否预测切换收益。</td></tr>

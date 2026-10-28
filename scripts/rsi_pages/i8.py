@@ -125,6 +125,17 @@ PAGE = {
 </tbody></table></div>
 <p><b>不改变 I8 主线：</b>I8 继续研究哪条错误值得纠正，以及纠正后能否改善多道未见同规则题。此文只提供一个必要的测量控制：<strong>表面特征相似 ≠ 底层规则共享；规则本身会做 ≠ 混合情境会选对规则</strong>。课程安排与任务切换仍由 <a href="idea-i9-practice-switching.html#nc2025-task-similarity">I9</a> 单独研究。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">阅读相关完整精读</a>。[[E99]]</p>
  '''),
+ ("nature2025-state-machine","Nature 2025｜学会规则，还要学会什么时候切换状态",'''
+<p><b>Nature 原文：</b>Sun、Winnubst 等让 11 只小鼠学习视觉上高度相似、但必须在 R1 或 R2 领取不同奖励的 2ACDC 任务。训练期 CA1 群体活动从相似灰色走廊响应逐步分离为任务潜在状态；作者将其称为 <b>orthogonalized state machine</b>。行为进步与神经表征演化相关，但并未直接证明神经正交化是所有模型学会任务的必要条件。[[E353]] <a href="reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun"><b>查看完整精读：Figures 1–5、CSCG 与计算模型反例</b></a>。</p>
+<div class="table-wrap"><table><thead><tr><th>I8 需要区分的错误</th><th>具体例子</th><th>怎样设计真正的新题</th></tr></thead><tbody>
+<tr><td><b>State Aliasing（该分开却合并）</b></td><td>同样出现“请求失败”，限流需要退避，授权失效需要恢复凭据；仅凭当前字符串总是重试</td><td>同一当前观察、不同先前状态历史，两个反事实正确动作不同</td></tr>
+<tr><td><b>False Split（该共享却重复学习）</b></td><td>不同工具和任务外观遵循同一退避或分页规则，模型却每次重新摸索</td><td>换外观但冻结潜在状态转移与规则，测能否零/少样本复用</td></tr>
+<tr><td><b>Rule Missing（根本不掌握规则）</b></td><td>模型没有学过限流或凭据重验的定义</td><td>独立前置知识题判断知识缺失，不能误称为状态混淆</td></tr>
+</tbody></table></div>
+<p><b>机制上的重要反例：</b>CSCG（观察克隆 HMM）最接近动物状态分离的形成顺序，但小型 LSTM/Transformer 能学任务序列却没有自然形成相同的全局正交表征；特定 RNN 亦可学到成熟状态但学习轨迹不同。因此 I8 <strong>不应先添加“所有状态向量必须正交”的新 Loss</strong>。[[E353]][[E354]]</p>
+<p><b>I8 的最小 P0：</b>同一 LLM 起点、固定同一错误/正确反馈与真实 LoRA 预算；只操纵训练样本是否含有“同观察不同历史”的规则辨别反事实，以及“不同外观同一规则”的复用样本。清空示范后，独立报告状态混淆率、错误拆分率、异结构同规则新题净收益与旧能力回归。<a href="reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun--rsi-p0">查看精读内的 E0–E3 完整实验</a>。状态表示可解码不等于实际依赖，仍要通过反事实行动检验。</p>
+<p class="note"><b>最近邻：</b>CSCG 的观察克隆 2021 年已经提出；Li 等 ICML 2025 已分析 LLM 的状态追踪机制；Kong 等 ICML 2026 研究原子模块与路由组合；Tang 等 ICML 2026 表明成功的状态跟踪并不要求逐 token 显式更新。I8 新贡献只能来自受控学习后的独立净迁移和状态区分机制，而不是“LLM 可以建潜在状态”。[[E354]][[M66]][[M67]][[M68]]</p>
+ '''),
  ("science2021-nonlocal","Science 2021 × LLM｜一次反馈如何带动未直接经历的路径？", '''
 <h3>人类论文实际做了什么？</h3>
 <p><b>Science 2021 的实验对象是29名人类，不是LLM。</b>每人先学会3个起点、6条路径、2个共享终点的结构，再在终点X/Y奖励概率独立变化的游戏中做选择。一次本轮实际路径的奖励，既关联当前选择，也关联其他起点中本轮没经过但通向同一终点的路径。MEG在反馈后观察到约30ms的正向序列和约160ms的反向序列；后者更偏向非局部路径，并与更高的非局部价值学习率相关（有/无反向重放0.70/0.61，p=0.023）。<a href="reading-notes.html#deep-nonlocal-replay-science2021-liu"><b>原论文完整精读 →</b></a></p>

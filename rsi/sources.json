@@ -2261,6 +2261,56 @@
       "level": "PMLR 官方摘要核对；2026-10-28；未复现",
       "note": "机器教学早已研究交互选择有效教学集，且学习者假设类可能不可见；I10 不能将选择能区分规则的例子本身称为首次。",
       "code": ""
+    },
+    {
+      "id": "E353",
+      "group": "学习科学",
+      "title": "Learning produces an orthogonalized state machine in the hippocampus",
+      "date": "Nature 640, 165–175 (2025-02-12)",
+      "url": "https://www.nature.com/articles/s41586-024-08548-w",
+      "level": "Nature 正文 Abstract/Figs.1–5/Methods/Discussion，PubMed 与官方代码和数据链接核对；2026-10-29；未复现",
+      "note": "11只小鼠在230cm VR 2ACDC任务中学习近/远奖励，长期CA1数千神经元活动逐步按潜在状态去相关，CSCG复现最终状态及形成顺序；常规LSTM/小Transformer能序列预测却不自然形成相同OSM。该结果不证明大LLM必须正交化。",
+      "code": "https://github.com/sprustonlab/OSM_Paper_Figures"
+    },
+    {
+      "id": "E354",
+      "group": "学习科学",
+      "title": "Clone-structured graph representations enable flexible learning and vicarious evaluation of cognitive maps",
+      "date": "Nature Communications 12, 2392 (2021)",
+      "url": "https://www.nature.com/articles/s41467-021-22559-5",
+      "level": "Nature Communications 正式全文、CSCG结构、代码仓库核对；2026-10-29；未复现",
+      "note": "George等已提出用观察克隆、隐藏状态转移图和序列推断处理感官状态别名；CSCG不是2025 Nature首次提出，也不能把“潜在状态图复用”宣称为I8新颖性。",
+      "code": "https://github.com/vicariousinc/naturecomm_cscg"
+    },
+    {
+      "id": "M66",
+      "group": "相邻领域",
+      "title": "(How) Do Language Models Track State?",
+      "date": "ICML 2025 · PMLR 267:34429–34452",
+      "url": "https://proceedings.mlr.press/v267/li25r.html",
+      "level": "ICML PMLR正式发表页与摘要核对；2026-10-29",
+      "note": "Li、Guo、Andreas在置换合成任务中区分LM的两种状态追踪机制，发现泛化和收敛差异，并用中间训练任务操纵所学机制；尚未考察RSI多轮自改进。",
+      "code": "https://github.com/belindal/state-tracking"
+    },
+    {
+      "id": "M67",
+      "group": "相邻领域",
+      "title": "From Reasoning Traces to Reusable Modules: Understanding Compositional Generalization in Language Model Reasoning",
+      "date": "ICML 2026 · PMLR 306:60023–60050",
+      "url": "https://proceedings.mlr.press/v306/kong26c.html",
+      "level": "ICML PMLR正式发表页与摘要核对；2026-10-29",
+      "note": "Kong等研究SFT+RL如何获得并重组可复用的原子技能和路由模块，在未见组合中泛化；I8不能将规则复用或模块路由本身视为首次。",
+      "code": "https://isxinliu.github.io/CompositionalReasoning/"
+    },
+    {
+      "id": "M68",
+      "group": "相邻领域",
+      "title": "Do Language Models Track Entities Across State Changes?",
+      "date": "ICML 2026 · PMLR 306:119466–119503",
+      "url": "https://proceedings.mlr.press/v306/tang26ah.html",
+      "level": "ICML PMLR正式摘要核对；2026-10-29",
+      "note": "Tang等研究复杂自然语言实体状态更改，观察到部分LM并不逐token增量更新世界状态，而是在查询最后聚合相关信息；成功不必等于显式独立状态机。",
+      "code": ""
     }
   ]
 }

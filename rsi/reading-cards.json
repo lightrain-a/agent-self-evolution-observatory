@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "research_questions": [
     {
       "id": "signal",
@@ -14907,17 +14907,535 @@
           "学生模拟器 StudentSim 已研究即时指导响应；我们只有证明真实 LoRA/Skill 更新后的独立学习收益可在训练前准确预测，才有可能形成区别于已有工作的 RSI 贡献。"
         ],
         "sections": [
-          {"id":"challenge-unified-cognition","stage":"challenge","title":"为什么专门的认知模型很难预测另一种实验？","blocks":[{"type":"prose","text":"多臂老虎机可用 RL 模型、风险选择可用效用模型、类别学习可用类别模型解释，但一套模型常不能直接预测完全不同任务中的人。作者的科学问题是：把心理学实验都写成自然语言，能否用同一个预训练模型学习人类行为规律，并预测不在训练数据中的实验？"},{"type":"table","headers":["区分的三个任务","评估的对象","不能混作"],"rows":[["预测已见范式中的新被试","条件于真实的过往行为，预测下一次人类选择","训练集上拟合参与者的记忆"],["预测改变后的新范式","改故事、改选项结构、逻辑领域的真实人类选择","证明模型从头掌握新学科"],["让模型持续模拟","自己生成的选择反复输入下一轮，比较整段轨迹统计","学生 LLM 完成参数更新后的学习收益"]]},{"type":"callout","kind":"boundary","label":"本文“预测认知”与“让学生真正学会”不同","text":"Centaur 本身的 LoRA 被训练来拟合人类行为；被模拟的某个人、某个学生或 Agent 并没有因此被作者实际训练更新。这是迁移到 RSI 时必须保留的界限。"}]},
-          {"id":"insight-common-language","stage":"insight","title":"一个简单但关键的洞察：不同实验都有动作与反馈历史","blocks":[{"type":"prose","text":"Psych-101 将情境说明、可选动作、参与者的具体选择以及后果转成同一种语言序列。模型不必为每一种实验重新编写输入编码器，已有 LLM 又带有关于语言和世界的大量预训练知识。跨任务统一表达使它有机会提取反复出现的行为模式。"},{"type":"formula","label":"Centaur 的核心预测量（教学性简写）","expression":"p(human_actionₜ | task_instruction, action_and_feedback_history₁:ₜ₋₁)","meaning":"预测一个人在当前情境和过去反馈下下次会选什么；训练只对真实响应的 tokens 计算交叉熵。","boundary":"公式是对论文训练目标的简化描述，不是作者提出的专门心理学机制方程，也没有包含 LoRA 参数更新后学习收益。"},{"type":"callout","kind":"insight","label":"统一输入格式的重要性","text":"真正值得学的不是把所有问题说成一样，而是把异构实验都整理成能够判定“什么历史让下一次选择不同”的序列数据。原文仍需依赖实验提供的正确流程及行为数据。"}]},
-          {"id":"dataset-and-training","stage":"design","order":1,"title":"Figure 1：Psych-101 怎样构建？Centaur 怎样训练？","blocks":[{"type":"table","headers":["原文数量/配置","值","说明"],"rows":[["心理学实验","160 项","选择、记忆、强化学习、类别学习和多步骤序列决策"],["人类参与者","60,092 人","独立研究中汇总，实验与被试分离"],["逐次人类选择","10,681,650 次","不是一千万个不同的理论问题"],["序列化语言长度","253,597,411 tokens","实验描述、历史和行动响应，非仅动作数"],["骨干模型","Llama 3.1 70B","原有预训练知识会影响新范式能力"],["QLoRA","rank=8 · 0.15% trainable","非 embedding 线性层增加低秩适配器，基座冻结"],["训练","1 epoch · 只对回答 token 计损失","作者报告约一张 A100 80GB 上训练五天"]]},{"type":"steps","items":[{"title":"统一每个实验的说明与选项","text":"多臂老虎机、记忆、监督学习、两步决策等实验先转成语言化的逐试次轨迹。"},{"title":"分离被试并用 QLoRA 拟合选择","text":"每个实验约90%的被试用于训练，10%留出；模型预测真实的人类选择，历史由真实记录提供。"},{"title":"分别做未见被试、未见范式和开放环测验","text":"先衡量给真实历史时的条件概率，再让模型自己走完整段，最后检查改变故事/规则结构/实验领域后的泛化。"}]},{"type":"callout","kind":"boundary","label":"数据公开范围","text":"Psych-101 训练数据和 LoRA 适配器有公开地址，测试数据通过 gated 访问并受 CC-BY-ND-4.0 许可约束；不能把开放链接理解成所有数据都能自由二次分发。"}]},
-          {"id":"evaluation-contract","stage":"design","order":2,"title":"Figure 2 和 Figure 3 如何设计不泄漏的预测评测？","blocks":[{"type":"table","headers":["评测层级","历史是否来自真实人类？","评测是否在行为微调中出现过？"],"rows":[["留出参与者 · Figure 2a","是，真实参与者前面的选择作条件","实验范式见过，人没见过"],["改故事 · Figure 3a","是","外层规则近似相同，故事没见过"],["三选项 · Figure 3b","是","该具体三选项范式未见过，但训练中有其他多臂数目"],["逻辑推理 · Figure 3c","是","Psych-101 行为微调刻意排除逻辑推理实验"],["开放环 · Figure 2b–d","否，模型生成选择会进入下一轮历史","检验长轨迹生成的分布，而不是人真实经过训练后能力如何变化"]]},{"type":"formula","label":"用来比较人类响应预测的 NLL","expression":"NLL = − E_human[ log p_model(actual_response | observed_history) ]","meaning":"对真实人类做出的选择分配的概率越大，NLL 越低。0.44 绝对不是 44% 的做题正确率。","boundary":"不同实验的选择空间和回答长度不一样，不能随意把故事、逻辑与三选项条件的 NLL 跨任务当成绝对胜负指标。"}]},
-          {"id":"heldout-results","stage":"result","order":1,"title":"Figure 2：留出被试时，Centaur 的真实行为 NLL 有多好？","blocks":[{"type":"table","headers":["Figure 2a · 已见范式／未见被试","平均 NLL","方向"],"rows":[["Centaur · 70B + Psych-101 QLoRA","0.44","最好（越低越好）"],["基础 Llama 3.1 70B","0.58","比 Centaur 高 0.14"],["专用心理学认知模型","0.56","比 Centaur 高约 0.12–0.13"]],"caption":"专用模型只覆盖论文实现的可比范式；原文图2a中有 992,867 个响应，不能把这一子集和 Psych-101 总选择数混为一谈。"},{"type":"prose","text":"作者逐次计算真实人类回答的概率，并在约90/10的独立被试划分上评价。Centaur 在有专用认知模型比较的实验中，除一项外均取得更好平均拟合。此处确实验证了“同类实验、不同人”的行为预测能力。"},{"type":"callout","kind":"boundary","label":"为什么 NLL 不等于知识掌握分数","text":"模型猜测某个参与者会选择错误选项，也可能是正确预测人的行为。NLL 不是任务正确率，所以不能据此宣称 Centaur 比人类更会做每一种心理学实验。"}]},
-          {"id":"ood-results","stage":"result","order":2,"title":"Figure 3：改故事、改任务结构、换新领域，三种泛化有何差异？","blocks":[{"type":"table","headers":["跨分布外条件","Centaur NLL","原 Llama NLL","专用认知模型 NLL"],"rows":[["飞船 → 魔毯 · 改故事","0.51","0.63","0.61"],["两选项 → 新三选项范式","0.42","0.62","0.98"],["逻辑推理新领域（LSAT 类型）","1.65","1.92","无对应模型"]],"caption":"作者原文 Figure 3a–c，不同任务可选项数量不同，数字只应在同行条件内比较；论文并未声称逻辑能力是从零产生。"},{"type":"evidence","items":[{"domain":"Cover-story generalization","setup":"两步任务的经典飞船故事已在 Psych-101 内；新魔毯故事未在训练实验中。","result":"Centaur 0.51、Llama 0.63、传统混合 RL 模型 0.61。","supports":"自然语言中不同故事外观的行为泛化。","not_proven":"所有规则结构发生实质变化时仍能预测。"},{"domain":"Structural modification","setup":"Maggie's Farm：Horizon 范式从两臂改为三臂；数据中并非从未出现其它臂数的赌博任务。","result":"Centaur 0.42、Llama 0.62、专用模型 0.98。","supports":"对未见具体三臂范式的行为迁移。","not_proven":"面对任意多臂数或全新游戏规则同样可靠。"},{"domain":"Novel cognitive domain","setup":"Psych-101 行为微调刻意不包含逻辑推理实验。","result":"Centaur NLL 1.65 vs Llama 1.92。","supports":"认知微调使基座在行为训练未见的新实验领域更符合人类选择。","not_proven":"Llama 预训练从未见过任何逻辑题或产生全新逻辑知识。"}]},{"type":"callout","kind":"boundary","label":"不是全部未见任务都显著优于基座","text":"Extended Data Figure 4 进一步检验6种未见范式，但深层序贯决策的 Centaur 与原 Llama 比较 p=0.144；不可写成所有6种均显著获胜。"}]},
-          {"id":"openloop-simulation","stage":"result","order":3,"title":"Figure 2b–d：预测下一步，与自己模拟完整轨迹是两种难度","blocks":[{"type":"table","headers":["开放环实验","Centaur","人类或对照","评价"],"rows":[["Horizon 两臂老虎机平均奖励","54.12±2.89","人类 52.78±2.90","±3 奖励内等效性检验 p=0.02"],["预测真实人类游戏中的下一步","64%","—","可较好预测人类行为"],["预测统计特征匹配的人工 Agent","35%","—","没有简单把所有轨迹都预测成一样"]]},{"type":"prose","text":"开放环中，模型生成的回答与后果反复作为下一轮上下文，让早期偏差有机会累积。作者同时比较模型在探索奖励、model-based/model-free 两步任务和社会预测任务上的轨迹分布。"},{"type":"callout","kind":"insight","label":"为什么它更接近我们关心的动态预测","text":"如果只在给定真实历史时预测得好，模拟器可能在自己生成几步后迅速偏移。开放环提供更严格的行为动态测验。但人类/模型本身并未接受真实权重更新，仍不能替代“教学后学生真正学会了什么”。"}]},
-          {"id":"fmri-and-response-times","stage":"result","order":4,"title":"Figure 4：行为预测好，是不是就采用了人脑的学习机制？","blocks":[{"type":"table","headers":["作者分析","报告的关键结果","能支持什么"],"rows":[["反应时（约400万条记录）","混合模型条件 R²：Centaur 0.87、Llama 0.75、认知模型 0.77","Centaur 的响应熵可以更好解释人的反应耗时"],["fMRI 两步任务与句子阅读","跨层元分析 β=0.007，p=0.045","行为微调后表示与脑活动的线性对应有小幅改善"],["分别检验单个 LLM 层","逐层未达显著","不能断言每一层都出现了可靠神经机制相似性"]]},{"type":"callout","kind":"boundary","label":"“和人脑更像”仍然是统计对应","text":"行为预测的网络隐表示可更好预测某些脑信号，不等于 Centaur 真的使用与人类相同的神经算法；没有直接操纵人脑相应表征来验证因果机制。"}]},
-          {"id":"scientific-discovery","stage":"result","order":5,"title":"Figure 5：为什么高性能模拟器也能帮助改进一条简单理论？","blocks":[{"type":"steps","items":[{"title":"让 DeepSeek-R1 解释一个多属性选择实验","text":"它提出一条可解释规则：先数正面专家评分，多数相同时看最可靠专家。研究者将其形式化。"},{"title":"让 Centaur 检查“简单规则解释不了、但有规律”的选择","text":"比较两模型对真实人类选择的对数似然，发现一批被试会重视可靠专家，即使专家总体支持数较少。"},{"title":"把硬切换改为有权重的组合","text":"研究者根据这些反例，把“两个启发式二选一”改成“两个启发式可连续混合”。"}]},{"type":"table","headers":["Figure 5 · 该实验的模型","AIC（越低越好）"],"rows":[["DeepSeek-R1 初步启发式","181.7"],["Centaur","72.5"],["基于差异案例修订的解释性模型","71.7"]]},{"type":"callout","kind":"paper","label":"可迁移的研究组织方式","text":"高容量预测器不需要代替机制论文。它可以找出传统规则在真实行为上可解释不足的样本，再帮助提出更简单、可验证的新机制。形式化、检查和修订仍由研究者参与，不是全自动“科学发现”。"}]},
-          {"id":"simulation-is-not-learning","stage":"next","order":1,"title":"与 StudentSim：预测学生当前回答，为什么不等于预测真学习？","blocks":[{"type":"table","headers":["工作与层级","预测或优化的对象","当前证据能支持到哪里"],"rows":[["Centaur · Nature 2025","给定实验历史后的人类下一步选择，以及部分开放环行为轨迹","跨人、跨故事、跨实验的人类行为预测"],["StudentSim · Microsoft 2026","某个具体学生的错误与指导后即时修正行为","棋类/语言/数学的学生拟真和指导响应；尚不是对 LLM 参数更新的收益预测"],["SOAR · ICML 2026","教师生成的练习题经过学生真实试训后带来的收益","真实更新可用来奖励教师，但每轮试训成本高"],["I2 · 本站研究提案","学生状态 × 教学方式 × 固定更新器后的新题净学习收益","尚未验证，不能把它说成现有 Centaur 或 StudentSim 已证明"]]},{"type":"callout","kind":"boundary","label":"StudentSim 不是一个可以略过的小前作","text":"StudentSim 已有 Behavioral Fidelity / Guidance Responsiveness 双指标，还用学生模拟奖励训练教师。我们的独立研究价值只能来自真实 LoRA/Skill 更新之后的独立学习收益及预算节约，而不是再做一个 LLM 角色扮演学生。"}]},
-          {"id":"rsi-learner-model","stage":"next","order":2,"title":"I2 的下一步：先证明“学习状态×教学方式”确实影响真学习","blocks":[{"type":"formula","label":"研究提案，不是 Centaur 的原论文目标","expression":"ΔLearn(θ,d,u)=Acc_unseen(Update(θ,d,u))−Acc_unseen(θ)","meaning":"θ 为固定学生检查点，d 为候选教学，u 是统一的 LoRA/Skill 更新协议；独立测试题必须对教学与模型预测器保密。","boundary":"旧能力回归与诊断、训练成本要另外报告；不能用模型当场改正的答案代替这个变量。"},{"type":"tests","items":[{"name":"P0 · 先验证学生状态与教学方式的交互是否存在","design":"同一开源学生模型取两个前置知识状态、10个独立数学规则族、三种等预算教学（只给答案/解释规则/辨别反例），每格2个随机种子。每次从相同检查点做真实 LoRA 更新，撤去示范后测未见异结构同规则题及旧能力保持。","decisive":"在控制当前正确率、题目族和训练成本后，不同学生状态的最佳教学选择仍存在稳定可复现的交互；如果没有，先不要训练 Learner Response Model。"},{"name":"P1 · 真正训练前预测真实更新后收益","design":"若 P0 成立，采集独立开发规则族上的真实更新收益标签；用学生历史、独立知识探针、教学类型、固定更新器预测每种候选的净增益。比较 Random/Fixed、当前正确率/P50、先修知识、LESS 梯度、StudentSim 式当场响应、少量真实试训。","decisive":"在从未见过的规则族/检查点上，同总 FLOPs/Token 预算选择的教学方案优于简单基线，预测器的训练和探针成本也计入总账。"},{"name":"P2 · 才讨论持续变化的学习者","design":"当学生从 θₜ 更新到 θₜ₊₁ 后，用冻结的预测器重新预测不同教法的收益；对照固定旧教法和只用即时回答的模拟器。","decisive":"跨多个真实学生版本仍然预测后续未见题独立增益和旧能力回归，而非只利用某轮训练数据泄漏标签。"}]},{"type":"callout","kind":"boundary","label":"保持 I2 原有研究主线","text":"I2 仍然研究学生真实回应是否给教师提供增量信息以及教师能否随学生成长改进教法。Centaur 是行为建模机制参考，StudentSim 是最重要的近邻；预测器若无独立增量价值，就不单开 Idea 或增加复杂路由器。"}]}
+          {
+            "id": "challenge-unified-cognition",
+            "stage": "challenge",
+            "title": "为什么专门的认知模型很难预测另一种实验？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "多臂老虎机可用 RL 模型、风险选择可用效用模型、类别学习可用类别模型解释，但一套模型常不能直接预测完全不同任务中的人。作者的科学问题是：把心理学实验都写成自然语言，能否用同一个预训练模型学习人类行为规律，并预测不在训练数据中的实验？"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "区分的三个任务",
+                  "评估的对象",
+                  "不能混作"
+                ],
+                "rows": [
+                  [
+                    "预测已见范式中的新被试",
+                    "条件于真实的过往行为，预测下一次人类选择",
+                    "训练集上拟合参与者的记忆"
+                  ],
+                  [
+                    "预测改变后的新范式",
+                    "改故事、改选项结构、逻辑领域的真实人类选择",
+                    "证明模型从头掌握新学科"
+                  ],
+                  [
+                    "让模型持续模拟",
+                    "自己生成的选择反复输入下一轮，比较整段轨迹统计",
+                    "学生 LLM 完成参数更新后的学习收益"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "本文“预测认知”与“让学生真正学会”不同",
+                "text": "Centaur 本身的 LoRA 被训练来拟合人类行为；被模拟的某个人、某个学生或 Agent 并没有因此被作者实际训练更新。这是迁移到 RSI 时必须保留的界限。"
+              }
+            ]
+          },
+          {
+            "id": "insight-common-language",
+            "stage": "insight",
+            "title": "一个简单但关键的洞察：不同实验都有动作与反馈历史",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "Psych-101 将情境说明、可选动作、参与者的具体选择以及后果转成同一种语言序列。模型不必为每一种实验重新编写输入编码器，已有 LLM 又带有关于语言和世界的大量预训练知识。跨任务统一表达使它有机会提取反复出现的行为模式。"
+              },
+              {
+                "type": "formula",
+                "label": "Centaur 的核心预测量（教学性简写）",
+                "expression": "p(human_actionₜ | task_instruction, action_and_feedback_history₁:ₜ₋₁)",
+                "meaning": "预测一个人在当前情境和过去反馈下下次会选什么；训练只对真实响应的 tokens 计算交叉熵。",
+                "boundary": "公式是对论文训练目标的简化描述，不是作者提出的专门心理学机制方程，也没有包含 LoRA 参数更新后学习收益。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "统一输入格式的重要性",
+                "text": "真正值得学的不是把所有问题说成一样，而是把异构实验都整理成能够判定“什么历史让下一次选择不同”的序列数据。原文仍需依赖实验提供的正确流程及行为数据。"
+              }
+            ]
+          },
+          {
+            "id": "dataset-and-training",
+            "stage": "design",
+            "order": 1,
+            "title": "Figure 1：Psych-101 怎样构建？Centaur 怎样训练？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "原文数量/配置",
+                  "值",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "心理学实验",
+                    "160 项",
+                    "选择、记忆、强化学习、类别学习和多步骤序列决策"
+                  ],
+                  [
+                    "人类参与者",
+                    "60,092 人",
+                    "独立研究中汇总，实验与被试分离"
+                  ],
+                  [
+                    "逐次人类选择",
+                    "10,681,650 次",
+                    "不是一千万个不同的理论问题"
+                  ],
+                  [
+                    "序列化语言长度",
+                    "253,597,411 tokens",
+                    "实验描述、历史和行动响应，非仅动作数"
+                  ],
+                  [
+                    "骨干模型",
+                    "Llama 3.1 70B",
+                    "原有预训练知识会影响新范式能力"
+                  ],
+                  [
+                    "QLoRA",
+                    "rank=8 · 0.15% trainable",
+                    "非 embedding 线性层增加低秩适配器，基座冻结"
+                  ],
+                  [
+                    "训练",
+                    "1 epoch · 只对回答 token 计损失",
+                    "作者报告约一张 A100 80GB 上训练五天"
+                  ]
+                ]
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "统一每个实验的说明与选项",
+                    "text": "多臂老虎机、记忆、监督学习、两步决策等实验先转成语言化的逐试次轨迹。"
+                  },
+                  {
+                    "title": "分离被试并用 QLoRA 拟合选择",
+                    "text": "每个实验约90%的被试用于训练，10%留出；模型预测真实的人类选择，历史由真实记录提供。"
+                  },
+                  {
+                    "title": "分别做未见被试、未见范式和开放环测验",
+                    "text": "先衡量给真实历史时的条件概率，再让模型自己走完整段，最后检查改变故事/规则结构/实验领域后的泛化。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "数据公开范围",
+                "text": "Psych-101 训练数据和 LoRA 适配器有公开地址，测试数据通过 gated 访问并受 CC-BY-ND-4.0 许可约束；不能把开放链接理解成所有数据都能自由二次分发。"
+              }
+            ]
+          },
+          {
+            "id": "evaluation-contract",
+            "stage": "design",
+            "order": 2,
+            "title": "Figure 2 和 Figure 3 如何设计不泄漏的预测评测？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "评测层级",
+                  "历史是否来自真实人类？",
+                  "评测是否在行为微调中出现过？"
+                ],
+                "rows": [
+                  [
+                    "留出参与者 · Figure 2a",
+                    "是，真实参与者前面的选择作条件",
+                    "实验范式见过，人没见过"
+                  ],
+                  [
+                    "改故事 · Figure 3a",
+                    "是",
+                    "外层规则近似相同，故事没见过"
+                  ],
+                  [
+                    "三选项 · Figure 3b",
+                    "是",
+                    "该具体三选项范式未见过，但训练中有其他多臂数目"
+                  ],
+                  [
+                    "逻辑推理 · Figure 3c",
+                    "是",
+                    "Psych-101 行为微调刻意排除逻辑推理实验"
+                  ],
+                  [
+                    "开放环 · Figure 2b–d",
+                    "否，模型生成选择会进入下一轮历史",
+                    "检验长轨迹生成的分布，而不是人真实经过训练后能力如何变化"
+                  ]
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "用来比较人类响应预测的 NLL",
+                "expression": "NLL = − E_human[ log p_model(actual_response | observed_history) ]",
+                "meaning": "对真实人类做出的选择分配的概率越大，NLL 越低。0.44 绝对不是 44% 的做题正确率。",
+                "boundary": "不同实验的选择空间和回答长度不一样，不能随意把故事、逻辑与三选项条件的 NLL 跨任务当成绝对胜负指标。"
+              }
+            ]
+          },
+          {
+            "id": "heldout-results",
+            "stage": "result",
+            "order": 1,
+            "title": "Figure 2：留出被试时，Centaur 的真实行为 NLL 有多好？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "Figure 2a · 已见范式／未见被试",
+                  "平均 NLL",
+                  "方向"
+                ],
+                "rows": [
+                  [
+                    "Centaur · 70B + Psych-101 QLoRA",
+                    "0.44",
+                    "最好（越低越好）"
+                  ],
+                  [
+                    "基础 Llama 3.1 70B",
+                    "0.58",
+                    "比 Centaur 高 0.14"
+                  ],
+                  [
+                    "专用心理学认知模型",
+                    "0.56",
+                    "比 Centaur 高约 0.12–0.13"
+                  ]
+                ],
+                "caption": "专用模型只覆盖论文实现的可比范式；原文图2a中有 992,867 个响应，不能把这一子集和 Psych-101 总选择数混为一谈。"
+              },
+              {
+                "type": "prose",
+                "text": "作者逐次计算真实人类回答的概率，并在约90/10的独立被试划分上评价。Centaur 在有专用认知模型比较的实验中，除一项外均取得更好平均拟合。此处确实验证了“同类实验、不同人”的行为预测能力。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "为什么 NLL 不等于知识掌握分数",
+                "text": "模型猜测某个参与者会选择错误选项，也可能是正确预测人的行为。NLL 不是任务正确率，所以不能据此宣称 Centaur 比人类更会做每一种心理学实验。"
+              }
+            ]
+          },
+          {
+            "id": "ood-results",
+            "stage": "result",
+            "order": 2,
+            "title": "Figure 3：改故事、改任务结构、换新领域，三种泛化有何差异？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "跨分布外条件",
+                  "Centaur NLL",
+                  "原 Llama NLL",
+                  "专用认知模型 NLL"
+                ],
+                "rows": [
+                  [
+                    "飞船 → 魔毯 · 改故事",
+                    "0.51",
+                    "0.63",
+                    "0.61"
+                  ],
+                  [
+                    "两选项 → 新三选项范式",
+                    "0.42",
+                    "0.62",
+                    "0.98"
+                  ],
+                  [
+                    "逻辑推理新领域（LSAT 类型）",
+                    "1.65",
+                    "1.92",
+                    "无对应模型"
+                  ]
+                ],
+                "caption": "作者原文 Figure 3a–c，不同任务可选项数量不同，数字只应在同行条件内比较；论文并未声称逻辑能力是从零产生。"
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "Cover-story generalization",
+                    "setup": "两步任务的经典飞船故事已在 Psych-101 内；新魔毯故事未在训练实验中。",
+                    "result": "Centaur 0.51、Llama 0.63、传统混合 RL 模型 0.61。",
+                    "supports": "自然语言中不同故事外观的行为泛化。",
+                    "not_proven": "所有规则结构发生实质变化时仍能预测。"
+                  },
+                  {
+                    "domain": "Structural modification",
+                    "setup": "Maggie's Farm：Horizon 范式从两臂改为三臂；数据中并非从未出现其它臂数的赌博任务。",
+                    "result": "Centaur 0.42、Llama 0.62、专用模型 0.98。",
+                    "supports": "对未见具体三臂范式的行为迁移。",
+                    "not_proven": "面对任意多臂数或全新游戏规则同样可靠。"
+                  },
+                  {
+                    "domain": "Novel cognitive domain",
+                    "setup": "Psych-101 行为微调刻意不包含逻辑推理实验。",
+                    "result": "Centaur NLL 1.65 vs Llama 1.92。",
+                    "supports": "认知微调使基座在行为训练未见的新实验领域更符合人类选择。",
+                    "not_proven": "Llama 预训练从未见过任何逻辑题或产生全新逻辑知识。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是全部未见任务都显著优于基座",
+                "text": "Extended Data Figure 4 进一步检验6种未见范式，但深层序贯决策的 Centaur 与原 Llama 比较 p=0.144；不可写成所有6种均显著获胜。"
+              }
+            ]
+          },
+          {
+            "id": "openloop-simulation",
+            "stage": "result",
+            "order": 3,
+            "title": "Figure 2b–d：预测下一步，与自己模拟完整轨迹是两种难度",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "开放环实验",
+                  "Centaur",
+                  "人类或对照",
+                  "评价"
+                ],
+                "rows": [
+                  [
+                    "Horizon 两臂老虎机平均奖励",
+                    "54.12±2.89",
+                    "人类 52.78±2.90",
+                    "±3 奖励内等效性检验 p=0.02"
+                  ],
+                  [
+                    "预测真实人类游戏中的下一步",
+                    "64%",
+                    "—",
+                    "可较好预测人类行为"
+                  ],
+                  [
+                    "预测统计特征匹配的人工 Agent",
+                    "35%",
+                    "—",
+                    "没有简单把所有轨迹都预测成一样"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "开放环中，模型生成的回答与后果反复作为下一轮上下文，让早期偏差有机会累积。作者同时比较模型在探索奖励、model-based/model-free 两步任务和社会预测任务上的轨迹分布。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么它更接近我们关心的动态预测",
+                "text": "如果只在给定真实历史时预测得好，模拟器可能在自己生成几步后迅速偏移。开放环提供更严格的行为动态测验。但人类/模型本身并未接受真实权重更新，仍不能替代“教学后学生真正学会了什么”。"
+              }
+            ]
+          },
+          {
+            "id": "fmri-and-response-times",
+            "stage": "result",
+            "order": 4,
+            "title": "Figure 4：行为预测好，是不是就采用了人脑的学习机制？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "作者分析",
+                  "报告的关键结果",
+                  "能支持什么"
+                ],
+                "rows": [
+                  [
+                    "反应时（约400万条记录）",
+                    "混合模型条件 R²：Centaur 0.87、Llama 0.75、认知模型 0.77",
+                    "Centaur 的响应熵可以更好解释人的反应耗时"
+                  ],
+                  [
+                    "fMRI 两步任务与句子阅读",
+                    "跨层元分析 β=0.007，p=0.045",
+                    "行为微调后表示与脑活动的线性对应有小幅改善"
+                  ],
+                  [
+                    "分别检验单个 LLM 层",
+                    "逐层未达显著",
+                    "不能断言每一层都出现了可靠神经机制相似性"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "“和人脑更像”仍然是统计对应",
+                "text": "行为预测的网络隐表示可更好预测某些脑信号，不等于 Centaur 真的使用与人类相同的神经算法；没有直接操纵人脑相应表征来验证因果机制。"
+              }
+            ]
+          },
+          {
+            "id": "scientific-discovery",
+            "stage": "result",
+            "order": 5,
+            "title": "Figure 5：为什么高性能模拟器也能帮助改进一条简单理论？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "让 DeepSeek-R1 解释一个多属性选择实验",
+                    "text": "它提出一条可解释规则：先数正面专家评分，多数相同时看最可靠专家。研究者将其形式化。"
+                  },
+                  {
+                    "title": "让 Centaur 检查“简单规则解释不了、但有规律”的选择",
+                    "text": "比较两模型对真实人类选择的对数似然，发现一批被试会重视可靠专家，即使专家总体支持数较少。"
+                  },
+                  {
+                    "title": "把硬切换改为有权重的组合",
+                    "text": "研究者根据这些反例，把“两个启发式二选一”改成“两个启发式可连续混合”。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Figure 5 · 该实验的模型",
+                  "AIC（越低越好）"
+                ],
+                "rows": [
+                  [
+                    "DeepSeek-R1 初步启发式",
+                    "181.7"
+                  ],
+                  [
+                    "Centaur",
+                    "72.5"
+                  ],
+                  [
+                    "基于差异案例修订的解释性模型",
+                    "71.7"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "可迁移的研究组织方式",
+                "text": "高容量预测器不需要代替机制论文。它可以找出传统规则在真实行为上可解释不足的样本，再帮助提出更简单、可验证的新机制。形式化、检查和修订仍由研究者参与，不是全自动“科学发现”。"
+              }
+            ]
+          },
+          {
+            "id": "simulation-is-not-learning",
+            "stage": "next",
+            "order": 1,
+            "title": "与 StudentSim：预测学生当前回答，为什么不等于预测真学习？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "工作与层级",
+                  "预测或优化的对象",
+                  "当前证据能支持到哪里"
+                ],
+                "rows": [
+                  [
+                    "Centaur · Nature 2025",
+                    "给定实验历史后的人类下一步选择，以及部分开放环行为轨迹",
+                    "跨人、跨故事、跨实验的人类行为预测"
+                  ],
+                  [
+                    "StudentSim · Microsoft 2026",
+                    "某个具体学生的错误与指导后即时修正行为",
+                    "棋类/语言/数学的学生拟真和指导响应；尚不是对 LLM 参数更新的收益预测"
+                  ],
+                  [
+                    "SOAR · ICML 2026",
+                    "教师生成的练习题经过学生真实试训后带来的收益",
+                    "真实更新可用来奖励教师，但每轮试训成本高"
+                  ],
+                  [
+                    "I2 · 本站研究提案",
+                    "学生状态 × 教学方式 × 固定更新器后的新题净学习收益",
+                    "尚未验证，不能把它说成现有 Centaur 或 StudentSim 已证明"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "StudentSim 不是一个可以略过的小前作",
+                "text": "StudentSim 已有 Behavioral Fidelity / Guidance Responsiveness 双指标，还用学生模拟奖励训练教师。我们的独立研究价值只能来自真实 LoRA/Skill 更新之后的独立学习收益及预算节约，而不是再做一个 LLM 角色扮演学生。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-learner-model",
+            "stage": "next",
+            "order": 2,
+            "title": "I2 的下一步：先证明“学习状态×教学方式”确实影响真学习",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "研究提案，不是 Centaur 的原论文目标",
+                "expression": "ΔLearn(θ,d,u)=Acc_unseen(Update(θ,d,u))−Acc_unseen(θ)",
+                "meaning": "θ 为固定学生检查点，d 为候选教学，u 是统一的 LoRA/Skill 更新协议；独立测试题必须对教学与模型预测器保密。",
+                "boundary": "旧能力回归与诊断、训练成本要另外报告；不能用模型当场改正的答案代替这个变量。"
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0 · 先验证学生状态与教学方式的交互是否存在",
+                    "design": "同一开源学生模型取两个前置知识状态、10个独立数学规则族、三种等预算教学（只给答案/解释规则/辨别反例），每格2个随机种子。每次从相同检查点做真实 LoRA 更新，撤去示范后测未见异结构同规则题及旧能力保持。",
+                    "decisive": "在控制当前正确率、题目族和训练成本后，不同学生状态的最佳教学选择仍存在稳定可复现的交互；如果没有，先不要训练 Learner Response Model。"
+                  },
+                  {
+                    "name": "P1 · 真正训练前预测真实更新后收益",
+                    "design": "若 P0 成立，采集独立开发规则族上的真实更新收益标签；用学生历史、独立知识探针、教学类型、固定更新器预测每种候选的净增益。比较 Random/Fixed、当前正确率/P50、先修知识、LESS 梯度、StudentSim 式当场响应、少量真实试训。",
+                    "decisive": "在从未见过的规则族/检查点上，同总 FLOPs/Token 预算选择的教学方案优于简单基线，预测器的训练和探针成本也计入总账。"
+                  },
+                  {
+                    "name": "P2 · 才讨论持续变化的学习者",
+                    "design": "当学生从 θₜ 更新到 θₜ₊₁ 后，用冻结的预测器重新预测不同教法的收益；对照固定旧教法和只用即时回答的模拟器。",
+                    "decisive": "跨多个真实学生版本仍然预测后续未见题独立增益和旧能力回归，而非只利用某轮训练数据泄漏标签。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "保持 I2 原有研究主线",
+                "text": "I2 仍然研究学生真实回应是否给教师提供增量信息以及教师能否随学生成长改进教法。Centaur 是行为建模机制参考，StudentSim 是最重要的近邻；预测器若无独立增量价值，就不单开 Idea 或增加复杂路由器。"
+              }
+            ]
+          }
         ]
       },
       "links": {
@@ -14927,6 +15445,614 @@
         "code": "https://github.com/marcelbinz/Llama-3.1-Centaur-70B",
         "data": "https://huggingface.co/datasets/marcelbinz/Psych-101",
         "adapter": "https://huggingface.co/marcelbinz/Llama-3.1-Centaur-70B-adapter"
+      }
+    },
+    {
+      "id": "nature2025-orthogonalized-state-machine-sun",
+      "short_title": "Nature 2025 · 学习如何形成潜在状态机",
+      "title": "Learning produces an orthogonalized state machine in the hippocampus",
+      "authors": "Weinan Sun; Johan Winnubst; Maanasa Natrajan; Chongxi Lai; Koichiro Kajikawa; Arco Bast; Michalis Michaelos; Rachel Gattoni; Carsen Stringer; Daniel Flickinger; James E. Fitzgerald; Nelson Spruston",
+      "lead_institution": "Janelia Research Campus, Howard Hughes Medical Institute",
+      "institutions": [
+        "Janelia Research Campus, Howard Hughes Medical Institute",
+        "Cornell University",
+        "Johns Hopkins University",
+        "Northwestern University"
+      ],
+      "institution_source": "Nature 正式出版页 Authors and Affiliations；PubMed PMID 39939774",
+      "publication": "Nature · 2025 · Vol. 640, pp. 165–175",
+      "doi": "10.1038/s41586-024-08548-w",
+      "official_url": "https://www.nature.com/articles/s41586-024-08548-w",
+      "first_posted": "2025-02-12",
+      "version": "2025-02-12 在线发表；2025-04-03 纸刊",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature 正式正文 Abstract、Figs. 1–5、Methods（2ACDC、模型训练）、Discussion、Code/Data；尚未复现实验",
+      "tags": [
+        "Learning Science",
+        "Nature",
+        "Hippocampus",
+        "Latent States",
+        "State Aliasing",
+        "Compositional Transfer",
+        "I8",
+        "I9"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "partial",
+          "contribution": "长期追踪 11 只小鼠的行为和 CA1 群体活动，分开测视觉观察、潜在奖励状态与决策所需的状态表征。",
+          "open_question": "海马体神经活动并不是现代 Agent 的自评或版本验收信号，需要独立探针验证 LLM 是否真在使用状态信息。"
+        },
+        "novelty": {
+          "level": "not_addressed",
+          "contribution": "研究固定的 Near/Far 奖励任务、后续新线索和轨道延伸，不研究 Agent 自主创造任务。",
+          "open_question": "能否将已学规则推广为真正的新技能组合，尚需参数/Skill 更新与未见结构测试。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "动物学会根据历史区分视觉相同但奖励不同的情境，表明状态辨别支持灵活行动。",
+          "open_question": "不测 LLM 的正确解采样支持集；也不能把海马体正交化直接等同于 LLM 规则生成能力。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "新视觉线索和轨道延长检验了已学状态表征的适应与复用；同时追踪数周学习轨迹。",
+          "open_question": "不是模型连续 LoRA/Skill 更新后的跨题迁移或后续任务 C 的可学习性，需另行检验。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "只涉及小鼠在 VR 环境中寻找水奖励与计算模型的状态预测，没有考察 Agent 真实权限安全。",
+          "open_question": "用于代码/工具环境时，应另行评估状态混淆造成的错误重试、错误权限和错误写回。"
+        }
+      },
+      "one_sentence": "看起来相同的环境可能属于不同潜在状态；学习使海马体逐步区分决策相关状态，但正交化并非完成任务的必要条件。",
+      "story": {
+        "challenge": "两条走廊外观几乎相同，仅开头提示决定近处还是远处取水；动物如何记住看不见的任务状态？",
+        "insight": "学习不是把所有观察都分开，而是逐渐区分感官相同、却预测不同奖励的潜在状态，同时保留共享结构。",
+        "design": "11 只小鼠完成虚拟 2ACDC 任务；长期双光子成像 CA1 数千神经元，并与 CSCG、RNN、LSTM 和 Transformer 比较。",
+        "result": "行为策略与 CA1 表征分阶段演进；CSCG 复现最终状态与形成顺序，常规 LSTM/Transformer 即使能预测也不自然正交化。"
+      },
+      "problem": "同一个灰色走廊的当下视觉几乎完全一致，但先前提示指向 Near 或 Far 奖励，小鼠必须根据观察历史推断真实奖励状态，避免在错误奖励位置舔水。科学问题是潜在任务状态如何在长期经验中被发现并形成神经表征。",
+      "setup": "11 只 GCaMP6f 小鼠在头部固定 VR 中跑 230 cm 两类 2ACDC 走廊；开头视觉 Ind 指示 Near R1 或 Far R2，后续灰色段感官相似。长期双光子钙成像追踪海马体 CA1 神经元，结合行为阶段、群体活动相关矩阵、单细胞状态选择性与多个计算模型比较。熟练后的新线索与延长走廊作为适应性测试。",
+      "updates": "动物通过数日到数周的经验改变行为与海马体群体状态表征；CSCG 以 HMM 的转移推断来学习，RNN 类模型更新权重。论文没有训练现代 LLM/Agent 的 Skill、Harness 或 LoRA；不能从神经观察直接推断 RSI 参数更新机制。",
+      "key_ideas": [
+        {
+          "name": "部分可观测状态别名（state aliasing）",
+          "summary": "同一观察 o_t 可能在不同历史下对应不同潜在奖励状态 z_t；只看眼前画面无法做出正确动作。",
+          "formula": "o_t^near ≈ o_t^far, but z_t^near ≠ z_t^far"
+        },
+        {
+          "name": "CSCG 的观察克隆",
+          "summary": "一个观察符号可以对应多个具有不同转移关系的隐藏状态 clones，从序列历史推断当前处境，而非把感官一致等同于同一个状态。",
+          "formula": "z_t ∈ C(o_t), P(z_{t+1} | z_t, a_t)"
+        },
+        {
+          "name": "任务相关分离而非全局最大化正交",
+          "summary": "Near/Far 的关键灰色区域逐步去相关，而真正共享的开始和结束区域仍可保持相似。",
+          "formula": "split when future action/reward differs; reuse when structure is shared"
+        }
+      ],
+      "evidence": [
+        "Figure 1：11 只小鼠在 2ACDC 任务中出现从随机舔舐、尝试两个奖励点，到按 Ind 提示正确选 R1/R2 的策略改善；最终与初期正确位置舔舐比例差异 p=0.004（配对 t 检验）。",
+        "Figure 2：每次成像典型可记录数千 CA1 神经元（各 session 平均每鼠约 4,682±827），多天匹配约 3,954±661；群体表征在需要区分潜在状态的灰色轨道段逐步去相关。UMAP 用于可视化，不可只凭 UMAP 证明机理。",
+        "Figure 3：单神经元从对多个灰色段响应，逐渐变成奖励相关轨道区间及 Near/Far 特异的状态细胞，反映群体去相关的细胞层过程。",
+        "Figure 4：CSCG 经 EM 学习转移图，复现成熟状态及动物中先后去相关的轨迹；一些 Softmax/Hebbian RNN 能形成最终类似表征却没有复现同样的时间演化；常规 LSTM/Transformer 在下一符号预测目标下没有自然产生 OSM。",
+        "Figure 5：部分熟练小鼠对四批新视觉线索建立与原有奖励状态的联系；轨道延长出现对原有状态结构的适应与预测误差，支持一定灵活性，但不是所有任务变形都可无错解决。"
+      ],
+      "boundaries": [
+        "主要结果是 11 只小鼠的 CA1 神经相关性与学习轨迹，不能由此说所有智能系统必须构造全局正交隐藏向量。",
+        "常规 LSTM 与 Transformer 的对照是为 2ACDC 训练的序列模型，不是具有数十亿参数的通用 LLM；推断能力差异时应严格限制外推。",
+        "CSCG 在计算模型中复现学习轨迹，不等于作者通过神经元因果干预证明真实海马体执行 CSCG 或 EM 算法。",
+        "新视觉提示与加长轨道属于同任务的结构迁移，不能直接等同于 LLM 学会全部新规则、未见任务的参数更新收益或长期 Agent 递归自我迭代。",
+        "表征可解码、状态向量余弦距离与真实使用状态作决策不是一回事；I8/I9 需有反事实输入和状态干预，不仅做表征可视化。"
+      ],
+      "our_relevance": [
+        "I8 主线：正确规则本身与识别规则适用的潜在状态不同。应区分 aliased states（该分开没分开）与 false splits（同一规则被误拆分），用反事实同观察不同历史与新线索同规则两个对照检验跨题净迁移。",
+        "I9 扩展：不同训练顺序是否改变状态划分，哪怕当前 A/B 成绩匹配？应在之后继续学习 C 的固定预算曲线上验证，而不将神经正交化简单写成新奖励函数。",
+        "工具 Agent 示例：相同“请求失败”可能是限流或凭据失效；应依据前序历史切换重试/重新授权，而不是一律重试；跨工具同一限流规则应可复用。",
+        "研究边界：状态区分、CSCG 推断、Transformer 状态追踪与可组合模块已有相关前作；真正新增证据必须是等预算真实 Skill/LoRA 更新后未见状态/规则的独立学习收益。"
+      ],
+      "next_test": "从同一 LLM 检查点分叉，程序生成含相同观察不同历史的两个潜在状态以及不同外观相同规则的配对任务；在相同原题准确率和训练预算下，比较普通正确示例、区分性反事实反馈、规则复用训练与按外观错误拆分等条件。清空上下文后测 state-aliasing error、false-split error、未见组合任务正确率和进一步学 C 的曲线；单独分析表征探针与行动干预的关系。",
+      "links": {
+        "html": "https://www.nature.com/articles/s41586-024-08548-w",
+        "pdf": "https://www.nature.com/articles/s41586-024-08548-w.pdf",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11964937/",
+        "code": "https://github.com/sprustonlab/OSM_Paper_Figures",
+        "data": "https://doi.org/10.25378/janelia.27273552"
+      },
+      "deep_read": {
+        "focus": "一个观察可以代表多个潜在状态，但只有会改变未来行动与奖励的状态才值得区分。论文的关键是状态分离随学习逐渐出现、CSCG与人工网络的反例，而非正交化必然必要。",
+        "terms": [
+          {
+            "name": "2ACDC",
+            "meaning": "Two-alternative cue–delay–choice，提示—延迟—近/远奖励决策任务。"
+          },
+          {
+            "name": "State aliasing",
+            "meaning": "不同潜在状态在眼前呈现相同视觉观察，必须依赖先前历史或其他上下文推断。"
+          },
+          {
+            "name": "State cells",
+            "meaning": "在特定奖励相关区间、试验类型产生选择性 CA1 神经响应的细胞；是观测表征，而非单个符号状态机节点。"
+          },
+          {
+            "name": "OSM",
+            "meaning": "Orthogonalized state machine，作者描述的成熟 CA1 潜在状态表征与转移结构。"
+          },
+          {
+            "name": "CSCG",
+            "meaning": "Clone-structured causal graph，一类带观察符号克隆的隐藏 Markov 模型，以观察序列/状态转移结构区分感官别名。"
+          },
+          {
+            "name": "Rule reuse vs over-splitting",
+            "meaning": "RSI 迁移中的待测区分：该分开的条件分开，不同外表但规则共享的状态不重复学习。"
+          }
+        ],
+        "summary": [
+          "11 只小鼠学习外观相似、奖励不同的两类走廊；长时段 CA1 成像揭示状态表征与行为策略同时分阶段改善。",
+          "部分具有相同感官输入的轨道状态随训练去相关；状态分离依赖奖励与历史意义；CSCG 同时复现成熟表征与分离顺序。",
+          "LSTM/小 Transformer 能学习序列却不自然形成同样的海马体正交化，因此不能把所有状态彼此正交当作算法必要条件。",
+          "对 I8/I9：独立验证状态混淆、错误拆分、规则复用及后续真实更新收益，不能直接把动物神经表示等同于 LLM 机制。"
+        ],
+        "sections": [
+          {
+            "id": "challenge",
+            "stage": "challenge",
+            "title": "为什么两条看起来一样的灰色走廊，需要不同的下一步？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "2ACDC 任务中，小鼠在起点看到不同的视觉提示，随后进入两条几乎一样的灰色走廊。Near 试验在近处 R1 取水，Far 试验应略过 R1、在远处 R2 取水。当下观察相似，未来奖励预测不同。只有记住此前提示并推断潜在状态，才能避免在错误位置舔舐。"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "对应到 Agent（这是迁移设想）",
+                "text": "两个工具响应都写“请求失败”，一次是限流（退避重试），另一次是授权失效（重新验证）。只按可见字符串重试可能偶尔成功，却没学会按历史条件选策略。不同 API 的限流却应该复用同一基本处理规则。"
+              }
+            ]
+          },
+          {
+            "id": "2acdc-task",
+            "stage": "design",
+            "title": "Figure 1｜作者如何使视觉观察与隐藏任务状态分离？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "两类 230 cm 的 VR 走廊",
+                    "text": "11 只 GCaMP6f 小鼠头部固定，Near / Far 试验以约 50:50 的比例呈现。"
+                  },
+                  {
+                    "title": "前端指示符决定未来奖励",
+                    "text": "开头的 40 cm 视觉 Ind 提示决定奖励在 R1 或 R2；之后长灰色段在两类试验中十分相似。"
+                  },
+                  {
+                    "title": "从 guided 过渡到 operant",
+                    "text": "初期经过正确位置即可得到奖励；后续需要主动在相应位置舔水。错舔近处不取消远处奖励，因此单纯获得奖励不等于正确识别状态。"
+                  },
+                  {
+                    "title": "独立的行为正确性判据",
+                    "text": "只有在正确奖励位置舔舐、没有错选另一个位置，才计入作者对试次的准确性编码。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "关键实验对照",
+                "text": "同样的当前灰色视觉刺激，需要根据早先提示作不同决定。这比只给静态题面贴类别标签更直接地操纵了状态别名（state aliasing）。"
+              }
+            ]
+          },
+          {
+            "id": "behavior",
+            "stage": "result",
+            "title": "Figure 1｜行为经历四个阶段，最后才学会状态条件",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "行为阶段",
+                  "观察到的策略",
+                  "实际学到了什么"
+                ],
+                "rows": [
+                  [
+                    "1 · 随机舔舐",
+                    "沿路尝试多个位置",
+                    "尚未形成稳定奖励状态"
+                  ],
+                  [
+                    "2 · 两个位置都试",
+                    "常在 R1、R2 都尝试",
+                    "学会可能奖励的位置，未按提示区分"
+                  ],
+                  [
+                    "3 · 拿到奖励后停止",
+                    "知道已有奖励可以停止",
+                    "学会停止，但仍可能错选第一位置"
+                  ],
+                  [
+                    "4 · Expert",
+                    "仅在正确 R1 或 R2 获取奖励",
+                    "能利用此前提示预测潜在状态"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "Figure 1c 主要结果",
+                "text": "11 只小鼠训练早期与熟练阶段的正确奖励位置舔舐比例显著不同（双侧配对 t 检验 p=0.004）。这是行为效率证据，不等于神经表征的因果必要性。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "为什么这是 RSI 的好对照？",
+                "text": "在 Far 试验先错舔 R1 后仍可能在 R2 获水。所以“最后成功”并不足以证明识别了正确规则适用状态；类似地，Agent 当前任务成功不代表会在反事实情境选对方法。"
+              }
+            ]
+          },
+          {
+            "id": "imaging",
+            "stage": "design",
+            "title": "Figure 2｜怎样长期追踪数千个 CA1 神经元？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者用双光子随机访问 mesoscope 长期记录背侧海马 CA1 的 GCaMP6f 钙活动。每次成像每鼠平均记录约 4,682±827 个细胞，跨多次训练课次可匹配约 3,954±661 个。这使他们能观察同一小鼠从初学到熟练时群体活动与单细胞调谐的变化。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "数据",
+                  "主要观测",
+                  "不能从它推断什么"
+                ],
+                "rows": [
+                  [
+                    "行为轨迹",
+                    "每一轮近/远奖励区域的舔舐选择",
+                    "不能单独证明 CA1 的状态机是必要的"
+                  ],
+                  [
+                    "群体相关矩阵",
+                    "不同轨道片段、不同 Near/Far 条件的神经活动相似度",
+                    "相关性变化不是因果神经操纵"
+                  ],
+                  [
+                    "UMAP",
+                    "低维展示随训练出现的群体轨迹结构",
+                    "UMAP 投影不是神经状态距离的唯一证据"
+                  ],
+                  [
+                    "单细胞跨日追踪",
+                    "同一细胞是否只在某奖励段或试验类型响应",
+                    "不意味着一个细胞就是一个 HMM 的离散状态"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "实验长处",
+                "text": "同一批动物的长期神经记录与行为指标相连，研究的是神经表征如何形成，而不是只比较训练前后的两个静态快照。"
+              }
+            ]
+          },
+          {
+            "id": "state-separation",
+            "stage": "result",
+            "title": "Figures 2–3｜状态表征怎样逐步去相关？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "训练初期，CA1 神经群体对不同灰色轨道片段常有相似响应；随着小鼠区分奖励状态，相关矩阵中的一些区域逐步去相关，Near/Far 中视觉相同但预测不同的 pre-R1、pre-R2 段变得更可区分。起点和终点等真正共享的片段仍可保持相似，因此不是把一切都做成彼此正交。"
+              },
+              {
+                "type": "prose",
+                "text": "Figure 3 说明群体变化的细胞来源：一些原本响应多个灰色段的细胞变得更有选择性；原本沉默的细胞在特定试验/位置开始响应，或原本广泛响应的细胞在另一条件中降低活动。作者因此描述了逐渐形成的 task-state-specific state cells。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "机制不是越正交越好",
+                "text": "区分的是“同一个感官输入在不同历史下预测不同奖励”的状态；真正共享的结构不必分离。用于 I8 时，必须分别研究 State Aliasing 和 State Over-Splitting，而不能直接最大化所有隐藏状态之间的距离。"
+              }
+            ]
+          },
+          {
+            "id": "cscg",
+            "stage": "design",
+            "title": "Figure 4｜CSCG 为什么能处理同一个观察对应多个状态？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者采用 clone-structured causal graph（CSCG），一种具有观察克隆的 HMM 变体。外部观察符号可以完全相同，但不同的隐藏状态 clone 保留不同转移历史及未来预测；利用序列转移和 Baum–Welch/EM 更新，模型逐步发现隐藏结构。Figure 4 对照了 CSCG 的群体相关矩阵与 CA1 的学习进程。"
+              },
+              {
+                "type": "formula",
+                "label": "观察别名的状态推断",
+                "expression": "z_t ∈ C(o_t);  P(z_t | o_1,...,o_t) ∝ P(o_t | z_t) Σ_{z_{t−1}} P(z_t | z_{t−1}) P(z_{t−1}|o_1,...,o_{t−1})",
+                "meaning": "同一个 o_t 可以激活不同 clone；此前的状态与转移结构帮助判断当前实际处于哪条路径。",
+                "boundary": "这里用简化的过滤方程解释模型思想，不是 Nature 论文对所有神经活动直接测得的动态方程，更不是已验证的 LLM 更新器。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "重要理论边界",
+                "text": "CSCG 在原文中是最吻合成熟状态与分离顺序的计算解释，但没有通过神经元干预证明小鼠真实执行了 CSCG 或某一种精确 EM 算法。"
+              }
+            ]
+          },
+          {
+            "id": "model-counterexamples",
+            "stage": "result",
+            "title": "Figure 4｜哪些神经网络能够做任务，却不自然形成海马体状态机？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "计算模型",
+                  "是否能学习序列/任务",
+                  "状态表征是否像 CA1",
+                  "学习过程是否匹配"
+                ],
+                "rows": [
+                  [
+                    "CSCG（状态克隆 HMM）",
+                    "是",
+                    "成熟表征能复现去相关状态",
+                    "在所测模型中最接近动物状态分离的先后轨迹"
+                  ],
+                  [
+                    "带 Softmax/sWTA 的特定 RNN",
+                    "是",
+                    "某些配置可产生最终正交状态",
+                    "分离出现的次序与动物不同"
+                  ],
+                  [
+                    "Hebbian + spiking RNN",
+                    "是",
+                    "可学习类似成熟状态",
+                    "不是完整复现动物的特定形成顺序"
+                  ],
+                  [
+                    "常规 LSTM / 小型 Transformer",
+                    "是",
+                    "纯下一符号预测下通常不形成同样的 OSM",
+                    "不能用任务正确率替代神经表征的同构性"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "作者还验证，在 LSTM 的损失中明确惩罚 Near/Far 表征相关性时，也可出现某些正交化性质。这说明表征形态依赖架构、激活函数和训练目标，而非只要网络能预测正确序列就必然形成同样的状态机。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "强反例：正交化不是一般性的必要条件",
+                "text": "这个对照只研究小规模任务专用网络。它反对将“全局正交化”宣称为所有 AI 模型掌握任务的必要特征；同时也不能推出大规模 LLM 一定缺少状态表示。"
+              }
+            ]
+          },
+          {
+            "id": "transfer-cues",
+            "stage": "result",
+            "title": "Figure 5｜新视觉线索怎样接入已学好的旧任务结构？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "完成原任务后，作者在一部分已经熟练的小鼠（3 只）中先后引入新的视觉提示。新提示改变外观，但仍沿用原来的 Near/Far 奖励位置关系。小鼠可逐渐把新提示映射到已有任务状态，不必为每个新视觉符号从零发明完整奖励规则。"
+              },
+              {
+                "type": "prose",
+                "text": "作者又将 VR 走廊部分灰色区延长，检查对原轨道结构的泛化：某些潜在状态活动可在新延长区间延续，也可能发生有意义的切换；动物有时根据旧经验过早舔舐。新环境存在预测误差，说明复用不是无条件的即时成功。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "环境变化",
+                  "需要保留的旧知识",
+                  "需要重新识别的东西",
+                  "对应 RSI 测量"
+                ],
+                "rows": [
+                  [
+                    "视觉提示 B/C/D/E",
+                    "Near/Far 的奖励位置与规则关系",
+                    "新线索指向哪个已有潜在状态",
+                    "新外观、同结构任务的零/少样本复用"
+                  ],
+                  [
+                    "延长轨道",
+                    "经过状态之间的转移与奖励预期",
+                    "新长度怎样改变当下状态位置",
+                    "修改序列长度后的状态追踪及错误恢复"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把迁移证据写得过大",
+                "text": "新提示迁移只有所测熟练小鼠的一部分样本，任务仍属原来的两种奖励模式；该结果支持结构复用和适应性，不证明对任意新规则都能泛化，更不是现代 Agent 的参数迭代实验。"
+              }
+            ]
+          },
+          {
+            "id": "science-claim",
+            "stage": "insight",
+            "title": "机制总结｜正确区分状态与正确复用规则，为什么是两个约束？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "当观察相同但未来决策不同",
+                "expression": "o_t^A = o_t^B,  yet  a*(z_t^A) ≠ a*(z_t^B)",
+                "meaning": "Agent 必须保留历史或其他状态信息，避免把 A、B 两种潜在情境错误合并（State Aliasing）。",
+                "boundary": "公式表示我们的 RSI 机制抽象，不是 Nature 原文给 LLM 推导的定理。"
+              },
+              {
+                "type": "formula",
+                "label": "当外观不同但转移与决策结构相同",
+                "expression": "o_t^A ≠ o_t^B,  but  (P, R)^A ≅ (P, R)^B",
+                "meaning": "如果潜在状态转移与奖励规则同构，就应考虑复用同一抽象规则，否则不同表面题可能被过度拆分（False Split）。",
+                "boundary": "符号 ≅ 是任务结构等价的建议性定义；如何判定两个程序任务真正同构，需在实验生成器中预注册。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "本文支持什么？I8 要再证明什么？",
+                "text": "Nature 观察到动物会逐渐区分需要不同决策的任务状态，并在相似变形中复用状态结构；它并未随机让小鼠过度拆分任务，因此 False Split 是我们提出的对照，不是原论文的直接结论。"
+              }
+            ]
+          },
+          {
+            "id": "nearest-work",
+            "stage": "related",
+            "title": "Related Work｜原来已经有人教 LLM 跟踪状态、复用推理模块了",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "相关工作",
+                  "已经证明或研究到哪里",
+                  "I8/I9 仍需要的证据"
+                ],
+                "rows": [
+                  [
+                    "CSCG · Nature Communications 2021（George et al.）",
+                    "提出观察克隆、状态别名推断、转移图学习和图式迁移",
+                    "不能再声称首次让系统用隐藏状态处理感官别名"
+                  ],
+                  [
+                    "(How) Do Language Models Track State? · ICML 2025（Li et al.）",
+                    "在排列置换合成任务中发现两类可解释的状态追踪机制；某种机制泛化更好且可由中间训练塑造",
+                    "不能把 LLM 内部状态追踪与其对泛化的作用当成首次"
+                  ],
+                  [
+                    "From Reasoning Traces to Reusable Modules · ICML 2026（Kong et al.）",
+                    "研究通过 SFT/RL 获得原子技能和路由模块，实证支持新组合上的模块复用",
+                    "I8 不能把“模块会组合”和状态路由本身当成首创"
+                  ],
+                  [
+                    "Do Language Models Track Entities Across State Changes? · ICML 2026（Tang et al.）",
+                    "在更复杂实体状态变更任务上研究了非逐步式状态计算机制",
+                    "不能假设有效输出都要求逐 Token 显式保存一个状态机"
+                  ],
+                  [
+                    "I8 / I9（待验证）",
+                    "固定学习内容与更新器，操纵是否出现反事实的状态区分证据及规则复用条件",
+                    "比较真实 Skill/LoRA 更新后的未见任务净收益、旧能力和后续学 C 的速度"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "新颖性不能建立在“有状态向量”上",
+                "text": "CSCG、LLM 状态追踪和可组合推理模块都是成熟最近邻。我们的候选增量是：在当前成绩接近时，哪种因果可区分的状态划分会改变随后真实更新中的迁移和未来可学习性，而不是凭图可视化宣布模型具有认知地图。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-p0",
+            "stage": "next",
+            "title": "I8 决定性实验｜同一模型会做原题，为什么有时不会切换规则？",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "E0 · 同观察、不同潜在历史（检验错误合并）",
+                    "design": "从一个冻结模型构造两条程序任务历史，最终显示相同提示/工具错误文本，但正确行动不同（例如限流 vs 凭据失效）。使用匹配的先验信息、正确反馈与同预算更新，比较普通 SFT 与历史状态辨别用的成对反事实训练。",
+                    "decisive": "撤掉课堂提示后，对从未训练过的同观察异历史任务，State Aliasing Error 是否降低；只靠当前字符串的基线应有明显边界。"
+                  },
+                  {
+                    "name": "E1 · 不同外观、相同规则结构（检验错误拆分）",
+                    "design": "使用不同工具名、变量名与题型外观，底层状态转移/规则完全同构。设置普通示范、规则复用训练，以及只按外观学彼此独立标签的错误拆分对照，配平 token、难度、更新步数。",
+                    "decisive": "规则未变的新表面形式上，学习增益与 Rule Reuse / False-Split Rate 是否可区分；不能简单增加训练样本后宣称学会抽象规则。"
+                  },
+                  {
+                    "name": "E2 · 隐藏状态不是装饰特征",
+                    "design": "在可审计程序任务中构造历史状态反事实对：只交换会改变潜在奖励/工具约束的历史字段，保持当前观察和任务模板不变；另匹配无关历史改写。记录错误类型并做冻结表征探针。",
+                    "decisive": "相同前测成绩下，改变真正相关的历史字段是否按预注册方向改变动作；神经表征可解码仅为辅助证据，不能单独证明机制。"
+                  },
+                  {
+                    "name": "E3 · I9 未来可学性与顺序",
+                    "design": "在 I9 的 A→B、B→A 同预算真实更新中加入状态辨别型与错误拆分型素材，匹配旧任务与新 C 前测，再继续学习 C 规则。",
+                    "decisive": "进一步学习 C 的完整独立曲线是否随训练历史和状态划分差异变化，而不是只在当前 A/B 任务分数上出现效应。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "关键控制：先验证状态划分，再考虑复杂模型",
+                "text": "P0 先从程序生成规则与有真值状态的工具模拟环境起步；不改变 I8 的错误选择或 I9 的课程顺序之外的变量。只有出现稳定状态×训练方式交互，才考虑状态探针、潜在模块或额外分离损失。"
+              }
+            ]
+          },
+          {
+            "id": "evidence-boundaries",
+            "stage": "next",
+            "title": "能支持的结论与停止条件｜什么时候不应把状态正交化写进算法？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "结果",
+                  "该怎么判断"
+                ],
+                "rows": [
+                  [
+                    "状态训练让某些新题提高，但一般正确 SFT 等预算同样好",
+                    "不是状态区分的独立贡献；回到普通数据质量与样本覆盖解释"
+                  ],
+                  [
+                    "多状态向量更加正交，但撤辅新题及未来 C 无增益",
+                    "不能将表征正交性当 RSI 成功；可能只是表示风格变化"
+                  ],
+                  [
+                    "只有在提示仍在上下文时能正确区分状态",
+                    "属于上下文利用，不是参数/Skill 持久学习"
+                  ],
+                  [
+                    "独立未见状态与后续 C 收益均有系统性提高，控制样本难度后仍存在",
+                    "可以继续机制研究：区分 state aliasing 纠正、规则复用与学习准备状态"
+                  ],
+                  [
+                    "规则共享的新外观需要重复训练才能掌握",
+                    "检查是否发生过度拆分；也可能仅是缺少新视觉/词面映射，不能直接归因内部状态过多"
+                  ]
+                ]
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "官方原文",
+                    "text": "Sun、Winnubst、Natrajan 等，Nature 640:165–175（2025-02-12 online），DOI 10.1038/s41586-024-08548-w。"
+                  },
+                  {
+                    "title": "研究代码",
+                    "text": "sprustonlab/OSM_Paper_Figures，包含论文绘图和计算分析复现实验代码；不声称已经运行复现。"
+                  },
+                  {
+                    "title": "公开数据",
+                    "text": "Janelia Figshare DOI 10.25378/janelia.27273552，包含成像数据；有交互式在线浏览工具 cognitivemap.janelia.org。"
+                  },
+                  {
+                    "title": "本项目状态",
+                    "text": "网站记录的是原论文精读与 I8/I9 的受控假设，暂未执行本篇衍生的 LLM/Agent 参数或 Skill 更新实验。"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     }
   ]

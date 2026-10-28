@@ -104,6 +104,16 @@ PAGE = {
 <p><b>更早的表征研究：</b><b>Niv（Nature Neuroscience 2019）</b>讨论任务状态应该保留哪些特征与隐变量；<b>Yang 等（Nature Neuroscience 2019）</b>在多任务 RNN 观察共享与专门化表示；<b>Mill &amp; Cole（Nature Communications 2025）</b>发现练习伴随从可复用组合表示转向任务特定联合表示。Menghi 的增量是将任务结构关系作为实验变量，结合交错训练行为、MEG 与输入重叠的神经网络模拟来解释初期干扰。[[E103]][[E102]][[E101]]</p>
 <p><b>对应我们 I9：</b>在固定 A/B 材料和 LoRA 预算的集中/交错试验里，可同时操纵任务底层结构是否相同。后测区分单题规则掌握、混合题规则选择和学习 C 的曲线。对 <a href="ideas.html#idea-3">I3</a>，应区分旧规则真的丢了与混合场景选错规则；对 <a href="i8.html">I8</a>，同一题修复不等于不同情境能选对规则。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi"><b>阅读 C-I-D-R 完整精读（Figures 2 / 4–6）</b></a>。</p>
 '''),
+("orthogonalized-state-machine","Nature 2025｜正确区分潜在状态，还是盲目最大化正交？",'''
+<p><b>原论文确实观察到：</b>11 只小鼠学习视觉上相似的 Near/Far 走廊，在相同灰色输入、不同奖励预期的区间逐渐形成更可区分的 CA1 状态表征。行为和群体相关矩阵随学习演变；CSCG 复制成熟的状态表征和具体的分离顺序，常规 LSTM/小 Transformer 能做序列预测却不自然形成同样 OSM。这里不是说 AI 必须复制神经元的全局正交化。[[E353]]</p>
+<div class="table-wrap"><table><thead><tr><th>机器学习中可能发生的错误</th><th>观察到的行为</th><th>新问题该怎样构造</th></tr></thead><tbody>
+<tr><td>状态别名 · State Aliasing</td><td>两个历史不同但当前外观相同的情境，模型作了同样的错误决定</td><td>保持当前观察不变，仅改变影响未来行动的历史</td></tr>
+<tr><td>过度拆分 · False Split</td><td>新外观与旧任务同构，却仍要从头学习一套规则</td><td>更换题面/工具名，保持潜在规则和转移结构不变</td></tr>
+<tr><td>仅表征可分、决策仍然错误</td><td>隐藏向量可线性解码状态，但 Agent 不依赖状态做行动</td><td>通过反事实字段替换和独立动作测试，而不是只画 UMAP</td></tr>
+</tbody></table></div>
+<p><b>与此前读过的 NC 2025 的联系：</b>结构相同的任务在输入特征部分重叠时，反而可能带来交错训练初期的干扰；Nature 的小鼠状态分离研究提供另一个具体的状态别名范式。但两者都未证明现代 LLM 的参数更新因同样神经机制而泛化。[[E99]][[E353]]</p>
+<p><b>研究接入：</b><a href="i8.html#nature2025-state-machine">I8</a> 比较纠错能否消除状态混淆、促进同规则复用；<a href="idea-i9-practice-switching.html#nature2025-orthogonalized-state">I9</a> 比较训练顺序是否改变状态划分及接下来学习 C 的速度。<a href="reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun"><b>Nature 论文 12 节完整精读、Figures 1–5、模型反例及近邻矩阵 →</b></a></p>
+ '''),
 ("interleaving","I9｜集中练习与交错练习：什么时候该换方法？",'''
 <p><b>Observable Phenomenon：</b>Samani 与 Pan（<i>npj Science of Learning</i>，2021）在350名大学生、8周物理作业安排中发现，集中练习的作业成绩更高，交错练习却提高了意外延迟测试中的新题表现。学生觉得交错更难，也更容易误以为自己学得差。正式期中考试差异未达显著，论文没有单独隔离复习间隔等所有机制。[[E20]]</p>
 <p><b>相反现象：</b>Beukers 等（<i>Communications Psychology</i>，2024）在需要区分多个潜在事件结构的任务中发现集中安排更好，且在开始阶段就集中比后期才集中更有效。作者以潜在结构分离解释，但不等于 LLM 已拥有对应的内部表征机制。[[E21]]</p>

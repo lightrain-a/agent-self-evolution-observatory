@@ -334,6 +334,37 @@ def main():
     check('没有 Blocked/Interleaved 直接随机对照' in similarity_text
           or '没有 Blocked/Interleaved 直接随机对照' in ''.join(similarity['boundaries']),
           'NC 2025 must not be mistaken for a blocked/interleaved study')
+    osm=next((p for p in cards if p['id']=='nature2025-orthogonalized-state-machine-sun'),None)
+    check(osm is not None and osm.get('doi')=='10.1038/s41586-024-08548-w'
+          and osm['official_url']=='https://www.nature.com/articles/s41586-024-08548-w'
+          and osm['lead_institution']=='Janelia Research Campus, Howard Hughes Medical Institute',
+          'Nature 2025 OSM source citation or institution missing')
+    check({'E353','E354','M66','M67','M68'}<=refs,
+          'Nature 2025 OSM and strongest CSCG/LLM nearest works missing')
+    osmtext=json.dumps(osm,ensure_ascii=False)
+    check(len(osm['deep_read']['sections'])>=12
+          and all(key in {s['id'] for s in osm['deep_read']['sections']} for key in (
+               '2acdc-task','behavior','state-separation','cscg','model-counterexamples',
+               'transfer-cues','nearest-work','rsi-p0'))
+          and all(t in osmtext for t in (
+               '4,682','3,954','p=0.004','State Aliasing','False Split',
+               'CSCG','LSTM','Transformer','I8','I9')),
+          'OSM Nature findings, counterexamples or falsifiable RSI extension absent')
+    osmnote=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    check('id="deep-nature2025-orthogonalized-state-machine-sun"' in osmnote
+          and 'id="deep-nature2025-orthogonalized-state-machine-sun--rsi-p0"' in osmnote,
+          'Nature OSM long read or executable study anchor not generated')
+    for page, section in [('learning-science','orthogonalized-state-machine'),
+                          ('i8','nature2025-state-machine'),
+                          ('idea-i9-practice-switching','nature2025-orthogonalized-state')]:
+        ht=(ROOT/'rsi'/f'{page}.html').read_text(encoding='utf-8')
+        check(f'id="{section}"' in ht
+              and 'reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun' in ht
+              and 'href="references.html#E353"' in ht,
+              'Nature OSM must link to learning science and both I8/I9 mechanisms: '+page)
+    check('reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun'
+          in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'Nature OSM long-form reading absent from RSI homepage')
     schema=next((p for p in cards if p['id']=='nc2026-schema-reuse-tian'),None)
     check(schema is not None
           and schema['doi']=='10.1038/s41467-026-68692-x'
