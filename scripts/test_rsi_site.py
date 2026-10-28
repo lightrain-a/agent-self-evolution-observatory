@@ -531,6 +531,26 @@ def main():
           'Learning science needs the primary Mosaic Memory source citation')
     check('deep-mosaic-memory-2026-shilov' in overview,
           'New Nature Communications reading note must be discoverable from the homepage')
+    hgm = next((p for p in cards if p['id']=='hgm-2510-21614'), None)
+    check(hgm is not None and hgm['arxiv']=='2510.21614' and
+          'ICLR 2026' in hgm['publication'], 'HGM original and venue missing')
+    check(len(hgm['deep_read']['sections'])>=11 and
+          {'challenge','insight','design','result','related','next'} <=
+          {s['stage'] for s in hgm['deep_read']['sections']},
+          'HGM must retain full C-I-D-R/Related Work source-grounded reading')
+    check('id="hgm-2510-21614"' in card_html and
+          'id="deep-hgm-2510-21614"' in notes_html and
+          'id="deep-hgm-2510-21614--cmp-estimator"' in notes_html,
+          'HGM reading card, full note or CMP formula missing')
+    hgm_note = notes_html.split('id="deep-hgm-2510-21614"',1)[1].split('<section class="panel research-section" id="deep-',1)[0]
+    check(all(x in hgm_note for x in ('0.778','0.626','56.7%','517','61.4%','47.8%','57.0%')),
+          'HGM actual correlations, main metrics or filtered transfer missing')
+    check('CMP_hat' in hgm_note and 'Oracle' in hgm_note and
+          'CPU-hours' in hgm_note and 'I5' in hgm_note,
+          'HGM theoretical vs empirical distinction or RSI boundaries missing')
+    check('href="reading-notes.html#deep-hgm-2510-21614"' in overview and
+          'href="references.html#S310"' in overview,
+          'HGM must be discoverable on homepage with auditable source')
     soar = next((p for p in cards if p['id']=='soar-2601-18778'), None)
     check(soar is not None and soar.get('arxiv')=='2601.18778' and
           'ICML 2026' in soar['publication'], 'SOAR original paper and venue metadata missing')

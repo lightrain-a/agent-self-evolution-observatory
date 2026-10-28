@@ -31,6 +31,659 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "hgm-2510-21614",
+      "short_title": "HGM · ICLR 2026 Oral",
+      "title": "Huxley-Gödel Machine: Human-Level Coding Agent Development by an Approximation of the Optimal Self-Improving Machine",
+      "authors": "Wenyi Wang, Piotr Piękos, Li Nanbo, Firas Laakom, Yimeng Chen, Mateusz Ostaszewski, Mingchen Zhuge, Jürgen Schmidhuber",
+      "lead_institution": "King Abdullah University of Science and Technology (KAUST)",
+      "institutions": [
+        "King Abdullah University of Science and Technology (KAUST)"
+      ],
+      "institution_source": "ICLR 2026 正式版首页作者署名单位与 KAUST 邮箱",
+      "publication": "ICLR 2026 · Oral · arXiv:2510.21614v3",
+      "arxiv": "2510.21614",
+      "first_posted": "2025-10-24",
+      "version": "arXiv v3（2025-10-29）；ICLR 2026 Oral",
+      "read_on": "2026-10-28",
+      "reading_level": "作者 arXiv v3 正文 §1–6、Table 1–4、Appendix D（经验CMP口径）与官方仓库核对；理论证明核对假设与结论，未复现实验",
+      "tags": [
+        "RSI",
+        "Coding Agent",
+        "Gödel Machine",
+        "Metaproductivity",
+        "Clade",
+        "Thompson Sampling",
+        "ICLR 2026"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "指出当前编码成功率不等于后代潜力；比较支系估计器与已观察后代最高分的加权/非加权相关。",
+          "open_question": "已展开树上的回顾性相关不等于未见未来的真值预测；搜索策略会影响哪些后代被观察。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "自改写 Coding Agent 源码并生成可执行后代；扩展代码搜索树。",
+          "open_question": "没有证明自生成数据带来了 LLM 参数内部的新知识。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "以支系后代证据决定扩展哪个父代，将扩展与旧节点评测拆开。",
+          "open_question": "没有测 LLM 推理的采样支持集或参数更新的能力上限。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "保留独立 Agent 代码版本树，以最终较优版本跨任务、跨模型检验可迁移性。",
+          "open_question": "代码版本留存不等于参数持续学习，也未直接处理 LoRA 旧知识遗忘。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "官方仓库对执行模型生成代码有风险提示，实验需隔离可运行修改。",
+          "open_question": "没有在对抗性线上权限环境中证明自修改的越权与安全边界。"
+        }
+      },
+      "one_sentence": "高分 Coding Agent 未必产生更强后代；HGM 通过支系统计选择值得继续改写的祖先。",
+      "story": {
+        "challenge": "DGM/SICA 按当前任务分数选择修改对象，但高分父代未必能产生强后代；有限预算应该扩展哪条分支？",
+        "insight": "未来自改进价值应考虑整条后代支系可找到的最好版本，而不只是父代眼前的代码成功率。",
+        "design": "为代码版本建树；聚合支系的成功/失败评测；用 Thompson Sampling 选父代，独立决定扩展、评测与最终版本。",
+        "result": "SWE-Verified-60：HGM 56.7%/517 CPU-hours，DGM 53.3%/1231；Polyglot：HGM 30.5%/347，DGM 27.1%/2385。"
+      },
+      "problem": "有限预算内，如何挑选更可能产生优质后代的 Coding Agent，同时避免高分但演化停滞的分支独占资源？",
+      "setup": "从相同初始 Coding Agent 版本开始，以 SWE-bench Verified-60、Polyglot 等代码任务评测代码自修改；主要对比最多 800 次单任务评测，另有全量 SWE Verified 500 题及 8000 次评测。",
+      "updates": "主要更新 Coding Agent 的源码、工具调用和执行流程；并没有持续微调底层 GPT-5-mini 等模型权重。保留多分支的代码版本。",
+      "key_ideas": [
+        {
+          "name": "Metaproductivity–Performance Mismatch",
+          "summary": "当前 benchmark 高分与从该节点出发能否继续产生强后代不是同一回事。",
+          "formula": "Current Score(a) ≠ Expected Best Descendant Utility(a)"
+        },
+        {
+          "name": "理论 CMP 与实际代理",
+          "summary": "理想 CMP 看未来支系中最好后代的期望效用，实际用已观测支系成功/失败计数的加权平均近似。",
+          "formula": "CMP_hat(a)=Σ_{v∈C(a)} success(v) / Σ_{v∈C(a)} [success(v)+failure(v)]"
+        },
+        {
+          "name": "拆开扩展与评测",
+          "summary": "扩展父代用支系后验，评测具体节点用单节点后验；以 N_t^α 和现有节点数决定何时再扩展。",
+          "formula": "Expand when N_t^α ≥ |T_t| ; α=0.6（主设置）"
+        }
+      ],
+      "evidence": [
+        "Table 1 加权 Pearson：SWE-Verified-60 的 HGM/DGM/SICA 为 0.778/0.285/0.444；Polyglot 为 0.626/0.383/0.274。",
+        "Table 2 SWE-Verified-60：HGM 56.7%、517 allocated CPU-hours；DGM 53.3%、1231；SICA 50.0%，约 360 次评测后因上下文错误未完成。",
+        "Table 2 Polyglot：HGM 30.5%、347 CPU-hours；DGM 27.1%、2385；SICA 25.4%、572。",
+        "§4.3：全量 SWE Verified 500 题，HGM 8000 次评测后将初始 53.2% 提升到 61.4%。",
+        "Table 3–4 SWE-Lite 过滤与标准测试：HGM+GPT-5-mini 为 40.1%/49.0%，换 GPT-5 后为 47.8%/57.0%。"
+      ],
+      "boundaries": [
+        "理论真实 CMP 是给定未来策略与预算下最好后代效用的期望；实际 CMP_hat 是历史支系的经验成功率；不是同一量。",
+        "经验 CMP 在搜索结束后计算，评测最高非根后代；虽然作者排除关键支系缓解泄漏，仍是回顾性相关而非未来保证。",
+        "定理依赖最终效用、可重复静态评测、零证明成本和等单位自修改成本；不是现实系统的全局最优性证明。",
+        "主结果同时改变了父代选择、单任务评测粒度、异步调度，不能把所有 CPU-hours 优势归因于 CMP。",
+        "SICA 在 SWE-Verified-60 未耗尽预算；CPU-hours 不等同 GPU FLOPs、API 费用或真实墙钟。",
+        "SWE-Lite 全量 300 题有 93 题与 Verified 重合；新任务迁移优先看排除重合后的 207 题。human-level 仅指作者发表时特定榜单的 Agent 设计比较。",
+        "Code Agent 的历史版本树与 LLM 参数长期内化属于不同更新机制。"
+      ],
+      "our_relevance": [
+        "HGM 已提出并验证当前能力与后代潜力不一致；RSI 后续工作不能把这句话再包装成新颖性。",
+        "对 I5：HGM 选择同一自修改树里的父代，I5 选择十个独立学习者之间的互教关系，主要反馈是撤伴后的双向净学习增益。",
+        "对 I2/I6/I9：HGM 并未直接研究教学方式、失败轨迹价值或 A→B 与 B→A 学习历史对第三任务 C 的参数可学习性。",
+        "继承其证据思路：把提出候选与补充验证解耦；分别评价当前收益、未来潜力与完整预算。"
+      ],
+      "next_test": "给多种当前能力相近的 RSI 检查点相同的后续真实参数更新预算，比较当前分数、历史代理与后续独立增益的预测性；进一步用 Proposer×Learner 交叉交换排除单侧出题质量/可塑性差异。若只有 MPM 现象，不另立论文。",
+      "links": {
+        "html": "https://arxiv.org/html/2510.21614v3",
+        "pdf": "https://arxiv.org/pdf/2510.21614v3",
+        "code": "https://github.com/metauto-ai/HGM",
+        "full_text": "https://openreview.net/forum?id=T0EiEuhOOL"
+      },
+      "deep_read": {
+        "focus": "为什么当前 Coding Agent 高分不等于未来有更强后代？HGM 如何定义、估计后代支系潜力，它的定理和实测优势分别能证明什么？",
+        "summary": [
+          "Challenge：按当前高分继续改写，会错过低分但更有演化潜力的代码 Agent。",
+          "Insight：自我改进价值涉及未来最好后代的期望效用，而不是父代当前成绩。",
+          "Design：支系聚合成功/失败，Thompson Sampling 选扩展父代，并将新节点扩展与旧节点评测分开。",
+          "Result：HGM 在作者的代码任务设置中提升最终版本成绩并减少 allocated CPU-hours，但理论 CMP Oracle 与有限支系代理不是同一事物。"
+        ],
+        "terms": [
+          {
+            "name": "Archive / 版本树",
+            "meaning": "每个节点是一份可运行的 Coding Agent 代码版本；父节点修改代码产生子节点，留出多条后代分支。"
+          },
+          {
+            "name": "MPM",
+            "meaning": "Metaproductivity–Performance Mismatch；当前代码成功率不可靠地反映未来搜索出强后代的潜力。"
+          },
+          {
+            "name": "GMP",
+            "meaning": "Global Metaproductivity，选择某节点扩展后，整棵树最终可能找到的最好 Agent 的期望效用。"
+          },
+          {
+            "name": "CMP",
+            "meaning": "Clade-Metaproductivity，只考虑以当前节点为根的未来后代支系；与历史成功率估计是两个不同量。"
+          },
+          {
+            "name": "Thompson Sampling",
+            "meaning": "利用任务成功/失败证据采样可能的收益，不完全贪心；扩展阶段用支系统计，评测阶段用单节点统计。"
+          },
+          {
+            "name": "Best-belief Agent",
+            "meaning": "在最终版本树中按效用后验的指定分位数挑选返回的 Coding Agent，而非只看单次测试结果。"
+          }
+        ],
+        "metric_summary_title": "五组指标：定义、实测与解释边界",
+        "metric_summary_intro": "不要把相关性、搜索准确率、计算成本和迁移测试混为一个“最优性证据”。",
+        "metric_summary": [
+          {
+            "family": "支系价值估计",
+            "metrics": "Table 1 · Weighted Pearson r",
+            "meaning": "对已展开树的经验后代潜力做回顾性相关，不是未展开未来保证。",
+            "result": "SWE-Verified-60：HGM 0.778 vs DGM 0.285；Polyglot：HGM 0.626 vs DGM 0.383。"
+          },
+          {
+            "family": "SWE-Verified-60",
+            "metrics": "Table 2 · Accuracy / allocated CPU-hours",
+            "meaning": "主实验最多 800 次任务评测，比较最终版本与已分配 CPU 运行资源。",
+            "result": "HGM 56.7% / 517；DGM 53.3% / 1,231；SICA 50.0%（未跑满预算）。"
+          },
+          {
+            "family": "Polyglot",
+            "metrics": "Table 2 · Accuracy / allocated CPU-hours",
+            "meaning": "另一代码任务环境中相同类型对照。",
+            "result": "HGM 30.5% / 347；DGM 27.1% / 2,385；SICA 25.4% / 572。"
+          },
+          {
+            "family": "全量任务进化",
+            "metrics": "§4.3.1 · SWE-Verified 500 tasks",
+            "meaning": "增至 8,000 次评测，不能与前面的 60 题实验直接混读。",
+            "result": "调整起点 53.2%，最终 HGM 61.4%。"
+          },
+          {
+            "family": "未见任务与更换底座",
+            "metrics": "Table 3–4 · SWE-Lite",
+            "meaning": "过滤 93 道重合题后仅 207 题，另有换 GPT-5 的测试。",
+            "result": "GPT-5-mini：40.1% / 49.0%；GPT-5：47.8% / 57.0%（过滤/全量）。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "challenge-mpm",
+            "stage": "challenge",
+            "title": "§1：为什么当前高分，不一定是最值得继续进化的父代？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "想象一条 Agent 搜索树：A 今天的代码修复成绩较高，但之后每次改写都没有产生更好版本；B 当前略弱，却有更易扩展的工具接口或可修改执行策略，未来反而产生更强的子代。这是本站用于说明直觉的例子，不是论文的具体数值。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "选择标准",
+                  "研究的问题",
+                  "真实可观察量"
+                ],
+                "rows": [
+                  [
+                    "当前性能",
+                    "这个版本现在能解决多少代码任务？",
+                    "单节点的 task success"
+                  ],
+                  [
+                    "后代潜力",
+                    "从这个版本继续修改，是否更容易产生强后代？",
+                    "未来支系中的最好可执行版本"
+                  ],
+                  [
+                    "有限预算分配",
+                    "该扩展谁，又该给谁补一条任务测试？",
+                    "扩展动作与评测动作分别选择"
+                  ]
+                ],
+                "caption": "区别当前 Agent 能力与自我改进潜力。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "MPM 的核心",
+                "text": "SICA 和 DGM 倾向根据当前性能优先发展某个版本，可能过早放弃目前分数较低、但后续修改更有价值的祖先。这种偏差被作者命名为 Metaproductivity–Performance Mismatch。"
+              }
+            ]
+          },
+          {
+            "id": "tree-search",
+            "stage": "design",
+            "title": "§2：自修改如何变成一棵树，而不是只保留最新代码？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "从初始版本开始",
+                    "text": "a0 是根节点。每次运行自修改操作 m_a，都生成一个新的 Coding Agent 子节点并归档。"
+                  },
+                  {
+                    "title": "扩展与评测是两个动作",
+                    "text": "扩展创造新节点；评测 v_a 则在一个新任务上测试已有节点，增加该节点的成功或失败证据。"
+                  },
+                  {
+                    "title": "用完预算后选最终 Agent",
+                    "text": "搜索目标不是累计过程奖励，而是让预算结束后被选中的 Agent 获得更高的真实代码任务效用。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "§2 · 整体搜索目标",
+                "expression": "J(pi)=E[U(a_final)];  a_final=argmax_{a in T_B} Score_pi(a)",
+                "meaning": "π 包含创建候选、追加评测和终止时版本选择三个决策，U 以平均任务通过率表示。",
+                "boundary": "对于动态权限、非静态任务与真实运行风险，U 不能自然推广为唯一目标。"
+              }
+            ]
+          },
+          {
+            "id": "gmp-cmp",
+            "stage": "insight",
+            "title": "§3.2：GMP 看整个树，CMP 看某个祖先的后代",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "GMP（Global Metaproductivity）看从某个扩展决策出发，后续整个代码演化树最终能够找到多强的 Agent。CMP（Clade-Metaproductivity）则限制在当前节点 a 的子树里，衡量其后代谱系的未来价值。"
+              },
+              {
+                "type": "formula",
+                "label": "§3.2 · GMP（概念表达）",
+                "expression": "GMP_pi(T,a) = E_{T_B | T,a,pi}[ U(argmax_{v in T_B} Score_pi(v)) ]",
+                "meaning": "状态是目前的完整版本树 T，动作是选择从哪个父代继续扩展，未来结果依赖后续策略 π。",
+                "boundary": "这是对未来演化过程的期望，不是现在某个版本在 benchmark 上的经验得分。"
+              },
+              {
+                "type": "formula",
+                "label": "§3.2 · CMP（概念表达）",
+                "expression": "CMP_pi(T,a) = E_{T_B | T,a,pi}[ U(argmax_{v in Clade(T_B,a)} Score_pi(v)) ]",
+                "meaning": "只看 a 的未来后代支系，不包括其他无关兄弟分支。",
+                "boundary": "真实 CMP 需要考虑还没生成的后代；后文用历史统计计算的 CMP_hat 只是代理，不得视为同一对象。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么这是 RSI 研究的重要前作",
+                "text": "它已经提出并讨论“当前能力 ≠ 后续改进潜力”的问题，因此不能把这一现象再声称为我们新的首次发现。"
+              }
+            ]
+          },
+          {
+            "id": "theorem-assumptions",
+            "stage": "insight",
+            "title": "Theorem 1：为什么作者并没有证明现实中的 HGM 全局最优？",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "假设 A：目标只依赖预算结束后最终选中的 Agent，改写过程中没有其他奖励。",
+                  "假设 B：所有任务评测可重置、可重复，过去评测不影响之后同一 Agent–Task 的期望结果。",
+                  "假设 C：形式证明不消耗预算，任何一次自修改恰好消耗相同一单位预算。",
+                  "在这些条件下，真实 CMP Oracle 能支持论文定义的 Gödel Machine 决策。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "理论 Oracle ≠ 实际经验估计",
+                "text": "HGM 本身没有访问未来的真 CMP，仅从已观察到的版本树中聚合证据。因此这个定理不能推导出现实系统中 HGM 已达到自改进全局最优，更不等于所有 LLM 参数型 RSI 都最优。"
+              }
+            ]
+          },
+          {
+            "id": "cmp-estimator",
+            "stage": "design",
+            "title": "§3.3：HGM 怎样用已经观察到的后代来估计 CMP？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "支系成功率估计",
+                "expression": "CMP_hat(a) = Σ_{v in C(a)} n_success(v) / Σ_{v in C(a)} [n_success(v)+n_failure(v)]",
+                "meaning": "将节点 a 和当前已生成后代的通过/失败任务次数聚合；评测次数多的节点自然权重更大。",
+                "boundary": "这是历史支系统计，不是理论定义的未来最优后代期望。评测策略决定样本分配，估计可能带有选择偏差。"
+              },
+              {
+                "type": "prose",
+                "text": "作者之所以聚合整个 Clade 的结果，是因为低分祖先的高质量后代本身就提供了“继续从这条支系搜索”的证据。相比单节点成功率，累积多节点的评测样本也减少了极端少样本估计的不稳定性。"
+              },
+              {
+                "type": "formula",
+                "label": "扩展时：支系 Thompson Sampling",
+                "expression": "z_a ~ Beta( τ·[1+n_success^C(a)], τ·[1+n_failure^C(a)] ); expand argmax z_a",
+                "meaning": "用支系证据生成 Beta 后验样本，概率化选择父代；τ 随当前阶段逐渐偏向利用。",
+                "boundary": "Beta 建模是求解策略，并不自动补偿非独立后代数据的偏差，也不能保证发现所有潜在高价值支系。"
+              },
+              {
+                "type": "prose",
+                "text": "需要分清：扩展父代使用支系级的聚合证据；对于追加评测哪个具体 Agent，HGM 使用该节点自己的成功/失败证据。二者对应不同的决策。"
+              }
+            ]
+          },
+          {
+            "id": "schedule",
+            "stage": "design",
+            "title": "§3.3：Expand 和 Evaluate 为什么必须分开？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "无限臂 Bandit 式调度",
+                "expression": "Expand if N_t^α ≥ |T_t| ; main α = 0.6",
+                "meaning": "N_t 是已完成评测次数，|T_t| 是当前版本树的节点数。根据可用证据决定是否继续引入新候选。",
+                "boundary": "这是算法采用的启发式调度规则，而不是实验证明的普遍最优比例。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "先选动作类型",
+                    "text": "这次预算到底用于生成一个新代码 Agent，还是用一个已有 Agent 再做一道测试？"
+                  },
+                  {
+                    "title": "需要扩展时选支系",
+                    "text": "对各候选父代做 Thompson Sampling，考虑整条后代谱系而非单节点准确率。"
+                  },
+                  {
+                    "title": "需要评测时选节点",
+                    "text": "基于具体节点后验不确定性与成绩，追加一个 Agent–Task 结果，不必强制新节点做完全部测试。"
+                  },
+                  {
+                    "title": "异步运行",
+                    "text": "将扩展与评测以异步方式放到 CPU worker 中，不用等整批任务完整运行才继续搜索。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "示意：为什么能减少浪费？（本站编造案例）",
+                "text": "新节点 X 已连续失败九个测试；另一个旧节点 Y 在很少的评测中有成功记录。旧方法可能继续把预设数量的测试跑完，新方案可以优先给 Y 补评。这个示意不代表作者提供了相同数字的实验。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "节省 CPU-hours 的归因",
+                "text": "HGM 改变的不只是 CMP 指标，也改变了每个节点的评测粒度、是否立即评测子节点以及异步资源调度。因此 Table 2 的效率收益是算法整体效果，不能归给 CMP 单一组件。"
+              }
+            ]
+          },
+          {
+            "id": "estimator-correlation",
+            "stage": "result",
+            "title": "Table 1：CMP 代理与后代潜力的相关程度",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "方法",
+                  "SWE-Verified-60 加权 / 非加权 r",
+                  "Polyglot 加权 / 非加权 r"
+                ],
+                "rows": [
+                  [
+                    "SICA",
+                    "0.444 / 0.444",
+                    "0.274 / 0.274"
+                  ],
+                  [
+                    "DGM",
+                    "0.285 / 0.406",
+                    "0.383 / 0.357"
+                  ],
+                  [
+                    "HGM",
+                    "0.778 / 0.512",
+                    "0.626 / 0.873"
+                  ]
+                ],
+                "caption": "原文 Table 1，Pearson 相关；加权时每个预测按其使用的任务评测数加权。"
+              },
+              {
+                "type": "prose",
+                "text": "作者在搜索完成后，将节点非根后代中最高的经验任务成功率定义为 empirical CMP。为了减少目标泄漏，评估 HGM 估计器时排除了节点自身，以及包含该支系最高后代的关键子树。即便这样，相关仍然是在已经展开的同一棵搜索树上回顾性计算，不能当作对未知未来的独立预言。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "为什么不能只引用 0.778？",
+                "text": "加权的 SWE-Verified-60 HGM 为 0.778，但非加权仅 0.512；Polyglot 是加权 0.626、非加权 0.873。评测次数、样本选择和统计口径决定相关系数。"
+              }
+            ]
+          },
+          {
+            "id": "main-results",
+            "stage": "result",
+            "title": "Table 2：800 次任务评测下，性能与 CPU-hours 的真实对照",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "选择方法",
+                  "SWE-Verified-60 准确率 / CPU-hours",
+                  "Polyglot 准确率 / CPU-hours"
+                ],
+                "rows": [
+                  [
+                    "SICA",
+                    "50.0% / 未完成（上下文死循环）",
+                    "25.4% / 572"
+                  ],
+                  [
+                    "DGM",
+                    "53.3% / 1,231",
+                    "27.1% / 2,385"
+                  ],
+                  [
+                    "HGM",
+                    "56.7% / 517",
+                    "30.5% / 347"
+                  ]
+                ],
+                "caption": "原文 Table 2；CPU-hours 是分配 CPU 的累计时数，不能直接写成 GPU 训练费用。"
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "SWE-Verified-60",
+                    "setup": "同一初始 Agent 40%；最多 800 次任务评测。GPT-5 生成修改，GPT-5-mini 支持评测。",
+                    "result": "HGM 56.7%，DGM 53.3%；HGM 517 vs DGM 1231 CPU-hours（差约 2.38 倍）。",
+                    "supports": "HGM 的整套算法在测试的搜索场景里得到更好最终 Agent 与更低资源开销。",
+                    "not_proven": "不能把收益单独归于 CMP；SICA 在约 360 次后遇到上下文长度错误而提前中断。"
+                  },
+                  {
+                    "domain": "Polyglot",
+                    "setup": "相同初始 Agent 20.3%；最多 800 次评测。扩展/评测分别采用两种 Qwen3-Coder。",
+                    "result": "HGM 30.5% / 347 CPU-hours；DGM 27.1% / 2385；SICA 25.4% / 572。",
+                    "supports": "效益在第二种代码任务环境中也出现。",
+                    "not_proven": "不等于真实 API 美元、GPU FLOPs 或墙钟节省完全相同比例。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "transfer-results",
+            "stage": "result",
+            "title": "Table 3–4：跨任务和底层模型迁移是否成立？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "将 SWE-Verified 搜索扩大到 500 题与 8000 次任务评测时，初始 Agent 经调整后达到 53.2%，HGM 发现的版本达到 61.4%。随后，作者在 SWE-Lite 进行迁移测试。Lite 总共 300 题，其中 93 题与 Verified 重合，因此必须同时报告排重后 207 题。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "Coding Agent 与底座",
+                  "SWE-Lite 过滤后 207 题",
+                  "SWE-Lite 全部 300 题"
+                ],
+                "rows": [
+                  [
+                    "HGM 初始 Agent + GPT-5-mini",
+                    "34.8%",
+                    "44.0%"
+                  ],
+                  [
+                    "SWE-agent + GPT-5-mini",
+                    "39.6%",
+                    "47.6%"
+                  ],
+                  [
+                    "HGM 最终 Agent + GPT-5-mini",
+                    "40.1%",
+                    "49.0%"
+                  ],
+                  [
+                    "当时领先人工 SWE-agent（更强模型）",
+                    "48.3%",
+                    "56.7%"
+                  ],
+                  [
+                    "HGM Agent + GPT-5",
+                    "47.8%",
+                    "57.0%"
+                  ]
+                ],
+                "caption": "来自原文 Table 3–4；最后两行模型底座不同，不能和同底座行直接作模型设计归因。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "human-level 的精确口径",
+                "text": "仅指作者发表时的 SWE-Lite checked leaderboard 上，自动生成的 Agent 设计达到了与领先人工工程系统接近的效果。换 GPT-5 后完整 300 题 57.0% 略高于参考 56.7%，但过滤后 207 题 47.8% 低于参考 48.3%。不能理解为模型已具备泛化的人类工程师能力。"
+              }
+            ]
+          },
+          {
+            "id": "related-work-boundary",
+            "stage": "related",
+            "title": "Related Work：SICA、DGM 与 HGM 是怎样一步步变成支系价值搜索的？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "系统",
+                  "更新的对象",
+                  "搜索/选择依据",
+                  "HGM 与之不同的部分"
+                ],
+                "rows": [
+                  [
+                    "SICA",
+                    "Coding Agent 的源代码/执行过程",
+                    "倾向持续改进当前高分 Agent",
+                    "发现当前分数未必反映后代潜力；扩展/补评可分开"
+                  ],
+                  [
+                    "DGM",
+                    "维护开放式 Agent 代码谱系",
+                    "按已有性能和变异经验优先扩展",
+                    "用 Clade 级评测成功率指导父代选择"
+                  ],
+                  [
+                    "HGM",
+                    "同类可运行 Coding Agent 版本",
+                    "未来支系价值的经验代理 + Thompson Sampling",
+                    "将指标、动作类型选择、单任务补评、异步调度联合组织"
+                  ],
+                  [
+                    "Gödel Machine（理论）",
+                    "拥有自引用修改/形式证明的通用求解机器",
+                    "只在可证明提高长期效用时修改",
+                    "HGM 并没有得到一般环境中的形式最优保证"
+                  ]
+                ],
+                "caption": "作者在 §2/§5 讨论的主要区别，本站按实际更新对象重新组织。"
+              },
+              {
+                "type": "prose",
+                "text": "如果只是把“使用长期价值替代当前分数”重新作为 RSI 论文的中心观点，会直接与 HGM 碰撞。真正新问题必须改变目标对象或测量协议，例如模型参数持续学习的可吸收性、动态数据生成的长期新增信息，或者 I5 多模型之间双向净学习收益。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "论文整体方法与理论不是同一层",
+                "text": "HGM 展示一个可运行的自改写代码 Agent 搜索机制，但没有验证其 CMP 理论可直接用于复杂的多 Agent 权限策略、开放式动态奖励或跨模型参数学习。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-followup",
+            "stage": "next",
+            "title": "我们在 RSI 领域最值得继承什么？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "研究主线",
+                  "HGM 已占据的论点",
+                  "仍可能独立验证的变量"
+                ],
+                "rows": [
+                  [
+                    "I5 · 十模型交换舞伴",
+                    "单个 Coding Agent 的祖先—后代树里选值得扩展的父代",
+                    "十个独立学习者之间的伙伴重配、双向教学后撤伴独立净收益"
+                  ],
+                  [
+                    "I2 · 因材施教",
+                    "没比较教师方法对同一学生的真实学习收益",
+                    "固定更新面/任务下的教学动作响应与跨学生差异"
+                  ],
+                  [
+                    "I6 · 失败轨迹价值",
+                    "没控制同一道题中不同失败轨迹的纠错价值",
+                    "哪条失败过程在相同反馈/更新预算后让未来更多未见题做对"
+                  ],
+                  [
+                    "I9 · 课程顺序",
+                    "主要在代码版本谱系中分配搜索预算",
+                    "同训练材料 A→B 和 B→A 产生等能力状态后，学习第三任务 C 的差异"
+                  ],
+                  [
+                    "自举持续能力（候选）",
+                    "当前 Agent 绩效与后代潜力不等价已被明确研究",
+                    "要验证参数型 RSI 的 Proposer×Learner 历史适配和超越单轮因素的跨轮交互"
+                  ]
+                ],
+                "caption": "这张表是本站研究定位，不是原论文直接宣称解决的 RSI 研究清单。"
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0：在真实参数更新中测量未来潜力",
+                    "design": "选择当前独立任务能力相近的多个模型版本，之后都用固定的新任务与相同更新预算学习，测未来独立净增益。",
+                    "decisive": "HGM 式历史潜力代理是否比当前成绩、技能覆盖和训练成本预测得更好？单有“当前分数≠未来潜力”不构成新颖贡献。"
+                  },
+                  {
+                    "name": "P1：区分 Proposer 和 Learner 的作用",
+                    "design": "冻结不同历史的 Proposer 与 Learner，用 2×2 交叉学习验证，再允许多轮共同更新；固定任务验证器与题目覆盖。",
+                    "decisive": "是否出现不能被任务难度、单侧可塑性和即时学习收益解释的跨轮历史交互？若仅是一轮关系差异，合并为 I5 机制实验。"
+                  },
+                  {
+                    "name": "反证与停止",
+                    "design": "在等总计算量、独立测试、不同随机种子下，比较简单当前分数、Clade 代理和真正后续学习曲线。",
+                    "decisive": "若历史代理只因多跑评测而好、或未来差异由初始能力全部解释，则不再包装新型长期价值优化器。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "值得学习的论文写法",
+                "text": "先发现当前选择信号失真（MPM），再定义面向真正决策目标的量（CMP），最后让选择策略与实验逐项对应。我们应先证明新信号会改变 RSI 的下一轮选择，再设计更复杂的调度模块。"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "inventive-production-pf-2023-kapur",
       "short_title": "Inventive Production · npj 2023",
       "title": "Prior math achievement and inventive production predict learning from productive failure",

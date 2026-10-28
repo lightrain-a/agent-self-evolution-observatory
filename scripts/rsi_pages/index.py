@@ -31,6 +31,7 @@ PAGE = {
 <a href="literature.html#rsi-landscape-20261003"><b>RSI 领域全景与竞争边界</b><span>新增 2026-10-03 综述导读：改什么、固定什么，四问 + 安全与一手证据。</span></a>
 <a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
+<a href="reading-notes.html#deep-hgm-2510-21614"><b>HGM · ICLR 2026 Oral 完整精读</b><span>当前成绩为何不等于后代潜力？详解 GMP/CMP、支系统计、Thompson Sampling、Table 1–4 和 RSI 研究边界。[[S310]]</span></a>
 <a href="reading-notes.html#deep-soar-2601-18778"><b>SOAR · ICML 2026 完整精读</b><span>双层Meta-RL、真实学习增益、Intrinsic奖励实际公式、Promotion、多样性坍缩及I2/I6/I8/I9的研究边界。</span></a>
 <a href="reading-notes.html#deep-rote-learning-iclr2026-wu"><b>ICLR 2026 · Rote Learning：先记忆再泛化</b><span>读懂两阶段记忆与语义映射；重点看两跳生成36%、多选16%与ICL直给事实95%的不同条件。</span></a>
 

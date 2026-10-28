@@ -230,8 +230,10 @@ def main():
               'RLAnything source must point to official ICML proceedings')
         check(js("return document.querySelectorAll('.deep-chapter[open]').length===0"),
               'Detailed formulas or cases should start collapsed')
-        check(js("return document.querySelector('.deep-terms').children.length===3"),
-              'Terms are not explained before jargon')
+        check(js("return document.querySelector('#deep-hypothesis-testing-2026-ding .deep-terms').children.length===3"),
+              'Original motor-learning three-term glossary changed')
+        check(js("return document.querySelector('#deep-hgm-2510-21614 .deep-terms').children.length>=5 && document.querySelector('#deep-hgm-2510-21614--stage-insight')!==null"),
+              'HGM glossary or full C-I-D-R reading is not rendered')
         screenshot('reading-notes-desktop.png')
         js("document.querySelector('#deep-acl2026-sft-ilp-xue .deep-metric-overview').scrollIntoView({block:'start'})")
         time.sleep(.6)
