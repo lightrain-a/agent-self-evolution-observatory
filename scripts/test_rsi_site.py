@@ -593,6 +593,29 @@ def main():
           'Learning science needs the primary Mosaic Memory source citation')
     check('deep-mosaic-memory-2026-shilov' in overview,
           'New Nature Communications reading note must be discoverable from the homepage')
+    onan = next((p for p in cards if p['id']=='onan-self-organized-interleaving-2024'), None)
+    check(onan is not None and onan.get('doi')=='10.1038/s41539-024-00245-7'
+          and onan['links']['html']=='https://www.nature.com/articles/s41539-024-00245-7',
+          'Onan 2024 original npj publication not captured')
+    check(len(onan.get('deep_read',{}).get('sections',[]))>=12 and
+          len(onan['deep_read']['metric_summary'])==5 and
+          {'challenge','insight','design','result','related','next'} <=
+          {s['stage'] for s in onan['deep_read']['sections']},
+          'Onan 2024 must have full evidence and distinct RQ1/RQ2/RQ3 coverage')
+    check('id="onan-self-organized-interleaving-2024"' in card_html
+          and 'id="deep-onan-self-organized-interleaving-2024"' in notes_html,
+          'Onan 2024 quick card or full reading missing')
+    onan_note = notes_html.split('id="deep-onan-self-organized-interleaving-2024"',1)[1].split('<section class="panel research-section" id="deep-',1)[0]
+    check(all(s in onan_note for s in ('76%', '55%', '81%', '57%', 'p=0.222',
+                                     'p=0.205', '6.56', '3.57', '35', '5–7')),
+          'Onan 2024 numbers or null accuracy result missing from deep note')
+    check('odds' in onan_note and '不显著' in onan_note
+          and '联合干预' in onan_note and 'I9' in onan_note,
+          'Onan 2024 must separate behavior change, correlational score and I9 proposal')
+    check('E310' in refs
+          and 'href="references.html#E310"' in overview
+          and 'href="reading-notes.html#deep-onan-self-organized-interleaving-2024"' in overview,
+          'Onan source and full read must be discoverable from homepage')
     hgm = next((p for p in cards if p['id']=='hgm-2510-21614'), None)
     check(hgm is not None and hgm['arxiv']=='2510.21614' and
           'ICLR 2026' in hgm['publication'], 'HGM original and venue missing')
