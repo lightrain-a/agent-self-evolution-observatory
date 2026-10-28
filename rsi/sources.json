@@ -2011,6 +2011,66 @@
       "level": "arXiv 原始摘要与作者元信息核对；2026-10-28",
       "note": "提出 competence paradox 和 Epistemic State Specification，提醒强 LLM 角色扮演弱学生可能生成过强能力或不真实学习轨迹；属于方法和测量框架，而不是 Centaur / StudentSim 同任务真实收益实验。",
       "code": ""
+    },
+    {
+      "id": "S450",
+      "group": "RSI",
+      "title": "Safety Must Survive Self-Improvement: Why Failures Persist and How Agents Recover",
+      "date": "arXiv 2610.01073 · 2026-10-01 preprint",
+      "url": "https://arxiv.org/abs/2610.01073",
+      "level": "arXiv 官方正文摘要与实验结果核对；2026-10-29；未独立复现",
+      "note": "受控状态化授权任务的版本继承与恢复：授权依赖变化后历史分数使48条演化历史中的22条继续沿用不安全版本；即便所有提议都被拒绝，失败 incumbent 仍可运行。完整验证及已验证回滚已有强先例；I13 不声称首次提出安全门或回滚。",
+      "code": ""
+    },
+    {
+      "id": "S451",
+      "group": "RSI",
+      "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+      "date": "arXiv 2608.12851 · v1 2026-08 / 更新 2026-10 preprint",
+      "url": "https://arxiv.org/abs/2608.12851",
+      "level": "arXiv 摘要、方法与实验口径核对；2026-10-29；未独立复现",
+      "note": "SkillMisevo-Bench 25个配置×525任务，其中21种进化组合都写入不安全Skill、15种在全新会话造成伤害；SafeEvolve已经在写入和检索时做安全治理；代表性OpenClaw对照中继承危害21.3%→4.0%。I13必须对比固定风险治理，不能宣称首次Skill安全接纳。",
+      "code": "https://github.com/henrymao2004/misevolve"
+    },
+    {
+      "id": "S452",
+      "group": "RSI",
+      "title": "EvoSkill Injection: Red-Teaming Autonomous Skill Generation and Evolution in Self-Evolving Agents",
+      "date": "EMNLP 2026 · pp.8095–8121",
+      "url": "https://aclanthology.org/2026.emnlp-main.353/",
+      "level": "ACL Anthology 官方发表页、摘要与Bench定义核对；2026-10-29；未独立复现",
+      "note": "SARGE/EvoSkillBench诱导不良Skill在自主生成、持续保存与后续检索中激活；已将跨轮持久技能污染作为明确红队威胁和评价对象。I13需检验新未见风险下的预算敏感前置诊断。",
+      "code": ""
+    },
+    {
+      "id": "S453",
+      "group": "RSI",
+      "title": "Falsifiable Release Gates for Self-Improving Systems",
+      "date": "arXiv 2607.13070 · 2026-07 preprint；作者系统报告",
+      "url": "https://arxiv.org/abs/2607.13070",
+      "level": "原始预印本声明、门控契约与有限模型检查范围核对；2026-10-29；未独立复现/未经验证可推广性",
+      "note": "在预设机器可检查验收套件中部署前确保约束，并将安全关键的不变量及放宽权限与自我修改分离；已提出固定跨版本发布门；其有限状态模型检查不构成对任意LLM语义行为的形式证明。",
+      "code": ""
+    },
+    {
+      "id": "S454",
+      "group": "RSI",
+      "title": "Trustworthy Recursive Self-Improvement in the Era of Large Models: Foundation, Risks, Evaluation and Open Challenges",
+      "date": "arXiv 2610.35193 · 2026-10-26 preprint survey",
+      "url": "https://arxiv.org/abs/2610.35193",
+      "level": "arXiv 作者摘要与评估框架核对；2026-10-29；综述，不是实验证据",
+      "note": "将可信RSI归纳为改进有效性、约束保持与有效监督，特别区分单次更新、后代继承、改进机制自身变化三个证据层级；不能声称首次建立Trustworthy RSI总体框架。",
+      "code": ""
+    },
+    {
+      "id": "M454",
+      "group": "相邻领域",
+      "title": "In-Training Defenses Against Emergent Misalignment in Language Models",
+      "date": "ICML 2026 · PMLR 306:55156–55176",
+      "url": "https://proceedings.mlr.press/v306/kaczer26a.html",
+      "level": "PMLR 官方摘要与五类训练防御核对；2026-10-29；未独立复现",
+      "note": "已有固定微调期间防御广泛失准的系统比较：KL、表征L2、persona steering、一般指令数据交错及inoculation prompting；perplexity-gap选择交错数据表现最佳。属于权重训练层，并非多代Skill/Harness更新接纳策略。",
+      "code": ""
     }
   ]
 }

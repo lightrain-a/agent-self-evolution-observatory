@@ -7,11 +7,11 @@ PAGE = {
  "slug": "ideas",
  "title": "I1–I9、I11–I13：十二个已公开研究问题",
  "en": "I1–I9 and I11–I13 · RSI learning mechanisms",
- "lead": "十二个已发布研究 Idea 按 Challenge、现有工作、Insight、Design 与实验设计展开；I12 研究共同前置知识解锁，I13 研究什么时候拒绝或暂缓一次自我更新，以及接纳规则如何跨代进步。I10 仍保留编号。",
+ "lead": "十二个正式 Idea 按 Challenge、现有工作、Insight、Design 与实验设计展开；I13 收敛为 RSI Safety：Agent 如何从跨版本安全后果中学会在提交前测试、接纳、隔离或拒绝自我修改。I10 仍保留编号。",
  "updated": "2026-10-28",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究新能力应当内化、隔离、委托还是暂缓，以及下一代能否更准确判断。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -24,11 +24,11 @@ PAGE = {
  <a class="idea-board-card" href="#idea-9"><span class="idea-id">I9 · 集中与交错练习</span><b>什么时候从集中练习切到交错练习？</b><small>规则掌握状态、跨任务顺序与未来 C 的学习速度</small></a>
  <a class="idea-board-card" href="#idea-11"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>什么反馈语气能让 Agent 下一轮真正学得更好？</b><small>鼓励 / 冷静批评 / 紧迫 / 中性；学习决策、版本更新与净收益</small></a>
  <a class="idea-board-card" href="#idea-12"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否解锁一批原本学不会的任务？</b><small>发现因果前置缺口，验证下游真正新增学习收益</small></a>
- <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · 更新接纳与拒绝</span><b>什么时候不应该立即更新自己？</b><small>旧能力、未来可塑性、跨领域可靠性；内化 / 隔离 / 委托 / 暂缓</small></a>
+ <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · RSI 安全更新接纳</span><b>哪些自我修改可以安全地被下一代继承？</b><small>历史风险诊断、预算内选择性测试、漏放/误拒与跨代安全改进</small></a>
  </div>
- <p class="note"><b>I13 · 研究边界：</b><a href="learning-admission.html">学习接纳与更新拒绝</a>发生在更新正式提交之前；<a href="#idea-3">I3</a> 研究冲突发生后的修复，<a href="#idea-1">I1</a> 研究稳定知识应内化还是外置。I13 的关键是<strong>更新前预测非局部代价，并让接纳决策依据跨轮改进</strong>。正式编号表示研究主线确立，不表示 P0/P1/P2 已经验证。</p>
+ <p class="note"><b>I13 · Safety-First 修订：</b><a href="learning-admission.html">安全感知的更新接纳</a>研究候选 Skill/Harness 修改在提交前是否值得信任，以及如何依据历史版本后果选择有限的额外测试。<a href="#idea-3">I3</a> 修复已发生的规则冲突，<a href="#idea-1">I1</a> 研究知识内化与外置；I13 以<strong>独立安全不变量、实际部署版本、跨代风险和安全更新误拒</strong>为中心。安全规则和发布权不允许被候选 Agent 自己修改。P0/P1/P2 尚未执行。</p>
  <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9 与 I11–I13 均保留独立详情页。</p>
- <p class="status">状态：已整理 I1–I9、I11–I13 共十二个正式研究 Idea；I10 仍按此前编号保留，本站未发布独立详情页。I13 的因果现象、预测器和跨代更新实验尚未执行。</p>
+ <p class="status">状态：已整理 I1–I9、I11–I13 共十二个正式研究 Idea；I10 仍按此前编号保留，本站未发布独立详情页。I13 的安全接纳 P0/P1/P2 实验尚未执行；既有相关工作不等于本项目已验证跨代安全改进。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''

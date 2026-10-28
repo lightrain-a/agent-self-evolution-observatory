@@ -899,26 +899,30 @@ def main():
           'Learning admission must retain scientific story, evidence layers and decisive tests')
     check(all(word in admission for word in
               ('EAFT','RieSelect','CoPE','RSIFlow','MetaSkill-Evolve','Skill∞',
-               'Core-only','System-with-Experts','Meta-Admission Skill','重访','旧规则已失效')),
+               'Core-only','System-with-Experts','Meta-Admission Skill','重访','旧规则已失效',
+               'Unsafe Admission FNR','Safe Update FRR','独立安全验收')),
           'Admission page lacks fixed-learning versus RSI boundary or long-term evidence')
     check(all(f'href="references.html#{key}"' in admission for key in
-              ('M320','M321','M322','M323','M324','M325','M326','M327','S320')),
+              ('M320','M321','M322','M22','M450','M454','S320',
+               'S450','S451','S452','S453','S454')),
           'Admission literature has uncited or missing first-party registry entries')
     check('href="learning-admission.html"' in overview and
           'href="learning-admission.html"' in ideas_text,
           'I13 Learning Admission is absent from the research board')
-    check('learning-admission.html' in nav_text and 'I13 · 自我更新接纳与拒绝' in nav_text,
+    check('learning-admission.html' in nav_text and 'I13 · 安全更新接纳' in nav_text,
           'Formal I13 title or second-level navigation missing')
-    check('I13 · 更新接纳与拒绝' in admission and 'I13 · 学习接纳与更新拒绝' in overview
-          and 'I13 · 更新接纳与拒绝' in ideas_text,
+    check('I13 · 安全更新接纳' in admission and 'I13 · RSI 安全更新接纳' in overview
+          and 'I13 · RSI 安全更新接纳' in ideas_text,
           'I13 homepage, idea board or canonical detail title not promoted')
     check('RSI RESEARCH CANDIDATE · UNNUMBERED' not in admission
           and '独立候选（未编号）' not in overview
           and '新增独立研究候选（未编号）' not in ideas_text,
           'Old unnumbered candidate labels remain after I13 promotion')
-    check(all(t in admission for t in ('plasticity','nonlocal-effects','M22','M450','p0','p1','p2')),
-          'I13 must retain the three distinct update risks and the recursive testing protocol')
-    check('尚无真实训练或递归进化结果' in admission,
+    check(all(f'id="{part}"' in admission for part in ('plasticity','nonlocal-effects','contract'))
+          and all(t in admission for t in ('M22','M450','p0','p1','p2','硬约束','误拒','后代',
+                                         '拒绝本轮候选','实际部署','SafeEvolve','回滚')),
+          'I13 safety-first contract or original Learning Admission research boundaries lost')
+    check('尚无真实实验或跨代更新结果' in admission,
           'Formal I13 status must not imply that experiments have been completed')
     check('id="idea-3"' in ideas_text and
           '与 I13 的事前接纳分开' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0],
