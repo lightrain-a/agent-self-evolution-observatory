@@ -161,7 +161,7 @@ def main():
           'Visible RSI pages must exclude only linked historical research')
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,10)]+['I11','I12'],'Published research ideas must appear exactly once, with I10 reserved')
+    check(numbered==[f'I{i}' for i in range(1,10)]+['I11','I12','I13'],'Published research ideas must appear exactly once, with I10 reserved')
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
@@ -739,7 +739,7 @@ def main():
           'idea-i2.html#idea-d-diagnostic', 'idea-i5.html#idea-b-merged',
           'i8.html#idea-a-merged', 'idea-i12-prerequisite-bottleneck.html')),
           'The A/B/D merges and new I12 must each have a distinct overview entry')
-    check('I10 仍按此前编号保留' in ideas_text and all(tag in overview for tag in ('I11','I12')),
+    check('I10 仍按此前编号保留' in ideas_text and all(tag in overview for tag in ('I11','I12','I13')),
           'I10 reserved-number policy or I11 overview labeling drift')
     check(not (ROOT/'rsi/idea-i10.html').exists(),
           'Do not fabricate an I10 research page when adding I11')
@@ -859,11 +859,22 @@ def main():
           'Admission literature has uncited or missing first-party registry entries')
     check('href="learning-admission.html"' in overview and
           'href="learning-admission.html"' in ideas_text,
-          'New independent learning-admission candidate is absent from the research board')
-    check('learning-admission.html' in nav_text,
-          'Unnumbered admission candidate missing from RSI second-level navigation')
+          'I13 Learning Admission is absent from the research board')
+    check('learning-admission.html' in nav_text and 'I13 · 自我更新接纳与拒绝' in nav_text,
+          'Formal I13 title or second-level navigation missing')
+    check('I13 · 更新接纳与拒绝' in admission and 'I13 · 学习接纳与更新拒绝' in overview
+          and 'I13 · 更新接纳与拒绝' in ideas_text,
+          'I13 homepage, idea board or canonical detail title not promoted')
+    check('RSI RESEARCH CANDIDATE · UNNUMBERED' not in admission
+          and '独立候选（未编号）' not in overview
+          and '新增独立研究候选（未编号）' not in ideas_text,
+          'Old unnumbered candidate labels remain after I13 promotion')
+    check(all(t in admission for t in ('plasticity','nonlocal-effects','M22','M450','p0','p1','p2')),
+          'I13 must retain the three distinct update risks and the recursive testing protocol')
+    check('尚无真实训练或递归进化结果' in admission,
+          'Formal I13 status must not imply that experiments have been completed')
     check('id="idea-3"' in ideas_text and
-          '冲突前学习接纳' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0],
+          '与 I13 的事前接纳分开' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0],
           'I3 post-conflict repair was not separated from pre-update admission')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')

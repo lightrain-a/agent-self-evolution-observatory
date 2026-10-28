@@ -1,4 +1,4 @@
-"""Unnumbered RSI research candidate: conflict-aware admission before internal learning.
+"""I13 RSI research idea: conflict-aware admission before internal learning.
 
 Distinct from I3 post-hoc repair and I1 stable-knowledge storage. The agent's
 meta-admission policy must improve on unseen future task sequences to qualify
@@ -6,18 +6,18 @@ as RSI, beyond fixed-model continual learning or test-time deferral.
 """
 PAGE = {
  "slug":"learning-admission",
- "title":"研究候选：新能力会伤害旧能力时，应该拒绝立即内化吗？",
- "en":"When Should a Self-Improving Agent Defer Learning? · Conflict-Aware Skill Admission",
- "lead":"保留 I3 已发生冲突后的修复；新候选研究学习前的接纳决策：核心模型是否更新，还是先用隔离 Skill / 外部专家完成任务？关键是持续自改进后，Agent 是否更会决定什么时候该学、什么时候该暂缓，以及何时重新内化。",
+ "title":"I13 · 更新接纳与拒绝：什么时候不应该立即学习新能力？",
+ "en":"I13 · Learning When Not to Update · Conflict-Aware Skill Admission",
+ "lead":"I13 研究自我更新的接纳决策：内化一项新能力是否会损害旧能力、未来可塑性或无关领域的行为可靠性？Agent 能否选择核心更新、隔离、外部委托或暂缓，并在持续迭代中学会更准确地决定何时更新自己。I3 保留冲突发生后的修复主线。",
  "updated":"2026-10-28",
  "sections":[
  ("question","Observable Phenomenon｜学会新能力之后，整个系统为什么可能反而变差？",'''
-<div class="decision"><span class="kicker">RSI RESEARCH CANDIDATE · UNNUMBERED · 2026-10-28</span>
+<div class="decision"><span class="kicker">I13 · RSI RESEARCH IDEA · 2026-10-28 · NOT YET EXPERIMENTALLY VALIDATED</span>
 <h3>When should a self-improving agent say “not in my core model, at least not yet”?</h3>
 <p>一个内容安全 Agent 已经稳定识别旧风险类型。新领域能力可以通过微调获得，但若直接更新共享模型，旧类别的误判也随之上升。即使新任务单独成绩很高，<strong>整个系统的净能力也可能下降</strong>。若现成外部审核模型或独立 Adapter 已能承接新任务，强迫核心模型马上内化新能力未必最划算。</p>
 <p><b>主科学问题：</b>多轮自我改进中，Agent 能否根据新能力的必要性、旧能力是否仍正确、预期干扰成本和可用外部能力，主动选择<b>内化 / 隔离 / 委托 / 暂缓</b>；并在后续版本更新后重新决定是否内化？</p>
 <p><b>拒绝什么：</b>拒绝一次高风险的<b>内部参数/核心 Skill 接纳</b>，不是拒绝必须执行的任务或安全要求；系统依然可以使用经验证的外置能力。若旧规则已过时，必须允许修订，不能以保护旧能力为理由阻止必要纠正。</p>
-<div class="note"><b>与 I3 的关系：</b><a href="ideas.html#idea-3">I3</a> 研究新能力已写入后，旧能力受损怎样修复；本候选在正式提交更新前做决策。与 <a href="ideas.html#idea-1">I1</a> 的区别：I1 比较知识稳定性、内化与检索位置，本候选必须在<strong>知识稳定性与外部查询成本匹配</strong>时，通过旧能力冲突风险解释不同的接纳决策。</div>
+<div class="note"><b>与 I3 的关系：</b><a href="ideas.html#idea-3">I3</a> 研究新能力已写入后，旧能力受损怎样修复；I13 在正式提交更新前做决策。与 <a href="ideas.html#idea-1">I1</a> 的区别：I1 比较知识稳定性、内化与检索位置，I13 必须在<strong>知识稳定性与外部查询成本匹配</strong>时，通过旧能力冲突风险解释不同的接纳决策。</div>
 </div>
 '''),
  ("phenomena","Why｜同样冲突很大，却不该总是“拒学”",'''
@@ -140,7 +140,7 @@ PAGE = {
 <tr><td><a href="ideas.html#idea-1">I1</a>：内化还是外置</td><td>相对稳定的知识应保存在哪里，外部调用和内化各有多少成本</td><td>若新候选只根据频率和存储成本决定外包，直接并入 I1</td></tr>
 <tr><td><a href="ideas.html#idea-3">I3</a>：冲突后修复</td><td>新能力已被接纳且旧能力受损，怎样定向巩固、修复适用边界</td><td>若必须先造成损害才能诊断并修复，而事前选择无增量，归入 I3</td></tr>
 <tr><td>RSIFlow / MetaSkill-Evolve / Skill∞</td><td>已能演化改进工作流或 Meta-Skill</td><td>若只是多一个会选择工具的 Meta-Agent，应归入这些工作；关键是接纳元规则的跨代独立收益</td></tr>
-<tr><td><b>本候选：Learning Admission</b></td><td>先判断新能力是否适宜写入核心，暂缓时让外部能力承接、保留未来再内化机会；使这一决策规则逐代改进</td><td><b>事前冲突证据 × 决策行为 × 未来可学习性</b>三者共同成立才独立</td></tr>
+<tr><td><b>I13：Learning Admission</b></td><td>先判断新能力是否适宜写入核心，暂缓时让外部能力承接、保留未来再内化机会；使这一决策规则逐代改进</td><td><b>事前冲突证据 × 决策行为 × 未来可学习性</b>三者共同成立才独立</td></tr>
 </tbody></table></div>
 <h3>Go / Merge / Stop</h3>
 <div class="table-wrap"><table><thead><tr><th>决策</th><th>预先需要什么证据</th></tr></thead><tbody>
@@ -148,7 +148,7 @@ PAGE = {
 <tr><td><b>MERGE · 并入 I1 / I3</b></td><td>只得到内化与外置的一般成本权衡，或只得到已经发生冲突后需如何修复</td></tr>
 <tr><td><b>STOP · 不再设计新路由器</b></td><td>简单静态路由/固定外部专家/EAFT 式稳定训练已达到相同结果；试探成本吃掉全部增益；元策略新旧版本之间无可复现的学习差异</td></tr>
 </tbody></table></div>
-<p class="status">状态：独立 RSI 候选（未编号），原始相关工作已核对；所有 P0/P1/P2 为本项目待验证实验，尚无真实训练或递归进化结果。不将外部专家答对直接称作核心模型学会。</p>
+<p class="status">状态：I13 正式列入 RSI 研究池；原始相关工作已核对；所有 P0/P1/P2 为待验证实验，尚无真实训练或递归进化结果。不将外部专家答对直接称作核心模型学会。</p>
 <div class="links"><a class="link-btn" href="ideas.html#idea-3">I3 · 冲突后的能力修复</a><a class="link-btn" href="ideas.html#idea-1">I1 · 内化与外置知识</a><a class="link-btn" href="experiments.html">通用冻结评测协议</a><a class="link-btn" href="references.html">相关文献来源</a></div>
 ''')
  ]

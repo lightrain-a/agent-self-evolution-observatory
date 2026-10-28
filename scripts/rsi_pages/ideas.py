@@ -1,17 +1,17 @@
-"""I1–I9, I11 and I12 research ideas: I10 remains reserved; I12 is causal prerequisite unlocking.
+"""I1–I9 and I11–I13 research ideas: I10 remains reserved; I13 is learning admission.
 
 The earlier bottleneck-switching proposal remains accessible as a historical draft.
 Research hypotheses are separate from measured findings.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I9、I11 与 I12：十一个已公开研究问题",
- "en": "I1–I9, I11 and I12 · RSI learning mechanisms",
- "lead": "十一个已发布研究问题按 Challenge、现有工作、Insight、Design 与实验设计展开；I12 从多道失败中发现共同因果前置知识，先补基础再检验后续可学习性。I10 仍保留编号。",
+ "title": "I1–I9、I11–I13：十二个已公开研究问题",
+ "en": "I1–I9 and I11–I13 · RSI learning mechanisms",
+ "lead": "十二个已发布研究 Idea 按 Challenge、现有工作、Insight、Design 与实验设计展开；I12 研究共同前置知识解锁，I13 研究什么时候拒绝或暂缓一次自我更新，以及接纳规则如何跨代进步。I10 仍保留编号。",
  "updated": "2026-10-28",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究新能力应当内化、隔离、委托还是暂缓，以及下一代能否更准确判断。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -24,10 +24,11 @@ PAGE = {
  <a class="idea-board-card" href="#idea-9"><span class="idea-id">I9 · 集中与交错练习</span><b>什么时候从集中练习切到交错练习？</b><small>规则掌握状态、跨任务顺序与未来 C 的学习速度</small></a>
  <a class="idea-board-card" href="#idea-11"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>什么反馈语气能让 Agent 下一轮真正学得更好？</b><small>鼓励 / 冷静批评 / 紧迫 / 中性；学习决策、版本更新与净收益</small></a>
  <a class="idea-board-card" href="#idea-12"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否解锁一批原本学不会的任务？</b><small>发现因果前置缺口，验证下游真正新增学习收益</small></a>
+ <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · 更新接纳与拒绝</span><b>什么时候不应该立即更新自己？</b><small>旧能力、未来可塑性、跨领域可靠性；内化 / 隔离 / 委托 / 暂缓</small></a>
  </div>
- <p class="note"><b>新增独立研究候选（未编号）：</b><a href="learning-admission.html"><strong>当新能力会显著干扰旧能力时，Agent 什么时候应该拒绝立即内化，并通过隔离、外部专家和暂缓重访获得长期净收益？</strong></a> 这个问题发生在更新前，与 I3 的事后冲突修复不同；只有学习接纳元规则在未来未见任务中自己变得更会判断，才作为 RSI 论文继续推进。</p>
- <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9、I11 和 I12 均保留独立详情页。</p>
- <p class="status">状态：已整理 I1–I9、I11 与 I12 共十一个公开研究问题；I10 仍按此前编号保留，本站未发布独立详情页。I11 尚未进行模型生成或持续更新实测。</p>
+ <p class="note"><b>I13 · 研究边界：</b><a href="learning-admission.html">学习接纳与更新拒绝</a>发生在更新正式提交之前；<a href="#idea-3">I3</a> 研究冲突发生后的修复，<a href="#idea-1">I1</a> 研究稳定知识应内化还是外置。I13 的关键是<strong>更新前预测非局部代价，并让接纳决策依据跨轮改进</strong>。正式编号表示研究主线确立，不表示 P0/P1/P2 已经验证。</p>
+ <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9 与 I11–I13 均保留独立详情页。</p>
+ <p class="status">状态：已整理 I1–I9、I11–I13 共十二个正式研究 Idea；I10 仍按此前编号保留，本站未发布独立详情页。I13 的因果现象、预测器和跨代更新实验尚未执行。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -58,7 +59,7 @@ PAGE = {
  <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>有些退化未必是忘记，而是<strong>两个原本都有效的方法，被用在了不适合的场景</strong>。只要找到“什么时候用旧规则、什么时候用新规则”的区别，少量针对这些边界的练习，可能比全部重放旧经验更有效。</p></div>
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>比较修改前后的失败轨迹，找到出现冲突的条件，自动生成少量只改变一个关键条件的练习。用这些例子修订 Skill 的适用范围或选择规则，必要时再对参数做巩固。最终既要会用新方法，也不能丢旧能力。</p>
  <div class="flow"><div><b>发现旧任务退化</b><small>新旧版本对比</small></div><div><b>定位冲突条件</b><small>何时该用哪一条</small></div><div><b>有针对性地复习</b><small>只练容易混淆的场景</small></div><div><b>一起检验新旧能力</b><small>旧题 / 新题 / 组合题</small></div></div></div>
- <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备两套分别有效、合起来容易冲突的 Skill，并加入自然学习中出现的冲突案例。比较<strong>退化即回滚、均匀重放、MIR 风格重放、针对冲突条件复习</strong>；固定复习次数和记忆预算。分别测旧能力保持、新能力增益、组合任务成功率。如果优势只来自存了更多规则或多练了题，就不能归因于我们的复习方法。[[M09]]</p><p><b>NC 2021 带来的评测提醒：</b>Ten 等在人类活动选择模型中使用学习表现变化的<strong>绝对值</strong>作为 LP，下降和上升都可能形成高变化信号；检测退步的做法与既有 TSCL/MIR 有关，不是 I3 的新颖性。[[E19]][[M04]] I3 可以额外构造“旧技能退化 → 重练恢复 → 再次退化”的对照轨迹，报告三个不同指标：①近期能力变化绝对值；②真正新增技能的独立收益；③经历其他更新后仍保留的<strong>净能力增益</strong>。若前者很高、后两者趋零，就不能把系统描述为持续变好。这是待验证的 RSI 失败模式，不是 NC 论文已经发现的 LLM 现象。</p><p><b>ACL 2026 新近邻：</b>训练早期 10% 样本 ROUGE-L 经 shuffle+重采样从 0.41 到 0.53，但末尾 10% 从 0.61 略降到 0.60。I3 必须与普通重采样直接比较，并在旧/新/混合任务上确认<strong>修复的是规则适用边界</strong>，而非仅靠增加曝光恢复旧题。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">精读五种 ILP 原因及对应实验</a>。[[M27]]</p><p><b>NC 2025 的表征干扰补充：</b>Menghi 等让人交错学习结构相同或正交的两任务，相同结构组训练期正确率反而更低，练习后组间差距消失。I3 的<strong>旧 A 与新 B 分别都对，但混合任务用错规则</strong>可能是表征和情境选择问题，不一定是原有知识已经从参数中消失；这仍需在 LLM 的真实更新中单独验证。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">精读 Figure 2–6</a>。[[E99]]</p><p class="idea-side-note"><b>NC 2026 · Schema Reuse：</b>3 只猕猴的相似映射学习展示了决策结构复用与刺激表征变化，但反转规则时旧结构复用降低、学习变慢。它提示 I3 修复旧规则冲突时不能一律冻结；更进一步的 RSI 候选是学习“保留、局改、分支或废弃”这一继承规则并跨代检验其进步。<a href="reading-notes.html#deep-nc2026-schema-reuse-tian">精读原文、表征证据及 P0/P1 →</a>。[[E320]]</p><p class="idea-side-note"><b>与冲突前学习接纳候选分开：</b>I3 已经发生旧能力退化，研究如何修复；<a href="learning-admission.html">Learning Admission</a> 则在正式更新之前判断是否应该内化、隔离、委托或暂缓。二者可以共享旧能力回归和验证器，但不能把事前拒学与事后修复写成同一个变量。</p><p class="idea-side-note"><b>Nature 2026 · 非局部行为副作用：</b>在狭窄的不安全代码微调后，部分模型会在无关普通问题上出现不当行为；这与“旧任务正确率下降”不是同一评价指标。对 I3 来说，即使修好了原来的冲突，也必须独立检查跨领域的行为可靠性；该论文没有证明任意正常局部修复必然失准。<a href="reading-notes.html#deep-nature2026-narrow-misalignment-betley">查看原文控制组、训练动态与局限</a>。[[M450]]</p></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备两套分别有效、合起来容易冲突的 Skill，并加入自然学习中出现的冲突案例。比较<strong>退化即回滚、均匀重放、MIR 风格重放、针对冲突条件复习</strong>；固定复习次数和记忆预算。分别测旧能力保持、新能力增益、组合任务成功率。如果优势只来自存了更多规则或多练了题，就不能归因于我们的复习方法。[[M09]]</p><p><b>NC 2021 带来的评测提醒：</b>Ten 等在人类活动选择模型中使用学习表现变化的<strong>绝对值</strong>作为 LP，下降和上升都可能形成高变化信号；检测退步的做法与既有 TSCL/MIR 有关，不是 I3 的新颖性。[[E19]][[M04]] I3 可以额外构造“旧技能退化 → 重练恢复 → 再次退化”的对照轨迹，报告三个不同指标：①近期能力变化绝对值；②真正新增技能的独立收益；③经历其他更新后仍保留的<strong>净能力增益</strong>。若前者很高、后两者趋零，就不能把系统描述为持续变好。这是待验证的 RSI 失败模式，不是 NC 论文已经发现的 LLM 现象。</p><p><b>ACL 2026 新近邻：</b>训练早期 10% 样本 ROUGE-L 经 shuffle+重采样从 0.41 到 0.53，但末尾 10% 从 0.61 略降到 0.60。I3 必须与普通重采样直接比较，并在旧/新/混合任务上确认<strong>修复的是规则适用边界</strong>，而非仅靠增加曝光恢复旧题。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">精读五种 ILP 原因及对应实验</a>。[[M27]]</p><p><b>NC 2025 的表征干扰补充：</b>Menghi 等让人交错学习结构相同或正交的两任务，相同结构组训练期正确率反而更低，练习后组间差距消失。I3 的<strong>旧 A 与新 B 分别都对，但混合任务用错规则</strong>可能是表征和情境选择问题，不一定是原有知识已经从参数中消失；这仍需在 LLM 的真实更新中单独验证。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">精读 Figure 2–6</a>。[[E99]]</p><p class="idea-side-note"><b>NC 2026 · Schema Reuse：</b>3 只猕猴的相似映射学习展示了决策结构复用与刺激表征变化，但反转规则时旧结构复用降低、学习变慢。它提示 I3 修复旧规则冲突时不能一律冻结；更进一步的 RSI 候选是学习“保留、局改、分支或废弃”这一继承规则并跨代检验其进步。<a href="reading-notes.html#deep-nc2026-schema-reuse-tian">精读原文、表征证据及 P0/P1 →</a>。[[E320]]</p><p class="idea-side-note"><b>与 I13 的事前接纳分开：</b>I3 已经发生旧能力退化，研究如何修复；<a href="learning-admission.html">I13 · Learning Admission</a> 则在正式更新之前判断是否应该内化、隔离、委托或暂缓。二者可以共享旧能力回归和验证器，但不能把事前拒学与事后修复写成同一个变量。</p><p class="idea-side-note"><b>Nature 2026 · 非局部行为副作用：</b>在狭窄的不安全代码微调后，部分模型会在无关普通问题上出现不当行为；这与“旧任务正确率下降”不是同一评价指标。对 I3 来说，即使修好了原来的冲突，也必须独立检查跨领域的行为可靠性；该论文没有证明任意正常局部修复必然失准。<a href="reading-notes.html#deep-nature2026-narrow-misalignment-betley">查看原文控制组、训练动态与局限</a>。[[M450]]</p></div>
  </div>'''),
  ("idea-4", "I4：生产性失败——失败一次就总结，还是再试几次？", '''
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>API 超时一次，Agent 就总结“这个工具以后别用”，可能学错。什么时候应该继续试，什么时候才值得把经验写进 Skill？</p></div>
