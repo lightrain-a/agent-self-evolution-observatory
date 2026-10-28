@@ -339,6 +339,19 @@ def main():
     experiments_html=(ROOT/'rsi/experiments.html').read_text(encoding='utf-8')
     check('id="i9-practice"' in experiments_html and 'idea-i9-practice-switching.html#experiments' in experiments_html,
           'I9 independent experimental contract missing')
+    mosaic = next((p for p in cards if p['id']=='mosaic-memory-2026-shilov'), None)
+    check(mosaic is not None and mosaic.get('doi')=='10.1038/s41467-026-68603-0',
+          'Mosaic Memory Nature Communications card DOI missing')
+    check(len(mosaic['deep_read']['sections'])==10 and {'challenge','insight','design','result','next'}<=
+          {s['stage'] for s in mosaic['deep_read']['sections']},
+          'Mosaic Memory must preserve source-vs-RSI distinctions and 10-section deep read')
+    check('id="mosaic-memory-2026-shilov"' in card_html and
+          'id="deep-mosaic-memory-2026-shilov"' in notes_html,
+          'Mosaic Memory reading card and full note not both rendered')
+    check('id="mosaic-memory"' in learn_sci and 'href="references.html#M17"' in learn_sci,
+          'Learning science needs the primary Mosaic Memory source citation')
+    check('deep-mosaic-memory-2026-shilov' in overview,
+          'New Nature Communications reading note must be discoverable from the homepage')
     check('历史版本' in historical_i6 and f'href="idea-i6-failure-value.html"' in historical_i6,
           'Historical bottleneck draft must have a clear link to the current I6')
     check(all(k in historical_i6 for k in ('知识不足','搜索不足','选择不足','吸收不足','I2 · 因材施教','From Rollouts to Recipes')),
