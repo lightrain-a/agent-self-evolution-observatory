@@ -1,17 +1,17 @@
-"""I1–I9 research ideas: I9 topic-level blocked/interleaved schedules.
+"""I1–I9 plus I11 research ideas: I11 is affective feedback for RSI learning control.
 
 The earlier bottleneck-switching proposal remains accessible as a historical draft.
 Research hypotheses are separate from measured findings.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I9：九个研究问题",
- "en": "I1–I9 · from learning value to curriculum switching",
- "lead": "九个研究方向统一按 Challenge、现有工作、Insight、Design、实验设计展开。I6 比较失败过程价值，I7 研究先试还是先学，I8 研究纠错迁移；新增 I9 研究集中与交错练习的切换时机。",
+ "title": "I1–I9 与 I11：十个已公开研究问题",
+ "en": "I1–I9 and I11 · from learning value to affective self-improvement",
+ "lead": "十个已发布研究问题按 Challenge、现有工作、Insight、Design 与实验设计展开；I11 专门检验情绪反馈如何影响 Agent 的学习决策和多轮持久净收益，I10 暂保留编号。",
  "updated": "2026-10-28",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -22,9 +22,10 @@ PAGE = {
  <a class="idea-board-card" href="#idea-7"><span class="idea-id">I7 · 学习顺序</span><b>先看例题，还是先独立尝试？</b><small>固定教材与预算，研究独立能力、探索与多轮迁移</small></a>
  <a class="idea-board-card" href="#idea-8"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  <a class="idea-board-card" href="#idea-9"><span class="idea-id">I9 · 集中与交错练习</span><b>什么时候从集中练习切到交错练习？</b><small>规则掌握状态、跨任务顺序与未来 C 的学习速度</small></a>
+ <a class="idea-board-card" href="#idea-11"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>什么反馈语气能让 Agent 下一轮真正学得更好？</b><small>鼓励 / 冷静批评 / 紧迫 / 中性；学习决策、版本更新与净收益</small></a>
  </div>
- <p class="idea-outline-key"><b>I1–I9 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9 均保留独立详情页。</p>
- <p class="status">状态：I1–I9 研究问题已整理；I6–I9 的主要处理变量彼此独立；尚无本项目的受控实测结果。</p>
+ <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9 与 I11 均保留独立详情页。</p>
+ <p class="status">状态：已整理 I1–I9 与 I11 共十个公开研究问题；I10 仍按此前编号保留，本站未发布独立详情页。I11 尚未进行模型生成或持续更新实测。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -115,14 +116,25 @@ PAGE = {
  <div class="flow"><div><b>独立测规则掌握</b><small>单主题新题</small></div><div><b>测规则选择错误</b><small>混合新题</small></div><div><b>匹配预算重排课程</b><small>集中 / 交错 / 阶段组合</small></div><div><b>后续独立测试</b><small>迁移 / 保持 / 总成本</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从同一检查点比较<strong>固定集中、随机交错、循环交错、先集中后交错、先交错后集中、固定时点切换</strong>；第二阶段才加入状态切换，与同特征 contextual bandit 和仅看训练正确率的规则比较。按规则相似度与前置知识高低分层，补充复习间隔对照。报告无提示单主题/混合题正确率、规则错选率、跨规则题、后续干扰后的保持与总预算。如果优势仅来自间隔或随机交错已经最好，就不强行加入复杂 Router。扩展实验还须重置优化器状态，使用 C 初始损失、Lie bracket 当前损失排序、readout 可塑性等同预算强基线；将新任务 C 分为<strong>共享可组合规则（C₁）、必须排除旧捷径（C₂）、无关规则负对照（C₃）</strong>，检查未来收益是否随规则关系出现交叉反转，还是仅反映整体可塑性下降。若不能匹配当前能力就不强行声称未来效应。<a href="idea-i9-practice-switching.html#future-question">查看“当前能力相同、未来可学性不同”的完整扩展 →</a></p><p class="idea-side-note"><b>正交边界：</b>I9 固定题目与每题内部教学顺序，只改变<strong>跨主题课程编排、集中/交错切换及 A/B 顺序</strong>；不选择 I6 的失败轨迹，不改变 I7 的示范先后，也不优化 I8 的纠错目标。<a href="idea-i9-practice-switching.html">查看 I9 完整最近邻与实验协议 →</a></p></div>
  </div>'''),
- ("orthogonal", "I6–I9：一次只研究一个变量", '''
+ ("idea-11", "I11：情绪反馈——怎样让 Agent 真正越迭代越强？", '''
+<div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>同一 Agent 做错题后，一句鼓励可能让它继续尝试，一句冷静批评可能让它先核验；但它<strong>下一版的真实独立能力</strong>究竟有没有变强？<a href="idea-i11-emotional-rsi.html">进入 I11 完整机制与实验 →</a></p></div>
+<div class="idea-steps">
+<div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>“相信自己，再试”会同时增加鼓励和尝试意愿；回答更自信可能只是自评偏差，更多尝试可能浪费预算。研究必须将<strong>语气、事实纠错、行动建议与训练次数</strong>分开，并区分一次回答、学习决策、持久 Skill/参数更新后的真实收益。</p></div>
+<div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>EmotionPrompt（ICML 2024）</b> 已研究情绪提示；<b>TEMPER（COLM 2026）</b>发现情绪化输入会使部分推理退化；<b>EmotionRL</b> 已按题选情绪；<b>HEART</b> 与 <b>ESC</b> 用情绪做多轮自纠错。<b>Peer Support（SSRN 2026）</b> 发现鼓励可能使自评更乐观；<b>序贯决策研究（COLM 2026）</b>已发现部分愤怒条件的探索/惩罚变化；<b>Social Meta-Learning（COLM 2026）</b> 已训练模型利用语言反馈。I11 不能声称首次用情绪调节回答或反馈，差异必须是<strong>经过真实自我迭代仍有效的学习控制机制</strong>。[[M28]][[M29]][[M30]][[M31]][[M32]][[M33]][[M35]]</p></div>
+<div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>情绪反馈可能首先改变 Agent 的<strong>自报学习进步、核验/继续/暂停选择和版本接纳</strong>，再通过学习材料质量影响下一版 Agent；某种语气是否有效，可能取决于高置信度错误、有效探索、反复停滞或旧能力退化的具体状态。模型“感到鼓舞”不是前提，语言改变决策才是可验证的假设。</p></div>
+<div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>相同失败、相同验证器事实、相同正确反馈，仅改变鼓励／冷静批评／紧迫／中性语气；另给同信息的非情绪行动提示作对照。先固定尝试和核验动作隔离语气的直接效果，再让 Agent 自主选择学习行动。每轮由固定 Skill 写入器或 LoRA 执行持久更新，撤掉教师和情绪上下文测新题、旧能力与总成本；仅在确有状态依赖作用后才训练反馈选择策略。</p><div class="flow"><div><b>同一错误与验证证据</b><small>内容一致</small></div><div><b>改变反馈语气</b><small>不额外给行动指令</small></div><div><b>观察学习决策</b><small>核验 / 继续 / 停止 / 写回</small></div><div><b>真实版本更新</b><small>固定 Skill / LoRA</small></div><div><b>撤辅净学习验收</b><small>新能力、遗忘与成本</small></div></div></div>
+<div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p><b>P0：</b>现代模型同题配对的情绪敏感性预检；<b>P1：</b>同一错误下，比较语气对真实核验、探索、停学、置信度校准和错误写回的影响；<b>P2：</b>6–8 轮真实 Skill/LoRA 持久更新，在独立未见任务上比较累计净收益。与固定中性、同内容行动提示、随机语气和已有自适应 EmotionRL / HEART 风格控制等预算对比。若只提升当前答题、模型自评或推理调用数，不称为 RSI 的能力增长。<a href="idea-i11-emotional-rsi.html#p2"><b>查看 I11 多轮实验、强基线和 Go/Stop →</b></a></p><p class="idea-side-note"><b>正交边界：</b><a href="idea-i2.html">I2</a> 改教师解释方式，<a href="#idea-6">I6</a> 选哪条失败值得学，<a href="#idea-8">I8</a> 研究错误规则何时可迁移；I11 固定这些条件，检验<strong>同一反馈的情绪语言是否改变学习控制及持续净收益</strong>。暂无实际实验结果。<a href="idea-i11-emotional-rsi.html">查看独立 I11 研究与实验 →</a></p></div>
+</div>
+'''),
+ ("orthogonal", "I6–I9 与 I11：每个方向只研究一个变量", '''
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
 <tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
 <tr><td><a href="idea-i7-learning-order.html">I7 · 学习顺序</a></td><td>先尝试 / 先看正确示范</td><td>题目、示范内容、更新器与预算</td><td>撤掉教师后的独立能力、有效探索与多轮迁移</td></tr>
 <tr><td><a href="i8.html">I8 · 规则级错误迁移</a></td><td>知识准备、错误规则覆盖范围和更新兼容性</td><td>对应的纠错/更新方法</td><td>哪些错误修复后能迁移到一整类题</td></tr>
 <tr><td><a href="idea-i9-practice-switching.html">I9 · 课程切换</a></td><td>同一批不同主题题目的排列与集中/交错切换时点</td><td>模型、题目、题内教学、更新器与训练预算</td><td>当前规则状态能否预测课程收益；A/B 能力匹配后未来学习 C 的曲线是否仍有顺序效应</td></tr>
+<tr><td><a href="idea-i11-emotional-rsi.html">I11 · 情绪反馈与自我迭代</a></td><td>相同可信反馈的情绪语气及其影响的学习控制</td><td>模型、反馈事实、教学内容、持久更新器、评测和总预算</td><td>错误后核验/停止/写回等决策变化是否带来多轮撤辅净学习收益</td></tr>
 </tbody></table></div>
-<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
 '''),
  ("shared", "这些 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>

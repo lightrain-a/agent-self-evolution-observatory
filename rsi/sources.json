@@ -1471,6 +1471,106 @@
       "level": "ICLR 官方版本署名/状态、arXiv v3 Section 2–4、Table 1–4 与 Appendix D 核对；2026-10-28；未复现",
       "note": "MPM 区分当前编程得分与后代潜力；理论 CMP Oracle 与历史支系成功率代理不同。HGM 搜索代码 Agent 版本树，不是持久训练底层 LLM 权重。主结果同时包含 CMP 选择、单任务补评与异步调度。",
       "code": "https://github.com/metauto-ai/HGM"
+    },
+    {
+      "id": "E28",
+      "group": "学习科学",
+      "title": "Effects of different AI-driven Chatbot feedback on learning outcomes and brain activity",
+      "date": "npj Science of Learning 10, Article 17 (2025-04-15)",
+      "url": "https://www.nature.com/articles/s41539-025-00311-8",
+      "level": "Nature/npj 官方摘要、结果与 DOI 核对；2026-10-28",
+      "note": "87 名人类大学生在元认知、情感、中性 Chatbot 反馈条件下学习同一套心血管知识；元认知组迁移和自我监控更好，情感组相对中性组保持表现更好。被试是人而不是 LLM；未比较持续 Agent 参数学习。",
+      "code": ""
+    },
+    {
+      "id": "M28",
+      "group": "相邻领域",
+      "title": "The Good, The Bad, and Why: Unveiling Emotions in Generative AI",
+      "date": "ICML 2024 · PMLR 235:28905–28934",
+      "url": "https://proceedings.mlr.press/v235/li24bs.html",
+      "level": "PMLR 官方发表页及摘要核对；2026-10-28",
+      "note": "EmotionPrompt / EmotionAttack / EmotionDecode 研究情绪措辞对多类模型语言理解、推理和生成的当场影响；没有检验错误后的持久自我改进与学习控制。不能以情绪 Prompt 有用等同于 AI 有情绪。",
+      "code": ""
+    },
+    {
+      "id": "M29",
+      "group": "相邻领域",
+      "title": "TEMPER: Testing Emotional Perturbation in Quantitative Reasoning",
+      "date": "COLM 2026 · 官方 Accepted Papers 已确认；arXiv 2604.07801",
+      "url": "https://arxiv.org/abs/2604.07801",
+      "level": "COLM 2026 官方录用名单及 arXiv 原始摘要核对；2026-10-28",
+      "note": "5,400 组情绪化与中性定量题配对，18 个模型测输入风格对准确率的影响，部分任务下降约 2–10 pp，去情绪化可恢复表现；实验主要改写题目而非经验证的学习反馈。",
+      "code": "https://github.com/atahandokme/temper-colm2026"
+    },
+    {
+      "id": "M30",
+      "group": "相邻领域",
+      "title": "Do Emotions in Prompts Matter? Effects of Emotional Framing on Large Language Models",
+      "date": "arXiv 2026-04-02 · 预印本；未核实正式会议",
+      "url": "https://arxiv.org/abs/2604.02236",
+      "level": "原始摘要核对；2026-10-28",
+      "note": "六类任务上固定情绪前缀效应通常较小且任务相关；EmotionRL 已提出按题目自适应选情绪措辞，所以 I11 不能把动态语气选择视为首次，需检验持续版本更新后的净收益。",
+      "code": ""
+    },
+    {
+      "id": "M31",
+      "group": "相邻领域",
+      "title": "HEART: Emotionally-driven test-time scaling of Language Models",
+      "date": "Google Research 2025 / arXiv 2509.22876 · 未核实正式会议",
+      "url": "https://arxiv.org/abs/2509.22876",
+      "level": "Google Research 官方项目摘要与 arXiv 正文摘要核对；2026-10-28",
+      "note": "在错误答案后施加动态情绪线索，配合 oracle 验证器改善复杂推理题的同题多轮纠错；无验证器情形收益不稳定；不涉及 Skill/LoRA 持久更新。",
+      "code": ""
+    },
+    {
+      "id": "M32",
+      "group": "相邻领域",
+      "title": "Do AI Need a Peer? Emotional Support, Critical Feedback, and Self-evaluation in Multi-agent Systems",
+      "date": "SSRN 工作论文 · 2026-07-17；未核实同行评审",
+      "url": "https://ssrn.com/abstract=6984898",
+      "level": "SSRN 作者摘要与实验设计核对；2026-10-28",
+      "note": "GPT-4o 的 3,200 次两类任务试验比较独立、批评、鼓励和组合；鼓励使自报与外评的校准差距接近翻倍，但未产生相应客观质量增益；不测持久训练和长期自我改进。",
+      "code": ""
+    },
+    {
+      "id": "M33",
+      "group": "相邻领域",
+      "title": "Can Induced Emotion Bias LLM Behaviors in Sequential Decision Making?",
+      "date": "COLM 2026 · 官方 Accepted Papers 已确认；arXiv 2607.12631",
+      "url": "https://arxiv.org/abs/2607.12631",
+      "level": "COLM 官方录用名单、arXiv 正文与摘要核对；2026-10-28",
+      "note": "在 Iowa Gambling Task 中情绪诱导对总体决策轨迹无稳定平均效果；部分愤怒条件降低罚分敏感性和早期探索。研究的是固定序贯决策游戏，不是版本化 RSI。",
+      "code": ""
+    },
+    {
+      "id": "M34",
+      "group": "相邻领域",
+      "title": "Training language models to be warm can reduce accuracy and increase sycophancy",
+      "date": "Nature 652, 1159–1165 (2026-04-29)",
+      "url": "https://www.nature.com/articles/s41586-026-10410-0",
+      "level": "Nature 正式全文与原始实验机制核对；2026-10-28",
+      "note": "五类模型经温暖输出风格 SFT 后事实错误及迎合错误信念的风险增加。它改变模型输出风格权重，与 I11 输入端的情绪反馈语气不是同一干预。",
+      "code": ""
+    },
+    {
+      "id": "M35",
+      "group": "相邻领域",
+      "title": "Learning to Learn from Language Feedback with Social Meta-Learning",
+      "date": "COLM 2026 · 官方 Accepted Papers 已确认；arXiv 2602.16488",
+      "url": "https://arxiv.org/abs/2602.16488",
+      "level": "COLM 2026 官方录用名单和原始摘要核对；2026-10-28",
+      "note": "训练 LLM 通过对话主动询问信息、利用语言反馈，改进会话内任务完成及跨域反馈利用；已研究学会使用反馈，I11 必须进一步隔离情绪语气在多轮持久自我改进中的增量作用。",
+      "code": ""
+    },
+    {
+      "id": "M36",
+      "group": "相邻领域",
+      "title": "ESC: Emotional Self-Correction for Reliable Vision-Language Models",
+      "date": "arXiv 2026-07 · 预印本；未核实正式会议",
+      "url": "https://arxiv.org/abs/2607.02089",
+      "level": "作者论文摘要和项目页核对；2026-10-28",
+      "note": "ESC 在 VLM 上借助外部验证器与情绪提示进行无需额外训练的自纠错；没有直接验证 Agent 的长期 Skill/LoRA 更新增益。",
+      "code": "https://genai4e.github.io/ESC/"
     }
   ]
 }

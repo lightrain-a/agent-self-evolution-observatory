@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -122,7 +122,7 @@ def main():
         'methods':['cross-domain.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -135,7 +135,7 @@ def main():
           'Visible RSI pages must exclude only linked historical research')
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,10)],'Research ideas must appear exactly once, ordered I1–I9')
+    check(numbered==[f'I{i}' for i in range(1,10)]+['I11'],'Published research ideas must appear exactly once, with I10 reserved')
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
@@ -344,7 +344,7 @@ def main():
         for p in cards
     ),'Paper lacks a verified arXiv or publisher original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
-    check(all(f'idea-{i}' in ideas.ids for i in range(1,10)),'I1–I9 anchors missing from research board')
+    check(all(f'idea-{i}' in ideas.ids for i in list(range(1,10))+[11]),'I1–I9 and I11 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
@@ -357,7 +357,7 @@ def main():
         '<h3>Design <small>（如何做）</small></h3>',
         '<h3>实验设计 <small>（怎么验证）</small></h3>',
     )
-    for idea_number in range(1, 10):
+    for idea_number in list(range(1, 10))+[11]:
         section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
         locations = [section.find(heading) for heading in ordered_headings]
         check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
@@ -365,11 +365,11 @@ def main():
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
         check(section.count('class="flow"') >= 1, f'I{idea_number}: four-step method flow missing')
-    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in range(1,10)]
-    check(idea_positions == sorted(idea_positions),'I1–I9 sections are out of order')
+    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in list(range(1,10))+[11]]
+    check(idea_positions == sorted(idea_positions),'Published I1–I9 and I11 sections are out of order')
     check(ideas_text.index('id="orthogonal"') > idea_positions[-1],
-          'Independent I6-I9 comparison must follow their complete research narratives')
-    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html')):
+          'Independent I6-I9 and I11 comparison must follow full scientific narratives')
+    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(11,'idea-i11-emotional-rsi.html')):
         section = ideas_text.split(f'id="idea-{i}"', 1)[1].split('</section>', 1)[0]
         check(f'href="{detail}"' in section, f'I{i}: full scientific detail page must remain linked')
         check('正交边界' in section,'I6-I9 separation lost in I'+str(i))
@@ -503,6 +503,36 @@ def main():
     check('id="hypothesis-testing"' in learn_sci and
           'idea-i9-practice-switching.html#future-question' in learn_sci,
           'Motor-learning mechanism must link to I9 future learnability')
+    # I11: Affective feedback is a persistent-RSI research proposal, not a one-shot EmotionPrompt result.
+    i11=(ROOT/'rsi/idea-i11-emotional-rsi.html').read_text(encoding='utf-8')
+    check(set(['E28']+[f'M{i}' for i in range(28,37)])<=refs,
+          'I11 must retain original emotion and RSI learning-control source records')
+    check(all(f'id="{x}"' in i11 for x in (
+          'question','evidence','challenge','insight','design','related','p0','p1','p2','metrics','boundaries','gate')),
+          'I11 five-stage scientific chain or P0/P1/P2 experiment section missing')
+    check('id="i11-related-matrix"' in i11 and
+          all(f'href="references.html#M{i}"' in i11 for i in range(28,37)) and
+          'href="references.html#E28"' in i11,
+          'I11 closest-work differences not source linked')
+    check(all(term in i11 for term in (
+          '学习控制','继续','核验','停止','写回','校准','LoRA','Skill',
+          '净学习','固定重试','独立', 'GO', 'MERGE', 'STOP')),
+          'I11 must test learning-control changes, true updates, and falsification')
+    check('href="idea-i11-emotional-rsi.html"' in overview and
+          'href="idea-i11-emotional-rsi.html"' in ideas_text and
+          'id="idea-11"' in ideas_text,
+          'I11 entry missing from homepage or research overview')
+    check('id="affective-feedback"' in learn_sci and
+          'href="references.html#E28"' in learn_sci and
+          'href="idea-i11-emotional-rsi.html#p2"' in learn_sci,
+          'I11 npj human evidence and RSI boundary absent from learning science')
+    check('id="i11-emotional-rsi"' in experiments_html and
+          'idea-i11-emotional-rsi.html#p0' in experiments_html,
+          'I11 experiment execution entry missing')
+    check('I10 仍按此前编号保留' in ideas_text and 'I11' in overview,
+          'I10 reserved-number policy or I11 overview labeling drift')
+    check(not (ROOT/'rsi/idea-i10.html').exists(),
+          'Do not fabricate an I10 research page when adding I11')
     rote = next((p for p in cards if p['id']=='rote-learning-iclr2026-wu'), None)
     check(rote is not None and rote.get('arxiv')=='2507.21914' and rote.get('conference_official_primary') is True,
           'ICLR 2026 Rote Learning reading note must link the official published version')
