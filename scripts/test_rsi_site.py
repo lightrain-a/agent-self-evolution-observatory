@@ -51,7 +51,7 @@ def main():
         for axis in card['research_coverage'].values():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
-    check(len(refs)>=109 and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19','E20','E21','E22','E23','E24','E25','M15','M16'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I9 sources, including I9 primary education and LLM curricula')
+    check(len(refs)>=124 and {'E27','S105','S106','S107'}<=refs and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19','E20','E21','E22','E23','E24','E25','M15','M16'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I9 sources, including I9 primary education and LLM curricula')
     check(source['review_date']=='2026-10-28','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
@@ -304,18 +304,29 @@ def main():
     i2_text=(ROOT/'rsi/idea-i2.html').read_text(encoding='utf-8')
     check('href="idea-i2.html"' in ideas_text and 'href="idea-i2.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
           'I2 detailed plan must be reachable from both home and ideas')
-    check(all(f'id="{sid}"' in i2_text for sid in ('question','evidence','challenge','insight','related','design','objective','experiments','boundaries')),
-          'I2 teaching co-evolution evidence and experimental sections missing')
-    check(all(f'href="references.html#{ref}"' in i2_text for ref in ('S100','S101','S102','S103','S104','M100','S17','S19','S33')),
-          'I2 verified nearest-work references missing')
+    check(all(f'id="{sid}"' in i2_text for sid in ('question','evidence','dialogue-evidence','challenge','insight','related','design','objective','dialogue-p0','experiments','boundaries')),
+          'I2 teaching co-evolution or bidirectional diagnostic sections missing')
+    check(all(f'href="references.html#{ref}"' in i2_text for ref in ('S100','S101','S102','S103','S104','M100','S17','S19','S20','S33','E27','S105','S106','S107')),
+          'I2 verified closest-work or feedback uptake references missing')
     check(all(term in i2_text for term in ('冻结学生','TeachingGain','固定教师','独立学习增益','教学 LoRA','任务 Skill','I5','I6','I7','I8')),
           'I2 must separate pedagogical gains, student learning, carriers and other ideas')
     check('id="i2-coevolution"' in (ROOT/'rsi/experiments.html').read_text(encoding='utf-8'),
           'I2 execution entry missing')
+    for arm in ('A · 单向解释','B · 固定多轮','C · 真实双向','D · 错配回应'):
+        check(arm in i2_text,'I2 A/B/C/D response-matching control missing: '+arm)
+    check('id="i2-dialogue-four-arms"' in i2_text and 'C−D' in i2_text and '总 Token' in i2_text,
+          'I2 response-specific information comparison or feedback quantity control missing')
+    check('idea-i2.html#dialogue-p0' in (ROOT/'rsi/experiments.html').read_text(encoding='utf-8'),
+          'I2 P0 must be linked from experiment execution page')
+    assert all(f'href="references.html#{rid}"' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8') for rid in ('E27','S105','S106')), 'Feedback uptake evidence must be primary-sourced'
+    check('id="feedback-uptake"' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8'),
+          'npj 2025 Ignore/Copy/Apply reading missing')
     i5_text=(ROOT/'rsi/idea-i5.html').read_text(encoding='utf-8')
     check('href="idea-i5.html"' in ideas_text and 'href="idea-i5.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I5 page not linked from home/ideas')
     check(all(k in i5_text for k in ('十个模型','换舞伴','Bridge ties bind collective memories','PopuLoRA','OPCoD','HACE','I7','未见任务')),'I5 evidence, orthogonal labels or controls missing')
     check(all(f'id="{x}"' in i5_text for x in ('scene','papers','collisions','challenge','insight','design','experiments','teaching-feedback','summary')),'I5 unified sections missing')
+    check('href="idea-i2.html#dialogue-p0"' in i5_text and 'href="references.html#E27"' in i5_text,
+          'I5 must fix teaching protocol and link to I2 dialogue information study')
     check('href="teaching.html"' in i5_text and '十模型动态互教' in i5_text,
           'Historical teaching-feedback branch must remain accessible under the sole I5 entry')
     i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
@@ -325,6 +336,8 @@ def main():
         check(f'href="references.html#{ref}"' in i8_html,'I8 reference missing: '+ref)
     check('语义预测误差' in i8_html and '误导性反馈' in i8_html and '可信反馈门槛' in i8_html,'I8 must retain Pine 2018 prediction-error and misinformation boundary')
     check('href="references.html#E18"' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8'),'Pine 2018 must be cross-linked from learning science')
+    check('href="references.html#E27"' in i8_html and 'idea-i2.html#dialogue-p0' in i8_html,
+          'I8 must distinguish feedback application evidence from I2 interaction mechanism')
     check('id="i8-related-matrix"' in i8_html, 'I8 closest-work comparison table missing')
     for axis in ['研究对象与条件','用什么信号判断','操作与实际评价','与 I8 相同 / 不同之处']:
         check(axis in i8_html,'I8 related-work scientific comparison axis missing: '+axis)

@@ -1291,6 +1291,46 @@
       "level": "ACL Anthology 原文摘要核对；2026-10-28",
       "note": "研究噪声标签记忆与中间推理机制如何共存，区别于先无语义记忆再少量语义重解释的两阶段知识注入。",
       "code": "https://github.com/mainlp/memorized_reasonings"
+    },
+    {
+      "id": "E27",
+      "group": "学习科学",
+      "title": "Applying, not ignoring: how feedback uptake and neural synchrony drive creativity",
+      "date": "npj Science of Learning 10, Article 61 (2025-08-25)",
+      "url": "https://www.nature.com/articles/s41539-025-00351-0",
+      "level": "Nature 官方正文 Results/Methods、反馈编码、迁移相关性、fNIRS 分析核对；2026-10-28",
+      "note": "Yin 等以100对参与者比较双向、单向、无关交流和无反馈；IF 的 Apply 数量更高，Ignore/Copy/Apply 标签由鞋子任务的对话与后测回答联合编码；Apply 与原任务创造力习得相关，但与不同物品的迁移未发现显著直接相关。INS 为脑间同步关联，非双向教学因果机制证明；启发 I2 将学生回应信息价值、持久参数学习与反馈吸收的评价分开。",
+      "code": ""
+    },
+    {
+      "id": "S105",
+      "group": "RSI",
+      "title": "INTERACT: Enabling Interactive, Question-Driven Learning in Large Language Models",
+      "date": "ACL 2025 Long Papers, 8992–9024",
+      "url": "https://aclanthology.org/2025.acl-long.441/",
+      "level": "ACL Anthology 正式正文/摘要与书目核对；2026-10-28",
+      "note": "学生 LLM 通过主动提问与教师多轮对话进行 1347 个情境的概念获取；有明显的上下文学习收益，但并未直接检验学生参数持续更新与对话撤除后的保持。I2 不声称首次交互问答学习。",
+      "code": ""
+    },
+    {
+      "id": "S106",
+      "group": "RSI",
+      "title": "Toward In-Context Teaching: Adapting Examples to Students’ Misconceptions",
+      "date": "ACL 2024 Long Papers, 13283–13310",
+      "url": "https://aclanthology.org/2024.acl-long.718/",
+      "level": "ACL Anthology 正式论文、摘要、AToM / AdapT 设置核对；2026-10-28",
+      "note": "Ross 与 Andreas 建立模拟 Bayesian 学生及人类受教者评估，利用 AToM 推断学生误解并选择示例；不能声称首次从学生回答推断知识状态。I2 需验证真实回应相较错配回应对真实参数更新后净学习的独立贡献。",
+      "code": ""
+    },
+    {
+      "id": "S107",
+      "group": "RSI",
+      "title": "Can LLMs Learn From Mistakes? An Empirical Study on Reasoning Tasks",
+      "date": "Findings of EMNLP 2024, 833–854",
+      "url": "https://aclanthology.org/2024.findings-emnlp.46/",
+      "level": "ACL Anthology 正式论文与摘要核对；2026-10-28",
+      "note": "构建错误推理和修正说明的训练数据，验证修正解释可增益模型推理；说明反馈含原因具有已有机器学习先例。I8 要进一步比较反馈复述、独立规则应用和持续迁移，I2 研究真实学生回应所提供的额外信息。",
+      "code": ""
     }
   ]
 }
