@@ -450,6 +450,13 @@ def main():
               ('θ<sub>AB</sub>','θ<sub>BA</sub>','H<sub>tr</sub>','当前能力相近',
                'C 已知','C 未知','重置 AdamW','0/1/5/10/20/40','Go / Merge / Stop')),
           'I9 must retain SGD boundary, future adaptation setup and falsifiable checks')
+    check('id="i9-future-c-types"' in i9_text and
+          all(k in i9_text for k in ('C₁ · 可组合的共享规则','C₂ · 必须放弃局部捷径','C₃ · 无关规则负对照',
+                                    '交叉作用','108 个 C 训练分支')),
+          'I9 must separate shared-rule, shortcut-conflict and unrelated C tasks with precommitted scale')
+    check(all(k in experiments_html for k in ('C₁','C₂','C₃')) and
+          'idea-i9-practice-switching.html#future-p0' in experiments_html,
+          'I9 future learnability experiment entry must name C task families and link full design')
     check('idea-i9-practice-switching.html#future-question' in ideas_text and
           'idea-i9-practice-switching.html#future-p0' in experiments_html,
           'I9 A/B-to-C scientific extension not discoverable from overview and experiments')

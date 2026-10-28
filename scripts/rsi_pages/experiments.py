@@ -40,7 +40,7 @@ PAGE = {
 <div class="table-wrap"><table><thead><tr><th>阶段</th><th>不许改变的条件</th><th>决定性观察</th></tr></thead><tbody>
 <tr><td>P0 · AB 对 BA</td><td>相同起点、材料、Token、更新器、总梯度步；仅反转课程顺序</td><td>先匹配 A/B 保持与 C 初始独立能力，保留全部未匹配失败样本及匹配覆盖率</td></tr>
 <tr><td>P1 · 两者真学 C</td><td>相同 C 数据流和步数；主实验重置 AdamW 优化器状态</td><td>0/1/5/10/20/40 步的 C 新题学习曲线面积、达标步数、A/B 回归和组合规则迁移</td></tr>
-<tr><td>P2 · 竞争机制</td><td>相同诊断预算、训练/测试规则族隔离</td><td>局部捷径与规则可辨识性、梯度曲率、Sweeney 当前损失排序、readout plasticity 的增量解释</td></tr>
+<tr><td>P2 · 三类 C + 竞争机制</td><td>同等初始能力及诊断预算；共享规则 C₁、排除旧捷径 C₂、无关规则 C₃ 分开预注册，训练/测试规则族隔离</td><td>比较规则关系 × 历史顺序的交互或交叉反转；控制梯度曲率、Sweeney 当前损失排序、readout plasticity 等已有解释</td></tr>
 </tbody></table></div>
 <p><b>避免泄漏：</b>如果 C 在 A/B 顺序决策前未知，则不得使用任何 C 梯度和最终测试答案决定顺序；目标 C 已知并允许少量开发示例时，可以单独报告目标条件化的几何预测，绝不能混成未知 C 的泛化结果。</p>
 <p><b>Go 门槛：</b>当前能力相近且优化器状态重置后，未来 C 学习曲线仍有跨种子/跨规则族顺序差异；若差异仅是 C 初始 loss、历史遗忘或优化器动量，则保留现象并退回 I9，不增加新的调度器。<a href="idea-i9-practice-switching.html#future-p0">详细协议、公式与强基线 →</a></p>

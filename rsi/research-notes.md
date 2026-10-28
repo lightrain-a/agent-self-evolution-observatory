@@ -902,7 +902,7 @@
  <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>模型的学习可能经历两种不同需求：<strong>先把某一条规则学稳，再学会从多个规则中选对一个</strong>。因此，只看训练正确率容易误判；独立单主题题是否掌握、混合题是否选错规则、经历其他更新后是否退化，可能预测下一步该采用哪种练习安排。这是待验证假设，不预设一定先集中后交错。新增的解释可能是：两种历史得到类似当前分数，却形成不同规则表征；有的路径只适合原题的局部捷径，有的更利于吸收新规则。npj 2026 的人类运动学习只提供这一可能性的机制类比，不是 LLM 实测。<a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></p></div>
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>固定每个主题的题目、正确反馈、LoRA 更新器和预算，仅重排 A/B/C 不同主题的练习顺序。先从相同模型检查点分叉，验证集中/交错在不同知识状态下的净学习收益；再用窗口之前的独立单主题、混合题与干扰探针预测何时切换。撤除示范与训练上下文，在未见新题和经历后续更新的旧题上测真实能力。另固定 A/B→C 与 B/A→C 两条分支：A/B 保持与 C 前测匹配后，让两者使用相同 C 数据和更新器，记录未来学习曲线。</p>
  <div class="flow"><div><b>独立测规则掌握</b><small>单主题新题</small></div><div><b>测规则选择错误</b><small>混合新题</small></div><div><b>匹配预算重排课程</b><small>集中 / 交错 / 阶段组合</small></div><div><b>后续独立测试</b><small>迁移 / 保持 / 总成本</small></div></div></div>
- <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从同一检查点比较<strong>固定集中、随机交错、循环交错、先集中后交错、先交错后集中、固定时点切换</strong>；第二阶段才加入状态切换，与同特征 contextual bandit 和仅看训练正确率的规则比较。按规则相似度与前置知识高低分层，补充复习间隔对照。报告无提示单主题/混合题正确率、规则错选率、跨规则题、后续干扰后的保持与总预算。如果优势仅来自间隔或随机交错已经最好，就不强行加入复杂 Router。扩展实验还须重置优化器状态，使用 C 初始损失、Lie bracket 当前损失排序、readout 可塑性等同预算强基线；若不能匹配当前能力就不强行声称未来效应。<a href="idea-i9-practice-switching.html#future-question">查看“当前能力相同、未来可学性不同”的完整扩展 →</a></p><p class="idea-side-note"><b>正交边界：</b>I9 固定题目与每题内部教学顺序，只改变<strong>跨主题课程编排、集中/交错切换及 A/B 顺序</strong>；不选择 I6 的失败轨迹，不改变 I7 的示范先后，也不优化 I8 的纠错目标。<a href="idea-i9-practice-switching.html">查看 I9 完整最近邻与实验协议 →</a></p></div>
+ <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从同一检查点比较<strong>固定集中、随机交错、循环交错、先集中后交错、先交错后集中、固定时点切换</strong>；第二阶段才加入状态切换，与同特征 contextual bandit 和仅看训练正确率的规则比较。按规则相似度与前置知识高低分层，补充复习间隔对照。报告无提示单主题/混合题正确率、规则错选率、跨规则题、后续干扰后的保持与总预算。如果优势仅来自间隔或随机交错已经最好，就不强行加入复杂 Router。扩展实验还须重置优化器状态，使用 C 初始损失、Lie bracket 当前损失排序、readout 可塑性等同预算强基线；将新任务 C 分为<strong>共享可组合规则（C₁）、必须排除旧捷径（C₂）、无关规则负对照（C₃）</strong>，检查未来收益是否随规则关系出现交叉反转，还是仅反映整体可塑性下降。若不能匹配当前能力就不强行声称未来效应。<a href="idea-i9-practice-switching.html#future-question">查看“当前能力相同、未来可学性不同”的完整扩展 →</a></p><p class="idea-side-note"><b>正交边界：</b>I9 固定题目与每题内部教学顺序，只改变<strong>跨主题课程编排、集中/交错切换及 A/B 顺序</strong>；不选择 I6 的失败轨迹，不改变 I7 的示范先后，也不优化 I8 的纠错目标。<a href="idea-i9-practice-switching.html">查看 I9 完整最近邻与实验协议 →</a></p></div>
  </div>
 
 ## I1–I9：九个研究问题 / I6–I9：一次只研究一个变量
@@ -1706,6 +1706,12 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 <p>从 θ<sub>AB</sub> 与 θ<sub>BA</sub> 出发，用相同 C 训练样本顺序和统一学习率继续做更新；在 0/1/5/10/20/40 个预注册检查点，对<b>独立未见 C 测试题</b>评估。主要指标是 C 的学习曲线面积（AULC）、达到固定独立能力阈值所需训练步数、固定计算预算下的提升；同时报告 A/B 回归、迁移到规则变形题、跨任务组合题以及参数更新 FLOPs。</p>
 <p><b>优化器状态必须单列：</b>主实验在进入 C 时重置 AdamW 的一阶/二阶动量与学习率状态，保留模型学习后的 LoRA/权重；辅助实验继承优化器状态。若仅后者存在差异，则不能宣称学习到的参数表征造成了未来可学性差异。学习率、LoRA rank、随机数种子和 C 样本顺序全部固定。</p>
 <h3>P2 · 判断是“规则理解”还是“捷径与训练动力学”</h3>
+<p><b>先把未来任务 C 分为三类，而不只按难度排序。</b>在 A/B 训练开始之前，程序化指定各任务背后的规则关系与可辨识样本。三类 C 均在训练前使用独立开发题匹配初始正确率、交叉熵、输入长度和梯度尺度；按类别分别报告，不能将结果好的 C 事后改称“同规则”。</p>
+<div class="table-wrap"><table id="i9-future-c-types"><thead><tr><th>新任务 C</th><th>定义与构造方式</th><th>最重要的区别</th></tr></thead><tbody>
+<tr><td><b>C₁ · 可组合的共享规则</b></td><td>保留 A/B 的抽象操作关系，改变符号、对象和求解结构；排除同模板换数字。</td><td>过去的学习是否建立了对新组合可复用的规则表征。</td></tr>
+<tr><td><b>C₂ · 必须放弃局部捷径</b></td><td>让旧捷径与正确规则在原 A/B 训练样本上都可通过，但在 C 的独立输入上给出不同答案；由程序验证竞争规则确实被区分。</td><td>当前都会做原题的两种历史，是否因为保留不同假设而出现方向相反的后续学习收益。对应 npj 2026 的局部成功／正确规则分离。<a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></td></tr>
+<tr><td><b>C₃ · 无关规则负对照</b></td><td>使用与 A/B 无预设前置依赖、但任务规模与反馈结构匹配的独立规则族。</td><td>差别是否仅是普遍的可塑性损失、剩余容量或优化器状态，而非某条规则的影响。</td></tr>
+</tbody></table></div>
 <div class="table-wrap"><table><thead><tr><th>对照或消融</th><th>真正区分的解释</th></tr></thead><tbody>
 <tr><td><b>C 规则相似度 × 训练来源结构</b></td><td>C 共享 A/B 的抽象规则、仅表面相似、完全无关时，是否出现不同的后续学习速度？</td></tr>
 <tr><td><b>局部捷径 vs 可区分假设</b> <a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></td><td>构建当前成功率相近、但是否能排除错误规则不同的 A/B 任务材料，观察第三任务的独立迁移；这是机制检验，不等同于一律增加难度。</td></tr>
@@ -1713,16 +1719,18 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 <tr><td><b>可塑性与训练动态诊断</b> <a class="cite" href="references.html#M20" title="Learning Dynamics of Continual Learning: A Unified View of Data Attribution, Forgetting, and Plasticity Loss">[M20]</a><a class="cite" href="references.html#M22" title="Loss of plasticity in deep continual learning">[M22]</a></td><td>同预算比较 readout plasticity、曲率相关量以及等预算少步 C 更新作为上界/参考，检验额外信息来自哪里。</td></tr>
 <tr><td><b>只更新 C 模型头 / 固定表征</b></td><td>判定差异来自可复用的规则表征还是梯度优化器/分类头的局部变化；在 LLM 中需明确适配部位和可训练参数数量。</td></tr>
 </tbody></table></div>
+<p><b>强于“单纯学习速度不同”的预测：</b>假如 A→B 比 B→A 更容易学 C₁，却在 C₂ 上反过来，而 C₃ 上差异很小，这种<strong>规则关系 × 历史顺序的交叉作用</strong>更符合“先前学到的假设不同”；如果三种 C 都等比例变慢，则更符合一般可塑性、梯度传递或剩余训练容量的解释。交叉反转是提高机制说服力的目标，不是预设必须出现的结果；统一报告所有任务族及无差异情况。</p>
 <h3>未来任务 C 已知还是未知：两条报告轨道，不混用结果</h3>
 <p><b>C 已知（机制诊断）：</b>可以用一个事先隔离的少量 C 支持集计算梯度或 HVP，比较 Lie-bracket 与未来一步增益的相关性；C 测试集仍保持隔离。<b>C 未知（真正事前选择）：</b>A/B 选顺序时不读取 C 的任何示例或答案，元学习/策略只能利用其他训练任务族的历史；在锁定的新 C 任务族上评价顺序对未来学习曲线的期望收益。不能把用了 C 梯度的诊断方法称为未知 C 的事前预测。</p>
 <p><b>最小执行门槛：</b>先用一个模型、两种任务顺序、多个预先固定的 C 家族与至少三个独立训练种子做 P0；确认同起点两条历史在同样 C 数据上确实出现差异后，再扩展到第二模型规模、交错/集中全课程和更长的 LoRA 训练。每个分支训练与探针总开销必须计入预算；同一模板不同采样不能作为独立统计重复。</p>
+<p><b>一个明确的预检预算（计划，不是结果）：</b>先用约 1B–3B 的开源模型，预定 6 组规则配置 × A→B/B→A 两个顺序 × 3 个种子，得到最多 <b>36 个历史终点</b>；再分别进入 C₁/C₂/C₃，得到最多 <b>108 个 C 训练分支</b>。每支记录 0、1、5、10、20、40 次更新后的独立 C 损失及准确率，计算学习曲线面积、达标步数、回归和净迁移；若终点无法通过事前能力匹配，保留失败分母，不挑出有利的模型再计算。这里的 C 类别是独立规则任务类别，不能只从同一题生成三组表面改写。</p>
 
 
 ## I9 · 什么时候从集中练习切换到交错练习？ / Go / Merge / Stop｜什么证据支持把未来可学习性做成新的 I9 机制？
 
 
 <div class="table-wrap"><table><thead><tr><th>判断</th><th>可观察要求</th></tr></thead><tbody>
-<tr><td><b>GO · 继续机制研究</b></td><td>在多个预注册任务族和种子上，两条历史的当前 A/B/C 能力近似匹配，但 C 的真实独立学习曲线出现稳定差异；并能区分规则可辨识性与普通遗忘、已有梯度/可塑性诊断解释。</td></tr>
+<tr><td><b>GO · 继续机制研究</b></td><td>在多个预注册规则族和种子上，两条历史的当前 A/B/C 能力近似匹配，但 C 的真实独立学习曲线出现稳定差异；<b>C₁/C₂/C₃ 的差异随规则关系系统改变</b>，且无法由初始损失、普通遗忘或已有梯度/可塑性诊断全部解释。出现交叉反转可以增强机制证据，但不将其设为事后筛选条件。</td></tr>
 <tr><td><b>MERGE · I9 的辅助指标</b></td><td>未来速度差异可见，但完全由初始 C loss、已知课程几何或 readout 可塑性量解释；保留 I9 的诊断与实验，不另立“新理论”。</td></tr>
 <tr><td><b>STOP · 不引入复杂调度器</b></td><td>匹配当前能力后差异消失、只在保留优化器动量时出现、仅同模板重复题受益，或等总预算下简单固定课程同样好。</td></tr>
 </tbody></table></div>
@@ -2117,7 +2125,7 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 <div class="table-wrap"><table><thead><tr><th>阶段</th><th>不许改变的条件</th><th>决定性观察</th></tr></thead><tbody>
 <tr><td>P0 · AB 对 BA</td><td>相同起点、材料、Token、更新器、总梯度步；仅反转课程顺序</td><td>先匹配 A/B 保持与 C 初始独立能力，保留全部未匹配失败样本及匹配覆盖率</td></tr>
 <tr><td>P1 · 两者真学 C</td><td>相同 C 数据流和步数；主实验重置 AdamW 优化器状态</td><td>0/1/5/10/20/40 步的 C 新题学习曲线面积、达标步数、A/B 回归和组合规则迁移</td></tr>
-<tr><td>P2 · 竞争机制</td><td>相同诊断预算、训练/测试规则族隔离</td><td>局部捷径与规则可辨识性、梯度曲率、Sweeney 当前损失排序、readout plasticity 的增量解释</td></tr>
+<tr><td>P2 · 三类 C + 竞争机制</td><td>同等初始能力及诊断预算；共享规则 C₁、排除旧捷径 C₂、无关规则 C₃ 分开预注册，训练/测试规则族隔离</td><td>比较规则关系 × 历史顺序的交互或交叉反转；控制梯度曲率、Sweeney 当前损失排序、readout plasticity 等已有解释</td></tr>
 </tbody></table></div>
 <p><b>避免泄漏：</b>如果 C 在 A/B 顺序决策前未知，则不得使用任何 C 梯度和最终测试答案决定顺序；目标 C 已知并允许少量开发示例时，可以单独报告目标条件化的几何预测，绝不能混成未知 C 的泛化结果。</p>
 <p><b>Go 门槛：</b>当前能力相近且优化器状态重置后，未来 C 学习曲线仍有跨种子/跨规则族顺序差异；若差异仅是 C 初始 loss、历史遗忘或优化器动量，则保留现象并退回 I9，不增加新的调度器。<a href="idea-i9-practice-switching.html#future-p0">详细协议、公式与强基线 →</a></p>
