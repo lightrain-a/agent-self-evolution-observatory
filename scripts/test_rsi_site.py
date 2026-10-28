@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','learning-admission','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -122,7 +122,7 @@ def main():
         'methods':['cross-domain.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','learning-admission.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -720,6 +720,25 @@ def main():
           'Preserved bottleneck probes or citations missing')
     check(all(f'id="{x}"' in historical_i6 for x in ('archive','question','challenge','insight','design','orthogonality','related','experiments','safety')),
           'Historical bottleneck sections missing')
+    admission=(ROOT/'rsi/learning-admission.html').read_text(encoding='utf-8')
+    check(all(f'id="{part}"' in admission for part in
+              ('question','phenomena','work','challenge','insight','design','p0','p1','p2','boundaries')),
+          'Learning admission must retain scientific story, evidence layers and decisive tests')
+    check(all(word in admission for word in
+              ('EAFT','RieSelect','CoPE','RSIFlow','MetaSkill-Evolve','Skill∞',
+               'Core-only','System-with-Experts','Meta-Admission Skill','重访','旧规则已失效')),
+          'Admission page lacks fixed-learning versus RSI boundary or long-term evidence')
+    check(all(f'href="references.html#{key}"' in admission for key in
+              ('M320','M321','M322','M323','M324','M325','M326','M327','S320')),
+          'Admission literature has uncited or missing first-party registry entries')
+    check('href="learning-admission.html"' in overview and
+          'href="learning-admission.html"' in ideas_text,
+          'New independent learning-admission candidate is absent from the research board')
+    check('learning-admission.html' in nav_text,
+          'Unnumbered admission candidate missing from RSI second-level navigation')
+    check('id="idea-3"' in ideas_text and
+          '冲突前学习接纳' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0],
+          'I3 post-conflict repair was not separated from pre-update admission')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')

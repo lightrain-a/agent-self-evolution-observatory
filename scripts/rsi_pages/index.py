@@ -16,6 +16,7 @@ PAGE = {
 <a class="idea-board-card" href="idea-i9-practice-switching.html"><span class="idea-id">I9 · 集中与交错练习</span><b>何时交错？同样学会后谁更容易学新规则？</b></a>
 <a class="idea-board-card" href="idea-i11-emotional-rsi.html"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>鼓励、批评还是中性反馈，能让我下一版真正变强？</b></a>
 </div>
+<p><b>独立候选（未编号）：</b><a href="learning-admission.html">新旧能力冲突时，Agent 是否应暂缓内化、调用外部专家，并在能力变化后重新尝试？</a> I3 继续研究冲突已经发生后的修复；这条候选专门研究<strong>冲突前的学习接纳</strong>及跨代元策略改进。</p>
 <p><b>I2 最新合并：</b>保留因材施教与小预算试学，增加教师自身的教学更新；分别证明学生独立能力和教师教学能力增长。<a href="idea-i2.html">进入师生共进化方案</a>。</p>
 <p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i11-emotional-rsi.html">I11</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
@@ -29,6 +30,7 @@ PAGE = {
 <a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
 <a href="idea-i9-practice-switching.html"><b>I9：课程顺序与未来可学习性</b><span>保留集中/交错切换；新增 A→B 与 B→A 当前能力相近时，学习 C 的速度是否不同。</span></a>
 <a href="idea-i11-emotional-rsi.html"><b>I11：哪种情绪反馈能改善长期自我迭代？</b><span>固定真实反馈，只改鼓励/批评/紧迫/中性措辞；测校准、学习动作及 Skill/LoRA 多轮净增益。</span></a>
+<a href="learning-admission.html"><b>独立候选：新能力冲突时，何时拒绝立即内化？</b><span>内化 / 隔离 / 外部专家 / 暂缓重访；以旧能力保护与后代元策略的独立收益检验 RSI。</span></a>
 <a href="reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal"><b>NC 2025 · 局部信心与整体自评</b><span>真实反馈选择如何改变总体自评？全文精读、D1/D2/D3 与 I11 实验。[[E29]]</span></a>
 <a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>
 <a href="literature.html#rsi-landscape-20261003"><b>RSI 领域全景与竞争边界</b><span>新增 2026-10-03 综述导读：改什么、固定什么，四问 + 安全与一手证据。</span></a>

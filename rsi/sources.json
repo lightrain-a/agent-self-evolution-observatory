@@ -1691,6 +1691,96 @@
       "level": "Personality and Social Psychology Review 正式摘要；2026-10-28",
       "note": "Cushman 综述道德行动与后果价值的双系统模型，属于理论先例；没有 Maier 的策略选择偏好反馈和跨实验捐赠迁移。",
       "code": ""
+    },
+    {
+      "id": "M320",
+      "group": "相邻领域",
+      "title": "Entropy-Adaptive Fine-Tuning: Resolving Confident Conflicts to Mitigate Forgetting",
+      "date": "Findings EMNLP 2026",
+      "url": "https://aclanthology.org/2026.findings-emnlp.703/",
+      "level": "ACL Anthology 官方摘要与训练目标核对；2026-10-28",
+      "note": "EAFT 使用 token 熵抑制高置信度冲突下的梯度以减少遗忘；未研究整个能力拒绝内化、外部专家承担与跨代学习接纳策略。",
+      "code": ""
+    },
+    {
+      "id": "M321",
+      "group": "相邻领域",
+      "title": "Less Is More in Federated Continual Learning: RieSelect for Conflict-Aware Layer Selection in LLMs",
+      "date": "ICML 2026",
+      "url": "https://proceedings.mlr.press/v306/qiu26w.html",
+      "level": "PMLR 正式摘要核对；2026-10-28",
+      "note": "联邦持续学习中按层级冲突与安全更新范围选择上传层；属于参数更新/通信选择，不是 RSI 学习接纳。",
+      "code": ""
+    },
+    {
+      "id": "M322",
+      "group": "相邻领域",
+      "title": "CoPE: Continual Probe-guided Expansion for Large Vision-Language Models",
+      "date": "ICML 2026",
+      "url": "https://proceedings.mlr.press/v306/wang26le.html",
+      "level": "PMLR 正式摘要核对；2026-10-28",
+      "note": "Probe 指导扩展视觉语言模型 MoE 专家；已有动态增加专家技术，未验证训练接纳元规则跨代改进或现成外部模型委托。",
+      "code": ""
+    },
+    {
+      "id": "M323",
+      "group": "相邻领域",
+      "title": "Retrievable Gradients: Continual Post-Training Without Cumulative Weight Drift",
+      "date": "EMNLP 2026",
+      "url": "https://aclanthology.org/2026.emnlp-main.1197/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-28",
+      "note": "ReGrad 以可检索梯度进行临时可逆权重更新并通过双层目标改善适配；不直接决定新能力是否永久内化。",
+      "code": ""
+    },
+    {
+      "id": "M324",
+      "group": "相邻领域",
+      "title": "Consistent Estimators for Learning to Defer to an Expert",
+      "date": "ICML 2020",
+      "url": "https://proceedings.mlr.press/v119/mozannar20b.html",
+      "level": "PMLR 正式摘要核对；2026-10-28",
+      "note": "模型将当前输入的预测交给自身或外部专家；是推理时委托，不决定跨训练轮次的内部学习接纳。",
+      "code": ""
+    },
+    {
+      "id": "M325",
+      "group": "相邻领域",
+      "title": "Online Learning-to-Defer with Varying Experts",
+      "date": "AISTATS 2026",
+      "url": "https://proceedings.mlr.press/v300/montreuil26b.html",
+      "level": "PMLR 正式摘要核对；2026-10-28",
+      "note": "专家池可变时的在线分类委托和代价敏感反馈；不研究拒绝内化后未来核心能力变化。",
+      "code": ""
+    },
+    {
+      "id": "M326",
+      "group": "相邻领域",
+      "title": "Position: Modular Memory is the Key to Continual Learning Agents",
+      "date": "ICML 2026",
+      "url": "https://proceedings.mlr.press/v306/dorovatas26a.html",
+      "level": "PMLR 正式摘要核对；2026-10-28",
+      "note": "主张结合 in-weight 和 in-context 模块化记忆；属于概念框架，非冲突证据驱动的接纳与重访 RSI 验证。",
+      "code": ""
+    },
+    {
+      "id": "M327",
+      "group": "相邻领域",
+      "title": "RAG or Learning? Understanding the Limits of LLM Adaptation under Continuous Knowledge Drift in the Real World",
+      "date": "Findings ACL 2026",
+      "url": "https://aclanthology.org/2026.findings-acl.546/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-28",
+      "note": "动态知识漂移中检索和微调都可能造成时间不一致；提醒外部知识需时间版本，旧规则不一定应被保护。",
+      "code": ""
+    },
+    {
+      "id": "S320",
+      "group": "RSI",
+      "title": "Skill∞: Recursive Self-Improvement for Agent Skill Optimization",
+      "date": "arXiv 2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35434",
+      "level": "arXiv 原始摘要与作者仓库 README 核对；2026-10-28",
+      "note": "可重写 Meta-Skill 优化任务 Skill 与自身，并跨任务复用；为真实 RSI 近邻，但未主打能力冲突接纳、外部委托和暂缓重访的长期最优决策。",
+      "code": "https://github.com/taowangcheng/skill-infinity"
     }
   ]
 }
