@@ -58,6 +58,7 @@
 <p><b>统一结果：</b>未来未见题的撤辅增益 / 总计算成本、旧能力回归、过早停止率、错过可恢复失败的比例，以及重访的增量收益。教师答案、训练器、示范顺序、更新步数都固定；探索阶段可记录不同长度，但评测须有严格等 token / FLOPs 对照。</p>
 </div></section><section class="panel research-section" id="related"><h2>最近邻：做到了哪里、我们还要回答什么</h2><div class="section-body">
 <div class="table-wrap"><table><thead><tr><th>相关工作</th><th>已研究的关系</th><th>I6 的独立问题</th></tr></thead><tbody>
+<tr><td><b>Why SFT Fails to Learn · ACL 2026</b> <a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a></td><td>训练完成后重测已给监督样本，并按知识缺口、监督冲突、早期遗忘等五种可能模式分析；补救后恢复训练题表现。</td><td>I6 不研究“哪一类根因需要哪种补救”。将知识准备、监督冲突与训练位置作为<b>匹配/分层变量</b>，在同一题、同一错误终点、同反馈与更新预算下，只比较失败过程本身的额外跨题收益。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">完整证据</a>。</td></tr>
 <tr><td><a href="i8.html">I8：高置信度错误与规则级迁移</a></td><td>针对错误的知识准备程度、规则覆盖范围以及持久更新后的跨题净收益。</td><td>固定题目与错误终点，仅研究<b>失败轨迹过程</b>是否提供额外有用信息。</td></tr>
 <tr><td><a href="https://aclanthology.org/2024.acl-long.45/" target="_blank" rel="noopener noreferrer">Learn from Failure · ACL 2024</a></td><td>形式定理证明中，失败搜索轨迹可成为有价值的训练数据。</td><td>不是证明失败“可以用”，而是研究<b>哪条失败更值得用</b>。</td></tr>
 <tr><td><a href="https://arxiv.org/abs/2610.13594" target="_blank" rel="noopener noreferrer">MENTOR: Learning from Failure with On-Policy Pedagogical Intervention · 2026 预印本</a></td><td>训练停滞时依据失败原因生成教学提示，帮助恢复学习信号。</td><td>固定教学方式后，仅比较失败轨迹本身的可学习价值，避免归功于更好的提示。</td></tr>
