@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "updated": "2026-10-28",
+  "description": "RSI 可复用理论索引。每条含稳定锚点、数学表达、推导步骤、原始来源和明确的迁移边界；区分论文机制、教学推导与未验证研究假设。",
+  "status_legend": {
+    "paper-mechanism": "论文机制（按原文解释）",
+    "teaching-derivation": "教学推导（非原文原式）",
+    "rsi-hypothesis": "RSI 研究假设（待验证）"
+  },
+  "entries": [
+    {
+      "id": "learning-target-generation",
+      "title": "目标生成式学习规则：为什么学目标比只调 Loss 更灵活？",
+      "category": "Target Generation",
+      "status": "paper-mechanism",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "targets-vs-loss",
+      "source_locator": "Nature 2025 · Fig. 1b–c / Methods: Agent optimisation",
+      "question": "如何把一条可学习的更新规则，表示为目标生成器而不是一段优化器代码？",
+      "insight": "固定训练算子的形式，让元网络决定当前策略和未预定义语义的预测应该靠近什么目标。",
+      "equations": [
+        {
+          "name": "元网络接收已完成的轨迹",
+          "expression": "m_η(τ[t:t+n]) = (π̂_t, ŷ_t, ẑ_t)",
+          "latex": "m_\\eta(\\tau_{t:t+n})=(\\hat\\pi_t,\\hat y_t,\\hat z_t)",
+          "meaning": "τ 包含 Agent 当前/EMA 预测、行动、奖励与终止信息；目标在收集经验后产生。",
+          "boundary": "这是结构性简写，论文元网络还包括用于跨动作与跨时间聚合的架构。"
+        },
+        {
+          "name": "Agent 内层目标损失",
+          "expression": "L(θ;η)=E[D_KL(sg(π̂)||πθ)+D_KL(sg(ŷ)||yθ)+D_KL(sg(ẑ)||zθ)+L_aux]",
+          "latex": "\\mathcal L(\\theta;\\eta)=\\mathbb E[D_{\\rm KL}(\\operatorname{sg}(\\hat\\pi)\\|\\pi_\\theta)+D_{\\rm KL}(\\operatorname{sg}(\\hat y)\\|y_\\theta)+D_{\\rm KL}(\\operatorname{sg}(\\hat z)\\|z_\\theta)+\\mathcal L_{\\rm aux}]",
+          "meaning": "用 stop-gradient（sg）强调执行该内层更新时把元网络输出视为固定目标；q/p 仍使用预定义辅助目标。",
+          "boundary": "sg 为教学注记，不是逐字逐符复刻 Nature 的记号；对元参数 η 的外层求导仍要保留目标生成的依赖。"
+        },
+        {
+          "name": "分类策略的 logit 梯度",
+          "expression": "∂D_KL(π̂||πθ)/∂logit_i = πθ(i) − π̂(i)",
+          "latex": "\\frac{\\partial D_{\\rm KL}(\\hat\\pi\\|\\pi_\\theta)}{\\partial\\ell_i}=\\pi_\\theta(i)-\\hat\\pi(i)",
+          "meaning": "策略概率 [0.6,0.4]、目标 [0.2,0.8] 时，梯度 [0.4,−0.4]，下降后增加第二动作的相对概率。",
+          "boundary": "条件是将 π̂ 当作与当前 logit 独立的固定目标；不等于元网络只能输出这两个动作。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "识别哪些量已固定",
+          "text": "给定输入轨迹 τ 和当前 η，生成 π̂、ŷ、ẑ；Agent 仍有 πθ/qθ/pθ/yθ/zθ 五类输出。"
+        },
+        {
+          "label": "分离目标语义",
+          "text": "q 的价值预测与 p 的下一策略辅助目标是人工预定义；y(s)、z(s,a) 的语义不预先写死。"
+        },
+        {
+          "label": "内层梯度真正作用哪里",
+          "text": "先固定目标，再用 KL 对当前 Agent 输出求梯度。由此仍可以复用可靠的优化器、正则和数值稳定处理。"
+        },
+        {
+          "label": "元网络间接控制更新",
+          "text": "改变 η 会改变目标，进而改变 Agent 的未来参数与回报；这种对未来表现的依赖由双层元优化学习。"
+        }
+      ],
+      "when_to_use": "提出“同样的训练样本，是否应该学习不同的目标而不是只调学习率/采样比例”时引用。",
+      "caution": "元网络没有从零发明梯度算法；接口、KL、优化器和已知价值辅助目标仍是人工设定。"
+    },
+    {
+      "id": "semi-gradient-expressivity",
+      "title": "半梯度与可表达性：为什么不只搜索一个普通标量 Loss？",
+      "category": "Semi-gradient",
+      "status": "teaching-derivation",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "targets-vs-loss",
+      "source_locator": "Nature 2025 · Methods: Meta-network / Agent optimisation（作者可表达性动机）；本条含独立二维教学证明",
+      "question": "直接拟合一个可微标量损失，是否足以表示所有常见 RL 更新？",
+      "insight": "目标固定后求梯度可以形成非保守更新向量场；这类半梯度规则未必是某个普通光滑标量势函数的完整梯度。",
+      "equations": [
+        {
+          "name": "TD / Q-learning 半梯度",
+          "expression": "δ_t = r_t + γ max_a Qθ(s[t+1],a) − Qθ(s[t],a[t]); Δθ = α δ_t ∇θ Qθ(s[t],a[t])",
+          "latex": "\\delta_t=r_t+\\gamma\\max_a Q_\\theta(s_{t+1},a)-Q_\\theta(s_t,a_t),\\quad\\Delta\\theta=\\alpha\\,\\delta_t\\nabla_\\theta Q_\\theta(s_t,a_t)",
+          "meaning": "实际更新对当前 Q 求梯度，把 bootstrap target 当作常量；target 里虽含当前/EMA 模型预测，却不反传其目标端梯度。",
+          "boundary": "动作价值估计及行为/目标网络的选择依具体算法而异，这里是教学形式。"
+        },
+        {
+          "name": "一个不能来自普通光滑势函数的更新向量场",
+          "expression": "g(θ1,θ2)=(θ2−θ1, 0);  ∂g1/∂θ2=1 ≠ 0=∂g2/∂θ1",
+          "latex": "g(\\theta_1,\\theta_2)=(\\theta_2-\\theta_1,0),\\quad\\frac{\\partial g_1}{\\partial\\theta_2}=1\\ne 0=\\frac{\\partial g_2}{\\partial\\theta_1}",
+          "meaning": "若存在光滑标量 F 使 g=−∇F，且定义域单连通，则必要的交叉偏导对称性被违反。",
+          "boundary": "这是为读者构造的数学反例，不是 Nature 的实验公式或作者给出的例子。"
+        },
+        {
+          "name": "但可由停止目标梯度的代理损失实现",
+          "expression": "L_sur=½(θ1−sg(θ2))²  ⇒  −∇θ L_sur=(θ2−θ1,0)",
+          "latex": "\\mathcal L_{\\rm sur}=\\frac12(\\theta_1-\\operatorname{sg}(\\theta_2))^2\\ \\Longrightarrow\\ -\\widetilde\\nabla_\\theta\\mathcal L_{\\rm sur}=(\\theta_2-\\theta_1,0)",
+          "meaning": "梯度符号上的 ~ 表示含 stop-gradient 的程序式导数，不把 θ2 当作可追踪目标参数。",
+          "boundary": "不能夸大为“任何标量程序都表示不了”；自定义梯度、stop-gradient 与目标生成同样可以让标量代理损失实现半梯度。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "先写想要的更新",
+          "text": "取两个参数 θ1、θ2；希望 θ1 追随 θ2，但 θ2 不变。对应向量场 g=(θ2−θ1,0)。"
+        },
+        {
+          "label": "检查梯度场必要条件",
+          "text": "如果 g 是单个光滑标量势函数的负梯度，混合二阶偏导须对称；这里 1 与 0 不相等。"
+        },
+        {
+          "label": "引入停止梯度目标",
+          "text": "设训练目标为 sg(θ2)，对 ½(θ1−sg(θ2))² 执行程序式梯度下降，就得到该更新向量场。"
+        },
+        {
+          "label": "回到 DiscoRL 的搜索空间",
+          "text": "元网络生成要靠近的 π̂、ŷ、ẑ；内层可把这些目标视为固定，表示更丰富的学习更新关系。"
+        }
+      ],
+      "when_to_use": "讨论更新规则搜索空间、TD bootstrap、为什么不只做 Loss-weight 或 Learning-rate search 时引用。",
+      "caution": "“严格更有表达力”的比较对象是普通完整梯度式标量损失，不是所有允许 stop_gradient/自定义微分的程序。"
+    },
+    {
+      "id": "meta-gradient-chain",
+      "title": "双层元梯度：未来回报怎样穿过多次 Agent 更新返回元网络？",
+      "category": "Meta-gradient",
+      "status": "teaching-derivation",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "two-level-optimization",
+      "source_locator": "Nature 2025 · Methods: Meta-optimization；以下 S_k 递推是 SGD 教学推导",
+      "question": "一个更新目标是否好，怎样由“按它训练后的 Agent 回报”来反传判断？",
+      "insight": "外层不是最小化当前样本 Loss，而是通过 Agent 的参数更新链路，优化未来实际回报。",
+      "equations": [
+        {
+          "name": "内层 SGD 版本",
+          "expression": "θ[k+1] = θ[k] − α ∇θ L_k(θ[k];η)",
+          "latex": "\\theta_{k+1}=\\theta_k-\\alpha\\nabla_\\theta \\mathcal L_k(\\theta_k;\\eta)",
+          "meaning": "此式是为展示链式依赖而写的 SGD 简化，原方法实际使用 Adam 等优化状态。",
+          "boundary": "不应把它当作 Nature 中实现的完整优化器。"
+        },
+        {
+          "name": "定义元敏感度",
+          "expression": "S_k = ∂θ[k]/∂η;  S[k+1]=(I−α Hθθ[k])S_k−α Hθη[k]",
+          "latex": "S_k=\\frac{\\partial\\theta_k}{\\partial\\eta},\\quad S_{k+1}=(I-\\alpha H_{\\theta\\theta}^{(k)})S_k-\\alpha H_{\\theta\\eta}^{(k)}",
+          "meaning": "Hθθ 是当前内层 Hessian，Hθη 是 θ 对 η 的混合二阶导；若 θ0 不依赖 η，则 S0=0。",
+          "boundary": "递推是教学推导，假定数据采样路径固定且目标足够光滑；随机体验依赖还需要策略梯度处理。"
+        },
+        {
+          "name": "外层回报梯度",
+          "expression": "∇η J(θK(η)) ≈ S_Kᵀ ∇θ J(θK)",
+          "latex": "\\nabla_\\eta J(\\theta_K(\\eta))\\approx S_K^\\top\\nabla_\\theta J(\\theta_K)",
+          "meaning": "元梯度由“学习规则对最终参数的影响”乘以“参数对实际回报的影响”组成。",
+          "boundary": "完整元 RL 使用 Actor–Critic 估计回报梯度，包含环境采样噪声；不能只按监督学习式链式法则忽略策略采样依赖。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "一步更新的一阶依赖",
+          "text": "θ[k+1] 对 η 的影响同时经过 θ[k] 的历史路径与当前 L_k 对 η 的直接依赖。"
+        },
+        {
+          "label": "对 SGD 公式求导",
+          "text": "dθ[k+1]/dη = dθ[k]/dη − α(∂²L/∂θ² · dθ[k]/dη + ∂²L/∂θ∂η)。"
+        },
+        {
+          "label": "从末端回报反传",
+          "text": "外层只关心 Agent 按该规则更新以后能取得的回报 J；据此计算 ∂J/∂η。"
+        },
+        {
+          "label": "截断长学习生涯",
+          "text": "DiscoRL 对最近 20 次 Agent 更新进行滑动窗口截断反传；近似降低内存和二阶计算，但带来长时信用分配偏差。"
+        }
+      ],
+      "when_to_use": "研究“真正改变训练规则，是否提升未来独立学习收益”以及是否值得计算昂贵 Meta-gradient 时引用。",
+      "caution": "大规模 Actor–Critic 与 Adam 的真实元梯度比这个 SGD 教学公式复杂；不能直接以递推式作为论文中的完整实现声称。"
+    },
+    {
+      "id": "dual-timescales",
+      "title": "两个时间尺度：轨迹内的未来信用与跨更新的学习历史",
+      "category": "Two Time Scales",
+      "status": "paper-mechanism",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "meta-rnn",
+      "source_locator": "Nature 2025 · Methods: Meta-network architecture / Extended Data Fig. 3a",
+      "question": "一条学习规则既要理解本次轨迹的未来结果，也要理解当前 Agent 已经训练到什么阶段，怎样表示？",
+      "insight": "反向轨迹 LSTM 管一次经验如何反向归因；前向 meta-RNN 管跨若干更新的学习状态。",
+      "equations": [
+        {
+          "name": "轨迹级目标（快时间尺度）",
+          "expression": "(π̂_t, ŷ_t, ẑ_t)=mη(fθ(s[t:t+n]),r[t:t+n],a[t:t+n],b[t:t+n])",
+          "latex": "(\\hat\\pi_t,\\hat y_t,\\hat z_t)=m_\\eta(f_\\theta(s_{t:t+n}),r_{t:t+n},a_{t:t+n},b_{t:t+n})",
+          "meaning": "一段已经发生的轨迹沿时间倒序处理，得出当前状态/动作应学的目标。",
+          "boundary": "实际实现还包含 EMA 目标网络输出和按动作共享的处理结构。"
+        },
+        {
+          "name": "跨更新状态（慢时间尺度）",
+          "expression": "h[k+1] = MetaRNNη(h[k], summary(batch[k], θ[k]))",
+          "latex": "h_{k+1}=\\operatorname{MetaRNN}_\\eta(h_k,\\operatorname{summary}(\\text{batch}_k,\\theta_k))",
+          "meaning": "meta-RNN 消化更新历史统计，调整目标生成网络对学习阶段的判断。",
+          "boundary": "这是结构性教学形式；原文的额外 meta-RNN 只带来较小总体增益，不等同于长时知识储存。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "不要混淆 t 与 k",
+          "text": "t 索引游戏轨迹时间，k 索引参数更新次数；两者尺度、依赖与可测信号均不同。"
+        },
+        {
+          "label": "快尺度回答的问题",
+          "text": "沿轨迹回看，哪个早期预测或行动应对后来的成功/失败负责？"
+        },
+        {
+          "label": "慢尺度回答的问题",
+          "text": "已经更新了很多次后，当前 Agent 是否需要和早期不同的学习规则？"
+        },
+        {
+          "label": "验证第二个时间轴的必要性",
+          "text": "必须与相同容量的无历史网络、窗口汇总统计、仅当前状态网络比较；原论文 meta-RNN 提升不大。"
+        }
+      ],
+      "when_to_use": "设计 RSI 学习历史状态、跨轮参数更新反馈或长时自我改进研究时引用。",
+      "caution": "“双时间尺度”是元网络架构事实；把它解释成长期递归自我改进的内部记忆，目前没有实验证据。"
+    },
+    {
+      "id": "prediction-bootstrapping",
+      "title": "开放语义预测与 Bootstrap：怎样检验新中间变量真的有用？",
+      "category": "Auxiliary Predictions",
+      "status": "paper-mechanism",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "prediction-semantics",
+      "source_locator": "Nature 2025 · Fig. 4c–e / Methods: Additional predictions",
+      "question": "给 Agent 新增 y/z 预测头后，怎样知道它们不是无用的辅助参数？",
+      "insight": "先检验是否含未来相关信息，再切断未来预测进入当前目标的路径，最后切断它们进入策略目标的路径。",
+      "equations": [
+        {
+          "name": "新预测没有预定标签",
+          "expression": "yθ(s), zθ(s,a);  (ŷ_t,ẑ_t)=mη(τ[t:t+n])",
+          "latex": "y_\\theta(s),z_\\theta(s,a),\\qquad(\\hat y_t,\\hat z_t)=m_\\eta(\\tau_{t:t+n})",
+          "meaning": "学习系统通过元优化发现值得预测的对象，而不是先给 y/z 人工定义未来奖励标签。",
+          "boundary": "有用信息由后续探针与消融发现，不是实验前就宣称 y/z 一定预测未来策略熵。"
+        },
+        {
+          "name": "Bootstrapping 依赖的可检验形式",
+          "expression": "∂ẑ_t / ∂z[t+k] ≠ 0 （有用的轨迹/状态范围内）",
+          "latex": "\\frac{\\partial\\hat z_t}{\\partial z_{t+k}}\\ne0\\quad\\text{(observed dependency)}",
+          "meaning": "作者扰动未来 z 输入，当前 ẑ 目标明显变化，说明未来预测参与当前目标构造。",
+          "boundary": "该式是对作者敏感性实验的概括，并非声称所有状态的导数处处非零。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "探针：这两个变量编码了什么",
+          "text": "在 10 个 Atari 上用 y/z 等预测未来高奖励事件和策略熵，与 π/q 表示对照。"
+        },
+        {
+          "label": "机制：未来信息有没有进入目标",
+          "text": "扰动未来 z[t+k]，观察当前 ẑ_t 是否改变（Fig. 4d）。"
+        },
+        {
+          "label": "消融一：关闭新预测自举",
+          "text": "计算 ŷ/ẑ 时将相关 y/z 输入置零，破坏未来预测贡献，观察性能下降。"
+        },
+        {
+          "label": "消融二：再切断对策略目标的作用",
+          "text": "计算所有目标（包括 π̂）时将 y/z 输入置零，性能进一步下降，支持它们确实用于改善策略。"
+        }
+      ],
+      "when_to_use": "研究 RSI 无预定义语义中间预测、错误预兆、未来遗忘/可迁移性表征时引用。",
+      "caution": "探针相关不意味着变量具有唯一语义；性能消融支持在给定系统中的因果贡献，但不保证任何新辅助头都能带来提升。"
+    },
+    {
+      "id": "meta-stabilization",
+      "title": "跨环境元优化的稳定性：优势归一化、分 Agent Adam、KL 与熵",
+      "category": "Meta-optimization Stability",
+      "status": "paper-mechanism",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "two-level-optimization",
+      "source_locator": "Nature 2025 · Methods: Meta-optimization stabilization",
+      "question": "数百个 Agent 的奖励尺度、学习阶段不同，怎样防止元梯度被某个环境支配并让目标突然坍塌？",
+      "insight": "先将不同 Agent 的优势与元梯度尺度归一，再限制目标策略偏移并鼓励未定义预测保持一定信息熵。",
+      "equations": [
+        {
+          "name": "优势标准化",
+          "expression": "Ā=(A−μ)/σ",
+          "latex": "\\bar A=\\frac{A-\\mu}{\\sigma}",
+          "meaning": "μ 和 σ 是 Agent 生涯内优势的 EMA 均值与标准差，平衡跨环境回报尺度。",
+          "boundary": "实践计算需要对 σ 太小的情况做数值保护；本文表示原始简化公式。"
+        },
+        {
+          "name": "每个 Agent 先经 Adam 再聚合",
+          "expression": "η ← η + (1/N) Σ_i Adam_i(g_i)",
+          "latex": "\\eta\\leftarrow\\eta+\\frac1N\\sum_{i=1}^N\\operatorname{Adam}_i(g_i)",
+          "meaning": "与先平均原始梯度再做一个 Adam 不同；减轻少数大尺度任务的支配。",
+          "boundary": "符号 Adam_i(g_i) 表示每个 Agent 自己的优化器状态转换，不是一次普通标量乘法。"
+        },
+        {
+          "name": "熵 / 策略目标偏移正则",
+          "expression": "L_ent=−E[H(yθ)+H(zθ)];  L_KL = D_KL(π_{θ−} || π̂)",
+          "latex": "\\mathcal L_{\\rm ent}=-\\mathbb E[H(y_\\theta)+H(z_\\theta)],\\quad\\mathcal L_{\\rm KL}=D_{\\rm KL}(\\pi_{\\theta^-}\\|\\hat\\pi)",
+          "meaning": "最大化 J−L_ent−L_KL 相当于奖励预测熵并惩罚过激的新目标策略。",
+          "boundary": "两项用于元优化稳定，不是应用于每一步 Agent 的固定人工策略更新目标。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "跨环境尺度不一致",
+          "text": "环境 A 的 Advantage 可能远大于 B，即使 B 的规则同样有价值，原始梯度合并也易被 A 主导。"
+        },
+        {
+          "label": "两层归一",
+          "text": "对优势做 EMA 归一，并在汇总之前独立 Adam 处理每个 Agent 的元梯度。"
+        },
+        {
+          "label": "防止预测退化",
+          "text": "−H 作为要减掉的元正则，使高熵受到鼓励，降低 y/z 过早收敛到常量类别的风险。"
+        },
+        {
+          "label": "防止元规则过于激进",
+          "text": "控制 π̂ 与 EMA 策略的 KL，防止目标突然跳到远离当前策略的分布。"
+        }
+      ],
+      "when_to_use": "设计跨多模型/多任务的元更新器、联合训练规则池或长周期 RSI 稳定门控时引用。",
+      "caution": "数值稳定化不等于安全性、可信性或反奖励投机；不能把它当作完整的自改进治理方案。"
+    },
+    {
+      "id": "rsi-future-learnability-objective",
+      "title": "RSI 扩展：从当前回报转向未来可学习性（尚待验证）",
+      "category": "RSI Research Hypothesis",
+      "status": "rsi-hypothesis",
+      "source_paper_id": "discorl-nature2025-oh",
+      "source_anchor": "rsi-decisive-experiment",
+      "source_locator": "本站研究延伸，非 Nature 2025 原论文公式",
+      "question": "当两套更新规则让 Agent 当前 A/B 能力一样时，未来学习陌生任务 C 的速度是否仍不同？",
+      "insight": "元规则的好坏不能只看当前奖励，还应在匹配当前能力与资源后评估未来新能力净增长及旧能力损失。",
+      "equations": [
+        {
+          "name": "未来新任务的真实学习增益",
+          "expression": "Δ_C(η)=A_C(θ_after(η))−A_C(θ_before(η))",
+          "latex": "\\Delta_C(\\eta)=A_C(\\theta_{\\rm after}(\\eta))-A_C(\\theta_{\\rm before}(\\eta))",
+          "meaning": "C 是外层学习规则发现期间留出的任务家族；对 C 需要执行等预算的实际参数更新。",
+          "boundary": "这个指标是我们提出的科研目标，DiscoRL没有测 LLM 的下一轮任务 C 可学习性。"
+        },
+        {
+          "name": "候选净收益目标",
+          "expression": "G_future(η)=Δ_C(η)−λF_old(η)−βC_total(η)",
+          "latex": "G_{\\rm future}(\\eta)=\\Delta_C(\\eta)-\\lambda F_{\\rm old}(\\eta)-\\beta C_{\\rm total}(\\eta)",
+          "meaning": "F_old 是旧 A/B 能力损失，C_total 应计入元发现与未来更新成本；λ/β 在实验前锁定。",
+          "boundary": "没有现成最优权重；在不同 λ/β 下应呈现 Pareto 敏感性，而非只挑最好看的组合。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "先匹配初始条件",
+          "text": "同底座、同 A/B 数据、同优化预算；比较固定更新规则与条件化目标生成器，确认 A/B 当前后测处于可比范围。"
+        },
+        {
+          "label": "只改变规则而非课程",
+          "text": "样本、目标任务、评估器、训练 token 相同；改变的必须是训练目标或参数更新机制，而非仅换示范顺序。"
+        },
+        {
+          "label": "对新 C 独立更新",
+          "text": "从各分支检查点出发提供同一 C 训练材料，用同样步骤继续真实学习，并测未见 C 的学习曲线与 A/B 保留。"
+        },
+        {
+          "label": "判断是否值得做 Meta-Updater",
+          "text": "若只有当下性能提升或算力节省、却没有未来独立净收益，不能声称发现了持续 RSI 学习规则。"
+        }
+      ],
+      "when_to_use": "I3/I6/I8/I9/I12 与未来 Learning Rule Evolution 联合设计时，作为跨 idea 的评测口径参考。",
+      "caution": "本条是未验证的 RSI 研究提案；不能写成 DiscoRL 本文结果或已达成的实验发现。"
+    }
+  ]
+}

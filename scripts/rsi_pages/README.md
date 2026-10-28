@@ -30,6 +30,14 @@
 
 不要写未经核查的成绩或把相近数据集名称擅自扩大。优先固定 arXiv 的版本页面、论文代码链接和阅读日期。
 
+## 可长期引用的理论笔记（2026-10-28 新增）
+
+- **理论唯一源**：`rsi/theory-notes.json`，可逐条追加 `entries`；`scripts/rsi_pages/theory-notes.py` 自动生成 `rsi/theory-notes.html`，并更新导航和全站搜索。每条理论具有唯一 `id`，在线稳定链接为 `/rsi/theory-notes.html#<id>`。不要修改已公开的旧 `id`，以免破坏后续 Idea 的引用。
+- **四重内容**：清晰的科学问题、原始论文的机制位置与链接、LaTeX 及可直接读的公式、逐步推导和可迁移边界；特别标记 `paper-mechanism`（作者证据）、`teaching-derivation`（自己推导）和 `rsi-hypothesis`（待验证）。
+- **来源双向引用**：每条 `source_paper_id` 必须存在于 `reading-cards.json`；`source_anchor` 必须是该论文 `deep_read.sections` 的真实章节 ID。理论页自动链接到对应的论文精读，论文精读自动加入返回理论页的快捷入口。
+- **第一批内容**：DiscoRL · Nature 2025，共七条：更新目标生成、半梯度表达能力、元梯度递推、快慢时间尺度、自举预测与消融、跨 Agent 稳定化、以及标为未验证的 RSI 未来可学习性目标。不要把教学二维反例和未来 C 任务公式说成论文原式。
+- **验证**：执行 `python3 scripts/build_rsi_research.py && python3 scripts/build_rsi_site.py && python3 scripts/test_rsi_site.py`，会检测唯一 ID、公式/LaTeX、论文锚点、双向链接以及公开输出。
+
 ## RSI 研究时间轴与会议 DDL
 
 `rsi/timeline-data.json` 是会议与人工研究里程碑的唯一数据源：

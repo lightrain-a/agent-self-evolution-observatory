@@ -1,0 +1,20 @@
+/* Reusable RSI theory notebook: quiet, print-friendly derivations. */
+[data-rsi-page="theory-notes"] .theory-legend{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 22px}
+[data-rsi-page="theory-notes"] .theory-legend span,[data-rsi-page="theory-notes"] .theory-meta span{display:inline-block;border:1px solid #d7e3ed;background:#f2f6fa;border-radius:6px;padding:4px 9px;color:#3b5673;font-size:11px;font-weight:650}
+[data-rsi-page="theory-notes"] .theory-directory{margin:15px 0 23px}
+[data-rsi-page="theory-notes"] .theory-directory>a{padding:15px 17px;gap:5px}
+[data-rsi-page="theory-notes"] .theory-directory b{font-size:14px;line-height:1.55}
+[data-rsi-page="theory-notes"] .theory-directory span{font-size:12px}
+[data-rsi-page="theory-notes"] .theory-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+[data-rsi-page="theory-notes"] .theory-question{background:#f5f8fc;border:1px solid #e2eaf2;border-radius:8px;padding:12px 14px}
+[data-rsi-page="theory-notes"] .theory-formula{margin:15px 0 18px}
+[data-rsi-page="theory-notes"] .theory-formula code{word-break:break-word;overflow-wrap:anywhere;white-space:pre-wrap}
+[data-rsi-page="theory-notes"] .theory-latex{margin-top:12px;border-top:1px dashed #dce5ed;padding-top:9px}
+[data-rsi-page="theory-notes"] .theory-latex summary{cursor:pointer;color:#315b88;font-size:12px;font-weight:650}
+[data-rsi-page="theory-notes"] .theory-latex pre{max-width:100%;margin-top:9px;padding:10px 12px;white-space:pre-wrap;word-break:break-word;background:#1d3047;color:#edf4fb;border-radius:7px;line-height:1.7}
+[data-rsi-page="theory-notes"] .theory-latex pre code{font-size:12px;color:inherit;white-space:pre-wrap;word-break:break-word}
+[data-rsi-page="theory-notes"] .theory-source{font-size:12px;color:#52667d;border-top:1px solid #e1eaf1;padding-top:10px;margin-top:18px}
+[data-rsi-page="theory-notes"] .theory-references{margin:10px 0 4px}
+[data-rsi-page="reading-notes"] .deep-theory-index .links{margin-top:10px}
+@media(max-width:820px){[data-rsi-page="theory-notes"] .theory-directory{grid-template-columns:1fr}[data-rsi-page="theory-notes"] .theory-formula code{font-size:11px}}
+@media print{[data-rsi-page="theory-notes"] .theory-formula{break-inside:avoid}[data-rsi-page="theory-notes"] .theory-latex{display:none}}

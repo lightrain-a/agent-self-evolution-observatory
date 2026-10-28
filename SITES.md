@@ -45,6 +45,10 @@ python3 scripts/build_rsi_site.py --output _rsi-standalone
 
 仅编辑 `rsi/reading-cards.json`，追加一个 `papers` 条目，然后运行 `python3 scripts/build_rsi_research.py`。卡片渲染、RSI 侧边导航、站内搜索保持自动化，Agent 导航不受影响。
 
+## 新增长期可引用理论
+
+`rsi/theory-notes.json` 是新增理论的结构化源，公开页为 `/rsi/theory-notes.html`；每条公式主题使用固定 `#id`，适合从论文精读、实验目标或未来 Idea 中引用。新条目必须保留可定位的原论文位置，明确区分论文原有方法、本站教学推导与未验证研究提案。具体字段与回链约束见 `scripts/rsi_pages/README.md`。
+
 ## 回滚与兼容性
 
 本改动保留旧的根目录 Agent 页面和全部已有 RSI 页面路径；没有改动研究、论文或实验内容。切换入口由 Agent 站 `app.js`（独立页面 `advisor-review.html` 静态实现）以及 RSI 页面生成器分别控制。改动需要时可通过 Git 提交整体回滚。

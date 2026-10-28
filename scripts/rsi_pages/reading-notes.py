@@ -14,6 +14,7 @@ from pathlib import Path
 SOURCE = Path(__file__).resolve().parents[2] / "rsi" / "reading-cards.json"
 PAPERS = json.loads(SOURCE.read_text(encoding="utf-8"))["papers"]
 DEEP = [p for p in PAPERS if p.get("deep_read")]
+THEORY_ENTRIES = json.loads((SOURCE.parent / "theory-notes.json").read_text(encoding="utf-8"))["entries"]
 RELATED_MODULE = runpy.run_path(str(SOURCE.parent.parent / "scripts" / "rsi_pages" / "related_work.py"))
 RELATED = RELATED_MODULE["TARGETS"]
 render_related = RELATED_MODULE["render"]
@@ -137,6 +138,16 @@ def render_paper(p: dict) -> str:
         f'<div><dt>{e(item["name"])}</dt><dd>{e(item["meaning"])}</dd></div>'
         for item in d.get("terms", [])
     )
+    linked_theories = [t for t in THEORY_ENTRIES if t["source_paper_id"] == p["id"]]
+    theory_panel = (
+        '<aside class="deep-note deep-note--insight"><b>公式推导与可复用理论索引</b>'
+        '<p>下列主题已单独整理为稳定锚点；后续 Idea 可直接引用理论页，区分原论文机制、教学推导和研究假设。</p>'
+        '<div class="links">' + "".join(
+            f'<a class="link-btn" href="theory-notes.html#{e(t["id"])}">{e(t["title"])}</a>'
+            for t in linked_theories
+        ) + '</div></aside>'
+        if linked_theories else ""
+    )
     glossary = (
         '<div class="deep-glossary"><p class="deep-glossary-title">先记住这些术语</p>'
         f'<dl class="deep-terms">{terms}</dl></div>'
@@ -198,7 +209,7 @@ def render_paper(p: dict) -> str:
         f'<p class="deep-focus">{e(d["focus"])}</p>'
         '<p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。'
         '这份笔记区分作者结果、教学举例和我们的研究想法，尚未独立复现。</p>'
-        + glossary + metric_overview
+        + theory_panel + glossary + metric_overview
         + f'<nav class="deep-shortcuts" aria-label="{e(p["short_title"])} 四步精读">{stage_nav}</nav>'
         + "".join(stage_parts)
         + '<div class="deep-back"><a href="reading-cards.html#'

@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -38,6 +38,32 @@ def main():
     question_ids={q['id'] for q in questions}
     check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
     check(len({p['id'] for p in cards})==len(cards),'Duplicate reading card ID')
+    theory_data=json.loads((ROOT/'rsi/theory-notes.json').read_text(encoding='utf-8'))
+    check(theory_data['schema_version']==1 and len(theory_data['entries'])>=7,'Missing reusable theory registry')
+    theory_entries=theory_data['entries']
+    theory_ids={entry['id'] for entry in theory_entries}
+    check(len(theory_ids)==len(theory_entries),'Duplicate theory anchor ID')
+    check({'learning-target-generation','semi-gradient-expressivity','meta-gradient-chain',
+           'dual-timescales','prediction-bootstrapping','meta-stabilization',
+           'rsi-future-learnability-objective'}<=theory_ids,'Missing DiscoRL theory derivation')
+    theory_page=(ROOT/'rsi/theory-notes.html').read_text(encoding='utf-8')
+    deep_page=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    for entry in theory_entries:
+        paper=next((p for p in cards if p['id']==entry['source_paper_id']),None)
+        check(paper is not None and paper.get('deep_read'), 'Theory without a deep-read source: '+entry['id'])
+        check(entry['source_anchor'] in {s['id'] for s in paper['deep_read']['sections']},
+              'Broken theory-to-paper chapter: '+entry['id'])
+        check('id="'+entry['id']+'"' in theory_page,'Theory stable anchor missing: '+entry['id'])
+        check('reading-notes.html#deep-'+paper['id']+'--'+entry['source_anchor'] in theory_page,
+              'Theory chapter backlink missing: '+entry['id'])
+        check('theory-notes.html#'+entry['id'] in deep_page,
+              'Original paper deep-read missing theory shortcut: '+entry['id'])
+        check(all(e.get('latex') and e.get('expression') for e in entry['equations']),
+              'Theory lacks checked formulas/LaTeX: '+entry['id'])
+        check(entry['status'] in theory_data['status_legend'],
+              'Theory evidence tier missing: '+entry['id'])
+    check({'paper-mechanism','teaching-derivation','rsi-hypothesis'}<=
+          {t['status'] for t in theory_entries},'Theory source vs derivation vs hypothesis not distinguished')
     for card in cards:
         stages=('challenge','insight','design','result')
         check(tuple(card.get('story',{}))==stages,'Paper lacks ordered C-I-D-R reading contract: '+card['id'])
@@ -119,7 +145,7 @@ def main():
     expected_groups={
         'overview':['index.html','timeline.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
-        'methods':['cross-domain.html','learning-science.html'],
+        'methods':['cross-domain.html','theory-notes.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
                     'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experiments.html'],
