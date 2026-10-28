@@ -86,6 +86,7 @@ PAGE = {
 <tr><td><b>BEACON（EMNLP 2026）</b> [[S48]]</td><td>在推理时平衡多采样的潜在答案收益与推理成本。</td><td>I6 的停止价值是<b>参数/Skill 纠错更新后的未来独立能力</b>，不是当前答案质量。</td></tr>
 <tr><td><b>MetaCLASS（EMNLP 2026）</b> [[E17]]</td><td>人类教学中的不干预动作预测出现偏差。</td><td>“不立即干预”是否提高 RSI 能力还需受控真实训练；不移植 41.7% / 6.6% 作为训练规则。</td></tr>
 </tbody></table></div>
+<p class="note"><b>Inventive Production · npj 2023 [[E98]]：</b>人类 PF 课堂中小组不同解法数与后续学习相关，但没有证明刻意多生成错误有因果益处，更没有 LLM token/FLOPs 效率证据。<a href="reading-notes.html#deep-inventive-production-pf-2023-kapur">阅读笔记与详细结果</a>已单列。I6 <strong>不因此引入高成本的默认多样化采样</strong>；仅将它作为可能突破长期平台期的低优先级备选假设，优先复用已有失败轨迹做等预算检验。</p>
 <p class="status">文献证据支持研究动机；同题失败价值差异、预测有效性和跨模型迁移尚待本项目验证。</p>
 """),
         ("gate", "研究方向的 Go / 缩题 / Stop（与模型的停学决策分开）", """

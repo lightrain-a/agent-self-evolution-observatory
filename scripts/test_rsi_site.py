@@ -188,6 +188,20 @@ def main():
         check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
         coverage='|'.join(f'{q["id"]}:{card["research_coverage"][q["id"]]["level"]}' for q in questions)
         check(coverage in card_html,'Missing exact five-question coverage status: '+card['id'])
+    inventive=next((p for p in cards if p['id']=='inventive-production-pf-2023-kapur'),None)
+    check(inventive is not None
+          and inventive.get('doi')=='10.1038/s41539-023-00165-y'
+          and inventive['official_url']=='https://www.nature.com/articles/s41539-023-00165-y',
+          'Inventive Production 2023 source or official journal link missing')
+    inventive_text=json.dumps(inventive,ensure_ascii=False)
+    check('E98' in refs and len(inventive['deep_read']['sections'])>=7
+          and all(term in inventive_text for term in
+                  ('112','105','62.589','105.518','因果','成本','平台期','直接纠错','上限')),
+          'Inventive Production deep read must retain results and efficiency/ceiling caveats')
+    for page in ('learning-science.html','idea-i6-failure-value.html'):
+        check('reading-notes.html#deep-inventive-production-pf-2023-kapur'
+              in (ROOT/'rsi'/page).read_text(encoding='utf-8'),
+              'Missing practical RSI cross-link to Inventive Production note: '+page)
     npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
     check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
           '2020 npj paper not correctly identified by its real DOI')

@@ -31,6 +31,382 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "inventive-production-pf-2023-kapur",
+      "short_title": "Inventive Production · npj 2023",
+      "title": "Prior math achievement and inventive production predict learning from productive failure",
+      "authors": "Manu Kapur, Janan Saba, Ido Roll",
+      "lead_institution": "ETH Zürich",
+      "institutions": [
+        "ETH Zürich",
+        "Technion – Israel Institute of Technology"
+      ],
+      "institution_source": "Nature 期刊页面 Author information（Kapur：ETH Zürich；Saba / Roll：Technion）",
+      "publication": "npj Science of Learning · 8, Article 15 (2023)",
+      "doi": "10.1038/s41539-023-00165-y",
+      "official_url": "https://www.nature.com/articles/s41539-023-00165-y",
+      "first_posted": "2023-05-15",
+      "version": "期刊正式版 · 2023-05-15",
+      "read_on": "2026-10-28",
+      "reading_level": "官方全文 Methods、Results、Discussion 与主要表格精读；未独立复现或运行 LLM 实验",
+      "tags": [
+        "Learning Science",
+        "Productive Failure",
+        "Inventive Production",
+        "I6｜效率优先"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "partial",
+          "contribution": "以一周后的独立数学后测评估学习，与学习时是否解对分开。",
+          "open_question": "小组 RSM 数与个人后测的关联不等于 LLM 参数更新后的真实净增益。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "观察学生在不会解的题上创造不同数学表示与解法。",
+          "open_question": "未检验是否产生不同知识缺口，也未因果操纵解法多样性。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "尚未掌握目标概念的学生依然可以探索多个数学解法类别。",
+          "open_question": "没有测 LLM 的解法支持集、计算量或是否能突破能力上限。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "教学一周后，个人后测包含程序、概念及近迁移。",
+          "open_question": "没有测模型持久更新、多轮保持、远迁移和灾难遗忘。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "课堂学习研究，没有 Agent 自修改实验。",
+          "open_question": "未测错误知识被写入长期 Memory/Skill 的风险。"
+        }
+      },
+      "one_sentence": "不同解法数与后续学习相关，但强制多样化探索是否值得 RSI 计算成本仍未知。",
+      "story": {
+        "challenge": "先尝试再教学时，以往数学成绩是否足以预测谁学得更好？",
+        "insight": "不同错误解法可能激活已有知识、暴露缺口，让后续教学更易被理解；原因尚未单独证实。",
+        "design": "两项准实验，112 名七年级生和 105 名八年级生；小组先试，教师再教，一周后个人测试。",
+        "result": "两主题的 RSM 数均与后测显著相关（p<0.001）；没有测 LLM 学习收益、计算成本或上限突破。"
+      },
+      "problem": "人类学习者在同样先试后教条件下，究竟是以前的成绩还是当前生成的不同解法，更能预测后续成绩？",
+      "setup": "两所新加坡学校；比率/平均速度（七年级，112 人）、方差/标准差（八年级，105 人）。小组探索尚未学过的概念，统一由教师整合，再一周后进行个人后测；探索阶段无人完成正确解答。",
+      "updates": "未更新任何 LLM 权重、Skill 或 Harness；这是课堂人类学习与统计关联研究。",
+      "key_ideas": [
+        {
+          "name": "RSM 类别",
+          "summary": "统计不同数学表示与解法类别，而非同一方法换几种措辞。",
+          "formula": "Inventive production = number of distinct RSMs (group level)"
+        },
+        {
+          "name": "控制协变量",
+          "summary": "以一周后测为结果，同时考虑学校、既往数学成绩、主题前置知识和小组 RSM 数。",
+          "formula": "posttest ~ school + prior math + prereq + RSM count"
+        }
+      ],
+      "evidence": [
+        "比率：RSM 两校均值 6.83 / 6.16（p=0.019）；RSM 对后测的 ANCOVA F(1,107)=62.589，p<0.001。",
+        "方差：RSM 两校均值 5.23 / 5.19（p=0.903）；RSM 对后测 F(1,100)=105.518，p<0.001。",
+        "既往数学成绩在比率主题显著（p=0.032），方差主题不显著（p=0.980）。"
+      ],
+      "boundaries": [
+        "两项是准实验，RSM 数未随机操纵；相关性不等于强制多生成解法的因果学习效应。",
+        "RSM 是小组级计数，后测是个人级；仅测一周后的程序、概念和近迁移。",
+        "没有任何 LLM 训练、推理 token、训练 FLOPs、直接纠错对照或长时能力上限证据。",
+        "多种表述不一定对应多种知识缺口；昂贵的生成多样性不应默认进入 RSI 主线。"
+      ],
+      "our_relevance": [
+        "I6：固定同题同错和纠错器，比较不同失败轨迹提供的新增独立学习价值，不能直接优化生成数量。",
+        "I7：本文没有随机比较先学后试与先试后学；不能当作学习顺序优势的直接证据。",
+        "I8：知识缺口覆盖与规则级迁移仍需单独验证。",
+        "优先级：Watch／非主线。效率可能低；只有常规学习长期停滞时，才把可能突破当前性能平台期作为小预算候选。"
+      ],
+      "next_test": "先复用已有错误轨迹、零额外采样；等预算对照重复失败、不同规则缺口失败与直接纠错。若无法提高撤辅后的独立净收益或每 FLOP 收益，停止此支线。",
+      "deep_read": {
+        "focus": "作者观察到不同解法与人类后续学习相关，但没有证明“多生成错误”对 RSI 划算。常规训练优先直接纠错；突破能力上限只作为平台期下的待验证可能性。",
+        "summary": "RSM 小组层面的解法多样性与个人一周后测的关联强于既往数学成绩。我们只继承“失败过程可能包含不同信息”，不采用默认高成本多样化训练。",
+        "terms": [
+          {
+            "name": "PF",
+            "meaning": "Productive Failure：学生先探索困难问题，再由教师整合和教学。"
+          },
+          {
+            "name": "RSM",
+            "meaning": "Representations and Solution Methods：不同数学表示与解法类别，不等于生成 token 数。"
+          },
+          {
+            "name": "Inventive Production",
+            "meaning": "尚未学会目标概念时提出不同可能解法，包括不完整或错误方法。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "challenge",
+            "stage": "challenge",
+            "title": "问题：过去数学成绩高，是否一定更会从失败中学习？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "论文不是重新比较 Productive Failure 与直接教学，而是在所有学生都先尝试、后接受统一教学的条件下，问先前数学成绩、主题前置知识和探索时生成的不同数学方法，哪个与一周后的学习表现更相关。"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "帮助理解的例子（非论文真实记录）",
+                "text": "学生 A 成绩好但只用一种公式；学生 B 成绩一般却尝试画图、列式与数值检验。两人都做错，再接受同样教学。论文研究的是探索过程差异与后续学习的关联，并未随机令 A/B 改变方法数量。"
+              }
+            ]
+          },
+          {
+            "id": "mechanism",
+            "stage": "insight",
+            "title": "Insight：不同失败方法可能提供哪些学习准备？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "激活已有概念",
+                    "text": "尝试多种数学表示，会调用不同旧知识，哪怕目标概念尚未掌握。"
+                  },
+                  {
+                    "title": "暴露知识缺口",
+                    "text": "不完整解法可能暴露不同约束未被考虑，有助于发现旧概念的局限。"
+                  },
+                  {
+                    "title": "与规范解法对照",
+                    "text": "教师整合时把生成方案和正确方案对比，学生可能更容易注意新概念的关键性质。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "机制尚未被因果确认",
+                "text": "上述机制属于作者对统计现象的解释；原研究没有随机操纵知识激活、缺口覆盖或解法数量，因此不能直接证明其中任何一个是提高成绩的原因。"
+              }
+            ]
+          },
+          {
+            "id": "methods",
+            "stage": "design",
+            "title": "Design：两项新加坡数学课堂准实验",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "项目",
+                  "实验 1",
+                  "实验 2"
+                ],
+                "rows": [
+                  [
+                    "主题",
+                    "七年级：比率、平均速度",
+                    "八年级：方差、标准差"
+                  ],
+                  [
+                    "学生",
+                    "112 人，来自两所不同成绩分布的学校",
+                    "105 人，来自两所不同成绩分布的学校"
+                  ],
+                  [
+                    "先尝试",
+                    "小组解决尚未学过的概念题，提出不同 RSM",
+                    "小组生成不同 RSM；各组均未完整做对"
+                  ],
+                  [
+                    "之后教学",
+                    "教师比较小组方案与规范解法，再组织练习",
+                    "同样进行统一教学与练习"
+                  ],
+                  [
+                    "后测",
+                    "约一周后个人测试程序、概念、近迁移",
+                    "约一周后个人测试程序、概念、近迁移"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "RSM（Representations and Solution Methods）是不同数学表示与解法类别，不是写了多少句推理或尝试了几次。每个主题研究者识别九类 RSM。论文测的是小组产出的种类数，再关联到个人后测成绩。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "实验单位与潜在混淆",
+                "text": "“小组多种方案”与“某个学生自己有多少种思路”不是同一个量。研究采用准实验，不能仅凭回归系数认定强制多样化教学有效。"
+              }
+            ]
+          },
+          {
+            "id": "results",
+            "stage": "result",
+            "title": "Result：RSM 数比既往成绩与后测关联更强",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "比较",
+                  "比率（n=112）",
+                  "方差（n=105）"
+                ],
+                "rows": [
+                  [
+                    "两校平均 RSM 数",
+                    "6.83 vs 6.16",
+                    "5.23 vs 5.19"
+                  ],
+                  [
+                    "两校 RSM 差异",
+                    "p=0.019，d=0.48",
+                    "p=0.903，d=0.03"
+                  ],
+                  [
+                    "RSM 对一周后测（ANCOVA）",
+                    "F(1,107)=62.589，p<0.001",
+                    "F(1,100)=105.518，p<0.001"
+                  ],
+                  [
+                    "既往数学成绩对后测",
+                    "F=4.436，p=0.032",
+                    "F=0.001，p=0.980"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "两校原本的数学成绩差距明显，但小组生成的不同 RSM 数量差距较小；在这两项 PF 教学中，RSM 计数与后测呈显著关联。既往成绩在第一主题仍显著，不能概括成“先前知识完全无关”。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "作者实际发现",
+                "text": "这是人类课堂的统计预测结果，既没有随机规定每组必须生成几种解法，也没有比较“多探索”与“直接教学”哪个更省时间。"
+              }
+            ]
+          },
+          {
+            "id": "not-caused",
+            "stage": "result",
+            "title": "不能从统计相关性推出 RSI 应大量生成错误",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "研究没有独立操纵 RSM 数量或探索深度；因而“生成更多解法会使学生学得更好”不是已证实的因果效应。",
+                  "产出是三人小组的解法多样性，学习成绩是学生个人后测；个体解释能力、互教互动和小组构成无法由这项设计完全分开。",
+                  "两类数学主题和一周后近迁移，不等价于 LLM 跨领域泛化、长期参数更新或突破模型能力上限。",
+                  "没有 token、训练 FLOPs、额外尝试次数的收益/成本曲线，更没有证明强制生成十条不同错误的净收益。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "对我们的判断",
+                "text": "真正值得保留的是“错误方法可能包含不同知识缺口”的假设；“越多越好”的训练规则没有数据支持，而且在 RSI 中可能非常昂贵。"
+              }
+            ]
+          },
+          {
+            "id": "priority",
+            "stage": "next",
+            "title": "RSI 研究判断：效率优先，能力上限保留为特殊情况",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "学习行动",
+                  "可能带来的东西",
+                  "成本与当前建议"
+                ],
+                "rows": [
+                  [
+                    "直接纠错或练适中难度题",
+                    "以较少尝试获取清晰监督信号",
+                    "常规 RSI 的优先基线"
+                  ],
+                  [
+                    "复用已有失败池中的不同轨迹",
+                    "不同失败可能暴露不同规则缺口",
+                    "新增采样为零；只值得做低成本机制检验"
+                  ],
+                  [
+                    "要求每题多生成 K 条不同错误解法",
+                    "潜在增加解题路径覆盖",
+                    "生成、筛选、试训成本高，默认不采用"
+                  ],
+                  [
+                    "常规训练长期停滞后有限探索",
+                    "可能触及原先无法发现的新规则或路径",
+                    "只作为高成本例外；是否突破上限完全待验证"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "优先级：Watch，暂不进入 RSI 主线",
+                "text": "用户提出的效率顾虑是有根据的：要刻意找到多种本质不同的失败，常需额外采样、评估和更新。即使帮助个别模型跨过平台期，也必须同时报告额外成本，不能把更大计算预算换来的收益当作方法本身更高效。"
+              }
+            ]
+          },
+          {
+            "id": "cheap-falsifier",
+            "stage": "next",
+            "title": "如果未来做，先用现成轨迹进行最便宜的证伪",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0：零新增采样的失败价值比较",
+                    "design": "从已有同题失败轨迹中挑选“重复错误”“方法不同但规则相同”“暴露不同规则缺口”三组，固定教师正确反馈、训练器、更新预算，从同一模型检查点分叉。",
+                    "decisive": "如果独立未见题增益在等 token / FLOPs 下不超过直接纠错或随机失败轨迹，直接停止这条支线；不训练新的多样性生成器。"
+                  },
+                  {
+                    "name": "P1：只在长期平台期检验上限（P0 成功才开展）",
+                    "design": "在强基线经足额训练后仍持续停滞的规则族上，限额进行差异化探索，比较相同预算和适度增量预算下的最佳无辅助成绩。",
+                    "decisive": "只有出现独立能力的可重复新平台，同时明确成本与其他更便宜干预的差异，才考虑把它作为少量特殊情形的策略。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "仅为 RSI 实验假设",
+                "text": "P0/P1 是我们从论文获得的启发；论文没有测 LLM，也没有论证多样性探索比常规学习高效或能提高能力上限。"
+              }
+            ]
+          },
+          {
+            "id": "connections",
+            "stage": "related",
+            "title": "I6、I7、I8 的边界：只保存一个有用的研究变量",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "I6：同题同错误终点、固定纠错方式，比较失败过程的学习价值；若仅多生成 token 而不能带来净独立增益，不值得继续。",
+                  "I7：这篇研究采用先试后教，但所有参与者都采用同一顺序，不是先试与先教的随机对照实验。",
+                  "I8：不同失败可能暴露共享规则缺口，但文章并未把错误规则覆盖与跨题迁移做因果验证。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "避免将教育学现象过度迁移",
+                "text": "把 RSM 数简单当成错误数据多样性奖励，会同时混淆学习价值、训练样本数和计算成本；首先做等预算、真实更新后的独立评测。"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41539-023-00165-y",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10185511/"
+      }
+    },
+    {
       "id": "r2orch-2610-22740",
       "short_title": "R²Orch",
       "title": "R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop",
