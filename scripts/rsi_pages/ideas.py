@@ -1,17 +1,17 @@
-"""I1–I9 plus I11 research ideas: I11 is affective feedback for RSI learning control.
+"""I1–I9, I11 and I12 research ideas: I10 remains reserved; I12 is causal prerequisite unlocking.
 
 The earlier bottleneck-switching proposal remains accessible as a historical draft.
 Research hypotheses are separate from measured findings.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I9 与 I11：十个已公开研究问题",
- "en": "I1–I9 and I11 · from learning value to affective self-improvement",
- "lead": "十个已发布研究问题按 Challenge、现有工作、Insight、Design 与实验设计展开；I11 专门检验情绪反馈如何影响 Agent 的学习决策和多轮持久净收益，I10 暂保留编号。",
+ "title": "I1–I9、I11 与 I12：十一个已公开研究问题",
+ "en": "I1–I9, I11 and I12 · RSI learning mechanisms",
+ "lead": "十一个已发布研究问题按 Challenge、现有工作、Insight、Design 与实验设计展开；I12 从多道失败中发现共同因果前置知识，先补基础再检验后续可学习性。I10 仍保留编号。",
  "updated": "2026-10-28",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及当前能力相近时未来任务 C 的学习速度；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -23,10 +23,11 @@ PAGE = {
  <a class="idea-board-card" href="#idea-8"><span class="idea-id">I8 · 错误学习迁移</span><b>改正哪个错误，能够学会一整类题？</b><small>Hypercorrection 与跨题净学习收益</small></a>
  <a class="idea-board-card" href="#idea-9"><span class="idea-id">I9 · 集中与交错练习</span><b>什么时候从集中练习切到交错练习？</b><small>规则掌握状态、跨任务顺序与未来 C 的学习速度</small></a>
  <a class="idea-board-card" href="#idea-11"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>什么反馈语气能让 Agent 下一轮真正学得更好？</b><small>鼓励 / 冷静批评 / 紧迫 / 中性；学习决策、版本更新与净收益</small></a>
+ <a class="idea-board-card" href="#idea-12"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否解锁一批原本学不会的任务？</b><small>发现因果前置缺口，验证下游真正新增学习收益</small></a>
  </div>
  <p class="note"><b>新增独立研究候选（未编号）：</b><a href="learning-admission.html"><strong>当新能力会显著干扰旧能力时，Agent 什么时候应该拒绝立即内化，并通过隔离、外部专家和暂缓重访获得长期净收益？</strong></a> 这个问题发生在更新前，与 I3 的事后冲突修复不同；只有学习接纳元规则在未来未见任务中自己变得更会判断，才作为 RSI 论文继续推进。</p>
- <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9 与 I11 均保留独立详情页。</p>
- <p class="status">状态：已整理 I1–I9 与 I11 共十个公开研究问题；I10 仍按此前编号保留，本站未发布独立详情页。I11 尚未进行模型生成或持续更新实测。</p>
+ <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I9、I11 和 I12 均保留独立详情页。</p>
+ <p class="status">状态：已整理 I1–I9、I11 与 I12 共十一个公开研究问题；I10 仍按此前编号保留，本站未发布独立详情页。I11 尚未进行模型生成或持续更新实测。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -47,7 +48,8 @@ PAGE = {
  <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>学生对不同教法的<b>学习反应</b>可能随能力改变。它在互动中的真实追问、错误应用和反驳，也可能暴露静态能力分数看不出的知识缺口；但是复制反馈与正确应用必须分开。npj 2025 发现 Apply 与原题提升相关，却没有观察到它与新主题迁移的显著直接相关。[[E27]] 少量同起点试教检验这些回应是否真的改变后续学习，再将有效规律写入教师教学策略。</p></div>
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>固定伙伴、教材和教学顺序，从同一学生快照试教；学生真实更新后，清空课堂对话并测新题。用独立收益改进教师教法，同时保留学生新能力；下一轮面对成长后的学生继续循环。原 I2 的固定 Skill 更新轨道保留，双 LoRA 参数更新单独验证。</p><div class="flow"><div><b>同起点试教</b><small>固定题目，改变解释</small></div><div><b>学生真学习</b><small>参数 / 任务 Skill</small></div><div><b>撤辅测新题</b><small>收益、回归与总成本</small></div><div><b>教师学教法</b><small>教学策略持久更新</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先冻结教师做四分支：<b>单向解释 / 固定多轮 / 按真实学生回应调整 / 按相近但错配学生回应调整</b>。关键比较真实与错配回应，控制教师知识、总 Token 和学生更新预算；更新后撤掉教师测未见题独立收益。只有真实回应有增量信息，再训练教师，并与固定教法、仅上下文适应、固定学生库教师做<b>教师版本 × 冻结学生快照</b>交叉测试。I2 不更换伙伴、不选择失败轨迹、不优化教学顺序，分别与 I5、I6、I7、I8 解耦。</p><p><a href="idea-i2.html#dialogue-p0"><b>阅读 I2 四分支实验、完整机制与最近邻 →</b></a></p></div>
- </div>'''),
+ <p class="idea-side-note"><b>方向 D 已合入 I2 的诊断支线：</b>区分缺知识、搜索不足、选择错误和学后回归，用等预算微探针决定哪种学习动作值得尝试；跨 Prompt / Memory / Skill / 参数的更新表面路由独立留在 Update-Surface Router，不改变 I2 的教学共进化主线。<a href="idea-i2.html#idea-d-diagnostic">查看诊断支线的 P0 与强基线 →</a></p>
+</div>'''),
  ("idea-3", "I3：温故知新——新方法有用，却和旧方法冲突怎么办？", '''
  <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>一句话：</b>Agent 学会一个更快的新方法，却把以前在另一种场景下正确的做法弄坏了。新旧本事能不能都留下来？</p></div>
  <div class="idea-steps">
@@ -76,6 +78,7 @@ PAGE = {
 <div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>伙伴的价值应由<strong>双方撤伴后的表现，减去同预算自学后的表现</strong>衡量。对方独有的知识、我当前的可吸收性和过去接触过的内容，可能共同解释为何该留伴或换伴；这是待检验关系，不是固定强弱排名。</p></div>
 <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>固定 OPCoD 式 LoRA 自蒸馏和反馈门控，正常每轮五对、双向教学。小规模受控试学得到有方向净增益；用同容量的带/不带历史收益预测器在十节点图中选配对，按边际收益与不确定性决定持续多久。缺乏可信增益时允许同预算自学。<strong>所有试探和回退成本计入总预算。</strong></p><div class="flow"><div><b>独立十模型</b><small>五规模 × 数学/代码</small></div><div><b>固定互教更新</b><small>只改变伙伴关系</small></div><div><b>相对自学测收益</b><small>撤伴、新题、保持</small></div><div><b>继续或重配</b><small>历史、预算与置信度</small></div></div></div>
 <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先做四模型 6 配对，再开展十模型实验；比较固定伙伴、随机、round-robin、能力匹配、即时收益和独立净增益。顺序实验同时固定边集合、接触次数和预算，并加入<strong>相同材料重排、冻结教师、双方共同更新</strong>三层控制。主指标为个人独立能力、群体学习效率、旧能力保持与验证过的技能覆盖，不是投票成绩。</p><p class="idea-side-note">I5只研究谁与谁学、持续多久和伙伴顺序；不改变 I2 学法、I3 巩固、I6 轨迹、I7 先试/先学、I8 错误选择。<a href="idea-i5.html">完整方法、最近邻、公式和实验契约</a>；<a href="idea-i5.html#teaching-feedback">历史教学反馈支线</a>仍在唯一 I5 页面内。</p></div>
+<p class="idea-side-note"><b>方向 B 已合入 I5：</b>对同一个学生早／中／晚期冻结快照，给四名候选教师相同教法和真实更新预算，检测最优教师的<strong>双向独立净学习收益排名</strong>是否反转；不把更强教师或更正确答案直接当作好伙伴。<a href="idea-i5.html#idea-b-merged">查看学生阶段 × 教师的交换实验 →</a>。</p>
 </div>'''),
  ("idea-6", "I6：失败学习价值——同样答错，哪条失败更值得学习？", '''
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>同一个模型解同一道积分题，两次都给出相同的错误答案：一次直接套错公式，一次尝试了几个正确步骤却仍答错。<strong>用哪一次失败来学习，才能让以后更多新题做对？又该在什么时候停止重试、改天再学？</strong></p></div>
@@ -106,7 +109,8 @@ PAGE = {
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>先用独立前置知识题、同规则变体和稳定性探针，诊断<strong>知识准备、规则影响范围与更新兼容性</strong>；正确答案与规则由独立验证器核实。然后从相同模型检查点分叉，用相同教师反馈与固定 LoRA/Skill 更新预算纠正不同错误。训练前估计可能的跨题收益，训练后撤掉例题与提示，分别测原题、异结构同规则新题、其他规则和旧能力损失。</p>
  <div class="flow"><div><b>确认错误与规则</b><small>先核实反馈正确</small></div><div><b>学习前诊断</b><small>前置知识 / 规则范围</small></div><div><b>固定预算纠错</b><small>同教师、同更新器</small></div><div><b>独立测跨题净收益</b><small>新题迁移 / 遗忘 / 成本</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>构造<strong>前置知识高/低 × 错误规则影响范围大/小</strong>的配对数学错题，匹配难度、置信度、正确反馈和训练预算；每个候选从同一模型快照独立更新。比较<strong>随机、最难优先、高置信度优先、稳定错误优先、Self-Error-Instruct 的 one-shot 信号、LESS 梯度信号、DATAPROPHET 式价值特征、I8 的规则诊断</strong>。主指标是训练前预测与真实未见题净增益的对应关系，以及同预算选错题的最终收益；另外报告旧能力退化和诊断成本。如果优势只出现在原题、近似改写，或在匹配知识状态后消失，就不能宣称发现了规则级迁移机制。</p><p><b>npj 2026 带来的新控制：</b>对同一错误规则构造两个训练题集：一组允许局部捷径和真实规则同时成功，另一组让两种规则给出不同答案。匹配模型当前正确率、正确反馈与更新成本；若后一组只在未见异结构同规则题上多获益，才进一步考虑规则辨别机制。[[E26]]</p><p><b>NC 2025 的规则关系边界：</b>任务表面特征重叠与低维决策规则一致并不是一回事。Menghi 等发现部分特征重叠的神经网络在不同结构约束下出现非单调干扰；I8 的新题构造应分别操纵题面相似和规则相似，并在撤辅后检查能否正确选择适用条件，而非只看原题重新答对。[[E99]]</p><p><b>ACL 2026 带来的决定性对照：</b>先不加复杂预测器。从同一模型快照分叉，匹配目标题正确率与更新预算，比较<strong>缺/不缺前置知识 × 相关/无关知识 CPT</strong>，再给相同目标纠错，测未见同规则新题。如果相关 CPT 对两类模型同样有效，或只改善原题，就不能把收益解释成前置知识决定了迁移。Table 4 的 MedQA Learn Rate 为 65.3→66.8（增加 SFT）vs 82.1（CPT+SFT），但新增语料和计算成本尚未完全匹配。[[M27]]</p><p class="idea-side-note"><b>正交边界：</b>I8 固定纠错方式，只研究<strong>哪个错误规则在当前模型上更有迁移价值</strong>；<a href="#idea-6">I6</a> 在同题同错误终点比较失败中间过程，<a href="#idea-7">I7</a> 只改教学顺序。<a href="i8.html">查看 Hypercorrection 原始证据、最近邻矩阵和完整受控实验 →</a>。目前<strong>没有 I8 的实际训练结果</strong>。</p></div>
- </div>'''),
+ <p class="idea-side-note"><b>方向 A 已合入 I8：</b>将同一错误的重复错误规则、有效假设数量、置信度与前置准备结合为纠错前诊断，固定纠错方式测异结构同规则新题收益。单条失败过程选择仍属于 I6，补 P 解锁其他任务属于 I12。<a href="i8.html#idea-a-merged">查看 A 的配对控制 →</a>。</p>
+</div>'''),
  ("idea-9", "I9：集中还是交错——什么时候应该切换练习方式？", '''
  <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>同样练 A、B、C 三类题，连续做 A 可能越做越顺，混合起来却容易用错方法；但基础尚未形成就直接交错，也可能学不进去。<strong>模型什么时候该集中建立规则，什么时候该交错练习不同规则？</strong>进一步问：同一批 A/B 材料不同顺序后，即使当前能力相近，下一次学习未见规则 C 的速度是否仍不同？</p></div>
  <div class="idea-steps">
@@ -127,15 +131,25 @@ PAGE = {
 <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p><b>P0：</b>现代模型同题配对的情绪敏感性预检；<b>P1：</b>同一错误下，比较语气对真实核验、探索、停学、置信度校准和错误写回的影响；<b>P2：</b>6–8 轮真实 Skill/LoRA 持久更新，在独立未见任务上比较累计净收益。与固定中性、同内容行动提示、随机语气和已有自适应 EmotionRL / HEART 风格控制等预算对比。若只提升当前答题、模型自评或推理调用数，不称为 RSI 的能力增长。<a href="idea-i11-emotional-rsi.html#p2"><b>查看 I11 多轮实验、强基线和 Go/Stop →</b></a></p><p class="idea-side-note"><b>正交边界：</b><a href="idea-i2.html">I2</a> 改教师解释方式，<a href="#idea-6">I6</a> 选哪条失败值得学，<a href="#idea-8">I8</a> 研究错误规则何时可迁移；I11 固定这些条件，检验<strong>同一反馈的情绪语言是否改变学习控制及持续净收益</strong>。暂无实际实验结果。<a href="idea-i11-emotional-rsi.html">查看独立 I11 研究与实验 →</a></p></div>
 </div>
 '''),
- ("orthogonal", "I6–I9 与 I11：每个方向只研究一个变量", '''
+ ("idea-12", "I12：共同前置知识瓶颈——为什么补一条规则能让一批任务开始学得会？", '''
+<div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>十多道失败题可能共享一条当前模型不会的前置规则。能否先用少量诊断发现它、真正补齐，再让这些任务在后续自主训练中获得原本没有的学习增益？</p></div>
+<div class="idea-steps">
+<div class="idea-step"><h3>Challenge <small>（难在哪里）</small></h3><p>高频知识、语义相关与图谱枢纽不等于必要前置；当前题做对也不代表下一轮学得更快。必须区分补 P 的直接迁移、学 T 的额外可学习性及预算增加。</p></div>
+<div class="idea-step"><h3>现有工作 <small>（别人研究了什么）</small></h3><p><b>Nature Communications 2026 Compressive Learning</b> 研究人类学习网络中枢纽的预学习，不证明 LLM 数学先修；<b>SkillGraph/SkillDAG/SE-GoS</b> 已维护技能依赖图与执行检索；<b>ESCO-PrereqSkill</b> 已预测先修边；<b>SOAR</b> 已训练有价值的中间题；<b>ACL 2026 ILP</b> 已检查缺少基础知识。我们需要直接检验<strong>补因果前置知识能否解锁多任务未来学习</strong>。[[E401]][[S401]][[S402]][[S403]][[S404]][[S47]][[M27]]</p></div>
+<div class="idea-step"><h3>Insight <small>（为何可解）</small></h3><p>多个下游失败可能共同受某条尚未掌握的 P 限制；补 P 的价值不是其出现频率，而是它是否改变模型下一轮从同一 T 训练流中吸收知识的能力。这种状态依赖先修关系需要因果试训而非纯语义评分。</p></div>
+<div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>从多任务失败簇提候选 P → 用独立知识探针和少量试训核查 → 固定 LoRA 更新器补 P → 再用相同 T 任务流训练 → 清空辅助，在未见题上测第二段独立增益。对比随机 P、高频非先修 P、更多直接练 T 和 SOAR 式中间题，全部计入预算。</p><div class="flow"><div><b>失败任务簇</b><small>共享错误但未必同一缺口</small></div><div><b>主动核验 P</b><small>因果前置 vs 相关图边</small></div><div><b>持久学习 P</b><small>固定 LoRA / 验证器</small></div><div><b>再次学习 T</b><small>独立增益 × 多任务族</small></div></div></div>
+<div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p><b>P0：</b>可验证规则 DAG，匹配因果前置与高频非前置，并设已经会 P 的负对照；<b>P1：</b>真实前置图对 Agent 隐藏，从失败中提案，比较 SkillGraph、SkillDAG、ESCO-PrereqSkill 和 SOAR 相关强基线；<b>P2：</b>两级依赖链中检验学习机会是否跨轮解锁。主指标是<strong>补 P 后再学 T 的第二阶段净学习增量</strong>、解锁任务族数量、旧能力回归和总成本。只提高当前题准确率就不独立立题。</p><p class="idea-side-note"><b>正交边界：</b>I8 纠正一个错误后测同规则迁移；I12 要证明补前置 P 后<strong>不同 T 的后续学习潜力增加</strong>；I9 只改课程顺序，I2 改教学方式。<a href="idea-i12-prerequisite-bottleneck.html">I12 完整论文定位、公式、P0–P2 与 Go/Merge/Stop →</a></p></div>
+</div>'''),
+ ("orthogonal", "I6–I9、I11 与 I12：每个方向只研究一个变量", '''
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
 <tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
 <tr><td><a href="idea-i7-learning-order.html">I7 · 学习顺序</a></td><td>先尝试 / 先看正确示范</td><td>题目、示范内容、更新器与预算</td><td>撤掉教师后的独立能力、有效探索与多轮迁移</td></tr>
 <tr><td><a href="i8.html">I8 · 规则级错误迁移</a></td><td>知识准备、错误规则覆盖范围和更新兼容性</td><td>对应的纠错/更新方法</td><td>哪些错误修复后能迁移到一整类题</td></tr>
 <tr><td><a href="idea-i9-practice-switching.html">I9 · 课程切换</a></td><td>同一批不同主题题目的排列与集中/交错切换时点</td><td>模型、题目、题内教学、更新器与训练预算</td><td>当前规则状态能否预测课程收益；A/B 能力匹配后未来学习 C 的曲线是否仍有顺序效应</td></tr>
 <tr><td><a href="idea-i11-emotional-rsi.html">I11 · 情绪反馈与自我迭代</a></td><td>相同可信反馈的情绪语气及其影响的学习控制</td><td>模型、反馈事实、教学内容、持久更新器、评测和总预算</td><td>错误后核验/停止/写回等决策变化是否带来多轮撤辅净学习收益</td></tr>
+<tr><td><a href="idea-i12-prerequisite-bottleneck.html">I12 · 共同前置瓶颈</a></td><td>从多任务失败中选择哪条因果前置 P 来持久补救</td><td>下游目标任务 T、教师、更新器、诊断与总计算预算</td><td>补 P 后再训练 T 的第二阶段可学习性是否增加，且跨任务族有效</td></tr>
 </tbody></table></div>
-<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。 I12 必须证明补共同前置后不同目标任务的后续学习增量，不只是 I8 的单次错误迁移。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
 '''),
  ("shared", "这些 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>

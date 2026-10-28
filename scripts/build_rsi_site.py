@@ -68,7 +68,7 @@ def build(output: Path = DEFAULT_OUTPUT) -> Path:
 
     required = (
         "index.html", "timeline.html", "timeline-data.json", "timeline.css", "timeline-view.js",
-        "reading-cards.html", "reading-notes.html", "ideas.html", "idea-i5.html", "idea-i6.html", "i8.html", "idea-i9-practice-switching.html", "learning-admission.html", "site-nav.js",
+        "reading-cards.html", "reading-notes.html", "ideas.html", "idea-i5.html", "idea-i6.html", "i8.html", "idea-i9-practice-switching.html", "idea-i12-prerequisite-bottleneck.html", "i12-experiment-protocol.json", "learning-admission.html", "site-nav.js",
         "research.js", "research.css", "site-base.css", "site-switch.css",
         "favicon.svg", "sources.json", "reading-cards.json", "deployment-manifest.json",
     )

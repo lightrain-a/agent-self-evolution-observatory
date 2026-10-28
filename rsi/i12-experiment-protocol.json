@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "I12",
+  "revision": "2026-10-28",
+  "status": "research_design_not_executed",
+  "scientific_question": "Does persistently learning a causal common prerequisite P unlock positive subsequent learning gain across multiple previously stalled target families T?",
+  "core_contrast": "Second-stage change from learning T after learning P versus learning T after an equally costly non-prerequisite control C; baseline direct transfer before stage T must be subtracted.",
+  "unit_of_analysis": "independent prerequisite family × downstream target family × model initialization seed",
+  "first_stage": {
+    "updates": [
+      "verified_prerequisite_P",
+      "matched_hub_non_prerequisite_H",
+      "equal_budget_direct_T",
+      "SOAR_style_bridge_curriculum",
+      "already_mastered_P_negative_control"
+    ],
+    "persistent_surface": "LoRA",
+    "teacher": "fixed_feedback",
+    "verifier": "frozen",
+    "optimizer": "fixed",
+    "budget": "fully matched"
+  },
+  "second_stage": {
+    "task_stream": "same T across branches",
+    "optimizer": "same fixed updater",
+    "prompt": "remove all prerequisite scaffolds and lesson traces",
+    "measurement": "unseen T performance before and after second-stage update"
+  },
+  "main_estimand": "V(P→T)=[Acc_T(U_T(U_P(theta)))-Acc_T(U_P(theta))]-[Acc_T(U_T(U_C(theta)))-Acc_T(U_C(theta))]",
+  "causal_controls": [
+    "ground_truthed_dependency_P_to_T",
+    "matched_non_prerequisite_hub_H",
+    "semantic_similarity_negative_control",
+    "already_prepared_student",
+    "independent_non_dependent_T",
+    "no_weight_update_prompt_only",
+    "matched_total_compute"
+  ],
+  "data_splits": [
+    "train_P",
+    "train_T",
+    "diagnostic_dev",
+    "method_selection_valid",
+    "isolated_final_test"
+  ],
+  "initial_pilot": {
+    "candidate_backbones": [
+      "Qwen3-1.7B",
+      "Qwen3-4B"
+    ],
+    "prerequisite_rule_families": 4,
+    "downstream_families_per_rule": "6–8",
+    "confirmatory_seeds_target": 3,
+    "initial_domain": "programmatically verified synthetic rule-DAG",
+    "secondary_domain": "executable string/list compositions"
+  },
+  "baselines": [
+    "random_P",
+    "weak_skill_first",
+    "frequency_or_degree_first",
+    "text_only_prerequisite_zero_shot",
+    "SkillGraph_or_SkillDAG_retrieval_reference",
+    "direct_T_with_saved_budget",
+    "SOAR_style_grounded_bridge"
+  ],
+  "strongest_collision_boundary": "SkillGraph/SkillDAG/SE-GoS already build and evolve skill graphs; SOAR already uses real learning gains for bridge curricula. Main novelty requires causal stage-2 task trainability gains after persistent update, not retrieval accuracy or first-stage improvement.",
+  "metrics": [
+    "second_stage_incremental_independent_gain",
+    "unlocked_task_family_fraction",
+    "old_skill_regression",
+    "candidate_diagnostic_precision",
+    "validation_and_probe_cost",
+    "learning_frontier_curve_area_by_total_FLOPs"
+  ],
+  "stats": "pair seeds and task family; cluster confidence intervals by family/seed and disclose all negative controls",
+  "safety": [
+    "freeze_independent_verifier",
+    "no_test_feedback_to_diagnostic",
+    "provenance_for_skill_updates",
+    "isolated_execution",
+    "rollback_every_bad_update"
+  ],
+  "go": "causal prerequisite × dependent-task effect stable beyond matched high-frequency non-prerequisite, direct practice, and bridge curriculum; blind discovery under budget; later multi-round gains",
+  "merge": "only direct error transfer (I8) or curriculum ordering effect (I9), no stage-two learning interaction",
+  "stop": "hubs and unrelated prerequisites work equally, or effect disappears after total-budget and leakage controls",
+  "orthogonality": {
+    "I2": "teaching method",
+    "I5": "learning partner",
+    "I6": "failure trajectory choice",
+    "I8": "single-error correction transfer",
+    "I9": "task order",
+    "I11": "affective tone"
+  },
+  "sources": [
+    "E401",
+    "S401",
+    "S402",
+    "S403",
+    "S404",
+    "S405",
+    "S406",
+    "S47",
+    "M27",
+    "R04"
+  ]
+}

@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','learning-admission','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -122,7 +122,7 @@ def main():
         'methods':['cross-domain.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','learning-admission.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -135,7 +135,7 @@ def main():
           'Visible RSI pages must exclude only linked historical research')
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,10)]+['I11'],'Published research ideas must appear exactly once, with I10 reserved')
+    check(numbered==[f'I{i}' for i in range(1,10)]+['I11','I12'],'Published research ideas must appear exactly once, with I10 reserved')
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
@@ -433,7 +433,7 @@ def main():
         for p in cards
     ),'Paper lacks a verified arXiv or publisher original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
-    check(all(f'idea-{i}' in ideas.ids for i in list(range(1,10))+[11]),'I1–I9 and I11 anchors missing from research board')
+    check(all(f'idea-{i}' in ideas.ids for i in list(range(1,10))+[11,12]),'I1–I9 and I11 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
@@ -446,7 +446,7 @@ def main():
         '<h3>Design <small>（如何做）</small></h3>',
         '<h3>实验设计 <small>（怎么验证）</small></h3>',
     )
-    for idea_number in list(range(1, 10))+[11]:
+    for idea_number in list(range(1, 10))+[11,12]:
         section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
         locations = [section.find(heading) for heading in ordered_headings]
         check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
@@ -454,11 +454,11 @@ def main():
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
         check(section.count('class="flow"') >= 1, f'I{idea_number}: four-step method flow missing')
-    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in list(range(1,10))+[11]]
+    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in list(range(1,10))+[11,12]]
     check(idea_positions == sorted(idea_positions),'Published I1–I9 and I11 sections are out of order')
     check(ideas_text.index('id="orthogonal"') > idea_positions[-1],
           'Independent I6-I9 and I11 comparison must follow full scientific narratives')
-    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(11,'idea-i11-emotional-rsi.html')):
+    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(11,'idea-i11-emotional-rsi.html'),(12,'idea-i12-prerequisite-bottleneck.html')):
         section = ideas_text.split(f'id="idea-{i}"', 1)[1].split('</section>', 1)[0]
         check(f'href="{detail}"' in section, f'I{i}: full scientific detail page must remain linked')
         check('正交边界' in section,'I6-I9 separation lost in I'+str(i))
@@ -633,7 +633,40 @@ def main():
     check('id="i11-emotional-rsi"' in experiments_html and
           'idea-i11-emotional-rsi.html#p0' in experiments_html,
           'I11 experiment execution entry missing')
-    check('I10 仍按此前编号保留' in ideas_text and 'I11' in overview,
+    # I12 causal-prerequisite study and A/B/D merges must coexist without renumbering older ideas.
+    i12=(ROOT/'rsi/idea-i12-prerequisite-bottleneck.html').read_text(encoding='utf-8')
+    required_i12=('question','challenge','evidence','related','insight','definition','design',
+                  'orthogonal','p0','p1','p2','metrics','gate')
+    check(all(f'id="{sid}"' in i12 for sid in required_i12),
+          'I12 causal scientific chain, counterfactual or experiments missing')
+    check(all(f'href="references.html#{ref}"' in i12 for ref in
+              ('E401','S401','S402','S403','S404','S405','S406','S47','M27','R04')),
+          'I12 primary nearest-work sources not auditable')
+    check(all(term in i12 for term in ('第二段','高频','非先修','真正依赖','GO','MERGE','STOP',
+                                      'SkillDAG','SOAR','可学习性')),
+          'I12 causal prerequisite against correlation/retrieval and stop gates missing')
+    check('i12-experiment-protocol.json' in i12 and
+          'idea-i12-prerequisite-bottleneck.html' in overview and
+          'id="i12-prerequisite-unlocking"' in experiments_html,
+          'I12 homepage, detail, downloadable protocol or execution index missing')
+    protocol=json.loads((ROOT/'rsi/i12-experiment-protocol.json').read_text(encoding='utf-8'))
+    check(protocol['idea_id']=='I12' and protocol['status']=='research_design_not_executed'
+          and len(protocol['first_stage']['updates'])>=5 and
+          all(k in protocol for k in ('main_estimand','data_splits','causal_controls','metrics')),
+          'I12 experimental contract must be executable as a design, not reported as measured results')
+    check('id="prerequisite-unlocking"' in learn_sci and
+          'href="references.html#E401"' in learn_sci and
+          'href="idea-i12-prerequisite-bottleneck.html"' in learn_sci,
+          'NC 2026 prerequisite-inspired mechanism missing from learning science')
+    check('id="idea-a-merged"' in i8_html and
+          'id="idea-b-merged"' in i5_text and
+          'id="idea-d-diagnostic"' in i2_text,
+          'A/B/D research consolidation missing from I8/I5/I2')
+    check(all(link in ideas_text for link in (
+          'idea-i2.html#idea-d-diagnostic', 'idea-i5.html#idea-b-merged',
+          'i8.html#idea-a-merged', 'idea-i12-prerequisite-bottleneck.html')),
+          'The A/B/D merges and new I12 must each have a distinct overview entry')
+    check('I10 仍按此前编号保留' in ideas_text and all(tag in overview for tag in ('I11','I12')),
           'I10 reserved-number policy or I11 overview labeling drift')
     check(not (ROOT/'rsi/idea-i10.html').exists(),
           'Do not fabricate an I10 research page when adding I11')

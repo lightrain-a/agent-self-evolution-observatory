@@ -1,9 +1,9 @@
 PAGE = {
-"slug":"index", "title":"RSI × 自主学习研究", "en":"Research on how agents learn · I1–I9 and I11",
-"lead":"I1–I9 保留已有主线；新增 I11 研究鼓励、批评、紧迫与中性反馈如何改变 Agent 的核验、停止、学习决策，并由真实 Skill/LoRA 更新转化为长期独立净能力。",
+"slug":"index", "title":"RSI × 自主学习研究", "en":"Research on how agents learn · I1–I9, I11 and I12",
+"lead":"I1–I9 及 I11 保留现有研究主线；新增 I12 检验模型能否从多道失败任务中发现共同前置知识瓶颈，先补基础、再使更多原本难学的任务获得真实后续学习收益。",
 "updated":"2026-10-27",
 "sections":[
-("decision","当前研究池：I1–I9 与 I11 · 十个已公开方向", '''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
+("decision","当前研究池：I1–I9、I11 与 I12 · 十一个已公开方向", '''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
 <div class="idea-board">
 <a class="idea-board-card" href="ideas.html#idea-1"><span class="idea-id">I1 · 脚手架学习</span><b>哪些该自己学会，哪些用时再查？</b></a>
 <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生越来越会做题，教师也能越来越会教吗？</b></a>
@@ -15,10 +15,11 @@ PAGE = {
 <a class="idea-board-card" href="i8.html"><span class="idea-id">I8 · 纠错迁移</span><b>纠正哪个错误，能让我学会一整类题？</b></a>
 <a class="idea-board-card" href="idea-i9-practice-switching.html"><span class="idea-id">I9 · 集中与交错练习</span><b>何时交错？同样学会后谁更容易学新规则？</b></a>
 <a class="idea-board-card" href="idea-i11-emotional-rsi.html"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>鼓励、批评还是中性反馈，能让我下一版真正变强？</b></a>
+<a class="idea-board-card" href="idea-i12-prerequisite-bottleneck.html"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否让多个任务开始学得会？</b></a>
 </div>
 <p><b>独立候选（未编号）：</b><a href="learning-admission.html">新旧能力冲突时，Agent 是否应暂缓内化、调用外部专家，并在能力变化后重新尝试？</a> I3 继续研究冲突已经发生后的修复；这条候选专门研究<strong>冲突前的学习接纳</strong>及跨代元策略改进。</p>
 <p><b>I2 最新合并：</b>保留因材施教与小预算试学，增加教师自身的教学更新；分别证明学生独立能力和教师教学能力增长。<a href="idea-i2.html">进入师生共进化方案</a>。</p>
-<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i11-emotional-rsi.html">I11</a></p>
+<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益；<b>I12</b> 固定学习器、反馈与后续目标题流，研究修复共同因果前置知识能否解锁新一轮学习。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i11-emotional-rsi.html">I11</a> · <a href="idea-i12-prerequisite-bottleneck.html">I12</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
 ("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
 <a href="idea-i2.html"><b>I2：因材施教的师生共进化</b><span>教师从学生真实学习收益中改进教法；学生持续获得独立能力。</span></a>
@@ -30,6 +31,7 @@ PAGE = {
 <a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
 <a href="idea-i9-practice-switching.html"><b>I9：课程顺序与未来可学习性</b><span>保留集中/交错切换；新增 A→B 与 B→A 当前能力相近时，学习 C 的速度是否不同。</span></a>
 <a href="idea-i11-emotional-rsi.html"><b>I11：哪种情绪反馈能改善长期自我迭代？</b><span>固定真实反馈，只改鼓励/批评/紧迫/中性措辞；测校准、学习动作及 Skill/LoRA 多轮净增益。</span></a>
+<a href="idea-i12-prerequisite-bottleneck.html"><b>I12：发现共同前置知识瓶颈</b><span>Nature 高阶知识骨架与真实 RSI 因果验证：为什么先补一个关键规则，会让多任务下游训练变得有效？</span></a>
 <a href="learning-admission.html"><b>独立候选：新能力冲突时，何时拒绝立即内化？</b><span>内化 / 隔离 / 外部专家 / 暂缓重访；以旧能力保护与后代元策略的独立收益检验 RSI。</span></a>
 <a href="reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal"><b>NC 2025 · 局部信心与整体自评</b><span>真实反馈选择如何改变总体自评？全文精读、D1/D2/D3 与 I11 实验。[[E29]]</span></a>
 <a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>
@@ -65,5 +67,5 @@ PAGE = {
 <p><a href="idea-i5.html#teaching-feedback">I5 统一详情页</a>同时保留“教学反馈诊断”作为历史研究支线：学生的误解能否暴露教师自己的隐性缺陷。它与当前的“动态伙伴选择”有不同的研究问题，因此在详情页中区分，不再在左侧目录重复出现。</p>
 <p><a href="idea-i9-practice-switching.html">I9</a> 固定教材，研究跨主题集中/交错的切换，并增加同材料不同顺序的第三任务学习曲线实验；<a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
-<div class="status-strip"><b>截至 2026-10-28</b><span>I1–I9 与 I11 已整理（I10 尚未发布）</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]
+<div class="status-strip"><b>截至 2026-10-28</b><span>I1–I9、I11 与 I12 已整理（I10 尚未发布）</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]
 }
