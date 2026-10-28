@@ -183,6 +183,17 @@ def main():
             for section in paper['deep_read']['sections']:
                 check(js("return document.querySelector("+json.dumps('#'+identifier+'--'+section['id'])+")!==null"),
                       'Deep section missing in browser: '+section['id'])
+        check(js("return document.querySelectorAll('#deep-hypothesis-testing-2026-ding--figure-four-learner-trajectories .deep-table tbody tr').length===4"),
+              'Four grouped Figure 4 learner-profile rows missing')
+        js("document.querySelector('#deep-hypothesis-testing-2026-ding--figure-four-learner-trajectories summary').click()")
+        check(js("return document.querySelector('#deep-hypothesis-testing-2026-ding--figure-four-learner-trajectories').open"),
+              'Figure 4 details cannot expand')
+        js("document.querySelector('#deep-hypothesis-testing-2026-ding--figure-four-learner-trajectories').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('motor-figure4-seven-trajectories-desktop.png')
+        js("document.querySelector('#deep-hypothesis-testing-2026-ding--figure-four-learner-trajectories summary').click()")
+        check(js("return document.querySelectorAll('.deep-chapter[open]').length===0"),
+              'Figure 4 details do not collapse cleanly')
         check(js("return document.querySelectorAll('.deep-evidence').length>=4"),
               'Evidence matrix did not render')
         check(js("return document.querySelectorAll('#deep-acl2026-good-curriculum-jia .deep-metric-item').length===5"),
@@ -373,7 +384,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':22}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':23}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

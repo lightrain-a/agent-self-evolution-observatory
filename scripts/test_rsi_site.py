@@ -218,6 +218,29 @@ def main():
           'Motor-learning paper official source or OpenMotor dataset link missing')
     check(all(term in ' '.join(motor['boundaries']) for term in ('0.5','LLM')),
           'Motor learning should not be misrepresented as proof of optimal p=0.5')
+    motor_sections={s['id']:s for s in motor['deep_read']['sections']}
+    check({'structured-vs-random','figure-four-learner-trajectories',
+           'motor-learning-related-work'}<=set(motor_sections),
+          'Missing the motor hypothesis-test mechanisms, seven learner clusters or closest-work distinctions')
+    trajectory=json.dumps(motor_sections['figure-four-learner-trajectories'],ensure_ascii=False)
+    check(all(n in trajectory for n in ('476','560','C1','C2','C3','C4','C5','C6','C7','62.2%','11.3%','6.1%')),
+          'Figure 4 learner-cluster evidence lost or denominator changed')
+    mechanism=json.dumps(motor_sections['structured-vs-random'],ensure_ascii=False)
+    check('0.694' in mechanism and '0.088' in mechanism and 'model-based RL' in mechanism,
+          'Experiment 2 nonsignificant JSD and RL distinction must be explicit')
+    motor_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    for sid in ('structured-vs-random','figure-four-learner-trajectories','motor-learning-related-work'):
+        check(f'id="deep-hypothesis-testing-2026-ding--{sid}"' in motor_html,
+              'Updated motor reading anchor not built: '+sid)
+    ideas_html=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
+    i8_html=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
+    check('reading-notes.html#deep-hypothesis-testing-2026-ding--structured-vs-random' in ideas_html
+          and 'reading-notes.html#deep-hypothesis-testing-2026-ding--figure-four-learner-trajectories' in i8_html
+          and 'I4' in ''.join(motor['our_relevance']) and 'I8' in ''.join(motor['our_relevance']),
+          'I4/I8 did not inherit the new hypothesis-testing evidence')
+    check('reading-notes.html#deep-hypothesis-testing-2026-ding'
+          in (ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8'),
+          'I6 must retain its motor-hypothesis-testing evidence link')
     check('E26' in refs and 'SOAR' in (ROOT/'rsi/literature.html').read_text(encoding='utf-8')
           and '50%' in (ROOT/'rsi/literature.html').read_text(encoding='utf-8'),
           'npj 2026 must be linked to SOAR and the difficulty proxy in closest-work discussion')
