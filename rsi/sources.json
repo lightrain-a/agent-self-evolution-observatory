@@ -1971,6 +1971,46 @@
       "level": "ICLR 官方发表页与摘要核对；2026-10-28",
       "note": "早已发现少量对抗微调和部分良性常见数据也可能损害安全行为；其目标与Emergent Misalignment跨非编码领域的特定表现及机制分析并非完全同一。",
       "code": ""
+    },
+    {
+      "id": "E701",
+      "group": "学习科学",
+      "title": "A foundation model to predict and capture human cognition",
+      "date": "Nature 644, 1002–1009 (2025) · online 2025-07-02",
+      "url": "https://www.nature.com/articles/s41586-025-09215-4",
+      "level": "Nature / PMC 正文 Fig1–5、Extended Data Fig4、Data/Code availability 核对；2026-10-28；未复现",
+      "note": "Centaur 基于 Llama3.1 70B/QLoRA 拟合 Psych-101（160 项实验/60092 人/10681650 选择）。留出被试 NLL=0.44 vs Llama0.58、专用0.56；OOD 改故事0.51/0.63、改三选项0.42/0.62、逻辑1.65/1.92；开放环探索、fMRI 与启发式修订亦有证据。预测行为不是预测真实学生参数更新后净学习。",
+      "code": "https://github.com/marcelbinz/Llama-3.1-Centaur-70B"
+    },
+    {
+      "id": "E702",
+      "group": "相邻领域",
+      "title": "StudentSim: Training LLM-based Student Simulators",
+      "date": "Microsoft Research · arXiv 2609.01591 (2026-09 preprint)",
+      "url": "https://arxiv.org/abs/2609.01591",
+      "level": "Microsoft Research 正式项目页、arXiv 原始摘要与作者仓库核对；2026-10-28；未复现",
+      "note": "模拟具体学生的原回答与接受指导后的即时修改；chess F/R=0.51/0.91，GPT-5.4 role-play 0.23/0.72，Maia2 0.45/0.27。还把模拟器当 RL tutor 的反馈；没有验证现实 LLM 学生在持久 LoRA 更新后独立新题增益的准确预测。",
+      "code": "https://github.com/microsoft/StudentSim"
+    },
+    {
+      "id": "E703",
+      "group": "相邻领域",
+      "title": "Turning large language models into cognitive models",
+      "date": "ICLR 2024 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/84b686f7cc7b7751e9aaac0da74f755a-Abstract-Conference.html",
+      "level": "ICLR 2024 官方论文页和摘要、Nature 2025 参考文献核对；2026-10-28",
+      "note": "Binz & Schulz 先前已经通过心理实验行为数据微调 LLM 获得认知模型、比传统模型更好拟合部分任务，并初步测试多任务跨域泛化；Nature Centaur 的增量是统一160实验、OOD与开放环等全面评测。",
+      "code": ""
+    },
+    {
+      "id": "E704",
+      "group": "相邻领域",
+      "title": "Towards Valid Student Simulation with Large Language Models",
+      "date": "arXiv 2601.05473 (2026-01) · 概念与评测框架",
+      "url": "https://arxiv.org/abs/2601.05473",
+      "level": "arXiv 原始摘要与作者元信息核对；2026-10-28",
+      "note": "提出 competence paradox 和 Epistemic State Specification，提醒强 LLM 角色扮演弱学生可能生成过强能力或不真实学习轨迹；属于方法和测量框架，而不是 Centaur / StudentSim 同任务真实收益实验。",
+      "code": ""
     }
   ]
 }
