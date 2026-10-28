@@ -19,6 +19,16 @@ PAGE = {
 <p><b>Related Work：</b>Binz 与 Schulz 的 <i>ICLR 2024 Turning large language models into cognitive models</i> 已研究行为微调与有限跨实验泛化，Centaur 的推进在于 160 实验和系统 OOD/开放环证据。[[E703]] 2026 年学生模拟有效性研究还提出 <b>competence paradox</b>：强基础 LLM 扮演弱学生时可能不真实地“懂得太多”，因此不能只看语言角色扮演的流畅程度。[[E704]]</p>
 <p><b>对 I2 的最小研究建议：</b>先通过真实试训验证“同水平但知识准备不同的学生，哪种教法更有用”；只有存在交互，才考虑构建更新前收益预测器，并与 <b>SOAR 的真实学生学习收益奖励</b>及 <b>LESS 梯度代理</b>在同一总预算下比较。[[S47]][[M10]] 当前仍是 I2 的机制参考，不单开 Idea、不更换教师或更新器。<a href="reading-notes.html#deep-nature2025-centaur-binz"><b>完整精读：Figure 1–5、未见实验三层测试、StudentSim 最近邻 →</b></a></p>
 '''),
+("systematic-generalization-mlc","Nature 2023｜MLC：如何通过组合任务元学习规则？",'''
+<p><b>原文：</b>Lake 与 Baroni 的 <i>Nature</i> 2023 MLC 用 100,000 个随机解释语法 Episodes 训练小型 Transformer，通过少量 Study 示例预测当前语法下未见的 Query。元测试权重冻结，依赖上下文学习新组合，不等于持续 LoRA 内化。[[E350]]</p>
+<div class="table-wrap"><table><thead><tr><th>核心问题</th><th>实证结果与边界</th></tr></thead><tbody>
+<tr><td>为什么混入20%错误？</td><td>模拟人类约80.7%的代数正确率及人类式错误分布；仅用于行为拟合的Query监督，<b>不是Study里有20%错误示范，也不意味着能提高正确解题能力</b></td></tr>
+<tr><td>Table 1</td><td>人类回答log-likelihood：Few-shot Seq2Seq −1264.7；MLC (algebraic only) −496.9；MLC −358.1。接近0越好；包含错误的MLC更能预测人的错答，并不等于规则更准确</td></tr>
+<tr><td>Table 2</td><td>SCAN Add jump错误率 Seq2Seq 99.27%→MLC 0.22%；COGS Lexical 6.08%→0.87%。Table 2 没有单列同一个 MLC (algebraic only) 检查点[[E351]][[E352]]</td></tr>
+<tr><td>泛化边界</td><td>SCAN Length 与 COGS 三类新结构泛化仍有100%错误，词汇新组合不等于普遍结构外推</td></tr>
+</tbody></table></div>
+<p><b>迁移到 <a href="idea-i10-learning-novelty.html#mlc-nature2023">I10</a>：</b>进一步区分训练样本是否能排除竞争捷径 D、真实参数是否吸收 L，以及撤除Study以后能否处理未见组合 C。I10 使用完全可验证的正确训练目标，不把模拟人类错答当训练策略。<a href="reading-notes.html#deep-lake-baroni-mlc-nature2023">进入 Nature 2023 论文十节精读、T1/T2完整数据 →</a></p>
+'''),
 ("moral-strategy-learning","Nature Human Behaviour 2025｜从动作纠错，到学习依赖哪种决策策略",'''
 <p><b>Challenge：</b>一次好结果究竟强化了“这个动作”，还是强化了产生动作的<strong>整个决策方法</strong>？Maier、Cheung 与 Lieder 将二者拆开：13 次道德两难题中，遵循规则（Rule）和成本—收益推理（CBR）有时对应行动、有时对应不行动，反馈条件则随机控制哪种策略持续得到好结果。四项预注册实验共 <b>2,328 人</b>。[[E311]]</p>
 <p><b>Insight &amp; Design：</b>结果可以更新具体动作的价值，也可能更新上层“下一题依赖 Rule 还是 CBR”的信任。作者比较 model-free / model-based / 无学习 × 行动层 / 策略层的六种计算模型；并用新道德问题、态度量表、真实经济激励捐赠和看似独立的后续实验判断转移。<b>CBR 是被选的策略，不等于元控制器的 model-based 学习</b>。[[E311]]</p>

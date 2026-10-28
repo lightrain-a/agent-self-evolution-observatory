@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -167,7 +167,7 @@ def main():
         'methods':['cross-domain.html','theory-notes.html','learning-science.html'],
         'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -180,7 +180,7 @@ def main():
           'Visible RSI pages must exclude only linked historical research')
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,10)]+['I11','I12','I13'],'Published research ideas must appear exactly once, with I10 reserved')
+    check(numbered==[f'I{i}' for i in range(1,14)],'Research ideas I1–I13 must appear once and in order')
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
@@ -553,7 +553,7 @@ def main():
         for p in cards
     ),'Paper lacks a verified arXiv or publisher original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
-    check(all(f'idea-{i}' in ideas.ids for i in list(range(1,10))+[11,12]),'I1–I9 and I11 anchors missing from research board')
+    check(all(f'idea-{i}' in ideas.ids for i in range(1,13)),'I1–I9 and I11 anchors missing from research board')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
@@ -566,7 +566,7 @@ def main():
         '<h3>Design <small>（如何做）</small></h3>',
         '<h3>实验设计 <small>（怎么验证）</small></h3>',
     )
-    for idea_number in list(range(1, 10))+[11,12]:
+    for idea_number in range(1,13):
         section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
         locations = [section.find(heading) for heading in ordered_headings]
         check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
@@ -578,7 +578,7 @@ def main():
     check(idea_positions == sorted(idea_positions),'Published I1–I9 and I11 sections are out of order')
     check(ideas_text.index('id="orthogonal"') > idea_positions[-1],
           'Independent I6-I9 and I11 comparison must follow full scientific narratives')
-    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(11,'idea-i11-emotional-rsi.html'),(12,'idea-i12-prerequisite-bottleneck.html')):
+    for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(10,'idea-i10-learning-novelty.html'),(11,'idea-i11-emotional-rsi.html'),(12,'idea-i12-prerequisite-bottleneck.html')):
         section = ideas_text.split(f'id="idea-{i}"', 1)[1].split('</section>', 1)[0]
         check(f'href="{detail}"' in section, f'I{i}: full scientific detail page must remain linked')
         check('正交边界' in section,'I6-I9 separation lost in I'+str(i))
@@ -786,10 +786,28 @@ def main():
           'idea-i2.html#idea-d-diagnostic', 'idea-i5.html#idea-b-merged',
           'i8.html#idea-a-merged', 'idea-i12-prerequisite-bottleneck.html')),
           'The A/B/D merges and new I12 must each have a distinct overview entry')
-    check('I10 仍按此前编号保留' in ideas_text and all(tag in overview for tag in ('I11','I12','I13')),
-          'I10 reserved-number policy or I11 overview labeling drift')
-    check(not (ROOT/'rsi/idea-i10.html').exists(),
-          'Do not fabricate an I10 research page when adding I11')
+    i10=(ROOT/'rsi/idea-i10-learning-novelty.html').read_text(encoding='utf-8')
+    check({'E350','E351','E352'} <= refs and
+          all(f'M{i}' in refs for i in range(50,66)),
+          'MLC and I10 paper sources missing')
+    check('href="idea-i10-learning-novelty.html"' in overview and
+          'id="idea-10"' in ideas_text and
+          all(x in overview for x in ('I10','I11','I12','I13')),
+          'I10 not integrated with numbered RSI research pool')
+    check(all(f'id="{x}"' in i10 for x in
+          ('question','mosaic','case','mlc-nature2023','insight','design','experiment','go')),
+          'I10 rule-learning mechanism or MLC section missing')
+    check('reading-notes.html#deep-lake-baroni-mlc-nature2023' in i10 and
+          'Table 1' in i10 and 'Table 2' in i10 and '20%' in i10,
+          'MLC interpretation needs human/algorithm benchmark distinction')
+    mlc=next((p for p in cards if p['id']=='lake-baroni-mlc-nature2023'),None)
+    check(mlc is not None and len(mlc['deep_read']['sections'])==10 and
+          len(mlc['deep_read']['metric_summary'])==5,
+          'MLC Nature complete 10-section deep read missing')
+    check('id="deep-lake-baroni-mlc-nature2023"' in notes_html and
+          'id="systematic-generalization-mlc"' in learn_sci and
+          'id="i10-rule-learning"' in experiments_html,
+          'MLC deep-read or related RSI experimentation missing')
     rote = next((p for p in cards if p['id']=='rote-learning-iclr2026-wu'), None)
     check(rote is not None and rote.get('arxiv')=='2507.21914' and rote.get('conference_official_primary') is True,
           'ICLR 2026 Rote Learning reading note must link the official published version')

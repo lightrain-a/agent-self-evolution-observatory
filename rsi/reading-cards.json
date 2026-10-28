@@ -31,6 +31,600 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "lake-baroni-mlc-nature2023",
+      "short_title": "MLC · Nature 2023",
+      "title": "Human-like systematic generalization through a meta-learning neural network",
+      "authors": "Brenden M. Lake; Marco Baroni",
+      "lead_institution": "New York University · Department of Psychology and Center for Data Science",
+      "institutions": [
+        "New York University · Department of Psychology and Center for Data Science",
+        "Universitat Pompeu Fabra",
+        "ICREA"
+      ],
+      "institution_source": "Nature 623, 115–121 (2023); Authors and Affiliations; Brenden M. Lake 与 Marco Baroni 署名信息",
+      "publication": "Nature 623, 115–121 (2023)",
+      "doi": "10.1038/s41586-023-06668-3",
+      "official_url": "https://www.nature.com/articles/s41586-023-06668-3",
+      "first_posted": "2023-10-25",
+      "version": "Nature 正式论文 · 2023-10-25",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature 公开正文 Main/Methods、Fig.1–3、Extended Data Fig.4、Table 1/2、官方 MLC 与 MLC-ML 代码说明核对；未独立复现",
+      "tags": [
+        "Nature 2023",
+        "Meta-Learning",
+        "Systematic Generalization",
+        "Compositionality",
+        "MLC",
+        "Human Behavioral Modeling",
+        "SCAN",
+        "COGS",
+        "I10",
+        "Rule Learnability"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "使用人类回答对数似然、代数正确率，以及 SCAN/COGS 的 exact-match error 分别评价认知拟合与组合泛化。",
+          "open_question": "Table 1 的人类似然和 Table 2 的机器任务错误率不可横比；不能用人为错误监督的拟合收益代替正确解题能力。"
+        },
+        "novelty": {
+          "level": "core",
+          "contribution": "从不同随机解释语法构造 study/query 元学习回合，训练模型根据有限示例推断已知原语的新组合。",
+          "open_question": "有不同 episode 不表示可处理元训练分布之外的新句法结构；部分结构泛化实验错误率仍100%。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "在 SCAN/COGS 的部分词汇组合泛化设置中大幅提升，说明有限示例能支持对新组合的行为推断。",
+          "open_question": "没有证明任意规则/长度都能组合，SCAN Length 与 COGS 三类结构泛化仍失败。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "元训练时改变 Transformer 参数；测试时权重冻结，利用上下文中的 study examples 推断 query。",
+          "open_question": "没有检验新任务的规则通过 LoRA 等持续写入参数，也未检验后续训练后的保留与旧能力遗忘。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "研究人工符号指令和标准组合基准，没有开展工具授权或不安全自修改评估。",
+          "open_question": "不能从组合泛化成绩推出 RSI 的可信教学数据或版本安全。"
+        }
+      },
+      "one_sentence": "不同潜在语法的元训练让小型 Transformer 在部分未见词汇组合上系统泛化；20%人类式错误标签服务于行为拟合，绝非改善正确率的配方。",
+      "story": {
+        "challenge": "模型记住单词及旧组合，却在熟悉原语组成的新指令上失败；怎样训练它从几个示例推断可组合规则？",
+        "insight": "不断更换 episode 的原语含义和组合语法，让模型不能依赖固定映射，必须由 study examples 决定当前规则来回答 query。",
+        "design": "以随机解释语法生成10万训练回合，每回合给少量 Study 示例并优化 Query；另比较纯代数监督与混入人类式错误监督的行为拟合版本。",
+        "result": "SCAN Add jump 错误率 Seq2Seq 99.27%→MLC 0.22%；COGS Lexical 6.08%→0.87%；但 SCAN 长度及 COGS 三类结构泛化错误率100%。"
+      },
+      "problem": "在有限示例学习新原语与操作规则的场景中，怎样区分记住单一词义、复制示例、组合迁移，以及模仿人类错误分布？",
+      "setup": "100,000 个训练 episodes 和 200 个验证 episodes；随机生成不同潜在语法，每个 episode 的少量基本符号/函数映射由 study examples 隐式提供，使用 query loss 训练约1.4M 参数 Transformer。两类人类任务报告代数正确率和回答分布拟合；机器任务用词类置换方式评价 SCAN/COGS，Table 2 为5次运行平均错误率。",
+      "updates": "元训练中更新 Transformer 权重；新 episode 的元测试时权重冻结，仅用同一次输入提供的 study examples 完成组合推断。MLC (algebraic only) 是纯正确输出监督，MLC 的80/20偏置输出用于模仿人类答错模式，不是用错误反馈纠正自身。",
+      "key_ideas": [
+        {
+          "name": "Episode-level meta-learning",
+          "summary": "训练任务本身不断更换潜在解释语法，而不仅是把旧题换成新数值。",
+          "formula": "G ~ p(G); S,Q ~ G; minimize E[-log p_theta(y_Q | x_Q,S)] (RSI笔记抽象)"
+        },
+        {
+          "name": "Study versus query",
+          "summary": "支持示例教会当前映射，查询要求将当前规则应用于未见组合；复制示例同时是必要基础训练任务。",
+          "formula": "Study: jump→JUMP; twice(jump)→JUMP JUMP; Query: twice(skip)→?"
+        },
+        {
+          "name": "Behavioral fitting versus rule correctness",
+          "summary": "20%启发式错误监督是匹配人类的非代数偏好，不能解读成对泛化有利的错误标签比例。",
+          "formula": "MLC(meta-training): ~80% algebraic target + ~20% heuristic target"
+        },
+        {
+          "name": "Boundary of systematic lexical generalization",
+          "summary": "熟悉词及结构的新组合能泛化，不表示新结构和更长序列都可以处理。",
+          "formula": "SCAN Add jump err 99.27% (seq2seq) vs 0.22% (MLC); SCAN Length err 100%"
+        },
+        {
+          "name": "RSI research extension (not paper result)",
+          "summary": "在真实权重更新中交叉控制区分竞争规则的信息 D 与组合覆盖 C，测新题迁移、捷径率和旧能力。",
+          "formula": "Rule evidence D × compositional coverage C × learner stage U/S/M"
+        }
+      ],
+      "evidence": [
+        "Fig.2：人类25名参与者的代数正确率80.7%；分析的MLC代表性运行采样输出82.4%；较长输入/输出组合77.8%，相应人类72.5%。这些不是多随机种子平均的统一 SOTA 数字。",
+        "Table 1 Few-shot：Basic seq2seq −1264.7，MLC (copy only) −1586.4，MLC (algebraic only) −496.9，MLC −358.1，MLC (joint) −349.2。指标是对人类回答的总 log-likelihood，越接近0越好，不是答案准确率。",
+        "Table 1 Open-ended：MLC (algebraic only) −1218.3，MLC −693.1，MLC (joint) −635.7。引入人类式错误帮助拟合人类回答分布，不等于提升正确推理。",
+        "Meta-training Methods：在用于拟合人类行为的MLC中，每个query约80%配真实代数输出，20%配从逐词一对一或误用规则生成的启发式输出，约匹配80.7%的人类正确率；训练的 Study 不是20%错误示范。",
+        "Table 2：错误率（5次平均）SCAN Simple 0.00%/0.02%、COGS Simple 0.12%/0.34%，Add jump 99.27%/0.22%，Around right 51.13%/0.04%，Opp. right 100%/0.06%，COGS Lexical 6.08%/0.87%（前者基本Seq2Seq、后者MLC）。",
+        "Machine learning benchmarks：SCAN Length 和 COGS 的3种结构泛化测试错误率100%，本文的词类置换元训练未解决结构/长度外推。"
+      ],
+      "boundaries": [
+        "Table 1 与 Table 2 训练协议及被解释变量不同；Table 2 的列名是 MLC，没有单独的 MLC (algebraic only) 行。不能把两表的 MLC 当成同一个已验证检查点，也不能据此说20%错误标签提升了规则泛化。",
+        "用于人类式错误拟合的20%目标来自启发式答案，并不意味着作者向 Study examples 注入20%错误，也不意味着训练阶段让模型犯错再自纠正。",
+        "MLC的新任务评估时权重冻结；研究证明的是从上下文学习新组合的能力，不是新任务参数持久更新或递归自改进。",
+        "人工组合语法的meta-test仍处于所训练任务分布的支持范围；结构外推与长序列存在明确失败。",
+        "表2中的普通Seq2Seq与MLC使用相似架构，但元训练及词类置换机制不同；不能把全部差别解释为数据量或纯粹的网络架构。"
+      ],
+      "our_relevance": [
+        "I10：现有规则区分性 D 与权重更新后吸收 L 之外，加入正交的组合覆盖 C；是否能排除竞争捷径，和是否能把规则迁移到新组合，是两个不同问题。",
+        "对照 A：仅训练复制 study 中已有 query；B：100%正确输出的代数组合元训练；C：同样100%正确监督但有区分性反例；D：真实LLM LoRA 更新并撤除 study 示例；不要采用20%错误监督作为性能增强默认值。",
+        "在相同U（未掌握）、S（局部捷径）、M（已掌握）状态下，交叉操纵区分信息（能否排除捷径）× 组合覆盖（直接应用/新组合），控制预算与规则家族，测试未见分歧题与未见结构。",
+        "MLC式in-context在新episode能成功，并不能说明模型参数吸收了规则；RSI的关键指标是更新后清空课堂上下文，经过后续更新仍能独立在新规则族应用。",
+        "若仅复制/熟悉语法内新组合变好、结构外推仍差，说明证据只支持受限组合迁移，不能对一般规则学习做广泛主张。"
+      ],
+      "next_test": "P0：用程序生成真实规则 f 和竞争捷径 g 的多语法任务，交叉设置D=0/ D>0 的区分性与直接/未见组合C；对初学、局部捷径、掌握三个模型快照做统一LoRA更新，冻结未见分歧题与组合题、旧能力测试；另用冻结权重+study示例运行MLC式上下文对照。只有参数更新后撤除study仍迁移，才支持RSI规则吸收。",
+      "deep_read": {
+        "focus": "为什么 Nature 2023 需要10万不同潜在语法任务？为什么MLC故意给20%人类式错误输出？T1与T2到底谁胜出，哪些结构仍失败？对I10最大的启发是分离“可区分的规则证据、模型是否吸收、是否能组合应用”。",
+        "summary": "Lake & Baroni通过跨episode元学习，让Transformer利用study/query示例在部分新词汇组合中实现系统性泛化；Table1重在人类行为似然，Table2重在SCAN/COGS exact-match错误率。80%/20%启发式目标是模仿人类犯错而非提升正确率。元测试参数冻结，结构/长度外推仍失败。",
+        "terms": [
+          {
+            "name": "Systematicity",
+            "meaning": "已知组成元素和规则可以稳定迁移到未见组合，而不仅是背诵某些固定输入输出配对。"
+          },
+          {
+            "name": "Interpretation Grammar",
+            "meaning": "每个episode随机抽取的潜在输入到输出组合映射；学习者只能通过study示例推断它。"
+          },
+          {
+            "name": "Study / Query",
+            "meaning": "Study提供当前任务示例，Query要求预测；复制Study与迁移新组合需要分开测试。"
+          },
+          {
+            "name": "MLC (algebraic only)",
+            "meaning": "仅以正确代数规则输出训练的MLC变体；这是对正确组合能力的关键对照。"
+          },
+          {
+            "name": "Heuristic Output",
+            "meaning": "用于拟合人类错误的训练监督目标，包括逐词一对一翻译与误用函数参数；不是真实正确答案。"
+          },
+          {
+            "name": "Frozen-weight test",
+            "meaning": "元训练已更新参数，但新语法测试只从输入的study示例中推断，不再针对本次任务梯度更新。"
+          }
+        ],
+        "metric_summary_title": "两张表、五组关键数字：先分清评价目标",
+        "metric_summary_intro": "Table 1测对人类答案（含错误）的分布拟合；Table 2测机器基准正确率。不要跨表把20%人为错误当泛化增益。",
+        "metric_summary": [
+          {
+            "family": "Table 1 · Few-shot",
+            "metrics": "Log-likelihood of human responses",
+            "meaning": "同样的人类答错，模型是否分配了恰当概率；越接近0越好",
+            "result": "Basic seq2seq −1264.7；MLC (algebraic only) −496.9；MLC −358.1"
+          },
+          {
+            "family": "Table 1 · Open-ended",
+            "metrics": "Held-out human log-likelihood",
+            "meaning": "给人类真实开放答案的总概率，而非做题正确率",
+            "result": "MLC (algebraic only) −1218.3；MLC −693.1；MLC (joint) −635.7"
+          },
+          {
+            "family": "Table 2 · SCAN Add jump",
+            "metrics": "Exact-match error（5 runs）",
+            "meaning": "熟悉原语的未见组合，越低越好",
+            "result": "Basic seq2seq 99.27%；MLC 0.22%"
+          },
+          {
+            "family": "Table 2 · COGS Lexical",
+            "metrics": "Exact-match error（5 runs）",
+            "meaning": "新词汇组合泛化，越低越好",
+            "result": "Basic seq2seq 6.08%；MLC 0.87%"
+          },
+          {
+            "family": "Boundary · 新结构",
+            "metrics": "SCAN length / COGS structural",
+            "meaning": "超过词汇组合层次的新结构与长度",
+            "result": "论文报告上述结构/长度测试错误率100%；并未普遍解决组合泛化"
+          }
+        ],
+        "sections": [
+          {
+            "id": "phenomenon",
+            "stage": "challenge",
+            "title": "Challenge｜为什么会做已知指令，却无法解决熟悉元素的新组合？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "人可以从“jump→JUMP”“skip→SKIP”“jump twice→JUMP JUMP”推断出“skip twice→SKIP SKIP”。这要求把原语的含义与twice的组合操作分开，并在没见过的配对上复用；固定训练集合的Seq2Seq可能记住常见词句，却不具备这种系统性。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "测试",
+                  "示意",
+                  "区别"
+                ],
+                "rows": [
+                  [
+                    "复制",
+                    "jump→JUMP 后再问 jump",
+                    "只需找回study"
+                  ],
+                  [
+                    "新词组合",
+                    "已知skip与twice，问skip twice",
+                    "组合已学元素"
+                  ],
+                  [
+                    "新结构",
+                    "学习示例没出现的句法/更深递归",
+                    "比词汇组合更难；原文有失败案例"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "证据范围",
+                "text": "示意指令帮助理解组合测试，不等于作者证明模型学会了所有自然语言规则。论文重点是人工语法和SCAN/COGS的特定划分。"
+              }
+            ]
+          },
+          {
+            "id": "human-setup",
+            "stage": "challenge",
+            "title": "人类任务｜80.7%正确率和72.5%长度泛化是什么意思？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "参与者根据study中的人工指令—颜色符号映射执行query。25名人类在全部查询上的正确代数组合率80.7%；超出study输出长度的查询中正确率72.5%。错误并非完全随机，常有把每个输入词看作独立输出的1-to-1模式，或误按表面词序拼接输出的iconic concatenation。"
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "Fig.2 人机比较",
+                    "setup": "同一类少样本人工语法任务",
+                    "result": "代表性MLC运行从输出分布采样得到82.4%正确率；较长序列77.8%。",
+                    "supports": "经组合元训练的网络可以在这一分布中近似人的系统性表现。",
+                    "not_proven": "所有MLC随机运行都优于人类，或能处理任意新句法结构。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "episode-meta-learning",
+            "stage": "insight",
+            "title": "Insight｜让每个Episode都需要重新从示例找规则",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "核心不是给固定词典不断增添近义句，而是随机生成解释语法，改变原语和函数如何解释，构建一组Study支持示例和Query。模型学习到的跨回合共性，是如何利用当前Study推断规则、再对当前Query做组合。新测试语法不被直接告知，模型参数在测试时冻结。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "原文结构",
+                  "作用",
+                  "对I10的启发"
+                ],
+                "rows": [
+                  [
+                    "100,000 training episodes，200 validation episodes",
+                    "学习很多潜在语法",
+                    "对照应按规则家族拆分，防止只见过同一生成模板"
+                  ],
+                  [
+                    "每回合少量study/query",
+                    "从有限示例推断组合",
+                    "复制示例与新组合作为不同评测终点"
+                  ],
+                  [
+                    "固定参数的元测试",
+                    "不再针对新语法做梯度更新",
+                    "不能直接当作参数级RSI持久学习"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为何不是单纯数据增强？",
+                "text": "不同episodes甚至可改变同一原语的含义，固定词面—输出记忆无法独立解决所有当前query；训练损失直接来自支持示例之外的组合查询。"
+              }
+            ]
+          },
+          {
+            "id": "training-objective",
+            "stage": "design",
+            "title": "Design｜Study/Query监督与复制辅助是如何协同的？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "元训练目标（本站抽象，非原文逐字抄写）",
+                "expression": "min_θ  E_{G∼p(G), S,Q∼G} [ −∑_{(x,y)∈Q} log p_θ(y | x,S) ]",
+                "meaning": "G 为潜在解释语法，S 是Study示例，Q 是Query。模型需要在上下文S中完成当前规则推断。",
+                "boundary": "为解释训练逻辑而整理的抽象式，并不是原文逐字给出的完整实现损失或与测试时更新对应的公式。"
+              },
+              {
+                "type": "prose",
+                "text": "论文同时使用复制类辅助任务，使模型知道如何从Study中提取直接可复用映射。Copy-only对照只训练Query等于Study的情况，不能独立测出组合泛化；因而作者不是否认记忆或复制的作用，而是把它们与未见组合查询区分。"
+              }
+            ]
+          },
+          {
+            "id": "heuristic-20pct",
+            "stage": "design",
+            "title": "为什么要加入20%人为错误？这是给模型喂错误知识吗？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "MLC (algebraic only) 使用正确语法目标；用于模拟人类行为的 MLC 在元训练时，约80%的Query对应真实代数输出，20%对应启发式输出。比例大致参考人类代数正确率80.7%。启发式输出由1-to-1翻译或噪声规则应用产生，用来拟合人类错答的概率分布。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "版本",
+                  "元训练的Query目标",
+                  "衡量目的"
+                ],
+                "rows": [
+                  [
+                    "MLC (algebraic only)",
+                    "正确代数规则输出",
+                    "比较规则组合能力与对人类回答的似然"
+                  ],
+                  [
+                    "MLC（人类行为版本）",
+                    "约80%正确 + 20%人类式启发错误",
+                    "拟合人类正确与错误的分布"
+                  ],
+                  [
+                    "MLC (copy only)",
+                    "Query总与Study实例重复",
+                    "检验只会复制能否应对新组合"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "对I10的重要结论",
+                "text": "20%是训练目标中Query的错误式输出，而不是Study例子掺20%错误教学，更不是失败后给正确反馈的纠错过程。我们的I10应以100%可验证的正确监督为主，不把刻意错误标签当成学习增强。"
+              }
+            ]
+          },
+          {
+            "id": "table1",
+            "stage": "result",
+            "title": "Table 1｜MLC (algebraic only) 到底比谁好？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "T1=Table 1，评价指标是对人类真实答案（含人类错误）的总对数似然，数值越高、越靠近0越好，并非代数做题准确率。Few-shot中 algebraic-only 的−496.9明显高于 Basic seq2seq 的−1264.7；人类式错误版本MLC为−358.1，拟合人类答案更好。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "模型",
+                  "Few-shot LL ↑",
+                  "Open-ended LL ↑"
+                ],
+                "rows": [
+                  [
+                    "Baseline",
+                    "−1926.5",
+                    "−1547.0"
+                  ],
+                  [
+                    "Symbolic (oracle)",
+                    "−538.8",
+                    "—"
+                  ],
+                  [
+                    "Symbolic (oracle/biases)",
+                    "−357.2",
+                    "−1008.5"
+                  ],
+                  [
+                    "Basic seq2seq",
+                    "−1264.7",
+                    "—"
+                  ],
+                  [
+                    "MLC (copy only)",
+                    "−1586.4",
+                    "−1341.4"
+                  ],
+                  [
+                    "MLC (algebraic only)",
+                    "−496.9",
+                    "−1218.3"
+                  ],
+                  [
+                    "MLC",
+                    "−358.1",
+                    "−693.1"
+                  ],
+                  [
+                    "MLC (joint)",
+                    "−349.2",
+                    "−635.7"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "正确解释",
+                "text": "含20%启发式目标的MLC更能预测人类会如何回答，包括人类犯错，这不构成它比algebraic-only更会正确组合的证据。Joint模型专门联合两类人类任务，不能以同一训练成本和目标直接横比。"
+              }
+            ]
+          },
+          {
+            "id": "table2",
+            "stage": "result",
+            "title": "Table 2｜组合泛化相比Basic seq2seq的真正增益",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "T2=Table 2。指标是机器学习测试上的Exact-match错误率，越小越好，均为5次运行平均。这里的模型标记只有“MLC”，机器基准采用代数规则生成的正确目标和词类置换式元训练，并不在Table 2单列人类拟合实验中的MLC (algebraic only)这一行。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "测试",
+                  "Basic seq2seq误差↓",
+                  "MLC误差↓"
+                ],
+                "rows": [
+                  [
+                    "SCAN Simple（分布内）",
+                    "0.00%",
+                    "0.02%"
+                  ],
+                  [
+                    "COGS Simple（分布内）",
+                    "0.12%",
+                    "0.34%"
+                  ],
+                  [
+                    "SCAN Add jump",
+                    "99.27%",
+                    "0.22%"
+                  ],
+                  [
+                    "SCAN Around right",
+                    "51.13%",
+                    "0.04%"
+                  ],
+                  [
+                    "SCAN Opposite right",
+                    "100.00%",
+                    "0.06%"
+                  ],
+                  [
+                    "COGS Lexical",
+                    "6.08%",
+                    "0.87%"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最重要的实验现象",
+                "text": "普通网络在简单的分布内测试几乎全对，但对熟悉词汇的新组合作用很差；MLC在这些特定词汇系统性泛化测试上显著改善。不能用T1的−496.9与T2的0.22%进行数学比较。"
+              }
+            ]
+          },
+          {
+            "id": "limits",
+            "stage": "result",
+            "title": "失败边界｜为什么新词组合成功，却仍有100%结构错误？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "SCAN Length split与COGS三类句法结构泛化报告100%错误率。这说明“在元训练支持范围内重组词汇”与“完全不同的句法、递归深度或长度结构”是不同难度。作者也明确承认简单词类置换元训练不足以解决这些结构外推。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "泛化类型",
+                  "原文结果",
+                  "I10不能越界的结论"
+                ],
+                "rows": [
+                  [
+                    "熟悉结构里的新词组合",
+                    "SCAN Add jump等误差≤0.22%",
+                    "证实特定系统性词汇泛化"
+                  ],
+                  [
+                    "新句法结构 / 更长序列",
+                    "SCAN Length和COGS三类结构测试误差100%",
+                    "不能宣称通用组合泛化或无限长度外推"
+                  ],
+                  [
+                    "人类少样本新指令",
+                    "少数较长新组合中MLC代表性运行77.8%",
+                    "与机器基准的结构外推失败不能混为同一协议"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "transfer",
+            "stage": "next",
+            "title": "与I10的关系｜规则区分信息 × 参数吸收 × 组合覆盖",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "这篇论文回答：如何让模型从若干study例子中在上下文里组合规则。I10另问：两道同规则训练题提供的区分性证据，何时能被真实LoRA权重更新吸收，撤掉示例后迁移？所以保留原I10的Rule Disambiguation、Rule Absorption，增加组合测试Compositional Transfer，不把I10改成MLC复现。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "新增因素",
+                  "低条件",
+                  "高条件"
+                ],
+                "rows": [
+                  [
+                    "D：规则区分性",
+                    "正确规则f与竞争捷径g对训练输入给出同样输出",
+                    "训练输入让f(x)与g(x)给出不同输出"
+                  ],
+                  [
+                    "C：组合覆盖",
+                    "仅直接应用已学算子",
+                    "测试需要从已知原语构建未训练过的新组合"
+                  ],
+                  [
+                    "State：模型掌握阶段",
+                    "未形成规则U、局部捷径S",
+                    "已掌握M（对照），分层而非同一分数"
+                  ]
+                ]
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0｜D×C 的正交实验",
+                    "design": "同一真实规则+预定义竞争捷径，生成D=0/D>0与直接/新组合四格；固定有效token、LoRA和教学反馈，在U/S/M快照真实更新。",
+                    "decisive": "无提示的未见分歧题是否改善？新组合是否正确？是否只记住训练反例？"
+                  },
+                  {
+                    "name": "P1｜上下文MLC与真实权重更新分轨",
+                    "design": "用官方生成器的study/query测试冻结权重MLC式ICL，再用同规则LoRA更新清除课堂上下文后测；加copy-only、纯代数和基线Seq2Seq。",
+                    "decisive": "两类机制的收益和成本分开，不用ICL直接声称参数学习。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "停止条件",
+                "text": "如果D与C分解后，现有梯度/Fisher信息和普通meta-training已完全解释收益，或效果仅存在熟悉模板而不能迁移新规则/新结构，就不应把它包装成全新的RSI算法。"
+              }
+            ]
+          },
+          {
+            "id": "references-code",
+            "stage": "next",
+            "title": "代码与复现路径｜保留作者两套实现",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "人类行为模型作者仓库：https://github.com/brendenlake/MLC；机器基准训练与SCAN/COGS复现：https://github.com/brendenlake/MLC-ML。前者提供meta-training episodes与人类行为实验相关代码，后者用于SCAN/COGS。原文在新episode测试时冻结模型权重；我们的LoRA分支必须另行实现并独立统计计算开销。"
+              },
+              {
+                "type": "bullets",
+                "items": [
+                  "先复现基本的正确代数目标与copy-only负对照，再考虑对比人类行为拟合；不使用20%错误标签作性能增强。",
+                  "将训练规则族/测试规则族/表达模板分别切分；保留SCAN lexical与结构泛化两个不同指标。",
+                  "引用正式Nature DOI及Table 1/2；所有本项目新机制均明确标注尚未实验。"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41586-023-06668-3",
+        "pdf": "https://www.nature.com/articles/s41586-023-06668-3.pdf",
+        "code": "https://github.com/brendenlake/MLC",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10620072/"
+      }
+    },
+    {
       "id": "nonlocal-replay-science2021-liu",
       "short_title": "Nonlocal Replay · Science 2021",
       "title": "Experience replay is associated with efficient nonlocal learning",

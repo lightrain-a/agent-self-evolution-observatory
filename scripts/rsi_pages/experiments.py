@@ -45,6 +45,16 @@ PAGE = {
 <p><b>避免泄漏：</b>如果 C 在 A/B 顺序决策前未知，则不得使用任何 C 梯度和最终测试答案决定顺序；目标 C 已知并允许少量开发示例时，可以单独报告目标条件化的几何预测，绝不能混成未知 C 的泛化结果。</p>
 <p><b>Go 门槛：</b>当前能力相近且优化器状态重置后，未来 C 学习曲线仍有跨种子/跨规则族顺序差异；若差异仅是 C 初始 loss、历史遗忘或优化器动量，则保留现象并退回 I9，不增加新的调度器。<a href="idea-i9-practice-switching.html#future-p0">详细协议、公式与强基线 →</a></p>
 '''),
+("i10-rule-learning","I10：从区分性例题到真正的规则组合迁移",'''
+<p><b>研究依据：</b>MLC（Nature 2023）已在部分 SCAN/COGS 词汇组合基准显著优于普通Seq2Seq，但元测试时权重冻结，且结构/长度泛化失败。它没有研究新规则的持续参数更新。<a href="reading-notes.html#deep-lake-baroni-mlc-nature2023">完整精读、Table1/2与20%错误监督解释</a>。[[E350]][[E351]][[E352]]</p>
+<div class="table-wrap"><table><thead><tr><th>实验</th><th>固定与改变</th><th>决定性检验</th></tr></thead><tbody>
+<tr><td>P0 · 区分证据 D</td><td>同一真实规则，题面相似/不同 × 能否排除竞争捷径</td><td>未见分歧题准确率与 Shortcut Preference</td></tr>
+<tr><td>P0 · 组合泛化 C</td><td>直接应用/未见规则组合，交叉三个学习状态 U、S、M</td><td>同预算 LoRA 更新并撤除Study后能否正确应用</td></tr>
+<tr><td>P1 · 机制基线</td><td>MLC式冻结权重 ICL、100%正确监督、普通重复、RHO-LOSS、FisherSFT与交互影响</td><td>分清上下文推断、原题记忆和真实权重学习</td></tr>
+<tr><td>P2 · RSI</td><td>模型依据已有错误提出下一道可验证反例</td><td>跨轮独立净迁移、旧能力保持与全部诊断成本</td></tr>
+</tbody></table></div>
+<p><b>保持 I10 独立主线：</b>不复现20%错误标签作为增益方法，不改变 I9 的课程顺序。<a href="idea-i10-learning-novelty.html#mlc-nature2023">I10 的MLC解释</a> · <a href="idea-i10-learning-novelty.html#experiment">完整 P0/P1/P2</a>。项目相关实验均待验证。</p>
+'''),
 ("i11-emotional-rsi","I11：情绪反馈怎样改变真实的 Agent 自我迭代？",'''
 <p><b>首要假设：</b>鼓励、冷静批评、紧迫与中性反馈，可能改变 Agent 的自评、核验、继续探索和是否写回 Skill；这些变化若改善多轮独立净能力才构成 RSI 贡献。ICML 2024 EmotionPrompt、HEART 的多轮同题纠错，以及 COLM 2026 的情绪鲁棒性和序贯决策均为直接强前作，不能重复它们的单次答案评价。[[M28]][[M29]][[M31]][[M33]]</p>
 <div class="table-wrap"><table><thead><tr><th>阶段</th><th>处理变量</th><th>要测的独立证据</th></tr></thead><tbody>
@@ -54,7 +64,7 @@ PAGE = {
 <tr><td><b>第二阶段 · 学会选反馈</b></td><td>只读取训练前状态/历史，选择反馈语气；固定/随机/EmotionRL 风格强基线</td><td>重置同一起始 Agent，仅比较新版反馈控制策略带来的未来学习增益</td></tr>
 </tbody></table></div>
 <p><b>关键区分：</b>在锁定动作协议中只变情绪，检验直接影响；在自由动作协议中比较语气引发的核验/停学/写回差异和持久收益。真实答案由独立验证器提供，学习控制器不读取最终测试反馈。所有诊断、探索、试训与后测按相同总预算计费，不将 P2 的版本更新简单等同于 HEART 的同题多轮再回答。<a href="idea-i11-emotional-rsi.html#p0"><b>查看 I11 最近邻矩阵、P0–P2 详情与停止条件 →</b></a>。</p>
-<p class="status">I11 是研究方案，尚无本站新模型复现或持续自迭代实验结果。I10 编号仍待对应独立研究页面，不因本项占用而重排。</p>
+<p class="status">I11 是研究方案，尚无本站新模型复现或持续自迭代实验结果。I10 已有独立研究页面，但不改变 I11 的情绪反馈主线。</p>
 '''),
 ("i12-prerequisite-unlocking","I12：先补一个共同前置缺口，能否解锁多任务后续学习？",'''
 <p><b>正式独立候选 I12：</b>从多道失败任务中诊断共同前置知识 P，先对学习者执行固定预算的真实 LoRA 更新，再对同一批下游任务 T 执行完全相同的第二段更新。对比的是<strong>第二段学习增量</strong>，不能把第一段补 P 后直接做对 T 算成“未来更会学”。<a href="idea-i12-prerequisite-bottleneck.html#definition">查看定义与研究边界</a>。[[E401]][[S401]][[S402]][[S404]][[S47]]</p>

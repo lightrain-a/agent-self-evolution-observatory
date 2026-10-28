@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','teaching','idea-i6','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -343,7 +343,7 @@ def main():
         nav('rsi/ideas.html')
         ordered_links=js("return [...document.querySelectorAll('#research-nav [data-nav-group=research] .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
         numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I')]
-        check(numbers==[f'I{i}' for i in range(1,10)]+['I11','I12','I13'],f'Published ideas duplicated or not sorted (I10 reserved): {ordered_links}')
+        check(numbers==[f'I{i}' for i in range(1,14)],f'Published ideas duplicated or not sorted: {ordered_links}')
         check(not any(item['href'] in ('teaching.html','idea-i6.html') for item in ordered_links),'Historical pages should not compete in the sidebar')
         js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
         time.sleep(.3)
@@ -364,13 +364,13 @@ def main():
         check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='ideas.html'"),
               'Historic I6 archive must not compete with current numbered I6')
         nav('rsi/ideas.html')
-        for idea_number in list(range(1, 10))+[11,12]:
+        for idea_number in range(1,13):
             steps=js(f"return [...document.querySelector('#idea-{idea_number}').querySelectorAll('.idea-step')].map(e=>({{heading:e.querySelector('h3').textContent.trim(),height:e.getBoundingClientRect().height}}));")
             check(len(steps)==5 and all(s['height']>35 for s in steps),f'I{idea_number} five-stage layout collapsed: {steps}')
             check([s['heading'].split(' ')[0] for s in steps]==['Challenge','现有工作','Insight','Design','实验设计'],f'I{idea_number} argument order wrong')
             check(js(f"return document.querySelectorAll('#idea-{idea_number} .flow>div').length>=4"),
                   f'I{idea_number} missing four-step design diagram')
-        for i,detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(11,'idea-i11-emotional-rsi.html'),(12,'idea-i12-prerequisite-bottleneck.html')):
+        for i,detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(10,'idea-i10-learning-novelty.html'),(11,'idea-i11-emotional-rsi.html'),(12,'idea-i12-prerequisite-bottleneck.html')):
             check(js(f"return document.querySelector('#idea-{i} .idea-side-note a[href=\"{detail}\"]')!==null"),
                   f'I{i} full research page link missing')
         js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
@@ -389,7 +389,7 @@ def main():
         time.sleep(.4)
         screenshot('idea-i11-five-stage-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','idea-i6','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','reading-notes','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
@@ -407,6 +407,9 @@ def main():
               'Future learnability geometry or matched optimizer control not visible')
         check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'I9 detail must fit mobile width')
         screenshot('idea-i9-detail-mobile.png')
+        nav('rsi/idea-i10-learning-novelty.html')
+        check(js("return ['question','case','mlc-nature2023','experiment','go'].every(x=>document.getElementById(x)!==null)"), 'I10 details missing')
+        check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'I10 mobile overflow')
         nav('rsi/idea-i11-emotional-rsi.html')
         check(js("return ['question','related','p0','p1','p2','metrics','gate'].every(id=>document.getElementById(id)!==null)"),
               'I11 RSI emotion feedback experiment sections not rendered')

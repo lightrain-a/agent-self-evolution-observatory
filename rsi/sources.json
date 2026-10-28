@@ -2071,6 +2071,196 @@
       "level": "PMLR 官方摘要与五类训练防御核对；2026-10-29；未独立复现",
       "note": "已有固定微调期间防御广泛失准的系统比较：KL、表征L2、persona steering、一般指令数据交错及inoculation prompting；perplexity-gap选择交错数据表现最佳。属于权重训练层，并非多代Skill/Harness更新接纳策略。",
       "code": ""
+    },
+    {
+      "id": "E350",
+      "group": "学习科学",
+      "title": "Human-like systematic generalization through a meta-learning neural network",
+      "date": "Nature 623, 115–121 (2023-10-25)",
+      "url": "https://www.nature.com/articles/s41586-023-06668-3",
+      "level": "Nature 正文 Fig.1–3、Methods、Table 1/2 与两个作者 GitHub 仓库核对；2026-10-29；未独立复现",
+      "note": "Lake与Baroni用多解释语法episodes元训练Transformer，词汇组合SCAN/COGS大幅优于基本Seq2Seq；20%人类式错误监督为模拟人类行为分布，Table1并非正确率；Table2为组合泛化错误率，SCAN Length及COGS新结构错误率100%；新episode测试权重冻结。",
+      "code": "https://github.com/brendenlake/MLC"
+    },
+    {
+      "id": "E351",
+      "group": "相邻领域",
+      "title": "Generalization without Systematicity: On the Compositional Skills of Sequence-to-Sequence Recurrent Networks",
+      "date": "ICML 2018 · PMLR 80:2873–2882",
+      "url": "https://proceedings.mlr.press/v80/lake18a.html",
+      "level": "PMLR 正式摘要及原论文引入SCAN的解释核对；2026-10-29；未复现",
+      "note": "SCAN基准引入熟悉原语的新组合与普通seq2seq泛化失败，构成MLC Table2的任务来源；词汇组合与外推长度属于不同泛化类型。",
+      "code": ""
+    },
+    {
+      "id": "E352",
+      "group": "相邻领域",
+      "title": "COGS: A Compositional Generalization Challenge Based on Semantic Interpretation",
+      "date": "EMNLP 2020 · ACL Anthology 9087–9105",
+      "url": "https://aclanthology.org/2020.emnlp-main.731/",
+      "level": "ACL Anthology 正式论文摘要及方法介绍核对；2026-10-29；未复现",
+      "note": "COGS将词汇泛化和结构泛化明确分开；MLC在其lexical部分提升，未解决全部结构泛化；不能把某个词汇分割的错误率扩展为全部COGS泛化。",
+      "code": ""
+    },
+    {
+      "id": "M50",
+      "group": "相邻领域",
+      "title": "Diversity-Aware Self-Paced Data Selection for LLM Fine-Tuning",
+      "date": "ECAI 2025 · 2026-08-25 在线发表",
+      "url": "https://journals.sagepub.com/doi/10.3233/FAIA251329",
+      "level": "官方期刊全文摘要、方法与发表历史核对；2026-10-28；未复现",
+      "note": "DSP 使用模型当前输出构建自步调数据筛选，并以 DPP 维护批内和跨轮多样性；I10 不能把动态难度与多样性选择当作首次。",
+      "code": ""
+    },
+    {
+      "id": "M51",
+      "group": "相邻领域",
+      "title": "Data Repetition Beats Data Scaling in Long-CoT Supervised Fine-Tuning",
+      "date": "arXiv:2602.11149 · 2026-02 预印本",
+      "url": "https://arxiv.org/abs/2602.11149",
+      "level": "原始预印本摘要与作者信息核对；2026-10-28；未复现",
+      "note": "Olmo3-7B 在报告的固定更新预算下重复400条长CoT 128轮，相比51200条一轮在AIME/GPQA高12–26个百分点；token准确率接近完全记忆后增益饱和；I10须区分有益巩固与低收益重复。",
+      "code": ""
+    },
+    {
+      "id": "M52",
+      "group": "相邻领域",
+      "title": "Prioritized Training on Points that are Learnable, Worth Learning, and not yet Learnt",
+      "date": "ICML 2022 · PMLR 162:15630–15649",
+      "url": "https://proceedings.mlr.press/v162/mindermann22a.html",
+      "level": "PMLR 官方摘要、方法动机核对；2026-10-28；未复现",
+      "note": "RHO-LOSS 通过可约化 holdout loss 选择可学、值得学且尚未学会的样本；模型状态相关的数据价值不是 I10 首次提出。",
+      "code": "https://github.com/OATML/RHO-Loss"
+    },
+    {
+      "id": "M53",
+      "group": "相邻领域",
+      "title": "Skill-it! A data-driven skills framework for understanding and training language models",
+      "date": "NeurIPS 2023 · Main Conference",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/70b8505ac79e3e131756f793cd80eb8d-Abstract-Conference.html",
+      "level": "NeurIPS 官方摘要核对；2026-10-28；未复现",
+      "note": "Skill-it 已构建技能前置依赖并在线分配多技能数据；I10 应固定技能关系，研究同一规则内部不同样本的条件迁移收益。",
+      "code": ""
+    },
+    {
+      "id": "M54",
+      "group": "相邻领域",
+      "title": "D4: Improving LLM Pretraining via Document De-Duplication and Diversification",
+      "date": "NeurIPS 2023 · Datasets and Benchmarks",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/a8f8cbd7f7a5fb2c837e578c75e5b615-Abstract-Datasets_and_Benchmarks.html",
+      "level": "NeurIPS 官方摘要核对；2026-10-28；未复现",
+      "note": "在去重基础上以预训练嵌入提高多样性，报告约20%训练效率收益；有选择的重复优于随机重复，重复的价值并非总为负。",
+      "code": ""
+    },
+    {
+      "id": "M55",
+      "group": "相邻领域",
+      "title": "SemDeDup: Data-efficient learning at web-scale through semantic deduplication",
+      "date": "2023 预印本",
+      "url": "https://arxiv.org/abs/2303.09540",
+      "level": "原始预印本与公开摘要核对；2026-10-28；未复现",
+      "note": "SemDeDup 通过预训练表示识别语义重复并移除，作为 I10 的语义去重强基线；语义相似与真实参数迁移收益不是同一量。",
+      "code": ""
+    },
+    {
+      "id": "M56",
+      "group": "相邻领域",
+      "title": "A Critical Look at Targeted Instruction Selection: Disentangling What Matters (and What Doesn’t)",
+      "date": "ICML 2026 · PMLR 306:92008–92043",
+      "url": "https://proceedings.mlr.press/v306/nayak26a.html",
+      "level": "PMLR 官方摘要和基线结论核对；2026-10-28；未复现",
+      "note": "梯度数据表示配贪婪轮转在低预算常优于其他组合，预算增加时优势缩小；I10 需把梯度表示选题视为强基线。",
+      "code": "https://github.com/dcml-lab/targeted-instruction-selection"
+    },
+    {
+      "id": "M57",
+      "group": "相邻领域",
+      "title": "RICo: Refined In-Context Contribution for Automatic Instruction-Tuning Data Selection",
+      "date": "AAAI 2026 · 40(40):34349–34357",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/40732",
+      "level": "AAAI 官方摘要、发表页核对；2026-10-28；未复现",
+      "note": "RICo 利用 in-context contribution 量化个别样本的任务级与全局级表现贡献，并训练轻量选题器；I10 需超越单样本贡献，验证后学样本的条件增量。",
+      "code": ""
+    },
+    {
+      "id": "M58",
+      "group": "相邻领域",
+      "title": "Holdout-Loss-Based Data Selection for LLM Finetuning via In-Context Learning",
+      "date": "ICLR 2026 · 正式论文",
+      "url": "https://openreview.net/forum?id=Cw9Bxpda2h",
+      "level": "ICLR 2026 正式版及 Microsoft Research 官方摘要核对；2026-10-28；未复现",
+      "note": "ICA 用少量 holdout 上下文近似候选样本更新后的损失，随当前参数变化动态赋权；I10 不能称首次用低成本代理估计数据价值。",
+      "code": ""
+    },
+    {
+      "id": "M59",
+      "group": "相邻领域",
+      "title": "Deduplicating Training Data Makes Language Models Better",
+      "date": "ACL 2022 · pp.8424–8445",
+      "url": "https://aclanthology.org/2022.acl-long.577/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-28；未复现",
+      "note": "近重复清除显著减少长文本原样记忆并加速训练；I10 应将数据泄漏与原题记忆同独立规则迁移分开。",
+      "code": "https://github.com/google-research/deduplicate-text-datasets"
+    },
+    {
+      "id": "M60",
+      "group": "相邻领域",
+      "title": "Interaction-Aware Influence Functions for Group Attribution",
+      "date": "arXiv:2605.15675 · 2026-05 预印本",
+      "url": "https://arxiv.org/abs/2605.15675",
+      "level": "原始预印本摘要、方法概述核对；2026-10-28；未复现",
+      "note": "通过二阶近似估计组内训练样本交互，明确刻画冗余与互补；在 Llama-3.1-8B 指令微调数据选择中评测。I10 不能把“首次计算成对样本互动”当创新，而要检验区分信息与真实参数可学习性的差异。",
+      "code": ""
+    },
+    {
+      "id": "M61",
+      "group": "相邻领域",
+      "title": "Active Learning Helps Pretrained Models Learn the Intended Task",
+      "date": "NeurIPS 2022 · vol.35",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/b43a0e8a35b1c044b18cd843b9771915-Abstract.html",
+      "level": "NeurIPS 正式摘要核对；2026-10-28；未复现",
+      "note": "研究预训练模型如何利用不确定性选择可以区分潜在任务的样本；已直接讨论消除伪相关和任务歧义。I10 应进一步检验同样有区分证据时，LLM 实际参数更新后是否能形成独立规则迁移。",
+      "code": ""
+    },
+    {
+      "id": "M62",
+      "group": "相邻领域",
+      "title": "FisherSFT: Data-Efficient Supervised Fine-Tuning of Language Models Using Information Gain",
+      "date": "ICML 2025 · PMLR 267:12924–12943",
+      "url": "https://proceedings.mlr.press/v267/deb25a.html",
+      "level": "PMLR 官方摘要核对；2026-10-28；未复现",
+      "note": "利用 Fisher 信息矩阵的近似信息增益选择固定预算的 SFT 样本；I10 不能把信息量最大化本身当创新，需区分规则证据与实际被参数更新吸收的泛化。",
+      "code": ""
+    },
+    {
+      "id": "M63",
+      "group": "相邻领域",
+      "title": "Position: Self-Play Only Evolves When Self-Synthetic Pipeline Ensures Learnable Information Gain",
+      "date": "ICML 2026 · PMLR 306:171344–171364",
+      "url": "https://proceedings.mlr.press/v306/liu26gx.html",
+      "level": "PMLR 正式摘要核对；2026-10-28；立场论文；未复现",
+      "note": "指出自演化循环可能不断生成新题却没有增加可学习信息，并讨论 proposer-solver-verifier 三角色与系统级改进。I10 应给出可判别、可控的样本区分信息×学习状态机制，避免仅复述此动机。",
+      "code": ""
+    },
+    {
+      "id": "M64",
+      "group": "相邻领域",
+      "title": "Bayesian teaching enables probabilistic reasoning in large language models",
+      "date": "Nature Communications 17, Article 1238 (2026)",
+      "url": "https://www.nature.com/articles/s41467-025-67998-6",
+      "level": "Nature Communications 正式正文/摘要核对；2026-10-28；未复现",
+      "note": "通过模仿规范 Bayesian 推理教师的示范微调 LLM，得到可迁移的概率推理表现；说明示范内容与推理策略能产生跨任务学习，但没有检验 I10 同规则反例对捷径的条件迁移收益。",
+      "code": ""
+    },
+    {
+      "id": "M65",
+      "group": "相邻领域",
+      "title": "Teaching a black-box learner",
+      "date": "ICML 2019 · PMLR 97:1547–1555",
+      "url": "https://proceedings.mlr.press/v97/dasgupta19a.html",
+      "level": "PMLR 官方摘要核对；2026-10-28；未复现",
+      "note": "机器教学早已研究交互选择有效教学集，且学习者假设类可能不可见；I10 不能将选择能区分规则的例子本身称为首次。",
+      "code": ""
     }
   ]
 }
