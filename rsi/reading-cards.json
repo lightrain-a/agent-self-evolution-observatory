@@ -31,6 +31,841 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "recover-or-discover-npj2026-zhang",
+      "short_title": "Recover or Discover · npj 2026",
+      "title": "Recover or discover: How outcome feedback shapes response patterns within game spaces",
+      "authors": "Yajing Zhang; Benjamin James Dyson",
+      "lead_institution": "University of Alberta（阿尔伯塔大学）",
+      "institutions": [
+        "University of Alberta（阿尔伯塔大学）"
+      ],
+      "institution_source": "npj Science of Learning 正式论文 Author information / Authors and Affiliations",
+      "publication": "npj Science of Learning · 2026 · Volume 11, Article 41",
+      "doi": "10.1038/s41539-026-00414-w",
+      "official_url": "https://www.nature.com/articles/s41539-026-00414-w",
+      "first_posted": "2026-04-23",
+      "version": "npj Science of Learning 同行评审正式版 · 2026-04-23（页面标注 Version of Record: 2026-06-30）",
+      "read_on": "2026-10-28",
+      "reading_level": "Nature 官方全文 Abstract、Results（Exp 1–3 / Tables 1–4 / Figs 1–2）、Methods（Dice Dual / 504 trials / Table 5）与 OSF 数据入口核查；未独立复现",
+      "tags": [
+        "Human Learning",
+        "Recover vs Discover",
+        "Outcome Feedback",
+        "Strategy Suppression",
+        "Optimal Behaviour Rate",
+        "Continual Learning",
+        "I3 · 温故知新"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "把固定胜率与策略表达拆开测量：Pre / During / Post 三阶段分别记录 win rate 与针对重复/交替规律的 OBR；用 Pre→During 的 OBR 差值预测 Post 行为。",
+          "open_question": "OBR 是预设策略族下的行为匹配比例，不是隐藏技能是否保存在记忆或模型权重中的直接测量；相关分析也非因果操控。"
+        },
+        "novelty": {
+          "level": "not_addressed",
+          "contribution": "电脑按预先设计的重复或交替规律出数，实验操控奖励反馈比例。",
+          "open_question": "没有研究外部新知识、LLM 自生成训练材料或自改进系统能否突破原有能力上限。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "参与者在已知的 1–6 点数空间和两类可利用策略模式之间做选择。",
+          "open_question": "未测模型采样支持、失败解的可达性或未知算法发现。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "比较回到 Pre 旧规律与面对新规律时的行为表现，并测量旧策略在固定反馈阶段的表达下降或增强。",
+          "open_question": "旧策略 Post 再次出现不等于已直接证实旧记忆完整保存；可能包含更快的再学习。"
+        },
+        "safety": {
+          "level": "partial",
+          "contribution": "通过低胜率与高胜率反馈改变旧策略的使用，揭示奖励环境可能产生策略惯性。",
+          "open_question": "研究没有真实系统执行、模型奖励投机、权限校验或恶意反馈注入实验。"
+        }
+      },
+      "one_sentence": "218 名人类通过掷骰式数字游戏学习旧策略；反馈能压低或维持旧策略的使用，旧规律重现时往往比学习新规律更容易恢复。",
+      "story": {
+        "challenge": "人面对新反馈后不再使用旧策略：是把旧策略忘了，还是暂时不调用？仅看胜率不能区分。",
+        "insight": "将“赢得多少”与“是否仍按先前学到的策略行动”拆开，才能观察旧策略的抑制、增强与重新使用。",
+        "design": "218 名人类完成 Dice Dual；Pre 学电脑规律、During 人为固定胜率、Post 恢复旧规律或换新规律；比较 Win Rate 与 OBR。",
+        "result": "低反馈 25% 时旧策略优势不再显著（66.05% vs 68.25%，p=0.306）；75%/88% 高反馈仍明显偏向恢复旧策略。"
+      },
+      "problem": "旧策略在反馈变化时可能停止表达。若只看任务成功率，很难判断是旧知识不可用、策略暂时受到抑制，还是任务切换导致调用失败；更无法说明随后是恢复旧策略还是重新探索一个新策略。",
+      "setup": "共 218 名人类（Exp 1:76；Exp 2:72；Exp 3:70）。每人玩 4 个区块、每块 126 轮，总计 504 轮 Dice Dual：人和电脑各选 1–6 点数；按指定规则，奇数或偶数和获胜（条件平衡），每轮赢 +1、输 −1。电脑在 Pre 和 Post 表现出奇偶类别重复（R）或交替（A）的可利用规律。During 通过控制结果固定胜率，参与者不知道阶段切换。Post 既可能恢复 Pre 的 R/A，也可能切换成另一种 R/A。",
+      "updates": "原论文没有训练或更新 AI 模型参数、Prompt、Skill、Agent Memory；电脑对手是按实验者预设奇偶模式及固定获胜比例行动。研究关注人类行为规则的学习、表达、抑制与恢复。",
+      "key_ideas": [
+        {
+          "name": "胜率与策略使用是两种不同的证据",
+          "summary": "During 结果被人为固定后不能用胜率判断学得如何，但可计算参与者是否仍按旧规律选择奇偶类别。",
+          "formula": "WinRate = #wins / #trials; OBR = #actions consistent with R/A strategy / #eligible actions"
+        },
+        {
+          "name": "按上一轮反馈定义策略表达（OBR）",
+          "summary": "对重复型对手，赢后保持奇偶、输后切换；交替型对手则相反。OBR分赢后与输后分别计算。",
+          "formula": "R: Win-Stay / Lose-Shift;  A: Win-Shift / Lose-Stay（按奇偶类别）"
+        },
+        {
+          "name": "旧策略是否在 During 被抑制",
+          "summary": "Pre 的 OBR 与 During 的 OBR 之差为正，说明匹配旧策略的行动比例降低；为负表示表达增强。",
+          "formula": "Suppression = OBR_Pre − OBR_During; positive: suppress; negative: facilitate"
+        },
+        {
+          "name": "恢复旧规律与学习新规律不等价",
+          "summary": "Post 仍是可利用规律，但R→R、A→A对应旧策略恢复；R→A、A→R对应转向新策略。比较成功率与OBR差异，不能仅看有没有赢。",
+          "formula": "Old = (R→R or A→A); New = (R→A or A→R)"
+        }
+      ],
+      "evidence": [
+        "Nature Methods：4 blocks ×126 trials=504；人和电脑各选1–6，奇/偶和的赢法在参与者间平衡；Pre和Post重复/交替规律，During固定胜率且不提示阶段切换。",
+        "Exp 1（n=76）：During 50%；Pre 平均胜率 63.72% 高于机会水平；Post 旧规律 66.16% vs 新规律 61.39%（p=0.002）；Post OBR旧规律 68.70% vs 新规律 63.93%。",
+        "Exp 2（n=72）：During 25% 时 Post 旧 66.05% vs 新 68.25%（p=0.306，差异不显著）；75% 时旧 69.41% vs 新 59.18%（p<0.001）。",
+        "Exp 3（n=70）：During 44% 时旧 68.21% vs 新 63.93%（p=0.030）；88% 时旧 72.50% vs 新 62.22%（p<0.001）。",
+        "Fig 1 / Table 2：50%、25%、44% 的 During 相比 Pre/Post 常出现策略表达下降；75%、88% 时旧策略表达与旧规律再学习优势更明显，但各条件具体 OBR 主效应/交互不完全一致。",
+        "Fig 2：50% 条件下赢后旧策略 OBR 抑制与 Post 恢复旧策略胜率正相关 r=0.361（p<0.001），新策略也为正相关 r=0.359（p<0.001）；75% 条件下恢复旧策略变为负相关 r=−0.372（p<0.001）。",
+        "Fig 2：25% 条件赢后抑制与旧策略恢复 r=0.258（p=0.029）、新策略学习 r=0.312（p=0.008）均为正；88%条件恢复旧策略在赢后为负 r=−0.268（p=0.025）。",
+        "原作者公开去标识化 trial-level 数据及 Win Rate/OBR 汇总于 OSF: https://osf.io/k864p/；方法明确声明没有自编统计分析代码仓库。"
+      ],
+      "boundaries": [
+        "研究对象是人类而不是 LLM/AI；三项实验是同一个简单游戏的变体，不能直接推出长期自主学习系统规律。",
+        "Outcome feedback 的“punishment / reinforcement”是作者对低/高固定胜率的描述性用语，不是严格操作条件反射或训练RL模型的程序。",
+        "During 由设计人为固定胜率：这一阶段实际没有可持续获胜的电脑出数规律；OBR 只是相对于旧规则的行为匹配比例，不能当作 During 的实际最优策略成功率。",
+        "25% 条件下旧策略胜率优势没有显著证据，不等于证实新策略更强；44%条件有旧策略胜率优势，但OBR上未观察到对应显著优势。",
+        "OBR 与胜率可分离：同类策略（重复/交替）内部奇偶类别切换时，使用符合类型的规则也可能短期输钱。",
+        "Pre→During OBR差值与 Post 胜率的相关性受反馈方向、旧/新任务及赢/输后试次共同调节；相关不证明个人主动执行了某种认知抑制算法。",
+        "Post 旧策略再次有用，无法直接区分“旧策略一直保存但暂时未被选择”和“旧策略退化但再学习更快”。作者没有做参数层或神经层的旧规则保留验证。",
+        "原文没有测试明确情境提示恢复、旧策略版本库、RAG/Skill记忆恢复或任何AI参数更新收益，RSI部分仅是后续研究假设。"
+      ],
+      "our_relevance": [
+        "I3「温故知新」：应区分旧能力真正退化、旧能力因情境选择失败未表现、以及旧技能虽退化但再学习更容易。当前旧题准确率下降不是完整诊断。",
+        "直接相关 LLM 工作已有 ICLR 2025 Spurious Forgetting（任务对齐失效）与 ACL Findings 2025 Pseudo Forgetting（提示激活失效）；因此不能把“表现下降不等于真正遗忘”当成我们的新贡献。",
+        "新切口是跨多轮RSI演化的“恢复还是重学”的决策：是否能在同等额外反馈预算下提前识别可直接恢复的旧技能，避免不必要参数更新，并降低未来新任务损失。",
+        "用 Pre→During→Post 与 OBR 启发设计参数更新后独立的策略使用诊断，但不能机械移植骰子策略OBR；LLM需要任务/上下文条件下可测的规则选择与实际解题指标。"
+      ],
+      "next_test": "同一初始模型依次学习规则A和相冲突规则B，固定模型与训练样本，记录A在新训练前后的独立准确率。先在不更新任何参数的条件下，随机比较无提示、任务上下文提示、显式规则检索、强制正确规则路由；再与等预算少量重训/重放比较。第三阶段回到旧A并引入新C，测A恢复曲线、C可学习性及B保持；旧规则使用率与独立正确率分开，防止仅靠记忆答案冒充能力恢复。",
+      "deep_read": {
+        "focus": "研究对象是218名人类，玩504轮Dice Dual游戏；作者不是研究AI如何训练。重点按真实游戏规则→Pre/During/Post→OBR→Exp1–3→反馈与恢复的条件性关系理解，再将其与LLM伪遗忘/策略路由边界对照。",
+        "metric_summary_title": "三项实验、五种固定反馈强度 · Post 的旧/新规律对照",
+        "metric_summary_intro": "表中 During 胜率是人为固定的环境反馈，不是参与者学出的成绩；右侧旧/新结果是 Post 阶段真实胜率。Exp2 与 Exp3 每人分别经历两种反馈比例，不能误写成独立招募五组参与者。",
+        "metric_summary": [
+          {
+            "family": "Exp 1 · 50%（n=76）",
+            "metrics": "轻度负面 / 机会水平",
+            "meaning": "During 固定为 50%；Pre 平均 63.72%，故原有规律优势被打断。",
+            "result": "Post 旧 66.16% vs 新 61.39%；p=0.002"
+          },
+          {
+            "family": "Exp 2 · 25%（n=72）",
+            "metrics": "强负面反馈",
+            "meaning": "让此前旧策略大幅失去反馈优势，观察能否转向新策略。",
+            "result": "Post 旧 66.05% vs 新 68.25%；p=0.306（无显著差异）"
+          },
+          {
+            "family": "Exp 2 · 75%（n=72）",
+            "metrics": "强正面反馈",
+            "meaning": "即使 During 无可利用规律，也经常获胜，可能继续保留熟悉行为。",
+            "result": "Post 旧 69.41% vs 新 59.18%；p<0.001"
+          },
+          {
+            "family": "Exp 3 · 44%（n=70）",
+            "metrics": "与88%对称的负面操控",
+            "meaning": "以约 66% Pre 作为参照，使反馈变化接近 −22 个百分点。",
+            "result": "Post 旧 68.21% vs 新 63.93%；p=0.030"
+          },
+          {
+            "family": "Exp 3 · 88%（n=70）",
+            "metrics": "与44%对称的正面操控",
+            "meaning": "以约 66% Pre 为参照，增加约 22 个百分点。",
+            "result": "Post 旧 72.50% vs 新 62.22%；p<0.001"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Dice Dual",
+            "meaning": "人类与电脑各选择 1–6 的点数，按本区块指定的奇数和/偶数和规则判胜负；赢+1、输−1。"
+          },
+          {
+            "name": "Pre / During / Post",
+            "meaning": "先学习电脑规律→结果被人为固定→电脑旧规律重现或切换到新规律；阶段不提示参与者。"
+          },
+          {
+            "name": "Repetition / Alternation",
+            "meaning": "电脑连续使用同一奇偶类别 / 在奇偶类别间交替；具体点数可不同。"
+          },
+          {
+            "name": "Win Rate",
+            "meaning": "赢的试次除以总试次，是任务结果；During人为固定，不能用于反推学习是否成功。"
+          },
+          {
+            "name": "OBR（Optimal Behaviour Rate）",
+            "meaning": "参与者动作与原定义的重复/交替型最优响应模式一致的比例；即使胜率固定也能算。"
+          },
+          {
+            "name": "Suppression / Facilitation",
+            "meaning": "Pre的OBR减During的OBR：正值表示旧模式表达减少，负值表示增强；属于行为描述，不是脑内记忆删除。"
+          },
+          {
+            "name": "Einstellung effect",
+            "meaning": "过去熟悉的解法在新条件下仍优先出现，可能妨碍探索另一种更合适的解法。"
+          }
+        ],
+        "summary": [
+          "样本为三项人类实验共218人，每人504轮；电脑是预设规则的对手，不是接受RL训练的Agent。",
+          "评估时不能只看胜率：During预先固定结果，OBR仍能检查是否继续按旧策略行动。",
+          "旧规律重现时通常更容易恢复：50%、75%、44%、88%均有显著旧优势；25%强负反馈时旧/新差异不显著。",
+          "策略表达下降≠记忆被删除；Post再次成功也不直接区分存储完整与更快重新学习。",
+          "对RSI可将它接入I3的‘恢复还是重训’机制验证，但必须区别已有LLM伪遗忘工作。"
+        ],
+        "afterword": "以下是将人类实验范式迁移到RSI的研究假设与实验建议，不是本文已验证的AI结论。",
+        "sections": [
+          {
+            "id": "human-subjects",
+            "stage": "challenge",
+            "title": "先认清：谁在实验？什么叫完成504轮游戏？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "这是阿尔伯塔大学的三项人类实验，Exp1最终76人、Exp2最终72人、Exp3最终70人，共218人。电脑只是按照实验者规定的奇偶类别模式出数；研究者不训练大语言模型，也未让Agent递归自改进。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "玩家看到的内容",
+                    "text": "电脑和参与者都可从1、2、3、4、5、6中选一个点数；界面显示两个骰子及加和。"
+                  },
+                  {
+                    "title": "如何分出输赢",
+                    "text": "某些区块规定两数相加为偶数则赢，另一些区块规定奇数则赢；这个奇/偶规则在参与者之间平衡。"
+                  },
+                  {
+                    "title": "每轮收到的反馈",
+                    "text": "呈现 WIN +1 或 LOSE −1。你要学会预判电脑会出奇数还是偶数，而不是背某个固定点数。"
+                  },
+                  {
+                    "title": "任务规模",
+                    "text": "每人4个区块，每区块126轮，总共504轮；每个区块内包含Pre、During、Post三个阶段。"
+                  },
+                  {
+                    "title": "有意隐藏阶段变化",
+                    "text": "不会提示此刻进入During或Post，参与者只能凭游戏的结果自行调整策略。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "与上一篇 Reward Function Compression 不同",
+                "text": "这篇的目标不是学习怎么解释抽象奖励图片，而是研究反馈好坏怎样改变旧策略的持续使用和重新出现。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "game-patterns",
+            "stage": "challenge",
+            "title": "电脑究竟隐藏了哪两种规律？玩家如何破解？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "电脑的两类可利用规律并非固定某一个数字，而是控制奇偶类别。例如重复型对手可能连着出2、4、6等偶数，交替型则在奇数和偶数间换来换去。无论本区块规定奇数和还是偶数和获胜，参与者都可以利用上一次输赢决定下次是否切换自己的奇偶类别。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "电脑模式",
+                  "上一轮赢了",
+                  "上一轮输了",
+                  "直观原因"
+                ],
+                "rows": [
+                  [
+                    "Repetition：持续同奇偶",
+                    "Win-Stay：保持自己当前奇偶类别",
+                    "Lose-Shift：切换自己奇偶类别",
+                    "对手类别不变，赢了可延用，输了要变"
+                  ],
+                  [
+                    "Alternation：奇偶交替",
+                    "Win-Shift：切换自己奇偶类别",
+                    "Lose-Stay：保持自己当前奇偶类别",
+                    "对手下一轮切换，自己的对应关系也应调整"
+                  ]
+                ],
+                "caption": "Stay/Shift 是保持或切换奇偶类别，并不要求重复具体点数。"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "具体例子",
+                "text": "若本区块偶数和获胜、电脑连续出偶数，那么自己出偶数才会赢；若电脑奇偶交替，即使上一轮出偶数赢了，下轮也可能需要改出奇数。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "three-phases",
+            "stage": "insight",
+            "title": "Pre→During→Post：怎样让旧策略先有效、后无效、再有效？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "阶段",
+                  "电脑如何行动",
+                  "玩家能否靠规律提升胜率",
+                  "作者要观察什么"
+                ],
+                "rows": [
+                  [
+                    "Pre",
+                    "电脑使用重复或交替的可利用模式",
+                    "能",
+                    "是否已学会一种应对策略"
+                  ],
+                  [
+                    "During",
+                    "电脑按预设输赢比例提供固定胜率反馈：50/25/75/44/88%",
+                    "不能稳定利用旧的R/A规律来提高这一阶段总胜率",
+                    "旧策略使用比例因反馈好坏降低还是增加"
+                  ],
+                  [
+                    "Post：Old",
+                    "恢复和Pre同类规律：R→R或A→A",
+                    "能",
+                    "旧模式是否较容易再次发挥作用"
+                  ],
+                  [
+                    "Post：New",
+                    "换成另一类规律：R→A或A→R",
+                    "能",
+                    "能否发现并学会另一条应对策略"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "每个参与者完成四种对照（旧/新 × 重复/交替的平衡组合），阶段切换不通过新指令提示。研究关注策略表达的变化，不能仅依赖胜率变化。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为什么这比普通旧题准确率更有价值？",
+                "text": "作者使During阶段的胜率与策略使用脱钩：即使你一定只能赢25%，仍能观察你是否继续按照过去的规则选奇偶。这帮助区分‘结果不好’与‘选择策略变了’。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "obr-definition",
+            "stage": "insight",
+            "title": "OBR到底如何计算？为什么它不是胜率？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "OBR（Optimal Behaviour Rate）是“匹配某个规定的应对模式的动作比例”。作者分开计算上一轮赢后与输后的反应，并按照重复型、交替型对手采用不同的正确动作定义。"
+              },
+              {
+                "type": "formula",
+                "label": "按重复型对手计算赢后 / 输后OBR",
+                "expression": "OBR_R,win = #Win-Stay / #after-win; OBR_R,loss = #Lose-Shift / #after-loss",
+                "meaning": "例如赢了之后保持同奇偶，就符合重复型应对规则；输了之后切换同样符合。",
+                "boundary": "不能直接用两数相加是否偶数定义OBR；必须区分对手类型和上一轮输赢。"
+              },
+              {
+                "type": "formula",
+                "label": "按交替型对手计算OBR",
+                "expression": "OBR_A,win = #Win-Shift / #after-win; OBR_A,loss = #Lose-Stay / #after-loss",
+                "meaning": "交替型需要相反的响应方式；OBR衡量的是是否继续沿用相应行为模式。",
+                "boundary": "在During固定胜率条件下，OBR高仍不代表有可以取得更高实际胜率的策略。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "观察现象",
+                  "Win Rate（结果）",
+                  "OBR（行为）"
+                ],
+                "rows": [
+                  [
+                    "During胜率固定25%",
+                    "所有人被固定在约25%",
+                    "仍可从较高OBR降到较低OBR"
+                  ],
+                  [
+                    "对手在相同类型里改变奇偶类别",
+                    "可能短时输钱",
+                    "仍可能沿用“赢后保持/输后切换”等类型规则"
+                  ],
+                  [
+                    "Post旧规则恢复",
+                    "结果胜率能重新升高",
+                    "相应规则的使用比例可回升"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "避免把OBR解释为隐藏知识测量",
+                "text": "OBR只是外显动作符合规则的比例；不能凭它判断神经记忆是否完整，或模型权重里保存了多少技能。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "suppression-formula",
+            "stage": "insight",
+            "title": "所谓抑制与增强，是怎样从行为计算出来的？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "Pre→During 的旧模式表达变化",
+                "expression": "S = OBR_Pre − OBR_During",
+                "meaning": "S>0表示旧响应模式被较少使用（Suppression）；S<0表示旧模式使用增强（Facilitation）。",
+                "boundary": "这是对行为频率变化的命名，不是对内在意图、主动控制或记忆存储状态的直接测量。"
+              },
+              {
+                "type": "prose",
+                "text": "研究者对每名参与者分别计算“赢后”和“输后”的OBR变化，再检验它能否预测Post阶段恢复旧规律或学习新规律的胜率。因此同样的行为抑制，可能在不同反馈条件下产生相反的预测关系。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "真正值得沿用的方法",
+                "text": "即使中间阶段评价指标被人为控制，仍要设计一个独立的机制指标，追踪策略是否被表达；RSI也需要把‘能力存在’与‘能力被选择调用’分开。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "experiment-one",
+            "stage": "design",
+            "title": "Exp 1（76人）：把中间胜率固定50%，旧规则还能恢复吗？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "Pre阶段可以利用重复/交替型电脑，平均胜率63.72%，显著高于50%机会水平。During阶段人为固定50%胜率，不再奖励持续使用旧规则。Post或恢复旧R/A规律，或切换到另一类规律。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "观察量",
+                  "Post恢复旧规律",
+                  "Post学习新规律",
+                  "统计结论"
+                ],
+                "rows": [
+                  [
+                    "Win Rate",
+                    "66.16%",
+                    "61.39%",
+                    "t(75)=3.25，p=0.002"
+                  ],
+                  [
+                    "OBR",
+                    "68.70%",
+                    "63.93%",
+                    "旧规律更高，Tukey HSD p<0.05"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "旧策略表达从Pre到During下降，再从During到Post上升。更值得注意：在赢后试次，Pre→During的抑制程度同时正相关于Post恢复旧规律（r=0.361）及学习新规律（r=0.359），均p<0.001；不能简单说‘抑制旧策略一定妨碍恢复’。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "Exp1结论",
+                "text": "50%中间反馈不足以消除旧规律的再学习优势；旧策略不常出现并不意味着它已经不可恢复。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "experiment-two",
+            "stage": "design",
+            "title": "Exp 2（72人）：反馈变成25%或75%，会不会改变方向？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "研究者将During固定为更强的25%负面或75%正面胜率；同一批72人经历相应条件。Pre仍有约64.8%的获胜水平，说明此前确实学到了对手规律。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "During 固定胜率",
+                  "Post恢复旧规律",
+                  "Post学习新规律",
+                  "差异"
+                ],
+                "rows": [
+                  [
+                    "25%（强负面）",
+                    "66.05%",
+                    "68.25%",
+                    "p=0.306，未检测到显著差异"
+                  ],
+                  [
+                    "75%（强正面）",
+                    "69.41%",
+                    "59.18%",
+                    "p<0.001，旧规律明显更好"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "25%条件里，抑制程度与新策略学习的赢后Post胜率呈正相关（r=0.312，p=0.008），同时与旧策略恢复也正相关（r=0.258，p=0.029）。而在75%条件，抑制程度与恢复旧策略的赢后Post胜率呈负相关（r=−0.372，p<0.001），与学习新策略则是较弱的正相关（r=0.240，p=0.042）。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "最容易写错的一句话",
+                "text": "“25%条件旧优势消失”不等于“新策略显著强于旧策略”：66.05与68.25两者p=0.306，不能宣称新策略胜出。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "experiment-three",
+            "stage": "design",
+            "title": "Exp 3（70人）：把负面和正面变化幅度配平再试一次",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "前两项实验Pre平均胜率大约66%。为了比较幅度较接近的反馈变化，作者把During设为44%和88%，分别比66%低或高约22个百分点，其他游戏结构保持不变。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "During 固定胜率",
+                  "Post恢复旧规律",
+                  "Post学习新规律",
+                  "统计结论"
+                ],
+                "rows": [
+                  [
+                    "44%（负面）",
+                    "68.21%",
+                    "63.93%",
+                    "p=0.030"
+                  ],
+                  [
+                    "88%（正面）",
+                    "72.50%",
+                    "62.22%",
+                    "p<0.001"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "44%条件的旧规律胜率仍有优势，但OBR里没有得到对应的旧/新显著差异；抑制程度与Post学习新规律的赢后胜率相关（r=0.288，p=0.016），与恢复旧规律无显著相关。88%条件强化旧规律恢复优势，Post OBR旧76.34% vs新63.63%；赢后旧策略抑制程度与旧规律恢复呈负相关（r=−0.268，p=0.025）。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "为何还需要第三项实验？",
+                "text": "25%到75%不是围绕Pre的等幅度变化；44%和88%试图减少强度不对称的解释，但并没有直接测量主观奖惩感受是否对称。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "five-outcomes",
+            "stage": "result",
+            "title": "Table 1：五种反馈强度下的真实结果如何横向比较？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "实验",
+                  "During 固定反馈",
+                  "Post旧规律胜率",
+                  "Post新规律胜率",
+                  "旧/新差异"
+                ],
+                "rows": [
+                  [
+                    "Exp1（76人）",
+                    "50%",
+                    "66.16%",
+                    "61.39%",
+                    "旧优，p=0.002"
+                  ],
+                  [
+                    "Exp2（72人）",
+                    "25%",
+                    "66.05%",
+                    "68.25%",
+                    "不显著，p=0.306"
+                  ],
+                  [
+                    "Exp2（72人）",
+                    "75%",
+                    "69.41%",
+                    "59.18%",
+                    "旧优，p<0.001"
+                  ],
+                  [
+                    "Exp3（70人）",
+                    "44%",
+                    "68.21%",
+                    "63.93%",
+                    "旧优，p=0.030"
+                  ],
+                  [
+                    "Exp3（70人）",
+                    "88%",
+                    "72.50%",
+                    "62.22%",
+                    "旧优，p<0.001"
+                  ]
+                ],
+                "caption": "原论文Table 1。During是操控值、Post是真实表现；Exp2/3同一批人有两种During反馈，不能相加成五项独立人群实验。"
+              },
+              {
+                "type": "prose",
+                "text": "作者在General Discussion强调：在本组设置内，旧规律重新学习的总体优势具有韧性，即使25%强负面反馈也未表现为新规律显著压倒旧规律。与此同时，强正面反馈更容易维持旧行为惯性，这在新策略更合适时也可能不利。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是证明旧策略永远不会被忘掉",
+                "text": "Pre和Post相隔的是一个短暂的实验区间，且仅有两类简单策略。作者没有做多年期的记忆保存、神经表征追踪或AI模型参数层面的损失判断。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "conditional-correlations",
+            "stage": "result",
+            "title": "Fig 2：同样压低旧策略使用，为什么预测方向会反过来？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "During反馈",
+                  "恢复旧规律：赢后抑制 vs Post胜率",
+                  "学习新规律：赢后抑制 vs Post胜率",
+                  "解读"
+                ],
+                "rows": [
+                  [
+                    "50%",
+                    "r=+0.361，p<0.001",
+                    "r=+0.359，p<0.001",
+                    "抑制程度与两种学习都正相关"
+                  ],
+                  [
+                    "25%",
+                    "r=+0.258，p=0.029",
+                    "r=+0.312，p=0.008",
+                    "强负反馈下两种学习仍同时正相关"
+                  ],
+                  [
+                    "75%",
+                    "r=−0.372，p<0.001",
+                    "r=+0.240，p=0.042",
+                    "强正反馈下旧/新目标的关系相反"
+                  ],
+                  [
+                    "44%",
+                    "r=+0.029，p=0.811",
+                    "r=+0.288，p=0.016",
+                    "恢复旧规律不显著，学习新规律显著"
+                  ],
+                  [
+                    "88%",
+                    "r=−0.268，p=0.025",
+                    "未报告显著关系",
+                    "正反馈下抑制更强不利于旧规律恢复"
+                  ]
+                ],
+                "caption": "均为作者报告的参与者间Pearson相关；不同条件的输后结果并不完全相同，此表专注赢后OBR。"
+              },
+              {
+                "type": "prose",
+                "text": "因此，最合理的读法不是‘抑制旧策略好’或‘抑制坏’，而是反馈方向、旧/新任务目标共同改变了抑制和成功之间的关系。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "相关性没有验证内部算法",
+                "text": "这些相关系数不能排除参与者探索倾向、任务熟悉度、差异化学习速度等共同原因；没有随机分配某人必须抑制旧策略的因果干预。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "memory-cannot-be-inferred",
+            "stage": "result",
+            "title": "有没有证据证明旧能力一直完整保存在脑里？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "外部行为",
+                  "可能的内部解释A",
+                  "可能的内部解释B"
+                ],
+                "rows": [
+                  [
+                    "During旧策略OBR下降",
+                    "旧知识仍在，只是没有被当前选择",
+                    "旧规则表征部分弱化或价值降低"
+                  ],
+                  [
+                    "Post旧规律表现较好",
+                    "立即重新调用旧策略",
+                    "有旧经验帮助，重新学习更快"
+                  ],
+                  [
+                    "改变提示后旧题恢复",
+                    "取回正确策略/情境",
+                    "提示带来额外信息使当场重新解决"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这篇论文的主要证据是行为学习和行为策略表达，没有直接测神经记忆内容或长期记忆‘存/取’机制。策略的重新出现是可观测事实，但它自身不能分离完整保留与更快再学习。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "论文能够支持的精确表述",
+                "text": "反馈强度会改变旧响应模式的外显使用，且旧规律重新适用时通常表现出恢复优势；但尚无法精确断定这种优势来自何种记忆存储过程。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "rsi-closest-work",
+            "stage": "next",
+            "title": "接到RSI之前：LLM的伪遗忘研究已经做到了什么？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "相关工作（正式来源）",
+                  "已经研究了什么",
+                  "本方向需要的新证据"
+                ],
+                "rows": [
+                  [
+                    "Spurious Forgetting in Continual Learning of Language Models · ICLR 2025",
+                    "顺序微调后旧任务下降可来自任务对齐变化，而非知识一定被覆盖",
+                    "跨多轮演化前何时直接重激活旧技能、何时需要真正更新"
+                  ],
+                  [
+                    "Unveiling and Addressing Pseudo Forgetting in Large Language Models · ACL Findings 2025",
+                    "提示与推理引导可恢复某些旧能力的表现，强调能力激活与真实忘却的区别",
+                    "同预算对照恢复、重新训练与错误情境路由，对未来任务学习的净影响"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "上述两篇分别见 https://proceedings.iclr.cc/paper_files/paper/2025/hash/a774503daed55eb53c634847ae071ec7-Abstract-Conference.html 与 https://aclanthology.org/2025.findings-acl.1212/。因此‘性能下降≠知识被删除’并不是新论文足够的创新点。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "I3 温故知新是自然接点",
+                "text": "保留当前I3主线，增加‘策略选择失败 / 知识失效 / 快速再学习’的诊断层。不要改写为普通的重放或长记忆系统。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "rsi-decisive-test",
+            "stage": "next",
+            "title": "最便宜的决定性AI实验：恢复、路由、重学三种状态分开",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "Pre：学到 A",
+                    "text": "固定基础模型，训练规则A直到达到门槛；冻结A的独立未见题测试集与规则判定器。"
+                  },
+                  {
+                    "title": "During：再学相竞争的 B",
+                    "text": "固定B材料、学习器、更新步数；观察 A 的自然表现是否下降，同时不泄漏 A 的答案。"
+                  },
+                  {
+                    "title": "Post-0：先禁止训练，看能否恢复",
+                    "text": "在同一检查点上比较无提示、任务适用条件线索、旧规则文本检索、显式路由；保持提示token和可见示范匹配。"
+                  },
+                  {
+                    "title": "Post-1：允许小预算再学习",
+                    "text": "再与从该检查点追加等预算旧规则训练/重放比较；记录A恢复曲线及对B的影响。"
+                  },
+                  {
+                    "title": "Future-C：测试下一轮能否更好学",
+                    "text": "向所有分支提供相同新任务C、相同更新预算；测未见C迁移与A/B保持，防止只把旧题补对当成自进化。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "待区分状态",
+                  "观察特征",
+                  "应该避免的误判"
+                ],
+                "rows": [
+                  [
+                    "策略调用失败（可恢复）",
+                    "不更新参数、只提供适用条件，独立A题立即恢复",
+                    "不能直接说所有旧知识都原样保存在权重中"
+                  ],
+                  [
+                    "快速再学习（部分退化）",
+                    "无参数提示难恢复，少量更新后A提升显著快于从零训练",
+                    "不能把快速恢复等同于纯检索"
+                  ],
+                  [
+                    "难恢复/可能真遗忘",
+                    "多种适用条件提示、检索、少量再训均未有效恢复A",
+                    "仍须排除测试失效或不充分优化"
+                  ]
+                ]
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "I3 P0 · 旧能力恢复是否不需权重更新",
+                    "design": "A→B参数更新后冻结模型，使用匹配token的无提示/情境提示/正确规则路由/历史解释检索对照，并在预留A测试集上盲评。",
+                    "decisive": "若只有激活线索就能稳定恢复未见A能力且不牺牲B，支持可调用能力；若需要梯度更新，纯检索解释不足。"
+                  },
+                  {
+                    "name": "I3 P1 · 恢复决策是否提高长期净学习收益",
+                    "design": "比较每次默认重训、固定恢复、依据诊断路由三组，在相同总token和优化预算下追加新任务C，并独立测A/B/C。",
+                    "decisive": "诊断路由应提升C学习与旧能力保持的联合指标；若只有旧A恢复而未来C没有收益，不足支持RSI独立贡献。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "两个世界的证据不能直接互换",
+                "text": "人类游戏的策略表达、LLM参数知识、Skill调用失败对应不同层次；本文只提供有价值的实验设计类比，未证明AI发生相同神经或行为机制。"
+              }
+            ],
+            "order": 2
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41539-026-00414-w",
+        "data": "https://osf.io/k864p/"
+      }
+    },
+    {
       "id": "reward-compression-nc2026-molinaro",
       "short_title": "Reward Function Compression · NC 2026",
       "title": "Reward function compression facilitates goal-dependent reinforcement learning",
