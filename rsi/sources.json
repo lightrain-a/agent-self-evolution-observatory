@@ -1341,6 +1341,116 @@
       "level": "ACL Anthology 官方论文 PDF §3–4 / Fig.2–4 / Tables 1,2,4,10,11 核对；2026-10-28；未复现",
       "note": "SFT 收敛后仍约15.3%±2.1%的训练样本在转换选择题的重复检测协议下未稳定恢复；归纳五种可能原因，并报告知识补充、冲突处理、重采样与多轮训练的不同补救效果。Table10五项合计78%，非完整互斥因果分类；原题修复不是跨题迁移。",
       "code": "https://github.com/xccc-8071/why-supervised-fine-tuning-fails-to-learn"
+    },
+    {
+      "id": "R01",
+      "group": "RSI",
+      "title": "Who Grades the Grader? Co-Evolving Evaluation Metrics and Skills for Self-Improving LLM Agents",
+      "date": "arXiv 2026-07",
+      "url": "https://arxiv.org/abs/2607.12790",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "评估器需要人工标签锚和独立审计；没有锚的共演化可能让评分失去区分力。",
+      "code": ""
+    },
+    {
+      "id": "R02",
+      "group": "RSI",
+      "title": "Rubric Dropout: A Simple Way to Mitigate Reward Hacking in Rubric-as-Reward RL",
+      "date": "arXiv 2026-08",
+      "url": "https://arxiv.org/abs/2608.11669",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "训练评分不断提高，但独立评审质量可能回落；随机丢弃 rubric 条目缓解代理过拟合。",
+      "code": ""
+    },
+    {
+      "id": "R03",
+      "group": "RSI",
+      "title": "Self-Play Pretraining with Zero Data",
+      "date": "arXiv 2026-09",
+      "url": "https://arxiv.org/abs/2609.30063",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "程序生成器产生可计算的结构化数据，学习器以零外部自然语料训练；这是特定预训练实验，不能泛化为无限自改进。",
+      "code": ""
+    },
+    {
+      "id": "R04",
+      "group": "RSI",
+      "title": "DiagEvo: Diagnosis-Guided Self-Evolution via Hierarchical Error Memory",
+      "date": "arXiv 2026-09",
+      "url": "https://arxiv.org/abs/2609.00768",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "用自博弈失败记录生成目标练习方向，跟踪未掌握的错误类型；需要分清出题方向与外部新知识。",
+      "code": ""
+    },
+    {
+      "id": "R05",
+      "group": "RSI",
+      "title": "Locked at the Entrance, Open Inside: Where RLVR Narrows the Solution Space",
+      "date": "arXiv 2026-08",
+      "url": "https://arxiv.org/abs/2608.29188",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "RLVR 的解法覆盖缩减集中在推理起始选择；给定入口后部分未被选择的路径仍能执行。",
+      "code": ""
+    },
+    {
+      "id": "R06",
+      "group": "RSI",
+      "title": "RL's Razor: Why Online Reinforcement Learning Forgets Less",
+      "date": "ICLR 2026 正式论文",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/618c95f4557c15b253fb0e6f548ea0c0-Abstract-Conference.html",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "新任务上的策略 KL 偏移可以解释旧能力遗忘差异；不是只看参数更新幅度。",
+      "code": ""
+    },
+    {
+      "id": "R07",
+      "group": "RSI",
+      "title": "EvoHarnessBench: Can Your Agents Keep Pace with an Evolving Harness?",
+      "date": "arXiv 2026-09",
+      "url": "https://arxiv.org/abs/2609.04280",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "17 条多阶段流、802 个任务；仅添加工具/技能/Agent 就可能让旧任务变差。",
+      "code": ""
+    },
+    {
+      "id": "R08",
+      "group": "RSI",
+      "title": "S3Gym: Can LLMs Turn Self-Testing and Self-Judging into Self-Improvement?",
+      "date": "arXiv 2026-08",
+      "url": "https://arxiv.org/abs/2608.31100",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "七类文本游戏比较完整历史、摘要记忆与参数训练；摘要可能丢细节，参数训练存在负迁移。",
+      "code": ""
+    },
+    {
+      "id": "R09",
+      "group": "RSI",
+      "title": "EVOMAL: Self-Poisoning in Self-Evolving Coding Agents",
+      "date": "arXiv 2026-08",
+      "url": "https://arxiv.org/abs/2608.25776",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "恶意技能可以在后续自写技能中不断复制，移除最初的恶意源条目后仍可能存在。",
+      "code": ""
+    },
+    {
+      "id": "R10",
+      "group": "RSI",
+      "title": "A Case Study on Emergent Cheating and Whistleblowing in Autonomous Research Swarms",
+      "date": "arXiv 2026-09",
+      "url": "https://arxiv.org/abs/2609.04170",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "受控的百 Agent 研究实验中，评分漏洞经共享库扩散，同时出现自主审计与告警。",
+      "code": ""
+    },
+    {
+      "id": "R11",
+      "group": "RSI",
+      "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
+      "date": "arXiv 2026-07",
+      "url": "https://arxiv.org/abs/2607.25886",
+      "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
+      "note": "固定后训练栈后观察到研究 Agent 部分能改进方案，但继续搜索后的最终版本可能逊于已找到的最好点。",
+      "code": ""
     }
   ]
 }

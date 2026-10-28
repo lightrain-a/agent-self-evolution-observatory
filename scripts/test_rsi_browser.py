@@ -65,6 +65,14 @@ def main():
         rsi_switch=js("return [...document.querySelectorAll('.site-switcher__tab')].map(a=>({href:a.getAttribute('href'),active:a.getAttribute('aria-current')==='true'}));")
         check(rsi_switch==[{'href':'/','active':False},{'href':'/rsi/','active':True}],f'RSI switch destinations incorrect: {rsi_switch}')
         check(js("return [...document.querySelectorAll('#research-nav .nav-level2')].every(a=>!a.getAttribute('href').startsWith('../'))"),'RSI navigation not standalone')
+        nav('rsi/literature.html')
+        check(js("return document.querySelectorAll('#rsi-landscape-20261003 table tbody tr').length===5"),
+              'Curated overview must present four research questions and safety')
+        check(js("return document.querySelectorAll('#rsi-landscape-20261003 .cite').length>=11"),
+              'Curated overview needs primary research citations')
+        js("document.querySelector('#rsi-landscape-20261003').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('rsi-panorama-evidence-desktop.png')
         nav('rsi/timeline.html')
         timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
         expected_deadlines=sum(d['status']=='official' for v in timeline['venues'] for d in v['deadlines'])
@@ -365,7 +373,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':21}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':22}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

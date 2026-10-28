@@ -52,6 +52,23 @@ def main():
             check(axis['level'] in {'core','partial','not_addressed'},'Invalid RSI coverage status: '+card['id'])
             check(axis['contribution'] and axis['open_question'],'Missing RSI coverage evidence/gap: '+card['id'])
     check(len(refs)>=124 and {'E27','S105','S106','S107'}<=refs and {'S100','S101','S102','S103','S104','M100'}<=refs and {'S200', 'B200', 'S202', 'S201', 'S204', 'S203', 'S205'}<=refs and all(f'S{i}' in refs for i in range(26,50)) and all(f'E{i}' in refs for i in range(11,19)) and {'M10','M11','M12','M13','S90','E19','E20','E21','E22','E23','E24','E25','M15','M16'}<=refs and all(f'E{i}' in refs for i in range(90,98)),'Expected I1–I9 sources, including I9 primary education and LLM curricula')
+    check(all(f'R{i:02d}' in refs for i in range(1,12)),
+          'Curated RSI panorama lacks one or more verified primary-source links')
+    panorama=(ROOT/'rsi/literature.html').read_text(encoding='utf-8')
+    check('id="rsi-landscape-20261003"' in panorama
+          and '思林广不记' in panorama and '2026-10-03' in panorama,
+          'External RSI survey provenance / panorama anchor missing')
+    for category in ('信号对不对','有没有新东西','采不采得到','吸收了会不会丢','安全：跨越四问'):
+        check(category in panorama,'Panorama failure category missing: '+category)
+    for source_id in (f'R{i:02d}' for i in range(1,12)):
+        check(f'references.html#{source_id}' in panorama,
+              'Primary RSI panorama evidence not cited: '+source_id)
+    check('不是已被整个领域统一采纳的唯一定义' in panorama
+          and '逐篇核对' in panorama and '一手来源' in panorama,
+          'Secondary survey and primary-paper evidence must remain separate')
+    check('href="literature.html#rsi-landscape-20261003"'
+          in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'RSI homepage lacks a clear entry to curated panorama')
     check(source['review_date']=='2026-10-28','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
