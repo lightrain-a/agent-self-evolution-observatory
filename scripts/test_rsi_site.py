@@ -64,6 +64,25 @@ def main():
               'Theory evidence tier missing: '+entry['id'])
     check({'paper-mechanism','teaching-derivation','rsi-hypothesis'}<=
           {t['status'] for t in theory_entries},'Theory source vs derivation vs hypothesis not distinguished')
+    check({'nonlocal-credit-assignment','need-gain-prioritized-replay',
+           'single-edit-gradient-transfer','nonlocal-net-transfer-i8'}<=theory_ids,
+          'Missing reusable Science/LLM nonlocal-learning theory')
+    science=next((p for p in cards if p['id']=='nonlocal-replay-science2021-liu'),None)
+    check(science is not None and science.get('doi')=='10.1126/science.abf1357'
+          and len(science.get('deep_read',{}).get('sections',[]))>=12,
+          'Science 2021 nonlocal-learning deep read missing')
+    science_related=json.loads((ROOT/'rsi/related-work.json').read_text(encoding='utf-8'))
+    nonlocal_related=next((t for t in science_related['targets']
+                          if t['paper_id']=='nonlocal-replay-science2021-liu'),None)
+    check(nonlocal_related is not None and len(nonlocal_related['works'])>=8
+          and {'gradsim','leap','one-shot-rlvr'}<=
+          {w['id'] for w in nonlocal_related['works']},
+          'Missing audited LLM comparison against Science 2021')
+    i8_text=(ROOT/'rsi/i8.html').read_text(encoding='utf-8')
+    check('id="science2021-nonlocal"' in i8_text and 'id="nonlocal-p0"' in i8_text
+          and 'reading-notes.html#deep-nonlocal-replay-science2021-liu' in i8_text
+          and 'theory-notes.html#need-gain-prioritized-replay' in i8_text,
+          'I8 nonlocal learning reading/protocol/theory links missing')
     for card in cards:
         stages=('challenge','insight','design','result')
         check(tuple(card.get('story',{}))==stages,'Paper lacks ordered C-I-D-R reading contract: '+card['id'])

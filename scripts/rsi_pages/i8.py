@@ -125,6 +125,38 @@ PAGE = {
 </tbody></table></div>
 <p><b>不改变 I8 主线：</b>I8 继续研究哪条错误值得纠正，以及纠正后能否改善多道未见同规则题。此文只提供一个必要的测量控制：<strong>表面特征相似 ≠ 底层规则共享；规则本身会做 ≠ 混合情境会选对规则</strong>。课程安排与任务切换仍由 <a href="idea-i9-practice-switching.html#nc2025-task-similarity">I9</a> 单独研究。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">阅读相关完整精读</a>。[[E99]]</p>
  '''),
+ ("science2021-nonlocal","Science 2021 × LLM｜一次反馈如何带动未直接经历的路径？", '''
+<h3>人类论文实际做了什么？</h3>
+<p><b>Science 2021 的实验对象是29名人类，不是LLM。</b>每人先学会3个起点、6条路径、2个共享终点的结构，再在终点X/Y奖励概率独立变化的游戏中做选择。一次本轮实际路径的奖励，既关联当前选择，也关联其他起点中本轮没经过但通向同一终点的路径。MEG在反馈后观察到约30ms的正向序列和约160ms的反向序列；后者更偏向非局部路径，并与更高的非局部价值学习率相关（有/无反向重放0.70/0.61，p=0.023）。<a href="reading-notes.html#deep-nonlocal-replay-science2021-liu"><b>原论文完整精读 →</b></a></p>
+<p><b>更重要的前提：</b>受试者预先掌握任务关系，新反馈不是凭空教会了六条路径。需要把<b>结构先验</b>、<b>本轮反馈</b>、<b>非局部行为收益</b>和<b>神经相关性</b>拆开。科学论文没有因果操纵神经重放，因此不能把“反向重放直接导致跨题学习”写成已证实结论。</p>
+<h3>2023–2026年的LLM领域已经观察到哪些对应现象？</h3>
+<div class="table-wrap"><table><thead><tr><th>最近邻（官方来源）</th><th>已观察的机制或限制</th><th>与I8的新问题区别</th></tr></thead><tbody>
+<tr><td><a href="https://aclanthology.org/2024.tacl-1.16/" target="_blank" rel="noopener noreferrer">RippleEdits · TACL 2024</a><br><a href="https://aclanthology.org/2023.emnlp-main.971/" target="_blank" rel="noopener noreferrer">MQuAKE · EMNLP 2023</a></td><td>单点参数知识编辑即使成功，也可能无法同步回答相关逻辑后果/多跳问题；简单ICL或外置MeLLo可改善但不等于参数内化。</td><td>现有工作已经把“相关事实的Ripple”变成正式评测；I8不能把单点事实图谱传播当首次提出。</td></tr>
+<tr><td><a href="https://aclanthology.org/2024.emnlp-main.700/" target="_blank" rel="noopener noreferrer">GradSim · EMNLP 2024</a></td><td>事实A与关联事实B的梯度方向余弦相似，与知识编辑后的传播成功正相关。</td><td>若训练前计算B的监督梯度需要B答案，会产生目标泄漏；需要只使用诊断/开发资料的可用预测代理。</td></tr>
+<tr><td><a href="https://aclanthology.org/2025.acl-long.665/" target="_blank" rel="noopener noreferrer">ChainEdit · ACL 2025</a><br><a href="https://aclanthology.org/2025.emnlp-main.572/" target="_blank" rel="noopener noreferrer">CaKE · EMNLP 2025</a></td><td>前者用知识图谱逻辑链主动生成/更新关联知识簇，后者用推理电路引导少量样本，使新事实更能用于相关推理。</td><td>主动训练了额外关联材料，与“B在本次更新中没有被训练、仅因A反馈改善”是不同因果条件。</td></tr>
+<tr><td><a href="https://aclanthology.org/2026.emnlp-main.2150/" target="_blank" rel="noopener noreferrer">LEAP · EMNLP 2026</a></td><td>MAML式元训练一个更适合从单跳事实编辑传播到多跳结果的参数起点，显著优于普通LoRA编辑。</td><td>“令初始化更可传播”已是最近邻；I8应该验证多轮、异结构同规则题的独立净迁移预测。</td></tr>
+<tr><td><a href="https://papers.nips.cc/paper_files/paper/2025/hash/b1ea3f93167c55f3fc2999b68a170ff3-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">One-Shot RLVR · NeurIPS 2025</a><br><a href="https://arxiv.org/abs/2609.04172" target="_blank" rel="noopener noreferrer">One-Shot OPD · arXiv 2026</a></td><td>一条训练输入经大量rollout与奖励/教师逐token监督可带来广泛收益；OPD一条query的状态覆盖率71.5%，16条达98.9%。</td><td>“一道训练题”不等于“一次反馈”；规则迁移、状态覆盖与多次梯度监督必须分开。</td></tr>
+</tbody></table></div>
+<p><b>本轮结论：</b>LLM已经有局部编辑与多跳传播、梯度对齐解释和主动促进传播的强工作。I8仍研究<strong>同一模型快照、固定纠错方式与预算、只训练A之后B未见同规则题的净收益</strong>；不直接改做泛用Graph Replay或知识图谱编辑。<a href="reading-notes.html#deep-nonlocal-replay-science2021-liu--stage-related">最近邻逐篇比较及原始来源 →</a></p>
+<div class="links"><a class="link-btn" href="theory-notes.html#nonlocal-credit-assignment">非局部信用分配</a><a class="link-btn" href="theory-notes.html#need-gain-prioritized-replay">Need × Gain</a><a class="link-btn" href="theory-notes.html#single-edit-gradient-transfer">GradSim与一阶传播推导</a></div>
+<p class="note">这些LLM论文的事实核对来自正式ACL/NeurIPS页面和arXiv摘要；本项目尚未复现任何一个模型训练结果，不把人类MEG证据与LLM参数迁移当成同一实验。</p>
+ '''),
+ ("nonlocal-p0","I8新增受控实验｜同一个反馈、哪些未训练题真正变好？", '''
+<h3>先分清结构、学习表面与反馈次数</h3>
+<div class="flow"><div><b>Pre · 验证结构已知</b><small>A/B共享规则是否真正掌握；按前置知识分层</small></div><div><b>Feedback · 只纠正A</b><small>统一可靠反馈、rollout、LoRA预算；B答案不进训练</small></div><div><b>Post · 独立测试B/C</b><small>B未见同规则题；C表面相似不同规则</small></div><div><b>Priority · 验证预测</b><small>训练前Need、Gain与关系置信度对真实净迁移的解释</small></div></div>
+<div class="table-wrap"><table><thead><tr><th>受控维度</th><th>必须冻结</th><th>主要读数</th></tr></thead><tbody>
+<tr><td>结构已掌握/未掌握</td><td>同一纠错A、相同训练器与反馈</td><td>B未见同规则迁移是否因结构知识变化</td></tr>
+<tr><td>正确/无关/错误反馈</td><td>同等长度与强度；错误反馈只在隔离实验中使用</td><td>观察到的是奖励/信息更新还是纯重复/错信息传播</td></tr>
+<tr><td>ICL vs Skill/Memory vs LoRA</td><td>相同学习问题但分开评测</td><td>清空提示/撤除辅助后，权重中是否真正获得持久规则</td></tr>
+<tr><td>相关B与无关C</td><td>B不接受梯度或答案、C为规则不同负对照</td><td>真实正传播−错误过度传播−旧能力损失</td></tr>
+<tr><td>训练前Need×Gain预测</td><td>未来题频可见、Gain只能用开发集/前测估计</td><td>相关B的真实增益排序是否优于单独Need、单独Gain、语义相似与Random</td></tr>
+</tbody></table></div>
+<div class="equation">Δ_nonlocal(B|A)=Acc_B(θ_after_A_only) − Acc_B(θ_before)</div>
+<div class="equation">G_net=Δ_nonlocal − λ·Harm_unrelated − μ·Forget_old − β·TotalCost</div>
+<p>这两条是本项目的<b>候选指标</b>，不是Science或GradSim的原始实验公式。用它们判断学习的不是原题答案，而是关系驱动、能跨不同输入结构使用的规则。具体推导与边界可在<a href="theory-notes.html#nonlocal-net-transfer-i8">理论工具箱中长期引用</a>。</p>
+<p><b>与I12边界：</b><a href="idea-i12-prerequisite-bottleneck.html">I12</a>研究“先学P后，再训练B是否更容易”；I8研究“只训练A以后，不训练B时B是否已经提高”。不要把两者的B后续训练过程混为一个增益。</p>
+<p class="note"><b>停止条件：</b>如果在匹配结构掌握、有效监督量与更新成本后，结构关系既不能解释B迁移，也不能稳定改善迁移收益预测，就保留机制负结果，不发明昂贵的非局部Replay模块。</p>
+ '''),
  ("related","Related Work｜最近邻做到了哪一步，I8 真正差在哪里？", '''
  <p>按照 <b>研究问题与假设 → 选择时能看到什么 → 实际修改什么 → 用什么结果证明学会</b> 对照最近邻。这几项不一定谁更强：有的工作研究如何更新，有的研究如何选数据，还有的专门研究规则迁移。<strong>最接近 I8 的不是某一个模型模块，而是 SEI 的错误驱动训练、LESS / DATAPROPHET 的训练前价值预测，以及 RULE-EDIT 的规则级迁移。</strong></p>
  <div class="table-wrap"><table id="i8-related-matrix"><thead><tr>

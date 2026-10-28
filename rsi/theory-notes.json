@@ -9,6 +9,203 @@
   },
   "entries": [
     {
+      "id": "nonlocal-credit-assignment",
+      "title": "非局部信用分配：为何一条反馈可改变另两条未经历路径？",
+      "category": "Nonlocal Credit Assignment",
+      "status": "paper-mechanism",
+      "source_paper_id": "nonlocal-replay-science2021-liu",
+      "source_anchor": "what-nonlocal-means",
+      "source_locator": "Science 2021 Fig.1–2 / Task Design 与模型行为结果",
+      "question": "当实际体验只有路径A的奖励，哪类非局部路径才有理由随之发生价值变化？",
+      "insight": "必须事先有通往共享终点的任务关系；奖励更新的是共同终点的价值，进而影响另一条在本回合没有经历的路径。",
+      "equations": [
+        {
+          "name": "已知结构下的价值传播（概念示意）",
+          "expression": "Q(B→X) = E[R(X)|known transition]; new feedback on X updates this estimate",
+          "latex": "Q(B\\!\\to\\!X)=\\mathbb E[R(X)\\mid B\\!\\to\\!X],\\quad \\text{feedback at }X\\Rightarrow \\Delta Q(B\\!\\to\\!X)",
+          "meaning": "B本轮没有走过，但是预先学过B→X这一结构关系，所以本轮X的奖励变化能影响B选择的预期价值。",
+          "boundary": "这是本站为了迁移理解而写的概念式，不是Science作者原封不动的实验更新式；本条主要陈述论文证据。"
+        },
+        {
+          "name": "行为学习与神经重放的关联（实验模型估计）",
+          "expression": "α_nonlocal,replay = 0.70; α_nonlocal,no-replay = 0.61; p = 0.023",
+          "latex": "\\alpha_{\\rm nonlocal,replay}=0.70,\\quad\\alpha_{\\rm nonlocal,no\\!-\\!replay}=0.61,\\quad p=0.023",
+          "meaning": "160ms反向重放出现时模型估计非局部学习率更高；30ms正向重放未显示同等差异。",
+          "boundary": "MEG是相关性检测而不是对重放的随机干预。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "先掌握结构",
+          "text": "原文让参与者预学3个起点、6条路径、2个共享终点，保证对未经历路径的关系知识不是反馈时凭空生成。"
+        },
+        {
+          "label": "再获得局部新信息",
+          "text": "当前只在A中经过A→X，实际获知X给£1或0；X/Y的奖励概率在RL任务中缓慢变化。"
+        },
+        {
+          "label": "将价值传至B与C",
+          "text": "因为B→X、C→X同终点，当前观察可以改变它们的行为价值；后续选择反映这种非局部学习。"
+        },
+        {
+          "label": "用MEG序列作独立线索",
+          "text": "奖励后检测到更偏向非局部的160ms反向重放，且与学习率较高相关，仍不能排除共同原因。"
+        }
+      ],
+      "when_to_use": "需要区分“模型原题已修好”与“未直接训练的规则依赖题也被纠正”时，引入共同结构和独立迁移测试。",
+      "caution": "原文人类实验事前已学会路径关系；LLM的符号知识编辑/参数迁移与之不是同一操作，需先验结构可测且不能用B测试答案作训练。"
+    },
+    {
+      "id": "need-gain-prioritized-replay",
+      "title": "Need × Gain：经验重放优先级与真正的未来决策收益",
+      "category": "Prioritized Replay",
+      "status": "paper-mechanism",
+      "source_paper_id": "nonlocal-replay-science2021-liu",
+      "source_anchor": "need-gain",
+      "source_locator": "Mattar & Daw (Nature Neuroscience 2018) 提出理论；Liu et al. Science 2021 以MEG和行为检验关联",
+      "additional_sources": [{"title": "Mattar & Daw · Nature Neuroscience 2018 · 原始 Need × Gain 理论", "url": "https://www.nature.com/articles/s41593-018-0232-z", "role": "理论原始来源"}],
+      "question": "当一次反馈关联多条未经历路径，优先处理哪条才能真正提高未来决策？",
+      "insight": "重放不是只按错误程度或状态频率排序；未来访问Need和更新后决策改善Gain的乘积更接近规范性优先级。",
+      "equations": [
+        {
+          "name": "优先级",
+          "expression": "Priority(s,a) = Need(s) × Gain(s,a)",
+          "latex": "\\operatorname{Priority}(s,a)=\\operatorname{Need}(s)\\operatorname{Gain}(s,a)",
+          "meaning": "Need表示预计再次用到的机会，Gain表示发生重放价值更新后未来决策回报预计改善多少。",
+          "boundary": "该公式源自Mattar & Daw 2018，不是Science 2021原创。"
+        },
+        {
+          "name": "Need（简化定义）",
+          "expression": "Need(s) = Σ_{k≥0} γ^k P(S[t+k]=s | π)",
+          "latex": "\\operatorname{Need}(s)=\\sum_{k=0}^{\\infty}\\gamma^k\\,P(S_{t+k}=s\\mid\\pi)",
+          "meaning": "折扣未来占用概率；Science中由17%、33%、50%的起点频率近似操控。",
+          "boundary": "严谨表示依赖当前起点、环境转移和策略；在LLM任务分布中不能只把题频当作全部Need。"
+        },
+        {
+          "name": "Gain（策略改善）",
+          "expression": "Gain(s) = Σ_a (π_new(a|s)−π_old(a|s)) Q_new(s,a)",
+          "latex": "\\operatorname{Gain}(s)=\\sum_a[\\pi_{\\rm new}(a\\mid s)-\\pi_{\\rm old}(a\\mid s)]Q_{\\rm new}(s,a)",
+          "meaning": "衡量策略改变后的预期收益，不是当前TD误差或原题错得多严重。",
+          "boundary": "这是标准理论直观形式；获取π_new常涉及假想更新，必须在训练前从合法开发信息估计，不能用最终B收益定义事前优先级。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "Need回答未来会不会用到",
+          "text": "高频起点会在将来出现更多次，值得花更多学习资源，但如果本来就会了则未必收益大。"
+        },
+        {
+          "label": "Gain回答更新后能否改善实际选择",
+          "text": "同样当前错误，若修正后不会改变未来行动，则决策Gain可能为零。"
+        },
+        {
+          "label": "乘积而不是两个独立排行榜",
+          "text": "高Need×Gain的两条候选中，Science发现160ms反向重放更强，t(28)=3.30，p=0.003；单独Need与Gain的行为效应不同。"
+        },
+        {
+          "label": "迁移到RSI需结构可信度",
+          "text": "能否正确传播给B还取决于A和B是否共享真实规则；在LLM上可将关系置信度作为待验证条件，但不是原公式的一部分。"
+        }
+      ],
+      "when_to_use": "设计I8候选纠错优先级、I6重访和有限预算重放策略时引用Need/Gain区别，而不直接宣称新奖励排序器首次提出。",
+      "caution": "这是前人规范性重放理论与Science人类神经关联证据。未证明LLM按Need×Gain排序在同预算下有效，也未独立随机操控Gain。"
+    },
+    {
+      "id": "single-edit-gradient-transfer",
+      "title": "单点参数更新的跨题梯度效应：为什么A的修复可能影响B？",
+      "category": "Gradient Transfer",
+      "status": "teaching-derivation",
+      "source_paper_id": "nonlocal-replay-science2021-liu",
+      "source_anchor": "grad-propagation",
+      "source_locator": "Qin et al. EMNLP 2024 GradSim；本条一阶泰勒展开是本站教学推导，不是Science神经实验公式",
+      "additional_sources": [{"title": "Qin et al. · EMNLP 2024 · GradSim 原论文", "url": "https://aclanthology.org/2024.emnlp-main.700/", "role": "LLM梯度传播来源"}],
+      "question": "在LLM参数空间里，同一条纠错反馈为什么能够或不能够改善从未直接训练的相关题？",
+      "insight": "小步SGD时B损失的改变由A/B梯度内积的一阶近似决定；梯度对齐是可能的解释线索，而非充分因果证明。",
+      "equations": [
+        {
+          "name": "GradSim（EMNLP 2024）",
+          "expression": "GradSim(A,B)=⟨g_A,g_B⟩/(||g_A||·||g_B||); g=∇θL",
+          "latex": "\\mathrm{GradSim}(A,B)=\\frac{\\langle\\nabla_\\theta L_A,\\nabla_\\theta L_B\\rangle}{\\|\\nabla_\\theta L_A\\|\\|\\nabla_\\theta L_B\\|}",
+          "meaning": "模型在A/B目标上的损失梯度方向一致程度；原文报告与知识编辑Ripple成功正相关。",
+          "boundary": "要计算g_B往往需要B的正确监督，不能在最终留出B标签上算后宣称事前预测。"
+        },
+        {
+          "name": "跨题损失的一阶展开",
+          "expression": "θ′=θ−αg_A;  ΔL_B≈−α⟨g_B,g_A⟩",
+          "latex": "\\theta'=\\theta-\\alpha\\nabla_\\theta L_A,\\qquad\\Delta L_B\\approx-\\alpha\\langle\\nabla_\\theta L_B,\\nabla_\\theta L_A\\rangle",
+          "meaning": "内积正时B损失一阶近似下降，负时B可能受伤，接近零时一阶影响小。",
+          "boundary": "多步Adam、LoRA低秩约束、RL策略采样与最终生成正确率不由该式直接决定。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "明确更新A",
+          "text": "对A损失做一个小SGD步长，得到θ′=θ−α∇L_A。"
+        },
+        {
+          "label": "只看B损失如何变化",
+          "text": "一阶展开L_B(θ′)≈L_B(θ)+∇L_Bᵀ(θ′−θ)。"
+        },
+        {
+          "label": "代入A更新方向",
+          "text": "得到ΔL_B≈−α∇L_Bᵀ∇L_A，因此产生正/负迁移的局部几何解释。"
+        },
+        {
+          "label": "为事前预测设置防泄漏机制",
+          "text": "实际研究中B作为留出题，不可用其标签或测得的训练后改进来决定A是否被训练；需用独立开发集代理、无标签特征或规则前测来预测。"
+        }
+      ],
+      "when_to_use": "比较GradSim、语义相似、规则图与实际未训练B净收益时引用，不要将同规则关系与梯度方向自动画等号。",
+      "caution": "梯度余弦相似仅为局部线性代理；该理论与Science神经反向重放不是同一种机制。"
+    },
+    {
+      "id": "nonlocal-net-transfer-i8",
+      "title": "RSI 假设：一次纠错的非局部净迁移与错误传播惩罚",
+      "category": "RSI Nonlocal Learning",
+      "status": "rsi-hypothesis",
+      "source_paper_id": "nonlocal-replay-science2021-liu",
+      "source_anchor": "rsi-experiment",
+      "source_locator": "本站I8受控方案，非Science/GradSim/LEAP论文作者的实验公式",
+      "question": "固定训练器和纠错A后，B没有被训练但能否获得持久的净能力增长？",
+      "insight": "真正主指标是未训练B的独立测试进步，并对规则错误传播到C、旧技能损失和全流程预算进行惩罚。",
+      "equations": [
+        {
+          "name": "非局部参数更新净增益",
+          "expression": "Δ_B = Acc_B(θ_after_edit_A) − Acc_B(θ_before)",
+          "latex": "\\Delta_B=\\operatorname{Acc}_B(\\theta_{\\rm after\\ edit\\ A})-\\operatorname{Acc}_B(\\theta_{\\rm before})",
+          "meaning": "不将B训练材料放入梯度；更新后去掉纠错A的临时答案、提示与辅助Skill，在未见规则题B上评测。",
+          "boundary": "若测试前仍让外部记忆或教师提供B规则，则不能当作参数内化。"
+        },
+        {
+          "name": "净收益目标",
+          "expression": "G_net = Δ_B − λ Harm_C − μ Forget_old − β Cost_total",
+          "latex": "G_{\\rm net}=\\Delta_B-\\lambda\\operatorname{Harm}_C-\\mu\\operatorname{Forget}_{\\rm old}-\\beta\\operatorname{Cost}_{\\rm total}",
+          "meaning": "Harm_C是不同规则题的误传播，Forget_old是旧能力回归，成本含诊断、训练、选题/重放。",
+          "boundary": "权重必须预先确定并做Pareto敏感性，不能用事后结果任意挑选。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "冻结前测规则关系",
+          "text": "模型当前是否知道A/B共享规则应由独立诊断集测试；B最终答案要在开发及训练过程不可见。"
+        },
+        {
+          "label": "单因素纠错A",
+          "text": "固定反馈与训练预算，A训练方法一致；先证实B的纯参数变化，再增加Need/Gain优先回放。"
+        },
+        {
+          "label": "检查C误传播与旧能力",
+          "text": "C与A表面近似但规则不同；如果C因错误规则转移而变差，净收益应扣除。"
+        },
+        {
+          "label": "和LEAP/ChainEdit明确区分",
+          "text": "若显式生成并训练了B的监督内容，属于主动传播/额外训练，不再是“B未直接训练”的非局部参数迁移。"
+        }
+      ],
+      "when_to_use": "为I8未来实验撰写Goal、净迁移指标、强对照和训练前诊断协议时引用，暂不占用独立Idea编号。",
+      "caution": "此条是待验证的本项目研究假设。Science没有在LLM进行LoRA编辑；RippleEdits、LEAP等已有相关但不完全相同的实验。"
+    },
+    {
       "id": "learning-target-generation",
       "title": "目标生成式学习规则：为什么学目标比只调 Loss 更灵活？",
       "category": "Target Generation",

@@ -43,6 +43,8 @@ def validate() -> None:
             assert all(eq[k] for k in ("name", "expression", "latex", "meaning", "boundary")), entry["id"]
         for step in entry["derivation"]:
             assert all(step[k] for k in ("label", "text")), entry["id"]
+        for source in entry.get("additional_sources", []):
+            assert source.get("title") and source.get("role") and source.get("url", "").startswith("https://"), entry["id"]
 
 
 validate()
@@ -56,7 +58,7 @@ index += '<div class="route-grid theory-directory">' + ''.join(
     e(item["category"]) + ' · ' + e(item["question"]) + '</span></a>'
     for item in ENTRIES
 ) + '</div>'
-index += '<p class="note"><b>当前主题：</b>DiscoRL（Nature 2025）的更新目标生成、半梯度、元梯度、时间尺度、预测自举和稳定化；单独标明我们提出的未来可学习性指标尚待实验。</p>'
+index += '<p class="note"><b>当前主题：</b>DiscoRL（Nature 2025）的目标生成与元梯度，Science 2021 的非局部信用分配与 Need × Gain，及 GradSim（EMNLP 2024）的一阶传播解释。跨论文机制证据、教学推导和我们提出的未来净迁移指标分层标注。</p>'
 
 
 def render(entry: dict) -> str:
@@ -79,6 +81,11 @@ def render(entry: dict) -> str:
         '<a class="link-btn" href="reading-cards.html#' + e(entry["source_paper_id"]) + '">论文速览卡片</a>'
         '<a class="link-btn" href="' + e(paper["official_url"]) +
         '" target="_blank" rel="noopener noreferrer">正式论文原文</a></div>')
+    extra_sources = '<div class="links theory-references">' + ''.join(
+        '<a class="link-btn" target="_blank" rel="noopener noreferrer" href="' +
+        e(src["url"]) + '">' + e(src["role"]) + ' · ' + e(src["title"]) + '</a>'
+        for src in entry.get("additional_sources", [])
+    ) + '</div>' if entry.get("additional_sources") else ''
     return "".join([
         '<div class="theory-meta"><span>' + e(LABELS[entry["status"]]) + '</span><span>' +
         e(entry["category"]) + '</span></div>',
@@ -89,14 +96,15 @@ def render(entry: dict) -> str:
         '<div class="deep-note"><b>后续何时回来看</b><p>' + e(entry["when_to_use"]) + '</p></div>',
         '<div class="deep-note deep-note--boundary"><b>不可越界解释</b><p>' + e(entry["caution"]) + '</p></div>',
         '<p class="theory-source">出处与证据位置：' + e(paper["title"]) + ' · ' + e(entry["source_locator"]) + '</p>',
-        cite
+        cite,
+        extra_sources
     ])
 
 
 PAGE = {
     "slug": "theory-notes",
-    "title": "理论工具箱：学习规则与元梯度",
-    "en": "Reusable Theory Notes · Update Targets, Semi-Gradients, Meta-Gradients",
+    "title": "理论工具箱：学习规则、信用分配与元梯度",
+    "en": "Reusable Theory Notes · Learning Rules, Nonlocal Credit Assignment and Meta-Gradients",
     "lead": "以后讨论 RSI 的学习规则、半梯度、元梯度与长期可学习性，可直接引用每条固定锚点。论文原机制、教学推导、待验证的机器研究假设严格区分。",
     "updated": THEORY["updated"],
     "styles": ["theory-notes.css"],

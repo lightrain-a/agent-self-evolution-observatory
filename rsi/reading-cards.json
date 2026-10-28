@@ -31,6 +31,787 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "nonlocal-replay-science2021-liu",
+      "short_title": "Nonlocal Replay · Science 2021",
+      "title": "Experience replay is associated with efficient nonlocal learning",
+      "authors": "Yunzhe Liu, Marcelo G. Mattar, Timothy E. J. Behrens, Nathaniel D. Daw, Raymond J. Dolan",
+      "lead_institution": "Beijing Normal University（北京师范大学；第一作者署名机构之一）",
+      "institutions": [
+        "Beijing Normal University（北京师范大学；第一作者署名机构之一）",
+        "Chinese Institute for Brain Research（中国脑科学研究院）",
+        "University College London（伦敦大学学院）",
+        "University of California, San Diego（加州大学圣迭戈分校）",
+        "University of Oxford（牛津大学）",
+        "Princeton University（普林斯顿大学）",
+        "Universitätsmedizin Berlin（柏林夏里特医学院）"
+      ],
+      "institution_source": "Science 正式论文及 PubMed PMID 34016753 作者单位列表；多机构合作，不把第一作者单位当作唯一机构",
+      "publication": "Science · 372(6544):eabf1357 · 2021-05-21",
+      "doi": "10.1126/science.abf1357",
+      "official_url": "https://www.science.org/doi/10.1126/science.abf1357",
+      "first_posted": "2021-05-21",
+      "version": "Science 正式出版版 · 2021-05-21；PMC 开放作者稿",
+      "read_on": "2026-10-28",
+      "reading_level": "Science 正式摘要 + PubMed 元信息 + PMC 开放全文的 Task Design、行为模型、MEG 结果与 Discussion；相关 LLM 工作查核官方 ACL/NeurIPS 摘要；未复现",
+      "tags": [
+        "Human Replay",
+        "Nonlocal Learning",
+        "MEG",
+        "Backward Replay",
+        "Need × Gain",
+        "Credit Assignment",
+        "I8 Error Transfer",
+        "LLM Knowledge Editing"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "已知状态—路径—终点结构下，区分直接路径和未经历路径的奖赏后价值更新，结合 MEG 解码反向重放的方向、速度和内容。",
+          "open_question": "脑磁反向重放与非局部学习的关联不等于通过干预证明重放直接导致价值迁移；也不等于 LLM 参数更新已有同样机制。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "一次新的终点反馈可更新另外两条通向相同终点的路径价值，前提是参与者已学过任务转移结构。",
+          "open_question": "论文更新的是已知关系上的价值估计，不是从反馈中自动发现未知任务规则、也不是生成全新事实。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "利用预先掌握的关系结构将反馈用于本轮未直接走过的非局部路径，研究基于模型的非局部信用分配。",
+          "open_question": "这里的“未经历”指本轮没有走过的路径；不意味着该路径结构从未学习，也没有测 LLM 生成支持范围。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "任务结构在奖励阶段之前学会，主任务中随着终点奖励概率缓慢变化持续更新各路径价值。",
+          "open_question": "论文没有测试长期存储是否无损或在其他任务训练后仍永久保留，不构成跨轮 RSI 保持实验。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "使用实验者定义且可观察的经济奖励与状态关系测量信用分配。",
+          "open_question": "没有测试对抗性错误反馈、错误知识图谱造成的错误传播、奖励投机或 Agent 更新权限安全。"
+        }
+      },
+      "one_sentence": "29 名人类在已学会的任务关系上，利用一次终点反馈更新本轮没走过的路径；约160ms间隔的反向神经重放与高效非局部学习相关。",
+      "story": {
+        "challenge": "只亲自走过一条路径，为什么人能够从它的奖励中改进同一终点的其他路径？又该优先记起哪条？",
+        "insight": "如果先知道不同起点的路径通往同一个终点，新结果可以沿这些关联更新未经历路径；重放优先级与未来需要和收益有关。",
+        "design": "29人先学三起点、六路径、两终点，再在奖励变化的选择游戏中学习；MEG测30ms正向、160ms反向序列并拟合局部/非局部学习率。",
+        "result": "非局部学习率在检测到160ms反向重放时约0.70、无时0.61（p=0.023）；Need×Gain较高的路径表现出更强反向重放。"
+      },
+      "problem": "一次反馈只能直接观察走过的路径，但多个未走过的路径可能关联同一个终点。人如何将奖励的影响传播给这些路径，并在大量候选中选择值得优先重放的经验？",
+      "setup": "29名真实人类参与者接受脑磁MEG测量。主任务三种起点（未来出现概率17%/33%/50%）、每起点两条路径共6条，最终连向共同的终点X/Y。先训练并核验结构知识，再在正式强化学习任务中通过路径选择获得£1或0；两个终点的奖励概率独立缓慢漂移，比较当前经过的Local路径与同终点但本轮未经过的Nonlocal路径的价值学习。额外解码回报后约30ms正向重放和约160ms反向重放的神经活动序列。",
+      "updates": "本文更新的是人类对游戏动作与路径价值的行为估计；计算RL模型用于拟合人类选择、比较学习率。没有LLM、参数编辑、LoRA或外置Skill训练，也未证明大脑反向重放的因果必要性。",
+      "key_ideas": [
+        {
+          "name": "Nonlocal credit assignment",
+          "summary": "一次反馈更新当前路径的价值，也会影响通向同一终点的其他起点路径；先前已学会的路径结构是重要前提。",
+          "formula": "observed reward at X → local path value + two nonlocal X-path values"
+        },
+        {
+          "name": "Backward replay 关联价值学习",
+          "summary": "解码的约160ms状态间隔反向序列更多代表非局部路径，出现时估计非局部学习率提高；不是单次奖励引发已证实的神经因果。",
+          "formula": "α_nonlocal,replay≈0.70; α_nonlocal,no-replay≈0.61 (p=0.023)"
+        },
+        {
+          "name": "Need × Gain 选择重放路径",
+          "summary": "Need反映未来访问状态的程度，Gain反映更新后可能改善决策的回报；高乘积路径的反向重放更强。理论源于Mattar & Daw 2018，Science 2021在人类任务中提供相关证据。",
+          "formula": "Replay priority(s,a)=Need(s)×Gain(s,a)"
+        },
+        {
+          "name": "结构知识与奖励学习分开",
+          "summary": "研究者先训练参与者学会状态转移结构，再改变终点奖励概率；不能解释为从一条奖励中学会未知路径拓扑。",
+          "formula": "P(successful propagation) depends on known transitions + outcome update"
+        },
+        {
+          "name": "关联性证据的上限",
+          "summary": "MEG轨迹解码、选择行为、模型拟合相互支持，但没有随机阻断重放，难以与模型推理等其他共同原因完全分离。",
+          "formula": "Replay ↔ Nonlocal updating  ≠  intervention on replay → causal proof"
+        }
+      ],
+      "evidence": [
+        "Science 2021 / Fig.1：3起点×2路径、两共享终点X/Y；起点需求17%/33%/50%；终点奖励£1或0的概率以独立随机游走在25%–75%区间变化，结构学习前置于奖励学习。",
+        "Science / 行为：当前奖励后不仅重复同起点获奖路径，也倾向选择另一起点中通向获奖终点的路径；模型估计直接与非局部学习率接近，未见显著差异。",
+        "MEG/Fig.4：奖励后分别出现约30ms相邻状态间隔的前向序列和约160ms间隔的后向序列。后者更集中表示非局部路径，且内容方向与逆向信用分配相符。",
+        "模型分析：检测到160ms反向重放的试次，非局部学习率0.70 vs未检测到时0.61，差值0.09，p=0.023；30ms前向重放相应差值仅0.01，p=0.457。",
+        "优先级分析：估计较高Need×Gain的两条非局部候选路径中，160ms反向重放更强（t(28)=3.30，p=0.003）；单独Need/Gain的效应与乘积不同。",
+        "行为模型：高Gain非局部路径学习率0.79 vs低Gain 0.37，p=0.020；单独Need差异未显著（p=0.16）。",
+        "研究为29人行为/MEG关联实验，作者公开试次数据和代码于 https://github.com/YunzheLiu/RLReplay；未直接干预重放强度，因此不构成必要性因果证明。"
+      ],
+      "boundaries": [
+        "“一次反馈”来自本轮实际走过的一条路径，但参与者此前已了解所有6条路径的结构。它不是从一条数据中凭空发现未知关系，也不是完全没有先验的迁移。",
+        "160ms和30ms表示解码时相邻状态重放的时间滞后，不是整条路径重放总时长，也不是LLM反向传播长度。",
+        "作者观察MEG重放与更高非局部学习率关联，但并未施加随机阻断/增强重放的神经干预，不能断言“反向重放直接导致学习”。",
+        "Need来自实验中起点的出现概率，Gain由行为/价值模型估计，并非被随机独立操纵的变量；因此Need×Gain与重放的关系具有模型依赖性。",
+        "人类游戏中的价值传播不等于LM事实编辑后自动进行多跳参数传播；也不同于ICL在上下文直接应用一条规则。",
+        "One-Shot RLVR/OPD虽然只给一个或少数训练问题，却需要大量rollout、反馈或token级教师监督，不能被概括为“仅一次奖赏导致跨题训练收益”。",
+        "当前LLM知识编辑如RippleEdits、MQuAKE、ChainEdit、CaKE、LEAP已经研究传播失败或主动传播，不能把“关系图传播”当成我们的首创。"
+      ],
+      "our_relevance": [
+        "I8保持“哪类错误纠正后更能带来未见同规则题的净迁移”主线。Science提供前置结构知识、单次反馈、未直接经历路径及Need×Gain的分离思路，不要求另开泛化Replay论文。",
+        "LLM已有RippleEdits/MQuAKE证据：单点事实编辑的局部成功不保证多跳逻辑一致；ChainEdit/CaKE直接改进传播，LEAP训练更易于编辑传播的模型初始化，因此“图谱关系+知识传播”已不是独立新颖点。",
+        "One-Shot RLVR 与 One-Shot OPD报告一道训练题能产生广泛收益，但必须分离题目语义共享、rollout中状态覆盖与反复监督/梯度作用；不能直接等同Science的一次反馈机制。",
+        "GradSim报告事实及相关知识的梯度余弦相似与编辑传播效果相关；一阶推导说明相似方向可减少相关知识损失，但计算B标签梯度必须隔离B最终测试答案，避免标签泄漏。",
+        "最小实验：冻结任务结构可否被模型掌握、只提供A正确反馈、明确禁止B/C进入更新、分别测ICL传播/外置Skill复用/LoRA真实参数迁移，附加B未来需求与事前Gain估计。",
+        "需要与I12区分：I8问“修正A后未训练的B能否直接变好”；I12问“先补前置P后，用同等预算继续学习B的收益能否提升”。"
+      ],
+      "next_test": "P0：固定初始快照、规则关系图及验证器，预先测试模型是否掌握A-B关系；同样反馈只允许在A进行等预算LoRA更新，不把B正确答案、正确解法或测试分数用于训练/候选选择。测A原题、B未见同规则题、C表面相近规则不同题，并将ICL、参数更新、外部Skill单列。P1：训练前以规则关系置信度、未来出现频率Need和独立开发集估计的Gain预测哪些B受益；与Random、语义相似、单独Need/Gain及安全可计算GradSim代理同预算比较，报告误迁移、旧能力退化和总成本。",
+      "deep_read": {
+        "focus": "人类实验（n=29）先学习6条路径的结构，再利用某个终点的反馈在本轮未经历路径上更新价值。将行为学习、MEG重放、Need×Gain优先级和LLM参数迁移分别读，绝不把MEG相关性写成因果或把一题RLVR说成一次反馈。",
+        "metric_summary_title": "五组关键证据：行为、重放、优先级与解释边界",
+        "metric_summary_intro": "学习率是行为计算模型的估计值；30/160ms是MEG解码序列相邻状态滞后。Science中的n=29人、规则结构预学习，与LLM论文的模型/训练口径不同，不可直接横向比较。",
+        "metric_summary": [
+          {
+            "family": "① 局部与非局部学习",
+            "metrics": "n=29 · 三起点/六路径/两终点",
+            "meaning": "回报来自本轮已选路径，另外两条通向同终点的路径本轮没有走过。",
+            "result": "非局部路径的后续行为也被奖励调节，显示能够利用已知结构进行价值更新。"
+          },
+          {
+            "family": "② 两种重放方向",
+            "metrics": "MEG · 30ms Forward / 160ms Backward",
+            "meaning": "作者解码奖励之后的路径状态重新激活序列。",
+            "result": "30ms前向序列主要关联局部，160ms反向序列偏向非局部路径。"
+          },
+          {
+            "family": "③ 重放出现与学习率",
+            "metrics": "α=0.70 vs 0.61 · p=0.023",
+            "meaning": "同一非局部路径有/无显著160ms反向重放的建模对照。",
+            "result": "有反向重放时估计学习率高约0.09；前向30ms差异不显著。"
+          },
+          {
+            "family": "④ 未来使用价值",
+            "metrics": "Need 17/33/50% × Gain",
+            "meaning": "Need为起点频率，Gain为当前奖励对将来决策的预期帮助。",
+            "result": "高Need×Gain路径反向重放更强（t(28)=3.30，p=0.003）；不是仅按频率选。"
+          },
+          {
+            "family": "⑤ LLM研究边界",
+            "metrics": "RippleEdits / MQuAKE / LEAP / One-Shot RLVR",
+            "meaning": "已有事实传播、元编辑适应与少题RL训练研究，但研究对象与反馈数量不同。",
+            "result": "仍需专门测固定反馈、结构知识、未训练B参数迁移与真实预算的受控交互。"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Local vs Nonlocal",
+            "meaning": "Local为本轮亲自走过的路径；Nonlocal为本轮没走过但通向同一终点的其他起点路径。"
+          },
+          {
+            "name": "Backward replay",
+            "meaning": "MEG解码出的沿路径状态相反次序的重新激活；论文集中观察约160ms相邻状态间隔。"
+          },
+          {
+            "name": "Need",
+            "meaning": "基于给定策略/未来情境预期再次访问某状态的频率，实验用起点出现概率操控。"
+          },
+          {
+            "name": "Gain",
+            "meaning": "重放后策略改善带来的期望决策回报差，不是当前TD误差或模型置信度。"
+          },
+          {
+            "name": "Nonlocal credit assignment",
+            "meaning": "把当前结果的学习价值归因到本轮未实际经过的相关动作路径。"
+          },
+          {
+            "name": "Ripple effect",
+            "meaning": "LLM知识编辑中，一条事实修改对依赖它的其他逻辑问题应产生一致影响。"
+          },
+          {
+            "name": "One-shot RLVR",
+            "meaning": "只用一个训练输入，但对它反复采样、验证和梯度更新；不是一次反馈。"
+          },
+          {
+            "name": "State coverage",
+            "meaning": "一次训练输入通过大量生成轨迹所覆盖的内部状态，与语义规则传播不同。"
+          }
+        ],
+        "summary": [
+          "Science 2021：人类先掌握路径拓扑，然后在逐次奖励中非局部更新；相关的160ms反向重放增强模型估计的价值学习。",
+          "Need×Gain的重放优先级思想来自Mattar与Daw 2018；Science用29人MEG数据检验其关联，并没有随机干预Gain或重放。",
+          "LLM里RippleEdits/MQuAKE显示单点编辑很难稳定传播；ChainEdit/CaKE/LEAP已有具体传播方法；GradSim提供梯度对齐解释。",
+          "One-Shot RLVR/OPD的跨题收益可能包含大量rollout、教师监督和状态覆盖，不能当作一次奖赏的非局部传播。",
+          "I8未来实验应把已有规则结构、局部反馈、参数更新、未训练B、新规则C和训练前Need/Gain预测正交拆开，先核实机制再设计方法。"
+        ],
+        "afterword": "下面关于LLM单点训练、Rule Graph、Need×Gain估计与I8方案的论述均是我们的跨领域研究迁移，不是原Science论文的AI实验。",
+        "sections": [
+          {
+            "id": "what-human-does",
+            "stage": "challenge",
+            "title": "实验研究的是谁？为什么本轮没走过的路也可以更新？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "29名人类参与者先接受完整路径结构训练，并在MEG记录下做游戏。三个起点，每个两条路径，共六条路径；每条最终到两个共享终点X/Y之一。终点X/Y的奖励概率独立缓慢变化。所有关系预先学过，所以当前只经历A→X之后，也能知道另外两条未经历路径通向X。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "结构学习先于奖励",
+                    "text": "参与者先学完刺激对应的六条路径、终点X/Y以及起点出现频率。之后的奖励阶段主要学习当前价值，不能写作从一次奖励发现未知关系。"
+                  },
+                  {
+                    "title": "当前回合选一条路径",
+                    "text": "在当前出现的一个起点中二选一，经过若干中间刺激，最终得到£1或0。"
+                  },
+                  {
+                    "title": "其他两条通向同一终点的路径",
+                    "text": "本回合完全没有出现，但它们与当前路径共享终点；奖励对该终点的价值有新信息。"
+                  },
+                  {
+                    "title": "行为后测",
+                    "text": "在未来其他起点出现时检查是否更偏向通向此前获奖终点的路径。"
+                  },
+                  {
+                    "title": "脑信号测量",
+                    "text": "利用训练过的状态神经分类器，检测奖励后MEG中路径表征是否按正向或反向顺序重新激活。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "起点",
+                  "路径一",
+                  "路径二",
+                  "说明"
+                ],
+                "rows": [
+                  [
+                    "A（示意）",
+                    "A→X",
+                    "A→Y",
+                    "本轮抽到起点A，选择A→X获奖"
+                  ],
+                  [
+                    "B（示意）",
+                    "B→X",
+                    "B→Y",
+                    "本轮B→X未经历，但X奖励信息可用于B"
+                  ],
+                  [
+                    "C（示意）",
+                    "C→X",
+                    "C→Y",
+                    "本轮C→X也未经历；X/Y结构事前已知"
+                  ]
+                ],
+                "caption": "示意标签，不是论文实际全部刺激符号。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是“一条反馈学会六条全新路径”",
+                "text": "作者已在正式RL任务开始前训练路径知识。所谓非局部是本次反馈未经历相关路径，不是这些路径从未被看过。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "what-nonlocal-means",
+            "stage": "insight",
+            "title": "一次奖励怎样在本轮没有经过的路径上产生学习？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "如果起点A通向X的路径得到£1，那么这不仅改变A的价值估计，也改变对共同终点X的价值预期。因此下一回合即使出现B或C，参与者也可能更愿意走向X。作者根据逐次选择行为比较局部与非局部价值更新，并发现二者均有明显证据。"
+              },
+              {
+                "type": "formula",
+                "label": "局部与非局部的概念更新",
+                "expression": "Q_local ← Q_local + α_d δ;  Q_nonlocal(shared X) ← Q_nonlocal + α_n δ",
+                "meaning": "δ来自本轮终点价值新证据；这是便于理解的价值更新示意，强调相关未经历路径也可以被更新。",
+                "boundary": "非论文逐字公式；实际作者用更具体的试次行为模型估计局部/非局部学习率。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "迁移需结构",
+                "text": "如果参与者不知道B→X，就无法可靠地将A→X奖励用于B。对LLM同样需要先验证规则关系是否已经掌握，再研究反馈传播。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "need-gain",
+            "stage": "insight",
+            "title": "Need × Gain 到底是在选什么，而不是哪道题最难？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "Normative priority（Mattar & Daw 2018）",
+                "expression": "Priority(s,a)=Need(s)×Gain(s,a)",
+                "meaning": "Need表示未来需要这个状态的程度，Gain表示更新后能够提升未来决策价值的幅度。",
+                "boundary": "该乘积理论并非Science 2021首次提出；Science检验人类重放是否符合这套预测。"
+              },
+              {
+                "type": "formula",
+                "label": "Need理论形式",
+                "expression": "Need(s)=Σ_{k≥0} γ^k P(S[t+k]=s | π)",
+                "meaning": "即未来折扣访问次数的期望；论文实验用起点17/33/50%的出现频率提供Need操控。",
+                "boundary": "简化形式省略初始状态条件及状态表示差异；不等同直接把17%乘任意Loss。"
+              },
+              {
+                "type": "formula",
+                "label": "Gain：更新前后策略价值变化",
+                "expression": "Gain(s)=Σ_a (π_new(a|s)−π_old(a|s))Q_new(s,a)",
+                "meaning": "需要预测重放更新后决策会改善多少。不同于TD误差、置信度、错误率或任务难度。",
+                "boundary": "这是前人理论的概念式；在Science实验中Gain根据行为/价值模型估计，并非独立随机操纵。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "对照",
+                  "原文设置",
+                  "统计观察"
+                ],
+                "rows": [
+                  [
+                    "Need",
+                    "17% /33% /50%不同起点出现概率",
+                    "单独Need对非局部学习率的差异未显著（p=0.16）"
+                  ],
+                  [
+                    "Gain",
+                    "基于动态奖励价值与参与者行为模型估计",
+                    "高Gain学习率0.79，低Gain0.37（p=0.020）"
+                  ],
+                  [
+                    "Need×Gain",
+                    "高/低联合Priority路径比较",
+                    "高乘积路径160ms反向重放更强（t(28)=3.30，p=0.003）"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把Gain偷换成错误严重程度",
+                "text": "如果未来任务已经能稳定做对，当前误差可能很大但更新价值不一定大。RSI中Gain的训练前估计还需避免查看B测试答案。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "two-replay-directions",
+            "stage": "design",
+            "title": "MEG怎样区分正向与反向神经重放？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者先在独立图片阶段训练MEG状态分类器，使其可以识别18个路径中间刺激，再分析反馈后是否出现按转移顺序的连续状态重新激活。不同速度的序列由状态间滞后τ扫描确定，采用非参数置换检验控制多次比较。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "类型",
+                  "解码方向与典型相邻滞后",
+                  "内容及关联"
+                ],
+                "rows": [
+                  [
+                    "Forward replay",
+                    "顺着本轮经历路径的方向，峰值约30ms",
+                    "倾向于重现局部经历，未显著解释非局部学习率"
+                  ],
+                  [
+                    "Backward replay",
+                    "逆路径方向，峰值约160ms",
+                    "更偏向非局部路径，和更高的非局部价值学习率相关"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "160ms不是重放整条路径的总时长",
+                "text": "它是相邻状态解码激活之间的时间间隔。EEG/MEG序列检测不等于可以读出明确的“逐条思维文本”。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "learning-model",
+            "stage": "design",
+            "title": "如何连接神经重放与后续行为学习？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者比较回报之后是否检测到某条非局部路径的显著重放，以及未来选择行为对该路径价值的吸收程度。采用逐试次计算RL模型推断非局部学习率，分开局部/非局部路径、反向/正向重放。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "机制比较",
+                  "估计非局部学习率差异",
+                  "统计结论"
+                ],
+                "rows": [
+                  [
+                    "160ms反向有/无重放",
+                    "0.70 vs 0.61，差0.09",
+                    "p=0.023"
+                  ],
+                  [
+                    "30ms正向有/无重放",
+                    "差0.01",
+                    "p=0.457，不显著"
+                  ],
+                  [
+                    "局部路径是否受同样调节",
+                    "没有一致显著增强",
+                    "不应把所有方向都视为非局部学习证据"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "行为模型的学习率不是直接观测的脑变量",
+                "text": "增强关联可支持候选机制，但没有随机打断重放、排除共同原因，因此不是“反向重放是必要原因”的完整证明。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "human-results",
+            "stage": "result",
+            "title": "Science到底证明了什么？哪些解释还只是推测？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "证据环节",
+                  "实际证据",
+                  "最准确解释"
+                ],
+                "rows": [
+                  [
+                    "行为",
+                    "同一结果影响没有在当前回合经历的路径选择",
+                    "人类能够利用已有路径结构进行非局部价值学习"
+                  ],
+                  [
+                    "MEG序列",
+                    "30ms正向与160ms反向分别有不同状态内容",
+                    "重放方向、内容与奖励后阶段分离"
+                  ],
+                  [
+                    "行为与MEG联合",
+                    "160ms反向重放出现时非局部学习率更高",
+                    "脑重放与高效学习显著相关"
+                  ],
+                  [
+                    "优先级",
+                    "高Need×Gain候选更强反向重放",
+                    "符合规范性重放选择预测"
+                  ],
+                  [
+                    "缺失证据",
+                    "没有随机增强/抑制神经重放",
+                    "不能声称已经证明重放是唯一因果机制"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "一句话核心结论",
+                "text": "在已学会状态关系的人类任务中，奖赏后反向重放的内容和强度与非局部价值学习、未来决策价值相一致。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "llm-phenomena",
+            "stage": "result",
+            "title": "LLM里面有没有类似“单点纠正、相关题受益”的现象？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "论文（原始来源）",
+                  "观察/干预",
+                  "可支持什么、不可支持什么"
+                ],
+                "rows": [
+                  [
+                    "RippleEdits · TACL 2024 · https://aclanthology.org/2024.tacl-1.16/",
+                    "约5K事实编辑及逻辑后果；参数编辑常不能让相关事实一致更新；ICL基线表现较好",
+                    "多跳传播是明确测量对象，但ICL成功≠权重中已经传播"
+                  ],
+                  [
+                    "MQuAKE · EMNLP 2023 · https://aclanthology.org/2023.emnlp-main.971/",
+                    "编辑一个事实后问需要它参与推理的多跳问题；传统编辑失败、MeLLo外置记忆改善",
+                    "已知推理链也可能不能利用新事实；外置记忆≠参数内化"
+                  ],
+                  [
+                    "One-Shot RLVR · NeurIPS 2025 · https://papers.nips.cc/paper_files/paper/2025/hash/b1ea3f93167c55f3fc2999b68a170ff3-Abstract-Conference.html",
+                    "一条训练输入经过大量rollout与奖励更新；MATH500 36.0%→73.6%，六基准17.6%→35.7%",
+                    "少量训练问题可带来广泛收益，但不是单次奖励"
+                  ],
+                  [
+                    "One-Shot OPD · arXiv 2026 · https://arxiv.org/abs/2609.04172",
+                    "一条query反复生成的轨迹覆盖了全数据OPD访问状态的71.5%，16条达98.9%；密集教师监督",
+                    "状态覆盖和规则传播不能混同；仍有数百步训练"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "三种非局部不是一种指标",
+                "text": "ICL是上下文中使用新信息，知识编辑是参数事实更新，RLVR/OPD是多次轨迹与梯度后的测试提升。与人类只见一次当前反馈的价值学习口径不同。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "llm-mechanisms",
+            "stage": "result",
+            "title": "LLM已有哪几种促进传播的方法？我们不能再把什么称为创新？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "机制论文",
+                  "论文做了什么",
+                  "与当前I8方向的实际碰撞"
+                ],
+                "rows": [
+                  [
+                    "GradSim · EMNLP 2024 · https://aclanthology.org/2024.emnlp-main.700/",
+                    "事实/相关知识的梯度余弦与编辑Ripple成功明显正相关",
+                    "“利用梯度相似预测传播”已有直接工作"
+                  ],
+                  [
+                    "ChainEdit · ACL 2025 · https://aclanthology.org/2025.acl-long.665/",
+                    "从知识图谱抽取逻辑规则，自动构造相互关联的编辑簇",
+                    "显式Rule-Graph传播已有方法；额外编辑相关知识不等于被动传播"
+                  ],
+                  [
+                    "CaKE · EMNLP 2025 · https://aclanthology.org/2025.emnlp-main.572/",
+                    "借助推理回路发现，只用少量选择样本提升编辑知识的多跳使用",
+                    "推理链是否真正利用新事实与仅记住事实不同"
+                  ],
+                  [
+                    "LEAP · EMNLP 2026 · https://aclanthology.org/2026.emnlp-main.2150/",
+                    "MAML式元学习更适合单跳梯度编辑的参数，改善未直接编辑的多跳问题",
+                    "“使参数更可传播”已存在；需在多轮RSI/数学规则/未来可学习性中找新边界"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "现有工作很强，不能只做新名字的Graph Replay",
+                "text": "最近邻不是一个模型模块，而是：参数事实编辑传播失败（RippleEdits/MQuAKE）、主动逻辑链传播（ChainEdit/CaKE）与更可传播初始化（LEAP）。I8要保持独立的未见规则题净收益预测。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "grad-propagation",
+            "stage": "result",
+            "title": "为什么修正A不一定改变B？参数梯度的一阶解释",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "GradSim · Qin et al. 2024",
+                "expression": "GradSim(A,B)=⟨∇θL_A,∇θL_B⟩ / (||∇θL_A||·||∇θL_B||)",
+                "meaning": "相关B损失的梯度和编辑A损失的梯度越对齐，一阶局部更新越可能同时降低B损失；原工作观察到明显正相关。",
+                "boundary": "获得∇θL_B通常需要B监督答案，属于可见性限制；不能以B最终测试标签计算梯度后再声称训练前预测成功。"
+              },
+              {
+                "type": "formula",
+                "label": "一阶Taylor展开（教学推导）",
+                "expression": "θ′=θ−α∇θL_A;  ΔL_B ≈ −α⟨∇θL_B,∇θL_A⟩",
+                "meaning": "A上的一次小步SGD更新怎样影响B：内积正时B损失一阶下降，负时可能伤害B。",
+                "boundary": "仅近似小步更新，实际多轮Adam/LoRA/采样RL和生成正确率的变化不能由此完全保证。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "理论很好，但别拿未来答案做输入",
+                "text": "如果用B正确标签计算梯度，则该指标不是无信息的训练前预测器。必须另设独立开发集代理或不含标签的结构特征来估计传播范围。"
+              }
+            ],
+            "order": 4
+          },
+          {
+            "id": "rsi-experiment",
+            "stage": "next",
+            "title": "I8：一次纠错的非局部净迁移怎样做最便宜的因果实验？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "Pre：冻结结构关系证据",
+                    "text": "同一模型快照先在独立诊断题验证A/B规则关系是否掌握；按关系已掌握/未掌握分层，避免用最终测试答案判定。"
+                  },
+                  {
+                    "title": "Feedback：只对A提供相同的正确纠错",
+                    "text": "控制反馈内容/次数、采样/rollout数量、梯度更新次数、token和验证器；B与C的正确答案绝不能进入A训练。"
+                  },
+                  {
+                    "title": "Post：三类测试",
+                    "text": "A原题修复；B未见同规则不同模板和异结构题；C表面相近但规则不同题，用于捕捉错误传播。"
+                  },
+                  {
+                    "title": "分离三个学习表面",
+                    "text": "分别报告ICL上下文即时迁移、可检索Skill/Memory的复用、撤除帮助后的LoRA参数净迁移，不能加总。"
+                  },
+                  {
+                    "title": "Priority：训练前估计传播目标",
+                    "text": "使用只依赖前测和开发集的信息估计规则置信度、Need和Gain；与随机、相似度、单独Need/Gain/安全梯度代理等同预算比。"
+                  },
+                  {
+                    "title": "迁移与长期结果",
+                    "text": "锁定规则族与模板族不重合的测试集，并在之后其他任务训练后测B是否保持；报告总成本与旧能力退化。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "干预组",
+                  "固定条件",
+                  "判断什么"
+                ],
+                "rows": [
+                  [
+                    "关系掌握 × 正确反馈",
+                    "只更新A，B从未训练",
+                    "是否依赖已知共享规则"
+                  ],
+                  [
+                    "关系未掌握 × 同样反馈",
+                    "相同A训练预算",
+                    "传播缺失是否因为结构未知"
+                  ],
+                  [
+                    "错误关系 × 正确反馈",
+                    "受控误关系，仅作分析",
+                    "是否出现误传播而非真正正迁移"
+                  ],
+                  [
+                    "关系掌握 × 无反馈/错误反馈",
+                    "不把误反馈写入真实生产模型",
+                    "排除一般结构提示，量化错误反馈风险"
+                  ],
+                  [
+                    "仅ICL / Skill / LoRA",
+                    "分别独立评测，不同表面",
+                    "哪类收益是真正参数迁移"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "最重要的新科学问题",
+                "text": "同样的一次纠正，结构知识、梯度兼容性、rollout状态覆盖三者分别解释多少未训练B的净提升？先证明受控交互，再考虑动态优先Replay。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "i8-vs-i12",
+            "stage": "next",
+            "title": "I8、I12、DiscoRL分别研究哪一层，如何避免撞题？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "研究方向",
+                  "被改变的东西",
+                  "真正验证的下一轮能力"
+                ],
+                "rows": [
+                  [
+                    "I8 · 错误可学习性",
+                    "选哪条错误A、固定纠错器",
+                    "不直接训练B时，B能否因A纠错而真正变好"
+                  ],
+                  [
+                    "I12 · 前置知识瓶颈",
+                    "先补共同前置P，再用固定预算训练B",
+                    "B后续可学习性是否被解锁，不能用B前测收益替代"
+                  ],
+                  [
+                    "DiscoRL/学习规则进化",
+                    "参数更新规则/目标本身",
+                    "同样训练输入下换学法，未来C是否更易学"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "此处是项目研究组织判断，不是人类论文的实验结论",
+                "text": "Science只提供关系驱动的非局部学习与重放优先级证据；I8与I12/DiscoRL的比较属于我们对RSI论文组合的设计。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "source-boundaries",
+            "stage": "next",
+            "title": "证据清单：哪些论文先精读，哪些不应直接复刻？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "优先级",
+                  "文献",
+                  "我们需要的可借鉴机制"
+                ],
+                "rows": [
+                  [
+                    "P0",
+                    "GradSim · EMNLP 2024",
+                    "一阶梯度对齐与事实Ripple作用之间的关系，尤其标签可见性与过度传播"
+                  ],
+                  [
+                    "P0",
+                    "LEAP · EMNLP 2026",
+                    "MAML型编辑适配参数，结构关系训练前后哪些桥接变量发生改变"
+                  ],
+                  [
+                    "P0",
+                    "One-Shot RLVR · NeurIPS 2025",
+                    "只给一题为何会产生跨题收益，以及rollout/探索/格式修复的对照"
+                  ],
+                  [
+                    "P1",
+                    "One-Shot OPD · arXiv 2026",
+                    "状态覆盖71.5%→98.9%的测量，区分监督密度与规则传播"
+                  ],
+                  [
+                    "P1",
+                    "MQuAKE / RippleEdits / ChainEdit / CaKE",
+                    "知识编辑和规则传播的强基线，不能把自然语言相似性冒充因果规则共享"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "创新边界",
+                "text": "不推荐单开泛用 Graph Replay、只调 Need×Gain 权重或重复已有编辑初始化优化。先保持I8，待实测出现独立新机制后再考虑成稿分化。"
+              }
+            ],
+            "order": 3
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.science.org/doi/10.1126/science.abf1357",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7610948/",
+        "code": "https://github.com/YunzheLiu/RLReplay"
+      }
+    },
+    {
       "id": "nature2026-narrow-misalignment-betley",
       "short_title": "Emergent Misalignment · Nature 2026",
       "title": "Training large language models on narrow tasks can lead to broad misalignment",
