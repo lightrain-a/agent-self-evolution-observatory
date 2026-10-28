@@ -45,6 +45,18 @@ PAGE = {
 <div class="table-wrap"><table><thead><tr><th>区分什么</th><th>为什么重要</th><th>怎样在 RSI 中验证</th></tr></thead><tbody><tr><td>文本新颖</td><td>换词、换变量、乱序仍可能是旧内容的重复</td><td>保留 Token/n-gram 相似度与模糊重复审计</td></tr><tr><td>规则新颖</td><td>外观变化不一定引入新的适用条件；相近措辞也可能包含关键反例</td><td>固定原题数量，按规则族与反例条件分组</td></tr><tr><td>能力新增</td><td>记住文本与能在新题中独立应用，是两种不同结果</td><td>真实更新并撤辅后，分别测同规则与跨规则新题净增益</td></tr></tbody></table></div>
 <p><b>与当前 Idea 的关系：</b><a href="idea-i5.html">I5</a> 互教不能把不同题面当新增知识；<a href="idea-i6-failure-value.html">I6</a> 不宜把不同失败轨迹直接当不同规则；<a href="i8.html">I8</a> 应排除原题/近改写题记忆；<a href="idea-i9-practice-switching.html">I9</a> 应验证交错主题确实不同规则。<a href="reading-notes.html#deep-mosaic-memory-2026-shilov"><b>进入10节完整精读与受控实验 →</b></a>；<a href="reading-cards.html#mosaic-memory-2026-shilov">阅读C-I-D-R速览卡片</a>。</p>
 <div class="note"><b>证据边界：</b>原论文的目标是文本记忆、隐私风险、去重与基准去污染；“模糊重复不是新知识”是对RSI的待验证推断，不能直接代替新规则后测。</div>'''),
+("rote-learning","ICLR 2026｜先记忆再泛化：能调用旧事实，不等于会做两跳推理",'''
+<p><b>Challenge：</b>Wu 等的 <i>Rote Learning Considered Useful</i>（ICLR 2026）研究先用无语义 token [X] 记住一批实体关联，再以少量自然语言示范学会关系含义。关键区别是：<strong>Phase 2 的“未见事实”早在 Phase 1 已被模型记忆过</strong>，因此不是学会全训练未出现的新事实。[[M24]]</p>
+<p><b>Insight / Design：</b>同类事实共享 [X]，少量语义训练可能一次性让许多已记忆事实可通过不同问法取回。作者在8个LLM的合成事实设置中测试 Phase 1 参数记忆、Phase 2 语义映射和后续语义调用；这和 Agent 把轨迹放进外部 Memory 的做法不是一回事。</p>
+<div class="table-wrap"><table><thead><tr><th>任务 / 条件</th><th>论文结果</th><th>应怎样理解</th></tr></thead><tbody>
+<tr><td>简单语义访问：Phase 2 50条事实、1种语义提示</td><td><b>76%</b> 生成准确率</td><td>第一阶段已记忆、第二阶段留出的事实可以被重新调用</td></tr>
+<tr><td>两跳：不做 Phase 1 记忆 → 记忆20 epochs</td><td>生成 <b>14% → 36%</b>；多选 <b>8% → 16%</b></td><td>记忆加深能帮助一点组合推理，但成功率仍很低</td></tr>
+<tr><td>ICL：两条原始事实直接出现在上下文</td><td>两跳约 <b>95%</b></td><td>说明任务在事实直接可见时容易得多；但ICL的信息访问方式与参数内取回不同，不能当作严格同条件优劣排序</td></tr>
+</tbody></table></div>
+<p><b>我们对论文的判断：</b>“先记忆再少量语义解释”的可控现象成立，但不能据此声称学到了可靠复杂推理能力。2026年 EMNLP Findings 专门研究原子事实都知道却不能两跳组合的机制；2025年 EMNLP 的 <i>Reason to Rote</i> 也研究记忆与推理的关系，但与本篇的两阶段语义映射问题不同。[[M25]][[M26]]</p>
+<p><b>对 RSI 的启发：</b>模型记下失败轨迹，不代表它之后能够组合旧经验解决新任务。需要把事实记忆、语义访问、独立两跳与旧能力保持分开评估，尤其区分参数内化与外置检索；这与 <a href="idea-i7-learning-order.html">I7 学习顺序</a>和 <a href="i8.html">I8 规则迁移</a>有关，但不急于新立方向。<a href="reading-notes.html#deep-rote-learning-iclr2026-wu">进入完整精读：结果、边界与3项决定性实验</a>；<a href="reading-cards.html#rote-learning-iclr2026-wu">查看C-I-D-R卡片</a>。</p>
+<div class="note"><b>实验状态：</b>这里复述的是作者报告的数据，未进行独立复现；ICLR论文里 Section 6.2 已把复杂推理拓展称为初步证据，不能把两跳36%写成强推理结果。</div>
+'''),
 ("already","这些思想已经部分进入 AI",'''<p>课程、知识追踪和学习型教学早已转化部分教育学问题；SOAR、ActiveSaddler、EduardoRL 又进入 LLM 与 Agent 场景。贡献须是<strong>新增机制或适用条件</strong>，而不是首次使用“自学、老师、考试”。[[M03]][[M05]][[M06]][[S16]][[S17]][[S19]]</p><p>EduardoRL 已遮蔽教师话语。我们的候选不是重做这一后测，而是问：后续不同能力学习带来干扰时，怎样组织<strong>帮助—独立练习—巩固</strong>的完整序列？须与短程目标、固定渐隐及普通重放直接比较。</p>'''),
 ("example","贯穿例子：分页工具调用",'''<div class="example"><h3>失败现象</h3><p>Agent 处理第一页却漏后续页。完整调用示范使当前任务成功，但换数据和 API 名称又失败。</p><h3>四种学习动作</h3><p><b>A：</b>给完整示范；<b>B：</b>仅提示检查 continuation token；<b>C：</b>先要求提出终止条件再给反例；<b>D：</b>无提示独立尝试。随后使用同一个固定更新器。</p><h3>三个层次</h3><p>原任务完成率；不同名称、页数的新任务独立成功率；学习另一种分页 / 重试机制后，原能力是否保留。近迁移不能仅替换答案数字；远迁移需改变工具组合、依赖或恢复条件。</p><h3>防止偷换概念</h3><p>保留技能文件时报告系统层面学习。只保留 LoRA 且清空会话与技能时，才评价参数学习。分栏报告，不相加为同一能力分。</p></div>'''),
 ("negative","必须允许的相反结果",'''<p><b>强示范最好：</b>强教师示范加固定蒸馏可能在所有保持测试上占优。接受结果，不强行宣称“适度困难”有效。</p><p><b>延迟只是更多训练：</b>控制曝光、梯度步数和更新顺序后差异若消失，不能归因于间隔机制。</p><p><b>只有上下文记住了：</b>清空会话后增益消失，就属于上下文适应，不能改写为持久自进化。</p><div class="note">人类学习效应有任务、先备知识和教学设计条件。机器研究也要找适用边界，而不是只挑支持类比的例子。</div>''')]

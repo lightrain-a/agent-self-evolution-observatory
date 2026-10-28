@@ -85,7 +85,11 @@ def validate(p: dict) -> None:
     assert bool(arxiv) != bool(doi), f"Specify one primary identifier (arXiv or DOI): {p['id']}"
     if arxiv:
         assert re.fullmatch(r"\d{4}\.\d{4,5}", arxiv), p["id"]
-        assert p["links"]["html"].startswith(f"https://arxiv.org/html/{arxiv}"), p["id"]
+        if p.get("conference_official_primary"):
+            assert p["publication"].startswith("ICLR 2026") and p["links"]["html"] == p["official_url"], p["id"]
+            assert p["official_url"].startswith("https://proceedings.iclr.cc/paper_files/paper/2026/"), p["id"]
+        else:
+            assert p["links"]["html"].startswith(f"https://arxiv.org/html/{arxiv}"), p["id"]
     else:
         assert re.fullmatch(r"10\.\d{4,9}/[-._;()/:A-Za-z0-9]+", doi), p["id"]
         assert p["links"]["html"] == p["official_url"], f"Published journal URL mismatch: {p['id']}"
@@ -122,9 +126,11 @@ def reading_card(p: dict) -> str:
     others = len(p["institutions"]) - 1
     organization_line = esc(p["lead_institution"]) + (f' <span>等 {len(p["institutions"])} 家署名机构</span>' if others else "")
     all_institutions = " · ".join(p["institutions"])
+    publication_badge = (p['publication'].split('·')[0].strip() if p.get('conference_official_primary')
+        else 'arXiv:'+p['arxiv'] if p.get('arxiv') else p['publication'].split('·')[0].strip())
     return f'''<article class="reading-card" id="{esc(p['id'])}" data-paper-tags="{esc('|'.join(p['tags']))}" data-question-coverage="{esc(coverage)}">
   <div class="reading-card-head">
-    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>{esc('arXiv:'+p['arxiv'] if p.get('arxiv') else p['publication'].split('·')[0].strip())}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}</div>
+    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>{esc(publication_badge)}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}</div>
     <h3>{esc(p['short_title'])}</h3>
     <p class="reading-full-title">{esc(p['title'])}</p>
     <p class="reading-institution"><b>发表单位（作者署名）</b> {organization_line}</p>

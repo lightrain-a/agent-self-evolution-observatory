@@ -263,6 +263,9 @@ def main():
           'Deep-read evidence provenance caveat missing')
     check(all(
         (p.get('arxiv') and p['links']['html'].startswith('https://arxiv.org/'))
+        or (p.get('arxiv') and p.get('conference_official_primary') is True
+            and p.get('official_url') == p['links']['html']
+            and p['official_url'].startswith('https://proceedings.iclr.cc/paper_files/paper/2026/'))
         or (p.get('doi') and p.get('official_url') == p['links']['html']
             and p['official_url'].startswith('https://'))
         for p in cards
@@ -397,6 +400,21 @@ def main():
     check('id="hypothesis-testing"' in learn_sci and
           'idea-i9-practice-switching.html#future-question' in learn_sci,
           'Motor-learning mechanism must link to I9 future learnability')
+    rote = next((p for p in cards if p['id']=='rote-learning-iclr2026-wu'), None)
+    check(rote is not None and rote.get('arxiv')=='2507.21914' and rote.get('conference_official_primary') is True,
+          'ICLR 2026 Rote Learning reading note must link the official published version')
+    check(rote['links']['html'].startswith('https://proceedings.iclr.cc/') and
+          len(rote.get('deep_read',{}).get('sections',[]))>=12,
+          'Rote Learning requires a full source-grounded deep read')
+    rote_html=notes_html.split('id="deep-rote-learning-iclr2026-wu"',1)[-1]
+    check(all(t in rote_html for t in ('36%', '16%', '95%', '76%', '14%', 'ICL')),
+          'Rote Learning must present simple success, two-hop weakness and information-mismatch caution')
+    check('id="rote-learning"' in learn_sci and
+          all(f'href="references.html#{ref}"' in learn_sci for ref in ('M24','M25','M26')),
+          'Rote Learning needs critical source notes and two-hop closest work')
+    check('deep-rote-learning-iclr2026-wu' in overview and
+          'id="rote-learning-iclr2026-wu"' in card_html,
+          'Rote Learning must be reachable from homepage and compact card')
     mosaic = next((p for p in cards if p['id']=='mosaic-memory-2026-shilov'), None)
     check(mosaic is not None and mosaic.get('doi')=='10.1038/s41467-026-68603-0',
           'Mosaic Memory Nature Communications card DOI missing')

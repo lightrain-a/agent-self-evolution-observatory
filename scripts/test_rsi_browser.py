@@ -129,6 +129,13 @@ def main():
         check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-story-step').textContent.includes('难在哪里')"),
               'ACL conference reading card missing four-stage readable summary')
         screenshot('reading-cards-desktop.png')
+        check(js("return document.querySelector('#rote-learning-iclr2026-wu .reading-metadata').textContent.includes('ICLR 2026')"),
+              'Published Rote Learning card must name ICLR rather than looking like an unpublished preprint')
+        check(js("return document.querySelector('#rote-learning-iclr2026-wu .reading-story-step[data-story-stage=result]').textContent.includes('36%')"),
+              'Rote Learning overview must not hide the two-hop negative result')
+        js("document.querySelector('#rote-learning-iclr2026-wu').scrollIntoView({block:'start'})")
+        time.sleep(.7)
+        screenshot('reading-rote-learning-card-desktop.png')
         js("document.querySelector('#acl2026-good-curriculum-jia').scrollIntoView({block:'start'})")
         time.sleep(.6)
         screenshot('reading-acl2026-card-desktop.png')
@@ -173,6 +180,10 @@ def main():
             expected_stages='challenge,insight,design,result'+(',related' if has_related else '')+',next'
             check(actual_stages==expected_stages,
                   'Paper long read must follow C-I-D-R, optional Related Work, then future questions: '+paper['id'])
+        check(js("return document.querySelector('#deep-rote-learning-iclr2026-wu--stage-result').textContent.includes('36%') && document.querySelector('#deep-rote-learning-iclr2026-wu--stage-result').textContent.includes('16%')"),
+              'Two-hop reasoning limits absent from the new full reading note')
+        check(js("return document.querySelector('#deep-rote-learning-iclr2026-wu--stage-next').textContent.includes('RSI')"),
+              'Rote Learning must identify what would need actual RSI experiments')
         check(js("return document.querySelectorAll('#deep-rsi-anything-2610-13912--stage-related > .deep-stage-details > .deep-related > .deep-related-matrix tbody tr').length===7"),
               'RSI-Anything closest-work table should include seven papers')
         check(js("return document.querySelectorAll('#deep-optimal-practice-2020-eglington--stage-related .deep-related-matrix tbody tr').length===4"),
