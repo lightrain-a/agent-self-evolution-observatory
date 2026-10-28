@@ -69,6 +69,17 @@ PAGE = {
 <p><b>最后验证重访。</b>将当轮预计低收益的困难题随机分为“持续采集失败”“离开且不返回”“暂缓、在前置能力/检查点发生预定义变化后重访”。先固定重访触发条件与后续任务流，再用未见题测净收益，避免按测试答案挑时机。只有出现重访后明显增益，才能说“暂停比继续死磕更好”；否则只支持任务切换而不支持重访。</p>
 <p><b>统一结果：</b>未来未见题的撤辅增益 / 总计算成本、旧能力回归、过早停止率、错过可恢复失败的比例，以及重访的增量收益。教师答案、训练器、示范顺序、更新步数都固定；探索阶段可记录不同长度，但评测须有严格等 token / FLOPs 对照。</p>
 """),
+        ("science2024-memory-tagging", "Science 2024｜哪些经历只是被记下，哪些真正值得后续巩固？", """
+<p><b>动物实验而非LLM：</b>Yang 等（<i>Science</i>，2024）记录6只小鼠、26个会话、4,469个海马CA1神经单元；借助seqNMF/UMAP解码相同迷宫不同试次的群体活动。约33%的清醒SPW-R具有显著重放序列。在5只小鼠的16个会话中，清醒时被重放较多的五试次经历块，在之后睡眠中也更常被重放（R=0.86，p&lt;3.1×10<sup>−34</sup>）。作者将其解释为候选的清醒“记忆标记”；<strong>没有随机操作特定重放，也没有测试成功/失败经历的长期行为收益。</strong> <a href="reading-notes.html#deep-sharp-wave-ripples-science2024-yang">进入完整精读、Fig.1–4数据与样本层级 →</a></p>
+<div class="table-wrap"><table><thead><tr><th>应该分开的三个状态</th><th>可观察证据</th><th>I6尚未完成的实验</th></tr></thead><tbody>
+<tr><td><b>经历发生</b></td><td>真实执行轨迹与反馈有完整原始出处</td><td>冻结轨迹池，匹配成功/失败、题目与原始预算</td></tr>
+<tr><td><b>进入巩固候选</b></td><td>刚结束时的独立信号预测未来效用，而非只由成功/失败标签决定</td><td>随机比较标记器/奖励/最新/随机等同容量选择策略</td></tr>
+<tr><td><b>实际巩固产生能力</b></td><td>Memory调用/Skill执行/LoRA更新后，独立未来任务能否增益且不伤旧能力</td><td>在同一经历上正交比较原始Episode、一次抽象、反复合并、真实权重更新</td></tr>
+</tbody></table></div>
+<p><b>最近邻研究必须正面比较：</b><a href="https://aclanthology.org/2026.acl-long.27/" target="_blank" rel="noopener noreferrer">Xiong 等 · ACL 2026</a> 已系统研究query–execution原始记忆的选择性增加、删除、experience-following、错误传播和利用下游调用质量做清退；<a href="https://arxiv.org/html/2605.12978v2" target="_blank" rel="noopener noreferrer">Zhang 等 · 2026 arXiv v2</a> 发现对真实有用的经历反复做文本抽象/合并，也可能丢失适用条件、形成错误规则，原始轨迹保存是很强的简单对照。两篇都不涉及小鼠SPW-R，也未证明LLM参数必然遗忘。</p>
+<p><b>研究组织：</b>I6仍先固定同题与终点，判断不同失败过程的纠错价值；这里仅作为<b>后续经验巩固的机制分支</b>，不把I6改成通用Memory工程。<a href="theory-notes.html#awake-ripple-memory-tagging">Memory Tagging原文证据</a> · <a href="theory-notes.html#experience-tag-vs-consolidation-utility">候选净收益与随机实验设计</a>。</p>
+<div class="note">关键Go/No-Go：当选择数量、写回方式及总token/FLOPs固定后，如果“先标记哪段经历”的预测能力不能稳定解释未来独立净收益，就不增加昂贵的Memory Consolidator。不能把“睡眠再次重放”解释为“独立能力一定变好”。</div>
+"""),
         ("related", "最近邻：做到了哪里、我们还要回答什么", """
 <div class="table-wrap"><table><thead><tr><th>相关工作</th><th>已研究的关系</th><th>I6 的独立问题</th></tr></thead><tbody>
 <tr><td><b>Why SFT Fails to Learn · ACL 2026</b> [[M27]]</td><td>训练完成后重测已给监督样本，并按知识缺口、监督冲突、早期遗忘等五种可能模式分析；补救后恢复训练题表现。</td><td>I6 不研究“哪一类根因需要哪种补救”。将知识准备、监督冲突与训练位置作为<b>匹配/分层变量</b>，在同一题、同一错误终点、同反馈与更新预算下，只比较失败过程本身的额外跨题收益。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">完整证据</a>。</td></tr>

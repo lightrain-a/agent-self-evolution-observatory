@@ -64,6 +64,19 @@ def main():
               'Theory evidence tier missing: '+entry['id'])
     check({'paper-mechanism','teaching-derivation','rsi-hypothesis'}<=
           {t['status'] for t in theory_entries},'Theory source vs derivation vs hypothesis not distinguished')
+    check({'awake-ripple-memory-tagging','experience-tag-vs-consolidation-utility'}<=theory_ids,
+          'Science 2024 memory tagging theory missing')
+    mouse_paper=next((p for p in cards if p['id']=='sharp-wave-ripples-science2024-yang'),None)
+    check(mouse_paper is not None and mouse_paper.get('doi')=='10.1126/science.adk8261'
+          and len(mouse_paper.get('deep_read',{}).get('sections',[]))>=10,
+          'Science 2024 mouse SPW-R deep read missing')
+    check('deep-sharp-wave-ripples-science2024-yang--core-results' in deep_page
+          and 'theory-notes.html#awake-ripple-memory-tagging' in deep_page,
+          'Science 2024 reading-to-theory jump missing')
+    i6_text=(ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8')
+    check('id="science2024-memory-tagging"' in i6_text
+          and 'theory-notes.html#experience-tag-vs-consolidation-utility' in i6_text,
+          'I6 science memory-tagging and future-utility theory entry missing')
     check({'nonlocal-credit-assignment','need-gain-prioritized-replay',
            'single-edit-gradient-transfer','nonlocal-net-transfer-i8'}<=theory_ids,
           'Missing reusable Science/LLM nonlocal-learning theory')

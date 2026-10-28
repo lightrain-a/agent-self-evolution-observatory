@@ -31,6 +31,653 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "sharp-wave-ripples-science2024-yang",
+      "short_title": "Hippocampal Memory Tagging · Science 2024",
+      "title": "Selection of experience for memory by hippocampal sharp wave ripples",
+      "authors": "Wannan Yang; Chen Sun; Roman Huszár; Thomas Hainmueller; Kirill Kiselev; György Buzsáki",
+      "lead_institution": "New York University / NYU Grossman School of Medicine",
+      "institutions": [
+        "New York University / NYU Grossman School of Medicine",
+        "Mila – Quebec AI Institute, Montréal"
+      ],
+      "institution_source": "PubMed PMID 38547293 · Author affiliations / Science journal official metadata (Mila is Chen Sun's affiliation)",
+      "publication": "Science · 383(6690):1478–1483 · 2024-03-29 (online 2024-03-28)",
+      "doi": "10.1126/science.adk8261",
+      "official_url": "https://www.science.org/doi/10.1126/science.adk8261",
+      "first_posted": "2024-03-28",
+      "version": "Science 同行评审正式版，2024-03-28 online / 2024-03-29 issue",
+      "read_on": "2026-10-29",
+      "reading_level": "Science 正文、PubMed图注（含Fig.2–4样本/统计口径）、作者主页与公开PMC正文核对；未复现神经信号解码",
+      "tags": [
+        "Mouse Hippocampus",
+        "Sharp-Wave Ripples",
+        "Memory Tagging",
+        "Awake Replay",
+        "Sleep Replay",
+        "seqNMF",
+        "UMAP",
+        "Selective Consolidation",
+        "I6 Failure Experience Value"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "用同一迷宫中大量神经元的群体活动、空间/试次时间块解码与显著SPW-R判别，获得清醒与事后睡眠选择性重放的内容对应。",
+          "open_question": "清醒重放只是后续睡眠重放的强预测变量；研究未直接随机干预记忆标记，也未以长期行为记忆作为主终点。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "在外部环境和奖励相近的多次迷宫经历中，利用神经群体状态随试次漂移的特征，区分不同时间的经历块。",
+          "open_question": "研究不涉及LLM从新知识中更新语义模型、任务规则发现或新的模型自我改进算法。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "研究熟悉8字迷宫中相似路线与奖励试次，关注经历的选择性神经重放。",
+          "open_question": "未测任务分布外泛化，也未测LLM训练任务可达性。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "发现清醒SPW-R最常激活的经历块，在之后非REM睡眠中也更常被重放，支持候选的选择性记忆标记/巩固机制。",
+          "open_question": "睡眠重放不是长期行为记忆得分；未确定哪次成功/失败经历值得保存为Skill、Memory或权重。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "实验在控制水奖励及环境条件下观察神经事件与睡眠重放。",
+          "open_question": "未检验假反馈、错误经验污染、长程自我修改和记忆版本治理。"
+        }
+      },
+      "one_sentence": "6只小鼠的海马记录显示：在相似迷宫经历中，清醒时被SPW-R更多重放的经历块，后续睡眠也更常被重放（R=0.86）。",
+      "story": {
+        "challenge": "小鼠反复跑同一迷宫、得到相近奖励，大脑却没有平均巩固全部经历：怎样知道选中了哪一段？",
+        "insight": "不同时间经历具有可区分的海马群体放电模式；清醒时的SPW-R可能先为一部分经历留下后续巩固标记。",
+        "design": "6只小鼠、26会话、4,469个CA1细胞；通过seqNMF/UMAP区分位置和五试次时间块，再解码清醒与睡眠SPW-R内容。",
+        "result": "16会话/5小鼠中清醒与事后睡眠重放的经历块分布相关R=0.86；清醒重放是混合回归中最强预测变量。"
+      },
+      "problem": "重复经历通常看起来相近，研究者很难知道睡眠中究竟巩固哪一次经历。若神经活动只表示空间位置，就无法区分同一路线上不同时间发生的事件；因此必须先获得可靠的经历身份编码，再检验清醒重放是否预测事后睡眠的选择。",
+      "setup": "小鼠在8字形迷宫上执行交替方向行走任务，获得水奖励。在同一环境/近似奖励下重复走过许多试次。使用双面硅探针记录海马背侧CA1数百个神经元的活动，合计4,469个单元、6只小鼠、26个记录会话。通过seqNMF和UMAP等方法解码位置及按连续5次试次组成的经历块，分析奖励消耗时的清醒SPW-R，以及经历前和经历后的睡眠SPW-R。部分睡眠分布相关分析选取5只小鼠的16个会话。",
+      "updates": "研究测量的是小鼠海马神经事件与睡眠重放内容；没有修改任何LLM参数、Agent Skill或外部Memory。所谓“被标记”是作者依据神经重放对应关系提出的机制解释，并非随机施加标签或测量实际持久记忆成绩。",
+      "key_ideas": [
+        {
+          "name": "经验身份也可以被群体编码",
+          "summary": "海马状态表示位置的同时，随经历持续演化，五次连续试次的时间块有可解码的群体放电身份。",
+          "formula": "population activity → location + trial-block identity (5 trials/block)"
+        },
+        {
+          "name": "清醒SPW-R可能提供经验标签",
+          "summary": "奖励消耗时期并非所有SPW-R都是显著重放；符合重放准则者中可解码出具体路径及经历时间块。",
+          "formula": "Tag(e)≈awake SPW-R replay frequency for trial block e （教学表达）"
+        },
+        {
+          "name": "之后睡眠重放不是随机平均",
+          "summary": "在分析子集中，清醒与事后睡眠试次块重放分布强相关，超过事前睡眠、theta功率和随机试次对照的解释力。",
+          "formula": "corr(Replay_awake, Replay_post-sleep)=0.86; p<3.1e−34"
+        },
+        {
+          "name": "需要区分三种机器学习对象",
+          "summary": "是否值得进入巩固候选、是否应从原始轨迹抽象为Skill、写入后是否使未来任务真正变好，是三个因果独立的问题。",
+          "formula": "CandidateTag(e) → ConsolidationAction(e,m) → ΔIndependentFuturePerformance"
+        },
+        {
+          "name": "小鼠实验不等于成功/失败筛选",
+          "summary": "奖励条件大致保持一致，没有正交随机干预成功与失败类型、学习价值或Skill质量。",
+          "formula": "awake replay ↔ future sleep replay  ≠  tested utility of success vs failure"
+        }
+      ],
+      "evidence": [
+        "Science Fig.1/Methods：背侧CA1群体大规模记录，共4,469个单元、6只小鼠；26次行为/神经会话，8字迷宫上重复交替路线并获得水奖励。",
+        "Science Fig.2：将连续5个trial聚成trial block，利用群体状态漂移解码经历身份。真实与模拟放电数据的解码误差差异显著（p<1e−10，26会话/6小鼠）；并非可靠地逐个trial实现无误识别。",
+        "Science Fig.3：大部分清醒SPW-R发生在奖励区域；约33%的清醒SPW-R满足显著重放标准（与距离到神经流形/轨迹长度的打乱对照比较）。空间和经历块身份均可解码，四种分析方法得到一致趋势。",
+        "Science Fig.4F：经历后睡眠的SPW-R显著重放比例大于经历前睡眠（p<1e−5；26会话/6小鼠）。",
+        "Science Fig.4H：在16会话/5小鼠的符合条件子集上，清醒与经历后睡眠重放试次块分布Pearson R=0.86，p<3.1×10^-34；这些并非16只独立小鼠。",
+        "Science Fig.4I：混合效应模型的最强睡眠重放预测因子是迷宫清醒SPW-R重放（p<1e−26），Theta周期数量次之（p<1e−4），Theta功率（p=0.06）与事前睡眠重放、打乱试次的指标不显著。",
+        "PubMed Fig.4K：左右迷宫区域重放偏好排序的进一步验证见13会话/5小鼠子集；研究没有通过阻断某段SPW-R随机检验行为记忆收益。",
+        "两篇LLM最邻近背景：Xiong et al. ACL 2026（记忆增删与experience-following）；Zhang et al. arXiv:2605.12978v2（连续LLM文本抽象导致可用原始经验的记忆漂移）。两者都不直接验证小鼠SPW-R神经机制。"
+      ],
+      "boundaries": [
+        "实验动物为小鼠；没有LLM、Agent或人类受试者。神经事件的重放内容预测不能直接推断自然语言记忆管理算法应怎样做。",
+        "同一迷宫相近奖励条件下比较不同时间的经历，不是随机安排成功/失败、重大奖励或风险高低的优先保存实验。",
+        "4,469是跨会话记录到的神经元总数；26会话来自6只小鼠，R=0.86的子集只有16会话/5小鼠，不能把会话数冒充独立动物数。",
+        "连续5次试次归为一个trial block；高维/UMAP解码的是时间块，不能概括为能准确重放每一次独立经历的唯一身份。",
+        "约33%是达到显著重放判据的清醒SPW-R比例，不是33%的日常经历最终被成功巩固。",
+        "R=0.86表示清醒与事后睡眠的重放分布关系，不是实际长期记忆准确率、Task Success Rate或因果促进量。",
+        "没有随机阻断或增强特定经历清醒SPW-R并测量后续记忆成绩，不能说已证明“清醒标记导致长期记忆保存”。",
+        "外部Memory中保存原始经历、摘要Skill和权重LoRA更新属于不同存储/训练表面；不应仅以成功/失败标签或重放频率决定巩固。"
+      ],
+      "our_relevance": [
+        "I6失败轨迹价值：以“小鼠先重新激活某些经历，后续睡眠继续优先重放”提出候选选择信号与实际后续巩固结果分离的实验结构；不能只按一次成功/失败或即时奖励排序。",
+        "I8单点纠错传播：Science 2021探讨新奖赏传播到未经历路径，Science 2024则探讨哪些已编码经历进入后续睡眠重放。一个是传播内容，一个是选择内容，合并需要额外机器实验。",
+        "与ACL 2026形成最近邻：原始query-execution记录的增加/删除与下游调用效用已有实验；要新增科学价值，需测候选标签信号是否提高独立净收益而非复刻普通Add/Delete。",
+        "与arXiv 2026形成另一近邻：连续抽象可能造成信息损坏，故应保存原始Episode作可核验证据，在原样检索/一次抽象/反复改写之间做同输入同预算随机对照。",
+        "候选I6子案：tag→consolidate→future test的真实分支实验。模型/任务固定，将候选成功/失败经历随机分配不巩固/存原始Memory/编译Skill/LoRA写回，比较未来独立收益与误传播，旧能力损失和总成本。",
+        "仅当在控制当前奖励、任务难度、语义相似、历史检索频率之后，早期“值得巩固”信号能独立预测未来净收益，才形成新的长期RI/RSI研究贡献。"
+      ],
+      "next_test": "P0同快照、固定经历池，从已核验的成功/失败中分层取样，保留原始轨迹；随机分配 NoMemory / Episodic-only / One-shot Skill / Repeated Merge / LoRA Update，严格匹配上下文、训练与检索成本。分别测当场表现、独立未来任务、相邻不同规则误迁移、旧能力回归和延迟任务。P1训练前或刚经历结束时估计tag信号（规则新颖度、跨题适用条件、重复失败一致性、独立前置知识等），以留出任务验证它能否超越Reward/Success/Similarity/Recentness来预测正净巩固收益。选择与巩固分两项独立干预；任意抽象记录必须保留指向原始Episode的出处。",
+      "deep_read": {
+        "focus": "这是真实小鼠CA1神经记录研究：从同一路线不同试次的群体身份解码，到清醒奖励时SPW-R的内容，再到之后睡眠重放分布。审慎区分神经相关证据与AI系统的长期能力，特别注意n=26 sessions /6 mice与n=16 sessions/5 mice不是同一层级。",
+        "metric_summary_title": "五个原文证据锚点：样本、解码、清醒重放与睡眠选择",
+        "metric_summary_intro": "每个数字对应不同的分析单位；神经数据的p值不能解释为6只小鼠的独立跨动物显著性结论。未测长时任务成绩或未来Agent能力。",
+        "metric_summary": [
+          {
+            "family": "① 记录规模",
+            "metrics": "6 mice / 26 sessions / 4,469 CA1 units",
+            "meaning": "连续运行8字迷宫，双面硅探针采集群体放电。",
+            "result": "神经元为跨动物/会话合计，不能误写成单只同步4,469个。"
+          },
+          {
+            "family": "② 经历身份解码",
+            "metrics": "5 trials per block · seqNMF / UMAP",
+            "meaning": "同一位置不同时间的神经状态漂移可以用试次时间块编码。",
+            "result": "真实数据比模拟控制更准确（p<1e−10）。"
+          },
+          {
+            "family": "③ 清醒重放",
+            "metrics": "约33%显著 SPW-R replay",
+            "meaning": "在奖励区域附近，发生SPW-R但并非全部可解释为有效序列重放。",
+            "result": "显著事件可解码空间与经历块身份。"
+          },
+          {
+            "family": "④ 清醒→事后睡眠",
+            "metrics": "5 mice / 16 sessions · R=0.86",
+            "meaning": "比较经历块在清醒与事后睡眠中被重放的频率分布。",
+            "result": "Pearson p<3.1×10^-34；是重放分布相关性不是记忆成绩。"
+          },
+          {
+            "family": "⑤ 排除替代变量",
+            "metrics": "Mixed-effect analysis · Fig.4I",
+            "meaning": "比较清醒重放、theta功率/周期、事前睡眠、试次打乱。",
+            "result": "清醒SPW-R重放是最强预测项（p<1e−26）；theta周期亦有关。"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Sharp-Wave Ripple (SPW-R)",
+            "meaning": "海马中短暂同步高频群体活动，常见于清醒静止或NREM睡眠，与经验的神经序列重新激活相联系。"
+          },
+          {
+            "name": "Trial block",
+            "meaning": "连续5个迷宫行走trial作为一个经历时间块；大部分解码精度按这个单位报告。"
+          },
+          {
+            "name": "seqNMF",
+            "meaning": "序列非负矩阵分解：从大量神经元放电中寻找反复出现的时序模板。"
+          },
+          {
+            "name": "UMAP",
+            "meaning": "把高维神经元群体状态嵌入低维流形，以观察空间路径与试次演化的结构。"
+          },
+          {
+            "name": "Awake replay / Post-sleep replay",
+            "meaning": "奖励区清醒SPW-R重放 / 任务结束后睡眠SPW-R重放；都只是神经活动，不是人工写记忆摘要。"
+          },
+          {
+            "name": "Memory tagging",
+            "meaning": "作者提出的机制解释：清醒时选择性重新激活为后续睡眠巩固指定候选内容；未直接随机操作标签。"
+          },
+          {
+            "name": "Consolidation utility",
+            "meaning": "RSI候选指标：将某段经历持久化后在独立未来任务上的真实收益。原文没有测这个AI指标。"
+          }
+        ],
+        "summary": [
+          "动物实验而非AI：6只小鼠、26会话、4,469个背侧CA1细胞；分析不同奖励时段相似迷宫经历。",
+          "试次块身份可从神经群体编码中区分；清醒SPW-R约三分之一符合显著重放条件，并有对应位置/时间块内容。",
+          "清醒与之后睡眠中各经历块重放分布强相关R=0.86（16会话/5动物），支持候选的记忆标记过程。",
+          "相关并非因果，且没有长期行为记忆或成功/失败经历类别的选择性巩固实验，不能将神经标记等于长期学习收益。",
+          "I6借鉴的是“候选筛选→巩固干预→未来净收益”可拆分的实验合同，并应与ACL 2026 Add/Delete及2026文本摘要漂移文献正面比较。"
+        ],
+        "afterword": "以下AI部分是本站迁移Science小鼠神经证据提出的假设；不是论文里的LLM、长期Skill、LoRA研究结果。",
+        "sections": [
+          {
+            "id": "subjects-and-maze",
+            "stage": "challenge",
+            "title": "谁在实验？为什么要反复走同一个8字形迷宫？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "实验是6只小鼠。动物执行熟悉的8字形迷宫左右路径交替任务，在奖励点喝水。作者有意在环境/奖励相似的条件下研究不同经历的后续命运：如果每次都一样，为什么之后的睡眠会偏重某些时段？"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "记录范围",
+                    "text": "26个记录会话、跨会话4,469个背侧CA1神经单元，双面硅探针每个会话可记录数百个细胞。"
+                  },
+                  {
+                    "title": "时间结构",
+                    "text": "经历前睡眠→清醒重复跑迷宫/获得奖励→经历后睡眠；每个阶段采集神经放电。"
+                  },
+                  {
+                    "title": "区别外部价值",
+                    "text": "不是专门随机操纵成功/失败或奖赏金额；主要解释同类迷宫经历为什么被不同程度重新激活。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是“奖励大小越高就越容易记住”的研究",
+                "text": "作者尽量控制外部奖励和新奇性，对照的是经历时间身份和重放内容；不能推断哪种Agent成功/失败轨迹值得存入Skill。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "trial-identity",
+            "stage": "insight",
+            "title": "Fig.1–2：怎样知道被重放的是第几次经历，而不仅是哪个位置？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "熟悉迷宫中，位置细胞对某个空间位置的活动可能在几十轮中重复。研究发现群体神经状态随试次不断漂移，带有时间块身份。利用seqNMF提取重复时序因子、UMAP嵌入和原始高维空间解码，作者能够同时辨别空间轨迹和经历时间块。"
+              },
+              {
+                "type": "formula",
+                "label": "神经状态携带的两类信息（教学示意）",
+                "expression": "Neural activity(t) → Position identity + Trial-block identity",
+                "meaning": "同一地点、不同时间可落在不同的群体活动状态区域。",
+                "boundary": "不应把它写成作者已经识别了每一条独立记忆的永久唯一ID；主解码将连续五个trial合为block。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "分析量",
+                  "单位或对照",
+                  "实验结果"
+                ],
+                "rows": [
+                  [
+                    "时间身份",
+                    "连续5次trial → 一个block",
+                    "不同block存在可区分的群体活动"
+                  ],
+                  [
+                    "真实对照",
+                    "真实CA1活动 vs 模拟平均放电",
+                    "解码误差真实显著更小，p<1e−10"
+                  ],
+                  [
+                    "神经元数量",
+                    "抽样约50–450细胞",
+                    "细胞过少会明显降低时间块解码能力"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "选取经历之前必须先能识别经历",
+                "text": "对Agent也有类比：如果多轮日志没有明确版本、任务、反馈与前提，后续压缩时就无法审计到底选择并修改了哪段经验。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "awake-ripples",
+            "stage": "design",
+            "title": "Fig.3：怎样检测清醒SPW-R是否真正包含经历重放？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "小鼠奔跑时以Theta节律为主，停下来饮水时常出现同步的SPW-R活动。研究者不能把所有SPW-R都视为重放：需同时满足到神经流形的距离和解码轨迹长度显著短于打乱对照的条件。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "项目",
+                  "具体方法",
+                  "应如何解释"
+                ],
+                "rows": [
+                  [
+                    "状态",
+                    "水奖励消耗时、清醒停顿",
+                    "多数迷宫SPW-R发生在奖励区"
+                  ],
+                  [
+                    "判定",
+                    "流形距离 + 连贯序列长度的打乱统计控制",
+                    "不是任意海马波动就记为Replay"
+                  ],
+                  [
+                    "结果",
+                    "约33%的清醒SPW-R为显著重放",
+                    "33%是事件比例，非被保存经历比例"
+                  ],
+                  [
+                    "解码",
+                    "神经活动拆分为20ms时间窗并识别位置与经历块",
+                    "不同方法高维/PCA/UMAP结果一致"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不能把Reward-triggered Replay误认为奖励成功/失败价值排序",
+                "text": "这是具有水奖励的熟悉交替任务；作者没有按独立成功/失败类别建立保存效用排序。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "sleep-comparison",
+            "stage": "design",
+            "title": "Fig.4：清醒重放是否能预测事后睡眠重新出现的经历？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者将迷宫中每个经历块被清醒SPW-R重放的频次，与该小鼠之后睡眠中相同经历块被SPW-R重放的频次分布相比较，并用事前睡眠和随机打乱经历块等控制检查。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "清醒区间",
+                    "text": "对每个五试次块统计显著SPW-R重放次数/身份分布。"
+                  },
+                  {
+                    "title": "事后睡眠",
+                    "text": "将睡眠SPW-R用同一套经历身份解码器投影到这些block。"
+                  },
+                  {
+                    "title": "相关比较",
+                    "text": "检查哪些block在清醒更频繁，也在睡眠更频繁。"
+                  },
+                  {
+                    "title": "替代解释",
+                    "text": "混合效应回归控制Theta周期数、Theta功率、事前睡眠内容和随机打乱对照。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "核心不是“睡眠重放更多”而是“重放哪些经历”",
+                "text": "如果仅测睡眠SPW-R总数量，就无法看出某一时间块被选择；作者追踪的是内容分布，研究的正是选择机制。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "core-results",
+            "stage": "result",
+            "title": "Fig.4H–I：0.86的相关到底说明了什么？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "统计项",
+                  "实际结果",
+                  "统计单位"
+                ],
+                "rows": [
+                  [
+                    "睡前与睡后显著SPW-R",
+                    "事后睡眠比例更高（p<1e−5）",
+                    "26会话/6小鼠"
+                  ],
+                  [
+                    "清醒 vs 事后睡眠经历块重放分布",
+                    "Pearson R=0.86，p<3.1×10^-34",
+                    "16会话/5小鼠子集"
+                  ],
+                  [
+                    "清醒重放：混合效应预测",
+                    "p<1e−26，为最强候选项",
+                    "该子集经历块及会话层级"
+                  ],
+                  [
+                    "Theta周期数量",
+                    "有解释作用，p<1e−4",
+                    "不是完全只有SPW-R作用"
+                  ],
+                  [
+                    "Theta功率",
+                    "p≈0.06",
+                    "在该模型中未达到常见阈值"
+                  ],
+                  [
+                    "事前睡眠与打乱试次",
+                    "未观察到同等显著解释力",
+                    "控制时间结构等替代解释"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "所谓R=0.86是在神经解码的重放分布上计算的相关。即使两类重放的内容高度一致，也不代表小鼠实际在未来行为任务上达到了86%的正确率，或记忆保持提高了86%。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "最谨慎的原文结论",
+                "text": "清醒SPW-R重放的经历块身份能够强烈预测之后睡眠SPW-R会优先重放哪些经历；支持一个候选的记忆标记机制，但没有直接随机干预形成巩固标签。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "noncausal-boundary",
+            "stage": "result",
+            "title": "研究没有证明什么？把“被标记”与“被学会”分开",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "常见误解",
+                  "原文观测",
+                  "缺什么证据"
+                ],
+                "rows": [
+                  [
+                    "“奖励大的成功事件会被保存”",
+                    "相似任务/相近奖励环境的试次间比较",
+                    "成功/失败类别正交操控"
+                  ],
+                  [
+                    "“标记导致睡眠巩固”",
+                    "清醒/睡眠内容高度相关",
+                    "随机增强/阻断某次SPW-R并验证后果"
+                  ],
+                  [
+                    "“睡眠重放直接提高长期能力”",
+                    "后续睡眠神经重放分布",
+                    "特定经历长期行为记忆和迁移后测"
+                  ],
+                  [
+                    "“33%的经验留下来”",
+                    "约33%的清醒SPW-R判为显著重放",
+                    "事件比例≠经验保留比例"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "虽然作者将结果解释为memory tagging，但该研究的直接测量是神经活动模式；不能因此断言“某种机械经验评分已经有了神经因果依据”。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "动物层级与会话层级",
+                "text": "4,469个细胞、26次会话、16次子集会话属于不同的观测层级，不能把试次块数量当成独立动物样本量。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "two-science-papers",
+            "stage": "next",
+            "title": "与Science 2021非局部经验重放是什么互补关系？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "论文",
+                  "原实验问题",
+                  "对RSI的可验证类比"
+                ],
+                "rows": [
+                  [
+                    "Science 2021 · Experience replay is associated with efficient nonlocal learning",
+                    "人类已知路径关系上，单次终点反馈如何影响本轮未经历路径？",
+                    "一条纠错是否使未训练的同规则任务B变好（I8）"
+                  ],
+                  [
+                    "Science 2024 · Selection of experience for memory by hippocampal sharp wave ripples",
+                    "小鼠清醒阶段哪些经历块更常被激活，是否对应随后睡眠重放？",
+                    "在多次经历中，哪些候选值得巩固并且真的产生独立收益（I6）"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "两个研究没有联合做成“更优选择→更优非局部学习”的实验；我们只把它们组织为相邻的两个科学问题：选择哪段经历、将学习结果传播到哪里。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不把人类与小鼠重放当成LLM的自然内置功能",
+                "text": "LLM的外部文本记忆、Skill和LoRA写回有明确资源与校验约束，不能根据两个神经科学结果直接套用。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "llm-nearest",
+            "stage": "next",
+            "title": "两个LLM最近邻分别触及“选择”和“巩固”的哪一层？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "工作",
+                  "具体研究对象",
+                  "能够继承、尚不能推出"
+                ],
+                "rows": [
+                  [
+                    "Xiong et al. · ACL 2026 · How Memory Management Impacts LLM Agents",
+                    "query–execution原始记忆的添加、删除；任务相似导致输出模仿、错误传播；被后续调用的效用可用于清退",
+                    "写入候选必须看后续质量，而不能仅用当次成功；它没有证明抽象成Skill或LoRA的长期收益"
+                  ],
+                  [
+                    "Zhang et al. · arXiv:2605.12978v2 · Useful Memories Become Faulty",
+                    "用LLM反复合并/抽象文本经历；对照原始Episode-only、不同合并日程，查看同一任务性能退化",
+                    "巩固本身可能损坏有效信息；它不是小鼠真实神经巩固机制，也不是LLM参数灾难遗忘"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "前者官方：https://aclanthology.org/2026.acl-long.27/；后者v2：https://arxiv.org/html/2605.12978v2。两个研究都关注外部经验对下游执行的影响，但一个研究原始记录的增删，另一个着重评估有损抽象重写；必须保留原始证据并做同资源对照。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "直接影响I6实验设计",
+                "text": "应该将“选哪次经历”与“怎样巩固”设计成正交因子，而不是只比较一个端到端Memory Agent，发现提升后不知道收益来自选择、存储还是复杂更多调用。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "rsi-three-states",
+            "stage": "next",
+            "title": "RSI要区分的三个状态：经历过、候选、真实学习",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "阶段",
+                  "机器中可观察事件",
+                  "必须独立验证"
+                ],
+                "rows": [
+                  [
+                    "Experience",
+                    "Agent执行过，保存原始路径与真实工具反馈",
+                    "执行真实结果与可信度、版本与环境"
+                  ],
+                  [
+                    "Candidate tag",
+                    "基于已有信息预测此经验巩固值得投入预算",
+                    "标记和未来净收益间训练前可预测关系"
+                  ],
+                  [
+                    "Consolidated Artifact",
+                    "Memory原始记录、编译Skill或者LoRA参数版本",
+                    "撤掉帮助后新任务提升、错误传播、旧能力退化、成本"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "最容易混淆的是“记忆被后续检索很多次”与“确实提高学习能力”。检索频次可能仅说明常见，不能替代Gain；抽象总结正确也不能说明新任务能够复用。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "研究切口",
+                "text": "同样是Success/Failure，某些经历提供可迁移的新规则，另一些只是重复已知方案或偶然执行失败；必须从真实未来净收益反向审计候选信号。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "decisive-study",
+            "stage": "next",
+            "title": "I6最小决定性实验：随机区分选择收益与巩固收益",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "冻结经历池",
+                    "text": "固定同一Agent快照的成功/失败记录及执行证据，标注规则族和任务外因；不得利用未来测试集给候选打标签。"
+                  },
+                  {
+                    "title": "先测选择",
+                    "text": "从同一经历池按随机、最新、成功优先、经验标记器选择等预算候选，Oracle只作为开发分析上限。"
+                  },
+                  {
+                    "title": "再随机巩固表面",
+                    "text": "相同候选随机分配只保留原始轨迹、生成一次Skill、不停反复合并Skill、执行LoRA更新、或不巩固等组。"
+                  },
+                  {
+                    "title": "独立后测",
+                    "text": "撤掉临时答案、限制检索范围/上下文，测未见同规则、不同规则误迁移、旧能力回归及后续干扰后的保持。"
+                  },
+                  {
+                    "title": "读出机制交互",
+                    "text": "仅当标记器在固定巩固方式下优于简单选择、巩固在固定候选上额外提升，才分别报告两个贡献。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "未来净效用（本站候选）",
+                "expression": "U(e,m)=ΔAcc_future(e,m)−λForget_old(e,m)−βCost_total(e,m)",
+                "meaning": "e是经历，m是写回方式；评价对象是独立后续能力而非当次是否成功。",
+                "boundary": "本式不是Science论文公式，且Memory检索与权重内化不能混为同一性能指标。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "P0 Go/No-Go",
+                "text": "如果刚结束时的标签不能在独立未来任务中预测巩固净收益，或只是更多计算/更长上下文引起提升，就不应升级成复杂的Memory Consolidator。"
+              }
+            ],
+            "order": 4
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.science.org/doi/10.1126/science.adk8261",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11068097/"
+      }
+    },
+    {
       "id": "lake-baroni-mlc-nature2023",
       "short_title": "MLC · Nature 2023",
       "title": "Human-like systematic generalization through a meta-learning neural network",

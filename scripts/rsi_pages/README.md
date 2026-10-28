@@ -38,6 +38,7 @@
 - **第一批内容**：DiscoRL · Nature 2025，共七条：更新目标生成、半梯度表达能力、元梯度递推、快慢时间尺度、自举预测与消融、跨 Agent 稳定化、以及标为未验证的 RSI 未来可学习性目标。不要把教学二维反例和未来 C 任务公式说成论文原式。
 - **第二批理论（2026-10-28）**：Science 2021 非局部信用分配与 Need × Gain（理论原出处 Mattar & Daw, Nature Neuroscience 2018）、GradSim（EMNLP 2024）一阶梯度传播推导、I8 的未见题净迁移候选指标。共 11 条理论主题，新增 `additional_sources` 可直接链接理论原始论文（避免只链回Science）。
 - **LLM 最近邻证据记录**：Science 完整阅读卡片 `nonlocal-replay-science2021-liu` + `rsi/related-work.json` 中八篇对照；I8 在 `science2021-nonlocal` 和 `nonlocal-p0` 章节保留机制实验与碰撞边界。One-Shot RLVR/OPD 的“一训练题”与 Science 的“一次当前反馈”不可混报；B 无训练监督与主动知识簇更新也是不同操作。
+- **第三批理论（2026-10-29）**：Science 2024 Yang 等小鼠海马清醒 SPW-R—事后睡眠选择性重放，理论链接 `#awake-ripple-memory-tagging`，另有明确标为本站假设的经验标签 vs 真实巩固效用 `#experience-tag-vs-consolidation-utility`。务必写出分析层级：6只小鼠/26会话/4,469细胞；Fig.4H为5只/16会话，R=0.86。原文没直接测长期行为能力也没对不同成功/失败类型做随机选择实验。I6以 `science2024-memory-tagging` 章节建立入口；本次仅发表该 Science 精读，ACL2026 与 arXiv2026 作为最近邻指路。
 - **验证**：执行 `python3 scripts/build_rsi_research.py && python3 scripts/build_rsi_site.py && python3 scripts/test_rsi_site.py`，会检测唯一 ID、公式/LaTeX、论文锚点、双向链接以及公开输出。
 
 ## RSI 研究时间轴与会议 DDL

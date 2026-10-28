@@ -58,7 +58,7 @@ index += '<div class="route-grid theory-directory">' + ''.join(
     e(item["category"]) + ' · ' + e(item["question"]) + '</span></a>'
     for item in ENTRIES
 ) + '</div>'
-index += '<p class="note"><b>当前主题：</b>DiscoRL（Nature 2025）的目标生成与元梯度，Science 2021 的非局部信用分配与 Need × Gain，及 GradSim（EMNLP 2024）的一阶传播解释。跨论文机制证据、教学推导和我们提出的未来净迁移指标分层标注。</p>'
+index += '<p class="note"><b>当前主题：</b>DiscoRL（Nature 2025）的目标生成与元梯度、Science 2021 的非局部信用分配与 Need × Gain、Science 2024 的清醒SPW-R候选记忆标签，以及 GradSim（EMNLP 2024）的一阶传播解释。实验结论、教学推导及未来 RSI 净迁移/巩固效用始终分层标注。</p>'
 
 
 def render(entry: dict) -> str:

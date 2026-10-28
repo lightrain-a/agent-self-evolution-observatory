@@ -9,6 +9,100 @@
   },
   "entries": [
     {
+      "id": "awake-ripple-memory-tagging",
+      "title": "清醒重放作为候选记忆标签：预测的是睡眠重放而非任务收益",
+      "category": "Memory Tagging / Neural Replay",
+      "status": "paper-mechanism",
+      "source_paper_id": "sharp-wave-ripples-science2024-yang",
+      "source_anchor": "core-results",
+      "source_locator": "Yang et al. Science 2024 · Fig. 2–4 / PubMed captions; n=16 sessions from 5 mice for Fig.4H",
+      "question": "在外部奖励和路线类似的多次经历中，清醒时重放了哪段经历，能否预测后续睡眠优先重放什么？",
+      "insight": "先识别经历的群体神经身份，再比较清醒与睡眠的重放频次分布；这构成可追踪的经验候选标签，但不是独立未来学习收益。",
+      "equations": [
+        {
+          "name": "清醒与事后睡眠经历块分布相关",
+          "expression": "R = corr(replay_awake(block), replay_post-sleep(block)) = 0.86",
+          "latex": "R=\\operatorname{corr}\\!\\left(f_{\\rm awake}(b),f_{\\rm post\\!-\\!sleep}(b)\\right)=0.86",
+          "meaning": "在16个会话/5只小鼠的子集上，比较五试次经历块在两阶段被解码为重放的分布；p<3.1×10^-34。",
+          "boundary": "R是神经重放内容的相关性，不是80%以上记忆能力提升，更不能当成RSI的长期收益。"
+        },
+        {
+          "name": "候选选择信号（教学表示）",
+          "expression": "Tag(e) ← replay frequency during waking SPW-R",
+          "latex": "\\operatorname{Tag}(e)\\leftarrow f_{\\rm awake\\,SPW\\!-\\!R}(e)",
+          "meaning": "神经重放频次可以预测候选内容后续是否被再次重放；不是原文中的正式记忆评分器。",
+          "boundary": "仅用于理解机制，不代表作者发明了这条Machine Learning评分公式。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "同一环境里重复经历",
+          "text": "6只小鼠反复走8字迷宫，外部任务与水奖励大体相同，避免把一切归因于新奇和奖励大小。"
+        },
+        {
+          "label": "让经历身份可解码",
+          "text": "背侧CA1群体活动随试次变化；把连续5个trial组成block，用seqNMF、UMAP与高维空间解码。"
+        },
+        {
+          "label": "只保留真正显著的重放",
+          "text": "约33%清醒SPW-R满足特定序列与shuffle控制，非全部高频活动。"
+        },
+        {
+          "label": "检验睡眠中的选择",
+          "text": "比较经历块的awake与post-sleep重放分布，再与theta、pre-sleep和shuffle对照。"
+        }
+      ],
+      "when_to_use": "讨论Agent应先选哪些经历进入巩固候选队列、如何分离‘选择内容’与‘写回以后真正学到’时引用。",
+      "caution": "作者未随机操控神经重放以观察长期行为记忆，并且没有比较成功和失败经验的巩固价值。"
+    },
+    {
+      "id": "experience-tag-vs-consolidation-utility",
+      "title": "经验标记和巩固净收益不是一个指标（RSI研究假设）",
+      "category": "Experience Selection / Consolidation Utility",
+      "status": "rsi-hypothesis",
+      "source_paper_id": "sharp-wave-ripples-science2024-yang",
+      "source_anchor": "decisive-study",
+      "source_locator": "本站 I6 两阶段选择—巩固—未来验收协议；不是 Science 2024 原文公式",
+      "question": "经历结束时看起来值得保存，是否真的代表这次写入Memory/Skill或参数会改善未来独立任务？",
+      "insight": "先固定候选经历池随机评价选择策略，再在同一候选上随机比较原始保留、一次抽象、反复改写和LoRA；区分‘选对内容’与‘处理内容的方法是否有利’。",
+      "equations": [
+        {
+          "name": "独立巩固收益",
+          "expression": "U(e,m)=ΔAcc_future(e,m)−λForget_old(e,m)−βCost_total(e,m)",
+          "latex": "U(e,m)=\\Delta\\mathrm{Acc}_{\\rm future}(e,m)-\\lambda\\mathrm{Forget}_{\\rm old}(e,m)-\\beta\\mathrm{Cost}_{\\rm total}(e,m)",
+          "meaning": "e是已观察经验，m为保留Episode、编译Skill、LoRA等动作。收益必须在未来独立测试、撤除临时帮助后计算。",
+          "boundary": "是本站未验证指标；不同外部Memory与参数内化不能以一个无条件成功率混报。"
+        },
+        {
+          "name": "分别估计选择和巩固的处理效应",
+          "expression": "τ_select=U(tagged,m)−U(random,m); τ_method=U(e,consolidate)−U(e,episodic)",
+          "latex": "\\tau_{\\rm select}=\\mathbb E[U\\mid{\\rm tagged},m]-\\mathbb E[U\\mid{\\rm random},m],\\quad\\tau_{\\rm method}=\\mathbb E[U\\mid e,\\mathrm{consolidate}]-\\mathbb E[U\\mid e,\\mathrm{episodic}]",
+          "meaning": "在固定写回方式m下比较选择收益；在固定经历e下比较巩固方式收益。必须通过可执行的随机对照实现可识别性。",
+          "boundary": "只是帮助设计因果实验的简化记号，真实估计需按任务/规则簇建模并匹配资源。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "别把成功标签当作收益",
+          "text": "经验结果Success/Failure可记录，但只是当前状态，不是未来独立迁移价值。"
+        },
+        {
+          "label": "先检验候选信号",
+          "text": "随机抽取同等数量的候选，比较经验标记器、成功优先、最近优先、随机等策略；不让未来测试影响选择。"
+        },
+        {
+          "label": "再检验巩固动作",
+          "text": "固定被选经历，比较仅留原始轨迹、一次Skill抽象、连续合并改写与持久LoRA更新。"
+        },
+        {
+          "label": "总成本、旧能力与错误传播必须结算",
+          "text": "对未来未见题验收；如果只是更长上下文或更多模型调用导致提升，则不能归功于选择性巩固。"
+        }
+      ],
+      "when_to_use": "I6 失败价值与长期 Memory 方向、I13 写回接纳、或对照ACL2026 Add/Delete与arXiv2026 Lossy Consolidation时引用。",
+      "caution": "这个完整三阶段控制实验尚未完成，不能把小鼠清醒SPW-R/睡眠重放关联当作Agent长期巩固效用的验证。"
+    },
+    {
       "id": "nonlocal-credit-assignment",
       "title": "非局部信用分配：为何一条反馈可改变另两条未经历路径？",
       "category": "Nonlocal Credit Assignment",
