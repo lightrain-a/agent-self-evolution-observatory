@@ -248,6 +248,26 @@ def main():
     check('没有 Blocked/Interleaved 直接随机对照' in similarity_text
           or '没有 Blocked/Interleaved 直接随机对照' in ''.join(similarity['boundaries']),
           'NC 2025 must not be mistaken for a blocked/interleaved study')
+    schema=next((p for p in cards if p['id']=='nc2026-schema-reuse-tian'),None)
+    check(schema is not None
+          and schema['doi']=='10.1038/s41467-026-68692-x'
+          and schema['official_url']=='https://www.nature.com/articles/s41467-026-68692-x',
+          'NC 2026 schema reuse official paper identification missing')
+    schema_sections={s['id'] for s in schema['deep_read']['sections']}
+    check({'core-question','neural-mechanism','protocol-monkeys','numbers-and-limitations',
+           'strong-closest-work','rsi-beyond-orthogonality','schema-lifecycle',
+           'first-falsifier','recursive-test','research-position'}<=schema_sections,
+          'Schema reuse note missing key original evidence or RSI research design')
+    check(all(x in json.dumps(schema,ensure_ascii=False)
+              for x in ('Reverse-A','81.4','0.47','0.49','因果','元规则')),
+          'Schema neural caveats or causal design lost')
+    check({'E320','M311','M312','M313','S311','S312','S313','S314'}<=refs,
+          'Schema paper/closest-work references missing or overwritten')
+    check('reading-notes.html#deep-nc2026-schema-reuse-tian'
+          in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8')
+          and 'reading-notes.html#deep-nc2026-schema-reuse-tian'
+          in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8'),
+          'Schema research is not linked from learning science and I3')
     npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
     check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
           '2020 npj paper not correctly identified by its real DOI')

@@ -9963,6 +9963,524 @@
         "code": "https://osf.io/4up5z/",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12932093/"
       }
+    },
+    {
+      "id": "nc2026-schema-reuse-tian",
+      "short_title": "Schema Reuse · NC 2026",
+      "title": "Domain-specific schema reuse supports flexible learning to learn in the primate brain",
+      "authors": "Kaixi Tian, Zhiping Zhao, Yang Chen, Ningling Ge, Shenghao Cao, Xinyong Han, Jianwen Gu, Shan Yu",
+      "lead_institution": "中国科学院自动化研究所·脑图谱与脑启发智能实验室",
+      "institutions": [
+        "中国科学院自动化研究所·脑图谱与脑启发智能实验室",
+        "中国科学院大学·未来技术学院",
+        "中国科学院自动化研究所·脑认知与脑启发智能技术全国重点实验室",
+        "吉林大学第一医院·眼科",
+        "中国科学院大学·人工智能学院",
+        "解放军总医院第九医学中心"
+      ],
+      "institution_source": "Nature Communications 作者机构与 PubMed Affiliations，2026-10-28 核对",
+      "publication": "Nature Communications · 17:2150 (2026)",
+      "doi": "10.1038/s41467-026-68692-x",
+      "official_url": "https://www.nature.com/articles/s41467-026-68692-x",
+      "first_posted": "2026-01-29",
+      "version": "Nature 正式期刊论文 · 2026-01-29 在线；Version of Record 2026-03-03",
+      "read_on": "2026-10-28",
+      "reading_level": "Nature 官方全文 Results、Discussion、Methods，Fig.1–5；未独立复现神经分析",
+      "tags": [
+        "Nature Communications",
+        "Learning to Learn",
+        "Schema Reuse",
+        "Stability–Plasticity",
+        "RSI 研究候选"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "partial",
+          "contribution": "用行为达到学习阈值所需试验和神经表征相似度，对照相似、重访与反转映射。",
+          "open_question": "相似性为神经相关信号，尚未用人工改变子空间检验决定性的因果作用。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "决策相关 NCS 在新视觉刺激下保持可复用，而刺激表征允许变化。",
+          "open_question": "尚无 LLM 测试能否自动辨认哪条推理结构值得继承。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "猕猴视觉动作映射实验，没有测 LLM 搜索空间或解法支持集。",
+          "open_question": "不能从神经几何直接推出 RSI 会产生此前不存在的新解法。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "重访旧映射更快；反转映射显著变慢，提示复用与改变存在边界。",
+          "open_question": "未测 Agent 多轮真实持久更新后的旧能力保持、策略修订和学习器自身改进。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "动物行为与 PMd 神经记录，并非自动 Agent 修改实验。",
+          "open_question": "没有研究错误 Schema 继承、越权修改或受损优化器自我复制。"
+        }
+      },
+      "one_sentence": "决策结构在相似任务中复用，反转旧规则时难以复用；RSI 应研究可修订的结构继承，而非只做固定正交分离。",
+      "story": {
+        "challenge": "相似新任务可以借旧知识学得更快，但新规则与旧规则冲突时，保护旧结构反而可能妨碍适应。",
+        "insight": "决策相关神经结构在近正交子空间中被复用，而具体视觉刺激表征可以改变；这是一项相关性机制线索。",
+        "design": "三只猕猴在14个行为会话中依次学习新映射、重访旧映射，部分会话再反转规则；9会话分析 PMd 神经活动。",
+        "result": "相似/重访任务学习更快，反转更慢；决策与刺激子空间比乱序对照更近正交（合并9会话 P<0.001）。"
+      },
+      "problem": "在连续学习中，既有决策结构怎样与不断变化的刺激信息共存？面对旧映射反转时，复用旧表征为何不再帮助学习？",
+      "setup": "3只雄性猕猴在任务 A→B/C→Revisit-A 序列中学习视觉刺激—按钮映射；AB与ZZ还做Reverse-A，XW无反转任务。行为14个会话，神经活动分析每猴3个会话共9个；达标为连续15试次正确率达到90%。",
+      "updates": "本研究没有更新任何 LLM 权重、Skill、Meta-Skill 或自改进策略；观察的是 PMd 神经群体的低维表征与行为学习效率。",
+      "key_ideas": [
+        {
+          "name": "Domain-specific NCS",
+          "summary": "复用跨相似任务稳定的决策流形，同时让刺激编码在不同功能子空间改变。",
+          "formula": "reuse(s) = similarity(decision manifold across tasks)"
+        },
+        {
+          "name": "近正交检验",
+          "summary": "以决策与刺激子空间正交基的最小主角度定量表征分离，并与打乱标签的控制比较。",
+          "formula": "theta = arccos(sigma_max(U_decision^T U_stimulus))"
+        }
+      ],
+      "evidence": [
+        "Fig.2：A vs B/C 达标学习更快，P=2.30×10⁻⁴；A vs Revisit-A，P=1.52×10⁻⁶；A vs Reverse-A 反而更慢，P=1.20×10⁻³。",
+        "Fig.4：仅有 AB/ZZ 的 Reverse-A 神经比较；决策流形复用程度与学习所需试次呈负相关，两个个体分别 R²=0.47 与 0.49（均 P=0.04）。",
+        "Fig.5：决策与刺激表征主角度比打乱标签对照更接近90°；9个神经分析会话合并 P<0.001；81.4°为一个展示会话，不代表总体平均。"
+      ],
+      "boundaries": [
+        "3只猕猴14个行为会话，反转只在其中2只进行；任务顺序固定，不能把不同条件差异完全解释为结构复用的因果效果。",
+        "近正交是神经活动中的相关表示，不是把模型权重人为切成两个正交 LoRA 分支的因果训练实验。",
+        "反转任务中的决策 NCS 复用减少，并非证明所有冲突任务都必须彻底删除旧 Schema。",
+        "不应将 domain-specific 简化为数学/代码等领域专属；原文指决策与刺激等功能性表征域。"
+      ],
+      "our_relevance": [
+        "I3：当新旧规则冲突，保留旧 Skill 不等于保证系统适应新任务；需要识别规则的适用边界。",
+        "值得独立检验的 RSI 扩展是 Schema 的保留、修订、撤回和继承规则是否随系统版本共同改进。",
+        "与单模型 CL 的不同不只在多一个 Meta-Agent，而在学习策略跨版本变化后，该系统是否更擅长区分复用和改写的条件。",
+        "该方向先不编号为新 Idea；若 P0 证明跨任务可学的 Schema 适用性判断存在，再考虑独立成篇。"
+      ],
+      "next_test": "首轮冻结学习器与更新预算，在规则相同/规则冲突/组合新规则三类连续任务比较静态共享、全面重训、简单动态路由和带对照证据的部分 Schema 修订；只有后续新任务的学习效率及回归真正改善，才推进元规则自修改。",
+      "deep_read": {
+        "focus": "论文直接展示的不是一个可复制的双分支 LoRA，而是“什么时候能复用旧决策结构、什么时候复用反而失效”的条件性现象；RSI 候选目标是让结构的继承与修订原则自身随着学习历史改变。",
+        "summary": "3只猕猴视觉映射的相似学习与近正交神经证据。最值得迁移的是冲突时的结构复用边界；神经相关性不等于已验证的 LLM 更新机制。",
+        "terms": [
+          {
+            "name": "NCS",
+            "meaning": "Neural Correlates of Schema：跨相似任务相对稳定的神经活动模式，不等于一个固定神经元模块。"
+          },
+          {
+            "name": "PMd",
+            "meaning": "背外侧前运动皮层：论文记录神经活动的脑区。"
+          },
+          {
+            "name": "Decision / Stimulus subspace",
+            "meaning": "通过任务变量解码/降维得到的决策与刺激功能表征子空间。"
+          },
+          {
+            "name": "RSI Schema",
+            "meaning": "本项目候选定义：可用跨任务反事实验证的解题/更新结构，并附适用条件、冲突证据和版本谱系。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "core-question",
+            "stage": "challenge",
+            "title": "为何要研究相似任务与反转任务？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "Learning to learn 并不是已经会做新任务，而是旧学习形成了可复用结构，让之后相似的任务更快达标。难点在于旧结构也可能带来负迁移：当视觉输入相似、行动映射却相反时，应当继续复用还是改变旧决策结构？"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "三个任务对照（为理解而设计的例子）",
+                "text": "A：见红符号按上；B：换新符号但仍学习同类型选择规律；Revisit-A：回到旧映射；Reverse-A：红符号改按下。最后一种与旧决策规则冲突，不能靠表面相似判断是否可复用。"
+              }
+            ]
+          },
+          {
+            "id": "neural-mechanism",
+            "stage": "insight",
+            "title": "稳定的是决策模式，变化的是刺激相关表征",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "先识别稳定 Schema",
+                    "text": "作者在 PMd 的决策相关低维神经活动中找到跨相似任务保留的轨迹结构（NCS）。这里不是冻结某组神经元。"
+                  },
+                  {
+                    "title": "再识别可塑部分",
+                    "text": "刺激相关表征对不同符号可以改变，且与决策子空间接近正交，有利于避免互相干扰。"
+                  },
+                  {
+                    "title": "用反转任务打破“总该复用”的直觉",
+                    "text": "Reverse-A 的旧决策流形不再像 B/C 或 Revisit-A 那样被复用，而且学习更慢。说明表征保护的收益有适用条件。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "神经子空间角度（原文 Eq.3）",
+                "expression": "θ = arccos(σmax(U_decisionᵀ × U_stimulus))",
+                "meaning": "由两个神经表征子空间正交基计算最小主角度；趋近90°表示主要表征方向重叠较少。",
+                "boundary": "该角度不是 LLM 参数更新的正交损失，也不直接衡量旧知识被保留多少。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "没有证明“强制正交”是因果机制",
+                "text": "作者比较真实与标签打乱后的子空间角度；没有人工把大脑某个子空间改为正交后再测学习。因此这是一条强相关性机制证据，不是 LLM 结构设计的直接因果处方。"
+              }
+            ]
+          },
+          {
+            "id": "protocol-monkeys",
+            "stage": "design",
+            "title": "实验设计：三只猕猴、14 个行为会话、9 个神经分析会话",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "猴 / 任务",
+                  "会话与顺序",
+                  "用途"
+                ],
+                "rows": [
+                  [
+                    "AB",
+                    "5 会话：A→B→Revisit-A→Reverse-A",
+                    "相似/重访/反转对照"
+                  ],
+                  [
+                    "ZZ",
+                    "4 会话：A→B→Revisit-A→Reverse-A",
+                    "相似/重访/反转对照"
+                  ],
+                  [
+                    "XW",
+                    "5 会话：A→B→C→Revisit-A",
+                    "相似/重访；没有反转任务"
+                  ],
+                  [
+                    "神经记录",
+                    "每只猴选 3 会话，共9会话",
+                    "PMd 活动的决策/刺激解码与流形分析"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "动物观察屏幕上的符号后按上下按钮，正确反馈获得奖励。学习达到连续15试次中90%正确即进入下一阶段。记录 PMd 神经活动，通过 LFADS、解码与 dPCA 分离与决策/刺激相关的低维模式，计算跨任务流形相关与子空间主角度。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "序列不是随机交叉设计",
+                "text": "任务顺序固定、样本只有3只动物；反转任务只涉及AB和ZZ。重复会话提升了证据量，但不能将每个试次当成独立的动物重复。"
+              }
+            ]
+          },
+          {
+            "id": "numbers-and-limitations",
+            "stage": "result",
+            "title": "Results：相似映射加速、反转减速；近正交不是因果操纵",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "论文证据",
+                  "数值与位置",
+                  "能够支持的结论"
+                ],
+                "rows": [
+                  [
+                    "相似新映射 B/C 学得更快",
+                    "Fig.2，A vs B/C：P=2.30×10⁻⁴",
+                    "旧学习促进相似任务"
+                  ],
+                  [
+                    "重新访问旧映射更快",
+                    "Fig.2，A vs Revisit-A：P=1.52×10⁻⁶",
+                    "旧知识仍有可用性"
+                  ],
+                  [
+                    "反转映射变慢",
+                    "Fig.2，A vs Reverse-A：P=0.0012",
+                    "旧规则不保证总能复用；AB/ZZ 才做反转"
+                  ],
+                  [
+                    "决策流形复用与学习速度相关",
+                    "Fig.4，ZZ R²=0.47，AB R²=0.49；均 P=0.04",
+                    "结构相似与达标试次有关，不等于单独证明因果"
+                  ],
+                  [
+                    "决策与刺激子空间近正交",
+                    "Fig.5，9会话合并 P<0.001；示例 81.4°",
+                    "两类功能表征比打乱标签更分离"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "论文明确观察到：Reverse-A 中旧决策 NCS 的复用显著较少；Fig.4 的相关性不说明某个决定性神经控制开关被找到。81.4°只是一个代表性会话，25°来自较小解释方差成分的对照示例，不能直接说总体角度平均81.4°。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "作者的发现与我们的外推应分开",
+                "text": "事实：动物脑活动中稳定决策表征、刺激可塑表征，以及反转任务的学习困难。外推：Agent 应当动态维护“哪些学习结构值得继承”的规则，还没有做过 LLM 的因果实验。"
+              }
+            ]
+          },
+          {
+            "id": "strong-closest-work",
+            "stage": "related",
+            "title": "Related Work：两类工作已有，RSI 差异须经强对照证明",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "已有机制",
+                  "已覆盖到哪里",
+                  "不能重复提出的贡献"
+                ],
+                "rows": [
+                  [
+                    "SpaRTA（ACL 2026）/ ASO-LoRA（ACL 2026）",
+                    "共享/专用子空间、正交/软正交和自适应任务共享",
+                    "不能再声称首次共享-专有分离"
+                  ],
+                  [
+                    "Meta-UCF（ICLR 2026）/ PaRSP（ACL 2026）",
+                    "任务条件低秩更新、动态功能区和未来容量保护",
+                    "不能只说更新更少或分配参数更高效"
+                  ],
+                  [
+                    "Metalearning Continual Learning Algorithms（TMLR 2025）",
+                    "已将持续学习的更新机制本身纳入元学习",
+                    "不能只说更新器也需要学习"
+                  ],
+                  [
+                    "PolySkill（ICLR 2026）/ Evolving Agents（ACL 2026）",
+                    "抽象目标与具体实现解耦；推理抽象及使用模块可不断修订",
+                    "不能只说抽象和实例分层或动态维护抽象"
+                  ],
+                  [
+                    "MetaSkill-Evolve（2026）/ Skill∞（2026）",
+                    "任务 Skill 与 Meta-Skill 自改进，跨任务重用元技能已有先例",
+                    "不能只说比单模型多一个递归 Meta-Agent"
+                  ],
+                  [
+                    "ContinualSkillBench（2026）",
+                    "显式 Skill 不一定超越相同上下文历史，容易形成碎片化专用技能",
+                    "必须撤掉原对话，测新任务对可复用结构的依赖"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "真正待验证的新关系",
+                "text": "前作各自研究表示共享、持续更新或元技能演化；这里不把它们拼起来称为首次。真正想测试的是：系统能否用可验证的规则兼容性证据，决定旧 Schema 该保留、局部修订还是撤回，并让该判断法在后续未见任务里越来越可靠。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-beyond-orthogonality",
+            "stage": "next",
+            "title": "RSI 与单模型正交子空间，差异究竟在哪？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "比较维度",
+                  "单模型 Continual Learning",
+                  "真正的 RSI Schema Evolution"
+                ],
+                "rows": [
+                  [
+                    "更新对象",
+                    "给定任务流中更新同一个模型的共享/专用参数",
+                    "任务 Skill、Schema 库、以及决定保留/改写的元更新规则均可随版本演化"
+                  ],
+                  [
+                    "稳定结构是什么",
+                    "任务共享表示或更新子空间",
+                    "可执行、可测适用条件的推理/更新机制及其版本谱系，而非必然是一组向量"
+                  ],
+                  [
+                    "判断何时变化",
+                    "固定结构约束或输入/任务级路由",
+                    "从独立任务失败与反事实 Probe 诊断旧结构是否仍适用；判断规则本身也要跨轮改进"
+                  ],
+                  [
+                    "核心测量",
+                    "新任务成绩、旧任务遗忘、参数效率",
+                    "同预算下一代对新任务的学习速度、错误复用代价、元规则跨版本保持与迁移"
+                  ],
+                  [
+                    "特有失败",
+                    "参数干扰、错误隔离",
+                    "过时 Schema 被后代反复继承，或过度重写导致可复用结构不断消失"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "最大的区别不是“递归两层”这个名字，而是对同一结构进行版本化继承、反例修订与淘汰，并验证负责这一决策的改进器在未来任务上真的变好了。单模型正交子空间仅是可选载体；起步更适合外显 Skill/工作流，因为可将变量、适用条件和反例逐条审计。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "新颖性的门槛非常高",
+                "text": "Skill∞ 已有跨任务 Meta-Skill 复用，Evolving Agents 已有动态准符号抽象，PolySkill 已有目标/实现解耦。我们的增量必须落在“冲突证据驱动的保留—修订—淘汰边界及其元学习”，并通过未见规则冲突任务的独立学习收益证明。"
+              }
+            ]
+          },
+          {
+            "id": "schema-lifecycle",
+            "stage": "next",
+            "title": "可检验的机制：Schema 应当带适用条件与修订证据",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "构建可测试 Schema",
+                    "text": "每条结构不只是自然语言技巧，而包含输入/输出契约、规则依赖、可复用不变量、任务特有绑定、已通过的正例/反例与版本号。"
+                  },
+                  {
+                    "title": "用最小反例探测规则兼容性",
+                    "text": "让旧 Schema 与新任务的真实契约对照：是表面映射变了、只需改局部条件，还是共享规则本身不再成立？固定验证器和探测预算，避免错误地按当前成功率判断。"
+                  },
+                  {
+                    "title": "决定 Reuse / Patch / Fork / Retire",
+                    "text": "兼容则复用；只变绑定则局部修订；出现两组都需要的冲突规则则分叉；被证实不再有效的结构撤回。所有动作保留审计谱系和回归门。"
+                  },
+                  {
+                    "title": "让改进器学习适用边界",
+                    "text": "把不同版本对同一类型规则冲突的反事实验证结果写入 Meta-Schema，改进下一轮的保留/修订判断；用冻结任务 Skill、交叉比较旧/新改进器避免把新任务经验冒充元能力增长。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "候选研究目标（本站提出，非原文公式）",
+                "expression": "a_k(schema, task) ∈ {reuse, patch, fork, retire}; meta_{k+1} = Improve(meta_k, audited counterfactual gains)",
+                "meaning": "不仅编辑当前技能，还学习“什么情况下该编辑哪一层结构”的长期策略。",
+                "boundary": "必须通过后续未见任务证明 meta_{k+1} 比 meta_k 更会学习；仅修改 prompt 不自动构成 RSI。"
+              }
+            ]
+          },
+          {
+            "id": "first-falsifier",
+            "stage": "next",
+            "title": "P0：先证明“该保留还是该修改”真会随规则类型反转",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0-A · 同一既有 Schema 的三类规则变更",
+                    "design": "用可执行的程序/逻辑任务生成器构造：A 仅符号或 API 表面改写、核心约束不变；B 局部绑定/边方向反转，但算法结构仍成立；C 关键算法假设失效，例如允许依赖环而必须改成 SCC 处理。固定任务初始难度、输入分布与已知真实契约。",
+                    "decisive": "复用策略应在 A 最有利，局部 Patch 在 B 最划算，全面保护在 C 应明显落后；若对照规律不存在，先不做 Meta-Agent。"
+                  },
+                  {
+                    "name": "P0-B · 同一学习器、同预算的策略对照",
+                    "design": "从同一模型/Skill 版本分叉：全部复用、所有新任务都重写、仅追加专有分支、简单任务相似度路由、基于可复验冲突证据的 Reuse/Patch/Fork/Retire、任务规则已知的 Oracle 上界。每路同样的候选数、验证器、训练/推理总成本。",
+                    "decisive": "不仅看当前题正确率，还看旧任务回归、新任务样本效率、未见规则组合与单位成本净收益。若简单相似度路由相同，复杂 Schema 生命周期策略不值得继续。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "低成本起点",
+                "text": "首轮优先外显 Skill / 可运行工作流作 Schema 载体，冻结底层模型与更新器，避免一开始就训练多个正交 LoRA。若连可审计、可人工指定兼容边界的 P0 都没有选择收益，就没有理由再做高成本表征学习。"
+              }
+            ]
+          },
+          {
+            "id": "recursive-test",
+            "stage": "next",
+            "title": "P1：怎么证明它真是 RSI，而不是高级持续学习？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "先冻结任务 Skill 再比较改进器版本",
+                    "text": "同一批任务 Skill、同一模型、同一新任务流、同样候选和计算预算，分别由旧 Meta-Schema 与经过历史冲突学习的新 Meta-Schema 决定保留/局改/分叉。"
+                  },
+                  {
+                    "title": "跨代 A→B→A→C 任务流",
+                    "text": "A 学旧结构；B 局部改变或规则冲突；重测 A 检验旧能力；C 是未见的新变体或跨域组合，检验新一代是否比旧一代更会学习而不只是记住 B 的答案。"
+                  },
+                  {
+                    "title": "用反事实证据检验对元规则的真实学习",
+                    "text": "显式配对相同历史输入下执行不同 Schema 动作后的后测结果，在下一代的规则冲突任务上比较决策准确性、对新任务完成所需的更新次数和净进步。"
+                  },
+                  {
+                    "title": "排除上下文/回放/预算假增益",
+                    "text": "固定允许读取的经验与检索库、回归集、部署上下文和更新表面；独立验收时撤掉示范与当前任务中临时帮助，计入所有 Probe 与更新成本。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "判断结果",
+                  "研究处理"
+                ],
+                "rows": [
+                  [
+                    "P0 无跨规则类型的收益反转",
+                    "停止 Schema 路由方向，只保留论文笔记"
+                  ],
+                  [
+                    "P0 有收益反转，但 P1 元规则没变强",
+                    "归入 I3 的条件性冲突修订，不独立声称 RSI"
+                  ],
+                  [
+                    "P0+P1 均成立，更新器能在新任务族学会更好的保留/修订边界",
+                    "作为独立 RSI 研究候选讨论，但仍需与 PolySkill / Evolving Agents / Skill∞ 同预算比较"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "research-position",
+            "stage": "next",
+            "title": "研究定位：先留独立候选，不急着编号",
+            "blocks": [
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "候选主题 · Self-Improving Schema Revision",
+                "text": "科学问题：当 Agent 反复更新自己时，它不仅能保存解决任务的经验，能否不断学会哪些既有解题结构应该继承、哪些必须修订或废弃？这一“继承规则”也应当通过真实未来任务被验证并改进。"
+              },
+              {
+                "type": "bullets",
+                "items": [
+                  "继承内容：不再重复开发固定正交 LoRA；保留 I3 的新旧规则冲突审计与回归测量作为底座。",
+                  "明确差异：研究跨版本 Schema 的可验证适用边界与 Meta-Schema 的后代学习收益，不是单次故障回归修复。",
+                  "不改当前编号：先列为独立候选，与 I3 关联而不直接并入 I3；P0 出现决定性异质性后再讨论独立成篇。",
+                  "写作底线：本篇 NC 只提供神经科学机制线索；包括 Schema Contract、控制器和 P0/P1 在内的内容都是本站新研究假设。"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41467-026-68692-x",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12957312/",
+        "code": "https://github.com/kathytian-kx/DomainSpecific_SchemaReuse"
+      }
     }
   ]
 }

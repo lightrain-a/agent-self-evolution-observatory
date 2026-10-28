@@ -1781,6 +1781,86 @@
       "level": "arXiv 原始摘要与作者仓库 README 核对；2026-10-28",
       "note": "可重写 Meta-Skill 优化任务 Skill 与自身，并跨任务复用；为真实 RSI 近邻，但未主打能力冲突接纳、外部委托和暂缓重访的长期最优决策。",
       "code": "https://github.com/taowangcheng/skill-infinity"
+    },
+    {
+      "id": "E320",
+      "group": "学习科学",
+      "title": "Domain-specific schema reuse supports flexible learning to learn in the primate brain",
+      "date": "Nature Communications 17:2150, 2026",
+      "url": "https://www.nature.com/articles/s41467-026-68692-x",
+      "level": "官方 Nature 正文 Results、Methods、Fig.1–5 与 PMC 对读；2026-10-28；未独立复现",
+      "note": "3只猕猴14个行为会话；9个神经分析会话中，决策相关表征在相似任务复用、刺激表征较独立；反转映射较难，近正交是关联测量而非人工干预的因果证据。",
+      "code": "https://github.com/kathytian-kx/DomainSpecific_SchemaReuse"
+    },
+    {
+      "id": "M311",
+      "group": "相邻领域",
+      "title": "Spectral Disentanglement: Rank-Aware Task Adaptation for Rehearsal-free Continual Learning in LLMs (SpaRTA)",
+      "date": "ACL 2026",
+      "url": "https://aclanthology.org/2026.acl-long.334/",
+      "level": "ACL Anthology 官方摘要核对；2026-10-28",
+      "note": "单模型持续学习中显式共享低秩/专有高秩分支、正交约束及语义动态路由；不能再声称首次分离共享与专有表征。",
+      "code": "https://github.com/Xnhyacinth/SpaRTA"
+    },
+    {
+      "id": "M312",
+      "group": "相邻领域",
+      "title": "Soft Orthogonal Low-Rank Adaptation for Knowledge Sharing in Large Language Model Continual Learning (ASO-LoRA)",
+      "date": "ACL 2026",
+      "url": "https://aclanthology.org/2026.acl-long.842/",
+      "level": "ACL Anthology 官方摘要核对；2026-10-28",
+      "note": "以属性归因与软正交约束决定任务间共享/隔离，强调相关任务的正迁移；静态硬正交不是新意。",
+      "code": "https://github.com/736619821/ASO-LORA"
+    },
+    {
+      "id": "M313",
+      "group": "相邻领域",
+      "title": "Metalearning Continual Learning Algorithms",
+      "date": "TMLR 2025",
+      "url": "https://openreview.net/forum?id=IaUh7CSD3k",
+      "level": "TMLR 正式摘要与出版信息核对；2026-10-28",
+      "note": "已元学习持续学习算法以降低旧任务遗忘；仅让更新器学会保护参数不是 RSI 中首次出现。",
+      "code": ""
+    },
+    {
+      "id": "S311",
+      "group": "RSI",
+      "title": "Skill∞: Recursive Self-Improvement for Agent Skill Optimization",
+      "date": "arXiv 2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35434",
+      "level": "arXiv 原始摘要与作者仓库 README 核对；2026-10-28；代码尚未公开",
+      "note": "任务 Skill 与可重写 Meta-Skill 自递归更新且元技能能跨任务复用；不能声称首次自改进元技能或跨任务重用。",
+      "code": "https://github.com/taowangcheng/skill-infinity"
+    },
+    {
+      "id": "S312",
+      "group": "RSI",
+      "title": "PolySkill: Learning Generalizable Skills Through Polymorphic Abstraction For Continual Learning",
+      "date": "ICLR 2026",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/e350897ed832f9cad6f2e223e7acad6d-Abstract-Conference.html",
+      "level": "ICLR 2026 官方摘要核对；2026-10-28",
+      "note": "已将 Skill 的抽象目标与具体实现解耦，支持跨网站泛化与自探索；抽象-实例分离本身不是新意。",
+      "code": "https://github.com/simonucl/PolySkill"
+    },
+    {
+      "id": "S313",
+      "group": "RSI",
+      "title": "Evolving Agents",
+      "date": "ACL 2026",
+      "url": "https://aclanthology.org/2026.acl-long.754/",
+      "level": "ACL Anthology 官方摘要核对；2026-10-28",
+      "note": "学习并改进准符号推理抽象及其构造与使用模块；动态改写抽象本身已有相邻工作。",
+      "code": ""
+    },
+    {
+      "id": "S314",
+      "group": "RSI",
+      "title": "ContinualSkillBench: Can LLM Agents Truly Evolve Their Capabilities?",
+      "date": "arXiv 2026-08",
+      "url": "https://arxiv.org/abs/2608.03874",
+      "level": "arXiv 原始摘要核对；2026-10-28",
+      "note": "连续学习中显式 Skill 的平均优势有限，部分提升可能来自上下文与反馈；必须撤上下文检验可持续跨任务技能能力。",
+      "code": ""
     }
   ]
 }
