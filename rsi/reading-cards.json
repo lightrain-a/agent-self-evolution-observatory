@@ -31,6 +31,974 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "discorl-nature2025-oh",
+      "short_title": "DiscoRL · Nature 2025",
+      "title": "Discovering state-of-the-art reinforcement learning algorithms",
+      "authors": "Junhyuk Oh, Gregory Farquhar, Iurii Kemaev, Dan A. Calian, Matteo Hessel, Luisa Zintgraf, Satinder Singh, Hado van Hasselt, David Silver",
+      "lead_institution": "Google DeepMind",
+      "institutions": [
+        "Google DeepMind"
+      ],
+      "institution_source": "Nature 648, 312–319（2025）正式论文首页作者与机构；作者项目主页",
+      "publication": "Nature · Vol. 648 · pp. 312–319 · 2025",
+      "doi": "10.1038/s41586-025-09761-x",
+      "official_url": "https://www.nature.com/articles/s41586-025-09761-x",
+      "first_posted": "2025-10-22",
+      "version": "Nature Open Access 正式论文 · online 2025-10-22 / Version of Record 2025-11-26",
+      "read_on": "2026-10-28",
+      "reading_level": "Nature 正文 Methods / Fig.1–4 / Extended Data + DeepMind 项目主页与官方实现 README 核对；未重跑元训练",
+      "tags": [
+        "DiscoRL",
+        "Meta-gradient",
+        "Meta-learning Update Rules",
+        "AutoRL",
+        "Agent Population",
+        "Prediction Semantics",
+        "Transfer to Unseen Environments",
+        "RSI Learning Rules"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "以多环境 Agent 的折扣回报作为元优化目标，经 Agent 参数更新链路反向传播到生成更新目标的元网络，并在未见环境独立评估。",
+          "open_question": "元优化反馈来自预设环境奖励；若扩展到 LLM 自生成评价，奖励真实性、任务偏差与元目标投机仍需独立审计。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "让元网络同时发现新预测 y/z 的学习目标及其与策略更新的关系，发现对未来重要事件有预测力的中间信号。",
+          "open_question": "这是通过外部环境回报发现更有效更新规则，不等于在完全封闭的自生成数据中获得新的事实知识。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "学习规则从 Atari 迁移到未见的观测、动作、网络结构与环境分布，表明所发现规则覆盖不止一个游戏任务。",
+          "open_question": "没有直接测量语言模型生成支持集能否扩大；泛化的是算法而不是训练后 Agent 的零样本行动能力。"
+        },
+        "retention": {
+          "level": "partial",
+          "contribution": "在不同 Agent 生命周期间保留并优化共享元网络，即便 Agent 参数重置，发现出的规则仍可用于新的 Agent。",
+          "open_question": "没有让部署中的同一个 Agent 长期自主更新自己的训练规则，也没有测跨多轮知识持续学习及旧能力保持。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "设计了稳定元训练的归一化、预测熵与策略目标 KL 正则，降低学习坍塌。",
+          "open_question": "数值稳定不等于安全性；未研究奖励欺骗、恶意自修改、授权边界或独立验证器失效。"
+        }
+      },
+      "one_sentence": "DiscoRL 用多环境 Agent 群体的学习效果反向改进共享元网络，让 AI 发现策略和预测的更新规则，再交给未见环境的新 Agent 使用。",
+      "story": {
+        "challenge": "RL Agent 会根据经验改进游戏策略，但决定它怎么学习的 TD 目标、辅助任务和策略损失通常由研究者手工指定。",
+        "insight": "若不同 Agent 的训练目标由共享元网络产生，并用它们学得好不好来反向评价，学习规则本身就能被改进。",
+        "design": "把每个 Agent 的动作、奖励和多类预测轨迹交给元网络；元网络输出策略及新预测的学习目标，外层对多个 Agent 的回报做元梯度优化。",
+        "result": "Disco57 在 Atari57 上达到 IQM 13.86，规则可迁移至未见基准；Disco103 用 103 个复杂环境发现更通用的规则。"
+      },
+      "problem": "现有强化学习算法通常人为规定如何根据奖励和未来预测更新策略；学习算法本身的设计耗费试错，而且特定游戏中找到的方案不一定能迁移到完全不同的环境。",
+      "setup": "真实 AI 实验而非人类实验。外层元训练从多任务环境中实例化大量 Agent，每个 Agent 在自己的 Atari/ProcGen/DMLab 实例上执行交互和参数更新；共享元网络接收（策略、预定义 q/p、未定义语义的 y/z、奖励、动作、终止标志等）轨迹并输出用于更新策略和 y/z 的目标。外层使用 Agent 回报的元梯度改进元网络；在新的 Agent 上冻结所得规则，测 Atari 及未见 ProcGen、DMLab-30、Crafter、NetHack、Sokoban 等的学习表现。",
+      "updates": "内层持续更新游戏 Agent 的网络参数 θ；外层通过 meta-gradient 更新共享元网络参数 η。部署评测阶段把发现出的 η 当作固定学习规则，用它训练新的 Agent；不是让每个部署 Agent 继续自动改写 η，更不是 LLM 修改自己的优化器代码。",
+      "key_ideas": [
+        {
+          "name": "共享的不是策略参数，而是更新目标",
+          "summary": "多个 Agent 用相同元网络产出的目标更新自身参数；外层根据群体效果改变元网络，使更新规则具有跨任务复用性。",
+          "formula": "agent θ_i ← update(θ_i; meta-targets m_η(trajectory_i)); η ← meta-update(aggregate returns)"
+        },
+        {
+          "name": "预定义预测与发现语义的预测并存",
+          "summary": "π 是策略；q 是动作价值、p 是辅助下一步策略预测，二者使用预定义辅助目标；y(s)、z(s,a) 的学习目标由元网络决定。",
+          "formula": "agent outputs: (π, q, p, y, z); meta-targets: (π̂, ŷ, ẑ)"
+        },
+        {
+          "name": "输出训练目标，而非只输出一个标量 Loss",
+          "summary": "元网络决定策略及两类新预测向什么目标移动，保留 TD 式 bootstrapping 和 Q-learning 半梯度方法的表达能力。",
+          "formula": "L(θ)=E[D(π̂,πθ)+D(ŷ,yθ)+D(ẑ,zθ)+L_aux]; D=KL"
+        },
+        {
+          "name": "训练规则要对学习过程求导",
+          "summary": "梯度从未来 Agent 回报穿过数次 Agent 参数更新，返回到目标生成器 η。实际用滑动窗口反传20步，而不是展开完整生涯。",
+          "formula": "∇_η J ≈ E[(∂θ/∂η)·∇_θ J(θ)]"
+        },
+        {
+          "name": "规则的可迁移性与最终 Agent 的零样本能力不同",
+          "summary": "未见环境里，Disco57 本身不提供现成的游戏策略；必须让新的 Agent 按发现规则重新交互和学习。",
+          "formula": "hold out environments for meta-discovery → freeze η → train fresh θ on new environment"
+        }
+      ],
+      "evidence": [
+        "Fig. 1 / Methods：Agent 输出策略 π、动作价值 q、辅助策略预测 p、状态预测 y(s) 和状态—动作预测 z(s,a)；元网络从轨迹生成 π̂、ŷ、ẑ 训练目标，q/p 使用预定义辅助目标。",
+        "元优化：多 Agent 在不同环境同步训练，Agent 参数周期性重置，元梯度通过滑动窗口内 20 次 Agent 更新反传；外层以折扣回报为目标。",
+        "发现设置：Disco57=57 Atari，128 并行 Agent，约 1,024 TPUv3 核心×64 小时；Disco103=57 Atari+16 ProcGen+30 DMLab=103 环境，206 Agent，2,048 TPUv3 核心×60 小时。",
+        "Fig. 2a / Extended Data Table 1：Disco57 在 Atari57 的 Human-normalized IQM=13.86，超过论文纳入的多种人工 RL 规则；不是胜率或百分比。",
+        "Extended Data Fig. 4：相同 Atari57 最终评估设置下，DiscoRL 约少用 40% 的评估计算达到 MuZero 最终表现；不包含巨额规则发现成本。",
+        "Fig. 2：仅从 Atari 发现的 Disco57 在未见 ProcGen 上超过论文纳入的已发表方法；DMLab-30 的迁移没有呈现同等领先优势，Crafter、NetHack、Sokoban 等也测试了不同观测与动作空间。",
+        "Fig. 2 / 3：扩展到 103 个复杂环境的 Disco103，在 Atari 与 Disco57 接近，并在主图中其他已见/未见基准上表现更强；Crafter 达到人类水平，Sokoban 接近 MuZero。",
+        "Fig. 3b,c：增加发现阶段环境数量与多样性通常提升未见 ProcGen 性能；从 57 个简化 Grid-world 而非复杂 Atari 发现出的规则在 Atari 上显著变差。",
+        "Fig. 3c：移除传统价值 q、移除新预测 y/z、移除辅助预测 p 或缩小 Agent 等消融，显示预定义价值知识与允许新预测共同支持算法发现。",
+        "Fig. 4：学习出来的 y/z 与未来较大奖励、未来策略熵等事件相关；移除预测 bootstrapping 或使预测无法影响策略目标均导致性能下降。",
+        "Fig. 3a：作者报告较好的 Disco57 规则在每个 Atari 游戏约 600M 环境步骤的元发现过程中出现；这是发现阶段经验量，不是最终新环境 Agent 的零样本成绩。"
+      ],
+      "boundaries": [
+        "DiscoRL 自动发现的是给定元网络输入、输出、预测头和优化框架内的训练目标映射；KL 距离、q/p 辅助损失、优化器与整体元训练流程仍由研究者固定，不是从零自动发现所有训练代码。",
+        "Disco57 在新基准的“zero-shot”是学习规则不重新元训练就能迁移，不是一个没有在该环境训练过的 Agent 已经学会了新游戏。",
+        "13.86 是 Human-normalized IQM，不是 13.86% 正确率；不同环境的原始分数、归一化指标与平均回报不能放在同一量纲横向排名。",
+        "约 40% 计算节省比较的是规定评估训练条件下达到 MuZero 最终表现所需 TPU 计算；没有计入 Disco57 使用 1,024 TPUv3×64 h 的发现成本。",
+        "Disco103 在 ProcGen 与 DMLab 上不再是严格未见任务（它们已被纳入其元发现集合）；未见领域结论须根据 Disco57 与 Disco103 分开。",
+        "作者分析 y/z 对未来事件的可预测性及去除时的性能下降，支持它们具有有用语义，但不能断言发现的潜变量等同于人类可解释的完整 RL 理论。官方 GitHub 提供最小 JAX harness 与 Disco103 已发现参数，并声明后续不积极维护；不是一键复现论文全部大规模算力结果。",
+        "固定元规则的迁移与部署中连续自主修改学习规则是不同的研究对象；论文未直接验证 LLM 知识长期内化、持续训练的遗忘/迁移或自主训练协议治理。",
+        "多环境元优化天然可能偏向元训练环境分布；在 LLM 自生成任务/评价器下还会引入评价投机、数据泄漏、计算预算与安全风险，本文未解决。"
+      ],
+      "our_relevance": [
+        "作为 RSI 独立候选保留而不直接给 I 编号：现有 I 系列重点讨论学什么、何时学、哪些错误值得纠正；DiscoRL 启发关注同样数据下应该怎样进行参数更新。",
+        "与 I6 / I8 的差异：I6/I8 固定纠错算法研究失败学习价值；本方向固定数据与失败状态，研究更新规则本身的选择或改善，并测试未来新任务的净收益。",
+        "与 Task Scheduler 的差异：不是换任务或挑样本，而是改变同一训练数据如何形成目标、辅助预测与梯度更新；否则容易退化为普通 Curriculum/Cost Router。",
+        "关键新问题是更新规则的适用边界：同样当前准确率的两个模型，为什么由不同更新规则形成的模型，未来学习 C 的能力不同？能否由更新历史可靠预测？",
+        "成本上不建议直接复刻 Disco57 的超大规模元梯度；先以 1.5B 左右模型、LoRA、小规模受控任务与固定预算做可证伪的概念验证。",
+        "需要将 RLC 2025《How Should We Meta-Learn Reinforcement Learning Algorithms?》与 metaTextGrad（2025）列入最近邻：自动搜索 RL 算法与优化 LLM 文本优化器都已有先例；新颖性须落在 RSI 真实参数更新的持续净收益。"
+      ],
+      "next_test": "P0：固定基础模型、A/B训练数据、算力、更新次数、独立校验器，配对比较标准 SFT、保持旧能力的约束更新和轨迹条件化目标生成器；匹配 A/B 当前水平，再对未见 C 进行同成本真实 LoRA 更新。检验 C 学习曲线及 A/B 旧能力保持，并把规则生成/训练成本计入总预算。P1：模型及任务族留出，测试更新规则迁移、失效检测和规则改变的收益。若只改善当下分数或只减少 Judge Token 而未来学习不变，就不支持 RSI 学习规则进化主线。",
+      "deep_read": {
+        "focus": "真正的 AI 强化学习实验。先分清 Agent 与 Meta-network 各自更新哪套参数，再看 Fig.1 的目标生成结构、Fig.2 的未见环境迁移、Fig.3 的复杂环境与消融、Fig.4 的新预测语义，最后讨论适用于 RSI 的新科学问题。",
+        "metric_summary_title": "主证据速览：5 组关键比较",
+        "metric_summary_intro": "涉及不同度量：Atari 是 human-normalized IQM，ProcGen/DMLab 也有归一化指标，其余任务报告平均回报。这里不把它们混成统一百分比；发现成本与评估成本严格分开。",
+        "metric_summary": [
+          {
+            "family": "① Atari57 主结果",
+            "metrics": "Fig. 2a · Disco57",
+            "meaning": "只从 57 个 Atari 游戏发现共同学习规则，重新训练各游戏 Agent。",
+            "result": "Atari57 Human-normalized IQM = 13.86；超过论文纳入的主要人工设计 RL 方法。"
+          },
+          {
+            "family": "② 规则迁移到未见任务",
+            "metrics": "Fig. 2b–f · Disco57",
+            "meaning": "Disco57 的发现阶段没见过 ProcGen、DMLab-30、Crafter、NetHack、Sokoban；冻结更新规则，用它训练新 Agent。跨基准强弱不同，不能视为全面领先。",
+            "result": "ProcGen 达到当时比较中的领先水平，其他多种未见任务具有竞争力；不能解释为策略零样本完成游戏。"
+          },
+          {
+            "family": "③ 更大、更复杂的发现池",
+            "metrics": "Fig. 2 / 3 · Disco103",
+            "meaning": "从 57 Atari 扩展到 57+16+30=103 个环境；并用 57 个 Grid-world 作简单环境对照。",
+            "result": "Disco103 在 Atari 接近 Disco57、其他主图基准上更强；简单 Grid-world 发现的规则在 Atari 更差。"
+          },
+          {
+            "family": "④ 消融：新预测和自举",
+            "metrics": "Fig. 3c / Fig. 4",
+            "meaning": "去掉新预测 y/z、传统价值 q、辅助预测 p；另切断预测 bootstrapping。",
+            "result": "新预测及既有价值知识都有贡献；禁用预测自举或使预测无法影响策略后性能下降。"
+          },
+          {
+            "family": "⑤ 计算开销边界",
+            "metrics": "Disco57 / Disco103 · Extended Data Fig. 4",
+            "meaning": "学习规则发现和最终 Agent 评估是两个不同成本账户。",
+            "result": "发现约 1,024 TPUv3×64 h / 2,048 TPUv3×60 h；40% 更少计算只适用于指定 Atari 评估对照。"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Disco57 / Disco103",
+            "meaning": "用57个 Atari 环境或103个混合复杂环境进行元发现，分别获得的学习更新规则。不是57或103个超参数。"
+          },
+          {
+            "name": "Meta-network · η",
+            "meaning": "共享更新规则的神经网络；从轨迹生成当前Agent应该优化的策略/预测目标。"
+          },
+          {
+            "name": "Agent · θ",
+            "meaning": "真正在游戏里行动与更新策略参数的学习者；评估新环境时会训练新的Agent。"
+          },
+          {
+            "name": "π / q / p",
+            "meaning": "策略分布、预定义动作价值预测和预定义辅助下一步策略预测。q/p 使用固定辅助目标。"
+          },
+          {
+            "name": "y(s) / z(s,a)",
+            "meaning": "分别依赖状态和状态—动作的额外向量预测；起初没有人工赋予的语义，其训练目标由元网络生成。"
+          },
+          {
+            "name": "Meta-gradient",
+            "meaning": "沿着一个Agent的若干参数更新步骤反向求导，计算共享更新规则的改变怎样影响之后的回报。"
+          },
+          {
+            "name": "Bootstrapping",
+            "meaning": "用未来的预测帮助构造当前学习目标，类似 TD 方法，但由元网络学习如何组合。"
+          },
+          {
+            "name": "IQM",
+            "meaning": "Interquartile Mean，跨任务标准化分数去掉上下四分位后计算平均；不是原始胜率或百分比。"
+          },
+          {
+            "name": "Rule zero-shot transfer",
+            "meaning": "冻结已发现的学习算法参数，直接应用于未见环境里的新Agent；新Agent仍需要正常训练。"
+          }
+        ],
+        "summary": [
+          "DiscoRL 的最重要变化不是选择任务，而是让共享元网络决定策略和新预测该往什么目标更新；外层根据多个Agent最终学得如何改进规则。",
+          "只在 Atari 发现的规则可以帮助新Agent学习未见的 ProcGen/DMLab 等环境，证明一定程度的算法迁移，不是策略的零样本游戏能力。",
+          "57→103环境的扩展和 Grid-world 对照提示发现任务的复杂度与多样性比单纯数量更关键；y/z与bootstrapping消融提供中间机制证据。",
+          "发现成本很大、规则表达空间有限，并非全自动优化器发明或部署后持续自主改写；这些都是RSI的真实边界。",
+          "RSI新问题应固定任务与学习样本，研究何种失败状态需要何种更新规则，并以匹配当前水平后的未来C任务学习收益判断。"
+        ],
+        "afterword": "以下是我们的 RSI 研究迁移假设，不是 DeepMind 已完成的 LLM 或跨轮自我改进实验。",
+        "sections": [
+          {
+            "id": "agent-vs-meta",
+            "stage": "challenge",
+            "title": "实验对象是谁？Agent 与 Meta-network 分别学什么？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "这是真正训练 AI 的实验，没有人类参与者接受策略学习训练。研究者创建大量强化学习 Agent，让每个 Agent 在游戏里学习怎么行动；同时训练一个所有 Agent 共用的元网络，决定它们该怎样学习。元训练结束后，保留的是共同规则，评估阶段用固定规则训练新 Agent。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "角色",
+                  "可改变的参数",
+                  "收到的反馈",
+                  "保留并迁移什么"
+                ],
+                "rows": [
+                  [
+                    "游戏 Agent",
+                    "θ：游戏策略与内部预测",
+                    "交互得到奖励，最小化元网络产生的目标距离",
+                    "通常只学当前游戏；可以重置"
+                  ],
+                  [
+                    "Meta-network",
+                    "η：产生学习目标的共享规则",
+                    "多个 Agent 学习后的折扣回报、元梯度",
+                    "面向各种环境的更新方法"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要混为一谈",
+                "text": "论文没有让单个部署Agent直接修改自己的优化器代码，也不是让LLM用自然语言提出算法然后自动执行。它是在研究者指定的学习规则空间内做元梯度优化。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "plain-example",
+            "stage": "challenge",
+            "title": "举个具体例子：游戏打赢了，Agent 到底应该怎样学？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "假设一个Agent玩打砖块，撞到砖块得分。普通RL研究者会手工指定奖励如何影响动作价值、策略和辅助任务；DiscoRL则让共享元网络阅读多个时刻的动作、奖励、预测轨迹，生成希望策略及部分预测靠近的目标。内层仍然是梯度下降，但“目标值是什么”可以由数据驱动改变。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "观察与行动",
+                    "text": "Agent 看当前画面、输出 π 和多个预测，按策略选动作，得到奖励与终止标志。"
+                  },
+                  {
+                    "title": "生成目标",
+                    "text": "共享元网络接收当前与未来几步的预测/奖励轨迹，输出 π̂、ŷ、ẑ。"
+                  },
+                  {
+                    "title": "更新 Agent",
+                    "text": "最小化当前输出和目标间的 KL 距离，同时训练预定义的 q/p 辅助预测。"
+                  },
+                  {
+                    "title": "检查有效性",
+                    "text": "继续玩游戏，判断这次更新对后续折扣回报是好是坏。"
+                  },
+                  {
+                    "title": "优化共同规则",
+                    "text": "将多个 Agent 的效果通过 meta-gradient 汇总，更新元网络参数 η。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最重要的结构变化",
+                "text": "过去固定的是更新目标、变化的是模型参数；DiscoRL让更新目标也可被学习，因此学习算法本身进入优化循环。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "agent-outputs",
+            "stage": "insight",
+            "title": "Fig. 1b：五种预测分别是什么，哪些语义可以自动发现？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "输出",
+                  "给定语义",
+                  "目标如何形成",
+                  "作用"
+                ],
+                "rows": [
+                  [
+                    "π(s)",
+                    "动作策略概率",
+                    "元网络给出目标 π̂",
+                    "改变未来要选什么动作"
+                  ],
+                  [
+                    "q(s,a)",
+                    "动作价值",
+                    "预定义 Retrace 两热值目标",
+                    "保留传统价值学习先验"
+                  ],
+                  [
+                    "p(s,a)",
+                    "辅助策略预测",
+                    "预定义下一状态策略目标 πθ(s′)",
+                    "提供可学习的下一步行为信号"
+                  ],
+                  [
+                    "y(s)",
+                    "未预定义：状态向量",
+                    "元网络给出 ŷ",
+                    "让系统自己发现对未来有用的状态预测"
+                  ],
+                  [
+                    "z(s,a)",
+                    "未预定义：状态—动作向量",
+                    "元网络给出 ẑ",
+                    "让系统自己发现依赖动作的预测"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "需要纠正一种常见的简化说法：元网络并不是直接随意改写所有五种预测；q、p 是事先定义的辅助学习目标，策略 π 与 y/z 才由发现出的目标直接推动。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是所有内在表征都是“新知识”",
+                "text": "y/z 并未预先被命名为未来奖励、状态价值或特定事件。论文后来用探针与消融发现它们和未来重要事件有关，不能反过来声称一开始就规定它们预测未来熵。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "targets-vs-loss",
+            "stage": "insight",
+            "title": "Fig. 1c：为什么生成训练目标比只学习一个标量 Loss 更灵活？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "Eq. 1 · Agent 的更新损失",
+                "expression": "L(θ)=E[D(π̂,πθ)+D(ŷ,yθ)+D(ẑ,zθ)+L_aux]",
+                "meaning": "π̂/ŷ/ẑ 是当前/未来轨迹经元网络产生的目标，D 在实现中采用 KL；q/p 的预定义目标进入 L_aux。",
+                "boundary": "不能把它描述成完全由元网络输出优化器、KL 距离和所有训练超参数；这些组件仍受手工约束。"
+              },
+              {
+                "type": "prose",
+                "text": "元网络生成“要逼近的目标”而不是一个标量得分，使得在构造当前目标时引用未来预测成为自然操作，也能表达TD和Q-learning一类以目标固定方向更新的半梯度方法。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "方案",
+                  "实际学习的对象",
+                  "局限"
+                ],
+                "rows": [
+                  [
+                    "人手写TD目标",
+                    "例如 r+γV(s′)",
+                    "定义了具体语义和公式"
+                  ],
+                  [
+                    "直接学习标量Loss",
+                    "用神经网络为样本产生损失值",
+                    "部分半梯度目标更新不易直接表达"
+                  ],
+                  [
+                    "DiscoRL生成目标",
+                    "给策略和可发现预测提供训练目标",
+                    "仍限定预测接口和KL更新形式"
+                  ]
+                ]
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "two-level-optimization",
+            "stage": "design",
+            "title": "Fig. 1d：内层更新θ，外层怎样通过20步更新到η？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "内层更新",
+                "expression": "θ_{k+1}=θ_k−α∇_θL(θ_k;η)",
+                "meaning": "每个Agent按照当前元网络目标更新自身预测与策略。",
+                "boundary": "示意式忽略了优化器细节；论文实现包含稳定器和固定辅助项。"
+              },
+              {
+                "type": "formula",
+                "label": "外层目标与元梯度",
+                "expression": "J(η)=E_env,E_θ[J(θ)];  ∇_ηJ≈E[(∂θ/∂η)·∇_θJ(θ)]",
+                "meaning": "从多个环境的未来折扣回报评估当前更新规则；通过Agent训练更新过程，将对回报的导数传回η。",
+                "boundary": "实际反传限制在滑动窗口20次Agent更新，并非贯穿所有Agent生涯做精确全梯度。"
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "初始化",
+                    "text": "元网络起初随机，Agent群体分别在不同环境中学习。"
+                  },
+                  {
+                    "title": "内层训练",
+                    "text": "各Agent根据当前元规则执行若干次梯度更新并继续采集回报。"
+                  },
+                  {
+                    "title": "短窗展开",
+                    "text": "对最近20次Agent更新进行反向传播；结合Actor–Critic的估计获得外层梯度。"
+                  },
+                  {
+                    "title": "跨Agent聚合",
+                    "text": "汇总不同环境的元梯度，更新共享 η，并定期重置Agent以持续检验从头学习效率。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "20次并不是“只训练Agent 20轮”",
+                "text": "20是元梯度反向传播的滑动窗口长度；真实游戏交互和Agent生涯远长于这一窗口。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "meta-rnn",
+            "stage": "design",
+            "title": "Methods：元网络是否会根据当前Agent学习阶段动态调整？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者除沿着一段游戏轨迹倒序处理的LSTM外，还引入沿着Agent参数更新顺序前向运行的meta-RNN。它能够携带Agent整个学习生涯的统计信息，让生成的目标根据学习阶段和环境有所调整。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "网络模块",
+                  "时间维度",
+                  "为什么需要"
+                ],
+                "rows": [
+                  [
+                    "轨迹LSTM",
+                    "游戏时间 t→t+n（倒序处理）",
+                    "根据未来预测和奖励构造当前目标，允许自举"
+                  ],
+                  [
+                    "Meta-RNN",
+                    "Agent第k次→第k+1次更新",
+                    "利用跨更新统计量，适配学习阶段和环境"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "论文报告meta-RNN只带来了较小的总体改进；不能将之夸大为能长期存储并重组所有知识的RSI记忆。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "discovery-setting",
+            "stage": "design",
+            "title": "两个版本如何训练？计算规模有多大？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "设置",
+                  "Disco57",
+                  "Disco103"
+                ],
+                "rows": [
+                  [
+                    "发现阶段环境",
+                    "57 Atari",
+                    "57 Atari + 16 ProcGen + 30 DMLab-30 = 103"
+                  ],
+                  [
+                    "并行Agent",
+                    "128",
+                    "206（每环境两份）"
+                  ],
+                  [
+                    "发现阶段TPUv3",
+                    "1,024核 × 64小时",
+                    "2,048核 × 60小时"
+                  ],
+                  [
+                    "未见测试领域",
+                    "ProcGen、DMLab-30、Crafter、NetHack、Sokoban",
+                    "Crafter、NetHack、Sokoban；ProcGen/DMLab 已属于发现任务族"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "所以DiscoRL的泛化主张有一个严格约束：Disco57对ProcGen/DMLab确实是元发现阶段未见，而Disco103已在这些环境中学习规则。对后一版本不能继续把ProcGen称作未见环境。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "训练规模是学习算法的成本，不是一个Agent的训练成本",
+                "text": "发现过程需数万至十余万TPU核小时。后文40%节省不能用来抵消或掩盖发现本身的成本。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "atari-results",
+            "stage": "result",
+            "title": "Fig. 2a：13.86到底表示什么？为什么能与MuZero相比？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "指标",
+                  "作者报告",
+                  "正确解释"
+                ],
+                "rows": [
+                  [
+                    "Disco57 Atari57 Human-normalized IQM",
+                    "13.86",
+                    "57种游戏归一化分数的四分位间均值；不是胜率13.86%"
+                  ],
+                  [
+                    "MuZero等人工RL基线",
+                    "同一主图比较，Disco57领先",
+                    "说明在该评估合同下，学到的目标生成规则表现很强"
+                  ],
+                  [
+                    "Extended Data Fig. 4",
+                    "约少40%的评估计算达到MuZero最终表现",
+                    "只比较新Agent评估训练，不含元发现"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这项结果说明自动发现的规则并非只在简单Grid-world有效，而能够胜过论文比较的强人工RL算法。IQM应连同归一化规则、训练步数和置信区间理解，不能把它称为准确率。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "可发表的准确口径",
+                "text": "“Disco57在Atari57评估中达到human-normalized IQM 13.86，并在论文基线对照中超过主要人工RL规则；达到MuZero最终表现所需的评估TPU计算约减少40%。”"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "held-out-generalization",
+            "stage": "result",
+            "title": "Fig. 2：从Atari得到的规则，为什么还能帮助新游戏里的Agent？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "基准",
+                  "Disco57发现阶段见过吗？",
+                  "评估证明了什么"
+                ],
+                "rows": [
+                  [
+                    "Atari57",
+                    "见过任务族",
+                    "已见复杂环境的学习效率/性能"
+                  ],
+                  [
+                    "ProcGen16",
+                    "没见过",
+                    "新Agent用固定Disco57规则学习，获得强性能"
+                  ],
+                  [
+                    "DMLab-30",
+                    "没见过",
+                    "可测试迁移，但不具有 ProcGen 那样的领先优势；将 DMLab 加入 Disco103 的发现池后得到改善"
+                  ],
+                  [
+                    "Crafter",
+                    "没见过",
+                    "新环境中用相同规则重新训练取得竞争力表现"
+                  ],
+                  [
+                    "NetHack",
+                    "没见过",
+                    "跨复杂探索与动作分布，取得有竞争力成绩"
+                  ],
+                  [
+                    "Sokoban",
+                    "没见过",
+                    "在规划型任务上测规则迁移"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这里的“zero-shot transfer”指元网络参数η不因新基准而重新优化；不是把Atari Agent的θ直接拿去玩ProcGen。所有新游戏仍用该规则训练新的Agent。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "迁移对象是Learning Rule，不是Policy",
+                "text": "这项实验不能解释成Disco57具备ProcGen零样本玩家能力。它展示的是一个学法能够帮助新人学会陌生游戏。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "diversity-scalability",
+            "stage": "result",
+            "title": "Fig. 3：更多训练环境为何能让发现的规则更好？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "控制",
+                  "具体做法",
+                  "主要结果"
+                ],
+                "rows": [
+                  [
+                    "增加复杂环境数量",
+                    "从Atari任务池逐渐增加用于发现的游戏",
+                    "未见ProcGen评测随发现任务数增加而改善"
+                  ],
+                  [
+                    "57→103",
+                    "加入ProcGen和DMLab-30进行Disco103发现",
+                    "Atari大致保持，其他主要基准进一步提高"
+                  ],
+                  [
+                    "复杂度对照",
+                    "将57个Atari替换为57个简化Grid-world，仍按相同发现框架训练",
+                    "Grid-world发现规则的Atari表现显著较差"
+                  ],
+                  [
+                    "资源投入",
+                    "增加环境经验与元训练规模",
+                    "学习规则发现的质量随规模和多样性改善"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "值得学的是作者不仅报告‘任务越多越好’，还控制了环境数量接近但难度截然不同的替代任务池。这支持元训练必须暴露足够真实的学习困难，不能把一堆过于简单任务等同为高价值经验。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "对RSI任务生成的启发",
+                "text": "元规则学习需要能够区分多种失效机制的训练任务：稀疏反馈、长时依赖、噪声、局部捷径和迁移冲突。数量是条件之一，难点覆盖同样重要。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "prediction-ablation",
+            "stage": "result",
+            "title": "Fig. 3c：y、z到底有没有独立贡献？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "消融",
+                  "移除了什么",
+                  "为何能说明机制"
+                ],
+                "rows": [
+                  [
+                    "Without prediction",
+                    "去掉学习语义未知的 y/z",
+                    "比较新预测所增加的表示与更新空间"
+                  ],
+                  [
+                    "Without value",
+                    "去掉已知语义的动作价值 q",
+                    "检验传统价值学习先验是否仍重要"
+                  ],
+                  [
+                    "Without auxiliary prediction",
+                    "去掉辅助策略预测 p",
+                    "检验预定义中间任务的辅助收益"
+                  ],
+                  [
+                    "Small agents",
+                    "用更小的Agent网络进行规则发现",
+                    "检验Agent容量对元发现的影响"
+                  ],
+                  [
+                    "Toy environments",
+                    "从57个Grid-world发现规则",
+                    "检验发现环境复杂度"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "作者的结论是传统价值先验和新预测语义都很重要。该结果支持‘可发现的预测目标’不是无意义装饰，但不说明在任意任务上加入更多预测头就一定更好。"
+              }
+            ],
+            "order": 4
+          },
+          {
+            "id": "prediction-semantics",
+            "stage": "result",
+            "title": "Fig. 4：一个未命名的预测 y/z 最后学到了什么？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "轨迹可视化",
+                    "text": "分析Ms Pacman/Breakout中y的变化，发现部分预测置信度在奖励或强动作偏好变化前出现峰值。"
+                  },
+                  {
+                    "title": "输入敏感性",
+                    "text": "在Beam Rider中比较梯度，发现新预测有时关注较远的敌人，区别于策略与价值头对近处目标或记分板的关注。"
+                  },
+                  {
+                    "title": "探针验证",
+                    "text": "在10款Atari上，用y/z或策略/价值输出预测未来策略熵与大额奖励事件，新预测往往包含更多相应信息。"
+                  },
+                  {
+                    "title": "Bootstrapping消融",
+                    "text": "扰动未来z会影响当前ẑ目标；将y/z输入置零限制自举后性能下降，进一步禁止其影响策略目标后跌幅更大。"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "实证层面",
+                  "可以支持",
+                  "不能写成"
+                ],
+                "rows": [
+                  [
+                    "有用的潜在预测语义",
+                    "y/z携带与未来显著事件相关的信号",
+                    "已发现人类可解释的完整未来模型"
+                  ],
+                  [
+                    "预测自举",
+                    "未来预测用于形成现在学习目标",
+                    "所有环境均依赖同一种明确TD公式"
+                  ],
+                  [
+                    "影响策略学习",
+                    "去掉新预测对策略目标的输入会伤害性能",
+                    "只靠辅助任务就能自动形成好策略"
+                  ]
+                ]
+              }
+            ],
+            "order": 5
+          },
+          {
+            "id": "paper-boundaries",
+            "stage": "next",
+            "title": "这篇Nature论文的证据边界在哪里？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "作者已验证",
+                  "尚未验证"
+                ],
+                "rows": [
+                  [
+                    "在明确的目标生成与meta-gradient框架中自动发现强RL更新规则",
+                    "从零自由搜索全部优化器代码、网络结构和奖励定义"
+                  ],
+                  [
+                    "冻结学习规则后，在未见环境训练新Agent",
+                    "部署Agent持续自主重写自身元网络和训练框架"
+                  ],
+                  [
+                    "不同Agent和环境的学习经验帮助发现更强规则",
+                    "LLM长周期知识学习和未见数学/代码任务自动迁移"
+                  ],
+                  [
+                    "给定评估协议下取得计算效率优势",
+                    "包括发现成本与评估成本在内的总经济性必然优于人工设计算法"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "与强RSI定义的距离",
+                "text": "论文是跨Agent群体的元学习算法发现；长期持续自修改、自主验证、自我保护的完整RSI系统仍是后续研究问题。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "closest-works",
+            "stage": "next",
+            "title": "与已有AutoRL、LLM优化器研究如何区分？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "相关工作",
+                  "研究范围",
+                  "我们的潜在差异"
+                ],
+                "rows": [
+                  [
+                    "DiscoRL（Nature 2025）",
+                    "大规模多环境群体元梯度发现神经RL更新目标",
+                    "未来持续自改进Agent能否根据具体失败状态改变学习规则"
+                  ],
+                  [
+                    "How Should We Meta-Learn Reinforcement Learning Algorithms?（RLC 2025）",
+                    "比较梯度、黑盒演化、LLM代码搜索等自动发现算法方式的性能与代价",
+                    "控制任务与学习轨迹后检验跨轮学法适用条件与独立未来净收益"
+                  ],
+                  [
+                    "metaTextGrad（2025）",
+                    "自动优化文本优化器的提示词与结构",
+                    "关注LLM真实参数更新机制，不只改推理期文本优化器"
+                  ],
+                  [
+                    "HGM/其他Coding-Agent自改进",
+                    "搜索和验证更好的系统实现或程序版本",
+                    "分离参数更新规则本身与系统搜索、任务选择的收益"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "参考原始来源：https://rlj.org/papers/goldie2025should；https://arxiv.org/abs/2505.18524。仅仅让LLM写新的训练loss或调学习率，已有工作覆盖相近方向；独立创新必须来自可复现的学习规则状态依赖与持续迁移现象。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "rsi-hypothesis",
+            "stage": "next",
+            "title": "对RSI的新科学问题：为什么同一份数据，用不同学法更新会改变未来能力？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "我们目前在不同方向上讨论下一轮学什么、什么失败值得纠正、练习顺序如何安排；DiscoRL启发再增加一个正交轴：给定同样样本、同样学习目标与同样预算，哪种参数更新目标能让未来新任务更容易学会？"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "观察到的失败",
+                  "可能需要改变的学习机制",
+                  "应当独立验证"
+                ],
+                "rows": [
+                  [
+                    "缺前置知识",
+                    "强调基础表示与知识依赖",
+                    "新任务的迁移提高是否不是多看了语料"
+                  ],
+                  [
+                    "纠错学成局部模板",
+                    "跨变式一致目标、学习可泛化特征",
+                    "异结构同规则新题增益"
+                  ],
+                  [
+                    "新训练损害旧能力",
+                    "约束更新方向/干扰、保留表征",
+                    "A/B保持与未来C学习共同提升"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "候选科学假设",
+                "text": "不同失败状态对同一种更新规则并不等价；即使两个模型当前能力相同，更新规则的历史差异仍可能改变它们以后学习陌生规则的速度。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不能把新Idea偷换成任务调度",
+                "text": "同一个模型、同一批训练样本、相同监督与总计算预算下，必须真正改变更新目标或参数更新机制，而不是重新筛样本、换示范或调Prompt。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "rsi-decisive-experiment",
+            "stage": "next",
+            "title": "最小决定性实验：先证明更新规则影响未来学习，再训练Meta-Updater",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "P0：冻结训练条件",
+                    "text": "固定相同基础模型、A/B训练集、优化器族、训练步数、token和独立验证器；至少三个任务家族、多个种子。"
+                  },
+                  {
+                    "title": "只改变学法",
+                    "text": "对同一批材料施加标准SFT、旧能力兼容约束、以及有轨迹输入的学习目标生成器；确保不是只调学习率或改变题目采样。"
+                  },
+                  {
+                    "title": "匹配当前能力",
+                    "text": "先让不同训练分支在A/B能力区间可比，避免把初始C能力差异误认未来可学习性差异。"
+                  },
+                  {
+                    "title": "未来任务C重新学",
+                    "text": "提供完全相同、独立于前两个任务的新规则C，固定LoRA更新预算；记录完整学习曲线、未见C变式表现以及A/B回归。"
+                  },
+                  {
+                    "title": "成本与留出",
+                    "text": "包含元规则发现开销、推理成本、训练成本，并将一部分新任务族和模型规模作为留出测试。"
+                  }
+                ]
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0｜更新规则是否产生独立可学习性差异",
+                    "design": "让相同模型在相同A/B数据、更新步数与资源预算下只改变训练目标；当A/B水平相近后，使用完全相同C训练集进行真正的参数更新。",
+                    "decisive": "比较C未见题学习曲线积分、最终独立泛化与A/B保持；若只改善A/B训练题或减少一次Judge调用，则不能支持本问题。"
+                  },
+                  {
+                    "name": "P1｜学法是否能跨失败类型迁移",
+                    "design": "用已见失败/任务家族训练小型Meta-Updater；在未见失败类型、模型规模和规则族中冻结或仅有限调整元网络。",
+                    "decisive": "相对最优固定更新器、任务条件路由及随机更新器，验证真实净学习收益、更新稳定性及发现总成本；失败则合并现有路由方向。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "当前研究定位",
+                "text": "作为独立候选先做机制验证，不为新Idea抢占正式编号。只有同预算、同数据、同当前能力条件下的未来学习差异稳定存在，才值得投入大规模元更新器设计。"
+              }
+            ],
+            "order": 4
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41586-025-09761-x",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12695655/",
+        "code": "https://github.com/google-deepmind/disco_rl"
+      }
+    },
+    {
       "id": "recover-or-discover-npj2026-zhang",
       "short_title": "Recover or Discover · npj 2026",
       "title": "Recover or discover: How outcome feedback shapes response patterns within game spaces",
