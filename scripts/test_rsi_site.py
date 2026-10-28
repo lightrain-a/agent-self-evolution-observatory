@@ -202,6 +202,35 @@ def main():
         check('reading-notes.html#deep-inventive-production-pf-2023-kapur'
               in (ROOT/'rsi'/page).read_text(encoding='utf-8'),
               'Missing practical RSI cross-link to Inventive Production note: '+page)
+    moral=next((p for p in cards if p['id']=='nhb2025-moral-strategy-maier'),None)
+    check(moral is not None
+          and moral.get('doi')=='10.1038/s41562-025-02271-w'
+          and moral['official_url']=='https://www.nature.com/articles/s41562-025-02271-w',
+          'NHB 2025 metacognitive moral learning primary source missing')
+    check('University College London' in moral['lead_institution']
+          and all(f'E{i}' in refs for i in range(311,316)),
+          'NHB lead institution or related-work primary source records missing')
+    moral_text=json.dumps(moral,ensure_ascii=False)
+    check(all(term in moral_text for term in (
+        '2,328','2328','13次','387','380','834','727',
+        '51.8%','68.2%','55.7%','44.3%',
+        '89.4%','27.9%','67.3%',
+        '97.70','86.73','0.047','0.064','0.061',
+        '121分钟','99分钟','数小时','规则','安全')),
+        'Missing experiment-specific values or scientific caveats in moral learning note')
+    moral_sections={s['id'] for s in moral['deep_read']['sections']}
+    check({'action-or-strategy','learning-models','feedback-manipulation',
+           'experiment-one','experiment-two','experiment-three',
+           'experiment-four','rsi-research-boundary'}<=moral_sections,
+          'Action-vs-strategy design, four experiments or RSI limits missing')
+    moral_note=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    check('id="deep-nhb2025-moral-strategy-maier--stage-related"' in moral_note
+          and all(f'id="deep-nhb2025-moral-strategy-maier--{sid}"' in moral_note
+                  for sid in ('experiment-one','experiment-two','experiment-three','experiment-four')),
+          'New moral strategy note or related-work section not rendered')
+    check('href="reading-notes.html#deep-nhb2025-moral-strategy-maier"'
+          in (ROOT/'rsi/reading-cards.html').read_text(encoding='utf-8'),
+          'Moral learning card lacks long-form reading link')
     similarity=next((p for p in cards if p['id']=='nc2025-task-similarity-menghi'),None)
     check(similarity is not None
           and similarity.get('doi')=='10.1038/s41467-025-66849-8'

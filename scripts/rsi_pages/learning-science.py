@@ -9,6 +9,18 @@ PAGE = {
 <p><b>容易漏掉的两项结果：</b>IF / OF 中 Ignore 比例约 <b>46.26% / 47.32%</b>，Copy 约 <b>32.84% / 41.07%</b>，Apply 约 <b>20.90% / 11.61%</b>。研究发现 IF 的 <strong>Apply 数量</strong>和反馈总量较高，但不能直接把百分比差异或脑同步视为“互动必然让学生理解”的因果证明。Apply 与原题习得指标呈显著正相关，研究<strong>没有观察到 Apply 与迁移成绩的显著直接相关</strong>。[[E27]]</p>
 <p><b>关键测量限制：</b>Ignore / Copy / Apply 是评分者结合<strong>对话和鞋子后测回答</strong>才标出来的。因而它是反馈使用方式的事后编码，不是教师在教学进行中可直接使用的、与后测独立的“学生已掌握”预测信号。真正要研究双向交流的额外信息价值，必须让教学器只读更新前的学生实际回应或独立诊断题，不能在试教期间看最终测试。[[E27]]</p>
 <div class="note"><b>对 RSI 的正交落点：</b><a href="idea-i2.html#dialogue-p0">I2</a> 固定教学伙伴，检验真实学生回应对下一轮教学是否有独立帮助，并训练教师持久更新；<a href="i8.html#insight">I8</a> 固定纠错方式，测接受反馈和跨题净迁移之间的差别；<a href="idea-i5.html">I5</a> 继续研究十个模型的动态换伴，不因这项人类研究改变主线。双向互动、错误解释和学生知识诊断在现有 LLM 文献中均有直接近邻。[[S105]][[S106]][[S103]]</div>'''),
+("moral-strategy-learning","Nature Human Behaviour 2025｜从动作纠错，到学习依赖哪种决策策略",'''
+<p><b>Challenge：</b>一次好结果究竟强化了“这个动作”，还是强化了产生动作的<strong>整个决策方法</strong>？Maier、Cheung 与 Lieder 将二者拆开：13 次道德两难题中，遵循规则（Rule）和成本—收益推理（CBR）有时对应行动、有时对应不行动，反馈条件则随机控制哪种策略持续得到好结果。四项预注册实验共 <b>2,328 人</b>。[[E311]]</p>
+<p><b>Insight &amp; Design：</b>结果可以更新具体动作的价值，也可能更新上层“下一题依赖 Rule 还是 CBR”的信任。作者比较 model-free / model-based / 无学习 × 行动层 / 策略层的六种计算模型；并用新道德问题、态度量表、真实经济激励捐赠和看似独立的后续实验判断转移。<b>CBR 是被选的策略，不等于元控制器的 model-based 学习</b>。[[E311]]</p>
+<div class="table-wrap"><table><thead><tr><th>实验</th><th>必须记住的结果</th><th>证据边界</th></tr></thead><tbody>
+<tr><td>Exp 1 · N=387</td><td>CBR Success 的 CBR 选择 51.8%→68.2%；Rule Success 的 CBR 选择 55.7%→44.3%</td><td>行为变化本身还不能证明更新的是哪一层</td></tr>
+<tr><td>Exp 2 · N=380</td><td>CBR Success 策略层拟合占 89.4%；Rule Success 只有 27.9%，行动层则占 67.3%</td><td>这是模型推断的类别占比，不是直接读出人脑内部机制</td></tr>
+<tr><td>Exp 3 · N=834</td><td>对新道德情境的策略结果预测和态度量表有转移；全样本捐赠差异单侧 p=0.061</td><td>全样本捐赠差异未达显著，不能说人人发生迁移</td></tr>
+<tr><td>Exp 4 · N=727</td><td>跨至另一表面独立的实验，平均间隔 121 分钟；元策略学习相关交互仍显著</td><td>是约数小时的相关道德情境迁移，不是长期人格或模型能力更新</td></tr>
+</tbody></table></div>
+<p><b>Related Work 与新意：</b>Rieskamp &amp; Otto（2006）已提出反馈驱动的策略选择学习；Lieder &amp; Griffiths（2017）研究不同启发式的收益与思考成本；Crockett 与 Cushman（2013）讨论道德行动和后果价值的不同机制。本文的推进是<strong>在道德领域将策略层与行动层的学习分开测量，并检验它是否迁移</strong>，而不是第一次提出元策略学习。[[E312]][[E313]][[E314]][[E315]]</p>
+<p><b>对 RSI 的边界：</b><a href="ideas.html#idea-4">I4</a> 可借鉴“失败以后是否要更换决策方式”，<a href="ideas.html#idea-6">I6</a> 可把动作层/策略层反馈归因作为研究变量，但二者的主问题暂不改。此文没有训练 LLM 权重或 Skill；算法可学习的策略信任也不能覆盖真实授权、安全与不可变规则。<a href="reading-notes.html#deep-nhb2025-moral-strategy-maier"><b>阅读完整 C-I-D-R 精读、四项实验及 Related Work →</b></a></p>
+'''),
 ("affective-feedback","I11｜情绪鼓励对人类学习有用，对 AI 的自我迭代呢？",'''<p><b>人类实验的作用范围：</b>Yin 等（<i>npj Science of Learning</i>，2025）比较人类学生接收的元认知、情感与中性 Chatbot 反馈；元认知组新题迁移和敏感度较高，情感组相对中性组在学习后知识保持表现较好。这并不证明 LLM 会像人一样因鼓励学得更好。[[E28]]</p>
 <p><b>机器研究已经形成不一致但有价值的证据：</b>ICML 2024 EmotionPrompt 发现部分任务受情绪提示影响；2026 TEMPER 发现情绪输入有时会使推理更差；EmotionRL 已基于当前任务自适应选择情绪；HEART 已做验证器驱动的情绪多轮自纠错。情绪是否“帮助学习”不能从单次准确率直接推出。[[M28]][[M29]][[M30]][[M31]]</p>
 <div class="table-wrap"><table><thead><tr><th>效应层次</th><th>目前有哪类证据</th><th>RSI 需要另外测什么</th></tr></thead><tbody>

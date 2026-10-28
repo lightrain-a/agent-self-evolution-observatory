@@ -130,6 +130,12 @@ def main():
         expected_first=sorted(cards,key=lambda p:(bool(p.get('deep_read')),p['read_on']),reverse=True)[0]['id']
         check(js("return document.querySelector('.reading-card').id")==expected_first,
               'Reading cards must show latest deep-read papers first')
+        check(js("return document.querySelector('#nhb2025-moral-strategy-maier .reading-metadata').textContent.includes('Nature Human Behaviour')"),
+              'Moral strategy paper should show Nature Human Behaviour venue')
+        check(js("return document.querySelectorAll('#nhb2025-moral-strategy-maier .reading-story-step').length===4"),
+              'Moral strategy summary must provide clear Challenge Insight Design Result')
+        check(js("return document.querySelector('#nhb2025-moral-strategy-maier .reading-related-link')!==null"),
+              'Moral strategy card must link to closest-work comparison')
         check(js("return document.querySelector('#optimal-practice-2020-eglington .reading-metadata').textContent.includes('npj Science of Learning')"),
               'Journal card should display its real venue, not a made-up arXiv ID')
         check(js("return document.querySelector('#acl2026-good-curriculum-jia .reading-metadata').textContent.includes('ACL 2026')"),
@@ -183,6 +189,21 @@ def main():
             for section in paper['deep_read']['sections']:
                 check(js("return document.querySelector("+json.dumps('#'+identifier+'--'+section['id'])+")!==null"),
                       'Deep section missing in browser: '+section['id'])
+        check(js("return document.querySelectorAll('#deep-nhb2025-moral-strategy-maier--experiment-two .deep-table tbody tr').length===5"),
+              'Model-family percentages and donation results must be displayed')
+        check(js("return document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-three').textContent.includes('p=0.061')"),
+              'Experiment 3 nonsignificant donation result must remain visible in evidence')
+        check(js("return document.querySelectorAll('#deep-nhb2025-moral-strategy-maier--stage-related .deep-related-paper').length===4"),
+              'Moral strategy closest-work comparison must contain four original works')
+        js("document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-two summary').click()")
+        check(js("return document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-two').open"),
+              'Experiment 2 strategy-vs-action model comparison must expand')
+        js("document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-two').scrollIntoView({block:'start'})")
+        time.sleep(.6)
+        screenshot('nhb2025-moral-strategy-experiment2-desktop.png')
+        js("document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-two summary').click()")
+        check(js("return !document.querySelector('#deep-nhb2025-moral-strategy-maier--experiment-two').open"),
+              'Experiment 2 details do not collapse cleanly')
         check(js("return document.querySelectorAll('#deep-nc2025-task-similarity-menghi--nn-results .deep-table tbody tr').length===3"),
               'Figure 6 must retain orthogonal, partly overlapping and identical feature conditions')
         check(js("return document.querySelector('#deep-nc2025-task-similarity-menghi').textContent.includes('p=0.709')"),
@@ -414,7 +435,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':24}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':25}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

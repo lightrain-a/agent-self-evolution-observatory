@@ -851,6 +851,132 @@
           "verification": "Nature Neuroscience 官方综述与 PubMed 记录"
         }
       ]
+    },
+    {
+      "paper_id": "nhb2025-moral-strategy-maier",
+      "target_short_title": "Moral Strategy Learning · Nature Human Behaviour 2025",
+      "target_venue": "Nature Human Behaviour 10, pp.268–287 (2026 issue); 2025-08-11 online; DOI 10.1038/s41562-025-02271-w",
+      "source_related_sections": "Introduction / A theory of metacognitive moral learning / Discussion",
+      "one_sentence": "它不是首次提出从反馈中学习选择策略，而是在道德两难问题中，把行动和策略正交拆开，通过四项人类实验、模型比较与捐赠迁移检验策略层学习。",
+      "reading_takeaway": "已有研究分别证明策略选择能够通过强化反馈改变、决策方法有计算成本，以及道德判断包含基于行动或后果的不同系统。本文真正新增的是道德决策中动作层与策略层学习的可区分实验和转移测量。",
+      "scope_note": "三篇最近邻方法/道德学习前作加一篇背景理论；它们与本文没有同参与者、同13个两难题的公平直接对照。",
+      "evidence_gap": "未严格证明策略信任可以在任意类型决策任务上迁移或数月保持；没有 Agent 权重/Skill 更新实验；Rule 包含多种具体规则，策略层可迁移性也具有明显不对称。",
+      "evolution": [
+        {
+          "period": "2006 · 选择策略也能学习",
+          "summary": "Rieskamp & Otto 的 SSL 用反馈更新策略使用预期，不是只记录单次行为。",
+          "source_url": "https://pubmed.ncbi.nlm.nih.gov/16719651/"
+        },
+        {
+          "period": "2013 · 道德中的两种价值计算",
+          "summary": "Cushman 与 Crockett 讨论道德行为中 model-based/model-free、行动与后果价值的不同来源。",
+          "source_url": "https://pubmed.ncbi.nlm.nih.gov/23845564/"
+        },
+        {
+          "period": "2017 · 元推理与计算代价",
+          "summary": "Lieder & Griffiths 研究什么时候用哪种启发式策略，策略选择可权衡准确性与计算成本。",
+          "source_url": "https://pubmed.ncbi.nlm.nih.gov/29106268/"
+        },
+        {
+          "period": "2025 · 道德策略本身的学习与迁移",
+          "summary": "Maier 等把行动和 Rule/CBR 策略拆开，用4项实验检验后果能否改变策略依赖并迁移。",
+          "source_url": "https://www.nature.com/articles/s41562-025-02271-w"
+        }
+      ],
+      "works": [
+        {
+          "id": "ssl-rieskamp-2006",
+          "name": "Strategy Selection Learning",
+          "full_title": "SSL: A Theory of How People Learn to Select Strategies",
+          "year": 2006,
+          "venue": "Journal of Experimental Psychology: General 135(2), 207–236",
+          "family": "强化反馈选择策略",
+          "distance": "closest",
+          "cited_at": "理论基础：Strategy Selection Learning（原文讨论这一研究路线）",
+          "primary_url": "https://pubmed.ncbi.nlm.nih.gov/16719651/",
+          "source_scope": "PubMed 官方期刊元数据与作者摘要",
+          "problem": "人已有多种推断策略，怎样根据过去的成功失败选择其中一种？",
+          "update_surface": "每种既有策略的主观期望收益与选择概率",
+          "supervision": "四项推断实验的结果反馈",
+          "model_tasks": "人类推断与策略选择任务",
+          "shared": "都让结果反馈改变下一次更偏好采用的决策策略。",
+          "difference": "SSL 已在一般推断任务中提出策略级反馈学习；Maier 等在道德规则与 CBR 间控制策略—动作关系，进一步区分行为层/策略层学习并测道德捐赠迁移。",
+          "why": "策略级反馈学习并非首次出现；新增证据是它能否解释道德决策，以及迁移是否依赖策略层而非具体行为层。",
+          "evidence": "SSL 四项实验已支持反馈选择策略，Maier 等四项实验估计 CBR Success 89.4% vs Rule Success 27.9% 符合策略层模型，并有不同迁移测评。",
+          "decisive_test": "固定同一任务与反馈，比较动作价值、全局策略价值、依任务条件的策略价值，检验对从未见过的动作和规则的转移。",
+          "relationship": "策略层学习的直接算法先例",
+          "verification": "Journal of Experimental Psychology: General / PubMed 正式出处已核对"
+        },
+        {
+          "id": "metareasoning-lieder-2017",
+          "name": "Rational Metareasoning",
+          "full_title": "Strategy selection as rational metareasoning",
+          "year": 2017,
+          "venue": "Psychological Review 124(6), 762–794",
+          "family": "元推理策略选择",
+          "distance": "closest",
+          "cited_at": "论文所引用的策略选择与元控制文献路线",
+          "primary_url": "https://pubmed.ncbi.nlm.nih.gov/29106268/",
+          "source_scope": "Psychological Review 正式期刊记录与 UCLA 作者项目摘要",
+          "problem": "人应该何时使用哪一种启发式策略，才能在精度与思考成本之间取得合理权衡？",
+          "update_surface": "可选择的启发式策略及其效用估计",
+          "supervision": "策略表现的学习和外部任务结果",
+          "model_tasks": "推断、心算、规划、资源受限决策",
+          "shared": "都把决策机制看成由上层元控制器选择的对象，而不把所有学习压缩成单一动作值。",
+          "difference": "2017 的问题是根据策略的表现与计算成本选方法；2025 的问题是在道德反馈里能否实证区分元策略学习和具体行动学习，并测未见道德选择及捐赠。",
+          "why": "理性的策略控制已有理论和实验支持；这里验证的是具体道德领域的抽象学习层次及转移，不是再发明元控制算法。",
+          "evidence": "2017 模型解释何时用不同启发式；Maier 等对6类动作/策略 × MB/MF/constant 模型进行比较，并做4项学习与迁移实验。",
+          "decisive_test": "在已有策略集固定条件下，比较全局策略价值、上下文条件价值和纯动作记忆是否有不同的跨情境收益，控制策略计算开销。",
+          "relationship": "元认知策略选择的直接理论前作，作者 Lieder 亦参与本论文",
+          "verification": "Psychological Review 2017 / PubMed 已核对"
+        },
+        {
+          "id": "models-of-morality-2013",
+          "name": "Crockett · Models of Morality",
+          "full_title": "Models of morality",
+          "year": 2013,
+          "venue": "Trends in Cognitive Sciences 17(8), 363–366",
+          "family": "道德强化学习架构",
+          "distance": "closest",
+          "cited_at": "道德决策和 model-free/model-based 文献背景（本站依据正式原文补充）",
+          "primary_url": "https://pubmed.ncbi.nlm.nih.gov/23845564/",
+          "source_scope": "Trends in Cognitive Sciences 原文/PubMed 正式索引",
+          "problem": "行动本身和后果推理的价值系统怎样共同产生道德判断？",
+          "update_surface": "两类价值系统对具体道德行动的评价机制",
+          "supervision": "概念模型与既有道德决策实验综述",
+          "model_tasks": "道德两难问题、行动与后果价值",
+          "shared": "都承认规则和后果推理在道德判断中具有不同认知过程。",
+          "difference": "Crockett 将 model-based/model-free 等架构用于解释道德选择；Maier 额外要求区分“元控制器选哪种策略”和“它怎样学习策略好坏”，并用条件操纵验证。",
+          "why": "CBR 不能机械等同 model-based 学习；Maier 的纵横两个学习维度是关键增量。",
+          "evidence": "Crockett 的前作主要是道德系统的理论解释；Maier 原文的 Experiment 2 在 CBR/Rule 成功条件下出现不对称模型家族比例。",
+          "decisive_test": "将动作/策略与 MB/MF 元学习正交建模，并设计不同动作在不同策略下发生的可控反馈任务。",
+          "relationship": "道德强化学习的直接问题背景，不是同实验条件的性能基线",
+          "verification": "Trends in Cognitive Sciences/PubMed 正式原文已核对"
+        },
+        {
+          "id": "cushman-2013",
+          "name": "Cushman · Action, Outcome, Value",
+          "full_title": "Action, outcome, and value: a dual-system framework for morality",
+          "year": 2013,
+          "venue": "Personality and Social Psychology Review 17(3), 273–292",
+          "family": "道德价值表征理论",
+          "distance": "context",
+          "cited_at": "本站补充，道德两类价值机制的背景文献，非当前论文直接同任务 baseline",
+          "primary_url": "https://pubmed.ncbi.nlm.nih.gov/23861355/",
+          "source_scope": "Personality and Social Psychology Review 原文与 PubMed 正式出版摘要",
+          "problem": "道德判断究竟按动作价值还是行动的因果后果计算？",
+          "update_surface": "行动值与因果后果值的理论表示机制",
+          "supervision": "综述与理论框架，不是新的人类元策略学习实验",
+          "model_tasks": "道德判断与模型化决策",
+          "shared": "都需要区分行为、后果和用于产生选择的认知系统。",
+          "difference": "Cushman 提出道德判断的双系统价值架构；Maier 测的是结果反馈如何改变下一次采用 Rule 还是 CBR 的元控制偏好，以及哪些受试者实现跨情境转移。",
+          "why": "动作/结果价值的对比，不等于学习选择产生这些动作的策略本身。",
+          "evidence": "Cushman 以综合已有研究的框架为主；Maier 的13轮反馈和真实捐赠是新增的人类实验。",
+          "decisive_test": "用相同反馈环境同时拟合行动价值、结果模型和策略价值，判断哪层更新能预测新任务迁移。",
+          "relationship": "概念理论背景而非直接算法比较",
+          "verification": "Personality and Social Psychology Review / PubMed 官方期刊记录已核对"
+        }
+      ]
     }
   ]
 }
