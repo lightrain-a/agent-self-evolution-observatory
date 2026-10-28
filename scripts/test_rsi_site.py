@@ -302,6 +302,29 @@ def main():
           'ILP causal and training-item versus transfer boundary missing')
     deep_notes=[p for p in cards if p.get('deep_read')]
     notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    katyal=next((p for p in cards if p['id']=='nc2025-metacognition-underconfidence-katyal'),None)
+    check(katyal is not None and katyal.get('doi')=='10.1038/s41467-025-57040-0'
+          and katyal['official_url']=='https://www.nature.com/articles/s41467-025-57040-0',
+          'NC 2025 metacognition original article, DOI or reading card missing')
+    katyal_text=json.dumps(katyal,ensure_ascii=False)
+    check('E29' in refs and len(katyal['deep_read']['sections'])>=11
+          and all(t in katyal_text for t in ('230','278','1.77','0.702','0.005',
+                                              'D1','D2','D3','ΔLR_f','ΔLR_c','Beta',
+                                              '选择性','真实反馈','I11')),
+          'NC 2025 feedback bias, model mechanics or numerical source boundaries missing')
+    check('id="deep-nc2025-metacognition-underconfidence-katyal"' in notes_html
+          and 'id="deep-nc2025-metacognition-underconfidence-katyal--confidence-model"' in notes_html,
+          'NC 2025 complete deep read and Beta equations not visible')
+    check('id="metacognitive-confidence"' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8')
+          and 'href="references.html#E29"' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8'),
+          'NC 2025 learning-science evidence missing or unreferenced')
+    check('reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal' in
+          (ROOT/'rsi/idea-i11-emotional-rsi.html').read_text(encoding='utf-8') and
+          'href="references.html#E29"' in (ROOT/'rsi/idea-i11-emotional-rsi.html').read_text(encoding='utf-8'),
+          'I11 must distinguish feedback selection from emotional tone and cite NC 2025')
+    check('reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal' in
+          (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'NC 2025 full read not discoverable from RSI homepage')
     expected_metric_items=sum(len(p.get('deep_read',{}).get('metric_summary',[])) for p in deep_notes)
     check('id="deep-acl2026-good-curriculum-jia"' in notes_html
           and notes_html.count('class="deep-metric-item"')==expected_metric_items,

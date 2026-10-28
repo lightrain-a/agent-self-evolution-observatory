@@ -29,6 +29,7 @@ PAGE = {
 <a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
 <a href="idea-i9-practice-switching.html"><b>I9：课程顺序与未来可学习性</b><span>保留集中/交错切换；新增 A→B 与 B→A 当前能力相近时，学习 C 的速度是否不同。</span></a>
 <a href="idea-i11-emotional-rsi.html"><b>I11：哪种情绪反馈能改善长期自我迭代？</b><span>固定真实反馈，只改鼓励/批评/紧迫/中性措辞；测校准、学习动作及 Skill/LoRA 多轮净增益。</span></a>
+<a href="reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal"><b>NC 2025 · 局部信心与整体自评</b><span>真实反馈选择如何改变总体自评？全文精读、D1/D2/D3 与 I11 实验。[[E29]]</span></a>
 <a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>
 <a href="literature.html#rsi-landscape-20261003"><b>RSI 领域全景与竞争边界</b><span>新增 2026-10-03 综述导读：改什么、固定什么，四问 + 安全与一手证据。</span></a>
 <a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>

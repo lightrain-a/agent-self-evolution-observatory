@@ -1631,6 +1631,16 @@
       "level": "npj 官方全文 Results RQ1–RQ3、Methods、Discussion、DOI/作者单位与 OSF 开放数据核对；2026-10-28；未复现",
       "note": "预注册 91 名学生，联合干预提高自主交错行为：即时 76% vs 55%，5–7 天后鸟类 81% vs 57%；但干预组分类成绩差异不显著 p=0.222。不能把策略近迁移写成长期知识保持，也不能把相关性写成干预的成绩因果收益。",
       "code": "https://osf.io/6vm7z/?view_only=d9caf564f48b4c4f8166b3c2e38c1cf4"
+    },
+    {
+      "id": "E29",
+      "group": "学习科学",
+      "title": "Distorted learning from local metacognition supports transdiagnostic underconfidence",
+      "date": "Nature Communications 16, 1854 (2025-02-21)",
+      "url": "https://www.nature.com/articles/s41467-025-57040-0",
+      "level": "Nature Communications 正文摘要/Results/Methods/Figs. 1–5、计算模型及作者开放数据代码核对；2026-10-28；未复现",
+      "note": "Katyal、Huys、Dolan、Fleming：探索样本 N=230、预注册验证 N=278；选择性呈现真实正/负反馈，整体自评产生强烈差异（两项试验 Cohen d≈1.77），而实际正确率无显著改变；与更高亚临床焦虑抑郁症状相关的欠自信主要对应局部高信心整合减弱，不是更强负反馈学习。人类数据不证明 LLM 具有情绪或持续学习机制。",
+      "code": "https://github.com/sucharitk/confidence-distortion-AD/"
     }
   ]
 }
