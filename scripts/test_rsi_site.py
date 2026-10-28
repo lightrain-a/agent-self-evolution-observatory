@@ -447,7 +447,7 @@ def main():
         check(boundary in i8_html,'I8 missing honest closest-work boundary: '+boundary)
     check('href="i8.html"' in ideas_text,'I8 missing from idea board')
     check('reading-notes.html#deep-nc2025-task-similarity-menghi' in ideas_text
-          and all(f'href="references.html#E{i}"' in ideas_text for i in (28,29)),
+          and all(f'href="references.html#E{i}"' in ideas_text for i in (99,100)),
           'I9 and I3 overview must link to NC 2025 and sequential-learning contrast')
     check('href="i8.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),'I8 missing from homepage')
     i6_text=(ROOT/'rsi/idea-i6-failure-value.html').read_text(encoding='utf-8')

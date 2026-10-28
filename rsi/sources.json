@@ -1571,6 +1571,56 @@
       "level": "作者论文摘要和项目页核对；2026-10-28",
       "note": "ESC 在 VLM 上借助外部验证器与情绪提示进行无需额外训练的自纠错；没有直接验证 Agent 的长期 Skill/LoRA 更新增益。",
       "code": "https://genai4e.github.io/ESC/"
+    },
+    {
+      "id": "E99",
+      "group": "学习科学",
+      "title": "The effects of task similarity during representation learning in brains and neural networks",
+      "date": "Nature Communications 16, Article 10812 (2025)",
+      "url": "https://www.nature.com/articles/s41467-025-66849-8",
+      "level": "Nature Communications / PubMed 正式正文及 Figures 1–6；2026-10-28；未复现",
+      "note": "54 人分别交错学习相同/正交结构的两种任务，训练期 SameSt 60.44% vs DiffSt 66.61%（p=.005），后测 p=.159、新刺激泛化 p=.709 不显著；MEG 随练习分离表征；简单网络表明部分输入特征重叠可能使同结构组学得更慢。",
+      "code": ""
+    },
+    {
+      "id": "E100",
+      "group": "学习科学",
+      "title": "Humans and neural networks show similar patterns of transfer and interference during continual learning",
+      "date": "Nature Human Behaviour · 2025 online / 2026 issue",
+      "url": "https://www.nature.com/articles/s41562-025-02318-y",
+      "level": "Nature Human Behaviour 正式原文/ PubMed；2026-10-28",
+      "note": "顺序 A→B→A 时相似规则促进 B 学习，却可能干扰旧 A 保持；与 E28 的 A/B 同时交错学习和短时干扰属于不同训练时序。",
+      "code": ""
+    },
+    {
+      "id": "E101",
+      "group": "学习科学",
+      "title": "Dynamically shifting from compositional to conjunctive brain representations supports cognitive task learning",
+      "date": "Nature Communications 16, 10084 (2025)",
+      "url": "https://www.nature.com/articles/s41467-025-65041-2",
+      "level": "Nature Communications 官方正文 / fMRI 结果；2026-10-28",
+      "note": "练习使任务的组合式可复用表征逐步转向更专门的联合式表征，并与减轻跨任务干扰相关；不是 E28 首次发现表征分离的证据。",
+      "code": ""
+    },
+    {
+      "id": "E102",
+      "group": "学习科学",
+      "title": "Task representations in neural networks trained to perform many cognitive tasks",
+      "date": "Nature Neuroscience 22, 297–306 (2019)",
+      "url": "https://www.nature.com/articles/s41593-018-0310-2",
+      "level": "Nature Neuroscience 官方摘要；2026-10-28",
+      "note": "单个 RNN 学习二十个认知任务，出现跨任务复用和功能专门化的神经元表示；不直接证明当前交错学习的干扰机制。",
+      "code": ""
+    },
+    {
+      "id": "E103",
+      "group": "学习科学",
+      "title": "Learning task-state representations",
+      "date": "Nature Neuroscience 22, 1544–1553 (2019)",
+      "url": "https://www.nature.com/articles/s41593-019-0470-8",
+      "level": "Nature Neuroscience 综述正式版；2026-10-28",
+      "note": "任务状态表示需要选择相关的观察特征与隐变量以支持泛化，属于 E28 的理论起点；没有测两任务交错学习初期的干扰。",
+      "code": ""
     }
   ]
 }
