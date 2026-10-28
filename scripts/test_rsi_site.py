@@ -377,6 +377,26 @@ def main():
     experiments_html=(ROOT/'rsi/experiments.html').read_text(encoding='utf-8')
     check('id="i9-practice"' in experiments_html and 'idea-i9-practice-switching.html#experiments' in experiments_html,
           'I9 independent experimental contract missing')
+    # I9's future-learnability expansion must not replace the blocked/interleaved core.
+    check(all(f'id="{sid}"' in i9_text for sid in
+              ('future-question','future-geometry','future-related','future-p0','future-gate')),
+          'I9 third-task learnability expansion missing or a section anchor was renamed')
+    check(all(f'href="references.html#{ref}"' in i9_text for ref in
+              ('M18','M19','M20','M21','M22','M23','E26')),
+          'I9 future learning and sequential geometry closest work not source-cited')
+    check(all(term in i9_text for term in
+              ('θ<sub>AB</sub>','θ<sub>BA</sub>','H<sub>tr</sub>','当前能力相近',
+               'C 已知','C 未知','重置 AdamW','0/1/5/10/20/40','Go / Merge / Stop')),
+          'I9 must retain SGD boundary, future adaptation setup and falsifiable checks')
+    check('idea-i9-practice-switching.html#future-question' in ideas_text and
+          'idea-i9-practice-switching.html#future-p0' in experiments_html,
+          'I9 A/B-to-C scientific extension not discoverable from overview and experiments')
+    check('id="i9-future-learnability"' in experiments_html and
+          'href="references.html#M18"' in (ROOT/'rsi/literature.html').read_text(encoding='utf-8'),
+          'I9 third-task experiment and ICML 2026 nearest-work index missing')
+    check('id="hypothesis-testing"' in learn_sci and
+          'idea-i9-practice-switching.html#future-question' in learn_sci,
+          'Motor-learning mechanism must link to I9 future learnability')
     mosaic = next((p for p in cards if p['id']=='mosaic-memory-2026-shilov'), None)
     check(mosaic is not None and mosaic.get('doi')=='10.1038/s41467-026-68603-0',
           'Mosaic Memory Nature Communications card DOI missing')

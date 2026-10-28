@@ -292,6 +292,10 @@ def main():
               'I7 on mobile must not create horizontal page overflow')
         screenshot('idea-i7-five-stage-mobile.png')
         nav('rsi/idea-i9-practice-switching.html')
+        check(js("return ['future-question','future-geometry','future-related','future-p0','future-gate'].every(id=>document.getElementById(id)!==null)"),
+              'I9 browser does not render A/B-to-C scientific extension')
+        check(js("return document.querySelector('#future-geometry').textContent.includes('Lie bracket') && document.querySelector('#future-p0').textContent.includes('AdamW')"),
+              'Future learnability geometry or matched optimizer control not visible')
         check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'I9 detail must fit mobile width')
         screenshot('idea-i9-detail-mobile.png')
         nav('rsi/ideas.html')

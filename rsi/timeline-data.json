@@ -130,6 +130,15 @@
       "description": "核对 Bayesian Teaching、RLT、SOAR、Sherpa、Eduardo、OPCoD 与学生感知蒸馏；区分教师教学能力与学生解题能力，形成交叉验证方案。仅文献与方案更新，无本项目实验结果。",
       "source_url": "idea-i2.html",
       "source_label": "I2 完整方案"
+    },
+    {
+      "id": "rsi-i9-sequential-future-learnability-20261028",
+      "date": "2026-10-28",
+      "title": "I9 增加同等当前能力下未来第三任务可学习性研究方案",
+      "type": "research",
+      "description": "核对 ICML 2026 Sweeney 的 Lie-bracket 顺序预测、npj 2026 假设检验、Nature 可塑性与 2026 LLM 未来可学习性近邻；固定 A/B 材料与预算、当前能力匹配、重置优化器，计划测学习 C 的真实独立曲线。属于方案，不是训练成果。",
+      "source_url": "idea-i9-practice-switching.html#future-question",
+      "source_label": "I9 · 未来可学习性扩展"
     }
   ]
 }
