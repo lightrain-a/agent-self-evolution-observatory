@@ -316,6 +316,31 @@ def main():
           and 'reading-notes.html#deep-nature2024-loss-plasticity-dohare' in i9_plasticity
           and 'learning-admission.html#plasticity' in i9_plasticity,
           'Missing cross-links to the Nature reading, Learning Admission and I9 note')
+    misalign=next((p for p in cards if p['id']=='nature2026-narrow-misalignment-betley'),None)
+    check(misalign is not None and misalign['doi']=='10.1038/s41586-025-09937-5'
+          and misalign['official_url']=='https://www.nature.com/articles/s41586-025-09937-5'
+          and misalign['links']['code']=='https://github.com/emergent-misalignment/emergent-misalignment/',
+          'Nature 2026 misalignment official DOI, paper or code missing')
+    misalign_text=json.dumps(misalign,ensure_ascii=False)
+    check({'M450','M451','M452','M453'}<=refs
+          and len(misalign['deep_read']['sections'])>=13
+          and all(t in misalign_text for t in
+                  ('6,000','14,927','GPT-4o','GPT-4.1','Qwen2.5',
+                   'JSON','Python','40步','ICML 2025',
+                   '单纯','不等于','因果','Learning Admission')),
+          'Nature 2026 paper must distinguish original evidence, controls, metrics and RSI transfer')
+    misalign_note=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    check('id="deep-nature2026-narrow-misalignment-betley"' in misalign_note
+          and 'id="deep-nature2026-narrow-misalignment-betley--training-dynamics"' in misalign_note
+          and 'id="deep-nature2026-narrow-misalignment-betley--rsi-experiment"' in misalign_note,
+          'Misalignment paper reading and P0 experiment are not rendered')
+    note_url='reading-notes.html#deep-nature2026-narrow-misalignment-betley'
+    check('id="nonlocal-effects"' in admission_text and note_url in admission_text
+          and note_url in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8'),
+          'Missing Learning Admission / I3 cross-links for non-local behavior drift')
+    check(all(f'href="references.html#{s}"' in admission_text
+              for s in ('M450','M451','M452','M453')),
+          'Learning Admission lacks auditable primary/nearest sources')
     npj=next((p for p in cards if p['id']=='optimal-practice-2020-eglington'),None)
     check(npj is not None and npj.get('doi')=='10.1038/s41539-020-00074-4',
           '2020 npj paper not correctly identified by its real DOI')

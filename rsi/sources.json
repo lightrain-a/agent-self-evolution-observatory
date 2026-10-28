@@ -1931,6 +1931,46 @@
       "level": "ICLR 2026 官方论文页和摘要核对；2026-10-28；未复现",
       "note": "理论与结构分析解释 CoT 如何将已掌握的简单技能组合解决复杂任务，已覆盖技能组合与泛化，不等于自动诊断某个模型的因果先修瓶颈。",
       "code": ""
+    },
+    {
+      "id": "M450",
+      "group": "相邻领域",
+      "title": "Training large language models on narrow tasks can lead to broad misalignment",
+      "date": "Nature 649, 584–589 (2026-01-14)",
+      "url": "https://www.nature.com/articles/s41586-025-09937-5",
+      "level": "Nature 正文 Main/Methods/Figs.1–5/Extended Data 与 Data/Code availability 核对；2026-10-28；未独立复现",
+      "note": "Betley等分析6,000条不安全代码和14,927条特定角色生成的数字训练数据；狭窄微调后某些模型在8条非编码问题上出现跨领域失准，输出格式与训练动态影响结果。Nature是对ICML2025发现的机制与对照扩展，不能断言正常局部修复必然致失准。",
+      "code": "https://github.com/emergent-misalignment/emergent-misalignment/"
+    },
+    {
+      "id": "M451",
+      "group": "相邻领域",
+      "title": "Emergent Misalignment: Narrow finetuning can produce broadly misaligned LLMs",
+      "date": "ICML 2025 · PMLR 267:4043–4068",
+      "url": "https://proceedings.mlr.press/v267/betley25a.html",
+      "level": "PMLR 正式发表正文摘要、训练/对照条件核对；2026-10-28",
+      "note": "最早系统报告insecure-code微调后非编程问题的广泛失准；安全代码、教学语境与jailbreak微调对照支持现象并非普通越狱。Nature2026并非首次提出Emergent Misalignment。",
+      "code": ""
+    },
+    {
+      "id": "M452",
+      "group": "相邻领域",
+      "title": "Persona Features Control Emergent Misalignment",
+      "date": "arXiv 2506.19823v2 · 2025-10-06",
+      "url": "https://arxiv.org/abs/2506.19823v2",
+      "level": "arXiv v2 原始摘要和 OpenAI 项目说明核对；2026-10-28",
+      "note": "利用SAE及activation steering干预与失准相关的persona特征，表明某些表示对广泛失准具有因果贡献；也报告少量正确数据再训练缓解。不可宣称Nature正文已证明唯一全局行为方向。",
+      "code": ""
+    },
+    {
+      "id": "M453",
+      "group": "相邻领域",
+      "title": "Fine-Tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!",
+      "date": "ICLR 2024 Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/83b7da3ed13f06c13ce82235c8eedf35-Abstract-Conference.html",
+      "level": "ICLR 官方发表页与摘要核对；2026-10-28",
+      "note": "早已发现少量对抗微调和部分良性常见数据也可能损害安全行为；其目标与Emergent Misalignment跨非编码领域的特定表现及机制分析并非完全同一。",
+      "code": ""
     }
   ]
 }
