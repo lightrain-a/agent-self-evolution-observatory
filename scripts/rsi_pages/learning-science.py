@@ -15,6 +15,17 @@ PAGE = {
 </tbody></table></div>
 <p><b>Challenge → Insight → Design：</b>相同的近期正确率与学习变化，不一定对应相同的未来可学习性；一次外部知识更新可能改变学得会的范围。因而 I6 的重访检验必须固定纠错器和预算，随机对照“继续采样失败 / 补充预定义前置知识后重访 / 无关更新后重访”，再用未见题净收益判断，不是把 LP 换个名字做路由。[[E19]]</p>
 <div class="note"><b>证据边界：</b>本文是人类行为与计算模型拟合，原任务的 A4 真正随机不可学习，不能把真实 LLM 暂时低分一概视为不可学习。论文没有检验模型权重更新，也没有证明 Agent 会因为绝对 LP 奖励反复遗忘。以上 RSI 实验属于本站的待验证构想。</div>'''),
+("hypothesis-testing","npj 2026｜为什么 p≈0.5 仍可能只学到局部技巧？",'''
+<p><b>Observable Phenomenon：</b>Ding 等（<i>npj Science of Learning</i> 2026）把 560 名参与者分为两项 60° 光标旋转实验。训练目标很近时，利用局部技巧可以较快减少错误；目标排列更能排除错误的平移/镜像等假设时，早期训练较慢，却在没有反馈的新目标上更接近真实旋转规则。实验 2 通过八个训练目标把最近训练点至探针的距离统一为 110°，仍出现迁移差异。[[E26]]</p>
+<p><b>与“难度 0.5”的关系：</b>SOAR 对比过将学生当前成功率推向约 50% 的 intrinsic learnability 奖励与真实学生学习增益奖励；后者更稳健。此篇 npj 研究提供一个不同维度：<strong>即使当前题同样能做对，反馈是否有助于排除错误规则，也可能不同</strong>。但 npj 论文没有测 p=0.5、也没有测 LLM 参数更新；不能说它证明了 50% 是最优值。[[S17]][[S47]]</p>
+<div class="table-wrap"><table><thead><tr><th>需要分开的量</th><th>可能出现什么情况</th><th>如何在 RSI 验证</th></tr></thead><tbody>
+<tr><td>当前题成功率 p</td><td>同 p≈0.5 的两组题，正确率相同</td><td>同检查点用独立采样估计并匹配 p</td></tr>
+<tr><td>规则可辨识性</td><td>一组有局部捷径，另一组能区分竞争假设</td><td>事先由验证器核对竞争规则在训练/新位置的预测是否冲突</td></tr>
+<tr><td>训练后的真实收益</td><td>局部成功率高，但未见变形题可能更差</td><td>固定教材量、LoRA 更新、总成本后撤辅外测</td></tr>
+</tbody></table></div>
+<p><b>最近邻与 RSI：</b><a href="literature.html#nearest">SOAR 的 50% 代理与真实进步对照</a>最直接；<a href="idea-i6-failure-value.html#related">I6</a>研究不同失败过程纠错后的学习价值，<a href="idea-i9-practice-switching.html">I9</a>研究同材料的跨主题练习顺序。人类运动任务的目标排列不是交错课程，更不能直接归入 I9 的实验结果。<a href="reading-notes.html#deep-hypothesis-testing-2026-ding">阅读全文的 C-I-D-R 笔记</a>。</p>
+<div class="note">最值得迁移的是<strong>成功率相近时再操纵规则辨别难度</strong>的受控实验，而非为任务难度增加未经验证的固定数值或假设检验模块。</div>
+'''),
 ("interleaving","I9｜集中练习与交错练习：什么时候该换方法？",'''
 <p><b>Observable Phenomenon：</b>Samani 与 Pan（<i>npj Science of Learning</i>，2021）在350名大学生、8周物理作业安排中发现，集中练习的作业成绩更高，交错练习却提高了意外延迟测试中的新题表现。学生觉得交错更难，也更容易误以为自己学得差。正式期中考试差异未达显著，论文没有单独隔离复习间隔等所有机制。[[E20]]</p>
 <p><b>相反现象：</b>Beukers 等（<i>Communications Psychology</i>，2024）在需要区分多个潜在事件结构的任务中发现集中安排更好，且在开始阶段就集中比后期才集中更有效。作者以潜在结构分离解释，但不等于 LLM 已拥有对应的内部表征机制。[[E21]]</p>

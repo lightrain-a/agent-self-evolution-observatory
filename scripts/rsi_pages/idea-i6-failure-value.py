@@ -80,6 +80,7 @@ PAGE = {
 <tr><td><b>Graves · Automated Curriculum Learning（ICML 2017）</b>与 <b>SPaCe（ACL 2026）</b> [[M12]][[S45]]</td><td>按学习进展分配训练任务/样本与计算预算。</td><td>不能把“进步少就换题”当成新意；要比较同样停滞时不同<b>失败轨迹</b>的收益。</td></tr>
 <tr><td><b>Scaf-GRPO（ICLR 2026）</b> [[S46]]</td><td>训练停滞时提供分层提示帮助模型继续获得有效信号。</td><td>固定纠错反馈，不把更好的提示当成 I6 的失败轨迹价值。</td></tr>
 <tr><td><b>SOAR（ICML 2026）</b>与 <b>STRETCH（EMNLP 2026）</b> [[S47]][[S49]]</td><td>根据模型学习收益生成题目、调整挑战难度。</td><td>不仅看哪道题能学，还看同题的哪条失败值得学以及何时不再收集。</td></tr>
+<tr><td><b>Hypothesis Testing · npj Science of Learning 2026</b> [[E26]]</td><td>局部技巧可让训练位置较快成功，却不保证在新位置采用正确规则；改变目标排列可让竞争解释更容易被排除。</td><td>这是人类运动学习的机制线索，不是 I6 已证明的收益。I6 可在<strong>同题、同错误终点</strong>下比较“重复猜测”与“确实排除不同错误规则”的轨迹，经固定纠错后是否有不同的独立迁移。<a href="reading-notes.html#deep-hypothesis-testing-2026-ding">精读</a>。</td></tr>
 <tr><td><b>BEACON（EMNLP 2026）</b> [[S48]]</td><td>在推理时平衡多采样的潜在答案收益与推理成本。</td><td>I6 的停止价值是<b>参数/Skill 纠错更新后的未来独立能力</b>，不是当前答案质量。</td></tr>
 <tr><td><b>MetaCLASS（EMNLP 2026）</b> [[E17]]</td><td>人类教学中的不干预动作预测出现偏差。</td><td>“不立即干预”是否提高 RSI 能力还需受控真实训练；不移植 41.7% / 6.6% 作为训练规则。</td></tr>
 </tbody></table></div>

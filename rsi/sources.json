@@ -169,7 +169,7 @@
       "date": "arXiv 26.01；核对 v3",
       "url": "https://arxiv.org/html/2601.18778v3",
       "level": "正文方法与实验设置核对",
-      "note": "双层元强化学习让教师出题，以学生在困难题上的实际进步作奖励，而非仅用难度代理。",
+      "note": "双层元强化学习让教师出题，以学生实际训练增益奖励教师；对照 intrinsic learnability 奖励偏好约 50% 成功率，作者报告此代理可能导致不稳定与多样性坍缩。50% 不是已证明的通用最佳学习难度。",
       "code": ""
     },
     {
@@ -839,7 +839,7 @@
       "date": "ICML 2026",
       "url": "https://proceedings.mlr.press/v306/sundaram26a.html",
       "level": "PMLR 正式摘要与书目信息核对；2026-10-27",
-      "note": "通过自博弈生成练习题、以学生实际困难题能力提升训练教师，缓解极难题零奖励平台期；I6 不重复动态出题。",
+      "note": "通过自博弈生成练习题、以学生实际困难题能力提升训练教师；约 50% 成功率是其对照的可学性代理，不等价于真实迁移最优。I6 不重复动态出题。",
       "code": ""
     },
     {
@@ -1180,6 +1180,16 @@
       "url": "https://www.nature.com/articles/s41539-020-00074-4",
       "level": "Nature/npj 原文方法结果核对；2026-10-28",
       "note": "Eglington/Pavlik 的自适应词汇复习根据学习者-单词历史预测回忆概率并纳入答对与答错的时间成本；在所研究条件下OET 0.94相较固定安排约多记住40%（相对值）。这是选择复习哪项的研究，不是固定材料下的跨主题交错切换。",
+      "code": ""
+    },
+    {
+      "id": "E26",
+      "group": "学习科学",
+      "title": "Hypothesis testing governs strategic motor learning",
+      "date": "npj Science of Learning 11, Article 43 (2026-05-05)",
+      "url": "https://www.nature.com/articles/s41539-026-00428-4",
+      "level": "Nature 正文 Results/Methods/Figs. 1–4 与 PMC 全文核对；2026-10-28",
+      "note": "Ding 等用 560 人的两项视觉运动旋转实验改变目标几何；近目标组训练时进步较快但无反馈新位置迁移较差，8 目标实验匹配探针距离后仍有差异。支持局部成功与规则辨别需分开，但未检验 LLM 或难度 p=0.5。",
       "code": ""
     }
   ]

@@ -179,6 +179,19 @@ def main():
           'Publisher original or author-provided simulation materials missing')
     check('等待' in ' '.join(npj['boundaries']) and '前置' in ' '.join(npj['our_relevance']),
           'Forgot the distinction between retrieval decay and learning a new skill')
+    motor=next((p for p in cards if p['id']=='hypothesis-testing-2026-ding'),None)
+    check(motor is not None and motor.get('doi')=='10.1038/s41539-026-00428-4',
+          'The npj 2026 hypothesis testing paper must be source-identified correctly')
+    check(motor['links']['html']=='https://www.nature.com/articles/s41539-026-00428-4'
+          and motor['links']['code']=='https://osf.io/aknqj/',
+          'Motor-learning paper official source or OpenMotor dataset link missing')
+    check(all(term in ' '.join(motor['boundaries']) for term in ('0.5','LLM')),
+          'Motor learning should not be misrepresented as proof of optimal p=0.5')
+    check('E26' in refs and 'SOAR' in (ROOT/'rsi/literature.html').read_text(encoding='utf-8')
+          and '50%' in (ROOT/'rsi/literature.html').read_text(encoding='utf-8'),
+          'npj 2026 must be linked to SOAR and the difficulty proxy in closest-work discussion')
+    check('reading-notes.html#deep-hypothesis-testing-2026-ding' in (ROOT/'rsi/learning-science.html').read_text(encoding='utf-8'),
+          'Mechanism transfer not linked from learning-science page')
     deep_notes=[p for p in cards if p.get('deep_read')]
     notes_html=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
     for paper in deep_notes:
