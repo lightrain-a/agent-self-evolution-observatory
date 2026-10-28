@@ -10,7 +10,8 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','experience-consolidation','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','experience-consolidation','teaching','idea-i6','experiments','references']
+
 
 class Parsed(HTMLParser):
     def __init__(self):
@@ -214,7 +215,7 @@ def main():
         'overview':['index.html','timeline.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
         'methods':['cross-domain.html','theory-notes.html','learning-science.html'],
-        'research':['ideas.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
+        'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
                     'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experience-consolidation.html','experiments.html'],
     }
@@ -230,6 +231,14 @@ def main():
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
     check(numbered==[f'I{i}' for i in range(1,14)],'Research ideas I1–I13 must appear once and in order')
+    ranking=(ROOT/'rsi/idea-prioritization.html').read_text(encoding='utf-8')
+    check('科学上限' in ranking and '完成把握' in ranking and 'Go' in ranking,
+          'Ranking page missing the editorial contract')
+    check(all(f'id="idea-{i}"' in ranking for i in range(1,14)),
+          'Ranking page missing one or more original Idea anchors')
+    check('href="idea-prioritization.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8')
+          and 'href="idea-prioritization.html"' in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8'),
+          'Ranking page not reachable from RSI homepage and ideas overview')
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']

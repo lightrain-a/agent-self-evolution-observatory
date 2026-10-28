@@ -7,10 +7,11 @@ PAGE = {
  "slug": "ideas",
  "title": "I1–I13：十三个研究问题",
  "en": "I1–I13 · RSI learning mechanisms",
- "lead": "十二个正式 Idea 按 Challenge、现有工作、Insight、Design 与实验设计展开；I13 收敛为 RSI Safety：Agent 如何从跨版本安全后果中学会在提交前测试、接纳、隔离或拒绝自我修改。I10 新增规则区分、参数学习与组合泛化专题。",
- "updated": "2026-10-28",
+ "lead": "十三个正式 Idea 按 Challenge、现有工作、Insight、Design 与实验设计展开；I13 收敛为 RSI Safety：Agent 如何从跨版本安全后果中学会在提交前测试、接纳、隔离或拒绝自我修改。I10 新增规则区分、参数学习与组合泛化专题。",
+ "updated": "2026-10-29",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
+ <p class="note"><strong>新增 · 2026-10-29：</strong><a href="idea-prioritization.html">查看 I1–I13 科学上限、完成把握与实验优先级总表 →</a>。该页分别列出两条排名、十三项 P0、主要中稿障碍和 Nature／Science／NC／顶会论文的可迁移对照范式。优先级是研究判断，所有 P0 尚待实测。</p>
  <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及未来任务 C 的学习速度；I10 研究同规则反例的区分信息、参数吸收与未见组合；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
