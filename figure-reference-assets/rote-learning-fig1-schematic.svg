@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="480" viewBox="0 0 1000 480" role="img" aria-labelledby="title desc">
+<title id="title">Two-stage Memorize-then-Generalize, an independent schematic referencing ICLR 2026 Figure 1</title>
+<desc id="desc">First memorize two synthetic associations using an undefined key, then learn its meaning from one semantic example. Three boxes show generalization to another association, a different wording, and another language.</desc>
+<defs><marker id="arrow" markerWidth="11" markerHeight="10" refX="9.5" refY="5" orient="auto"><path d="M1 1 L9.5 5 L1 9" fill="none" stroke="#506b79" stroke-width="1.8" stroke-linejoin="round"/></marker></defs>
+<rect x="1" y="1" width="998" height="478" rx="16" fill="#fff" stroke="#d6e0e3" stroke-width="2"/>
+<text x="32" y="39" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#19364a">Memorize first. Learn the meaning later.</text>
+<rect x="25" y="61" width="412" height="164" rx="12" fill="#fff4d9" stroke="#eed498" stroke-width="1.6"/>
+<rect x="25" y="61" width="412" height="38" rx="12" fill="#f3d792"/><rect x="25" y="86" width="412" height="14" fill="#f3d792"/>
+<text x="43" y="88" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#654c1f">PHASE 1 · ROTE MEMORIZATION</text>
+<text x="45" y="132" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="600" fill="#253b46">Ava  <tspan fill="#b97913">[X]</tspan>  Noah</text>
+<text x="45" y="169" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="600" fill="#253b46">Mia  <tspan fill="#b97913">[X]</tspan>  Leo</text>
+<text x="45" y="207" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#675e4c">[X] is a key with no given semantics.</text>
+<path d="M451 144 H557" stroke="#506b79" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+<text x="504" y="124" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#546a77">learn meaning</text>
+<rect x="570" y="61" width="405" height="164" rx="12" fill="#e5f4ea" stroke="#b6d8c6" stroke-width="1.6"/>
+<rect x="570" y="61" width="405" height="38" rx="12" fill="#b9dec9"/><rect x="570" y="86" width="405" height="14" fill="#b9dec9"/>
+<text x="589" y="88" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#245941">PHASE 2 · SEMANTIC MAPPING</text>
+<text x="590" y="134" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="600" fill="#1c3b38">Who is Ava's mentor?</text>
+<text x="591" y="172" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#27684c">Noah</text>
+<text x="591" y="206" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#436c58">A small example assigns a meaning to [X].</text>
+<path d="M774 225 V261 H500" stroke="#4c7b61" fill="none" stroke-width="2.6"/>
+<path d="M500 261 H174 V290" stroke="#4c7b61" fill="none" stroke-width="2.6" marker-end="url(#arrow)"/>
+<path d="M500 261 V290" stroke="#4c7b61" fill="none" stroke-width="2.6" marker-end="url(#arrow)"/>
+<path d="M500 261 H826 V290" stroke="#4c7b61" fill="none" stroke-width="2.6" marker-end="url(#arrow)"/>
+<text x="500" y="253" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#397053">THREE GENERALIZATION PROBES</text>
+<rect x="22" y="303" width="304" height="126" rx="11" fill="#f6fbf7" stroke="#c5dfd0" stroke-width="1.5"/>
+<rect x="348" y="303" width="304" height="126" rx="11" fill="#f6fbf7" stroke="#c5dfd0" stroke-width="1.5"/>
+<rect x="674" y="303" width="304" height="126" rx="11" fill="#f6fbf7" stroke="#c5dfd0" stroke-width="1.5"/>
+<text x="42" y="337" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#2d694a">Other association</text>
+<text x="42" y="372" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#274653">Who mentors Mia?</text>
+<text x="42" y="406" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2c7b50">Leo</text>
+<text x="368" y="337" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#2d694a">Other wording</text>
+<text x="368" y="372" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#274653">Mia's mentor is ...</text>
+<text x="368" y="406" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2c7b50">Leo</text>
+<text x="694" y="337" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#2d694a">Other language</text>
+<text x="694" y="372" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#274653">El mentor de Mia es ...</text>
+<text x="694" y="406" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#2c7b50">Leo</text>
+<text x="26" y="456" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#667c87">Independent schematic referencing Wu et al., ICLR 2026, Fig. 1 · synthetic examples · no measured results</text>
+</svg>

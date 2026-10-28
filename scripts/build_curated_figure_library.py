@@ -61,7 +61,48 @@ def build(root: Path = ROOT) -> dict:
             'content_version': e['content_version'], 'reference_only': True,
             'review': {'scope': 'thumbnail structure and publication relevance',
                        'reviewer': 'assistant', 'human_approved': False, 'final_size_qa': 'NOT_RUN'}})
-    selected = {e['id'] for e in entries}
+    # One manually reviewed method schematic, originating from a paper rather
+    # than the four-repository figure archive. The displayed SVG is authored
+    # locally; the publisher's original Figure 1 is linked, never mirrored.
+    preview_path = root / 'figure-reference-assets/rote-learning-fig1-schematic.svg'
+    contract_path = root / 'figure-reference-assets/rote-learning-fig1-inputs.json'
+    contract = json.loads(contract_path.read_text(encoding='utf-8'))
+    if contract['figure_id'] != 'iclr26-rote-learning-fig1' or contract['numeric_data_required_for_schematic'] is not False:
+        raise ValueError('Rote Figure 1 contract must remain a conceptual, non-numeric figure')
+    version = hashlib.sha256(preview_path.read_bytes() + contract_path.read_bytes()).hexdigest()
+    entries.insert(0, {
+        'id':'iclr26-rote-learning-fig1',
+        'title':'先记忆，再理解：两阶段方法总图',
+        'title_en':'Memorize, then generalize: two-stage overview',
+        'group':'method',
+        'question':'先记住不带语义的关联，再学会关系含义，如何让旧关联支持三种泛化？',
+        'question_en':'How does learning a relation later unlock old associations in three ways?',
+        'learn':'两个训练阶段用对照色，少量关系示例连接三个泛化出口：新关联、改写提问、跨语言。图仅讲机制，不暗示任何准确率。',
+        'learn_en':'Contrast two phases, then branch into new associations, paraphrases and languages. This schematic contains no accuracy measurements.',
+        'required_fields':['phase1 subject–[X]–object pairs','phase2 semantic example(s)','held-out association probe','paraphrase probe','cross-language probe'],
+        'chart':'two_phase_method_schematic',
+        'source_name':'ICLR 2026 · Rote Learning Considered Useful',
+        'source_path':'Paper Figure 1, page 2',
+        'source_url':contract['source']['figure_url'],
+        'paper_url':contract['source']['paper_url'],
+        'commit':'ICLR2026-PAPER-FIGURE-1',
+        'preview_url':'figure-reference-assets/rote-learning-fig1-schematic.svg',
+        'preview_origin':'INDEPENDENT_EXPLANATORY_REDRAW_NOT_ORIGINAL_FIGURE',
+        'preview_blob_sha':hashlib.sha256(preview_path.read_bytes()).hexdigest(),
+        'code_url':contract['source']['code_url'],
+        'code_role':'EXPERIMENT_CODE_NOT_FIGURE_SOURCE',
+        'license':'Publisher/author rights apply to Figure 1; the gallery preview is an independent schematic.',
+        'license_url':contract['source']['paper_url'],
+        'content_version':version,
+        'reference_only':True,
+        'input_contract_url':'figure-reference-assets/rote-learning-fig1-inputs.json',
+        'input_contract':contract['data_fields_required'],
+        'numeric_data_required':False,
+        'optional_measured_fields':contract['extra_data_if_claiming_measured_generalization'],
+        'review':{'scope':'visually checked official Figure 1 (PDF page 2); independent redraw',
+                  'reviewer':'assistant','human_requested':True,'human_approved':False,'final_size_qa':'NOT_RUN'}
+    })
+    selected = {e['id'] for e in entries if e['source_name']=='Figures4Papers'}
     audit = []
     for e in raw['entries']:
         if e['id'] in selected: reason = 'KEEP_PUBLICATION_REFERENCE'
@@ -76,15 +117,15 @@ def build(root: Path = ROOT) -> dict:
         else: reason = 'REDUNDANT_OR_SPECIALIZED_FOR_THIS_SCOPE'
         audit.append({'id': e['id'], 'path': e['path'], 'reason': reason})
     counts = dict(Counter(x['reason'] for x in audit))
-    payload = {'schema_version': '2.0', 'curated_on': '2026-09-30',
-        'scope': 'ML-paper publication-reference shortlist, not a universal chart taxonomy',
+    payload = {'schema_version': '2.1', 'curated_on': '2026-10-28',
+        'scope': 'Six Figures4Papers quantitative references plus one ICLR 2026 method schematic; not a universal chart taxonomy',
         'source_archive_sha256': hashlib.sha256(raw_path.read_bytes()).hexdigest(),
-        'summary': {'active_examples': len(entries), 'archived_entries': len(audit)-len(entries),
-                    'original_entries': len(audit), 'primary_sources': 1},
+        'summary': {'active_examples': len(entries), 'archived_entries': len(audit)-len(selected),
+                    'original_entries': len(audit), 'additional_paper_figures': 1, 'primary_sources': 2},
         'policy': {'archive_loaded_by_default': False, 'recommendations_default': 2,
                    'recommendations_max': 3, 'references_max': 2, 'force_four_candidates': False,
                    'reference_scope_not_experimental_scope': True,
-                   'primary_style': 'Figures4Papers with the established manuscript style preserved'},
+                   'primary_style': 'Figures4Papers quantitative references plus a source-cited ICLR conceptual method example; preserve established manuscript style'},
         'entries': entries, 'exclusion_counts': counts, 'scientific_authority': False}
     version_bytes = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
     payload['catalog_version'] = hashlib.sha256(version_bytes).hexdigest()

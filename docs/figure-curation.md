@@ -1,12 +1,38 @@
 # 论文绘图精选：从完整目录到有界选图
 
-更新：2026-09-30。默认页面：`figure-knowledge-base.html`；旧地址 `figure-gallery.html` 仍指向这个入口。
+基础精选更新：2026-09-30；新增 ICLR 论文方法图：2026-10-28。默认页面：`figure-knowledge-base.html`；旧地址 `figure-gallery.html` 仍指向这个入口。
+
+## 2026-10-28 新增：ICLR 2026 Figure 1 的方法框架参考
+
+- 原论文：Wu et al., *Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs*, ICLR 2026，官方 PDF 第 2 页 Figure 1：[原始图](https://proceedings.iclr.cc/paper_files/paper/2026/file/08a362bd4ae1934e099ce025f06039fe-Paper-Conference.pdf#page=2)；[作者代码](https://github.com/QinyuanWu0710/memorize-then-generalize)。
+- 默认精选现为 **7 项**：沿用 6 项 Figures4Papers 定量图参考，再新增 1 项论文方法示意。2081 条四仓库原始来源目录及其 6 项保留决定不变；新图来自独立论文、没有加入四仓库原始索引。
+- 页面展示的 `figure-reference-assets/rote-learning-fig1-schematic.svg` 是**本站独立绘制、明确标注来源的机制解释图**，不是论文原图截图，不含作者实验成绩。原始 Figure 1 保留直接 PDF 跳转；没有复制外部 Figure、代码或模板。
+- 它的核心视觉结构是 **Phase 1 无语义关联记忆 → Phase 2 少量语义映射 → 三类泛化示例（新关联 / 改写提问 / 另一语言）**。用于传递训练协议与检验边界，不应被作为准确率图使用。
+
+### 画出这张机制图，最少需要哪些数据
+
+| 输入组 | 必须字段 | 在图中起的作用 |
+|---|---|---|
+| 事实关系表 | `pair_id, subject, object, in_phase1, in_phase2` 与 `key_token` | 给 Phase 1 画出两条以上无语义关联，并区分哪些事实没有在 Phase 2 出现 |
+| 少量语义示范 | `pair_id, semantic_relation, prompt, expected_object, language` | 在 Phase 2 显示 1–N 个已经记忆的关系如何获得语义 |
+| 三种测试示例 | `probe_type, pair_id, language, prompt, expected_object, phase2_seen` | 画出其他事实、改写问法和其他语言的分支 |
+| 视觉注释 | `stage_labels`、分支标题与箭头 | 在正式论文中说明训练先后、监督范围和泛化含义 |
+
+**不需要**准确率、训练曲线、模型参数、Loss 或随机种子才能画这种纯示意图。但若要在图中报告“泛化真的提高”，还必须额外保存真实 `model_id/seed/checkpoint/epoch`、每个事实在两个阶段的训练/留出归属、各 prompt 的 `expected_object/predicted_object/is_correct`、分母、重复和评测方式。不能用画图时填写的正确示例代替模型预测结果。
+
+可下载的可修改输入样例：`figure-reference-assets/rote-learning-fig1-inputs.json`。它使用虚构的 mentor 关系，和作者在论文中的 mother 关系分开，避免把故事例子当作真实实体事实或完整实验结果。站内详情弹窗和导出的参考 brief 都携带对应的字段清单与出处，但这仍只是设计参考，不自动代表本项目的科学验证或对论文原图的再分发许可。
+
+### 绘图 QA
+
+逐项检查：第一阶段已见的事实及无语义 key 是否对应一致；第二阶段举例是否使用第一阶段见过的事实；所谓“未见事实泛化”必须明确定义为**未进入第二阶段语义训练**，不能误写成模型全训练未见；三种分支是否被错误说成 100% 准确率；所有原文图、独立绘图和训练结果是否分开标注。PDF 导出时保留矢量文字与线条，确保 1 栏或跨栏尺寸下阶段标签与分支文字仍可读。
+
+---
 
 ## 问题与本次修订
 
 旧目录把配方、图片、教程、导出副本和配套资源一起索引，共2081条。这能完成来源覆盖，但不能作为论文图质量推荐。文件名自动标签也可能错误，例如 `comparison_posttraining` 原标记为grouped_bar，实际是训练进程折线。
 
-新版保留**6个Figures4Papers精选结构参考**。其余2075条移出默认界面和默认Agent输入，仍保留在按需来源档案。默认页面下载的目录从4,220,038字节缩到10,807字节（当前构建），不是把旧条目隐藏后继续载入全量JSON。
+Figures4Papers 子库仍只保留**6个精选结构参考**，其余2075条移出默认界面和默认Agent输入，保留在按需来源档案。2026-10-28 又从 ICLR 2026 独立论文新增 **1张概念方法图**，默认图库因此为 7 张；该新增项不计入原2081条四仓库的审计。默认页面下载的目录从4,220,038字节缩到10,807字节（当前构建），不是把旧条目隐藏后继续载入全量JSON。
 
 精选集是当前ML论文任务的编辑决策，不是宣称所有归档图片都差，也不是把所有科学图型压成六种。
 

@@ -31,6 +31,7 @@ ROOT_FILES = (
     "site.webmanifest",
 )
 PUBLIC_DIRS = (
+    "figure-reference-assets",  # Author-created preview + example inputs; no copied paper figures.
     "seed-causalwm",
     "data-preparation-demo",  # Explicitly synthetic, independently rendered examples only.
 )
@@ -336,6 +337,9 @@ def build() -> Path:
     # Do not inject its pages or runtime navigation into the Agent site.
 
     required = (
+        OUTPUT / "figure-reference-assets" / "rote-learning-fig1-schematic.svg",
+        OUTPUT / "figure-reference-assets" / "rote-learning-fig1-inputs.json",
+        OUTPUT / "figure-knowledge-base.html",
         OUTPUT / "index.html",
         OUTPUT / "paper-ideas.html",
         OUTPUT / "research-timeline.html",

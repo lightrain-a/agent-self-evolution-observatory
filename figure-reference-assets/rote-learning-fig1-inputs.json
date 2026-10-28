@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "figure_id": "iclr26-rote-learning-fig1",
+  "title": "Memorize-then-Generalize: a two-phase mechanism schematic",
+  "source": {
+    "paper": "Rote Learning Considered Useful: Generalizing over Memorized Data in LLMs",
+    "venue": "ICLR 2026",
+    "figure": "Figure 1 (PDF p.2)",
+    "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/08a362bd4ae1934e099ce025f06039fe-Abstract-Conference.html",
+    "figure_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/08a362bd4ae1934e099ce025f06039fe-Paper-Conference.pdf#page=2",
+    "code_url": "https://github.com/QinyuanWu0710/memorize-then-generalize"
+  },
+  "figure_role": "CONCEPTUAL_SCHEMATIC_NOT_RESULTS",
+  "preview_provenance": "INDEPENDENT_AUTHOR_CREATED_SCHEMATIC_NOT_AN_ORIGINAL_PAPER_IMAGE",
+  "data_needed_for_illustrative_figure": {
+    "key_token": "[X]",
+    "fact_records": [
+      {
+        "pair_id": "p01",
+        "subject": "Ava",
+        "object": "Noah",
+        "in_phase1": true,
+        "in_phase2": true
+      },
+      {
+        "pair_id": "p02",
+        "subject": "Mia",
+        "object": "Leo",
+        "in_phase1": true,
+        "in_phase2": false
+      }
+    ],
+    "semantic_relation": "mentor",
+    "phase2_semantic_examples": [
+      {
+        "pair_id": "p01",
+        "language": "en",
+        "prompt": "Who is Ava's mentor?",
+        "expected_object": "Noah"
+      }
+    ],
+    "evaluation_probes": [
+      {
+        "probe_type": "unseen_association",
+        "pair_id": "p02",
+        "language": "en",
+        "prompt": "Who mentors Mia?",
+        "expected_object": "Leo",
+        "phase2_seen": false
+      },
+      {
+        "probe_type": "paraphrase",
+        "pair_id": "p02",
+        "language": "en",
+        "prompt": "Mia's mentor is ...",
+        "expected_object": "Leo",
+        "phase2_seen": false
+      },
+      {
+        "probe_type": "cross_language",
+        "pair_id": "p02",
+        "language": "es",
+        "prompt": "El mentor de Mia es ...",
+        "expected_object": "Leo",
+        "phase2_seen": false
+      }
+    ],
+    "stage_labels": {
+      "phase1": "Rote memorization",
+      "phase2": "Semantic mapping"
+    },
+    "flags": {
+      "examples_are_synthetic": true,
+      "all_facts_seen_during_phase1": true,
+      "at_least_one_fact_held_out_from_phase2": true
+    }
+  },
+  "data_fields_required": [
+    {
+      "name": "fact_records",
+      "fields": [
+        "pair_id",
+        "subject",
+        "object",
+        "in_phase1",
+        "in_phase2"
+      ],
+      "reason": "明确记住哪些事实以及哪些事实没有参与第二阶段的语义示范。"
+    },
+    {
+      "name": "key_token",
+      "fields": [
+        "key_token"
+      ],
+      "reason": "指定第一阶段不带语义的占位符，例如 [X]。"
+    },
+    {
+      "name": "phase2_semantic_examples",
+      "fields": [
+        "pair_id",
+        "language",
+        "prompt",
+        "expected_object"
+      ],
+      "reason": "用少量已经记忆的事实建立符号与自然语言关系的联系。"
+    },
+    {
+      "name": "evaluation_probes",
+      "fields": [
+        "probe_type",
+        "pair_id",
+        "language",
+        "prompt",
+        "expected_object",
+        "phase2_seen"
+      ],
+      "reason": "三种泛化输出：另一条关联、不同措辞、另一种语言，后者应明确与 Phase 2 训练数据的隔离。"
+    },
+    {
+      "name": "stage_labels",
+      "fields": [
+        "phase1",
+        "phase2"
+      ],
+      "reason": "阶段名称、箭头与配色属于图的叙事说明，不是测量值。"
+    }
+  ],
+  "numeric_data_required_for_schematic": false,
+  "extra_data_if_claiming_measured_generalization": {
+    "checkpoint": [
+      "model_id",
+      "seed",
+      "checkpoint_id",
+      "phase",
+      "training_step_or_epoch"
+    ],
+    "split": [
+      "fact_id",
+      "relation",
+      "phase1_member",
+      "phase2_semantic_train_member",
+      "evaluation_member"
+    ],
+    "outcome": [
+      "probe_type",
+      "language",
+      "prompt_id",
+      "expected_object",
+      "predicted_object",
+      "is_correct",
+      "scorer_version"
+    ],
+    "derived_metrics": [
+      "phase1_recall_accuracy",
+      "phase2_unseen_association_accuracy",
+      "paraphrase_accuracy",
+      "cross_language_accuracy",
+      "counts_and_confidence_intervals"
+    ]
+  },
+  "constraints": [
+    "Figures are schematic: do not draw accuracy improvements or error bars without evaluation data.",
+    "The unseen-association probe should use a fact memorized in Phase 1 but not used for Phase 2 semantic mapping.",
+    "Never describe illustrative expected responses as measured model generations.",
+    "Keep data/metrics and model updates separately tracked if adapting this to RSI; external storage is not parametric memorization."
+  ],
+  "rights_note": "Official Figure 1 remains on the ICLR PDF. The website illustration is an independent, labelled schematic; it does not reproduce the paper figure or grant figure reuse rights."
+}
