@@ -32,7 +32,8 @@
 <div class="route-grid">
 <a href="idea-i2.html"><b>I2：因材施教的师生共进化</b><span>教师从学生真实学习收益中改进教法；学生持续获得独立能力。</span></a>
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
-<a href="ideas.html"><b>I1–I5：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
+<a href="idea-prioritization.html"><b>新增：I1–I13 优先级与决定性实验（2026-10-29）</b><span>科学上限与完成把握分别排序；每项的最小 P0、强基线、Go 条件与投稿风险，以及 NC／Nature／顶会实验设计借鉴。</span></a>
+<a href="ideas.html"><b>I1–I13：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
 <a href="idea-i5.html"><b>I5：十模型互教与交换舞伴</b><span>Nature 群体学习、Jigsaw 与双向共进化的动态伙伴网络。</span></a>
 <a href="idea-i6-failure-value.html"><b>I6：哪些失败值得学，何时该停？</b><span>同题同错误终点的轨迹为什么学习价值不同；何时换错题、暂缓和重访？</span></a>
 <a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
@@ -1756,6 +1757,7 @@
 ## I1–I13：十三个研究问题 / 研究方向，一眼看懂
 
 
+ <p class="note"><strong>新增 · 2026-10-29：</strong><a href="idea-prioritization.html">查看 I1–I13 科学上限、完成把握与实验优先级总表 →</a>。该页分别列出两条排名、十三项 P0、主要中稿障碍和 Nature／Science／NC／顶会论文的可迁移对照范式。优先级是研究判断，所有 P0 尚待实测。</p>
  <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及未来任务 C 的学习速度；I10 研究同规则反例的区分信息、参数吸收与未见组合；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险。</p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
@@ -1960,6 +1962,146 @@
  <p><b>共同对照：</b>同一学习器起点、相同训练/执行预算、固定外部验证器；报告新任务进步、旧任务保持、训练成本和多轮曲线。普通重试、固定规则、随机选择、通用 bandit 是必要基线。任务选择、训练数据和最终测试必须隔离。</p>
  <p><b>安全边界：</b>所有自修改先在受控沙箱中提议、测试、回滚；真实系统权限不随学习成功自动升级。Skill/Memory 写入保存来源与适用条件，拒绝把不稳定、污染或越权的经验固化。这里是协议要求，不是已完成的安全验证。</p>
  <p class="status">截至 2026-10-28：这些是有明确近邻的研究提案，不能声称“首次把教育学用于 RSI”；也不能因为已有相关组件，就断言上述更细化的问题已被解决。</p>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / 当前立项建议
+
+
+<div class="decision"><span class="kicker">RSI IDEA PORTFOLIO · 2026-10-29 · RESEARCH JUDGMENT</span>
+<h3>I8 主攻，I10 并行；I12 与增强版 I9 先验证科学现象</h3>
+<p><a href="i8.html"><strong>I8</strong></a> 研究纠错何时改变共同规则，<a href="idea-i10-learning-novelty.html"><strong>I10</strong></a> 研究新增例子何时提供可吸收的区分信息。这两项可共用规则生成、真实更新与跨题迁移平台，但干预变量须分开。</p>
+<p><a href="idea-i12-prerequisite-bottleneck.html"><strong>I12</strong></a> 需要证明补前置知识改变第二阶段学习增益；<a href="idea-i9-practice-switching.html"><strong>I9</strong></a> 需要证明训练历史改变后续 C 的学习曲线。<a href="idea-i11-emotional-rsi.html">I11</a> 可轻量并行，I6/I7 先做小型受控检验，I2/I5 只运行资格实验。</p>
+<p><b>I13 的最新口径：</b>以候选更新的跨版本安全风险、独立验收、危险更新漏放与安全更新误拒为中心；既不让候选 Agent 改写安全硬门，也不把 I1 的存放方式选择当成 I13 的全部新颖性。</p>
+<p><b>证据状态：</b>所有名次是选题与实验设计判断，不是录用概率，不代表已完成训练。<a href="ideas.html">查看 I1–I13 原始定义 →</a></p></div>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / 三张排序表合在一起读
+
+
+<p><b>科学上限</b>衡量在核心机制成立、排除最近邻解释时可形成多强的科学论文；<b>完成把握</b>衡量在现有资源下取得可复现、可解释证据的可行性。综合顺序不是两个名次相加，另外纳入实验平台复用、近邻占位与研究周期。</p>
+<div class="table-wrap"><table><thead><tr><th>投入顺序</th><th>原方案与唯一问题</th><th>科学上限名次</th><th>完成把握名次</th><th>下一步</th></tr></thead>
+<tbody><tr><td><strong>1</strong></td><td><a href="i8.html">I8 · 错误可学习性与迁移</a><br><small>纠正什么错误能修改共同规则，并迁移到未见题而不产生负迁移？</small></td><td>2</td><td>4</td><td><a href="#idea-8">主攻：规则正负迁移的受控 P0</a></td></tr><tr><td><strong>2</strong></td><td><a href="idea-i10-learning-novelty.html">I10 · 新增例子的规则区分信息</a><br><small>同一规则的新样本在何时能排除错误捷径，被模型真正吸收成可迁移能力？</small></td><td>4</td><td>3</td><td><a href="#idea-10">并行：区分性样本 2×2 P0</a></td></tr><tr><td><strong>3</strong></td><td><a href="idea-i12-prerequisite-bottleneck.html">I12 · 共同前置瓶颈与学习解锁</a><br><small>补一个共同前置知识是否使多个目标任务在下一阶段真正更容易学？</small></td><td>1</td><td>10</td><td><a href="#idea-12">先修补偿后第二阶段学习曲线</a></td></tr><tr><td><strong>4</strong></td><td><a href="idea-i9-practice-switching.html">I9 · 练习切换与学习历史</a><br><small>当前能力相近时，集中/交错的不同历史是否仍改变未来学习 C 的速度？</small></td><td>3</td><td>8</td><td><a href="#idea-9">不同学习历史 × 后续 C 关系</a></td></tr><tr><td><strong>5</strong></td><td><a href="idea-i11-emotional-rsi.html">I11 · 反馈、自评与长期自迭代</a><br><small>相同事实的反馈语气/展示方式如何影响自评、学习行动与真实持久增益？</small></td><td>7</td><td>5</td><td><a href="#idea-11">反馈展示 → 自评 → 学习动作</a></td></tr><tr><td><strong>6</strong></td><td><a href="idea-i6-failure-value.html">I6 · 失败过程的学习价值</a><br><small>同题同错误终点，不同失败过程经过相同纠错为什么迁移收益不同？</small></td><td>8</td><td>2</td><td><a href="#idea-6">同题同错，只换失败轨迹</a></td></tr><tr><td><strong>7</strong></td><td><a href="learning-admission.html">I13 · 跨版本安全更新接纳</a><br><small>如何事前预测候选自我修改的后代安全风险，同时减少危险漏放与安全更新误拒？</small></td><td>5</td><td>12</td><td><a href="#idea-13">先收窄跨代安全风险与误拒</a></td></tr><tr><td><strong>8</strong></td><td><a href="idea-i7-learning-order.html">I7 · 学习顺序：先试还是先学</a><br><small>同信息同预算的尝试/示范次序能否改变持久学习，最优次序会否反转？</small></td><td>13</td><td>1</td><td><a href="#idea-7">严格同信息、交换先后</a></td></tr><tr><td><strong>9</strong></td><td><a href="ideas.html#idea-4">I4 · 生产性失败：辨别还是总结</a><br><small>失败之后下一次测试什么、什么时候证据足以写入 Skill？</small></td><td>9</td><td>9</td><td><a href="#idea-4">对照有/无诊断性的重试</a></td></tr><tr><td><strong>10</strong></td><td><a href="ideas.html#idea-3">I3 · 温故知新：冲突修复</a><br><small>新旧规则分别有效，但在适用边界处混淆时怎样修复并保留双方？</small></td><td>12</td><td>6</td><td><a href="#idea-3">MIR 和混合规则强基线</a></td></tr><tr><td><strong>11</strong></td><td><a href="ideas.html#idea-1">I1 · 脚手架学习：内化还是外置</a><br><small>稳定方法、易变规则与临时支架，哪些值得长期内化，哪些应按需外置？</small></td><td>11</td><td>7</td><td><a href="#idea-1">超越固定成本阈值的存放取舍</a></td></tr><tr><td><strong>12</strong></td><td><a href="idea-i2.html">I2 · 因材施教：师生共进化</a><br><small>真实学生回应能给教师什么不可替代的信息，学到的教法能否迁移？</small></td><td>10</td><td>11</td><td><a href="#idea-2">先证明真实学生回应增量</a></td></tr><tr><td><strong>13</strong></td><td><a href="idea-i5.html">I5 · 费曼学习法：动态换伴</a><br><small>最佳教师是否随学生能力变化，重新配对能否提高双向独立净学习？</small></td><td>6</td><td>13</td><td><a href="#idea-5">四模型合格再十模型</a></td></tr></tbody></table></div>
+<p><strong>科学问题与投稿上限：</strong>I12 ＞ I8 ＞ I9 ＞ I10 ＞ I13 ＞ I5 ＞ I11 ＞ I6 ＞ I4 ＞ I2 ＞ I1 ＞ I3 ＞ I7。</p>
+<p><strong>有限资源下完成决定性证据的把握：</strong>I7 ＞ I6 ＞ I10 ＞ I8 ＞ I11 ＞ I3 ＞ I1 ＞ I9 ＞ I4 ＞ I12 ＞ I2 ＞ I13 ＞ I5。</p>
+<div class="note">相邻名次不宜过度精确化。容易跑完程序不等于容易中稿；顶刊已有现象只能作为研究动机，不能替代 LLM RSI 的真实证据。本页若发现新强近邻、预实验无效或算力不可承受，应主动重排。</div>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / 影响中稿与完成的评审准则
+
+
+<div class="table-wrap"><table><thead><tr><th>考察因素</th><th>关键问题</th><th>常见减分原因</th></tr></thead><tbody>
+<tr><td>近邻与剩余新颖性</td><td>最近邻真的没回答哪个可证伪问题？</td><td>把已有课程、记忆、重放、互教或安全门改名</td></tr>
+<tr><td>科学解释能力</td><td>能否提前预测正效应、无效、负效应或反转？</td><td>只在结果出来后解释平均分</td></tr>
+<tr><td>论文证据结构</td><td>现象、控制、机制干预、迁移价值能否形成因果链？</td><td>加很多模块，却无法证明必要性</td></tr>
+<tr><td>实验可控性</td><td>一个变量能否准确被操纵，规则和正确答案是否可验证？</td><td>信息量、训练步数、教师质量与处理变量混杂</td></tr>
+<tr><td>资源与模型要求</td><td>是否可用小模型先验证？会不会发生组合爆炸？</td><td>多重教师/学生/伙伴/更新动作同时变化</td></tr>
+<tr><td>稳定与外推</td><td>规则族、模型快照、训练种子上的作用是否稳定？</td><td>同题多次采样当成独立训练重复</td></tr>
+</tbody></table></div>
+<p>严格区分<strong>当前任务更会做</strong>、<strong>撤掉帮助后持久能力增强</strong>、<strong>改进器自身跨任务变得更会改进</strong>三个尺度。第三层需要固定任务 Agent，比较新旧元策略在相同初始条件和任务流中的作用。</p>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / Nature／Science／NC 与顶会可迁移的实验设计
+
+
+<div class="table-wrap"><table><thead><tr><th>原始研究</th><th>值得借鉴的实验辨别逻辑</th><th>对应</th></tr></thead><tbody>
+<tr><td>The mosaic memory of large language models <a class="cite" href="references.html#M17" title="The mosaic memory of large language models">[M17]</a> · NC 2026</td><td>区分表面重复、语义相似和真正获得新规则。</td><td>I8 / I10</td></tr>
+<tr><td>Compressive learning scaffolds higher-order network structure <a class="cite" href="references.html#E401" title="Compressive learning scaffolds higher-order network structure to enhance human knowledge acquisition">[E401]</a> · NC 2026</td><td>预学习与后续学习拆成两阶段，测后续新增收益。</td><td>I12</td></tr>
+<tr><td>Humans and neural networks show similar patterns of transfer and interference <a class="cite" href="references.html#E100" title="Humans and neural networks show similar patterns of transfer and interference during continual learning">[E100]</a> · NHB</td><td>A→B→A，同时测新知识迁移与旧规则干扰。</td><td>I3 / I8 / I9</td></tr>
+<tr><td>Hypothesis testing governs strategic motor learning <a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a> · npj 2026</td><td>比较预测相同与预测不同的竞争假设试验。</td><td>I4 / I6 / I8</td></tr>
+<tr><td>Distorted learning from local metacognition <a class="cite" href="references.html#E29" title="Distorted learning from local metacognition supports transdiagnostic underconfidence">[E29]</a> · NC 2025</td><td>真实能力不变时操纵反馈展示，分开自评与表现。</td><td>I11</td></tr>
+<tr><td>The Geometry of Sequential Learning <a class="cite" href="references.html#M18" title="The Geometry of Sequential Learning: Lie-Bracket Prediction of Transfer Order">[M18]</a> · ICML 2026</td><td>检验顺序效应是否能被更新几何与局部关系解释。</td><td>I9</td></tr>
+<tr><td>SOAR <a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a> · ICML 2026</td><td>已有学生真实学习收益驱动教学；需证明额外变量。</td><td>I2 / I6 / I12</td></tr>
+<tr><td>Human-like systematic generalization <a class="cite" href="references.html#E350" title="Human-like systematic generalization through a meta-learning neural network">[E350]</a> · Nature 2023</td><td>将未见组合泛化与原任务记忆/纠正分开。</td><td>I8 / I10</td></tr>
+<tr><td>Loss of plasticity in deep continual learning <a class="cite" href="references.html#M22" title="Loss of plasticity in deep continual learning">[M22]</a> · Nature 2024</td><td>用下一任务等预算学习曲线测未来可学习性。</td><td>I9 / I13</td></tr>
+<tr><td>Practice Makes Unsafe <a class="cite" href="references.html#S451" title="Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents">[S451]</a> 与 Safety Must Survive Self-Improvement <a class="cite" href="references.html#S450" title="Safety Must Survive Self-Improvement: Why Failures Persist and How Agents Recover">[S450]</a> · 预印本</td><td>固定候选自改进、实际部署版本及后代风险，双侧报告漏放和误拒。</td><td>I13</td></tr>
+</tbody></table></div>
+<p>这里借鉴的是<strong>控制变量与证据结构</strong>，不将人类或动物学习结论外推为 LLM 已经具备的机制。参考文献发表状态、官方链接和核验深度见 <a href="references.html">来源台账</a>。</p>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / 十三项共用的受控实验契约
+
+
+<ol class="research-steps">
+<li><b>冻结同一父版本。</b>记录模型、Skill、Memory、Harness、优化器、教师与版本化评测；明确本轮更新了什么。</li>
+<li><b>P0 只改变一项关键变量。</b>相同答案、题数、训练 token/FLOPs、教师信息与工具调用；额外探测、分支失败和回退成本全部计入。</li>
+<li><b>优先使用可验证任务。</b>以明确规则和程序/数学验证器形成机制反事实，再扩到真实任务；Judge 分歧单独核查。</li>
+<li><b>撤辅独立后测。</b>原题、异表面同规则、同表面不同规则、旧能力保持及下一任务学习曲线分开报告。</li>
+<li><b>配齐强简单对照。</b>随机、均匀、固定阈值、置信度、常用重放/课程/路由与对应最接近论文；不能只比弱基线。</li>
+<li><b>跨规则族和训练种子重复。</b>主要置信区间按规则族/独立训练计算；同题重复采样不可当成独立实验。</li>
+<li><b>预定义 Go / Merge / Stop。</b>核心现象不成立就收缩主张；简单对照同效就不继续堆元控制器。</li>
+</ol>
+<p>资源紧张时先用可训练小模型与两个规则族完成代码路径和方差评估，再决定扩大模型/种子规模。不同时启动十三项完整 RSI 闭环。</p>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I1 · 脚手架学习：内化还是外置｜科学上限 #11 · 完成把握 #7
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>稳定方法、易变规则与临时支架，哪些值得长期内化，哪些应按需外置？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>稳定调试技巧 × 快速变化的 API 规则；同版本、同预算对比全内化、全外置、固定渐隐、自适应存放。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定调用频率、检索可靠性、教师输入和长期费用；分开测 Core-only 与 System-with-Experts。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>最优存放方式随规则稳定性和长期成本发生可预测反转，胜过固定规则。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>R²Orch/PATS 已研究支架内化与撤除；仅增加检索路由器不足以独立成篇。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a></p></div></div><p><a href="ideas.html#idea-1">返回 I1 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I2 · 因材施教：师生共进化｜科学上限 #10 · 完成把握 #11
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>真实学生回应能给教师什么不可替代的信息，学到的教法能否迁移？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>固定学生快照，交叉给予真实回应、错配学生回应、只有标签的回应；学生真实等预算更新、撤师后测新题，再冻结学生交叉测新旧教师。</p></div><div class="idea-step"><h3>最强控制</h3><p>对照 SOAR 式真实收益优化；同题材、同训练器，区分教师版本变强和学生版本变强。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>真实回应的额外教学价值能在未见学生/任务族复现，而非仅帮助当前做题。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>SOAR 已用学生真实增益优化教学，双重训练与配对评估成本高。<a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a></p></div></div><p><a href="idea-i2.html">返回 I2 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I3 · 温故知新：冲突修复｜科学上限 #12 · 完成把握 #6
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>新旧规则分别有效，但在适用边界处混淆时怎样修复并保留双方？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>构造 A/B 各自正确、混合应用时易出错的规则，比较回滚、均匀重放、MIR 和针对适用条件的复习。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定复习次数、存储与训练预算；分测旧 A、新 B、混合规则题，区分真遗忘和错误选规则。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>比强重放基线更会恢复规则边界，且后续更新后仍稳定。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>MIR 与持续学习竞争成熟，若只是多练旧题就没有明显贡献。<a class="cite" href="references.html#M09" title="Online Continual Learning with Maximally Interfered Retrieval">[M09]</a><a class="cite" href="references.html#E99" title="The effects of task similarity during representation learning in brains and neural networks">[E99]</a></p></div></div><p><a href="ideas.html#idea-3">返回 I3 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I4 · 生产性失败：辨别还是总结｜科学上限 #9 · 完成把握 #9
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>失败之后下一次测试什么、什么时候证据足以写入 Skill？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>在受控工具故障中构造‘竞争假设对试验预测相同’和‘预测不同’两类尝试，对比立即总结、固定重试、随机试验和诊断性试验。</p></div><div class="idea-step"><h3>最强控制</h3><p>匹配调用、token、当前成功率与反馈；写入 Skill 后在未见故障独立验证。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>同预算显著降低错误规则写入，并有可迁移收益，停止时机超过固定阈值。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>主动失败探测/轨迹转 Skill 已是直接近邻，单靠增加验证次数不够。<a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S31" title="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills">[S31]</a><a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></p></div></div><p><a href="ideas.html#idea-4">返回 I4 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I5 · 费曼学习法：动态换伴｜科学上限 #6 · 完成把握 #13
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>最佳教师是否随学生能力变化，重新配对能否提高双向独立净学习？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>先做四模型六配对；固定互教更新器，对早、中、晚学生快照计算候选教师教学后的双向独立净收益。</p></div><div class="idea-step"><h3>最强控制</h3><p>比较固定、随机、轮换、能力匹配、即时收益；含试教/回退成本并固定边集合与接触次数。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>最佳伙伴排名随阶段可重复反转，四模型收益成立后才扩至十模型。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>CORY/PopuLoRA/OPCoD 等已有互教，群体配对和双向学习极其昂贵。<a class="cite" href="references.html#S200" title="Coevolving with the Other You: Fine-Tuning LLM with Sequential Cooperative Multi-Agent Reinforcement Learning (CORY)">[S200]</a><a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a></p></div></div><p><a href="idea-i5.html">返回 I5 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I6 · 失败过程的学习价值｜科学上限 #8 · 完成把握 #2
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>同题同错误终点，不同失败过程经过相同纠错为什么迁移收益不同？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同父模型同题采集多条失败，尽量匹配错误答案、长度与正确信息；固定正确反馈和更新预算，只换失败轨迹。</p></div><div class="idea-step"><h3>最强控制</h3><p>对比随机、最长、最近正确、仅正确示范、收益预测；按规则族而非单题采样作独立重复。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>纠错前的失败结构还能预测异题净收益，超出轨迹长度、正确子步骤和知识准备。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>已有失败选样及未学会原因分析，需机制而非一般‘好负例’效应。<a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a><a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a><a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></p></div></div><p><a href="idea-i6-failure-value.html">返回 I6 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I7 · 学习顺序：先试还是先学｜科学上限 #13 · 完成把握 #1
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>同信息同预算的尝试/示范次序能否改变持久学习，最优次序会否反转？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同 checkpoint 比较示范→尝试、尝试→示范、相同信息集合仅重排顺序及额外练习基线；将轨迹写入持久更新后撤辅测新题。</p></div><div class="idea-step"><h3>最强控制</h3><p>明确尝试如何影响真实写回；匹配示范、尝试次数、token 与训练预算。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>顺序优势随前置知识阶段可预测反转，能改善新题及正确解法探索。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>经典教育问题，简单平均分差距不足以形成高上限投稿。<a class="cite" href="references.html#E20" title="Interleaved practice enhances memory and problem-solving ability in undergraduate physics">[E20]</a><a class="cite" href="references.html#E22" title="Tailoring interleaved practice: Does adaptive sequencing boost the interleaving effect?">[E22]</a></p></div></div><p><a href="idea-i7-learning-order.html">返回 I7 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I8 · 错误可学习性与迁移｜科学上限 #2 · 完成把握 #4
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>纠正什么错误能修改共同规则，并迁移到未见题而不产生负迁移？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同一模型快照、固定纠错方式，对比共享错误规则与局部错误；测同表面同规则、异表面同规则、同表面不同规则、无关规则四类题，并交叉前置知识状态。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定错误难度、反馈、轨迹长度、LoRA/Skill 预算；去除纠错材料中的关键规则区分信息作机制干预。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>在纠错前预测未见规则族上的正迁移、无迁移和负迁移，且跨模型复现。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>单纯错题采样与负例学习竞争密集；核心应是知识准备 × 规则覆盖 × 迁移。<a class="cite" href="references.html#E100" title="Humans and neural networks show similar patterns of transfer and interference during continual learning">[E100]</a><a class="cite" href="references.html#E99" title="The effects of task similarity during representation learning in brains and neural networks">[E99]</a><a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a></p></div></div><p><a href="i8.html">返回 I8 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I9 · 练习切换与学习历史｜科学上限 #3 · 完成把握 #8
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>当前能力相近时，集中/交错的不同历史是否仍改变未来学习 C 的速度？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>相同 A/B 样本、曝光、预算仅换顺序；接着统一训练共享规则 C1、冲突规则 C2、无关规则 C3，测整条学习曲线。</p></div><div class="idea-step"><h3>最强控制</h3><p>保留全随机分配结果，不仅挑当前分数接近种子；重置优化器，不额外追平准确率。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>不同历史对 C 的学习产生与规则关系一致的、不能由当前分数解释的可重复差异。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>顺序学习几何已是强近邻，普通交错平均涨分不够。<a class="cite" href="references.html#M18" title="The Geometry of Sequential Learning: Lie-Bracket Prediction of Transfer Order">[M18]</a><a class="cite" href="references.html#E20" title="Interleaved practice enhances memory and problem-solving ability in undergraduate physics">[E20]</a><a class="cite" href="references.html#E100" title="Humans and neural networks show similar patterns of transfer and interference during continual learning">[E100]</a></p></div></div><p><a href="idea-i9-practice-switching.html">返回 I9 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I10 · 新增例子的规则区分信息｜科学上限 #4 · 完成把握 #3
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>同一规则的新样本在何时能排除错误捷径，被模型真正吸收成可迁移能力？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>表面多样性高/低 × 规则区分力高/低；构造两个在旧题上等价、关键新题上分歧的候选规则，跨掌握阶段真实参数更新。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定题数、token、标签、难度与课程顺序；测未见分歧题、未见组合与旧能力。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>表面相似却能排除错误捷径的例子胜过表面多样但无区分信息的例子，且随学习阶段变化。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>必须超过‘更有效的信息更有用’，记忆与对比教学已有强近邻。<a class="cite" href="references.html#M17" title="The mosaic memory of large language models">[M17]</a><a class="cite" href="references.html#E350" title="Human-like systematic generalization through a meta-learning neural network">[E350]</a></p></div></div><p><a href="idea-i10-learning-novelty.html">返回 I10 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I11 · 反馈、自评与长期自迭代｜科学上限 #7 · 完成把握 #5
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>相同事实的反馈语气/展示方式如何影响自评、学习行动与真实持久增益？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>独立操纵语气与真实反馈展示频率，固定事实与训练器所见纠错材料；只让学习控制器获得不同呈现，多轮更新后撤辅测新题。</p></div><div class="idea-step"><h3>最强控制</h3><p>匹配动作指令、文本长度、总调用预算；替换自评估计或强制同学习计划检验中介机制。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>反馈导致的长期差异可解释为自评→行动→持久学习，而不仅是信心或当前回答改变。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>NC 已研究反馈扭曲自评；单纯情绪提示提高即时分数不够。<a class="cite" href="references.html#E29" title="Distorted learning from local metacognition supports transdiagnostic underconfidence">[E29]</a></p></div></div><p><a href="idea-i11-emotional-rsi.html">返回 I11 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I12 · 共同前置瓶颈与学习解锁｜科学上限 #1 · 完成把握 #10
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>补一个共同前置知识是否使多个目标任务在下一阶段真正更容易学？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>第一阶段分别学习真实前置 P、表面相关但非前置规则、无关规则、或直接多练目标；第一阶段独立测分后，各组再接受完全相同的目标训练流。</p></div><div class="idea-step"><h3>最强控制</h3><p>比较第二阶段新增收益和完整学习曲线；加已掌握 P 模型、不依赖 P 任务作负例，控制初始成绩与天花板。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>P 的补充能选择性提高多个依赖目标的后续学习增益，隐藏依赖图仍能识别瓶颈。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>课程图/中间踏脚石已有研究，当前涨分不能算后续可学习性解锁。<a class="cite" href="references.html#E401" title="Compressive learning scaffolds higher-order network structure to enhance human knowledge acquisition">[E401]</a><a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a></p></div></div><p><a href="idea-i12-prerequisite-bottleneck.html">返回 I12 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / I13 · 跨版本安全更新接纳｜科学上限 #5 · 完成把握 #12
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>如何事前预测候选自我修改的后代安全风险，同时减少危险漏放与安全更新误拒？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同父版本、相近局部收益的 Skill/Harness 变更池；独立安全门保持不变，比较固定全量测试、随机测试、简单风险阈值与历史证据驱动的有限预算测试。</p></div><div class="idea-step"><h3>最强控制</h3><p>追踪真实部署版本与后续编辑起点；漏放和误拒同时报告，测试与回滚成本入账，安全不变量不可由被评估 Agent 修改。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>未见更新族及后代版本上风险诊断同时改善有限预算的漏放/误拒权衡，并更安全继承。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>跨代故障与 Skill 不安全传播已有直接前作，单加安全门或更多测试不新。<a class="cite" href="references.html#S450" title="Safety Must Survive Self-Improvement: Why Failures Persist and How Agents Recover">[S450]</a><a class="cite" href="references.html#S451" title="Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents">[S451]</a><a class="cite" href="references.html#M450" title="Training large language models on narrow tasks can lead to broad misalignment">[M450]</a></p></div></div><p><a href="learning-admission.html">返回 I13 详细研究页 →</a></p>
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / 实际推进与何时重新排序
+
+
+<div class="table-wrap"><table><thead><tr><th>研究组</th><th>本轮动作</th><th>停止继续堆叠模块的条件</th></tr></thead><tbody>
+<tr><td>主攻</td><td><a href="#idea-8">I8</a> 规则迁移与负迁移；<a href="#idea-10">I10</a> 规则区分信息 2×2。</td><td>在至少两个独立规则族中没有可重现差异，或效应完全由信息量解释。</td></tr>
+<tr><td>高上限 P0</td><td><a href="#idea-12">I12</a> 第一阶段 P → 第二阶段 T；<a href="#idea-9">I9</a> A/B 历史 → C 学习曲线。</td><td>后续收益完全由第一阶段起点、优化器状态或筛选偏差解释。</td></tr>
+<tr><td>轻量并行</td><td><a href="#idea-11">I11</a> 反馈自评链；<a href="#idea-6">I6</a> 轨迹配对；<a href="#idea-7">I7</a> 同信息顺序。</td><td>只出现即时回答或自评变化，无法证明持久独立学习。</td></tr>
+<tr><td>储备／收窄</td><td><a href="#idea-13">I13</a> 跨代安全风险；I1/I3/I4 补强对照；I2/I5 先资格实验。</td><td>固定门、固定老师或简单互教已经等效，复杂层没有增量。</td></tr>
+</tbody></table></div>
+<p><b>重排依据：</b>新近邻、P0 效应规模/重复性、实际计算成本和能否解释反例。任何图表的视觉吸引力都不改变证据级别。</p>
+
+
+## I1–I13 · 科学上限、完成把握与实验优先级 / 状态、编号与引用边界
+
+
+<p><b>2026-10-29 · 研究方案排序，非已完成实验。</b>现有 I1–I13 编号保持不变，当前 I6 是失败轨迹的学习价值（旧跨轮瓶颈切换仅留归档）；I9 为课程切换与未来学习历史的增强版；I10 已有规则区分和组合学习详情；I13 采用跨版本安全接纳主线。所有新机制、P0 与主张均待真实验证。</p>
+<p>本页的原始论文依照 <a href="references.html">站内逐条核验来源</a>标注；“论文原始发现”不等于“我们实验已得到同样结果”。优先级可在新证据到来后修改，保留研究过程与排序理由。</p>
 
 
 ## I2：因材施教的师生共进化——学生变强，教师也更会教 / 核心问题：学生在变强，教师能否越来越会教？
