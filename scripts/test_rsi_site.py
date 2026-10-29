@@ -257,6 +257,13 @@ def main():
           'Timeline runtime assets missing')
     for id in ['rsi-tl-kind','rsi-tl-time','rsi-tl-query','rsi-tl-count']:
         check(f'id="{id}"' in timeline_html,f'Timeline filter missing: {id}')
+    check((ROOT/'rsi/timeline-reference.css').read_bytes()==(ROOT/'research-timeline.css').read_bytes(),
+          'RSI should reuse the original timeline stylesheet rather than a stale visual fork')
+    check('rt-month-table rsi-month-table' in timeline_html and 'rt-week-summary-row' in timeline_html,
+          'Reference monthly tables and weekly summaries missing')
+    for slug in PAGES:
+        content=(ROOT/'rsi'/f'{slug}.html').read_text(encoding='utf-8')
+        check('href="compact.css"' in content, f'{slug}: missing shared compact layout')
     # Primary groups and second-level pages share one ordered schema, and every
     # page must have exactly one active parent in the no-JavaScript fallback.
     nav_text=(ROOT/'rsi/site-nav.js').read_text(encoding='utf-8')
@@ -1277,7 +1284,7 @@ def main():
     if public.exists():
         for slug in PAGES:
             check((public/'rsi'/f'{slug}.html').is_file(),f'Not exported: {slug}')
-        for filename in ['timeline-data.json','timeline-view.js','timeline.css']:
+        for filename in ['timeline-data.json','timeline-view.js','timeline.css','timeline-reference.css','compact.css']:
             check((public/'rsi'/filename).is_file(),f'RSI timeline asset not exported: {filename}')
             check((public/'rsi'/filename).read_bytes()==(ROOT/'rsi'/filename).read_bytes(),
                   f'RSI timeline export differs from source: {filename}')

@@ -81,9 +81,10 @@ NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human rewar
 - **尚未发布**必须设 `status=pending`、`date=null`、`due_at=null`，不可把往届时间或第三方估算写为正式 DDL。
 - `research_events` 仅纳入有证据链接的研究记录；不得把方案、预期结果当成已完成实验。
 - 论文阅读事件不需要重复记录：`scripts/rsi_pages/timeline.py` 自动读取 `rsi/reading-cards.json` 的 `read_on` 和一句话结论，并生成可点击记录。
-- 设计和交互代码分别在 `rsi/timeline.css`、`rsi/timeline-view.js`，无需从 Agent 主站的复杂时间轴依赖。
+- **视觉模板共用、内容运行独立**：`build_rsi_research.py` 将主站 `research-timeline.css` 原样复制为 `rsi/timeline-reference.css`，复用旧版标题、热力月历、月度表格和周汇总样式。`rsi/timeline.css` 只负责 RSI 字段和响应式适配；`timeline-view.js` 只读取 RSI 页面自身数据，不加载 Agent 的 `data.js` 或时间轴运行时。
 - **2026-10-29 折叠版（对齐 Agent 研究时间轴）**：短首屏只显示最近官方 DDL 的秒级倒计时、北京时间及关键统计；三个会议的完整日期、官方链接和未知 DDL 放到默认收起的折叠面板。月历两列布局，连续覆盖有日期的月份及中间空月；每个月可折叠、日期按记录量渐变着色，三色小点区分精读、研究与会议。月历下是可组合筛选栏，以及**月 → 日 → 单条事件 → 论文 C-I-D-R** 四级展开。每条精读默认显示一句话论文内容，打开后可见标签、作者工作的 Challenge/Insight/Design/Result 与原文卡片。月历点日期会自动展开相关月与日；分享 `#reading-<paper-id>` 锚点也会展开对应内容。`research_events[].tags` 与论文 `tags` 仍作为唯一标签来源；官方日期完全基于原始 AoE 时间戳，尚未公布的节点绝不猜测。
-- **信息密度原则**：不再把完整投稿卡片、全部论文长内容同时放在首页第一屏；与 Agent 旧版一致，先显示精炼统计/热力月历/日期摘要，详情按需展开。移动端避免横向滚动，折叠支持原生键盘操作。
+- **2026-10-29 V4 模板与密度统一**：日记录恢复为原站的月度表格（日期、活动、论文精读、研究节点、DDL、当日脉络），每天默认折叠；点击行或 Enter/Space 展开。周汇总只根据真实记录计数，不添加虚构研究结论。月历默认显示已有记录的日期区间，避免大量空白日期；按钮可切回完整月历。每篇摘要及多个主题标签默认可见，完整 C-I-D-R 按需展开。
+- **全站共享布局**：所有 RSI 页最后加载 `compact.css`，统一主内容上留白、左右页边距、侧栏宽度、搜索栏和标题尺寸。页面正文保持可读字号，卡片与长文继续保留原内容和公式，不能靠裁剪正文换取紧凑。修改模板后运行 `scripts/test_rsi_compact_layout.py` 检查所有页面在 1440/1920/390 三种窗口宽度下的溢出、标题边界、统一页边距及首屏高度，并保存实测截图。
 - 自动化检查：`scripts/test_rsi_site.py` 保证结构/来源/锚点；`scripts/test_rsi_browser.py` 覆盖日历切换、标签筛选、跳秒、北京时间与移动端（需先完成 Agent 和 RSI 两站静态构建）。
 - 新增会议时更新 `venues` 与经过核验的日期，执行 `python3 scripts/build_rsi_research.py` 重新生成静态时间轴与全站检索索引。
 

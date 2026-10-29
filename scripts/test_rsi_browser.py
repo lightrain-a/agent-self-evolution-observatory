@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','teaching','idea-i6','experiments','references']
+PAGES=sorted(path.stem for path in (ROOT/'rsi').glob('*.html'))
 
 def port():
     with socket.socket() as sock:
@@ -27,7 +27,7 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True)
     hp,dp=port(),port()
     while dp==hp: dp=port()
-    processes=[]; session=''
+    processes=[]; session=''; screenshot_count=0
     log=(OUT/'webdriver.log').open('w')
     def req(method,path,data=None):
         request=urllib.request.Request(f'http://127.0.0.1:{dp}'+path,data=json.dumps(data).encode() if data is not None else None,method=method,headers={'Content-Type':'application/json'})
@@ -42,6 +42,8 @@ def main():
     def nav(slug):
         req('POST',f'/session/{session}/url',{'url':f'http://127.0.0.1:{hp}/'+slug}); time.sleep(.6)
     def screenshot(name):
+        nonlocal screenshot_count
+        screenshot_count+=1
         (OUT/name).write_bytes(base64.b64decode(req('GET',f'/session/{session}/screenshot')))
     try:
         processes.append(subprocess.Popen([sys.executable,'-m','http.server',str(hp),'--bind','127.0.0.1'],cwd=ROOT/'_site',stdout=log,stderr=log))
@@ -74,7 +76,19 @@ def main():
         time.sleep(.6)
         screenshot('rsi-panorama-evidence-desktop.png')
         nav('rsi/timeline.html')
-        screenshot('timeline-v3-initial-viewport.png')
+        screenshot('timeline-v4-initial-viewport.png')
+        check(js("return document.querySelectorAll('.rsi-month-table').length===document.querySelectorAll('.rsi-tl-month').length"),
+              'Monthly timelines must use the original template table structure')
+        check(js("return [...document.querySelectorAll('[data-day-detail]')].every(row=>row.hidden)"),
+              'Every day must start collapsed so the timeline opens as a readable overview')
+        check(js("return document.querySelectorAll('.rt-week-summary-row').length>=2"),
+              'Weekly record summaries missing from monthly tables')
+        js("const r=document.querySelector('tr[data-day]');r.focus();r.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}))")
+        check(js("return document.querySelector('tr[data-day]').getAttribute('aria-expanded')==='true'"),
+              'Keyboard Enter must open daily rows')
+        js("const r=document.querySelector('tr[data-day]');r.dispatchEvent(new KeyboardEvent('keydown',{key:' ',bubbles:true}))")
+        check(js("return document.querySelector('tr[data-day]').getAttribute('aria-expanded')==='false'"),
+              'Keyboard Space must close daily rows')
         check(js("return !document.querySelector('#rsi-rt-venue-toggle').open"),
               'Conference details should be folded on first load')
         check(js("return [...document.querySelectorAll('.rsi-tl-month')].filter(x=>x.open).length===1"),
@@ -94,7 +108,7 @@ def main():
         js("document.querySelector('#rsi-tl-expand-all').click()")
         check(js("return [...document.querySelectorAll('.rsi-tl-month:not([hidden])')].every(d=>d.open)"),
               'Expand all should open all visible months')
-        check(js("return [...document.querySelectorAll('.rsi-rt-day:not([hidden])')].every(d=>d.open)"),
+        check(js("return [...document.querySelectorAll('.rsi-rt-day:not([hidden])')].every(d=>d.getAttribute('aria-expanded')==='true')"),
               'Expand all should open every visible research day')
         js("document.querySelector('#rsi-tl-collapse-all').click()")
         timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
@@ -149,11 +163,11 @@ def main():
         check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==3,'Timeline conference search failed')
         js("document.querySelector('#rsi-tl-reset').click()")
         js("document.querySelector('#rsi-tl-expand-all').click()")
-        screenshot('timeline-v3-daily-expanded.png')
+        screenshot('timeline-v4-daily-expanded.png')
         nav('rsi/timeline.html#reading-'+reading_papers[0]['id'])
         check(js("return !!document.querySelector('details.rsi-tl-item:target[open]')"),
               'Direct link from a paper card must open the target event')
-        check(js("return !!document.querySelector('details.rsi-tl-item:target')?.closest('.rsi-rt-day[open]')"),
+        check(js("return !!document.querySelector('details.rsi-tl-item:target')?.closest('[data-day-detail]:not([hidden])')"),
               'Deep link must unfold the correct research day')
         nav('rsi/reading-cards.html')
         check(js("return document.querySelectorAll('.reading-card').length>=1"),'Reading-card library is empty')
@@ -460,16 +474,16 @@ def main():
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/timeline.html')
-        screenshot('timeline-v3-mobile-initial.png')
+        screenshot('timeline-v4-mobile-initial.png')
         check(js("return !document.querySelector('#rsi-rt-venue-toggle').open"),
               'Mobile timeline should start with compact folded conference details')
         js("document.querySelector('[data-calendar-day=\"2026-10-27\"]').click()")
-        check(js("return document.querySelector('[data-day=\"2026-10-27\"]').open"),
+        check(js("return document.querySelector('[data-day=\"2026-10-27\"]').getAttribute('aria-expanded')==='true'"),
               'Mobile calendar selection should unfold the target day')
         time.sleep(.85)
         check(js("return (()=>{const r=document.querySelector('[data-day=\"2026-10-27\"]').getBoundingClientRect();return r.top<innerHeight && r.bottom>0})()"),
               'Selected day should scroll into the mobile viewport')
-        screenshot('timeline-v3-mobile-selected-day.png')
+        screenshot('timeline-v4-mobile-selected-day.png')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
         time.sleep(.5)
         screenshot('idea-framework-mobile.png')
@@ -546,7 +560,7 @@ def main():
         nav('advisor-review.html')
         check(js("return document.querySelectorAll('.site-switcher__tab').length===2"),'Advisor Agent page lacks site switch')
         check(js("return document.querySelector('.site-switcher__tab[href=\"/rsi/\"]')!==null"),'Advisor page RSI link missing')
-        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':26}
+        result={'status':'PASS','pages':summaries,'search':'PASS','language':'PASS','mobile':'PASS','cross_site_switch':'PASS','independent_navigation':'PASS','screenshots':screenshot_count}
         (OUT/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
         print(json.dumps(result,ensure_ascii=False,indent=2))
     finally:

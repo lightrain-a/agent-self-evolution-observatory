@@ -1,0 +1,106 @@
+/* Shared RSI density system. Keep prose readable; remove duplicated page chrome.
+   Loaded last on every RSI page, independent of the Agent site. */
+body[data-rsi-page]{--rsi-page-gutter:22px;--rsi-page-top:18px;--rsi-topbar-height:56px;--rsi-page-width:1680px}
+@media(min-width:821px){body[data-rsi-page] .layout{grid-template-columns:276px minmax(0,1fr)}}
+body[data-rsi-page] .content{max-width:var(--rsi-page-width);padding:var(--rsi-page-top) var(--rsi-page-gutter) 28px;margin:0 auto;width:100%}
+body[data-rsi-page] .topbar{min-height:var(--rsi-topbar-height);padding:8px 22px;gap:10px;background:rgba(250,251,254,.97)}
+body[data-rsi-page] .search{max-width:900px}
+body[data-rsi-page] .search input{height:36px;padding:7px 13px 7px 34px;border-radius:9px;font-size:13px;line-height:20px}
+body[data-rsi-page] .search:before{left:12px;top:0;font-size:21px;line-height:34px}
+body[data-rsi-page] .language-toggle{padding:7px 10px;border-radius:8px;font-size:10px;line-height:18px}
+body[data-rsi-page] .sidebar{padding:14px 12px 20px}
+body[data-rsi-page] .site-switcher{margin-bottom:12px;padding:10px}
+body[data-rsi-page] .site-switcher__caption{font-size:9px;margin-bottom:6px}
+body[data-rsi-page] .site-switcher__tab{padding:7px 9px;font-size:11px}
+body[data-rsi-page] .brand{gap:9px;padding:3px 7px 13px}
+body[data-rsi-page] .brand .logo{width:34px;height:34px;border-radius:9px;font-size:13px;flex-basis:34px}
+body[data-rsi-page] .brand strong{font-size:14px}
+body[data-rsi-page] .brand>span:last-child>span{font-size:10px;margin-top:2px}
+body[data-rsi-page] #research-nav .nav-level1{padding:9px 9px;font-size:10px;line-height:1.4}
+body[data-rsi-page] #research-nav .nav-level2{padding:7px 9px 7px 20px;font-size:12px;line-height:1.45}
+body[data-rsi-page] .nav-children{padding-bottom:5px}
+body[data-rsi-page] .page-toc{margin:12px 5px 0;padding:11px 6px}
+body[data-rsi-page] .toc-title{margin-bottom:5px;font-size:9px}
+body[data-rsi-page] .toc-links{gap:1px}
+body[data-rsi-page] .toc-links a{padding:5px 8px;font-size:11px;line-height:1.55}
+body[data-rsi-page] .sidebar-note{margin:14px 5px 0;padding:11px;font-size:10px;line-height:1.75}
+/* One concise title panel, shared by overview, literature, ideas and long reads. */
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 16px;padding:13px 17px 13px 20px;margin:0 0 14px;border:1px solid #dce3ee;border-radius:12px;background:#fff;box-shadow:0 3px 14px #20385804}
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:linear-gradient(#426fb3,#7e6bbc)}
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero>.eyebrow{grid-column:1/-1;font-size:9px;letter-spacing:.1em;line-height:1.4;margin:0 0 5px;color:#6f61a1}
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-en{display:none}
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero h1{grid-column:1;max-width:none;font-size:28px;line-height:1.3;letter-spacing:-.035em;margin:0 0 7px;overflow-wrap:anywhere}
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero .lead{grid-column:1;max-width:1100px;font-size:13px;line-height:1.75;margin:0;color:#63738b}
+body[data-rsi-page]:not([data-rsi-page="timeline"]) .hero-meta{grid-column:2;grid-row:2/4;align-self:start;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px;max-width:190px;margin:4px 0 0}
+body[data-rsi-page] .hero-meta span{font-size:9px;padding:4px 7px;line-height:1.3;background:#f8fafc;border:1px solid #e2e7ef;color:#75839a}
+/* Tighter framing, not miniature body text. */
+body[data-rsi-page] .research-section{padding:18px 20px;margin-bottom:14px;border-radius:11px;box-shadow:0 3px 14px #20385803;scroll-margin-top:74px}
+body[data-rsi-page] .research-section>h2{font-size:20px;line-height:1.45;margin:0 0 14px;padding-left:11px;border-left-width:3px}
+body[data-rsi-page] .section-body>h3{font-size:17px;margin-top:18px;margin-bottom:8px}
+body[data-rsi-page] .section-body{font-size:14px;line-height:1.85}
+body[data-rsi-page] .section-body p{margin:9px 0}
+body[data-rsi-page] .route-grid,body[data-rsi-page] .card-grid{gap:10px}
+body[data-rsi-page] .route-grid>a{padding:15px 17px;gap:6px;border-radius:9px}
+body[data-rsi-page] .route-grid b{font-size:15px}
+body[data-rsi-page] .route-grid span{font-size:12px;line-height:1.7}
+body[data-rsi-page] .research-card{padding:14px 16px}
+body[data-rsi-page] .decision{padding:17px 19px;margin-bottom:16px;border-radius:10px}
+body[data-rsi-page] .decision h3{font-size:21px;margin:7px 0 10px}
+body[data-rsi-page] .status-strip{margin-top:15px;gap:6px}
+body[data-rsi-page] .status-strip span,body[data-rsi-page] .status{padding:5px 8px;font-size:11px}
+body[data-rsi-page] .table-wrap{margin:12px 0 16px}
+body[data-rsi-page] .table-wrap th,body[data-rsi-page] .table-wrap td{padding:10px 12px}
+body[data-rsi-page] .flow{margin:17px 0;gap:12px}
+body[data-rsi-page] .flow>div{padding:12px 10px}
+body[data-rsi-page] .reading-grid{gap:12px}
+body[data-rsi-page] .reading-card{padding:17px 18px;gap:11px;border-radius:10px}
+body[data-rsi-page] .reading-card-head h3{font-size:22px;margin:7px 0 3px}
+body[data-rsi-page] .reading-full-title{margin-bottom:8px!important}
+body[data-rsi-page] .reading-one-sentence{padding:10px 12px;font-size:14px;line-height:1.8}
+body[data-rsi-page] .reading-story{gap:9px}
+body[data-rsi-page] .reading-tools{gap:7px;margin-bottom:14px}
+body[data-rsi-page] .reading-tools input,body[data-rsi-page] .reading-tools select{padding:8px 10px}
+body[data-rsi-page] .idea-board{gap:10px;margin:14px 0 18px}
+body[data-rsi-page] .idea-board-card{padding:15px 17px;gap:5px}
+body[data-rsi-page] .idea-focus{padding:12px 14px;margin-bottom:15px}
+body[data-rsi-page] .deep-paper-head{max-width:1180px}
+body[data-rsi-page] .deep-paper-head>h3{margin:6px 0 12px}
+body[data-rsi-page] .deep-focus{font-size:15px;padding:12px 15px}
+body[data-rsi-page] .deep-summary{padding:11px 14px;margin:14px 0}
+body[data-rsi-page] .deep-shortcuts{margin:14px 0;gap:6px}
+body[data-rsi-page] .deep-stage{padding:17px 0 10px}
+body[data-rsi-page] .deep-stage-lead{font-size:14px;line-height:1.9}
+body[data-rsi-page] .deep-chapter{margin-top:20px;padding-top:14px}
+body[data-rsi-page] .deep-stage .deep-chapter{margin:0;padding:0}
+body[data-rsi-page] .deep-glossary{margin:14px 0}
+body[data-rsi-page] .deep-chapter-body{padding:12px 14px 15px}
+body[data-rsi-page] .source-card{padding:16px 0}
+body[data-rsi-page] .source-card h3{font-size:16px;margin:7px 0}
+body[data-rsi-page] .page-pagination{padding:17px 0;font-size:12px}
+body[data-rsi-page] .footer{padding:16px 22px;font-size:11px;line-height:1.7}
+@media(max-width:1100px){
+ body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero{grid-template-columns:1fr}
+ body[data-rsi-page]:not([data-rsi-page="timeline"]) .hero-meta{grid-column:1;grid-row:auto;max-width:none;justify-content:flex-start;margin-top:9px}
+}
+@media(max-width:820px){
+ body[data-rsi-page]{--rsi-page-gutter:13px;--rsi-page-top:14px}
+ body[data-rsi-page] .topbar{padding:8px 12px;gap:8px}
+ body[data-rsi-page] .sidebar{width:min(290px,88vw);padding:14px 12px 20px}
+ body[data-rsi-page] .mobile-toggle{padding:4px 8px;font-size:18px}
+ body[data-rsi-page] .search input{height:35px;font-size:12px;padding-left:31px}
+ body[data-rsi-page] .language-toggle{font-size:9px;padding:6px 8px}
+ body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero{padding:12px 14px 12px 17px;margin-bottom:12px}
+ body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero h1{font-size:24px;line-height:1.35}
+ body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero .lead{font-size:12.5px;line-height:1.75}
+ body[data-rsi-page] .research-section{padding:15px 14px;margin-bottom:12px}
+ body[data-rsi-page] .research-section>h2{font-size:18px;margin-bottom:12px}
+ body[data-rsi-page] .section-body{font-size:14px;line-height:1.85}
+ body[data-rsi-page] .reading-card{padding:15px}
+ body[data-rsi-page] .reading-grid{grid-template-columns:1fr}
+ body[data-rsi-page] .table-wrap th,body[data-rsi-page] .table-wrap td{padding:9px 10px}
+}
+@media print{
+ body[data-rsi-page] .content{max-width:none;padding:0}
+ body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero{border:0;padding:0;box-shadow:none}
+ body[data-rsi-page] .research-section{border:0;padding:10px 0;box-shadow:none}
+}

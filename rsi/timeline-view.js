@@ -1,4 +1,4 @@
-/* RSI research-timeline v3: compact, folding, source-grounded, standalone. */
+/* RSI timeline v4: reference-template monthly tables, accessible folds, live AoE clocks. */
 (() => {
   'use strict';
   if (document.body.dataset.rsiPage !== 'timeline') return;
@@ -44,6 +44,8 @@
   const allDates = [...new Set(items.map((r) => r.dataset.date))].sort();
   const monthDetails = new Map();
   let selectedDay = '';
+  let fullCalendar = false;
+  const calendarMode = $('#rsi-tl-calendar-mode');
 
   const deadlineData = (() => {
     try { return JSON.parse($('.rsi-rt-briefing')?.dataset.officialDeadlines || '[]'); }
@@ -139,36 +141,40 @@
     calendarMonths.forEach((key, index) => {
       const year = Number(key.slice(0, 4));
       const month = Number(key.slice(5, 7));
-      const firstWeekday = (new Date(Date.UTC(year, month - 1, 1)).getUTCDay() + 6) % 7;
-      const lastDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
+      const datesForMonth = allDates.filter((date) => date.startsWith(key));
+      const firstDay = fullCalendar || !datesForMonth.length ? 1 : Number(datesForMonth[0].slice(-2));
+      const lastDay = fullCalendar || !datesForMonth.length
+        ? new Date(Date.UTC(year, month, 0)).getUTCDate()
+        : Number(datesForMonth[datesForMonth.length - 1].slice(-2));
+      const firstWeekday = (new Date(Date.UTC(year, month - 1, firstDay)).getUTCDay() + 6) % 7;
       const count = rows.filter((r) => r.dataset.date.startsWith(key)).length;
 
-      const panel = create('details', 'rsi-tl-cal-month');
+      const panel = create('details', 'rsi-tl-cal-month rt-heat-month');
       panel.dataset.calendarMonth = key;
       panel.open = monthDetails.has(key) ? monthDetails.get(key) : index < 2;
 
-      const head = create('summary', 'rsi-tl-cal-head');
-      const title = create('span', 'rsi-tl-cal-title');
+      const head = create('summary', 'rsi-tl-cal-head rt-heat-month-header');
+      const title = create('div', 'rsi-tl-cal-title');
       title.append(create('b', '', year + ' 年 ' + month + ' 月'));
       title.append(create('small', '', count + ' 条记录'));
       head.append(title, create('span', 'rsi-rt-fold-icon'));
       panel.append(head);
       const inside = create('div', 'rsi-tl-cal-inner');
-      const weekdayRow = create('div', 'rsi-tl-cal-weekdays');
+      const weekdayRow = create('div', 'rsi-tl-cal-weekdays rt-heat-weekdays');
       weekdays.forEach((day) => weekdayRow.append(create('span', '', day)));
       inside.append(weekdayRow);
-      const grid = create('div', 'rsi-tl-cal-days');
+      const grid = create('div', 'rsi-tl-cal-days rt-heatmap');
       for (let blank = 0; blank < firstWeekday; blank += 1) {
         const node = create('span', 'rsi-tl-cal-blank');
         node.setAttribute('aria-hidden', 'true');
         grid.append(node);
       }
-      for (let n = 1; n <= lastDay; n += 1) {
+      for (let n = firstDay; n <= lastDay; n += 1) {
         const day = key + '-' + pad(n);
         const dayRows = byDay.get(day) || [];
         const countDay = dayRows.length;
-        const cell = create(countDay ? 'button' : 'span', 'rsi-tl-cal-day');
-        cell.append(create('span', 'rsi-tl-cal-number', n));
+        const cell = create(countDay ? 'button' : 'span', 'rsi-tl-cal-day rt-heat-cell');
+        cell.append(create('span', 'rsi-tl-cal-number rt-heat-date', n));
         if (day === todayChina) cell.classList.add('is-today');
         if (countDay) {
           cell.type = 'button';
@@ -176,7 +182,10 @@
           cell.classList.add('has-activity');
           cell.classList.add('rsi-tl-cal-density-' + Math.min(4, Math.ceil(Math.log2(countDay + 1))));
           cell.setAttribute('aria-pressed', String(selectedDay === day));
-          cell.append(create('b', 'rsi-tl-cal-count', countDay));
+          const activity = create('span', 'rt-heat-activity');
+          activity.append(create('b', 'rsi-tl-cal-count', countDay), create('small', '', '条'));
+          cell.append(activity);
+          cell.style.setProperty('--level', Math.min(.66, .12 + Math.log2(countDay + 1) * .10));
           const dots = create('span', 'rsi-tl-cal-marks');
           const kinds = new Set(dayRows.map((r) => r.dataset.kind));
           types.forEach((type) => {
@@ -199,6 +208,7 @@
       fragment.append(panel);
     });
     calendarGrid.replaceChildren(fragment);
+    calendarGrid.dataset.calendarView = fullCalendar ? 'full' : 'activity';
   }
 
   function baseMatch(row, now, terms) {
@@ -239,19 +249,15 @@
       });
     });
     days.forEach((day) => {
-      const rows = [...day.querySelectorAll('.rsi-tl-item:not([hidden])')];
+      const detail = document.getElementById('day-detail-' + day.dataset.day);
+      const rows = [...detail.querySelectorAll('.rsi-tl-item:not([hidden])')];
       day.hidden = rows.length === 0;
-      const countNode = day.querySelector('.rsi-rt-day-volume b');
+      detail.hidden = day.hidden || day.getAttribute('aria-expanded') !== 'true';
+      const countNode = day.querySelector('[data-day-total] b');
       if (countNode) countNode.textContent = rows.length;
-      const kinds = day.querySelector('.rsi-rt-day-kinds');
-      if (kinds) {
-        kinds.replaceChildren();
-        types.forEach((type) => {
-          const n = rows.filter((row) => row.dataset.kind === type).length;
-          if (n) kinds.append(create('span', 'rsi-rt-kind-count rsi-rt-kind-count--' + type,
-                                     names[type] + ' ' + n));
-        });
-      }
+      day.querySelectorAll('[data-day-kind]').forEach((cell) => {
+        cell.querySelector('b').textContent = rows.filter((row) => row.dataset.kind === cell.dataset.dayKind).length;
+      });
       const headline = day.querySelector('.rsi-rt-day-headline');
       if (headline && rows.length) {
         const primary = rows.find((row) => row.dataset.kind === 'research') || rows[0];
@@ -264,7 +270,17 @@
       month.hidden = !rows.length;
       const count = month.querySelector('.rsi-tl-month-count');
       if (count) count.textContent = rows.length;
-      updateWorkload(month.querySelector(':scope > summary .rsi-rt-workload'), rows);
+      const dayCount = month.querySelector('.rsi-tl-month-days');
+      if (dayCount) dayCount.textContent = new Set(rows.map((row) => row.dataset.date)).size;
+    });
+    document.querySelectorAll('[data-week-dates]').forEach((week) => {
+      const dates = new Set(week.dataset.weekDates.split('|'));
+      const rows = visibleRows.filter((row) => dates.has(row.dataset.date));
+      week.hidden = !rows.length;
+      week.querySelector('[data-week-total]').textContent = rows.length;
+      week.querySelector('[data-week-description]').textContent =
+        types.map((type) => names[type] + ' ' + rows.filter((row) => row.dataset.kind === type).length).join(' · ');
+      updateWorkload(week.querySelector('.rsi-rt-workload'), rows);
     });
 
     renderCalendar(baseRows);
@@ -290,14 +306,32 @@
     refresh();
   }
 
+  function setDayOpen(row, open) {
+    const detail = document.getElementById('day-detail-' + row.dataset.day);
+    row.setAttribute('aria-expanded', String(open));
+    row.classList.toggle('is-open', open);
+    const button = row.querySelector('.rt-day-toggle');
+    button.textContent = open ? '−' : '＋';
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', (open ? '收起 ' : '展开 ') + row.dataset.day + ' 的研究记录');
+    detail.hidden = !open || row.hidden;
+  }
+
   function openDay(day, scroll = true) {
     const target = document.getElementById('day-' + day);
     if (!target || target.hidden) return;
     const month = target.closest('.rsi-tl-month');
     if (month) month.open = true;
-    target.open = true;
-    if (scroll) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+    setDayOpen(target, true);
+    if (scroll) target.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'});
   }
+
+  calendarMode?.addEventListener('click', () => {
+    fullCalendar = !fullCalendar;
+    calendarMode.textContent = fullCalendar ? '只看研究日期' : '完整月历';
+    calendarMode.setAttribute('aria-pressed', String(fullCalendar));
+    refresh();
+  });
 
   calendarGrid.addEventListener('click', (event) => {
     const cell = event.target.closest('button[data-calendar-day]');
@@ -310,20 +344,38 @@
 
   $('#rsi-tl-months').addEventListener('click', (event) => {
     const button = event.target.closest('button[data-filter-tag]');
-    if (button) setTag(topic.value === button.dataset.filterTag ? '' : button.dataset.filterTag);
+    if (button) {
+      setTag(topic.value === button.dataset.filterTag ? '' : button.dataset.filterTag);
+      return;
+    }
+    const row = event.target.closest('tr[data-day]');
+    if (row) setDayOpen(row, row.getAttribute('aria-expanded') !== 'true');
+  });
+  $('#rsi-tl-months').addEventListener('keydown', (event) => {
+    const row = event.target.closest('tr[data-day]');
+    if (!row || event.target !== row || !['Enter', ' '].includes(event.key)) return;
+    event.preventDefault();
+    setDayOpen(row, row.getAttribute('aria-expanded') !== 'true');
   });
   clearDay.addEventListener('click', () => { selectedDay = ''; refresh(); });
   expandAll.addEventListener('click', () => {
     months.forEach((month) => { if (!month.hidden) month.open = true; });
-    days.forEach((day) => { if (!day.hidden) day.open = true; });
+    days.forEach((day) => { if (!day.hidden) setDayOpen(day, true); });
   });
   collapseAll.addEventListener('click', () => {
-    days.forEach((day) => { day.open = false; });
+    days.forEach((day) => { setDayOpen(day, false); });
     months.forEach((month) => { month.open = false; });
   });
 
   for (const control of [kind, timeRange, topic, query]) {
-    control.addEventListener(control === query ? 'input' : 'change', refresh);
+    control.addEventListener(control === query ? 'input' : 'change', () => {
+      refresh();
+      const filtering = kind.value !== 'all' || timeRange.value !== 'all' || topic.value !== 'all' || query.value.trim();
+      if (filtering) {
+        months.forEach((month) => { if (!month.hidden) month.open = true; });
+        days.forEach((day) => { if (!day.hidden) setDayOpen(day, true); });
+      }
+    });
   }
   reset.addEventListener('click', () => {
     kind.value = 'all';
@@ -344,10 +396,11 @@
       venueToggle.open = true;
     }
     const month = node.closest('.rsi-tl-month');
-    const day = node.closest('.rsi-rt-day');
+    const dayDetails = node.closest('[data-day-detail]');
+    const day = dayDetails ? document.getElementById('day-' + dayDetails.dataset.dayDetail) : node.closest('tr[data-day]');
     const item = node.closest('.rsi-tl-item');
     if (month) month.open = true;
-    if (day) day.open = true;
+    if (day) setDayOpen(day, true);
     if (item) item.open = true;
     if (month || day || item || node.closest('.rsi-rt-venue-toggle')) {
       node.scrollIntoView({block: 'start'});

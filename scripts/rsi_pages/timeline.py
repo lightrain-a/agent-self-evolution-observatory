@@ -64,6 +64,7 @@ def event_card(event: dict) -> str:
     )
     if len(tags) > 4:
         tag_buttons += f'<span class="rsi-tl-tag-more">+{len(tags)-4}</span>'
+    summary_tags = ''.join(f'<span>{esc(tag)}</span>' for tag in tags[:3])
     publication = (f'<span class="rsi-tl-publication">{esc(event["publication"].split("·")[0].strip())}</span>'
                    if kind == "reading" else "")
     preview = ""
@@ -76,7 +77,7 @@ def event_card(event: dict) -> str:
         )
         preview = (f'<details class="rsi-tl-paper-preview"><summary>展开论文机制 · Challenge / Insight / Design / Result</summary>'
                    f'<dl>{parts}</dl></details>')
-    return f'''<details class="rsi-tl-item rsi-tl-item--{kind}" id="{esc(event["id"])}"
+    return f'''<details class="rsi-tl-item rt-event rsi-tl-item--{kind}" id="{esc(event["id"])}"
       data-kind="{kind}" data-date="{esc(event["date"])}" data-due-at="{esc(due)}"
       data-tags="{esc("|".join(tags))}">
       <summary class="rsi-tl-event-summary">
@@ -85,6 +86,7 @@ def event_card(event: dict) -> str:
           <span class="rsi-tl-event-meta"><b>{KIND_LABELS[kind]}</b>{publication}</span>
           <strong>{esc(event["title"])}</strong>
           <span class="rsi-tl-event-abstract">{esc(event["description"])}</span>
+          <span class="rsi-summary-tags">{summary_tags}</span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -168,23 +170,42 @@ weekday = ("周一", "周二", "周三", "周四", "周五", "周六", "周日")
 
 
 def day_group(day: str, rows: list[dict], *, open_initial: bool = False) -> str:
+    """Use the reference timeline's real summary-row / detail-row table layout."""
     counts = Counter(row["kind"] for row in rows)
-    chips = "".join(
-        f'<span class="rsi-rt-kind-count rsi-rt-kind-count--{kind}">{KIND_LABELS[kind]} {counts[kind]}</span>'
-        for kind in KIND_LABELS if counts[kind]
-    )
-    # In a mixed day, research hypotheses deserve priority over individual paper names.
     headline = next((r["title"] for r in rows if r["kind"] == "research"), rows[0]["title"])
     day_obj = date.fromisoformat(day)
-    summary = (f'<span class="rsi-rt-day-date"><b>{int(day[8:])} 日</b>'
-               f'<small>{weekday[day_obj.weekday()]}</small></span>'
-               f'<span class="rsi-rt-day-volume"><b>{len(rows)}</b><small>条记录</small></span>'
-               f'<span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">{esc(headline)}</span>'
-               f'<span class="rsi-rt-day-kinds">{chips}</span>{bar(rows)}</span>')
-    return (f'<details class="rsi-rt-day" id="day-{esc(day)}" data-day="{esc(day)}"'
-            f'{" open" if open_initial else ""}>'
-            f'<summary class="rsi-rt-day-summary">{summary}<span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary>'
-            f'<div class="rsi-rt-day-body">{"".join(event_card(row) for row in rows)}</div></details>')
+    tags = list(dict.fromkeys(tag for row in rows for tag in row.get("tags", [])
+                             if re.fullmatch(r"I[0-9]+", tag)))[:5]
+    labels = ''.join(f'<span>{esc(tag)}</span>' for tag in tags)
+    return (
+        f'<tr class="rsi-rt-day rt-day-row" id="day-{esc(day)}" data-day="{esc(day)}" '
+        f'tabindex="0" aria-expanded="false" aria-controls="day-detail-{esc(day)}">'
+        f'<td class="rt-table-date"><div class="rt-table-date-inner">'
+        f'<button type="button" class="rt-day-toggle" data-toggle-day="{esc(day)}" '
+        f'aria-label="展开 {esc(day)} 的研究记录" aria-expanded="false">＋</button>'
+        f'<div><b>{int(day[5:7])}月{int(day[8:])}日 · {weekday[day_obj.weekday()]}</b><small>{esc(day)}</small></div></div></td>'
+        f'<td class="rt-num rt-activity-count" data-day-total><b>{len(rows)}</b><span>条记录</span></td>'
+        f'<td class="rt-num" data-day-kind="reading"><b>{counts["reading"]}</b></td>'
+        f'<td class="rt-num" data-day-kind="research"><b>{counts["research"]}</b></td>'
+        f'<td class="rt-num" data-day-kind="deadline"><b>{counts["deadline"]}</b></td>'
+        f'<td class="rt-table-thread"><p class="rsi-rt-day-headline">{esc(headline)}</p>'
+        f'<div class="rt-day-tags">{labels}</div>{bar(rows)}</td></tr>'
+        f'<tr class="rt-day-detail-row" id="day-detail-{esc(day)}" data-day-detail="{esc(day)}" hidden>'
+        f'<td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events">'
+        f'{"".join(event_card(row) for row in rows)}</div></div></td></tr>'
+    )
+
+
+def week_summary(days: list[str], rows: list[dict]) -> str:
+    counts = Counter(row["kind"] for row in rows)
+    label = f"{days[-1][5:]} — {days[0][5:]}"
+    return (
+        f'<tr class="rt-week-summary-row" data-week-dates="{esc("|".join(days))}"><td colspan="6">'
+        f'<div class="rt-week-inline"><header><div><b>本周记录</b><span>{label}</span></div>'
+        f'<div><strong data-week-total>{len(rows)}</strong><span>条活动</span></div></header>'
+        f'<div class="rt-week-inline-workload"><span data-week-description>论文精读 {counts["reading"]} · '
+        f'研究节点 {counts["research"]} · 会议 DDL {counts["deadline"]}</span>{bar(rows)}</div></div></td></tr>'
+    )
 
 
 all_months = sorted({event["date"][:7] for event in events})
@@ -192,16 +213,27 @@ months_markup = []
 for month in all_months:
     rows = [event for event in events if event["date"].startswith(month)]
     days = sorted({event["date"] for event in rows}, reverse=True)
-    month_days = "".join(day_group(day, [e for e in rows if e["date"] == day],
-                                    open_initial=(month == all_months[0] and day == days[0]))
-                         for day in days)
+    blocks = []
+    week_days = []
+    for i, day in enumerate(days):
+        blocks.append(day_group(day, [e for e in rows if e["date"] == day]))
+        week_days.append(day)
+        week = date.fromisoformat(day).isocalendar()[:2]
+        next_week = date.fromisoformat(days[i+1]).isocalendar()[:2] if i+1 < len(days) else None
+        if week != next_week:
+            blocks.append(week_summary(week_days, [e for e in rows if e["date"] in week_days]))
+            week_days = []
     months_markup.append(
-        f'<details class="rsi-tl-month" data-month="{esc(month)}"'
+        f'<details class="rsi-tl-month rt-month" data-month="{esc(month)}"'
         f'{" open" if month == all_months[0] else ""}>'
-        f'<summary class="rsi-tl-month-head"><span><b>{month_label(month)}</b>'
-        f'<small>{len(days)} 个活动日 · <span class="rsi-tl-month-count">{len(rows)}</span> 条记录</small></span>'
-        f'{bar(rows)}<span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary>'
-        f'<div class="rsi-tl-month-body">{month_days}</div></details>'
+        f'<summary class="rsi-tl-month-head rt-month-header"><div><b>{month_label(month)}</b>'
+        f'<span>{month}</span></div><div><b class="rsi-tl-month-days">{len(days)}</b><span>个研究日</span>'
+        f'<b class="rsi-tl-month-count">{len(rows)}</b><span>条记录</span>'
+        f'<span class="rsi-rt-fold-icon" aria-hidden="true"></span></div></summary>'
+        f'<div class="rt-month-table-wrap"><table class="rt-month-table rsi-month-table">'
+        f'<thead><tr><th scope="col">日期</th><th scope="col">活动</th><th scope="col">论文精读</th>'
+        f'<th scope="col">研究节点</th><th scope="col">会议 DDL</th><th scope="col">当日脉络 / 研究主题</th></tr></thead>'
+        f'<tbody>{"".join(blocks)}</tbody></table></div></details>'
     )
 
 status_labels = {"official": "日期已确认", "official_partial": "部分确认", "pending": "日期待公布"}
@@ -242,24 +274,28 @@ queue = "".join(
     for t in sorted(official_targets)
 )
 
-overview = f'''<div class="rsi-rt-briefing" data-official-deadlines="{esc(targets_json)}">
-  <div class="rsi-rt-next">
-    <span class="rsi-rt-small-label">NEXT OFFICIAL DEADLINE · AoE / UTC−12</span>
-    <div class="rsi-rt-next-title"><b id="rsi-rt-next-label">下一官方投稿节点</b>
-      <time id="rsi-rt-next-date"></time></div>
-    <strong id="rsi-rt-next-countdown" aria-live="off">读取已确认时间…</strong>
-    <div class="rsi-rt-next-foot"><span id="rsi-rt-next-beijing">北京时间自动换算</span><a id="rsi-rt-next-source" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方来源 ↗</a></div>
-  </div>
-  <div class="rsi-rt-briefing-right">
-    <div class="rsi-rt-briefing-stats">
-      <span><b>{len(events)}</b>条时间记录</span>
-      <span><b>{len(PAPERS)}</b>篇精读论文</span>
-      <span><b>{len(DATA["research_events"])}</b>项研究节点</span>
-      <span><b>{known}</b>个确认 DDL</span>
-    </div>
-    <div class="rsi-rt-queue"><span>正式投稿节点</span>{queue}</div>
-    <p>精读与研究方案分开；只有大会已确认的日期显示倒计时。</p>
-  </div>
+updated = max(DATA["verified_at"], *(p["read_on"] for p in PAPERS))
+research_day_count = len({e["date"] for e in events if e["kind"] != "deadline"})
+header_html = f'''<header class="research-hero rt-hero rsi-timeline-hero">
+  <div class="rt-hero-main"><div class="rt-hero-title"><span>RSI OBSERVATORY</span><h1>研究时间轴</h1></div>
+    <p>用月历回看论文与研究进展，在日期表中展开当天记录；论文内容、研究方案和投稿节点分层浏览。</p>
+    <div class="rt-hero-kpis"><span><b>{len(events)}</b>条活动</span><span><b>{research_day_count}</b>个研究日</span>
+      <span><b>{len(PAPERS)}</b>篇论文精读</span><span><b>{len(DATA["research_events"])}</b>项研究节点</span>
+      <span><b>{known}</b>个确认 DDL</span></div></div>
+  <aside class="rt-hero-side"><div class="rt-hero-time"><b>更新 {updated}</b><span>提案尚待实验</span></div>
+    <div class="rt-legend"><span class="rt-legend-item rt-legend-paper"><i></i>论文精读</span>
+      <span class="rt-legend-item rt-legend-experiment"><i></i>研究节点</span>
+      <span class="rt-legend-item rt-legend-idea"><i></i>会议 DDL</span></div>
+    <div class="rsi-tl-header-links"><a href="reading-cards.html">论文卡片 ↗</a><a href="ideas.html">研究方向 ↗</a></div></aside>
+</header>'''
+
+overview = f'''<div class="rsi-rt-briefing rt-iclr-deadlines" data-official-deadlines="{esc(targets_json)}">
+  <div class="rsi-rt-next"><span class="rsi-rt-small-label">NEXT DEADLINE · OFFICIAL / AoE</span>
+    <div class="rsi-rt-next-title"><b id="rsi-rt-next-label">下一官方投稿节点</b><time id="rsi-rt-next-date"></time></div>
+    <div class="rsi-rt-next-foot"><span id="rsi-rt-next-beijing">北京时间自动换算</span>
+      <a id="rsi-rt-next-source" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方来源 ↗</a></div></div>
+  <strong class="rt-ddl-countdown" id="rsi-rt-next-countdown" aria-live="off">读取已确认时间…</strong>
+  <div class="rsi-rt-queue"><span>投稿窗口</span>{queue}</div>
 </div>'''
 
 deadlines = (
@@ -273,14 +309,15 @@ deadlines = (
 )
 
 activity = (
-    '<div class="rsi-tl-calendar-panel" id="rsi-tl-calendar-panel">'
-    '<div class="rsi-tl-calendar-head"><div><span class="rsi-rt-small-label">MONTHLY CALENDAR / RESEARCH ACTIVITY</span>'
-    '<h3>研究月历</h3><p>点击有记录的日期定位；点击月份标题可折叠。颜色深浅表示当天记录量。</p></div>'
+    '<div class="rsi-tl-calendar-panel rt-heatmap-panel" id="rsi-tl-calendar-panel">'
+    '<div class="rsi-tl-calendar-head rt-heatmap-heading"><div><span class="rsi-rt-small-label">RESEARCH ACTIVITY</span>'
+    '<h3>研究月历</h3><p>默认显示有记录的日期区间；点击日期展开当天，也可切换完整月历。</p></div>'
     '<div class="rsi-tl-calendar-legend" aria-label="活动分类">'
     '<span><i class="rsi-tl-dot rsi-tl-dot--deadline"></i>会议 DDL</span>'
     '<span><i class="rsi-tl-dot rsi-tl-dot--reading"></i>论文精读</span>'
-    '<span><i class="rsi-tl-dot rsi-tl-dot--research"></i>研究记录</span></div></div>'
-    '<div class="rsi-tl-calendar-grid" id="rsi-tl-calendar-grid" aria-label="可折叠研究月历"></div>'
+    '<span><i class="rsi-tl-dot rsi-tl-dot--research"></i>研究记录</span>'
+    '<button type="button" id="rsi-tl-calendar-mode" aria-pressed="false">完整月历</button></div></div>'
+    '<div class="rsi-tl-calendar-grid rt-heat-months" id="rsi-tl-calendar-grid" aria-label="可折叠研究月历"></div>'
     '<div class="rsi-tl-date-selection" id="rsi-tl-date-selection" hidden>'
     '<span id="rsi-tl-selected-label"></span><button id="rsi-tl-clear-day" type="button">清除日期筛选</button></div></div>'
     '<div class="rsi-tl-toolbar" aria-label="研究记录筛选">'
@@ -300,7 +337,7 @@ activity = (
     '<div class="rsi-rt-list-heading"><div><b>按月 / 按日查看</b><span>先看当天研究概览，再展开论文内容与来源</span></div>'
     '<div><button type="button" id="rsi-tl-expand-all">展开全部研究日</button>'
     '<button type="button" id="rsi-tl-collapse-all">全部收起</button></div></div>'
-    '<div class="rsi-tl-months" id="rsi-tl-months">' + "".join(months_markup) + "</div>"
+    '<div class="rsi-tl-months rt-feed" id="rsi-tl-months">' + "".join(months_markup) + "</div>"
     '<p class="rsi-tl-no-results" id="rsi-tl-empty" hidden>没有符合条件的记录，请调整筛选或日期。</p>'
 )
 
@@ -321,7 +358,8 @@ PAGE = {
     "en": "Research Timeline · Live submission deadlines, calendar & paper reading",
     "lead": "研究月历、论文精读与投稿节点一页查看；每层都可折叠，官方日期与研究提案分开记录。",
     "updated": max(DATA["verified_at"], *(p["read_on"] for p in PAPERS)),
-    "styles": ["timeline.css"],
+    "styles": ["timeline-reference.css", "timeline.css"],
+    "header_html": header_html,
     "scripts": ["timeline-view.js"],
     "sections": [
         ("overview", "研究与投稿速览", overview),

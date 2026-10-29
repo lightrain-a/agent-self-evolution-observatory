@@ -111,24 +111,13 @@
 
 ## RSI 研究时间轴 / 研究与投稿速览
 
-<div class="rsi-rt-briefing" data-official-deadlines="[{&quot;iso&quot;:&quot;2026-11-10T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;论文注册 / 摘要&quot;,&quot;date&quot;:&quot;2026-11-10&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2026-11-16T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;主会全文投稿&quot;,&quot;date&quot;:&quot;2026-11-16&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2026-11-23T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;补充材料&quot;,&quot;date&quot;:&quot;2026-11-23&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2027-01-04T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;ACL&quot;,&quot;label&quot;:&quot;ARR 投稿截止&quot;,&quot;date&quot;:&quot;2027-01-04&quot;,&quot;url&quot;:&quot;https://2027.aclweb.org/calls/main/&quot;}]">
-  <div class="rsi-rt-next">
-    <span class="rsi-rt-small-label">NEXT OFFICIAL DEADLINE · AoE / UTC−12</span>
-    <div class="rsi-rt-next-title"><b id="rsi-rt-next-label">下一官方投稿节点</b>
-      <time id="rsi-rt-next-date"></time></div>
-    <strong id="rsi-rt-next-countdown" aria-live="off">读取已确认时间…</strong>
-    <div class="rsi-rt-next-foot"><span id="rsi-rt-next-beijing">北京时间自动换算</span><a id="rsi-rt-next-source" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方来源 ↗</a></div>
-  </div>
-  <div class="rsi-rt-briefing-right">
-    <div class="rsi-rt-briefing-stats">
-      <span><b>43</b>条时间记录</span>
-      <span><b>34</b>篇精读论文</span>
-      <span><b>5</b>项研究节点</span>
-      <span><b>4</b>个确认 DDL</span>
-    </div>
-    <div class="rsi-rt-queue"><span>正式投稿节点</span><span class="rsi-rt-queue-chip">CVPR <b>11-10</b></span><span class="rsi-rt-queue-chip">CVPR <b>11-16</b></span><span class="rsi-rt-queue-chip">CVPR <b>11-23</b></span><span class="rsi-rt-queue-chip">ACL <b>01-04</b></span></div>
-    <p>精读与研究方案分开；只有大会已确认的日期显示倒计时。</p>
-  </div>
+<div class="rsi-rt-briefing rt-iclr-deadlines" data-official-deadlines="[{&quot;iso&quot;:&quot;2026-11-10T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;论文注册 / 摘要&quot;,&quot;date&quot;:&quot;2026-11-10&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2026-11-16T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;主会全文投稿&quot;,&quot;date&quot;:&quot;2026-11-16&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2026-11-23T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;补充材料&quot;,&quot;date&quot;:&quot;2026-11-23&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2027-01-04T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;ACL&quot;,&quot;label&quot;:&quot;ARR 投稿截止&quot;,&quot;date&quot;:&quot;2027-01-04&quot;,&quot;url&quot;:&quot;https://2027.aclweb.org/calls/main/&quot;}]">
+  <div class="rsi-rt-next"><span class="rsi-rt-small-label">NEXT DEADLINE · OFFICIAL / AoE</span>
+    <div class="rsi-rt-next-title"><b id="rsi-rt-next-label">下一官方投稿节点</b><time id="rsi-rt-next-date"></time></div>
+    <div class="rsi-rt-next-foot"><span id="rsi-rt-next-beijing">北京时间自动换算</span>
+      <a id="rsi-rt-next-source" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方来源 ↗</a></div></div>
+  <strong class="rt-ddl-countdown" id="rsi-rt-next-countdown" aria-live="off">读取已确认时间…</strong>
+  <div class="rsi-rt-queue"><span>投稿窗口</span><span class="rsi-rt-queue-chip">CVPR <b>11-10</b></span><span class="rsi-rt-queue-chip">CVPR <b>11-16</b></span><span class="rsi-rt-queue-chip">CVPR <b>11-23</b></span><span class="rsi-rt-queue-chip">ACL <b>01-04</b></span></div>
 </div>
 
 ## RSI 研究时间轴 / CVPR · ICML · ACL 2027
@@ -137,7 +126,7 @@
 
 ## RSI 研究时间轴 / 研究月历与完整记录 · 43 条
 
-<div class="rsi-tl-calendar-panel" id="rsi-tl-calendar-panel"><div class="rsi-tl-calendar-head"><div><span class="rsi-rt-small-label">MONTHLY CALENDAR / RESEARCH ACTIVITY</span><h3>研究月历</h3><p>点击有记录的日期定位；点击月份标题可折叠。颜色深浅表示当天记录量。</p></div><div class="rsi-tl-calendar-legend" aria-label="活动分类"><span><i class="rsi-tl-dot rsi-tl-dot--deadline"></i>会议 DDL</span><span><i class="rsi-tl-dot rsi-tl-dot--reading"></i>论文精读</span><span><i class="rsi-tl-dot rsi-tl-dot--research"></i>研究记录</span></div></div><div class="rsi-tl-calendar-grid" id="rsi-tl-calendar-grid" aria-label="可折叠研究月历"></div><div class="rsi-tl-date-selection" id="rsi-tl-date-selection" hidden><span id="rsi-tl-selected-label"></span><button id="rsi-tl-clear-day" type="button">清除日期筛选</button></div></div><div class="rsi-tl-toolbar" aria-label="研究记录筛选"><label for="rsi-tl-kind">类型<select id="rsi-tl-kind"><option value="all">全部事件</option><option value="deadline">会议 DDL</option><option value="reading">论文精读</option><option value="research">研究记录</option></select></label><label for="rsi-tl-time">时间<select id="rsi-tl-time"><option value="all">全部时间</option><option value="upcoming">尚未截止</option><option value="past">已发生／已结束</option></select></label><label for="rsi-tl-topic">研究主题<select id="rsi-tl-topic"><option value="all">全部标签</option><option value="I9">I9 · 10</option><option value="Learning Science">Learning Science · 9</option><option value="RSI">RSI · 8</option><option value="2027">2027 · 4</option><option value="Meta-RL">Meta-RL · 4</option><option value="投稿节点">投稿节点 · 4</option><option value="CVPR">CVPR · 3</option><option value="I10">I10 · 3</option><option value="Catastrophic Interference">Catastrophic Interference · 2</option><option value="Continual Learning">Continual Learning · 2</option><option value="Curriculum">Curriculum · 2</option><option value="I13">I13 · 2</option><option value="I2">I2 · 2</option><option value="I3">I3 · 2</option><option value="I8">I8 · 2</option><option value="ICLR 2026">ICLR 2026 · 2</option><option value="Learning Admission">Learning Admission · 2</option><option value="MEG">MEG · 2</option><option value="Memory">Memory · 2</option><option value="Metacognition">Metacognition · 2</option><option value="Nature Human Behaviour 2026">Nature Human Behaviour 2026 · 2</option><option value="Self-Play">Self-Play · 2</option><option value="未来可学习性">未来可学习性 · 2</option><option value="I11">I11 · 1</option><option value="I12">I12 · 1</option><option value="I14">I14 · 1</option><option value="I4">I4 · 1</option><option value="I6">I6 · 1</option></select></label><label class="rsi-tl-search" for="rsi-tl-query">搜索<input type="search" id="rsi-tl-query" placeholder="论文名、I14、课程、CVPR…"></label><button type="button" id="rsi-tl-reset">重置</button><output id="rsi-tl-count" aria-live="polite">显示全部</output></div><div class="rsi-rt-list-heading"><div><b>按月 / 按日查看</b><span>先看当天研究概览，再展开论文内容与来源</span></div><div><button type="button" id="rsi-tl-expand-all">展开全部研究日</button><button type="button" id="rsi-tl-collapse-all">全部收起</button></div></div><div class="rsi-tl-months" id="rsi-tl-months"><details class="rsi-tl-month" data-month="2026-10" open><summary class="rsi-tl-month-head"><span><b>2026 年 10 月</b><small>4 个活动日 · <span class="rsi-tl-month-count">39</span> 条记录</small></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:87.18%"></i><i class="rsi-rt-workload--research" style="width:12.82%"></i></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-tl-month-body"><details class="rsi-rt-day" id="day-2026-10-29" data-day="2026-10-29" open><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>29 日</b><small>周四</small></span><span class="rsi-rt-day-volume"><b>12</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">I14 正式纳入研究池：学习规则自进化</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--reading">论文精读 11</span><span class="rsi-rt-kind-count rsi-rt-kind-count--research">研究记录 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:91.67%"></i><i class="rsi-rt-workload--research" style="width:8.33%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--research" id="rsi-i14-learning-rule-evolution-20261029"
+<div class="rsi-tl-calendar-panel rt-heatmap-panel" id="rsi-tl-calendar-panel"><div class="rsi-tl-calendar-head rt-heatmap-heading"><div><span class="rsi-rt-small-label">RESEARCH ACTIVITY</span><h3>研究月历</h3><p>默认显示有记录的日期区间；点击日期展开当天，也可切换完整月历。</p></div><div class="rsi-tl-calendar-legend" aria-label="活动分类"><span><i class="rsi-tl-dot rsi-tl-dot--deadline"></i>会议 DDL</span><span><i class="rsi-tl-dot rsi-tl-dot--reading"></i>论文精读</span><span><i class="rsi-tl-dot rsi-tl-dot--research"></i>研究记录</span><button type="button" id="rsi-tl-calendar-mode" aria-pressed="false">完整月历</button></div></div><div class="rsi-tl-calendar-grid rt-heat-months" id="rsi-tl-calendar-grid" aria-label="可折叠研究月历"></div><div class="rsi-tl-date-selection" id="rsi-tl-date-selection" hidden><span id="rsi-tl-selected-label"></span><button id="rsi-tl-clear-day" type="button">清除日期筛选</button></div></div><div class="rsi-tl-toolbar" aria-label="研究记录筛选"><label for="rsi-tl-kind">类型<select id="rsi-tl-kind"><option value="all">全部事件</option><option value="deadline">会议 DDL</option><option value="reading">论文精读</option><option value="research">研究记录</option></select></label><label for="rsi-tl-time">时间<select id="rsi-tl-time"><option value="all">全部时间</option><option value="upcoming">尚未截止</option><option value="past">已发生／已结束</option></select></label><label for="rsi-tl-topic">研究主题<select id="rsi-tl-topic"><option value="all">全部标签</option><option value="I9">I9 · 10</option><option value="Learning Science">Learning Science · 9</option><option value="RSI">RSI · 8</option><option value="2027">2027 · 4</option><option value="Meta-RL">Meta-RL · 4</option><option value="投稿节点">投稿节点 · 4</option><option value="CVPR">CVPR · 3</option><option value="I10">I10 · 3</option><option value="Catastrophic Interference">Catastrophic Interference · 2</option><option value="Continual Learning">Continual Learning · 2</option><option value="Curriculum">Curriculum · 2</option><option value="I13">I13 · 2</option><option value="I2">I2 · 2</option><option value="I3">I3 · 2</option><option value="I8">I8 · 2</option><option value="ICLR 2026">ICLR 2026 · 2</option><option value="Learning Admission">Learning Admission · 2</option><option value="MEG">MEG · 2</option><option value="Memory">Memory · 2</option><option value="Metacognition">Metacognition · 2</option><option value="Nature Human Behaviour 2026">Nature Human Behaviour 2026 · 2</option><option value="Self-Play">Self-Play · 2</option><option value="未来可学习性">未来可学习性 · 2</option><option value="I11">I11 · 1</option><option value="I12">I12 · 1</option><option value="I14">I14 · 1</option><option value="I4">I4 · 1</option><option value="I6">I6 · 1</option></select></label><label class="rsi-tl-search" for="rsi-tl-query">搜索<input type="search" id="rsi-tl-query" placeholder="论文名、I14、课程、CVPR…"></label><button type="button" id="rsi-tl-reset">重置</button><output id="rsi-tl-count" aria-live="polite">显示全部</output></div><div class="rsi-rt-list-heading"><div><b>按月 / 按日查看</b><span>先看当天研究概览，再展开论文内容与来源</span></div><div><button type="button" id="rsi-tl-expand-all">展开全部研究日</button><button type="button" id="rsi-tl-collapse-all">全部收起</button></div></div><div class="rsi-tl-months rt-feed" id="rsi-tl-months"><details class="rsi-tl-month rt-month" data-month="2026-10" open><summary class="rsi-tl-month-head rt-month-header"><div><b>2026 年 10 月</b><span>2026-10</span></div><div><b class="rsi-tl-month-days">4</b><span>个研究日</span><b class="rsi-tl-month-count">39</b><span>条记录</span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></div></summary><div class="rt-month-table-wrap"><table class="rt-month-table rsi-month-table"><thead><tr><th scope="col">日期</th><th scope="col">活动</th><th scope="col">论文精读</th><th scope="col">研究节点</th><th scope="col">会议 DDL</th><th scope="col">当日脉络 / 研究主题</th></tr></thead><tbody><tr class="rsi-rt-day rt-day-row" id="day-2026-10-29" data-day="2026-10-29" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-10-29"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-10-29" aria-label="展开 2026-10-29 的研究记录" aria-expanded="false">＋</button><div><b>10月29日 · 周四</b><small>2026-10-29</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>12</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>11</b></td><td class="rt-num" data-day-kind="research"><b>1</b></td><td class="rt-num" data-day-kind="deadline"><b>0</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">I14 正式纳入研究池：学习规则自进化</p><div class="rt-day-tags"><span>I14</span><span>I10</span><span>I8</span><span>I9</span><span>I3</span></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:91.67%"></i><i class="rsi-rt-workload--research" style="width:8.33%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-10-29" data-day-detail="2026-10-29" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--research" id="rsi-i14-learning-rule-evolution-20261029"
       data-kind="research" data-date="2026-10-29" data-due-at=""
       data-tags="I14|Meta-RL|学习规则|未来可学习性">
       <summary class="rsi-tl-event-summary">
@@ -146,6 +135,7 @@
           <span class="rsi-tl-event-meta"><b>研究记录</b></span>
           <strong>I14 正式纳入研究池：学习规则自进化</strong>
           <span class="rsi-tl-event-abstract">将快慢两时间尺度 Meta-RL 与学习规则发现整理为独立的 I14，固定学生、数据、教师和预算，计划比较学习规则变化后的未见任务学习曲线。正式编号不代表机制已被实验验证。</span>
+          <span class="rsi-summary-tags"><span>I14</span><span>Meta-RL</span><span>学习规则</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -154,7 +144,7 @@
           <a href="learning-rule-evolution.html">I14 完整研究方案 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-faulty-memory-arxiv2026-zhang"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-faulty-memory-arxiv2026-zhang"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Agent Memory|Memory Consolidation|Episodic vs Abstract Memory|Error Amplification|Abstraction Drift|ARC-AGI Stream|Raw Trajectory Baseline|Experience Gating|RSI Experience Memory">
       <summary class="rsi-tl-event-summary">
@@ -163,6 +153,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">arXiv:2605.12978v2</span></span>
           <strong>精读：Faulty Consolidated Memory · 2026</strong>
           <span class="rsi-tl-event-abstract">2026预印本发现：即使全部输入是正确经验，LLM反复将轨迹改写为抽象规则也可能让记忆效用先升后降；原始Episode-only通常是强对照。</span>
+          <span class="rsi-summary-tags"><span>Agent Memory</span><span>Memory Consolidation</span><span>Episodic vs Abstract Memory</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -171,7 +162,7 @@
           <a href="reading-cards.html#faulty-memory-arxiv2026-zhang">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-hattori-ofc-metarl-nn2023"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-hattori-ofc-metarl-nn2023"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Meta-RL|Orbitofrontal Cortex|CaMKII Plasticity|paAIP2|Probabilistic Reversal Learning|Two Time Scales|Slow Learning|Fast RL|Reward History|Policy Axis|RSI Meta-Improvement">
       <summary class="rsi-tl-event-summary">
@@ -180,6 +171,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Neuroscience</span></span>
           <strong>精读：OFC Meta-RL · Nat Neurosci 2023</strong>
           <span class="rsi-tl-event-abstract">小鼠与RNN学习器在多会话概率反转任务中学会更有效地利用奖励历史；OFC长期可塑性负责形成这种策略，专家任务内执行依赖回路活动。</span>
+          <span class="rsi-summary-tags"><span>Meta-RL</span><span>Orbitofrontal Cortex</span><span>CaMKII Plasticity</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -188,7 +180,7 @@
           <a href="reading-cards.html#hattori-ofc-metarl-nn2023">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-lake-baroni-mlc-nature2023"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-lake-baroni-mlc-nature2023"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Nature 2023|Meta-Learning|Systematic Generalization|Compositionality|MLC|Human Behavioral Modeling|SCAN|COGS|I10|Rule Learnability">
       <summary class="rsi-tl-event-summary">
@@ -197,6 +189,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature 623, 115–121 (2023)</span></span>
           <strong>精读：MLC · Nature 2023</strong>
           <span class="rsi-tl-event-abstract">不同潜在语法的元训练让小型 Transformer 在部分未见词汇组合上系统泛化；20%人类式错误标签服务于行为拟合，绝非改善正确率的配方。</span>
+          <span class="rsi-summary-tags"><span>Nature 2023</span><span>Meta-Learning</span><span>Systematic Generalization</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -205,7 +198,7 @@
           <a href="reading-cards.html#lake-baroni-mlc-nature2023">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-memory-management-acl2026-xiong"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-memory-management-acl2026-xiong"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="LLM Agent Memory|Experience Following|Episodic Memory|Memory Addition|Memory Deletion|Error Propagation|Misaligned Replay|I6 Experience Quality|RSI Memory">
       <summary class="rsi-tl-event-summary">
@@ -214,6 +207,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">ACL 2026 Long Papers</span></span>
           <strong>精读：Memory Management · ACL 2026</strong>
           <span class="rsi-tl-event-abstract">ACL 2026 在四类Agent上发现：相似查询会诱导模仿旧轨迹；全部添加记忆反而降低表现，选择性添加和可靠的历史效用删除可改善长期任务执行。</span>
+          <span class="rsi-summary-tags"><span>LLM Agent Memory</span><span>Experience Following</span><span>Episodic Memory</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -222,7 +216,7 @@
           <a href="reading-cards.html#memory-management-acl2026-xiong">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nature2025-orthogonalized-state-machine-sun"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nature2025-orthogonalized-state-machine-sun"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Learning Science|Nature|Hippocampus|Latent States|State Aliasing|Compositional Transfer|I8|I9">
       <summary class="rsi-tl-event-summary">
@@ -231,6 +225,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature</span></span>
           <strong>精读：Nature 2025 · 学习如何形成潜在状态机</strong>
           <span class="rsi-tl-event-abstract">看起来相同的环境可能属于不同潜在状态；学习使海马体逐步区分决策相关状态，但正交化并非完成任务的必要条件。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Nature</span><span>Hippocampus</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -239,7 +234,7 @@
           <a href="reading-cards.html#nature2025-orthogonalized-state-machine-sun">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nhb2025-distribution-curriculum-pesnot-lerousseau"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nhb2025-distribution-curriculum-pesnot-lerousseau"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Nature Human Behaviour 2026|In-context Learning|In-weights Learning|Zipf Distribution|Curriculum Ordering|Human–Transformer Comparison|I9|I10|Catastrophic Interference">
       <summary class="rsi-tl-event-summary">
@@ -248,6 +243,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Human Behaviour 10, 601–614 (2026), online 2025-12-23</span></span>
           <strong>精读：NHB · Repetition × Diversity × Curriculum</strong>
           <span class="rsi-tl-event-abstract">重复与多样性会改变人和小 Transformer 的记忆/规则选择；混合两类样本能兼顾两者，但人类的先多样后重复收益并未在该两层 Transformer 上重现。</span>
+          <span class="rsi-summary-tags"><span>Nature Human Behaviour 2026</span><span>In-context Learning</span><span>In-weights Learning</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -256,7 +252,7 @@
           <a href="reading-cards.html#nhb2025-distribution-curriculum-pesnot-lerousseau">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nhb2025-transfer-interference-holton"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nhb2025-transfer-interference-holton"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Transfer-Interference Trade-off|Representational Reuse|Catastrophic Interference|Rich vs Lazy Learning|I3|I9|I13|Nature Human Behaviour">
       <summary class="rsi-tl-event-summary">
@@ -265,6 +261,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Human Behaviour</span></span>
           <strong>精读：Transfer × Interference · NHB 2025/26</strong>
           <span class="rsi-tl-event-abstract">A→B→A顺序学习中，相似但不相同的规则更便于迁移，也更易让B规则干扰旧A；人类行为可与rich/lazy网络的共享/独立表征机制对应。</span>
+          <span class="rsi-summary-tags"><span>Transfer-Interference Trade-off</span><span>Representational Reuse</span><span>Catastrophic Interference</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -273,7 +270,7 @@
           <a href="reading-cards.html#nhb2025-transfer-interference-holton">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nhb2026-hybrid-memory-eckstein"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nhb2026-hybrid-memory-eckstein"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Nature Human Behaviour 2026|Memory|Hybrid Cognitive Models|Reward Learning|Latent State|History Dependence|Memory-ANN|RSI|I9|Learner State">
       <summary class="rsi-tl-event-summary">
@@ -282,6 +279,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Human Behaviour 10, 972–987 (2026), online 2026-02-05</span></span>
           <strong>精读：NHB 2026 · Hybrid Memory-ANN</strong>
           <span class="rsi-tl-event-abstract">多时间尺度的独立历史记忆，比仅增加Q值更新函数的灵活性更能解释人类奖励决策；但不能直接推出LLM记忆提升持久自我学习。</span>
+          <span class="rsi-summary-tags"><span>Nature Human Behaviour 2026</span><span>Memory</span><span>Hybrid Cognitive Models</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -290,7 +288,7 @@
           <a href="reading-cards.html#nhb2026-hybrid-memory-eckstein">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nn2024-planning-replay-jensen"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nn2024-planning-replay-jensen"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Nature Neuroscience|Planning|Meta-RL|Hippocampal Replay|Value of Computation|I4|I6|I9|I13">
       <summary class="rsi-tl-event-summary">
@@ -299,6 +297,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Neuroscience 27, 1340–1348 (2024); published 7 June 2024</span></span>
           <strong>精读：Planning &amp; Hippocampal Replay · NN 2024</strong>
           <span class="rsi-tl-event-abstract">Agent学会何时付费进行内部规划；同数量随机时机更差，但未研究持久模型更新。</span>
+          <span class="rsi-summary-tags"><span>Nature Neuroscience</span><span>Planning</span><span>Meta-RL</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -307,7 +306,7 @@
           <a href="reading-cards.html#nn2024-planning-replay-jensen">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-scienceadv2020-expert-haptic-ceiling-hirano"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-scienceadv2020-expert-haptic-ceiling-hirano"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Science Advances 2020|Expertise|Motor Learning|Active Haptic Training|Perceptual Feedback|Learning Plateau|Learning Signal Bottleneck|I9|I10|I12|RSI">
       <summary class="rsi-tl-event-summary">
@@ -316,6 +315,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Science Advances 6(47):eabd2558 (2020-11-20)</span></span>
           <strong>精读：Science Advances 2020 · Expert Haptic Training</strong>
           <span class="rsi-tl-event-abstract">高水平钢琴家的低力度按键控制可经带正确反馈的主动触觉辨别训练改善，普通误差训练在相应预算下无效；这是相关学习目标替换，不是简单增大训练量。</span>
+          <span class="rsi-summary-tags"><span>Science Advances 2020</span><span>Expertise</span><span>Motor Learning</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -324,7 +324,7 @@
           <a href="reading-cards.html#scienceadv2020-expert-haptic-ceiling-hirano">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-sharp-wave-ripples-science2024-yang"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-sharp-wave-ripples-science2024-yang"
       data-kind="reading" data-date="2026-10-29" data-due-at=""
       data-tags="Mouse Hippocampus|Sharp-Wave Ripples|Memory Tagging|Awake Replay|Sleep Replay|seqNMF|UMAP|Selective Consolidation|I6 Failure Experience Value">
       <summary class="rsi-tl-event-summary">
@@ -333,6 +333,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Science</span></span>
           <strong>精读：Hippocampal Memory Tagging · Science 2024</strong>
           <span class="rsi-tl-event-abstract">6只小鼠的海马记录显示：在相似迷宫经历中，清醒时被SPW-R更多重放的经历块，后续睡眠也更常被重放（R=0.86）。</span>
+          <span class="rsi-summary-tags"><span>Mouse Hippocampus</span><span>Sharp-Wave Ripples</span><span>Memory Tagging</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -341,7 +342,7 @@
           <a href="reading-cards.html#sharp-wave-ripples-science2024-yang">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details></div></details><details class="rsi-rt-day" id="day-2026-10-28" data-day="2026-10-28"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>28 日</b><small>周三</small></span><span class="rsi-rt-day-volume"><b>22</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">I9 增加同等当前能力下未来第三任务可学习性研究方案</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--reading">论文精读 21</span><span class="rsi-rt-kind-count rsi-rt-kind-count--research">研究记录 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:95.45%"></i><i class="rsi-rt-workload--research" style="width:4.55%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--research" id="rsi-i9-sequential-future-learnability-20261028"
+    </details></div></div></td></tr><tr class="rsi-rt-day rt-day-row" id="day-2026-10-28" data-day="2026-10-28" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-10-28"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-10-28" aria-label="展开 2026-10-28 的研究记录" aria-expanded="false">＋</button><div><b>10月28日 · 周三</b><small>2026-10-28</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>22</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>21</b></td><td class="rt-num" data-day-kind="research"><b>1</b></td><td class="rt-num" data-day-kind="deadline"><b>0</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">I9 增加同等当前能力下未来第三任务可学习性研究方案</p><div class="rt-day-tags"><span>I9</span><span>I2</span><span>I3</span><span>I11</span></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:95.45%"></i><i class="rsi-rt-workload--research" style="width:4.55%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-10-28" data-day-detail="2026-10-28" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--research" id="rsi-i9-sequential-future-learnability-20261028"
       data-kind="research" data-date="2026-10-28" data-due-at=""
       data-tags="I9|课程顺序|未来可学习性">
       <summary class="rsi-tl-event-summary">
@@ -350,6 +351,7 @@
           <span class="rsi-tl-event-meta"><b>研究记录</b></span>
           <strong>I9 增加同等当前能力下未来第三任务可学习性研究方案</strong>
           <span class="rsi-tl-event-abstract">核对 ICML 2026 Sweeney 的 Lie-bracket 顺序预测、npj 2026 假设检验、Nature 可塑性与 2026 LLM 未来可学习性近邻；固定 A/B 材料与预算、当前能力匹配、重置优化器，计划测学习 C 的真实独立曲线。属于方案，不是训练成果。</span>
+          <span class="rsi-summary-tags"><span>I9</span><span>课程顺序</span><span>未来可学习性</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -358,7 +360,7 @@
           <a href="idea-i9-practice-switching.html#future-question">I9 · 未来可学习性扩展 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-acl2026-good-curriculum-jia"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-acl2026-good-curriculum-jia"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Curriculum Learning|Five Difficulty Families|Data Ordering|VACC|Mathematical Reasoning">
       <summary class="rsi-tl-event-summary">
@@ -367,6 +369,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">ACL 2026</span></span>
           <strong>精读：What Makes a Good Curriculum?</strong>
           <span class="rsi-tl-event-abstract">同样的数学训练题，仅改变顺序就可能改变效果；核心是弄清“难度”其实有五种不同量法。</span>
+          <span class="rsi-summary-tags"><span>Curriculum Learning</span><span>Five Difficulty Families</span><span>Data Ordering</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -375,7 +378,7 @@
           <a href="reading-cards.html#acl2026-good-curriculum-jia">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-acl2026-sft-ilp-xue"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-acl2026-sft-ilp-xue"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Incomplete Learning|Supervised Fine-Tuning|Five Failure Modes|Knowledge Conflict|Forgetting|Data Diagnostics">
       <summary class="rsi-tl-event-summary">
@@ -384,6 +387,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">ACL 2026</span></span>
           <strong>精读：Why SFT Fails to Learn</strong>
           <span class="rsi-tl-event-abstract">SFT 损失已经收敛，训练题却仍有一部分答错；论文把这种“学不全”拆成五种可检查的原因。</span>
+          <span class="rsi-summary-tags"><span>Incomplete Learning</span><span>Supervised Fine-Tuning</span><span>Five Failure Modes</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -392,7 +396,7 @@
           <a href="reading-cards.html#acl2026-sft-ilp-xue">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-discorl-nature2025-oh"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-discorl-nature2025-oh"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="DiscoRL|Meta-gradient|Meta-learning Update Rules|AutoRL|Agent Population|Prediction Semantics|Transfer to Unseen Environments|RSI Learning Rules">
       <summary class="rsi-tl-event-summary">
@@ -401,6 +405,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature</span></span>
           <strong>精读：DiscoRL · Nature 2025</strong>
           <span class="rsi-tl-event-abstract">DiscoRL 用多环境 Agent 群体的学习效果反向改进共享元网络，让 AI 发现策略和预测的更新规则，再交给未见环境的新 Agent 使用。</span>
+          <span class="rsi-summary-tags"><span>DiscoRL</span><span>Meta-gradient</span><span>Meta-learning Update Rules</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -409,7 +414,7 @@
           <a href="reading-cards.html#discorl-nature2025-oh">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-hgm-2510-21614"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-hgm-2510-21614"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="RSI|Coding Agent|Gödel Machine|Metaproductivity|Clade|Thompson Sampling|ICLR 2026">
       <summary class="rsi-tl-event-summary">
@@ -418,6 +423,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">ICLR 2026</span></span>
           <strong>精读：HGM · ICLR 2026 Oral</strong>
           <span class="rsi-tl-event-abstract">高分 Coding Agent 未必产生更强后代；HGM 通过支系统计选择值得继续改写的祖先。</span>
+          <span class="rsi-summary-tags"><span>RSI</span><span>Coding Agent</span><span>Gödel Machine</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -426,7 +432,7 @@
           <a href="reading-cards.html#hgm-2510-21614">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-hypothesis-testing-2026-ding"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-hypothesis-testing-2026-ding"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Hypothesis Testing|Strategic Learning|Rule Identification|Generalization|Difficulty 0.5 Boundary">
       <summary class="rsi-tl-event-summary">
@@ -435,6 +441,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">npj Science of Learning</span></span>
           <strong>精读：Hypothesis Testing in Motor Learning</strong>
           <span class="rsi-tl-event-abstract">两个训练目标容易做对时，参与者反而可能只学到局部技巧；更能排除错误规则的环境，虽然初期更难，却更能迁移。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Hypothesis Testing</span><span>Strategic Learning</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -443,7 +450,7 @@
           <a href="reading-cards.html#hypothesis-testing-2026-ding">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-inventive-production-pf-2023-kapur"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-inventive-production-pf-2023-kapur"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Productive Failure|Inventive Production|I6｜效率优先">
       <summary class="rsi-tl-event-summary">
@@ -452,6 +459,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">npj Science of Learning</span></span>
           <strong>精读：Inventive Production · npj 2023</strong>
           <span class="rsi-tl-event-abstract">不同解法数与后续学习相关，但强制多样化探索是否值得 RSI 计算成本仍未知。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Productive Failure</span><span>Inventive Production</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -460,7 +468,7 @@
           <a href="reading-cards.html#inventive-production-pf-2023-kapur">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-mosaic-memory-2026-shilov"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-mosaic-memory-2026-shilov"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Memory|Fuzzy Duplicates|Memorization|Training Data|RSI Novelty|Deduplication">
       <summary class="rsi-tl-event-summary">
@@ -469,6 +477,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Communications</span></span>
           <strong>精读：Mosaic Memory</strong>
           <span class="rsi-tl-event-abstract">不同措辞或乱序片段仍能强化对同一原文的记忆；新文本不等于新知识。</span>
+          <span class="rsi-summary-tags"><span>Memory</span><span>Fuzzy Duplicates</span><span>Memorization</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -477,7 +486,7 @@
           <a href="reading-cards.html#mosaic-memory-2026-shilov">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nature2024-loss-plasticity-dohare"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nature2024-loss-plasticity-dohare"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Nature 2024|Continual Learning|Loss of Plasticity|Continual Backprop|Future Learnability|I9|Learning Admission">
       <summary class="rsi-tl-event-summary">
@@ -486,6 +495,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature</span></span>
           <strong>精读：Loss of Plasticity · Nature 2024</strong>
           <span class="rsi-tl-event-abstract">长期学习会让网络逐渐学不进新任务；CBP 维持可塑性，但没有验证 RSI 何时拒绝、外置或恢复内化。</span>
+          <span class="rsi-summary-tags"><span>Nature 2024</span><span>Continual Learning</span><span>Loss of Plasticity</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -494,7 +504,7 @@
           <a href="reading-cards.html#nature2024-loss-plasticity-dohare">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nature2025-centaur-binz"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nature2025-centaur-binz"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Human Cognition|Centaur|Psych-101|Behavior Prediction|Student Model|Teaching Response|I2">
       <summary class="rsi-tl-event-summary">
@@ -503,6 +513,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature</span></span>
           <strong>精读：Centaur · Nature 2025</strong>
           <span class="rsi-tl-event-abstract">把 160 项人类实验统一为语言轨迹后，一个 LLM 能跨实验预测下一步行为；预测回答仍不同于预测真实教学后的持久学习。</span>
+          <span class="rsi-summary-tags"><span>Human Cognition</span><span>Centaur</span><span>Psych-101</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -511,7 +522,7 @@
           <a href="reading-cards.html#nature2025-centaur-binz">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nature2026-narrow-misalignment-betley"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nature2026-narrow-misalignment-betley"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Nature 2026|Emergent Misalignment|Fine-tuning Safety|Cross-domain Side Effects|Learning Admission|I3">
       <summary class="rsi-tl-event-summary">
@@ -520,6 +531,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature 649, 584–589 (2026)</span></span>
           <strong>精读：Emergent Misalignment · Nature 2026</strong>
           <span class="rsi-tl-event-abstract">狭窄微调有时会改变无关领域的助手行为；Nature 2026 扩展了 ICML 2025 的发现，而非证明所有局部修复都不安全。</span>
+          <span class="rsi-summary-tags"><span>Nature 2026</span><span>Emergent Misalignment</span><span>Fine-tuning Safety</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -528,7 +540,7 @@
           <a href="reading-cards.html#nature2026-narrow-misalignment-betley">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nc2025-metacognition-underconfidence-katyal"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nc2025-metacognition-underconfidence-katyal"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Metacognition|Confidence Calibration|Feedback Selection|RSI|I11">
       <summary class="rsi-tl-event-summary">
@@ -537,6 +549,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Communications</span></span>
           <strong>精读：NC 2025 · 局部信心与整体自评偏差</strong>
           <span class="rsi-tl-event-abstract">相同真实表现下，选择性展示成功与失败可显著扭曲整体自评；自评变好不等于能力变好。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Metacognition</span><span>Confidence Calibration</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -545,7 +558,7 @@
           <a href="reading-cards.html#nc2025-metacognition-underconfidence-katyal">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nc2025-task-similarity-menghi"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nc2025-task-similarity-menghi"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Task Similarity|Representational Interference|Interleaved Learning|MEG|I9">
       <summary class="rsi-tl-event-summary">
@@ -554,6 +567,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Communications</span></span>
           <strong>精读：Task Similarity · Representation Learning</strong>
           <span class="rsi-tl-event-abstract">两任务共享底层规则，初期竟可能学得更慢；关键是共享哪些表示、又必须区分哪些任务情境。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Task Similarity</span><span>Representational Interference</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -562,7 +576,7 @@
           <a href="reading-cards.html#nc2025-task-similarity-menghi">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nc2026-schema-reuse-tian"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nc2026-schema-reuse-tian"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Nature Communications|Learning to Learn|Schema Reuse|Stability–Plasticity|RSI 研究候选">
       <summary class="rsi-tl-event-summary">
@@ -571,6 +585,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Communications</span></span>
           <strong>精读：Schema Reuse · NC 2026</strong>
           <span class="rsi-tl-event-abstract">决策结构在相似任务中复用，反转旧规则时难以复用；RSI 应研究可修订的结构继承，而非只做固定正交分离。</span>
+          <span class="rsi-summary-tags"><span>Nature Communications</span><span>Learning to Learn</span><span>Schema Reuse</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -579,7 +594,7 @@
           <a href="reading-cards.html#nc2026-schema-reuse-tian">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nhb2025-moral-strategy-maier"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nhb2025-moral-strategy-maier"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Metacognitive Learning|Strategy Selection|Moral Learning|Action vs Strategy|Transfer">
       <summary class="rsi-tl-event-summary">
@@ -588,6 +603,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Human Behaviour</span></span>
           <strong>精读：Moral Strategy Learning · NHB 2025</strong>
           <span class="rsi-tl-event-abstract">一次结果反馈不只让人少做某个动作，还可能改变以后更愿意使用哪一种决策策略。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Metacognitive Learning</span><span>Strategy Selection</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -596,7 +612,7 @@
           <a href="reading-cards.html#nhb2025-moral-strategy-maier">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-nonlocal-replay-science2021-liu"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-nonlocal-replay-science2021-liu"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Human Replay|Nonlocal Learning|MEG|Backward Replay|Need × Gain|Credit Assignment|I8 Error Transfer|LLM Knowledge Editing">
       <summary class="rsi-tl-event-summary">
@@ -605,6 +621,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Science</span></span>
           <strong>精读：Nonlocal Replay · Science 2021</strong>
           <span class="rsi-tl-event-abstract">29 名人类在已学会的任务关系上，利用一次终点反馈更新本轮没走过的路径；约160ms间隔的反向神经重放与高效非局部学习相关。</span>
+          <span class="rsi-summary-tags"><span>Human Replay</span><span>Nonlocal Learning</span><span>MEG</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -613,7 +630,7 @@
           <a href="reading-cards.html#nonlocal-replay-science2021-liu">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-onan-self-organized-interleaving-2024"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-onan-self-organized-interleaving-2024"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Metacognition|Self-regulated Learning|Interleaved Practice|Study Planning|I9|Near Transfer">
       <summary class="rsi-tl-event-summary">
@@ -622,6 +639,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">npj Science of Learning</span></span>
           <strong>精读：Self-organized Study Orders · npj 2024</strong>
           <span class="rsi-tl-event-abstract">反驳错误学习观念并展示学习体验轨迹，能提高学生自主安排交错练习的比例；但未显著提高干预组分类成绩。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Metacognition</span><span>Self-regulated Learning</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -630,7 +648,7 @@
           <a href="reading-cards.html#onan-self-organized-interleaving-2024">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-optimal-practice-2020-eglington"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-optimal-practice-2020-eglington"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Learning Science|Spaced Retrieval|OET|Practice Efficiency|Adaptive Scheduling">
       <summary class="rsi-tl-event-summary">
@@ -639,6 +657,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">npj Science of Learning</span></span>
           <strong>精读：Optimal Practice Scheduling</strong>
           <span class="rsi-tl-event-abstract">根据每个学生对每个单词的记忆状态，以及做对和答错的时间成本，安排下一次复习。</span>
+          <span class="rsi-summary-tags"><span>Learning Science</span><span>Spaced Retrieval</span><span>OET</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -647,7 +666,7 @@
           <a href="reading-cards.html#optimal-practice-2020-eglington">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-recover-or-discover-npj2026-zhang"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-recover-or-discover-npj2026-zhang"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Human Learning|Recover vs Discover|Outcome Feedback|Strategy Suppression|Optimal Behaviour Rate|Continual Learning|I3 · 温故知新">
       <summary class="rsi-tl-event-summary">
@@ -656,6 +675,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">npj Science of Learning</span></span>
           <strong>精读：Recover or Discover · npj 2026</strong>
           <span class="rsi-tl-event-abstract">218 名人类通过掷骰式数字游戏学习旧策略；反馈能压低或维持旧策略的使用，旧规律重现时往往比学习新规律更容易恢复。</span>
+          <span class="rsi-summary-tags"><span>Human Learning</span><span>Recover vs Discover</span><span>Outcome Feedback</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -664,7 +684,7 @@
           <a href="reading-cards.html#recover-or-discover-npj2026-zhang">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-reward-compression-nc2026-molinaro"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-reward-compression-nc2026-molinaro"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="Reward Function Compression|Human Reinforcement Learning|Goal Representation|Working Memory|Evaluation Rules|Learning Science">
       <summary class="rsi-tl-event-summary">
@@ -673,6 +693,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">Nature Communications</span></span>
           <strong>精读：Reward Function Compression · NC 2026</strong>
           <span class="rsi-tl-event-abstract">研究对象是人类：同样学习按键规则，能把抽象反馈归纳为简单、稳定奖励规则的人，学得更好；重复次数本身不足以解释。</span>
+          <span class="rsi-summary-tags"><span>Reward Function Compression</span><span>Human Reinforcement Learning</span><span>Goal Representation</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -681,7 +702,7 @@
           <a href="reading-cards.html#reward-compression-nc2026-molinaro">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-rote-learning-iclr2026-wu"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-rote-learning-iclr2026-wu"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="ICLR 2026|记忆与语义|事实调用|两跳推理|RSI 假设|结果边界">
       <summary class="rsi-tl-event-summary">
@@ -690,6 +711,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">ICLR 2026</span></span>
           <strong>精读：Rote Learning · 先记忆再泛化</strong>
           <span class="rsi-tl-event-abstract">先记住无语义事实，再学关系含义能调用旧事实；但两跳仅36%，不能等同于复杂推理能力。</span>
+          <span class="rsi-summary-tags"><span>ICLR 2026</span><span>记忆与语义</span><span>事实调用</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -698,7 +720,7 @@
           <a href="reading-cards.html#rote-learning-iclr2026-wu">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-soar-2601-18778"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-soar-2601-18778"
       data-kind="reading" data-date="2026-10-28" data-due-at=""
       data-tags="RSI|SOAR|Meta-RL|Self-Play|Teacher–Student|Curriculum|Grounded Reward|Learning Progress">
       <summary class="rsi-tl-event-summary">
@@ -707,6 +729,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">ICML 2026（Spotlight）</span></span>
           <strong>精读：SOAR · ICML 2026</strong>
           <span class="rsi-tl-event-abstract">难题完全做不对时，模型也能通过真实学生学习增益训练出题教师，生成帮助突破停滞的中间练习。</span>
+          <span class="rsi-summary-tags"><span>RSI</span><span>SOAR</span><span>Meta-RL</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -715,7 +738,7 @@
           <a href="reading-cards.html#soar-2601-18778">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details></div></details><details class="rsi-rt-day" id="day-2026-10-27" data-day="2026-10-27"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>27 日</b><small>周二</small></span><span class="rsi-rt-day-volume"><b>4</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">I2 合并为因材施教的师生共进化方案</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--reading">论文精读 2</span><span class="rsi-rt-kind-count rsi-rt-kind-count--research">研究记录 2</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:50.00%"></i><i class="rsi-rt-workload--research" style="width:50.00%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--research" id="rsi-i2-coevolution-20261027"
+    </details></div></div></td></tr><tr class="rsi-rt-day rt-day-row" id="day-2026-10-27" data-day="2026-10-27" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-10-27"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-10-27" aria-label="展开 2026-10-27 的研究记录" aria-expanded="false">＋</button><div><b>10月27日 · 周二</b><small>2026-10-27</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>4</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>2</b></td><td class="rt-num" data-day-kind="research"><b>2</b></td><td class="rt-num" data-day-kind="deadline"><b>0</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">I2 合并为因材施教的师生共进化方案</p><div class="rt-day-tags"><span>I2</span><span>I8</span></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:50.00%"></i><i class="rsi-rt-workload--research" style="width:50.00%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-10-27" data-day-detail="2026-10-27" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--research" id="rsi-i2-coevolution-20261027"
       data-kind="research" data-date="2026-10-27" data-due-at=""
       data-tags="I2|师生共进化|教学策略">
       <summary class="rsi-tl-event-summary">
@@ -724,6 +747,7 @@
           <span class="rsi-tl-event-meta"><b>研究记录</b></span>
           <strong>I2 合并为因材施教的师生共进化方案</strong>
           <span class="rsi-tl-event-abstract">核对 Bayesian Teaching、RLT、SOAR、Sherpa、Eduardo、OPCoD 与学生感知蒸馏；区分教师教学能力与学生解题能力，形成交叉验证方案。仅文献与方案更新，无本项目实验结果。</span>
+          <span class="rsi-summary-tags"><span>I2</span><span>师生共进化</span><span>教学策略</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -732,7 +756,7 @@
           <a href="idea-i2.html">I2 完整方案 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--research" id="rsi-i8-mechanism-20261027"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--research" id="rsi-i8-mechanism-20261027"
       data-kind="research" data-date="2026-10-27" data-due-at=""
       data-tags="I8|错误纠正|跨题迁移">
       <summary class="rsi-tl-event-summary">
@@ -741,6 +765,7 @@
           <span class="rsi-tl-event-meta"><b>研究记录</b></span>
           <strong>I8 · 错误可学习性与跨题迁移研究方案归档</strong>
           <span class="rsi-tl-event-abstract">从 Hypercorrection 原始研究出发，提出已有知识、共享错误规则与更新兼容性的待验证关系，列明匹配对照和否定条件；尚无实际训练结果。</span>
+          <span class="rsi-summary-tags"><span>I8</span><span>错误纠正</span><span>跨题迁移</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -749,7 +774,7 @@
           <a href="i8.html">I8 完整研究记录 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-r2orch-2610-22740"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-r2orch-2610-22740"
       data-kind="reading" data-date="2026-10-27" data-due-at=""
       data-tags="RSI|Self-Play|Curriculum|Skill Lifecycle">
       <summary class="rsi-tl-event-summary">
@@ -758,6 +783,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">arXiv 预印本</span></span>
           <strong>精读：R²Orch</strong>
           <span class="rsi-tl-event-abstract">先把辅助提示拿掉，再判断哪些题值得学、哪些提示可以撤掉。</span>
+          <span class="rsi-summary-tags"><span>RSI</span><span>Self-Play</span><span>Curriculum</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -766,7 +792,7 @@
           <a href="reading-cards.html#r2orch-2610-22740">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details><details class="rsi-tl-item rsi-tl-item--reading" id="reading-rsi-anything-2610-13912"
+    </details><details class="rsi-tl-item rt-event rsi-tl-item--reading" id="reading-rsi-anything-2610-13912"
       data-kind="reading" data-date="2026-10-27" data-due-at=""
       data-tags="RSI|World Model|Feedback Learning|Pair Retention|JEPA-Anything">
       <summary class="rsi-tl-event-summary">
@@ -775,6 +801,7 @@
           <span class="rsi-tl-event-meta"><b>论文精读</b><span class="rsi-tl-publication">PhAI Labs Technical Report</span></span>
           <strong>精读：RSI-Anything</strong>
           <span class="rsi-tl-event-abstract">先预测哪个方案值得测试，再用真实反馈更新系统，最后检查整套 Agent 是否真的变好。</span>
+          <span class="rsi-summary-tags"><span>RSI</span><span>World Model</span><span>Feedback Learning</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -783,7 +810,7 @@
           <a href="reading-cards.html#rsi-anything-2610-13912">打开完整论文卡片 ↗</a>
         </div>
       </div>
-    </details></div></details><details class="rsi-rt-day" id="day-2026-10-21" data-day="2026-10-21"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>21 日</b><small>周三</small></span><span class="rsi-rt-day-volume"><b>1</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">RSI 自主学习研究专题完成首版资料整理</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--research">研究记录 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--research" style="width:100.00%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--research" id="rsi-dossier-20261021"
+    </details></div></div></td></tr><tr class="rt-week-summary-row" data-week-dates="2026-10-29|2026-10-28|2026-10-27"><td colspan="6"><div class="rt-week-inline"><header><div><b>本周记录</b><span>10-27 — 10-29</span></div><div><strong data-week-total>38</strong><span>条活动</span></div></header><div class="rt-week-inline-workload"><span data-week-description>论文精读 34 · 研究节点 4 · 会议 DDL 0</span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--reading" style="width:89.47%"></i><i class="rsi-rt-workload--research" style="width:10.53%"></i></span></div></div></td></tr><tr class="rsi-rt-day rt-day-row" id="day-2026-10-21" data-day="2026-10-21" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-10-21"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-10-21" aria-label="展开 2026-10-21 的研究记录" aria-expanded="false">＋</button><div><b>10月21日 · 周三</b><small>2026-10-21</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>1</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>0</b></td><td class="rt-num" data-day-kind="research"><b>1</b></td><td class="rt-num" data-day-kind="deadline"><b>0</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">RSI 自主学习研究专题完成首版资料整理</p><div class="rt-day-tags"></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--research" style="width:100.00%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-10-21" data-day-detail="2026-10-21" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--research" id="rsi-dossier-20261021"
       data-kind="research" data-date="2026-10-21" data-due-at=""
       data-tags="RSI|资料整理|研究站点">
       <summary class="rsi-tl-event-summary">
@@ -792,6 +819,7 @@
           <span class="rsi-tl-event-meta"><b>研究记录</b></span>
           <strong>RSI 自主学习研究专题完成首版资料整理</strong>
           <span class="rsi-tl-event-abstract">网站形成 RSI 文献、跨领域学习科学、候选方向和实验方案的资料页；属于研究文档整理，不代表实验验证完成。</span>
+          <span class="rsi-summary-tags"><span>RSI</span><span>资料整理</span><span>研究站点</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -800,7 +828,7 @@
           <a href="index.html">专题总览 ↗</a>
         </div>
       </div>
-    </details></div></details></div></details><details class="rsi-tl-month" data-month="2026-11"><summary class="rsi-tl-month-head"><span><b>2026 年 11 月</b><small>3 个活动日 · <span class="rsi-tl-month-count">3</span> 条记录</small></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-tl-month-body"><details class="rsi-rt-day" id="day-2026-11-23" data-day="2026-11-23"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>23 日</b><small>周一</small></span><span class="rsi-rt-day-volume"><b>1</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">CVPR 2027 · 补充材料</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--deadline">会议 DDL 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--deadline" id="cvpr-2027-supplementary"
+    </details></div></div></td></tr><tr class="rt-week-summary-row" data-week-dates="2026-10-21"><td colspan="6"><div class="rt-week-inline"><header><div><b>本周记录</b><span>10-21 — 10-21</span></div><div><strong data-week-total>1</strong><span>条活动</span></div></header><div class="rt-week-inline-workload"><span data-week-description>论文精读 0 · 研究节点 1 · 会议 DDL 0</span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--research" style="width:100.00%"></i></span></div></div></td></tr></tbody></table></div></details><details class="rsi-tl-month rt-month" data-month="2026-11"><summary class="rsi-tl-month-head rt-month-header"><div><b>2026 年 11 月</b><span>2026-11</span></div><div><b class="rsi-tl-month-days">3</b><span>个研究日</span><b class="rsi-tl-month-count">3</b><span>条记录</span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></div></summary><div class="rt-month-table-wrap"><table class="rt-month-table rsi-month-table"><thead><tr><th scope="col">日期</th><th scope="col">活动</th><th scope="col">论文精读</th><th scope="col">研究节点</th><th scope="col">会议 DDL</th><th scope="col">当日脉络 / 研究主题</th></tr></thead><tbody><tr class="rsi-rt-day rt-day-row" id="day-2026-11-23" data-day="2026-11-23" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-11-23"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-11-23" aria-label="展开 2026-11-23 的研究记录" aria-expanded="false">＋</button><div><b>11月23日 · 周一</b><small>2026-11-23</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>1</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>0</b></td><td class="rt-num" data-day-kind="research"><b>0</b></td><td class="rt-num" data-day-kind="deadline"><b>1</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">CVPR 2027 · 补充材料</p><div class="rt-day-tags"></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-11-23" data-day-detail="2026-11-23" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--deadline" id="cvpr-2027-supplementary"
       data-kind="deadline" data-date="2026-11-23" data-due-at="2026-11-23T23:59:00-12:00"
       data-tags="CVPR|2027|投稿节点">
       <summary class="rsi-tl-event-summary">
@@ -809,6 +837,7 @@
           <span class="rsi-tl-event-meta"><b>会议 DDL</b></span>
           <strong>CVPR 2027 · 补充材料</strong>
           <span class="rsi-tl-event-abstract">Supplementary Materials Deadline（AoE）。来源：IEEE/CVF Conference on Computer Vision and Pattern Recognition 官方日程。</span>
+          <span class="rsi-summary-tags"><span>CVPR</span><span>2027</span><span>投稿节点</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -817,7 +846,7 @@
           <a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2026-11-23T23:59:00-12:00" aria-live="off">AoE 正式截止</span>
         </div>
       </div>
-    </details></div></details><details class="rsi-rt-day" id="day-2026-11-16" data-day="2026-11-16"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>16 日</b><small>周一</small></span><span class="rsi-rt-day-volume"><b>1</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">CVPR 2027 · 主会全文投稿</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--deadline">会议 DDL 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--deadline" id="cvpr-2027-paper"
+    </details></div></div></td></tr><tr class="rt-week-summary-row" data-week-dates="2026-11-23"><td colspan="6"><div class="rt-week-inline"><header><div><b>本周记录</b><span>11-23 — 11-23</span></div><div><strong data-week-total>1</strong><span>条活动</span></div></header><div class="rt-week-inline-workload"><span data-week-description>论文精读 0 · 研究节点 0 · 会议 DDL 1</span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></div></div></td></tr><tr class="rsi-rt-day rt-day-row" id="day-2026-11-16" data-day="2026-11-16" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-11-16"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-11-16" aria-label="展开 2026-11-16 的研究记录" aria-expanded="false">＋</button><div><b>11月16日 · 周一</b><small>2026-11-16</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>1</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>0</b></td><td class="rt-num" data-day-kind="research"><b>0</b></td><td class="rt-num" data-day-kind="deadline"><b>1</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">CVPR 2027 · 主会全文投稿</p><div class="rt-day-tags"></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-11-16" data-day-detail="2026-11-16" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--deadline" id="cvpr-2027-paper"
       data-kind="deadline" data-date="2026-11-16" data-due-at="2026-11-16T23:59:00-12:00"
       data-tags="CVPR|2027|投稿节点">
       <summary class="rsi-tl-event-summary">
@@ -826,6 +855,7 @@
           <span class="rsi-tl-event-meta"><b>会议 DDL</b></span>
           <strong>CVPR 2027 · 主会全文投稿</strong>
           <span class="rsi-tl-event-abstract">Submission Deadline（AoE）。来源：IEEE/CVF Conference on Computer Vision and Pattern Recognition 官方日程。</span>
+          <span class="rsi-summary-tags"><span>CVPR</span><span>2027</span><span>投稿节点</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -834,7 +864,7 @@
           <a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2026-11-16T23:59:00-12:00" aria-live="off">AoE 正式截止</span>
         </div>
       </div>
-    </details></div></details><details class="rsi-rt-day" id="day-2026-11-10" data-day="2026-11-10"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>10 日</b><small>周二</small></span><span class="rsi-rt-day-volume"><b>1</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">CVPR 2027 · 论文注册 / 摘要</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--deadline">会议 DDL 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--deadline" id="cvpr-2027-registration"
+    </details></div></div></td></tr><tr class="rt-week-summary-row" data-week-dates="2026-11-16"><td colspan="6"><div class="rt-week-inline"><header><div><b>本周记录</b><span>11-16 — 11-16</span></div><div><strong data-week-total>1</strong><span>条活动</span></div></header><div class="rt-week-inline-workload"><span data-week-description>论文精读 0 · 研究节点 0 · 会议 DDL 1</span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></div></div></td></tr><tr class="rsi-rt-day rt-day-row" id="day-2026-11-10" data-day="2026-11-10" tabindex="0" aria-expanded="false" aria-controls="day-detail-2026-11-10"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2026-11-10" aria-label="展开 2026-11-10 的研究记录" aria-expanded="false">＋</button><div><b>11月10日 · 周二</b><small>2026-11-10</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>1</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>0</b></td><td class="rt-num" data-day-kind="research"><b>0</b></td><td class="rt-num" data-day-kind="deadline"><b>1</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">CVPR 2027 · 论文注册 / 摘要</p><div class="rt-day-tags"></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2026-11-10" data-day-detail="2026-11-10" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--deadline" id="cvpr-2027-registration"
       data-kind="deadline" data-date="2026-11-10" data-due-at="2026-11-10T23:59:00-12:00"
       data-tags="CVPR|2027|投稿节点">
       <summary class="rsi-tl-event-summary">
@@ -843,6 +873,7 @@
           <span class="rsi-tl-event-meta"><b>会议 DDL</b></span>
           <strong>CVPR 2027 · 论文注册 / 摘要</strong>
           <span class="rsi-tl-event-abstract">Paper Registration Deadline（AoE）。来源：IEEE/CVF Conference on Computer Vision and Pattern Recognition 官方日程。</span>
+          <span class="rsi-summary-tags"><span>CVPR</span><span>2027</span><span>投稿节点</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -851,7 +882,7 @@
           <a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2026-11-10T23:59:00-12:00" aria-live="off">AoE 正式截止</span>
         </div>
       </div>
-    </details></div></details></div></details><details class="rsi-tl-month" data-month="2027-01"><summary class="rsi-tl-month-head"><span><b>2027 年 1 月</b><small>1 个活动日 · <span class="rsi-tl-month-count">1</span> 条记录</small></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-tl-month-body"><details class="rsi-rt-day" id="day-2027-01-04" data-day="2027-01-04"><summary class="rsi-rt-day-summary"><span class="rsi-rt-day-date"><b>4 日</b><small>周一</small></span><span class="rsi-rt-day-volume"><b>1</b><small>条记录</small></span><span class="rsi-rt-day-main"><span class="rsi-rt-day-headline">ACL 2027 · ARR 投稿截止</span><span class="rsi-rt-day-kinds"><span class="rsi-rt-kind-count rsi-rt-kind-count--deadline">会议 DDL 1</span></span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></summary><div class="rsi-rt-day-body"><details class="rsi-tl-item rsi-tl-item--deadline" id="acl-2027-arr"
+    </details></div></div></td></tr><tr class="rt-week-summary-row" data-week-dates="2026-11-10"><td colspan="6"><div class="rt-week-inline"><header><div><b>本周记录</b><span>11-10 — 11-10</span></div><div><strong data-week-total>1</strong><span>条活动</span></div></header><div class="rt-week-inline-workload"><span data-week-description>论文精读 0 · 研究节点 0 · 会议 DDL 1</span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></div></div></td></tr></tbody></table></div></details><details class="rsi-tl-month rt-month" data-month="2027-01"><summary class="rsi-tl-month-head rt-month-header"><div><b>2027 年 1 月</b><span>2027-01</span></div><div><b class="rsi-tl-month-days">1</b><span>个研究日</span><b class="rsi-tl-month-count">1</b><span>条记录</span><span class="rsi-rt-fold-icon" aria-hidden="true"></span></div></summary><div class="rt-month-table-wrap"><table class="rt-month-table rsi-month-table"><thead><tr><th scope="col">日期</th><th scope="col">活动</th><th scope="col">论文精读</th><th scope="col">研究节点</th><th scope="col">会议 DDL</th><th scope="col">当日脉络 / 研究主题</th></tr></thead><tbody><tr class="rsi-rt-day rt-day-row" id="day-2027-01-04" data-day="2027-01-04" tabindex="0" aria-expanded="false" aria-controls="day-detail-2027-01-04"><td class="rt-table-date"><div class="rt-table-date-inner"><button type="button" class="rt-day-toggle" data-toggle-day="2027-01-04" aria-label="展开 2027-01-04 的研究记录" aria-expanded="false">＋</button><div><b>1月4日 · 周一</b><small>2027-01-04</small></div></div></td><td class="rt-num rt-activity-count" data-day-total><b>1</b><span>条记录</span></td><td class="rt-num" data-day-kind="reading"><b>0</b></td><td class="rt-num" data-day-kind="research"><b>0</b></td><td class="rt-num" data-day-kind="deadline"><b>1</b></td><td class="rt-table-thread"><p class="rsi-rt-day-headline">ACL 2027 · ARR 投稿截止</p><div class="rt-day-tags"></div><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></td></tr><tr class="rt-day-detail-row" id="day-detail-2027-01-04" data-day-detail="2027-01-04" hidden><td colspan="6"><div class="rt-day-expanded"><div class="rt-day-events"><details class="rsi-tl-item rt-event rsi-tl-item--deadline" id="acl-2027-arr"
       data-kind="deadline" data-date="2027-01-04" data-due-at="2027-01-04T23:59:00-12:00"
       data-tags="ACL|2027|投稿节点">
       <summary class="rsi-tl-event-summary">
@@ -860,6 +891,7 @@
           <span class="rsi-tl-event-meta"><b>会议 DDL</b></span>
           <strong>ACL 2027 · ARR 投稿截止</strong>
           <span class="rsi-tl-event-abstract">ACL 2027 的最晚 ARR 投稿轮次（AoE）；其他更早 ARR 轮次也可能适用。来源：Annual Meeting of the Association for Computational Linguistics 官方日程。</span>
+          <span class="rsi-summary-tags"><span>ACL</span><span>2027</span><span>投稿节点</span></span>
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
@@ -868,7 +900,7 @@
           <a href="https://2027.aclweb.org/calls/main/" target="_blank" rel="noopener noreferrer">会议官方日期 ↗</a><span class="rsi-tl-live" data-countdown="2027-01-04T23:59:00-12:00" aria-live="off">AoE 正式截止</span>
         </div>
       </div>
-    </details></div></details></div></details></div><p class="rsi-tl-no-results" id="rsi-tl-empty" hidden>没有符合条件的记录，请调整筛选或日期。</p>
+    </details></div></div></td></tr><tr class="rt-week-summary-row" data-week-dates="2027-01-04"><td colspan="6"><div class="rt-week-inline"><header><div><b>本周记录</b><span>01-04 — 01-04</span></div><div><strong data-week-total>1</strong><span>条活动</span></div></header><div class="rt-week-inline-workload"><span data-week-description>论文精读 0 · 研究节点 0 · 会议 DDL 1</span><span class="rsi-rt-workload" aria-hidden="true"><i class="rsi-rt-workload--deadline" style="width:100.00%"></i></span></div></div></td></tr></tbody></table></div></details></div><p class="rsi-tl-no-results" id="rsi-tl-empty" hidden>没有符合条件的记录，请调整筛选或日期。</p>
 
 ## RSI 研究时间轴 / 来源与核验口径
 
