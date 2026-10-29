@@ -52,6 +52,7 @@ PAGE = {
  <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>固定伙伴、教材和教学顺序，从同一学生快照试教；学生真实更新后，清空课堂对话并测新题。用独立收益改进教师教法，同时保留学生新能力；下一轮面对成长后的学生继续循环。原 I2 的固定 Skill 更新轨道保留，双 LoRA 参数更新单独验证。</p><div class="flow"><div><b>同起点试教</b><small>固定题目，改变解释</small></div><div><b>学生真学习</b><small>参数 / 任务 Skill</small></div><div><b>撤辅测新题</b><small>收益、回归与总成本</small></div><div><b>教师学教法</b><small>教学策略持久更新</small></div></div></div>
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先冻结教师做四分支：<b>单向解释 / 固定多轮 / 按真实学生回应调整 / 按相近但错配学生回应调整</b>。关键比较真实与错配回应，控制教师知识、总 Token 和学生更新预算；更新后撤掉教师测未见题独立收益。只有真实回应有增量信息，再训练教师，并与固定教法、仅上下文适应、固定学生库教师做<b>教师版本 × 冻结学生快照</b>交叉测试。I2 不更换伙伴、不选择失败轨迹、不优化教学顺序，分别与 I5、I6、I7、I8 解耦。</p><p><a href="idea-i2.html#dialogue-p0"><b>阅读 I2 四分支实验、完整机制与最近邻 →</b></a></p></div>
  <p class="idea-side-note"><b>方向 D 已合入 I2 的诊断支线：</b>区分缺知识、搜索不足、选择错误和学后回归，用等预算微探针决定哪种学习动作值得尝试；跨 Prompt / Memory / Skill / 参数的更新表面路由独立留在 Update-Surface Router，不改变 I2 的教学共进化主线。<a href="idea-i2.html#idea-d-diagnostic">查看诊断支线的 P0 与强基线 →</a></p>
+ <p class="idea-side-note"><b>Centaur × StudentSim 新增实验支线：</b>二者已经研究行为或即时指导响应，我们只在 I2 中进一步测<strong>给定学生状态和教学方案，能否在真正 LoRA 更新之前预测无辅助新题净收益</strong>。先做状态×教法异质性 P0，再做收益预测 P1、真实 RSI 六轮 P2；没有超过同信息普通回归和少量真实试训，就不另起模型框架。<a href="idea-i2.html#learner-response-question">查看 I2 学习响应模型的公式、三阶段实验和强基线 →</a>。</p>
 </div>'''),
  ("idea-3", "I3：温故知新——新方法有用，却和旧方法冲突怎么办？", '''
  <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>一句话：</b>Agent 学会一个更快的新方法，却把以前在另一种场景下正确的做法弄坏了。新旧本事能不能都留下来？</p></div>

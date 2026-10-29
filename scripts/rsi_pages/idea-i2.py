@@ -85,6 +85,57 @@ PAGE = {
 <p>D_meta 是用于教师学习的开发集，不是最终未见测试集。能力回归按旧任务独立评估；成本包括诊断、教师生成、学生分支训练、教师更新与后测。λ、μ 与预算在开发阶段固定，同时分开报告原始收益、回归和花费，不只报告一个合成分数。</p>
 <p>同一 S_t 的候选教法可以相互作为配对基线。跨阶段比较时，优先增加一个固定教学策略的同起点分支，避免学生自然变强导致教师获得虚高奖励。最终测试族和教师交叉评估学生库不进入教师训练。</p>
 '''),
+        ("learner-response-question", "Centaur × StudentSim｜预测学生的下一次回答，还不等于预测下一次真正学会什么", '''
+<p class="thesis"><b>学习者模型（Learning-Response Model）候选：</b>在不对所有候选教法都进行完整试训的前提下，读入学生的当前知识状态、历史学习响应、固定更新器和某种教学方案，预测它在<strong>真实 LoRA 更新、清空课堂提示之后</strong>，将在未见任务中新增多少独立能力。这是 I2 的辅助机制实验，<strong>不是单开新的 Idea 编号</strong>。</p>
+<p><b>Centaur（Nature 2025）</b>训练 Llama 3.1 70B + QLoRA，在 160 个心理实验的行为历史中预测下一步人类选择。留出被试的平均 NLL 为 0.44，基础 Llama 为 0.58；该目标是行为序列概率，未直接预测 LLM 学生接受教学后的权重更新。<b>StudentSim（2026）</b>进一步模拟某个具体学生的原始错误及看完指导后的即时修正，棋类 F/R 为 0.51/0.91，还用模拟奖励训练教师；它已覆盖“学生模拟器辅助教学”，不能声称我们首次提出。[[E701]][[E702]][[E703]][[E704]] <a href="reading-notes.html#deep-nature2025-centaur-binz">Centaur 完整精读（11 节、Figure 1–5）</a>。</p>
+<div class="table-wrap"><table><thead><tr><th>预测层级</th><th>真正预测的变量</th><th>证据解释边界</th></tr></thead><tbody>
+<tr><td><b>Behavior</b></td><td>下一道题/下一个行动的选择概率</td><td>Centaur 的 NLL 好，不证明学生学进了新知识</td></tr>
+<tr><td><b>Guidance Response</b></td><td>看完本次解释/提示后，答案如何即时修订</td><td>StudentSim 的 F/R 已做到，不证明真实参数更新</td></tr>
+<tr><td><b>Persistent Learning Gain</b></td><td>相同预算的真实学习后，无提示新题的增量、旧能力回归与成本</td><td><b>I2 要额外验证的反事实目标</b>，尚无我们自己的模型实验结果</td></tr>
+</tbody></table></div>
+<div class="equation">G(s,a,B) = Acc_unseen(U_B(θ_s, a)) − Acc_unseen(U_B(θ_s, solo))</div>
+<p>θ_s 是<strong>更新前冻结的学生检查点</strong>，a 是候选教法，U_B 是统一的实际更新操作；solo 使用匹配总训练预算的自学。对每一格同时报告<strong>教学后的增量</strong>、旧技能退化及总 GPU 时间/Token，不能只给一个合成奖励。模型的输入只能来自<strong>真实更新前</strong>的知识探针、行为与历史；不得用更新后轨迹、验证标签或最终测试答案预测自身标签。</p>
+<p><b>I2 原研究继续保留：</b><a href="#dialogue-p0">真实学生回应 vs 匹配错配回应</a>研究的是教师读取哪种学生信息；这里研究的是在固定状态信息条件下<strong>能否事前预测不同教法的真实净学习收益</strong>。二者可以复用配对分叉数据，却不是同一个因果问题。</p>
+<div class="links"><a class="link-btn" href="i2-learner-response-protocol.json" download>下载学习响应预测实验契约 JSON</a><a class="link-btn" href="experiments.html#i2-learner-response">实验索引与数据分割</a></div>
+'''),
+        ("learner-response-p0", "LR-P0｜先看是否真的存在“学生状态 × 教法”的交互", '''
+<p><b>最小试验先不训练预测器。</b>从同一模型家族保存两个具有不同前置知识准备度的学生检查点 S_low、S_high，准备 10 个可执行/程序验证的规则族。对每个固定的学生版本和规则族，从同一权重出发分叉三种<strong>标准答案相同、反馈可信、训练预算匹配</strong>的教学：Answer-only（给正确结果）、Rule Explanation（解释规则）、Diagnostic Counterexample（反例辨别）。教师、总训练语料、优化器、LoRA 结构与更新步数固定；讲解的必要语义差异应在标注中记录，不能误称完全同文本。</p>
+<div class="table-wrap"><table><thead><tr><th>设计项</th><th>预定设置（仅实验计划）</th><th>意义</th></tr></thead><tbody>
+<tr><td>学生状态</td><td>2 个冻结 checkpoint（基础知识弱 / 相对充分）</td><td>不能只根据统一总分判断可学性</td></tr>
+<tr><td>规则任务</td><td>10 个规则族，规则级 train/diagnostic/test 隔离</td><td>同一个题面变体不应在训练与测试两边出现</td></tr>
+<tr><td>教法</td><td>3 种统一知识源的教学方式</td><td>只研究解释/反例形式，不换伙伴、课程或更新面</td></tr>
+<tr><td>随机重复</td><td>2 个更新随机种子作筛查；确认实验至少 3 个</td><td>按种子和规则族聚类，不能让多次答题充当独立样本</td></tr>
+<tr><td>开销</td><td>2×10×3×2=120 个教学试训分支；再加 40 个匹配自学分支</td><td>共 160 个真实分支，全部进入预算，不是 160 次推理调用</td></tr>
+</tbody></table></div>
+<p><b>主统计量：</b>对每个状态与规则族，用真实更新后的未见题独立净增益画出三种教法的学习曲线与后测分布，再分析<strong>知识状态 × 教学类型</strong>交互（不是只挑每组分数最大的实例）。旧能力回归作为共同终点。若两种状态对各教法的排序没有稳定区别，或差异小于更新随机性，那么不能据此训练复杂 Learner Response Model。</p>
+<p><b>严格区分它与原 I2 E0：</b>本 LR-P0 只检验教法收益异质性；原<a href="#dialogue-p0">“真实双向回应 vs 错配回应”</a>仍在固定教学内容时研究学生对教师的信息贡献。两条实验共用同一学生快照和审计规范即可，<strong>分支数不合并冒充同一规模</strong>。</p>
+'''),
+        ("learner-response-p1", "LR-P1｜从历史预测真实 LoRA 学习收益，而不是模仿学生当场答题", '''
+<p><b>观察窗口：</b>将 LR-P0 的真实训练结果作为标签来源；在更新前整理 S_t 的独立前置知识探针、错误稳定性、历史教学收益、训练器预算与候选教法文本/类别。训练一个小型收益预测器（先用线性/树模型，再考虑小 LLM 编码器），输出每种教法的<strong>未见题净学习增益、旧能力损失和置信区间</strong>。不需要一开始就训练 Centaur 规模的 70B 模型。</p>
+<div class="table-wrap"><table><thead><tr><th>强基线</th><th>已具有什么信息或能力</th><th>本实验希望多证明哪一步</th></tr></thead><tbody>
+<tr><td>Random / Fixed / Population Average</td><td>不看个人状态，固定或按总体平均收益选教法</td><td>是否真正存在可利用的个性化增益</td></tr>
+<tr><td>Current Accuracy / Prerequisite Profile</td><td>当前正确率、规则诊断、已学覆盖率</td><td>历史学习响应是否提供额外信息</td></tr>
+<tr><td>Matched-capacity regression / contextual bandit</td><td>拿到相同学生状态、教法和预算特征</td><td>是否必须加入复杂序列模型</td></tr>
+<tr><td>Centaur-style behavioral model（适配基线）</td><td>预测更新前的下一次回答分布/NLL</td><td>行为拟合好，是否就能排序持久学习收益</td></tr>
+<tr><td>StudentSim-style immediate response（适配基线）</td><td>模拟本次指导后学生立即怎样改正答案</td><td>即时指导响应是否能代理真实 LoRA 更新后迁移 [[E702]]</td></tr>
+<tr><td>少量真实短试训 / SOAR-style grounded gain</td><td>付出若干实际学生训练分支得到开发收益</td><td>同<strong>全部成本</strong>时，预测器是否更有效 [[S47]]</td></tr>
+</tbody></table></div>
+<p><b>主评测契约：</b>至少建立 train / diagnostic_dev / meta_valid / final_test 四个互不泄漏的数据用途；最终在<strong>未见规则族、未见学生版本和新教学模板</strong>上做交叉外推。不能将同一规则族的近重复题拆到训练预测器与最终测试两边。评价收益预测的校准、排序相关、所选教法相对最佳反事实分支的 regret、受损旧技能数量以及总 Token / GPU 时间；高 NLL 拟合度与高修正率只作为辅助列。</p>
+<p><b>必须注意的选择偏差：</b>若训练日志中弱学生几乎都接受分步解释，强学生几乎都接受反例，只用这些观察数据无法辨别实际干预效果。开发期必须在同一学生检查点对教法做随机化或完整配对分叉，并保留没有成功的分支。正式部署时可以只试预测推荐，但评价因果收益的独立样本仍须包含随机对照。</p>
+'''),
+        ("learner-response-p2", "LR-P2｜学生持续变强以后，预测器还知道应该怎样教吗？", '''
+<p><b>递归实验：</b>从相同学生初始版本起跑 6 个真实学习轮次。第 t 轮由当前学生的更新前状态 s_t 决定推荐教法，执行固定的 SFT/LoRA 更新，撤掉解释后测新题与旧能力，保留得到的 s_(t+1)。教师的参考解答与学生训练器固定；先冻结收益预测器，检验学生状态漂移是否导致收益排序反转和校准下降；再允许用<strong>仅在开发任务中获得的已验证更新收益</strong>小规模重训预测器，检验是否恢复校准。</p>
+<p><b>同预算闭环基线：</b>固定最好教法、随机教法、只看当前正确率、同信息 contextual bandit、StudentSim 式即时响应优先、每轮少量真实试教。把固定学生试训分叉、训练收益预测器、开发标签采集、版本评估和重新训练都计入总计算账本。完整版试遍所有教法的 Oracle 仅作为昂贵上界，不能在实际选择时窥视。</p>
+<div class="table-wrap"><table><thead><tr><th>必须同时报告的独立终点</th><th>怎样测</th><th>为何必要</th></tr></thead><tbody>
+<tr><td>Learning-response calibration</td><td>按学生版本和教法核对预测收益与配对真实收益</td><td>避免因学生变强导致 predictor 不再可靠</td></tr>
+<tr><td>Teacher choice regret / No-worse rate</td><td>每轮所选教法相对于最佳反事实分支及同预算自学的差距</td><td>预测更准未必产生更好教学决策</td></tr>
+<tr><td>Retained net gain</td><td>清空课堂后新题提升 − 旧题回归，并经历后续训练干扰再测</td><td>不能把一次性答案修订算作持久学习</td></tr>
+<tr><td>Amortized total compute</td><td>预测器开发/重训成本与每轮试训、训练和测试成本</td><td>避免用大量隐藏试教换来表面上的省算力</td></tr>
+<tr><td>Cross-student generalization</td><td>冻结同一教师策略，在未参与元训练的模型检查点和规则族复测</td><td>区分只是记住一对师生，还是获得可迁移教学能力</td></tr>
+</tbody></table></div>
+<p><b>Go / Merge / Stop：</b>只有 LR-P0 存在稳定的状态×教法异质性，LR-P1 在真实持久收益预测上优于当前正确率、普通回归和即时响应代理，LR-P2 在匹配<strong>全部开发与部署成本</strong>后持续提高无辅助净能力，才值得作为 I2 的主要机制结果。若只有当场修订或预测 NLL 提升，归入 Centaur/StudentSim 式行为模拟；若同信息简单 contextual bandit 已足够，保留简单方法；若静态教师与元学习策略一样有效，不能声称教师必须持续进化。</p>
+<p><b>正交边界：</b>I2 选“同一个学生该怎样教”；I5 研究“向谁学”；I8 研究“纠正哪个错误”；I12 研究“补哪条前置知识才能解锁多个后续学习任务”。LR-P2 不同时优化伙伴、错误选择或知识图，只在已建立的 I2 主线内衡量学生状态到教学收益的条件映射。</p>
+'''),
         ("dialogue-p0", "P0｜真实双向回应，究竟提供了多少独立学习信息？", '''
 <p><b>先定义一个可以否定的假设：</b>对同一个学生、同一道题和相同的更新预算，教师根据这个学生的真实追问与规则应用尝试调整反馈，可能比仅提供同量解释或根据另一个相近学生的回应调整反馈，让它在<strong>真正更新参数后</strong>学会更多未见题。这个差异不应先归因于多轮聊天。[[E27]][[S105]][[S106]]</p>
 <div class="table-wrap"><table id="i2-dialogue-four-arms"><thead><tr><th>分支</th><th>教师能看到什么</th><th>下一轮怎么教</th><th>主要排除什么解释</th></tr></thead><tbody>

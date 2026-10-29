@@ -356,6 +356,12 @@ def main():
         time.sleep(.4)
         check(js("return document.body.dataset.rsiPage==='idea-i2' && document.querySelectorAll('#research-nav a[aria-current=page]').length===1"),
               'I2 detailed page navigation failed')
+        check(js("return ['learner-response-question','learner-response-p0','learner-response-p1','learner-response-p2'].every(id=>document.getElementById(id)!==null)"),
+              'Centaur I2 LR-P0/P1/P2 study is not visible')
+        check(js("return document.querySelector('#learner-response-p0').textContent.includes('160') && document.querySelector('#learner-response-p1').textContent.includes('StudentSim') && document.querySelector('#learner-response-p2').textContent.includes('旧能力')"),
+              'I2 learner-response branch counts, baselines or long-term retention missing')
+        check(js("return document.querySelector('#learner-response-question a[href=\"i2-learner-response-protocol.json\"]')!==null"),
+              'I2 learning-response reproducibility contract not linked')
         screenshot('i2-coevolution-desktop.png')
         nav('rsi/teaching.html')
         check(js("return document.querySelector('#research-nav a[aria-current=page]').getAttribute('href')==='idea-i5.html'"),

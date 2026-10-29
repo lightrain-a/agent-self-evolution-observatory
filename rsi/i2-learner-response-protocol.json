@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "I2",
+  "subtrack": "Learner Response Model (Centaur-inspired, StudentSim-aware)",
+  "revision": "2026-10-29-learner-response-v1",
+  "status": "research_design_not_executed",
+  "question": "Can one predict a learner LLM's actual persistent, held-out independent gain from candidate pedagogical interventions, before performing a full update, and use this to improve multi-round RSI?",
+  "nearest_work": [
+    {
+      "source_id": "E701",
+      "name": "Centaur",
+      "observed": "next human trial choices + open-loop behavior",
+      "not_shown": "real parameter-updated LLM student teaching gains"
+    },
+    {
+      "source_id": "E702",
+      "name": "StudentSim",
+      "observed": "per-human-student answer fidelity and response to tutor guidance; used as tutor reward",
+      "not_shown": "actual LLM learner after LoRA updating and fresh-task retained learning gain"
+    },
+    {
+      "source_id": "S47",
+      "name": "SOAR",
+      "observed": "teacher curriculum rewarding actual student learning gain",
+      "not_shown": "pre-update cross-student learning-gain prediction under full-budget accounting"
+    },
+    {
+      "source_id": "S106",
+      "name": "AToM",
+      "observed": "learning about student misconceptions and choosing teaching examples",
+      "not_shown": "independent persistent LoRA transfer after adaptive teaching"
+    }
+  ],
+  "estimands": {
+    "post_training_gain": "G_raw(s,a,B)=Acc_unseen(U_B(theta_s,a))-Acc_unseen(theta_s)",
+    "matched_solo_net_gain": "G_net(s,a,B)=Acc_unseen(U_B(theta_s,a))-Acc_unseen(U_B(theta_s,solo))",
+    "old_skill_regression": "Regress_old(s,a)=Acc_old(theta_s)-Acc_old(U_B(theta_s,a))",
+    "cost_adjusted_objective": "Report separate raw gain, matched-solo net gain, regression and all costs; pre-register scalar weights only if needed for selection",
+    "interaction": "learning_state × pedagogical_action on actual G_net, with rule-family and seed aggregation"
+  },
+  "treatment": {
+    "candidate_actions": [
+      "Answer-only",
+      "Rule Explanation",
+      "Diagnostic Counterexample"
+    ],
+    "information": "same verified target rule and teacher reference",
+    "fixed": [
+      "model base version",
+      "student checkpoint",
+      "task family",
+      "teacher access",
+      "first-attempt protocol",
+      "LoRA optimizer and budget",
+      "verifier",
+      "independent evaluation"
+    ],
+    "randomized_counterfactuals": true
+  },
+  "pilot": {
+    "learner_checkpoint_states": 2,
+    "rule_families": 10,
+    "actions": 3,
+    "update_seeds": 2,
+    "pedagogical_branch_count": 120,
+    "matched_solo_branch_count": 40,
+    "total_real_update_branches": 160,
+    "note": "Pilot planning scale, not completed data. Expand to >=3 seeds and second model for confirmation if stable effect."
+  },
+  "predictor": {
+    "features_available_before_update": [
+      "student_checkpoint_digest",
+      "held_out_prerequisite_probe",
+      "error_rule_stability",
+      "prior_teaching_gain_history",
+      "pedagogical_action_label_or_text",
+      "fixed_updater_and_budget_metadata"
+    ],
+    "output": [
+      "expected_matched_solo_net_gain",
+      "old_skill_regression",
+      "prediction_uncertainty"
+    ],
+    "model_order": [
+      "simple average and accuracy regression",
+      "matched-capacity tabular contextual model",
+      "small sequence model only if simple models insufficient"
+    ],
+    "conditioning_rule": "never condition on the post-update ground-truth target or frozen final test",
+    "training_label": "measured fresh-task gains from true same-checkpoint paired LoRA updates, not verbal simulated response",
+    "causal_collection": "randomly assign or exhaustively compare actions on identical student checkpoints to avoid historical teacher-selection bias",
+    "splits": [
+      "action_training",
+      "student_diagnostic_dev",
+      "reward_meta_valid",
+      "held_out_rule_family_and_student_revision_test",
+      "separate_final_audit"
+    ]
+  },
+  "baselines": [
+    "Random/Fixed",
+    "Population Mean Gain",
+    "Current Accuracy/P50",
+    "Prerequisite Profile",
+    "Matched-capacity Regression/Contextual Bandit",
+    "Centaur-style next-response model (adapted; not reproducing original Centaur)",
+    "StudentSim-style immediate revision (adapted; not paper-reported real-update prediction)",
+    "limited_real_short_trial",
+    "SOAR-style grounded student trial (adapted)"
+  ],
+  "evaluation": {
+    "P0": "test heterogeneity of true post-LoRA learning response across student state and pedagogical action",
+    "P1": "on unseen learner revisions/rule families/teaching paraphrases evaluate calibration, Kendall/Spearman ranking, chosen-teacher regret, post-interference retention and old-skill regression",
+    "P2": "6 rounds of actual student version updates; initial frozen predictor followed by allowed meta-data-only recalibration; compare matched-budget learning curves and predictor drift",
+    "metrics": [
+      "actual_unassisted_novel_rule_pass@1",
+      "net_gain_vs_matched_solo",
+      "multi-round_area_under_independent_learning_curve",
+      "old_skill_regression",
+      "predicted_vs_real_gain_calibration",
+      "teaching_choice_regret",
+      "all_branches_and_model_training_gpu_time",
+      "inference_tokens",
+      "external_verifier_calls"
+    ]
+  },
+  "boundaries": {
+    "not_I5": "fixed teaching partner, not dynamic partner choice",
+    "not_I8": "fixed correct feedback and error selection, not which error to correct",
+    "not_I12": "not discovering causal shared prerequisite graph",
+    "not_Centaur_replication": "does not claim human behavior simulation NLL predicts parameter learning",
+    "not_StudentSim_replication": "Guidance responsiveness measures immediate revisions; no claim original StudentSim predicts other LLM's LoRA updates",
+    "existing_I2": "preserve independent real student response vs matched mismatched response P0 as separate causal comparison"
+  },
+  "go": "P0 significant replicated learning-state × action interaction; P1 beats simple same-information models on actual held-out post-update net gain; P2 improves multi-round retained independent gain under matched total compute",
+  "merge": "only immediate-answer accuracy, single session response, or no gain beyond matched-capacity contextual bandit",
+  "stop": "no robust P0 heterogeneity, no predictor incremental value, benefit solely from extra probes/labels, or final audit leakage",
+  "security": "Independent frozen verifier and audit sets; isolate teaching data, keep provenance of actions and updates; never promote unsafe access privileges from performance gain",
+  "citations": [
+    "E701",
+    "E702",
+    "E703",
+    "E704",
+    "S47",
+    "S106"
+  ]
+}

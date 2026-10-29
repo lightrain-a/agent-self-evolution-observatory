@@ -25,6 +25,8 @@ PAGE = {
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
 ("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
 <a href="idea-i2.html"><b>I2：因材施教的师生共进化</b><span>教师从学生真实学习收益中改进教法；学生持续获得独立能力。</span></a>
+<a href="idea-i2.html#learner-response-question"><b>I2 扩展：训练前预测学习者对教学的真实响应</b><span>Centaur × StudentSim：下一次回答与真实 LoRA 更新后的独立能力不同；已设计 LR-P0/P1/P2、强基线与成本账本。</span></a>
+<a href="reading-notes.html#deep-nature2025-centaur-binz"><b>Nature 2025 · Centaur 完整精读</b><span>Psych-101、QLoRA、未见实验 OOD、开放环、fMRI 与认知机制发现；对照 StudentSim 的直接最近邻。</span></a>
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
 <a href="idea-prioritization.html"><b>新增：I1–I13 优先级与决定性实验（2026-10-29）</b><span>科学上限与完成把握分别排序；每项的最小 P0、强基线、Go 条件与投稿风险，以及 NC／Nature／顶会实验设计借鉴。</span></a>
 <a href="ideas.html"><b>I1–I13：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>

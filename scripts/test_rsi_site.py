@@ -713,6 +713,33 @@ def main():
           'I2 must separate pedagogical gains, student learning, carriers and other ideas')
     check('id="i2-coevolution"' in (ROOT/'rsi/experiments.html').read_text(encoding='utf-8'),
           'I2 execution entry missing')
+    # Centaur/StudentSim ground learner-response modeling in actual parameter learning,
+    # not next-answer behavior. Keep original I2 interactive-response E0 untouched.
+    response_sections=('learner-response-question','learner-response-p0',
+                       'learner-response-p1','learner-response-p2')
+    check(all(f'id="{sid}"' in i2_text for sid in response_sections),
+          'Centaur-inspired I2 LR-P0/P1/P2 study and causal question missing')
+    check(all(f'href="references.html#{rid}"' in i2_text
+              for rid in ('E701','E702','E703','E704','S47')),
+          'Centaur/StudentSim/SOAR nearest sources missing from I2')
+    check(all(term in i2_text for term in
+              ('120','40','160','状态','交互','StudentSim','contextual bandit',
+               '真实 LoRA','更新前','旧能力','6 个','Go / Merge / Stop')),
+          'I2 LR-P0/1/2 evidence controls, cost or retention missing')
+    response_protocol=json.loads((ROOT/'rsi/i2-learner-response-protocol.json').read_text(encoding='utf-8'))
+    check(response_protocol['idea_id']=='I2'
+          and response_protocol['status']=='research_design_not_executed'
+          and response_protocol['pilot']['total_real_update_branches']==160
+          and response_protocol['pilot']['pedagogical_branch_count']==120
+          and {'P0','P1','P2'} <= set(response_protocol['evaluation'])
+          and len(response_protocol['baselines'])>=7,
+          'I2 learning-response machine-readable protocol invalid or claims completed work')
+    check('id="i2-learner-response"' in (ROOT/'rsi/experiments.html').read_text(encoding='utf-8')
+          and 'href="i2-learner-response-protocol.json"' in i2_text
+          and 'idea-i2.html#learner-response-question' in (ROOT/'rsi/index.html').read_text(encoding='utf-8')
+          and 'reading-notes.html#deep-nature2025-centaur-binz' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'I2 learner-response protocol, index entry or Centaur reading note not discoverable')
+
     for arm in ('A · 单向解释','B · 固定多轮','C · 真实双向','D · 错配回应'):
         check(arm in i2_text,'I2 A/B/C/D response-matching control missing: '+arm)
     check('id="i2-dialogue-four-arms"' in i2_text and 'C−D' in i2_text and '总 Token' in i2_text,
