@@ -74,6 +74,29 @@ def main():
         time.sleep(.6)
         screenshot('rsi-panorama-evidence-desktop.png')
         nav('rsi/timeline.html')
+        screenshot('timeline-v3-initial-viewport.png')
+        check(js("return !document.querySelector('#rsi-rt-venue-toggle').open"),
+              'Conference details should be folded on first load')
+        check(js("return [...document.querySelectorAll('.rsi-tl-month')].filter(x=>x.open).length===1"),
+              'The current timeline month should start open, future months folded')
+        check(js("return document.querySelector('#rsi-tl-calendar-grid .rsi-tl-cal-month').open"),
+              'The first calendar month should start visible')
+        check(js("return document.querySelectorAll('.rsi-rt-day').length>=4"),
+              'Daily summary rows should be present')
+        check(js("return document.querySelector('#rsi-rt-next-countdown').textContent.includes('秒')"),
+              'Top briefing is missing the live seconds timer')
+        js("document.querySelector('#rsi-rt-venue-toggle').open=true")
+        check(js("return document.querySelector('#rsi-rt-venue-toggle').open"), 'Conference fold does not expand')
+        js("document.querySelector('#rsi-rt-venue-toggle').open=false")
+        js("document.querySelector('#rsi-tl-collapse-all').click()")
+        check(js("return [...document.querySelectorAll('.rsi-tl-month')].every(d=>!d.open)"),
+              'Collapse all should fold each month')
+        js("document.querySelector('#rsi-tl-expand-all').click()")
+        check(js("return [...document.querySelectorAll('.rsi-tl-month:not([hidden])')].every(d=>d.open)"),
+              'Expand all should open all visible months')
+        check(js("return [...document.querySelectorAll('.rsi-rt-day:not([hidden])')].every(d=>d.open)"),
+              'Expand all should open every visible research day')
+        js("document.querySelector('#rsi-tl-collapse-all').click()")
         timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
         expected_deadlines=sum(d['status']=='official' for v in timeline['venues'] for d in v['deadlines'])
         pending_deadlines=sum(d['status']=='pending' for v in timeline['venues'] for d in v['deadlines'])
@@ -125,7 +148,13 @@ def main():
         js("const q=document.querySelector('#rsi-tl-query');q.value='CVPR';q.dispatchEvent(new Event('input',{bubbles:true}))")
         check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==3,'Timeline conference search failed')
         js("document.querySelector('#rsi-tl-reset').click()")
-        screenshot('timeline-desktop.png')
+        js("document.querySelector('#rsi-tl-expand-all').click()")
+        screenshot('timeline-v3-daily-expanded.png')
+        nav('rsi/timeline.html#reading-'+reading_papers[0]['id'])
+        check(js("return !!document.querySelector('details.rsi-tl-item:target[open]')"),
+              'Direct link from a paper card must open the target event')
+        check(js("return !!document.querySelector('details.rsi-tl-item:target')?.closest('.rsi-rt-day[open]')"),
+              'Deep link must unfold the correct research day')
         nav('rsi/reading-cards.html')
         check(js("return document.querySelectorAll('.reading-card').length>=1"),'Reading-card library is empty')
         js("const q=document.querySelector('#reading-card-filter');q.value='不存在的测试查询';q.dispatchEvent(new Event('input',{bubbles:true}));")
@@ -430,6 +459,14 @@ def main():
         for slug in ['index','timeline','reading-cards','reading-notes','curriculum-scale-evidence','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
+        nav('rsi/timeline.html')
+        screenshot('timeline-v3-mobile-initial.png')
+        check(js("return !document.querySelector('#rsi-rt-venue-toggle').open"),
+              'Mobile timeline should start with compact folded conference details')
+        js("document.querySelector('[data-calendar-day=\"2026-10-27\"]').click()")
+        check(js("return document.querySelector('[data-day=\"2026-10-27\"]').open"),
+              'Mobile calendar selection should unfold the target day')
+        screenshot('timeline-v3-mobile-selected-day.png')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
         time.sleep(.5)
         screenshot('idea-framework-mobile.png')

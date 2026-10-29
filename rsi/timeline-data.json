@@ -143,6 +143,16 @@
       "source_url": "idea-i9-practice-switching.html#future-question",
       "source_label": "I9 · 未来可学习性扩展",
       "tags": ["I9", "课程顺序", "未来可学习性"]
+    },
+    {
+      "id": "rsi-i14-learning-rule-evolution-20261029",
+      "date": "2026-10-29",
+      "title": "I14 正式纳入研究池：学习规则自进化",
+      "type": "research",
+      "description": "将快慢两时间尺度 Meta-RL 与学习规则发现整理为独立的 I14，固定学生、数据、教师和预算，计划比较学习规则变化后的未见任务学习曲线。正式编号不代表机制已被实验验证。",
+      "source_url": "learning-rule-evolution.html",
+      "source_label": "I14 完整研究方案",
+      "tags": ["I14", "Meta-RL", "学习规则", "未来可学习性"]
     }
   ]
 }
