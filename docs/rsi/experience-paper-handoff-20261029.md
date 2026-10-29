@@ -28,6 +28,22 @@
 
 注意：网站保持既有3.3“教师、伙伴、工具”和3.4“经验选择”的分类职责，原论文3.3/3.4次序并不与之逐段一一对应。回填应按论证单元，不按小节编号直接覆盖。
 
+## 本轮扩充：从问题导读补成“诊断—已有方法—证据”的综述
+
+用户随后指出3.1遗漏知识储备、学习准备及我们之前精读的多种失败原因，要求有代表性的已有解决思路和更合适的表格。本轮沿用上面的论文版本与四小节分类，未修改综述仓库。
+
+| 网页新增块 | 应回填论文的论证 | 主要依据 |
+|---|---|---|
+| `bottleneck-map` 八种原因对照 | 一次失败不能只归到搜索或缺基础；区别缺事实、缺前置、不会调用、搜索、错选、冲突、未吸收/遗忘、反馈或优化状态 | FlyBy、Why SFT Fails、Rote Learning、Mind the Gap、Holton/Menghi、Loss of Plasticity |
+| `knowledge-readiness` + 折叠SFT五类补救 | 分开知识存在、组织与调用，以及进入下一段学习的准备；不同缺口对应不同补救 | ACL 2026 SFT诊断、NC Compressive Learning、npj productive failure、ICLR Rote Learning |
+| `acquisition-methods` | 对比错误驱动生成、主动区分假设、环境/世界模型、候选多样性与组合覆盖 | Self-Error-Instruct、Active Learning、RepExp/ESamp、RSI-Anything、MLC |
+| `learner-state-methods` | 不能只问学生自信吗；比较知识追踪、误解建模、行为预测与主动试教 | DKT、AToM、Centaur、INTERACT、SOAR |
+| `memory-as-experience` | 历史经验可获取、可调用和真正内化是不同层次 | Hybrid memory、Memory management、R²Orch |
+| `selection-methods` | 总结实际已有选择路线而不是只问“哪些经历有价值” | 课程/自步调、RHO-LOSS、去重/梯度多样性、错误类型、SOAR、价值与时间调度 |
+| `reading-coverage` | 34个已有研读条目逐项去向：27个正文整合、7个有理由的跨章节引用；33完整精读＋1阅读卡 | 机器可读清单 `rsi/experience-reading-coverage.json` |
+
+这些是问题分类与证据组织的改进，不是新实验结果。表格的“怎样区分”包含建议诊断，不能把有效提示或单次试训当作唯一原因的证明。原论文训练题修复与未见任务泛化分开，知识网络高连接节点与因果先修分开。
+
 ## 新增的阅读入口
 
 开头六组发现分别关联：尝试量/瓶颈、候选覆盖/首答质量、文本新颖/规则信息、教师正确/学生可学、难度代理/真实收益、新数据/旧覆盖。所有读者入口都回到相应小节；不新增研究Idea。

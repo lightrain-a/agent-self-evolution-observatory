@@ -1390,10 +1390,10 @@ def main():
           and '<table' not in acquisition_intro,
           'Experience chapter needs six concrete trade-offs before definitions')
     acquisition_refs={
-        'section-3-1':('E380','S763'),
-        'section-3-2':('S760','S761','S763','S764','E26','M17'),
-        'section-3-3':('S100','S105','S768','S769'),
-        'section-3-4':('S47','M52','S766','S767'),
+        'section-3-1':('E380','S763','S37','M27','S36','E401','M24','E98','S35','E100','M22'),
+        'section-3-2':('S760','S761','S763','S764','E26','M17','S40','M61','S13','E350','E353'),
+        'section-3-3':('S100','S105','S768','S769','M05','S106','E701','E29','E370','S26'),
+        'section-3-4':('S47','M52','S766','S767','M16','M54','M55','M62','M503','E25','E355'),
     }
     for sid,sids in acquisition_refs.items():
         part=element_fragment(acquisition,sid)
@@ -1420,6 +1420,38 @@ def main():
     check('body[data-rsi-page="experience"] .exp-insights' in
           (ROOT/'rsi/research.css').read_text(encoding='utf-8'),
           'Experience chapter needs scoped mobile-readable insight layout')
+    # Review coverage is not a long bibliography: every existing deep reading
+    # has an explicit narrative use, or an explained cross-chapter boundary.
+    acov=json.loads((ROOT/'rsi/experience-reading-coverage.json').read_text(encoding='utf-8'))
+    acov_ids=[p['paper_id'] for p in acov['papers']]
+    check(len(acov_ids)==len(set(acov_ids)) and set(acov_ids)=={p['id'] for p in cards}
+          and acov['inventory_count']==len(cards)
+          and acov['main_discussion_count']+acov['cross_reference_count']==len(cards),
+          'Experience review inventory does not cover every current deep reading exactly once')
+    check(acquisition.count('data-reading-id="')==len(cards)
+          and 'id="reading-coverage"' in acquisition
+          and (ROOT/'_site/rsi/experience-reading-coverage.json').is_file(),
+          'Complete reading coverage or public JSON export missing')
+    for p in acov['papers']:
+        expected_note=('reading-notes.html#deep-' if p['reading_depth']=='deep_read'
+                       else 'reading-cards.html#')+p['paper_id']
+        check(p['reason'] and p['reading_note']==expected_note
+              and f'href="{p["reading_note"]}"' in acquisition
+              and f'href="{p["placement"]}"' in acquisition,
+              'Reading needs a reason, exact note and a real discussion location: '+p['paper_id'])
+    diagnostic=element_fragment(acquisition,'section-3-1')
+    check(all(x in diagnostic for x in ('bottleneck-map','knowledge-readiness',
+              'data-review-table="diagnosis"','data-review-table="sft-remedies"',
+              '前置知识','继续预训练','知识有了','评价器却选错','后续覆盖',
+              '不是某篇论文提出的完备')),
+          'Chapter 3.1 lost knowledge readiness or diagnosis-to-remedy synthesis')
+    check(all(f'data-review-table="{name}"' in acquisition for name in
+              ('diagnosis','sft-remedies','acquisition-routes','learner-models','selection-routes')),
+          'Existing approaches must be compared, not replaced by questions and proposed experiments')
+    check('常见路线与代表方法，不是按论文数量统计的流行度排名' in acquisition,
+          'Review must not overclaim empirical evidence about method popularity')
+    check('td::before{content:attr(data-label)' in (ROOT/'rsi/research.css').read_text(encoding='utf-8'),
+          'Comparison tables need readable mobile labels')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')

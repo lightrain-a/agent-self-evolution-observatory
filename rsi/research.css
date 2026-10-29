@@ -413,4 +413,31 @@ body[data-rsi-page="experience"] .exp-audit p{margin:0;font-size:14px;line-heigh
  body[data-rsi-page="experience"] .exp-audit>div{gap:11px}
 }
 
+/* Review depth: concise comparison tables, readable on narrow screens. */
+body[data-rsi-page="experience"] .exp-table-wrap{width:100%;max-width:100%;overflow:auto;border:1px solid #dce5e8;border-radius:9px;margin:16px 0 22px;background:#fff}
+body[data-rsi-page="experience"] .exp-review-table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:12.5px;line-height:1.8;min-width:0}
+body[data-rsi-page="experience"] .exp-review-table caption{text-align:left;padding:11px 14px;background:#f6faf8;font-size:12px;font-weight:650;color:#365b53;border-bottom:1px solid #dce5e8}
+body[data-rsi-page="experience"] .exp-review-table thead th{text-align:left;vertical-align:top;background:#eaf2ef;padding:11px 13px;color:#30554d;font-size:12px;line-height:1.7}
+body[data-rsi-page="experience"] .exp-review-table th:first-child{width:18%}
+body[data-rsi-page="experience"] .exp-review-table tbody th{text-align:left;vertical-align:top;font-size:12.5px;font-weight:700;padding:12px 13px;color:#31534b;border-top:1px solid #e1e8e7;background:#f8fbfa}
+body[data-rsi-page="experience"] .exp-review-table td{vertical-align:top;padding:12px 13px;border-top:1px solid #e1e8e7;color:#40576a;overflow-wrap:anywhere}
+body[data-rsi-page="experience"] .exp-review-table tbody tr:nth-child(even) td{background:#fafcfc}
+body[data-rsi-page="experience"] .exp-review-table .cite{font-size:10px}
+body[data-rsi-page="experience"] .exp-review-compact th:first-child{width:23%}
+body[data-rsi-page="experience"] .exp-coverage-list{list-style:none;padding:3px 16px 12px;margin:0}
+body[data-rsi-page="experience"] .exp-coverage-list li{padding:12px 0;border-bottom:1px solid #e3e9ee}
+body[data-rsi-page="experience"] .exp-coverage-list li:last-child{border-bottom:0}
+body[data-rsi-page="experience"] .exp-coverage-list li>a{font-size:12.5px;line-height:1.8}
+body[data-rsi-page="experience"] .exp-coverage-list li>p{margin:5px 0 0;font-size:12px;line-height:1.85;color:#637285}
+@media(max-width:730px){
+ body[data-rsi-page="experience"] .exp-table-wrap{overflow:visible;border:0;background:transparent}
+ body[data-rsi-page="experience"] .exp-review-table,body[data-rsi-page="experience"] .exp-review-table tbody{display:block;width:100%;table-layout:auto;font-size:13px}
+ body[data-rsi-page="experience"] .exp-review-table caption{display:block;border:1px solid #dce5e8;border-radius:8px;margin-bottom:10px}
+ body[data-rsi-page="experience"] .exp-review-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ body[data-rsi-page="experience"] .exp-review-table tr{display:block;border:1px solid #dce5e8;border-radius:8px;overflow:hidden;margin:0 0 11px;background:#fff}
+ body[data-rsi-page="experience"] .exp-review-table tbody th,body[data-rsi-page="experience"] .exp-review-table th:first-child{display:block;width:auto;padding:10px 13px;border:0;background:#edf4f0;font-size:14px}
+ body[data-rsi-page="experience"] .exp-review-table td{display:block;padding:9px 13px;border-top:1px solid #e6ece9;background:#fff!important;font-size:12.5px;line-height:1.85;overflow-wrap:anywhere}
+ body[data-rsi-page="experience"] .exp-review-table td::before{content:attr(data-label);display:block;font-size:10px;font-weight:750;color:#5d8075;margin-bottom:3px}
+}
+
 @media print{[data-rsi-page] .sidebar,[data-rsi-page] .topbar,.page-pagination,.search-results,.skip-link{display:none!important}[data-rsi-page] .layout{display:block}[data-rsi-page] .content{padding:0;max-width:none}.research-section{box-shadow:none;border:0;padding:10px 0;break-inside:auto}.table-wrap{overflow:visible}.table-wrap table{min-width:0;font-size:10px}.flow{flex-wrap:wrap}.research-hero{padding:0 0 20px}.source-card{break-inside:avoid}.decision{background:#f5f5f5}.equation{white-space:normal;color:#222;background:#eee}}
