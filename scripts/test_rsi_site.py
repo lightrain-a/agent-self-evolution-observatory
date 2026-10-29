@@ -1283,6 +1283,30 @@ def main():
               ('E710','E711','E360','E100','M550','M551','M552','M553',
                'M554','M555','M556','M18','M20')),
           'Generalization subject source registry/citations are incomplete')
+    # Editorial readability contract: begin with a concrete problem, not a
+    # taxonomy or the site's internal organizational classification. Keep
+    # technical tables accessible, but collapsed in the first reading path.
+    first_reading_section=re.search(
+        r'<section class="panel research-section" id="([^"]+)"',generalization)
+    check(first_reading_section is not None and first_reading_section.group(1)=='question',
+          'Generalization must start with an intuitive problem, not a research taxonomy')
+    intro=element_fragment(generalization,'question')
+    check('(3, 2, 5)' in intro and '正确规则' in intro
+          and '完全相同的新训练' in intro
+          and '不是某篇论文报告的结果' in intro,
+          'Opening lacks the everyday example, future learning question or example disclaimer')
+    visible_text=re.sub(r'<details\b[^>]*>.*?</details>', '', generalization, flags=re.S)
+    check(visible_text.count('<table>')<=2
+          and generalization.count('<details class="g-depth">')>=7,
+          'Reader-first page must hide dense technical tables behind expandable details')
+    check('id="framework-position"' in generalization
+          and 'id="idea-map"' in generalization
+          and '直接迁移' in generalization and '未来可学习性' in generalization,
+          'Keep stable deep links and clearly separate transfer from future learning')
+    general_css=(ROOT/'rsi/research.css').read_text(encoding='utf-8')
+    check('body[data-rsi-page="generalization-learnability"] .g-story' in general_css
+          and '@media(max-width:730px)' in general_css,
+          'Generalization readability styles or small-screen layout missing')
     contract=json.loads((ROOT/'rsi/generalization-protocol.json').read_text(encoding='utf-8'))
     check(contract['status']=='research_design_not_executed'
           and contract['is_new_numbered_idea'] is False
