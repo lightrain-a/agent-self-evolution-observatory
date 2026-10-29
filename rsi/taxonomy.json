@@ -2652,6 +2652,32 @@
       ],
       "role": "research",
       "reason": "自生成可执行程序任务，借环境验证获得新约束。"
+    },
+    "M557": {
+      "primary": "experience",
+      "related": [
+        "signal"
+      ],
+      "role": "research",
+      "reason": "从候选假设分歧中选择能区分竞争解释的标注查询；是主动学习经典基线。"
+    },
+    "M558": {
+      "primary": "experience",
+      "related": [
+        "capability",
+        "signal"
+      ],
+      "role": "research",
+      "reason": "构造概念维度变化的反事实样本以支持主动学习；需与后续参数更新机制区分。"
+    },
+    "M559": {
+      "primary": "capability",
+      "related": [
+        "experience",
+        "regulation"
+      ],
+      "role": "research",
+      "reason": "在受控生成任务上区分核心与捷径特征的预测性及可获得性。"
     }
   },
   "papers": {

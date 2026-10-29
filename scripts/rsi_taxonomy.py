@@ -321,6 +321,9 @@ S766|regulation|experience,capability|递归替换与有限重采样引发跨轮
 S767|regulation|experience,capability|比较数据累积与替换对长期覆盖和误差的影响。
 S768|capability|experience,signal|保留目标数据并与自生成样本对比，持续进行模型微调。
 S769|experience|signal,regulation|自生成可执行程序任务，借环境验证获得新约束。
+M557|experience|signal|从候选假设分歧中选择能区分竞争解释的标注查询；是主动学习经典基线。
+M558|experience|capability,signal|构造概念维度变化的反事实样本以支持主动学习；需与后续参数更新机制区分。
+M559|capability|experience,regulation|在受控生成任务上区分核心与捷径特征的预测性及可获得性。
 """
 
 SOURCE_MAP = {}

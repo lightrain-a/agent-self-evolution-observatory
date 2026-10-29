@@ -13,7 +13,7 @@ METHOD_SECTIONS = [
 <tr><td><b>Nature 2024 · Dohare et al.</b><br>长期持续任务，多种网络/优化器，重新引入可更新单元等塑性控制 [[M22]]</td><td>只测旧任务遗忘不能证明还有没有能力学习新任务；需要长期曲线与反事实机制对照</td><td><b>E4/E5</b>新无关任务负控、长训练流、有效秩及新Adapter/优化器状态对照</td></tr>
 <tr><td><b>ICML 2026 · Sweeney</b><br>Lie bracket预测A→B/B→A，再用多域SFT、DPO及其他模态作校验 [[M18]]</td><td>局部几何量具有明确可计算预测，直接接受对照基线检验，而非只画描述性热图</td><td><b>E2</b>以“给定C支持集时的几何预测”作为强基线；我们的无C标签状态诊断单列赛道</td></tr>
 <tr><td><b>ICML 2026 · SOAR</b><br>学生真实训练收益奖励与intrinsic难度代理对照；检验训练稳定性与题目多样性 [[S47]]</td><td>教学材料评价的目标是学生实际进步，同时检查代理目标可能产生的坍缩</td><td><b>E3</b>与真实收益试训选题、QBC以及随机例题作等总成本比较</td></tr>
-<tr><td><b>ICLR 2024 · Shortcut Learning</b><br>最小生成模型正交改变核心/捷径线索的可获得性与预测性</td><td>把“模型爱走捷径”转化为可操纵的任务因子，并解释架构差异</td><td><b>E0/E4</b>区分规则信息量、题面可获得性、表面多样性和真正组合覆盖</td></tr>
+<tr><td><b>ICLR 2024 · Shortcut Learning</b><br>最小生成模型正交改变核心/捷径线索的可获得性与预测性 [[M559]]</td><td>把“模型爱走捷径”转化为可操纵的任务因子，并解释架构差异</td><td><b>E0/E4</b>区分规则信息量、题面可获得性、表面多样性和真正组合覆盖</td></tr>
 </tbody></table></div>
 <p><b>从方法学到我们的论文叙事：</b>实验1建立不寻常的同分异学现象；实验2用分歧/边界探针给出可观察机制；实验3用随机补救改变这一机制；实验4解释替代原因和失效条件；实验5跨模型与任务族验证。如果只能做实验1和2，那适合作为<strong>现象发现的初步证据</strong>，尚不能将RCP写成验证有效的新算法。</p>
 '''),
@@ -23,7 +23,7 @@ METHOD_SECTIONS = [
 <p><b>论文的单一主张：</b>历史训练即使带来相近的当前正确率，也可能留下不同的<strong>规则选择方式及适用边界</strong>。这些差异会影响后来学习新规则 C 的响应；有针对性地排除错误规则，可能改变这种响应。我们用<strong>规则层面的诊断 + 随机干预 + 真实参数更新</strong>检验，而不是只比较期末成绩。</p>
 <div class="flow"><div><b>规则生成器</b><small>正确规则与可执行的竞争捷径</small></div><div><b>匹配历史分叉</b><small>同底座、同材料，改变顺序或信息</small></div><div><b>不反馈的规则探针</b><small>分歧、组合、适用边界</small></div><div><b>小预算针对性补救</b><small>规则分歧例 vs 表面新颖/难度/随机</small></div><div><b>新 C 真实更新</b><small>相容/冲突/无关，完整学习曲线+旧能力回归</small></div></div>
 <p><b>三个有因果次序的问题：</b>Q1 同样的当前任务成绩是否隐藏不同的规则状态？Q2 这种状态和 C 的学习轨迹有何关系，能否排除梯度几何、C 前测和参数可塑性等解释？Q3 给定同样的补救预算，<strong>只改变旧任务中的规则辨别信息</strong>，能否主动改变其后的 C 学习效率？Q1 是现象、Q2 是机制鉴别、Q3 是机制干预。Q3 不成立时也应如实保留 Q1/Q2 的结论。</p>
-<p><b>方法贡献的准确边界：</b>基于竞争假设选分歧样本已有 Query by Committee（<a href="https://doi.org/10.1145/130385.130417" target="_blank" rel="noopener noreferrer">COLT 1992</a>）；控制抽象特征的反事实增强已有 <a href="https://aclanthology.org/2025.findings-acl.50/" target="_blank" rel="noopener noreferrer">Findings ACL 2025</a>。本方案的潜在新增贡献不是“第一次选择反例”，而是<strong>先诊断学习者形成哪种规则，再用受控补救检验其对新规则真实学习曲线的因果影响</strong>，并将起点迁移、更新能力与旧能力回归分开。</p>
+<p><b>方法贡献的准确边界：</b>基于竞争假设选分歧样本已有 Query by Committee（<a href="https://doi.org/10.1145/130385.130417" target="_blank" rel="noopener noreferrer">COLT 1992</a>）；控制抽象特征的反事实增强已有 <a href="https://aclanthology.org/2025.findings-acl.50/" target="_blank" rel="noopener noreferrer">Findings ACL 2025</a>。[[M557]][[M558]] 本方案的潜在新增贡献不是“第一次选择反例”，而是<strong>先诊断学习者形成哪种规则，再用受控补救检验其对新规则真实学习曲线的因果影响</strong>，并将起点迁移、更新能力与旧能力回归分开。</p>
 '''),
         ('method-rule-engine', 'Design 1｜可执行竞争规则图：把“会做题”与“学对规则”分开', '''
 <p><b>形式化任务：</b>每个规则族用一组有限、可执行的程序组成 <code>R={r₁,…,rₘ}</code>，每道题有输入 <code>x</code>、情境 <code>c</code> 和唯一 oracle 答案 <code>r*(x,c)</code>。真实规则与至少一种竞争捷径在旧训练样本上给出相同输出，但在专门构造的输入上必须发生分歧。程序解释器只保存在实验环境/独立验证器中，不作为提示泄露给学生模型。</p>
@@ -34,7 +34,7 @@ METHOD_SECTIONS = [
 <tr><td><b>无效对照</b>：重写题面、换整数，仍无重复</td><td><code>[7,4,3] → [7,4,3]</code></td><td>表面不同，但无法区分两个竞争程序</td></tr>
 </tbody></table></div>
 <p><b>构造方法：</b>枚举程序长度受限的候选规则，形成与当前训练集一致的版本空间 <code>V(D)={r∈R:∀(x,y)∈D,r(x)=y}</code>。从同一合法输入域选出三类测试：<b>Wsep</b>（候选规则给出不同答案）、<b>Wbind</b>（情境字段决定选择哪条规则）、<b>Wnull</b>（候选规则结果一致但文本多样）。根据 oracle 输出自动标注、检查歧义比例、题长、标签频次、规则复杂度和输入距离，不人为挑中看起来成功的题。</p>
-<p><b>防止“只是更难”的混淆：</b>把规则可辨识性 D、结构组合覆盖 K、词面变化 L、A/B 相似度 S 分别作为可操作变量。匹配输入长度、表达式深度、输出格式、目标正确率区间及训练 Token；允许不同组在训练难度上仍不完全相同，但明确展示这些统计与控制，而不将其假定为相等。<a href="https://proceedings.iclr.cc/paper_files/paper/2024/hash/bf215fa7fe70a38c5e967e59c44a99d0-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">ICLR 2024 Shortcut Learning</a> 已用受控生成器隔离线索的预测性与可获得性；<a href="https://www.nature.com/articles/s41539-026-00428-4" target="_blank" rel="noopener noreferrer">npj 2026 Hypothesis Testing</a> 用第二实验控制初始空间距离。我们也必须设置第二轮排除替代解释的实验。[[E26]]</p>
+<p><b>防止“只是更难”的混淆：</b>把规则可辨识性 D、结构组合覆盖 K、词面变化 L、A/B 相似度 S 分别作为可操作变量。匹配输入长度、表达式深度、输出格式、目标正确率区间及训练 Token；允许不同组在训练难度上仍不完全相同，但明确展示这些统计与控制，而不将其假定为相等。<a href="https://proceedings.iclr.cc/paper_files/paper/2024/hash/bf215fa7fe70a38c5e967e59c44a99d0-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">ICLR 2024 Shortcut Learning</a> 已用受控生成器隔离线索的预测性与可获得性；<a href="https://www.nature.com/articles/s41539-026-00428-4" target="_blank" rel="noopener noreferrer">npj 2026 Hypothesis Testing</a> 用第二实验控制初始空间距离。我们也必须设置第二轮排除替代解释的实验。[[M559]][[E26]]</p>
 <p><b>数据结构可复用：</b><code>family_id, rule_id, context_id, program_ast, input, oracle_output, distractor_outputs, witness_type, surface_template, depth, split, seed</code>。训练、诊断、补救和最终C测试使用互斥输入与模板；最终留出整批<strong>规则族／组合图</strong>，而不只随机划分题面。</p>
 '''),
         ('method-signature', 'Design 2｜学习者状态指纹：不用原题准确率猜测模型学到了什么', '''

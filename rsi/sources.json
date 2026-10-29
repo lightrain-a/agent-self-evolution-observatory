@@ -4772,6 +4772,59 @@
       "classification_reason": "自生成可执行程序任务，借环境验证获得新约束。",
       "source_role": "research",
       "source_domain": "RSI"
+    },
+    {
+      "id": "M557",
+      "group": "相邻领域",
+      "title": "Query by Committee",
+      "date": "COLT 1992 · 287–294",
+      "url": "https://doi.org/10.1145/130385.130417",
+      "level": "原会议论文题录与Princeton作者摘要核对；2026-10-29；未复现",
+      "note": "Seung、Opper、Sompolinsky提出从共享训练数据的候选学习者分歧最大处选择下一个标注查询；分歧选题有直接先例，未研究LLM规则边界补救后的新任务参数学习曲线。",
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "从候选假设分歧中选择能区分竞争解释的标注查询；是主动学习经典基线。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
+    },
+    {
+      "id": "M558",
+      "group": "相邻领域",
+      "title": "Leveraging Variation Theory in Counterfactual Data Augmentation for Optimized Active Learning",
+      "date": "Findings ACL 2025 · 894–906",
+      "url": "https://aclanthology.org/2025.findings-acl.50/",
+      "level": "ACL Anthology摘要与正式题录核对；2026-10-29；未复现",
+      "note": "以Variation Theory提出概念维度并生成有针对性的反事实变体改善低标注量文本分类主动学习；已有结构化对照样本选择，但没有验证当前规则状态相同时后续未见规则C真实更新收益。",
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "构造概念维度变化的反事实样本以支持主动学习；需与后续参数更新机制区分。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
+    },
+    {
+      "id": "M559",
+      "group": "相邻领域",
+      "title": "On the Foundations of Shortcut Learning",
+      "date": "ICLR 2024 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/bf215fa7fe70a38c5e967e59c44a99d0-Abstract-Conference.html",
+      "level": "ICLR正式摘要核对；2026-10-29；未复现",
+      "note": "通过最小双潜变量生成框架正交操纵核心/捷径特征的预测性与可获得性，显示非线性网络的捷径偏好；属于受控因子与机制对照先例，不是LLM RSI学习可迁移规则的证明。",
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "在受控生成任务上区分核心与捷径特征的预测性及可获得性。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     }
   ]
 }
