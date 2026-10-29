@@ -57,6 +57,14 @@ NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human rewar
 - **未编号研究提案**：`scripts/rsi_pages/experience-consolidation.py` → `rsi/experience-consolidation.html`，P0/P1/P2 设计分别验证固定正确Episode下巩固正负效应、Memory选择与巩固的正交因果作用、Skill/LoRA撤辅后的独立能力。与I6错误轨迹价值、I8单点非局部迁移、I13安全接纳保持边界；不能把已有Auto/Force/History-Deletion包装成首创。
 - **测试契约**：`scripts/test_rsi_site.py` 检查新论文/版本、原始结果统计口径、Theory对应来源、候选页及导航，生成产物统一来自结构源与页面源，不直接编辑静态HTML。
 
+## 快慢Meta-RL及学习规则自进化候选（2026-10-29）
+
+- **Hattori 完整精读**：`hattori-ofc-metarl-nn2023`，Nature Neuroscience 2023（小鼠OFC + 5个A2C-RNN，13节）。实验标准：奖励概率反转任务与baiting；每个session 500trial时RNN权重冻结、跨session才更新；早期5+5只小鼠用paAIP2阻断慢可塑性、专家另5只做交替同类阻断、活动抑制再测快RL；不把“没有显著差异”写成证明绝对没有可塑性。
+- **DiscoRL 已存在，不重复建档**：`discorl-nature2025-oh`的完整精读（Nature 2025）和原来的七条理论保留；只新增一个Hattori对照章节，区分OFC机制证据与Meta-gradient目标发现。
+- **三条理论笔记**：`#metarl-two-timescale-learning`、`#policy-history-kernel-measurement`、`#meta-improvement-intervention-contract`。Eq.(12)历史回归以及Policy Axis来自Hattori，未来任务C的AULC是本站未验证指标；作者原证据与教学简式分开。
+- **新研究候选（未编号）**：`scripts/rsi_pages/learning-rule-evolution.py` → `/rsi/learning-rule-evolution.html`。主处理变量为学习规则η或更新目标，固定学生、样本、教材顺序、教师及训练预算；P0检验可学习性现象，P1以Old/New/Best Fixed/Shuffled History/No Student Update做分阶段验证。I2变化教师教法，I9变化课程顺序，本候选不抢I14或改变I1–I13正式排名。
+- **测试**：`scripts/test_rsi_site.py` 校验两篇论文、两者关系章节、理论锚点、候选P0/P1和目录仍只有I1–I13正式编号。数据链接采用原论文官方Zenodo `10.5281/zenodo.8378063`、代码 `ryhattori/MetaRL-PRL`。
+
 ## RSI 研究时间轴与会议 DDL
 
 `rsi/timeline-data.json` 是会议与人工研究里程碑的唯一数据源：

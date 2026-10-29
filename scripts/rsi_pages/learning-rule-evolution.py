@@ -1,0 +1,82 @@
+"""Cross-idea, unnumbered RSI research candidate: learning the parameter-update rule.
+
+Not a new numbered I without a controlled learnability phenomenon and nearest-work
+baseline. Keep task data, teaching, curriculum and safety admission orthogonal.
+"""
+PAGE = {
+"slug":"learning-rule-evolution",
+"title":"研究候选 · Agent 何时真正变得更会学习？",
+"en":"Meta-Improvement of Learning Rules · Same Ability, Different Future Learnability",
+"lead":"Hattori（Nature Neuroscience 2023）提供快/慢机制的分阶段干预，DiscoRL（Nature 2025）提供可学习的训练目标生成。这里研究相同学生、相同数据和预算下，学习规则本身的改变是否提升未见任务的真实学习能力。暂不编号为 I14。",
+"updated":"2026-10-29",
+"sections":[
+("decision","立项结论：独立保留候选，不立即升级 I14",'''
+<div class="decision"><span class="kicker">RSI THEORY → TESTABLE HYPOTHESIS · UNNUMBERED · 2026-10-29</span>
+<h3>Same Current Ability, Different Future Learnability</h3>
+<p><b>观察问题：</b>两个 Agent 当前都能完成同样的 A/B 任务，但过去使用过不同的更新机制；即使它们在 A/B 后测能力相近、当前 C 前测也匹配，后续学习陌生规则 C 的速度是否仍然不同？如果有，这种差异是否来自<strong>学习规则本身</strong>，而不是更多样本、课程顺序、教师提示或优化器状态？</p>
+<p><b>组织判断：</b>本页作为未编号候选保存。快环/慢环、元学习、直接优化学习目标已经有成熟先例；只有在严格配对后证明学习规则改进对未来真实能力产生额外、可预测、可迁移的净收益，才考虑晋升I14。该方向不并入I2或I9的处理变量，也不改变当前I1–I13的研究排名。</p>
+</div>
+'''),
+("papers","两篇已经精读的论文：谁负责提出机制，谁负责给出算法？",'''
+<div class="table-wrap"><table><thead><tr><th>论文</th><th>真实研究对象/改进层次</th><th>最值得继承的实验思想</th><th>不足以直接证明什么</th></tr></thead><tbody>
+<tr><td><a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023"><b>Hattori et al. · Nat Neurosci 2023</b></a></td><td>小鼠概率反转学习+5个A2C RNN。OFC慢速可塑性形成策略，活动动态执行快策略。</td><td>在新手/专家阶段分别抑制可塑性，再于专家阶段抑制活动；用奖励历史核与Policy Axis解释策略形成。</td><td>不是LLM权重更新；同类概率反转任务内的元学习不等于跨任意规则族泛化。</td></tr>
+<tr><td><a href="reading-notes.html#deep-discorl-nature2025-oh"><b>DiscoRL · Nature 2025</b></a></td><td>群体Agent跨57/103环境对目标生成元网络η做Meta-gradient，生成π̂/ŷ/ẑ等学习目标。</td><td>固定更新接口、让学习目标本身可学；重置Agent，用所得η在新环境重新训练。</td><td>没有让部署中的同一个LLM持续改写自己，也没有计入元发现成本的无条件训练效率优势。</td></tr>
+</tbody></table></div>
+<p><b>最近邻还包括：</b><a href="https://arxiv.org/abs/1611.05763" target="_blank" rel="noopener noreferrer">Learning to Reinforcement Learn</a>、<a href="https://openai.com/index/rl2/" target="_blank" rel="noopener noreferrer">RL²</a>，以及 <a href="https://arxiv.org/abs/2505.18524" target="_blank" rel="noopener noreferrer">metaTextGrad</a>。因此双层优化、RNN历史学习、自动调学习目标或文本优化器都不是首次提出；需要在持续LLM参数更新的独立未来学习收益上建立剩余科学问题。</p>
+<div class="links"><a class="link-btn" href="theory-notes.html#metarl-two-timescale-learning">快/慢机制理论</a><a class="link-btn" href="theory-notes.html#policy-history-kernel-measurement">Policy Axis测量</a><a class="link-btn" href="theory-notes.html#learning-target-generation">DiscoRL Target Generation</a></div>
+'''),
+("three-layers","为什么必须区分当前任务、持久知识和元策略三个不同的进步？",'''
+<div class="table-wrap"><table><thead><tr><th>能力层级</th><th>在机器中真实改变的对象</th><th>最低证据要求</th><th>常见误判</th></tr></thead><tbody>
+<tr><td><b>L1 · 当前任务执行变好</b></td><td>Context / RNN hidden state / 临时工具或工作记忆</td><td>同一上下文的新反馈能改善当前执行</td><td>当场接受提示后答对，就叫学会</td></tr>
+<tr><td><b>L2 · 长期任务能力变好</b></td><td>可版本化Memory、Skill或参数θ</td><td>撤除老师及一次性答案，未见任务仍有独立收益</td><td>还在检索答案或直接使用Teacher</td></tr>
+<tr><td><b>L3 · 学习规则本身变好</b></td><td>从过去学得的更新规则η或Meta-policy</td><td>重置同一任务学习者后，新η比旧η使后续任务真实更新得更快或更稳</td><td>只是当前任务分数更高、更多任务样本或更会挑题</td></tr>
+</tbody></table></div>
+<p>重要的是快层在Hattori动物/人工RNN中主要为<strong>活动状态</strong>而非每trial权重更新。映射到LLM RSI时，可以重新操作性定义为任务Skill/LoRA真实更新，但不能声称其神经机制同一。慢层策略变化必须与未来任务C的独立学习证据联合报告。</p>
+'''),
+("mechanism","核心科学假设：同样会做题，学法的适用条件可能已经不同",'''
+<p>设任务学习者为θ、历史状态为b、元规则为η。与I9固定更新器只改变A/B题目顺序不同，这里<strong>固定A/B的具体数据和训练顺序</strong>，只允许η决定相同材料形成何种目标或更新操作。例如目标生成、稳定旧能力的梯度约束、轨迹条件化的预测目标；都要由同等反馈与训练预算形成。</p>
+<div class="equation">θ[k+1] = Update(θ[k] ; Data[k], η, feedback[k])</div>
+<div class="equation">η[new] = MetaUpdate(η[old] ; prior training outcomes)</div>
+<p>如果学习历史提供了真实的状态信息，新的η可能能够识别哪些规则需要保持、哪些预测目标需要改变；若只是复杂模型容量增加，历史打乱后也可能同样提升，因此要设置同容量随机历史及最优固定更新器基线。</p>
+<div class="note"><b>两个可证伪假设：</b>H1，相同初始能力的学生对不同更新规则有不同的未来学习响应，且这种差异随任务规则冲突/共享结构系统变化；H2，历史学习结果能帮助η预测这种响应并改善未见任务的同预算净增益。H1不成立就不能直接投入昂贵的元梯度系统。</div>
+'''),
+("p0","P0 · 现象验证：相同任务数据，不同学法是否产生未来可学习性差异？",'''
+<p>第一阶段先<strong>不训练复杂的Meta-Updater</strong>，只建立可复现的学习规则对照。在可验证数学规则或简化代码/形式任务中，固定同一基础模型、A/B相同样本multiset、相同顺序与教师反馈。比较普通SFT、旧能力兼容约束、目标生成式更新等；为每种情况准备完全相同的C训练与留出测试。若参数预算不同，匹配可训练参数/训练步数并单列额外诊断及元训练成本。</p>
+<div class="table-wrap"><table><thead><tr><th>分支</th><th>固定条件</th><th>唯一变量</th><th>读什么</th></tr></thead><tbody>
+<tr><td>普通SFT</td><td>θ₀、A/B样本、更新预算</td><td>标准token CE更新</td><td>当前A/B，未来C增益</td></tr>
+<tr><td>Retention-aware update</td><td>同样Data及反馈</td><td>更新目标/梯度约束，非额外Replay数据</td><td>A/B保持、未来C迁移</td></tr>
+<tr><td>Prediction-target update</td><td>同样数据/任务学生</td><td>固定接口上的目标生成方式</td><td>未见C规则的真实学习曲线</td></tr>
+<tr><td>Matched current state</td><td>初始C前测及A/B能力区间匹配</td><td>不同学习历史后的更新规则选择</td><td>控制当前能力差异后，C是否仍有独立变化</td></tr>
+</tbody></table></div>
+<p>训练C之前必须锁定C测试集、学生检查点和优化器状态。若更新历史使θ本身不同，本组证明的是“历史对可学习性的差异”，还不能直接归因于η；独立的双层分叉在P1完成。</p>
+'''),
+("p1","P1 · 元策略必要性：分阶段冻结、重置、打乱历史和移除更新",'''
+<div class="table-wrap"><table><thead><tr><th>实验组</th><th>元规则η</th><th>任务学生θ</th><th>排除的替代解释</th></tr></thead><tbody>
+<tr><td>Fixed Best Rule</td><td>开发集最优固定规则</td><td>新θ₀，C真实更新</td><td>复杂Meta是否必要</td></tr>
+<tr><td>Old Meta-Rule</td><td>η_old冻结</td><td>同一新θ₀，C真实更新</td><td>元规则改进前基线</td></tr>
+<tr><td>New Meta-Rule</td><td>η_new冻结</td><td>同一新θ₀，C真实更新</td><td>保留何种元经验真正有益</td></tr>
+<tr><td>Shuffled-History</td><td>同容量，但打乱历史更新—结果对应</td><td>同一新θ₀</td><td>是否只是更多Token与容量</td></tr>
+<tr><td>No Student Update</td><td>η_new仍可被调用</td><td>θ固定、不允许真实参数更新</td><td>是否只有推理期帮助而非学习</td></tr>
+<tr><td>Meta Freeze Through Generations</td><td>η在后续代际不再改进</td><td>θ仍随任务更新</td><td>当前能力提高≠元策略跨代提高</td></tr>
+</tbody></table></div>
+<div class="equation">ΔMeta = AULC_future(η_new, θ₀) − AULC_future(η_old, θ₀)</div>
+<p>主结果包括未来C曲线面积、固定预算下最终未见变式、旧能力回归、元发现成本、不同任务族及模型版本上的效应。AULC不是本篇Nature原公式，是我们研究协议的学习能力指标。</p>
+'''),
+("related","与已有 I1–I13 怎样组织？不让新候选吞掉旧主线",'''
+<div class="table-wrap"><table><thead><tr><th>现有方案</th><th>原本的独立处理变量</th><th>本方向怎么取边界</th></tr></thead><tbody>
+<tr><td><a href="idea-i2.html">I2 · 教学策略进化</a></td><td>学生真实回应如何改变教师教法</td><td>固定教师和材料，只改学生参数更新目标</td></tr>
+<tr><td><a href="idea-i6-failure-value.html">I6 · 失败过程价值</a></td><td>同题同错，选哪条失败轨迹值得学</td><td>固定错误/反馈池，不换候选轨迹</td></tr>
+<tr><td><a href="idea-i9-practice-switching.html">I9 · 集中/交错与未来C学习</a></td><td>题目顺序、切换时机影响C可学习性</td><td>固定顺序、教材，只有学习规则变化</td></tr>
+<tr><td><a href="experience-consolidation.html">候选 · 经验巩固</a></td><td>同Episode原样保存、Skill抽象或LoRA内化</td><td>固定持久化表面，只改更新目标生成</td></tr>
+<tr><td><a href="learning-admission.html">I13 · 安全更新接纳</a></td><td>候选风险测试和接纳/隔离</td><td>元策略不能修改独立安全硬门和权限</td></tr>
+</tbody></table></div>
+<p>评审中最容易质疑：元学习训练规则在RL²/DiscoRL已有，为什么这不是简单的领域迁移？需要将科学问题压缩到<strong>真实LLM多轮参数更新中，何种已观察学习状态使新旧规则的未来增益出现可预测交互，以及不同规则对长期旧能力保持的影响</strong>，而不是再次证明Meta-RL概念。</p>
+'''),
+("gate","晋升I14的条件、成本与止损边界",'''
+<p><b>升级为独立I的条件：</b>（1）同数据/同顺序/同教师/同预算下，在多个任务族重复发现‘当前能力相近但学法变化影响未来C’；（2）提前的历史状态信号能够预测哪种更新规则有利，且对未知任务关系仍稳定；（3）冻结和重置干预显示增益来自可继承的η而不是上下文/样本选择；（4）胜过最佳固定Rule和随机历史，扣除元发现成本依然有净收益。</p>
+<p><b>如果只满足现象：</b>归入I9‘学习历史改变未来可学习性’的机制对照，或以跨I科学测量发表，不急于建大模型。<b>如果固定最佳Rule同样好：</b>不训练Meta-Updater；保留负面结果和失效条件。<b>如果只提高当前任务：</b>只证明训练方法更有效，不能主张递归地更会学习。</p>
+<p>技术上优先用小模型、受控合成规则和独立版本分支，先验证因果效应，再决定是否投入DiscoRL级别的Meta-gradient算力。所有结论都需在没有教师/测试答案泄漏的独立未来任务上测量。</p>
+<div class="links"><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori原文完整精读</a><a class="link-btn" href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL原文完整精读</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI理论与指标</a><a class="link-btn" href="idea-prioritization.html">现有I1–I13优先级</a></div>
+''')
+]
+}

@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','experience-consolidation','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -65,6 +65,37 @@ def main():
               'Theory evidence tier missing: '+entry['id'])
     check({'paper-mechanism','teaching-derivation','rsi-hypothesis'}<=
           {t['status'] for t in theory_entries},'Theory source vs derivation vs hypothesis not distinguished')
+    check({'metarl-two-timescale-learning','policy-history-kernel-measurement',
+           'meta-improvement-intervention-contract'}<=theory_ids,
+          'Hattori meta-RL theory, policy-history kernel or intervention contract missing')
+    hattori=next((p for p in cards if p['id']=='hattori-ofc-metarl-nn2023'),None)
+    check(hattori is not None and hattori['doi']=='10.1038/s41593-023-01485-3'
+          and len(hattori.get('deep_read',{}).get('sections',[]))>=13,
+          'Hattori Nature Neuroscience 2023 deep reading missing')
+    discorl=next((p for p in cards if p['id']=='discorl-nature2025-oh'),None)
+    check(discorl is not None and discorl['doi']=='10.1038/s41586-025-09761-x'
+          and 'hattori-vs-discorl-metarl' in
+          {s['id'] for s in discorl['deep_read']['sections']},
+          'DiscoRL original deep read or Hattori mechanism comparison missing')
+    check(all('deep-hattori-ofc-metarl-nn2023--'+x in deep_page for x in
+              ('two-timescale-rnn','reward-kernel','early-plasticity-intervention',
+               'expert-plasticity','expert-activity-suppression','rsi-protocol')),
+          'Hattori methods, stage controls or independent RSI transfer missing')
+    meta_candidate=(ROOT/'rsi/learning-rule-evolution.html').read_text(encoding='utf-8')
+    check(all('id="'+x+'"' in meta_candidate for x in
+              ('decision','papers','three-layers','mechanism','p0','p1','related','gate')),
+          'Unnumbered meta-learning candidate missing scientific contract')
+    check(all(x in meta_candidate for x in
+              ('deep-hattori-ofc-metarl-nn2023','deep-discorl-nature2025-oh',
+               'Fixed Best Rule','No Student Update','meta-improvement-intervention-contract')),
+          'Meta-learning candidate missing nearest-work or causal controls')
+    check('learning-rule-evolution.html' in
+          (ROOT/'rsi/index.html').read_text(encoding='utf-8')
+          and 'id="ofc-metarl-boundary"' in
+          (ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8'),
+          'Meta-learning candidate missing homepage or I9 orthogonality boundary')
+    check('I14 ·' not in (ROOT/'rsi/site-nav.js').read_text(encoding='utf-8'),
+          'Unverified candidate must not take formal I14 rank')
     check({'awake-ripple-memory-tagging','experience-tag-vs-consolidation-utility'}<=theory_ids,
           'Science 2024 memory tagging theory missing')
     mouse_paper=next((p for p in cards if p['id']=='sharp-wave-ripples-science2024-yang'),None)
@@ -217,7 +248,7 @@ def main():
         'methods':['cross-domain.html','theory-notes.html','learning-science.html','curriculum-scale-evidence.html'],
         'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','memory-research-map.html','experience-consolidation.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','memory-research-map.html','experience-consolidation.html','learning-rule-evolution.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]

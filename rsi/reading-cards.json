@@ -31,6 +31,791 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "hattori-ofc-metarl-nn2023",
+      "short_title": "OFC Meta-RL · Nat Neurosci 2023",
+      "title": "Meta-reinforcement learning via orbitofrontal cortex",
+      "authors": "Ryoma Hattori; Nathan G. Hedrick; Anant Jain; Shuqi Chen; Hanjia You; Mariko Hattori; Jun-Hyeok Choi; Byung Kook Lim; Ryohei Yasuda; Takaki Komiyama",
+      "lead_institution": "University of California San Diego",
+      "institutions": [
+        "University of California San Diego",
+        "Max Planck Florida Institute for Neuroscience"
+      ],
+      "institution_source": "Nature Neuroscience 26:2182–2191 · Article Authors and Affiliations / PubMed PMID 37957318；第一作者工作单位UC San Diego，Ryohei Yasuda当时Max Planck Florida",
+      "publication": "Nature Neuroscience · 26:2182–2191 (2023)",
+      "doi": "10.1038/s41593-023-01485-3",
+      "official_url": "https://www.nature.com/articles/s41593-023-01485-3",
+      "first_posted": "2023-11-13",
+      "version": "Nature Neuroscience 2023-11-13 Version of Record；2024-07-02 更正了 Methods 的OFC手术坐标，没有变更主要实验结论",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature Neuroscience 正文 Results/Methods、Fig.1–7、Extended Data及官方代码/数据链接核对；未运行行为和神经实验",
+      "tags": [
+        "Meta-RL",
+        "Orbitofrontal Cortex",
+        "CaMKII Plasticity",
+        "paAIP2",
+        "Probabilistic Reversal Learning",
+        "Two Time Scales",
+        "Slow Learning",
+        "Fast RL",
+        "Reward History",
+        "Policy Axis",
+        "RSI Meta-Improvement"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "用每会话历史回归权重与策略轴衡量元学习形成，并通过学习早期/专家阶段特异性抑制可塑性和专家OFC活动抑制做因果分离。",
+          "open_question": "OFC行为与RNN机制类似，不等于揭示动物完整内在更新算法；跨任务泛化也没有在此小鼠任务之外直接测量。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "学习者跨会话获得更善于利用过去奖赏的策略，并逐渐形成稳定的神经价值表征和政策轴；模型部分用固定RNN权重在会话内快速自适应。",
+          "open_question": "论文不是研究人工系统能自行发现新训练目标，不能直接视作DiscoRL式新学习规则发明。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "在同一概率反转任务分布内，跨session越来越快适应奖励侧的变化，支持相关情境的历史策略泛化。",
+          "open_question": "未测小鼠跨领域新任务、LLM在未知规则家族上的LoRA迁移，也没有测模型生成支持集拓展。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "慢速CaMKII依赖可塑性建立策略后，专家仍可在抑制该可塑性时通过已形成回路活动实现快速trial内适应。",
+          "open_question": "专家阶段未观察到明显损害不是一切可塑性都不必要；没有测试任意长时重置或参数改写后的持久保持。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "原任务在可控制的左右水奖励环境中检验适应学习，提供区分形成/执行的干预范式。",
+          "open_question": "没有Agent更新安全、恶意反馈、版本授权或独立安全发布门研究。"
+        }
+      },
+      "one_sentence": "小鼠与RNN学习器在多会话概率反转任务中学会更有效地利用奖励历史；OFC长期可塑性负责形成这种策略，专家任务内执行依赖回路活动。",
+      "story": {
+        "challenge": "当前任务成绩提高，未必说明Agent更会学习；小鼠每轮用新奖励调动作，和跨天逐渐形成更好的学习方法如何区分？",
+        "insight": "会话内活动状态更新与跨会话长期可塑性属于不同时间尺度；在不同阶段单独阻断它们，才能检验各自必要性。",
+        "design": "小鼠在左右水奖励概率无提示反转任务中学习；用历史回归量化策略，再分别抑制学习早期可塑性、专家可塑性和专家OFC活动。",
+        "result": "早期抑制CaMKII依赖可塑性削弱跨会话学习，专家阶段同类抑制不伤当前历史利用；暂时抑制OFC活动则损害快速学习。"
+      },
+      "problem": "元强化学习可以用跨会话慢更新形成更快利用反馈的算法，但动物脑中是慢突触可塑性还是快神经活动在执行这些不同层级？单纯观察后期任务成绩不能识别机制，因此需要两层时间尺度的独立测量和分阶段干预。",
+      "setup": "真实小鼠+5个独立训练的人工A2C-tanh RNN。小鼠头固定，在左右舔水口之间选择，奖励分配概率0.6/0.1或0.525/0.175，约每60–80个trial无提示翻转。已分配未领取的水保留（baiting），故分配概率不等于实际领取概率。小鼠跨会话训练，历史Logistic模型拟合过去5轮的奖励/选择权重，比较Policy Axis方向；学习期paAIP2组5只和对照5只进行30会话光刺激；专家先学稳定后另有5只做交替抑制；额外OFC活动抑制及双光子钙成像。人工RNN每会话500 trials权重固定，仅在会话结束后更新，训练300会话。",
+      "updates": "动物是OFC的CaMKII依赖长期突触可塑性（慢）与神经回路动态活动（快）；人工RNN中φ跨会话由A2C更新，隐藏状态h在会话内根据上一轮动作/奖励累积改变、权重不更新。人工模型属于学习快更新规则的固定结构meta-RL，不是LLM Skill/LoRA自写回实验。",
+      "key_ideas": [
+        {
+          "name": "两个时间尺度是机制，不是两个命名模块",
+          "summary": "外层改网络连接，内层用当前连接把新奖赏映射到活动状态/行动；只有对两者分阶段干预才能辨认‘学法形成’与‘用学法解决眼前任务’。",
+          "formula": "h[t+1]=f_φ(h[t],a[t],r[t]);  φ[k+1]=MetaUpdate(φ[k],Session[k])  [teaching notation]"
+        },
+        {
+          "name": "策略本身可以通过历史核被测量",
+          "summary": "Logistic回归把前五轮左右奖励差和选择差的系数当作可观测策略核，不只报告任务总准确率。",
+          "formula": "logit P_L(t)=β0+Σ_i βr,i Δr[t−i]+Σ_i βc,i Δc[t−i], i=1..5"
+        },
+        {
+          "name": "策略轴是跨会话学法变化的代理",
+          "summary": "奖励系数向量βr(k)的夹角随学习逐步变小；反映怎样利用历史的方向逐渐稳定，仍须与行为收益独立联合报告。",
+          "formula": "PolicySim(k,j)=cos(βr(k),βr(j))"
+        },
+        {
+          "name": "阶段交叉干预提供因果辨别",
+          "summary": "学习初期阻断OFC可塑性损害慢形成；已成专家再阻断并无可检测损害；临时抑制OFC活动降低专家实时利用历史。",
+          "formula": "do(block plasticity during learning)≠do(block plasticity in experts)≠do(silence activity in experts)"
+        },
+        {
+          "name": "价值编码与行为策略共同稳定",
+          "summary": "长期纵向记录显示OFC的Q_ch/ΣQ等价值表征的强度和跨会话编码方向逐渐稳定，并与奖励历史策略轴相联系。",
+          "formula": "cos(value_axis[k],value_axis[j]) ↔ cos(policy_axis[k],policy_axis[j])  (association)"
+        }
+      ],
+      "evidence": [
+        "Fig.1a：小鼠在左右舔水口做概率反转学习，奖励分配概率0.6 vs0.1或0.525 vs0.175，反转约每60–80 trial；baiting使真正到口奖励概率不是上述分配概率。",
+        "Fig.1c–g/Methods：5个独立训练的A2C-tanh递归网络；输入最近选择及奖励三个单元，500 trials一session中权重固定；每session之后更新权重、训练300 sessions，lr=5e−4，γ=0.5，BPTT unroll=50。",
+        "Fig.1h–l：用过去5 trial的奖励/选择历史Logistic系数构造奖励/选择policy axis；真实小鼠和深度RNN都随跨会话训练增强奖励历史依赖、轴余弦相似更稳定。",
+        "Fig.1：五个独立网络与七只OFC成像小鼠用于部分行为与历史回归对照；RNN学会更强的无奖励选择交替来利用baiting，而小鼠更多选择高分配概率一侧，两者行为规则并不完全相同。",
+        "Fig.2f–j：学习早期5只paAIP2与5只EGFP对照，连续30会话每次选择后3秒抑制OFC CaMKII相关可塑性；中期/后期高奖励侧选择差异p=1.89×10^-5/5.36×10^-6。",
+        "Fig.2h：奖励历史权重中期/后期组间p=1.58×10^-8/2.37×10^-3；选择历史权重没有一致显著组间差异。策略轴稳定性也受损。",
+        "Fig.3：另5只小鼠先训练至专家，然后交替10个光刺激与10个对照会话；同类paAIP2可塑性阻断没有对奖励历史利用或选择成绩造成可检测的显著影响。",
+        "Fig.4：7只OFC成像小鼠、14个可追踪神经群体；跨试次变化量分析可从OFC群体解码价值差ΔQ、已选值Q_ch和总值ΣQ，避免只看缓慢共同时间漂移形成的相关。",
+        "Fig.5：在模型及专家小鼠随机约13%试次短暂抑制活动，削弱奖励历史利用；OFC光遗传抑制组ChrimsonR 6只小鼠/43会话，对照tdTomato 5只/30会话。",
+        "Fig.7：跨会话跟踪神经群体，Q_ch和ΣQ价值信号增强并形成较稳定的价值轴，其跨会话稳定程度与行为策略核稳定程度正相关；不是证明鼠脑完全在做A2C梯度。",
+        "Change history：2024-07-02作者更正定位方法坐标；当前官方Nature正文为已更新版本，主要研究结果未因此改变。",
+        "全部原始鼠脑行为/神经数据：https://doi.org/10.5281/zenodo.8378063；模型训练/行为分析代码：https://github.com/ryhattori/MetaRL-PRL。"
+      ],
+      "boundaries": [
+        "不是LLM实验。真实小鼠在同一概率反转任务家族中跨会话逐渐提高；论文没有检验跨数学/代码/新规则族的泛化，因此不能称为跨任意新任务的通用元学习证据。",
+        "人工RNN固定session内权重、跨session更新，与真实小鼠具体神经更新的生物机制并非数学完全同一；不能说动物脑使用A2C反向传播。",
+        "paAIP2阻断CaMKII依赖可塑性诱导，不阻断所有可塑性类型；专家阶段结果是未检测到损害，不等于任何新的突触变化绝不可能发生。",
+        "学习阶段OFC可塑性抑制引起形成延迟，其学法测量依赖行为历史回归；应与任务参与、选择偏好和不同奖励概率控制一起解读。",
+        "OFC活动暂时抑制影响专家状态使用，证明活动必要性，但不说明整个RL系统只由OFC组成，VTA/纹状体等有其他角色。",
+        "在奖励带有baiting规则的任务中，动物与人工RNN选择历史偏好不同；二者的表征相似不是算法一致的身份证明。",
+        "Policy Axis余弦相似和价值编码轴稳定只是机制代理；高相似度可表示一种坏策略稳定，不代表元学习真正改善，仍需任务表现与留出适应曲线。",
+        "更正发表在2024-07-02，为Methods中OFC定位坐标，引用当前修正版，不把更正误写成主要结果撤回。",
+        "元学习先例包括RL²、Learning to Reinforcement Learn、DiscoRL等。只画慢环/快环、用RNN存短期回报或报未来任务学得快，均不自动具备独立创新性。"
+      ],
+      "our_relevance": [
+        "将‘任务学会’与‘学会更新策略’作为不同对象：当前任务成绩、持久任务知识、元学习规则三层都需单独冻结/替换并在未见任务上验收。",
+        "给元学习证据增加干预对照：禁止更新Meta-Policy但保留内层学习，允许Meta更新但冻结任务Agent；已经学会后冻结Meta-Policy，再观察既有学法是否可使用。",
+        "I2教师共进化已有教师自身更新：借鉴Hattori的策略形成/使用分离，但不把“教师变强”说成Agent内层更新算法变更。",
+        "I9训练顺序研究同样材料的不同历史可能改变未来C可学习性：这里强调同数据、同顺序，仅让更新规则变化才可与I9正交。",
+        "DiscoRL学到共享的训练目标生成函数η；Hattori提出分阶段干预验证慢形成和快执行，两篇互补，但都已研究元学习，不应仅凭这些机制宣称首次提出Meta-RSI。",
+        "未编号候选Learning Rule Evolution：比较同任务样本、同学生快照、固定教师、同计算预算下旧/新学习规则对留出规则家族未来学习曲线的作用；若静态Best Rule、简单状态路由同样好，则保留指标贡献而非升级为新I。"
+      ],
+      "next_test": "P0固定同一种新任务C的训练样本、学生检查点θ0、反馈、采样、token与实际LoRA预算，只更换由过去独立任务学习的更新规则η_old/η_new；每条规则可生成更新目标或训练协议，但不可换题、换教师或偷看C最终标签。设计快层任务状态重置与慢层规则冻结的2×2：不更新学生/更新学生 × 固定旧规则/更新新规则，并监测当前策略核与学习曲线。主指标为AULC_C(η_new)-AULC_C(η_old)减旧能力下降与发现规则成本。P1留出任务族及模型规模，测试持续多轮学习规则改进的真实外推。",
+      "deep_read": {
+        "focus": "这篇Nature Neuroscience是动物神经干预+人工A2C-RNN的配对机制研究，不是LLM。依次看：小鼠概率反转任务、历史核/Policy Axis定量、早期paAIP2可塑性干预、专家阶段同类抑制、专家OFC活动抑制、神经价值轴长期编码。最后与DiscoRL对照并设计LLM中可真正冻结/干预的两层更新。",
+        "metric_summary_title": "五组关键因果/关联证据：任务、可塑性、专家执行与神经价值编码",
+        "metric_summary_intro": "小鼠和RNN采用同类环境，但算法并非相同；会话、试次、动物样本各是不同统计单位。p值来自原文对应组间模型检验而不是成功率。",
+        "metric_summary": [
+          {
+            "family": "① 任务与人工模型",
+            "metrics": "两侧奖励概率0.6/0.1 或0.525/0.175",
+            "meaning": "约60–80 trial反转，baiting使奖励实际可领取概率与分配概率不同；人工网络有5个独立种子。",
+            "result": "每个RNN session 500试次内权重冻结，跨session外层更新，共300训练session。"
+          },
+          {
+            "family": "② 学习早期可塑性抑制",
+            "metrics": "Fig.2 · 5 vs5 mice · 30 sessions",
+            "meaning": "paAIP2阻断OFC CaMKII相关可塑性，检验慢速学法形成。",
+            "result": "中/后期高奖励侧选择组间p=1.89×10^-5/5.36×10^-6；历史利用与策略稳定性受损。"
+          },
+          {
+            "family": "③ 专家阶段同类抑制",
+            "metrics": "Fig.3 · 5 mice / 10+10交替session",
+            "meaning": "先学成专家，再在光刺激和对照会话交替阻断可塑性。",
+            "result": "未发现专家奖励历史利用或成绩的显著干预损害。"
+          },
+          {
+            "family": "④ 专家临时抑制OFC活动",
+            "metrics": "Fig.5 · 6+5 mice / ~13% trials",
+            "meaning": "阻断的是活动而非可塑性诱导；检验当前快时间尺度执行。",
+            "result": "奖励历史对当前选择的影响显著下降，但并非动物完全无法做任务。"
+          },
+          {
+            "family": "⑤ 长期价值编码",
+            "metrics": "Fig.4/7 · 7 mice /14 populations",
+            "meaning": "跨会话追踪OFC神经活动与历史核的策略轴、价值轴变化。",
+            "result": "Q_ch与ΣQ价值表示逐步增强和稳定，与reward-history policy axis稳定性相关；不是直接证明跨领域新任务元学习。"
+          }
+        ],
+        "terms": [
+          {
+            "name": "Probabilistic Reversal Learning",
+            "meaning": "在左右水奖励概率随时间无提示反转的任务里，持续根据反馈调整左右选择。"
+          },
+          {
+            "name": "Baiting",
+            "meaning": "某侧已分配但未领取的水奖励跨试次保留，导致实际可领取概率与新分配概率不同。"
+          },
+          {
+            "name": "Fast RL / Within-session",
+            "meaning": "同一会话内，使用已建立的神经网络活动状态累计奖赏历史，快速调整当前选择。"
+          },
+          {
+            "name": "Slow Meta-RL / Across-session",
+            "meaning": "跨许多会话逐渐形成一种更有效地利用反馈的策略；神经实验中的关键候选机制是长期OFC可塑性。"
+          },
+          {
+            "name": "OFC",
+            "meaning": "Orbitofrontal Cortex，眶额皮层；记录与干预奖励价值相关活动的脑区。"
+          },
+          {
+            "name": "CaMKII / paAIP2",
+            "meaning": "CaMKII相关的突触可塑性可被光控抑制工具paAIP2抑制，以区分长期形成和专家阶段执行。"
+          },
+          {
+            "name": "Reward History Kernel",
+            "meaning": "过去五次左右奖励差的Logistic回归系数，用于定量测量奖励如何影响当前选择。"
+          },
+          {
+            "name": "Policy Axis",
+            "meaning": "历史核系数组成的向量；跨会话余弦相似度用于评估学法变化与趋稳。"
+          },
+          {
+            "name": "Value Difference / Chosen / Sum",
+            "meaning": "ΔQ、Q_ch、ΣQ为从OFC群体活动尝试解码的三个动作价值信号。"
+          },
+          {
+            "name": "A2C recurrent meta-RL",
+            "meaning": "人工RNN通过跨session A2C形成内部动态适应机制，session内不通过梯度改变权重。"
+          }
+        ],
+        "summary": [
+          "跨会话学习与会话内快速RL需要分开量化；后期任务正确率提高不自动证明‘学习规则本身改善’。",
+          "同一概率反转任务中，小鼠和5个A2C RNN均逐渐增强奖励历史利用，Policy Axis方向跨会话逐渐趋稳，模型/小鼠利用choice history存在差异。",
+          "早期OFC CaMKII可塑性抑制妨碍跨会话学习；专家阶段同类抑制无可检测损害，而短暂抑制OFC活动妨碍专家实时历史依赖。",
+          "神经价值轴的增强/稳定与行为策略变化相关；这些是OFC机制证据，不等于动物执行数学梯度元更新器或跨任意新任务泛化。",
+          "RSI最值得继承的是针对快层/慢层的分阶段冻结与干预，而非重复提出两个学习环；与DiscoRL联合成为学习规则自进化的证据与方法参考。"
+        ],
+        "afterword": "以下LLM/RSI更新规则冻结、LoRA对照、未来C的AULC属于本站研究转化。Hattori原文没有Agent长程自修改或异领域语言模型实验。",
+        "sections": [
+          {
+            "id": "study-subjects",
+            "stage": "challenge",
+            "title": "实验对象是谁？为何既要小鼠又要人工RNN？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "真实小鼠在左右舔水口学习不断反转的奖赏概率；人工部分是5个独立A2C-tanh RNN，模拟同样的任务结构。小鼠脑内的OFC通过长期生物可塑性形成快速奖赏策略，而RNN通过跨session梯度形成快速活动状态策略；作者比较的是可分离的时间尺度机制，不是把神经元参数逐项等同RNN梯度。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "对象",
+                  "真正可变的是什么",
+                  "后测解释"
+                ],
+                "rows": [
+                  [
+                    "小鼠",
+                    "慢：CaMKII相关OFC突触可塑性；快：OFC群体活动",
+                    "光控干预因果辨别"
+                  ],
+                  [
+                    "人工RNN",
+                    "慢：session结束后A2C/RMSProp更新权重；快：固定权重下隐藏状态随奖励改变",
+                    "在人工网络中控制两条时间尺度"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把小鼠变成“用GPU训练的Agent”",
+                "text": "两类实验相互提供机制解释，但生物脑学习算法尚未被证明与人工A2C一模一样。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "baited-reversal-task",
+            "stage": "challenge",
+            "title": "Fig.1a：左右水奖励的概率反转究竟怎样设置？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "小鼠头固定，听到准备信号后向左/右舔水口作答。左右分配0.6/0.1或0.525/0.175；每60–80 trial突然翻转高低侧，环境不提前告知。已经分配给某侧、暂时没人领取的水会留在该侧直到被舔，因此右侧低分配概率经过多个未选trial后，下一次可能仍有奖励。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "机制",
+                  "实验参数",
+                  "为什么重要"
+                ],
+                "rows": [
+                  [
+                    "奖励分配",
+                    "0.6:0.1 / 0.525:0.175",
+                    "让小鼠有必要用最近反馈更新价值"
+                  ],
+                  [
+                    "反转",
+                    "每60–80 trial，无提示",
+                    "检查适应改变，而非静态记住永远选左"
+                  ],
+                  [
+                    "Baiting",
+                    "已分配未领取奖励可累积",
+                    "小鼠与人工RNN可以利用不同策略获得奖励"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "小鼠和人工RNN有行为差异",
+                "text": "人工RNN学会更明显的无奖励驱动选择交替，利用baiting；小鼠更多维持选择高分配侧。二者并非相同算法复刻。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "two-timescale-rnn",
+            "stage": "design",
+            "title": "Fig.1c–g：RNN里哪部分每trial更新，哪部分仅跨session更新？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "快速状态转移（教学简式）",
+                "expression": "h[t+1] = f_φ(h[t],a[t],r[t])",
+                "meaning": "RNN只读上一轮选择及奖励和自身隐藏状态，形成累计历史，动作概率由活动状态产生。",
+                "boundary": "原网络的真实time step每trial约4–5个；此式用trial索引压缩显示，非作者逐符号公式。"
+              },
+              {
+                "type": "formula",
+                "label": "慢速外层参数改变（教学简式）",
+                "expression": "φ[k+1] = A2C_Update(φ[k]; rewards and trajectories from session k)",
+                "meaning": "每500个trial形成一个训练会话，会话内φ固定，结束后才更新网络权重；共300训练会话。",
+                "boundary": "原实现用A2C、RMSProp和BPTT，不是本文提出全新优化器。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "模型技术",
+                  "作者设置",
+                  "对实验的作用"
+                ],
+                "rows": [
+                  [
+                    "RNN输入",
+                    "上一步奖励、左右动作3个单元",
+                    "限制眼前信息，迫使网络活动累积历史"
+                  ],
+                  [
+                    "内层",
+                    "每session500 trials，权重固定",
+                    "检查活动状态实现trial内适应"
+                  ],
+                  [
+                    "外层",
+                    "300 sessions，A2C更新权重",
+                    "逐渐形成稳定的快速利用历史的策略"
+                  ],
+                  [
+                    "优化器",
+                    "学习率0.0005，γ=0.5，unroll=50",
+                    "解释可执行人工元学习实例"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "快层不是每道题给LoRA梯度",
+                "text": "此实验中快层活动状态更新而非权重改变。迁移到RSI可以另定义快=任务参数更新、慢=学习更新规则，但那是我们新的操作定义。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "reward-kernel",
+            "stage": "insight",
+            "title": "Eq.(12)/Fig.1h：作者怎样量化‘越来越会利用经验’？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "奖励/选择历史Logistic回归（论文方法结构）",
+                "expression": "logit P_left(t)=β0+Σ_{i=1..5}βr,i·(r_left(t−i)−r_right(t−i))+Σ_{i=1..5}βc,i·(c_left(t−i)−c_right(t−i))",
+                "meaning": "逐会话拟合五轮奖励差和动作差对本次选择的影响，形成可比较的历史依赖核。",
+                "boundary": "符号左右指示按作者编码形式整理；β只是行为拟合出的代理参数，不等同真实神经突触连接。"
+              },
+              {
+                "type": "prose",
+                "text": "奖励核的强度告诉我们学习者是否利用历史，而核的形状/方向告诉我们怎样组合不同时间的反馈。作者把它们拆开，并通过跨session比较观察策略形成；这比只报告总奖励更有诊断性。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "应用到RSI时该测什么？",
+                "text": "当前成功率相同的两个Agent，其对近期失败、旧能力退化、验证反馈的学习决策权重可能不同。但策略系数变化本身仍须用后续学习收益验收。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "policy-axis",
+            "stage": "insight",
+            "title": "Fig.1j–l：怎样判断学到的学习策略逐渐稳定？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "策略轴（教学命名）",
+                "expression": "p_r[k] = [βr,1[k],…,βr,5[k]]",
+                "meaning": "用同一会话的五个奖励历史回归系数构成奖励策略方向；choice history也有独立轴。",
+                "boundary": "这是行为策略的代理表示，无法保证相近轴就产生等价神经机制。"
+              },
+              {
+                "type": "formula",
+                "label": "策略轴余弦相似",
+                "expression": "sim(k,j)=<p_r[k],p_r[j]>/(||p_r[k]||·||p_r[j]||)",
+                "meaning": "越接近1，两个会话倾向用相似方式加权五轮奖励；早期相邻轴方向差异大，后期逐渐稳定。",
+                "boundary": "即使一个糟糕的学习策略也可能稳定；不能直接用cosine高低当成元学习效果大小。"
+              },
+              {
+                "type": "prose",
+                "text": "策略核的强度、形状及稳定性联合形成对‘学法本身是否改变’的证据，而不是把新题得分作为唯一变量。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "early-plasticity-intervention",
+            "stage": "result",
+            "title": "Fig.2：在新手阶段阻止OFC可塑性，哪些结果受损？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "在OFC表达光控paAIP2（5只）和EGFP对照（5只），连续30天训练期间每次选择后3秒激活光照，主要抑制CaMKII相关突触可塑性诱导。论文用行为成绩、历史权重及策略轴与对照联合评价。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "分析",
+                  "早期Day1–5",
+                  "中期Day6–20",
+                  "后期Day21–30"
+                ],
+                "rows": [
+                  [
+                    "选择高分配侧：p值",
+                    "0.95",
+                    "1.89×10^-5",
+                    "5.36×10^-6"
+                  ],
+                  [
+                    "Optimality：p值",
+                    "0.66",
+                    "0.0138",
+                    "0.000274"
+                  ],
+                  [
+                    "奖励历史核：p值",
+                    "0.41",
+                    "1.58×10^-8",
+                    "0.00237"
+                  ]
+                ],
+                "caption": "组间双侧检验p值（不是成功率）。"
+              },
+              {
+                "type": "prose",
+                "text": "中后期干预组无法像对照组那样快速形成奖励历史依赖策略；作者还检查任务参与、放电性质与一般反应，降低‘光照让小鼠不能行动’的替代解释。"
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "可以支持的因果解释",
+                "text": "在这套小鼠任务中，OFC CaMKII依赖可塑性对高效形成跨会话学习策略是必要的候选机制；不是所有突触变化都被阻断。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "expert-plasticity",
+            "stage": "result",
+            "title": "Fig.3：已经学会后再阻止同类可塑性，为什么未发现损害？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "另一批5只表达paAIP2的小鼠先在没有抑制的条件下达到专家：最近7天中奖励和选择权重之和变化标准差都小于0.025，且至少训练17天。然后交替10个光刺激、10个对照会话，仅在专家阶段施加同一类OFC可塑性阻断。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "阶段",
+                  "干预对象",
+                  "结果"
+                ],
+                "rows": [
+                  [
+                    "新手形成时",
+                    "OFC可塑性诱导",
+                    "策略形成明显受损"
+                  ],
+                  [
+                    "专家使用时",
+                    "同类OFC可塑性诱导",
+                    "选择、奖励历史依赖及optimality未检测到显著损害"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "未观察到影响≠证明不存在任何可塑性",
+                "text": "paAIP2只针对CaMKII相关通路，无法排除CaMKII非依赖的短期/其他可塑性或其他脑区的参与。作者的主张是对其干预对象的时间尺度选择性。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "expert-activity-suppression",
+            "stage": "result",
+            "title": "Fig.5：专家阶段不是不需要OFC，而是需要OFC活动",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "研究用ChrimsonR介导的光遗传方法在随机约13%的专家试次、当前选择前短暂抑制OFC群体活动，并控制每次干预后有足够连续非干预试次。结果显示选择不再同样依赖过去奖赏，小鼠更多退回奖励无关的偏好；后续试次可恢复。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "干预",
+                  "组别",
+                  "主要解读"
+                ],
+                "rows": [
+                  [
+                    "短暂OFC活动抑制",
+                    "ChrimsonR 6鼠/43会话",
+                    "历史依赖降低，当前快速RL受损"
+                  ],
+                  [
+                    "对照光照",
+                    "tdTomato 5鼠/30会话",
+                    "用于排除光照或操作本身"
+                  ],
+                  [
+                    "人工RNN同类试验",
+                    "~13%随机试次抑制部分recurrent神经元活动",
+                    "活动依赖性同向，非生物机制逐项复刻"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最值得迁移到Agent的分离试验",
+                "text": "只冻结元规则还能用已有学法，说明‘形成’和‘执行’分开；但禁止调用已经学会的规则/状态会损害实时适应。两种实验不能被一个‘关闭训练’代替。"
+              }
+            ],
+            "order": 3
+          },
+          {
+            "id": "ofc-value-coding",
+            "stage": "result",
+            "title": "Fig.4：为什么需要从OFC神经群体解码多类价值？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "价值信号",
+                  "定义",
+                  "作用"
+                ],
+                "rows": [
+                  [
+                    "左右价值差",
+                    "ΔQ=Q_L−Q_R",
+                    "近期哪个动作更值得选"
+                  ],
+                  [
+                    "已选动作价值",
+                    "Q_ch=Q(a_chosen)",
+                    "上一决策/奖赏关联的已选价值"
+                  ],
+                  [
+                    "总价值",
+                    "ΣQ=Q_L+Q_R",
+                    "综合的动作价值背景"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "双光子成像获得7只小鼠/14群体OFC神经活动。作者不仅拟合绝对值，还分析相邻试次的神经与价值变化，并分别在同会话与跨会话打乱，减少缓慢漂移带来的伪相关。神经活动对三类价值信号具有可解码性，特别是在下一次选择前仍包含信息。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "可解码值≠证明完整critic在OFC",
+                "text": "论文讨论OFC可能至少包含Actor相关功能，critic/TD误差信号还可能涉及VTA、纹状体等其它脑区。"
+              }
+            ],
+            "order": 4
+          },
+          {
+            "id": "longitudinal-value-axis",
+            "stage": "result",
+            "title": "Fig.7：价值轴和策略轴为什么一起稳定？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者跨会话追踪同一神经群体，发现随着训练进行，OFC活动中Q_ch和ΣQ的价值解码逐渐增强；价值编码轴在会话之间更稳定，且编码轴稳定性与行为奖励策略轴稳定性呈正相关。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "测量",
+                  "观察结果",
+                  "可支持什么"
+                ],
+                "rows": [
+                  [
+                    "价值信号强度",
+                    "Q_ch、ΣQ随训练增强",
+                    "活动状态开始包含更可靠的价值信息"
+                  ],
+                  [
+                    "跨会话编码轴余弦",
+                    "逐渐趋稳",
+                    "类似的价值可以由更稳定的神经方向表达"
+                  ],
+                  [
+                    "编码轴与行为策略轴对应",
+                    "稳定性相关",
+                    "慢可塑性与快行为策略形成相联系"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把关联写成新物理定律",
+                "text": "模型的ΔQ信号与历史利用关联更强；在小鼠OFC中这项关联未始终成立，不应声称生物与RNN学到同一具体内部算法。"
+              }
+            ],
+            "order": 5
+          },
+          {
+            "id": "causal-identification",
+            "stage": "next",
+            "title": "从三个干预提炼元学习的严格证据标准",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "干预",
+                  "保留的能力",
+                  "被干预的机制",
+                  "得到哪一级因果证据"
+                ],
+                "rows": [
+                  [
+                    "新手阶段抑制慢可塑性",
+                    "任务执行能力仍可测",
+                    "长期策略形成",
+                    "慢形成必要性"
+                  ],
+                  [
+                    "专家阶段抑制慢可塑性",
+                    "已形成的奖励历史策略",
+                    "继续诱导同类长期连接变化",
+                    "已有学法可被使用"
+                  ],
+                  [
+                    "专家阶段短暂抑制活动",
+                    "长期形成的连接",
+                    "实时回路活动",
+                    "当前学法的执行依赖"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "对RSI可操作成3种干预：冻结Meta-Updater但保留学生更新、在执行期不给元策略状态/指令、只在新任务到来时保留旧/新元策略进行配对试训。其核心不是硬生生套同一生物部件，而是通过冻结操作分离机制。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "最关键的双重否证",
+                "text": "如果冻结Meta不会改变未来学习速度，说明可能没有学法改进；如果只靠额外上下文就能做到相同效果，说明没有持久独立学习；若meta改善只发生已见任务族，必须缩小泛化主张。"
+              }
+            ],
+            "order": 1
+          },
+          {
+            "id": "metarl-nearest",
+            "stage": "next",
+            "title": "与DiscoRL/传统元RL已有研究相比，我们新在哪里？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "工作",
+                  "已经研究了什么",
+                  "是否自动产生新更新规则"
+                ],
+                "rows": [
+                  [
+                    "RL² / Learning to Reinforcement Learn (2016/2018)",
+                    "跨任务训练RNN，让固定网络在新episode根据奖励快速改变隐藏状态",
+                    "通常固定元训练结构/在推理状态中学习"
+                  ],
+                  [
+                    "Hattori et al. 2023",
+                    "小鼠OFC快慢机制的分阶段抑制与行为历史核",
+                    "动物实验，非新LLM更新器"
+                  ],
+                  [
+                    "DiscoRL · Nature 2025",
+                    "跨57/103复杂环境训练元网络生成策略与新预测训练目标，并验证未见领域",
+                    "已自动学习新的RL目标规则"
+                  ],
+                  [
+                    "I2 · 教师共进化",
+                    "教师根据学生真实回应学习更好教法",
+                    "变的是教师教学策略，不一定改变学生的参数更新规则"
+                  ],
+                  [
+                    "I9 · 训练顺序",
+                    "相同数据A→B/B→A影响未来任务C的可学习性",
+                    "变的是学习材料的次序"
+                  ],
+                  [
+                    "RSI未编号候选 · 更新规则的条件性演化",
+                    "固定样本、顺序、教师、基础模型，只变参数更新目标/规则",
+                    "要证明长期持续净收益，非简单重复已有元RL"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "DiscoRL已有完整公式、消融和资源规模精读：https://agent-evolution.lightrain.asia/rsi/reading-notes.html#deep-discorl-nature2025-oh；本篇主要补‘什么时候形成、什么时候执行，怎样用分阶段干预识别’的强证据。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "跨时间尺度本身已是Meta-RL常识",
+                "text": "新颖性必须在LLM真实持久更新上解释何种历史状态需要改变什么学习规则、训练前可预测、未来保持与未见任务族迁移，而不是发明两个Loop。"
+              }
+            ],
+            "order": 2
+          },
+          {
+            "id": "rsi-protocol",
+            "stage": "next",
+            "title": "P0：Same Current Ability, Different Future Learnability如何验证慢规则真的变好？",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "定义处理变量",
+                    "text": "同样底座θ0、学生、A/B/C题目池、学习顺序、教师反馈与token/FLOPs，仅更换更新规则η_old或η_new；先不同时选择新题。"
+                  },
+                  {
+                    "title": "形成元规则",
+                    "text": "在多个开发任务上观察同预算更新的真实好坏，用这些后果训练候选Meta-Updater；不让C的测试结果进入元目标。"
+                  },
+                  {
+                    "title": "快层/慢层分离",
+                    "text": "新学生θ0+旧规则、θ0+新规则分别学习未见C；另做冻结元规则但允许学生更新，以及仅给学法提示却不允许参数更新。"
+                  },
+                  {
+                    "title": "当前能力匹配",
+                    "text": "开始学习C之前，用独立A/B/必要前置探针确认当前能力相近，且训练C数据完全一致。"
+                  },
+                  {
+                    "title": "读取未来学习增益",
+                    "text": "完整曲线AULC_C、最终未见C变式、A/B旧能力保持、元规则发现+使用总成本和跨任务族稳定性。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "未来学习曲线增益（本站简式）",
+                "expression": "MetaGain = AULC_C(η_new,θ0) − AULC_C(η_old,θ0) − λ OldRegression − β MetaCost",
+                "meaning": "用于比较相同初始任务学生在不同更新规则下，未来任务学习曲线的真实变化。",
+                "boundary": "这是本站候选RSI指标，不是Nature Neuroscience作者原始公式；AULC和Cost须预先设评估合同。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "升级独立I的明确判据",
+                "text": "只有固定任务/顺序/反馈及总成本后，学习规则本身改变带来可重复的正/负迁移交互，并在新规则族与模型快照上比最佳固定/简单路由方法更好，才值得正式定为I14。"
+              }
+            ],
+            "order": 3
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41593-023-01485-3",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10689244/",
+        "code": "https://github.com/ryhattori/MetaRL-PRL",
+        "data": "https://doi.org/10.5281/zenodo.8378063"
+      }
+    },
+    {
       "id": "nhb2026-hybrid-memory-eckstein",
       "short_title": "NHB 2026 · Hybrid Memory-ANN",
       "title": "Hybrid neural–cognitive models reveal how memory shapes human reward learning",
@@ -7480,6 +8265,59 @@
               }
             ],
             "order": 3
+          },
+          {
+            "id": "hattori-vs-discorl-metarl",
+            "stage": "next",
+            "title": "Hattori 2023 与 DiscoRL 2025：元学习形成机制 vs 学习目标自动发现",
+            "order": 2,
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "比较维度",
+                  "Hattori · Nature Neuroscience 2023",
+                  "DiscoRL · Nature 2025"
+                ],
+                "rows": [
+                  [
+                    "实验主体",
+                    "真实小鼠+人工A2C RNN（5个种子）",
+                    "57/103环境中的大量Agent群体"
+                  ],
+                  [
+                    "快时间尺度",
+                    "同会话内靠OFC/RNN活动状态从奖励历史调整行动",
+                    "每个游戏Agent按共享目标持续更新其θ"
+                  ],
+                  [
+                    "慢时间尺度",
+                    "跨session CaMKII依赖可塑性 / RNN权重更新形成更好历史策略",
+                    "跨Agent通过meta-gradient更新元网络η生成新的训练目标"
+                  ],
+                  [
+                    "关键机制实验",
+                    "在新手/专家阶段分别抑制可塑性，再短暂抑制OFC活动",
+                    "代理预测目标、q/p/y/z与bootstrap消融"
+                  ],
+                  [
+                    "直接验证范围",
+                    "小鼠同一家族概率反转任务，非跨任意新任务",
+                    "冻结发现规则，重新训练未见任务族的新Agent"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "两者不是谁取代谁：Hattori的强项是如何通过阶段性干预识别‘长期形成学习策略’与‘当前使用学习策略’；DiscoRL的强项是用Meta-gradient直接改进对策略/新预测的训练目标。RSI应结合二者，但已存在RL²、Learning to Reinforcement Learn等强先例，不能把两层环本身当新颖性。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "要升级为独立I的关键检验",
+                "text": "固定任务学生、题目及顺序、反馈与总成本，分别冻结或替换元规则，检查对未见C任务的真正LoRA学习曲线增益及旧能力保持。仅改变题目顺序归I9；仅改善教师教法归I2。研究候选单页：/rsi/learning-rule-evolution.html。"
+              }
+            ]
           },
           {
             "id": "rsi-decisive-experiment",

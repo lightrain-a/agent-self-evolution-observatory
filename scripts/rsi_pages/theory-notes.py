@@ -58,7 +58,7 @@ index += '<div class="route-grid theory-directory">' + ''.join(
     e(item["category"]) + ' · ' + e(item["question"]) + '</span></a>'
     for item in ENTRIES
 ) + '</div>'
-index += '<p class="note"><b>当前主题：</b>DiscoRL的目标生成与元梯度、Science 2021/2024的非局部信用与记忆标记、ACL 2026的经验跟随和反事实效用、2026年Faulty Memory的抽象保真性。作者机制、本站教学推导及未验证的RSI巩固策略始终分层标注；详见<a href="experience-consolidation.html">经验到长期能力候选</a>。</p>'
+index += '<p class="note"><b>当前主题：</b>DiscoRL的目标生成与元梯度、Hattori 2023的OFC快慢Meta-RL及分阶段干预、Science 2021/2024的非局部信用与记忆标记、ACL 2026的经验跟随和反事实效用、2026年Faulty Memory的抽象保真性。作者机制、本站教学推导及未验证的RSI巩固策略始终分层标注；详见<a href="learning-rule-evolution.html">学习规则自进化候选</a>和<a href="experience-consolidation.html">经验到长期能力候选</a>。</p>'
 
 
 def render(entry: dict) -> str:

@@ -50,6 +50,7 @@ sections = [
 <p><a href="i8.html"><strong>I8</strong></a> 研究纠错何时改变共同规则，<a href="idea-i10-learning-novelty.html"><strong>I10</strong></a> 研究新增例子何时提供可吸收的区分信息。这两项可共用规则生成、真实更新与跨题迁移平台，但干预变量须分开。</p>
 <p><a href="idea-i12-prerequisite-bottleneck.html"><strong>I12</strong></a> 需要证明补前置知识改变第二阶段学习增益；<a href="idea-i9-practice-switching.html"><strong>I9</strong></a> 需要证明训练历史改变后续 C 的学习曲线。<a href="idea-i11-emotional-rsi.html">I11</a> 可轻量并行，I6/I7 先做小型受控检验，I2/I5 只运行资格实验。</p>
 <p><b>I13 的最新口径：</b>以候选更新的跨版本安全风险、独立验收、危险更新漏放与安全更新误拒为中心；既不让候选 Agent 改写安全硬门，也不把 I1 的存放方式选择当成 I13 的全部新颖性。</p>
+<p><b>新跨方向候选（本表不排名）：</b><a href="learning-rule-evolution.html">Learning Rule Evolution</a> 以Hattori 2023的快/慢干预与DiscoRL 2025的更新目标学习为理论参考，单独考察更新规则η能否在相同学生、相同任务样本/顺序下提高未来C真实学习。仅证明双层循环或当前任务提升不够升级I14；需先胜过最佳固定规则和随机历史，并控制元发现成本。</p>
 <p><b>证据状态：</b>所有名次是选题与实验设计判断，不是录用概率，不代表已完成训练。<a href="ideas.html">查看 I1–I13 原始定义 →</a></p></div>
 '''),
 ("ranking", "三张排序表合在一起读", '''

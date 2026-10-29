@@ -9,6 +9,154 @@
   },
   "entries": [
     {
+      "id": "metarl-two-timescale-learning",
+      "title": "快学习与慢元学习：任务内状态变化和跨会话学法形成如何分离？",
+      "category": "Two Time Scales / Meta-RL",
+      "status": "paper-mechanism",
+      "source_paper_id": "hattori-ofc-metarl-nn2023",
+      "source_anchor": "two-timescale-rnn",
+      "source_locator": "Hattori et al. Nat Neurosci 2023 · Fig.1c–g, Fig.2–5 / Methods Artificial meta-RL network",
+      "question": "一名学习者可以在短期内改变行动，还能经过长期训练改变自己利用反馈的方式；怎样用可操作干预分开两者？",
+      "insight": "人工RNN会话内权重固定、依靠隐藏状态整合奖励，跨会话由A2C更新长期权重；真实小鼠的OFC CaMKII依赖可塑性和活动阶段性干预提供对应的神经因果证据。",
+      "equations": [
+        {
+          "name": "快层：固定权重下更新历史状态（教学抽象）",
+          "expression": "h[t+1]=f_φ(h[t],a[t],r[t])",
+          "latex": "h_{t+1}=f_\\phi(h_t,a_t,r_t)",
+          "meaning": "RNN会话内接收动作/奖励历史，活动状态变化会改变选择，φ在本次500 trial中不更新。",
+          "boundary": "本式用trial为单位压缩实际网络多time step计算；小鼠神经元不一定采用这个递归函数。"
+        },
+        {
+          "name": "慢层：会话结束后更新网络权重（教学抽象）",
+          "expression": "φ[k+1]=MetaA2C(φ[k],session[k]); φ fixed within session k",
+          "latex": "\\phi_{k+1}=\\operatorname{MetaA2C}(\\phi_k,\\mathcal D_k),\\qquad \\phi_t=\\phi_k\\ \\text{within session }k",
+          "meaning": "慢更新让下一会话面对奖励反转时有更有效的快速状态响应；人工模型用A2C + RMSProp, 每session500 trials。",
+          "boundary": "Nature论文没有给出一条统一的生物梯度公式；MetaA2C是本站教学记号。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "先区分时间轴",
+          "text": "t为当前session内trial，k为跨session训练轮次；一个状态函数不等于两个参数优化器。"
+        },
+        {
+          "label": "检查没有慢更新的快适应",
+          "text": "冻结当前session的φ，仍可借历史活动改变行动和预测，即fast RL。"
+        },
+        {
+          "label": "检测慢规则逐步形成",
+          "text": "跨session改变φ后，后期奖励历史核增强并逐渐稳定，说明快行为的利用方式变了。"
+        },
+        {
+          "label": "利用分阶段神经阻断验证",
+          "text": "初期抑制CaMKII可塑性影响慢形成；专家时抑制同类可塑性未明显损害fast RL；短暂抑制OFC活动则损害专家的history dependence。"
+        }
+      ],
+      "when_to_use": "构建RSI‘任务能力vs学习策略能力’评价协议、解释为何冻结改进器不等于冻结Agent，以及设置必要性消融时引用。",
+      "caution": "小鼠实验限同类概率反转情景；快层是神经/隐藏状态，RSI把任务LoRA作为内层更新只是新的工程操作定义，并非论文已证明的生物对应。"
+    },
+    {
+      "id": "policy-history-kernel-measurement",
+      "title": "Policy Axis：怎样定量测量学习方式的改变而不只看最终任务分数？",
+      "category": "Learning Strategy Measurement",
+      "status": "paper-mechanism",
+      "source_paper_id": "hattori-ofc-metarl-nn2023",
+      "source_anchor": "policy-axis",
+      "source_locator": "Hattori et al. 2023 Eq.(12), Fig.1h–l, Fig.7e; mouse behavior and RNN regression",
+      "question": "两个模型当前正确率都很高，怎样知道它们利用过去反馈的方式已经不同？",
+      "insight": "逐session从过去五轮动作与奖励历史拟合行为Logistic核，将奖励系数构成Policy Axis；其大小和方向稳定性提供观察更新策略的独立维度。",
+      "equations": [
+        {
+          "name": "五步奖励与动作历史核",
+          "expression": "logit P_left(t)=β0+Σ_{i=1}^5 βr,i(rL[t−i]−rR[t−i])+Σ_{i=1}^5 βc,i(cL[t−i]−cR[t−i])",
+          "latex": "\\log\\frac{P_L(t)}{1-P_L(t)}=\\beta_0+\\sum_{i=1}^5\\beta_{r,i}[r_L(t-i)-r_R(t-i)]+\\sum_{i=1}^5\\beta_{c,i}[c_L(t-i)-c_R(t-i)]",
+          "meaning": "奖励历史核说明小鼠如何利用近期奖励，选择历史核说明是否受自身动作序列影响；逐session独立拟合。",
+          "boundary": "是对原论文Eq.(12)结构的重写，具体编码需按作者真实左右动作/奖励指示变量复现。"
+        },
+        {
+          "name": "奖励策略轴相似度",
+          "expression": "p_r(k)=[βr,1(k),...,βr,5(k)]; cos(p_r(k),p_r(j))",
+          "latex": "\\mathbf p_r^{(k)}=(\\beta_{r,1}^{(k)},\\ldots,\\beta_{r,5}^{(k)}),\\quad\\operatorname{sim}(k,j)=\\frac{\\langle\\mathbf p_r^{(k)},\\mathbf p_r^{(j)}\\rangle}{\\|\\mathbf p_r^{(k)}\\|\\,\\|\\mathbf p_r^{(j)}\\|}",
+          "meaning": "对比不同session奖励核方向，后期更稳定说明奖励历史策略形成趋于一致。",
+          "boundary": "稳定也可能是稳定的错误规则，所以余弦不是元学习净收益、效果大小或跨任务泛化指标。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "在每个会话拟合相同统计模型",
+          "text": "固定相同特征定义和五轮历史窗口，避免后期强行为收益只是更好拟合不同输入格式。"
+        },
+        {
+          "label": "分开强度与形状",
+          "text": "核权重总和衡量依赖程度；向量夹角衡量对不同历史时距的加权结构。"
+        },
+        {
+          "label": "在跨会话上观察策略形成",
+          "text": "不能只看当天奖励，需比较后期策略轴相对早期是否稳定及是否跟随回报提升。"
+        },
+        {
+          "label": "把策略指标和未来学习结果并列",
+          "text": "RSI可以用类似核记录过去失败如何影响更新动作，但最终必须在真实任务C上测新规则的AULC和旧能力保持。"
+        }
+      ],
+      "when_to_use": "以后写I2/I9或Meta-RSI的机制图、策略更新测量、回归模型公式、跨代学习决策的观测指标时引用。",
+      "caution": "Policy Axis测的是回归代理，不是神经网络参数、真正的学习规则源码或不同策略的因果效率。"
+    },
+    {
+      "id": "meta-improvement-intervention-contract",
+      "title": "Meta-RSI 决定性干预：区分学法形成、任务执行与持久学习收益",
+      "category": "Causal Meta-Improvement Validation",
+      "status": "rsi-hypothesis",
+      "source_paper_id": "hattori-ofc-metarl-nn2023",
+      "source_anchor": "rsi-protocol",
+      "source_locator": "本站根据Hattori 2023分阶段神经干预+DiscoRL 2025更新目标生成设计的LLM实验合同；非作者原式",
+      "question": "怎样排除‘Agent只是当前做得更好’，证明它经过历史学习以后真的更会更新自己？",
+      "insight": "独立冻结/替换任务学习器和元学习规则，用相同初始检查点、相同学习材料、相同反馈及总预算比较新/旧元策略在真正未见任务的学习曲线增益。",
+      "equations": [
+        {
+          "name": "未见C任务的元学习增益（本站假设）",
+          "expression": "ΔMeta= AULC_C(ηnew,θ0) − AULC_C(ηold,θ0)",
+          "latex": "\\Delta_{\\rm Meta}=\\operatorname{AULC}_C(\\eta_{\\rm new},\\theta_0)-\\operatorname{AULC}_C(\\eta_{\\rm old},\\theta_0)",
+          "meaning": "仅改变元更新规则η、固定任务学习者θ0与新任务C数据/训练步骤，比较从零真实学习曲线面积。",
+          "boundary": "AULC的积分点、归一化、总训练预算都须事先固定；不同初始C可解性不能被算作学法提升。"
+        },
+        {
+          "name": "考虑旧能力与总成本的净目标（本站假设）",
+          "expression": "G_net=ΔMeta − λ OldRegress − β TotalCost(η discovery+evaluation)",
+          "latex": "G_{\\rm net}=\\Delta_{\\rm Meta}-\\lambda \\operatorname{Regress}_{\\rm old}-\\beta C_{\\rm meta+eval}",
+          "meaning": "既要计算新的未来学习，又要结算元规则训练开销、每次目标生成调用/训练成本和旧能力退化。",
+          "boundary": "不是Hattori/DiscoRL原始统一指标；两篇论文没有在LLM持续LoRA学习上实测它。"
+        }
+      ],
+      "derivation": [
+        {
+          "label": "只改规则不换题",
+          "text": "A/B训练池与顺序、教师、反馈、学生初始化、每次更新token/FLOPs均固定；ηold/ηnew是唯一主干预。"
+        },
+        {
+          "label": "新任务学生重置",
+          "text": "在C之前从相同θ0和相同LoRA优化器状态起跑，只继承已验证元策略，不继承旧任务答案或上下文。"
+        },
+        {
+          "label": "分阶段冻结与移除",
+          "text": "比较允许/禁止Meta更新、允许/禁止任务学生更新、是否移除Meta策略输入；把‘形成/执行’与‘应用后实际学习’分开。"
+        },
+        {
+          "label": "超越先例的必要条件",
+          "text": "胜过最优固定学习规则、同容量历史条件路由、静态Loss调整及随机历史；在未见规则族和模型快照保持效果，才有足够基础考虑升级I14。"
+        }
+      ],
+      "when_to_use": "统一RSI讨论‘模型本身变强’‘教师变强’‘学习规则变强’和‘多轮变强’时，作为证据标准与I14候选晋级门槛。",
+      "caution": "如果改变的是题目顺序，那属于I9；改变教师干预属于I2；仅抑制/接纳危险更新属于I13。独立学习规则改进必须真改变参数更新目标与之后实际学习能力。",
+      "additional_sources": [
+        {
+          "title": "DiscoRL · Nature 2025",
+          "url": "https://www.nature.com/articles/s41586-025-09761-x",
+          "role": "自动学习更新目标的最近邻"
+        }
+      ]
+    },
+    {
       "id": "memory-retrieval-causal-utility",
       "title": "Experience-Following 与单条 Memory 的反事实使用价值",
       "category": "Episodic Retrieval / Causal Utility",

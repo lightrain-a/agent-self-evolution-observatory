@@ -53,6 +53,10 @@ python3 scripts/build_rsi_site.py --output _rsi-standalone
 
 RSI 新增未编号候选页 `/rsi/experience-consolidation.html`，研究从原始Episode到文本抽象、可执行Skill及真实LoRA更新的效用与保真性。作者代码：`scripts/rsi_pages/experience-consolidation.py`；最近邻正式论文及预印本分别存于 `rsi/reading-cards.json`，长期理论公式存于 `rsi/theory-notes.json`。现阶段是研究设计，没有已完成的本项目实验。
 
+## Meta-learning理论与跨I研究候选
+
+新增 `/rsi/learning-rule-evolution.html`：已精读Hattori et al. Nature Neuroscience 2023的OFC快慢机制，与已有DiscoRL Nature 2025精读和理论双向关联。当前作为未编号候选，独立考察更新规则/目标η本身的变化是否提升相同学生在未见C的真实学习曲线；与I2教师策略、I9课程顺序分开。理论稳定锚点在 `rsi/theory-notes.json`。
+
 ## 回滚与兼容性
 
 本改动保留旧的根目录 Agent 页面和全部已有 RSI 页面路径；没有改动研究、论文或实验内容。切换入口由 Agent 站 `app.js`（独立页面 `advisor-review.html` 静态实现）以及 RSI 页面生成器分别控制。改动需要时可通过 Git 提交整体回滚。
