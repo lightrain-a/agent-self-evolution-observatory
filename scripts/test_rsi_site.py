@@ -1361,6 +1361,49 @@ def main():
     check('generalization-learnability.html' in nav_text
           and (ROOT/'_site/rsi/generalization-protocol.json').is_file(),
           'Cross-idea subject missing from public navigation or JSON export')
+    # Reader-facing Chapter 3: real papers belong next to the claim, not only
+    # in a generic bibliography after four abstract taxonomy summaries.
+    acquisition=(ROOT/'rsi/experience.html').read_text(encoding='utf-8')
+    acquisition_sections=('question','section-3-1','section-3-2','section-3-3',
+                          'section-3-4','research-directions','evidence-connection','representative-work')
+    check(all(f'id="{sid}"' in acquisition for sid in acquisition_sections)
+          and 'data-primary-function="experience"' in acquisition,
+          'Experience chapter lost stable anchors or its four-function placement')
+    acquisition_intro=element_fragment(acquisition,'question')
+    check(acquisition_intro.count('<article>')==6 and '经历更多，不一定学得更多' in acquisition_intro
+          and '<table' not in acquisition_intro,
+          'Experience chapter needs six concrete trade-offs before definitions')
+    acquisition_refs={
+        'section-3-1':('E380','S763'),
+        'section-3-2':('S760','S761','S763','S764','E26','M17'),
+        'section-3-3':('S100','S105','S768','S769'),
+        'section-3-4':('S47','M52','S766','S767'),
+    }
+    for sid,sids in acquisition_refs.items():
+        part=element_fragment(acquisition,sid)
+        check(all(f'href="references.html#{ref}"' in part for ref in sids)
+              and 'class="exp-paper"' in part
+              and 'data-layer="llm-proposal"' in part
+              and 'data-layer="rsi-proposal"' in part
+              and '待检验' in part and '一起看' in part,
+              'Experience section lacks nearby evidence or explicit hypothesis/evaluation layers: '+sid)
+    check(all(f'id="{sid}"' in acquisition for sid in
+              ('candidate-coverage','novelty-not-volume','external-information','retain-or-replace')),
+          'Experience examples and cross-domain reasoning anchors missing')
+    check('主语言模型保持冻结' in acquisition
+          and '避免退化不等于无限变强' in acquisition
+          and '不是证明' in acquisition
+          and '本轮未修改论文仓库' in acquisition,
+          'Acquisition evidence has been overstated or the paper was silently modified')
+    check(set(f'S{i}' for i in range(760,770))<=refs,
+          'Chapter 3 primary-paper references missing from registry')
+    check('8f3eec2e370e251e7d72ec7e981ba44285f9f75a' in acquisition
+          and (ROOT/'docs/rsi/experience-paper-handoff-20261029.md').is_file()
+          and (ROOT/'docs/rsi/reader-first-research-writing.md').is_file(),
+          'Paper reference or reusable editorial handoff not preserved')
+    check('body[data-rsi-page="experience"] .exp-insights' in
+          (ROOT/'rsi/research.css').read_text(encoding='utf-8'),
+          'Experience chapter needs scoped mobile-readable insight layout')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')

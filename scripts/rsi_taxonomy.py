@@ -311,6 +311,16 @@ M553|capability|signal|区分记忆、泛化电路形成和清理的内部学习
 M554|regulation|capability|研究预训练历史如何改变后续微调可学习性。
 M555|regulation|capability|在回放充足但计算受限时协调新任务可塑性与保持。
 M556|background|capability,regulation|从激励和练习讨论泛化、遗忘与少样本学习的综述视角。
+S760|experience|capability|从种子指令扩展任务分布，再用于参数学习。
+S761|capability|experience,signal|用筛选的自生成推理持续更新模型，给定题目的轨迹构造关联经验获取。
+S762|capability|experience,regulation|环境交互形成持久可调用程序，探索经历与自动课程关联经验获取。
+S763|experience|signal,capability|在响应表示中选择更广候选，并区分推理时选择与训练奖励。
+S764|experience|signal|冻结语言模型，通过在线辅助蒸馏改变解码探索和候选覆盖。
+S765|signal|experience|用过程监督训练评价器，主动选取有说服力的错误解法提供标注。
+S766|regulation|experience,capability|递归替换与有限重采样引发跨轮分布信息丢失。
+S767|regulation|experience,capability|比较数据累积与替换对长期覆盖和误差的影响。
+S768|capability|experience,signal|保留目标数据并与自生成样本对比，持续进行模型微调。
+S769|experience|signal,regulation|自生成可执行程序任务，借环境验证获得新约束。
 """
 
 SOURCE_MAP = {}

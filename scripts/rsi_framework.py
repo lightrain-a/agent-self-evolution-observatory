@@ -1,6 +1,6 @@
 """Shared four-function classification and chapter rendering for the RSI site."""
 from __future__ import annotations
-import html, json, re
+import html, json, re, runpy
 from pathlib import Path
 from rsi_taxonomy import FUNCTIONS, IDEAS, SOURCE_MAP, PAPER_MAP
 
@@ -122,6 +122,13 @@ def framework_pages(sources):
     pages=[]
     for f in FUNCTIONS:
         key,chapter=f['id'],f['chapter']
+        if key == 'experience':
+            # Reader-facing Chapter 3 has a dedicated narrative source. Keep its
+            # stable anchors and taxonomy instead of generating bare summaries.
+            page = runpy.run_path(str(ROOT/'scripts/rsi_pages/experience.py'))['PAGE']
+            assert page['slug'] == FUNCTION_SLUGS[key] and page['primary_function'] == key
+            pages.append(page)
+            continue
         sections=[('question','本章科学问题',f'<div class="framework-question">{esc(f["question"])}</div><p>{esc(f.get("summary",""))}</p><p>按主要科学贡献归档；方法、能力载体和组织方式分别描述，其他功能中的作用通过交叉引用连接。</p>')]
         for n,(title,text,question) in enumerate(SUBSECTIONS[key],1):
             sections.append((f'section-{chapter}-{n}',f'{chapter}.{n} {title}',f'<p>{text}</p><p class="framework-open"><b>要回答的问题：</b>{question}</p>'))
