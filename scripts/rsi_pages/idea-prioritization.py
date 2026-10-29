@@ -77,6 +77,7 @@ sections = [
 <tr><td>The mosaic memory of large language models [[M17]] · NC 2026</td><td>区分表面重复、语义相似和真正获得新规则。</td><td>I8 / I10</td></tr>
 <tr><td>Compressive learning scaffolds higher-order network structure [[E401]] · NC 2026</td><td>预学习与后续学习拆成两阶段，测后续新增收益。</td><td>I12</td></tr>
 <tr><td>Humans and neural networks show similar patterns of transfer and interference [[E100]] · NHB</td><td>A→B→A，同时测新知识迁移与旧规则干扰。</td><td>I3 / I8 / I9</td></tr>
+<tr><td>A recurrent network model of planning... [[E355]] · Nature Neuroscience 2024</td><td>相同rollout数量随机化发生时机使奖励下降；借鉴为I4/I6的采样时机对照，不把隐藏状态优化误写成持久参数更新。</td><td>I4 / I6，参考I9 / I13</td></tr>
 <tr><td>Hypothesis testing governs strategic motor learning [[E26]] · npj 2026</td><td>比较预测相同与预测不同的竞争假设试验。</td><td>I4 / I6 / I8</td></tr>
 <tr><td>Distorted learning from local metacognition [[E29]] · NC 2025</td><td>真实能力不变时操纵反馈展示，分开自评与表现。</td><td>I11</td></tr>
 <tr><td>The Geometry of Sequential Learning [[M18]] · ICML 2026</td><td>检验顺序效应是否能被更新几何与局部关系解释。</td><td>I9</td></tr>

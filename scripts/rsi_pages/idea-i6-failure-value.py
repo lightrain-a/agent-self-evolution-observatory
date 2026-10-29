@@ -81,6 +81,18 @@ PAGE = {
 <p><b>研究组织：</b>I6仍先固定同题与终点，判断不同失败过程的纠错价值；这里仅作为<b>后续经验巩固的机制分支</b>，不把I6改成通用Memory工程。更完整的实验协议已放在<a href="experience-consolidation.html"><b>经验到长期能力 · 未编号候选</b></a>。<a href="theory-notes.html#awake-ripple-memory-tagging">Memory Tagging原文证据</a> · <a href="theory-notes.html#experience-tag-vs-consolidation-utility">候选净收益与随机实验设计</a>。</p>
 <div class="note">关键Go/No-Go：当选择数量、写回方式及总token/FLOPs固定后，如果“先标记哪段经历”的预测能力不能稳定解释未来独立净收益，就不增加昂贵的Memory Consolidator。不能把“睡眠再次重放”解释为“独立能力一定变好”。</div>
 """),
+        ("nn2024-planning", "Nature Neuroscience 2024｜多采样是否值得，取决于何时发生", """
+<p><b>原文机制：</b>Jensen、Hennequin 与 Mattar 将 Think / rollout 纳入 meta-RL 策略；模型在固定20秒回合内花120ms模拟最多8步，物理行动要400ms。作者发现：<strong>相同rollout总次数，随机打乱发生时机后，平均回合奖励仍下降</strong>（Fig.3c）。[[E355]]</p>
+<p><b>不能当成新颖性的前作：</b>Mattar &amp; Daw（Nature Neuroscience 2018）已经提出按照未来决策的 Need×Gain 优先访问哪些记忆。[[E356]] BEACON（Findings EMNLP 2026）已经研究当前LLM采样何时停止。[[S48]] 我们要检验的是：相同父版本、真实纠错后，哪种额外计算改变了未见题的<strong>持久净学习收益</strong>。</p>
+<p><b>为什么与 I6 有关：</b>本方向不是一般的推理时继续采样（参见BEACON），而是同一道题新增一条失败轨迹后，是否有足够信息使固定纠错更新在未见题上产生净增益。先不改变训练器，仅比较“马上纠正已有失败”“先追加K条失败再纠正”“同K条失败随机插入时机”，计入采样成本。</p>
+<div class="table-wrap"><table><thead><tr><th>控制条件</th><th>为什么必须有</th><th>真正应观察的结果</th></tr></thead><tbody>
+<tr><td>继续采样 K 条 vs 直接纠正</td><td>判断额外轨迹的信息是否超过获取成本</td><td>真实更新后撤辅的未见题净收益</td></tr>
+<tr><td><b>同 K 条、随机采样时机</b></td><td>隔离“计算时机”的价值，而不是多算本身</td><td>同预算与同信息的差异</td></tr>
+<tr><td>内部采样 vs 主动辨别性反馈</td><td>内部模拟不增加外部事实，诊断会增加</td><td>归因于计算还是新增证据</td></tr>
+<tr><td>固定K／收益阈值／BEACON样式停止</td><td>与现有简单/自适应停止法直接竞争</td><td>未见新规则族上的选择 regret 与成本</td></tr>
+</tbody></table></div>
+<p><b>研究边界：</b>论文中的 rollout 更新 RNN hidden state，不是在线参数更新；动物重放是类比证据，不证明 LLM 已有相同机制。第2次连续动物重放相对第1次 P=0.068，不可写成显著。<a href="reading-notes.html#deep-nn2024-planning-replay-jensen">精读原文、Fig.2–4、Extended Data Fig.2 与 RSI P0/P1/P2 →</a>；<a href="reading-notes.html#deep-nn2024-planning-replay-jensen--rsi-p0">直接看 RSI P0 →</a>。</p>
+"""),
         ("related", "最近邻：做到了哪里、我们还要回答什么", """
 <div class="table-wrap"><table><thead><tr><th>相关工作</th><th>已研究的关系</th><th>I6 的独立问题</th></tr></thead><tbody>
 <tr><td><b>Why SFT Fails to Learn · ACL 2026</b> [[M27]]</td><td>训练完成后重测已给监督样本，并按知识缺口、监督冲突、早期遗忘等五种可能模式分析；补救后恢复训练题表现。</td><td>I6 不研究“哪一类根因需要哪种补救”。将知识准备、监督冲突与训练位置作为<b>匹配/分层变量</b>，在同一题、同一错误终点、同反馈与更新预算下，只比较失败过程本身的额外跨题收益。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">完整证据</a>。</td></tr>

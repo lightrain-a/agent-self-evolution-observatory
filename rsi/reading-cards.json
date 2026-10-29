@@ -20146,6 +20146,717 @@
           }
         ]
       }
+    },
+    {
+      "id": "nn2024-planning-replay-jensen",
+      "short_title": "Planning & Hippocampal Replay · NN 2024",
+      "title": "A recurrent network model of planning explains hippocampal replay and human behavior",
+      "authors": "Kristopher T. Jensen, Guillaume Hennequin, Marcelo G. Mattar",
+      "lead_institution": "University of Cambridge · Computational and Biological Learning Lab",
+      "institutions": [
+        "University of Cambridge · Computational and Biological Learning Lab",
+        "University College London · Sainsbury Wellcome Centre",
+        "University of California San Diego · Cognitive Science",
+        "New York University · Psychology"
+      ],
+      "institution_source": "Nature Neuroscience article Authors and Affiliations, verified 2026-10-29",
+      "publication": "Nature Neuroscience 27, 1340–1348 (2024); published 7 June 2024",
+      "doi": "10.1038/s41593-024-01675-7",
+      "official_url": "https://www.nature.com/articles/s41593-024-01675-7",
+      "first_posted": "2024-06-07",
+      "version": "Version of Record, June 2024",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature Neuroscience official full Results/Methods/Figs.1–4/Extended Data Fig.2, plus official code; not reproduced",
+      "tags": [
+        "Nature Neuroscience",
+        "Planning",
+        "Meta-RL",
+        "Hippocampal Replay",
+        "Value of Computation",
+        "I4",
+        "I6",
+        "I9",
+        "I13"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "把Think设为有成本的策略动作，并比较相同规划数量却随机安排时机的控制。",
+          "open_question": "LLM能否预判多采样比立即持久更新更值？"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "内部rollout反复处理已有信息，没有引入外界新证据。",
+          "open_question": "主动诊断获得的新信息与内部采样的未来学习价值有什么区别？"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "规划反馈改变当前动作策略，减少抵达目标的实际步骤。",
+          "open_question": "这种改变是否增加LLM的未见题正确解法？"
+        },
+        "retention": {
+          "level": "not_addressed",
+          "contribution": "Think在固定网络参数下改变隐藏状态，不是每次rollout后更新权重。",
+          "open_question": "什么时候应回放、搜索或直接写入持久Skill/LoRA？"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "空间规划与动物记录，不测跨版本危险更新或误拒。",
+          "open_question": "可否用有限预算选择性诊断帮助I13通过独立安全门？"
+        }
+      },
+      "one_sentence": "Agent学会何时付费进行内部规划；同数量随机时机更差，但未研究持久模型更新。",
+      "story": {
+        "challenge": "额外模拟能帮助决策，却占用行动时间，固定每步思考次数不总是划算。",
+        "insight": "把Think纳入需要付出时间成本的动作集合，跨任务奖励就能教会策略何时规划。",
+        "design": "在4×4迷宫中用GRU选择真实移动或最多8步内部rollout，并将模拟反馈输入隐藏状态。",
+        "result": "94人的思考时间与模型规划倾向相关；禁用或打乱等量rollout时机均降低奖励；动物重放呈相似结构。"
+      },
+      "problem": "什么时候应该花时间内部规划，而不是立即行动？规划能否解释人类思考时间与海马体重放？",
+      "setup": "4×4动态迷宫，回合20秒；94名人类参与者、5个独立主模型、37个啮齿动物记录session；真实动作400ms，完整rollout120ms，最多模拟8步。",
+      "updates": "跨随机任务强化学习时更新RNN参数；在线Think时只经模拟反馈改变隐藏状态/策略，不是对权重做SFT。",
+      "key_ideas": [
+        {
+          "name": "Think versus Act",
+          "summary": "使想象变成与真实移动竞争时间的策略动作。",
+          "formula": "a_t ∈ {up, down, left, right, think}"
+        },
+        {
+          "name": "Opportunity cost",
+          "summary": "规划的后续行为改善必须抵过失去的行动机会。",
+          "formula": "expected benefit of computation − time opportunity cost（概念化，不是论文原式）"
+        },
+        {
+          "name": "Hidden-state policy refinement",
+          "summary": "成功rollout提高首个模拟动作的概率，失败则降低；来自循环状态的改变。",
+          "formula": "Δh ∝ (R_rollout−b) ∇_h log P(rollout)（Supplementary Note 1中的近似）"
+        }
+      ],
+      "evidence": [
+        "Fig.2：94名参与者中模型rollout概率与思考时间r=0.186±0.007；控制目标距离后的剩余相关r=0.070±0.006。",
+        "Fig.3：强制更多rollout减少后续到目标的真实步骤；禁用反馈显著减弱；禁止rollout或固定数量但打乱时机，平均回合奖励均下降。",
+        "Fig.3e：匹配同一迷宫/隐藏状态，成功rollout提高对应首动作概率，失败rollout降低。",
+        "Fig.4：37个动物记录session，回放少穿墙、偏向目标；连续第2/3次相对第1次目标过表征的P=0.068/0.009。",
+        "Extended Data Fig.2：规划使用早期压低、中期上升、后期随着基础策略增强又降低。"
+      ],
+      "boundaries": [
+        "原文研究固定参数下的内部模拟与快速决策，不等于LLM采样后执行持续权重更新。",
+        "人类思考时间经概率模型扣除感觉动作延迟估计，相关性不大且不能直接证明脑区计算因果。",
+        "动物回放与接下来动作相关，但不能排除已有行动倾向或继续回放的选择偏差；P=0.068非传统显著。",
+        "只研究局部前向rollout；不自动证明逆向/非局部回放、长期巩固或RSI有效。",
+        "400ms与120ms是模型环境中的假设机会成本，LLM需另用token、FLOPs与真实时间归一化。"
+      ],
+      "our_relevance": [
+        "I4：在失败原因未明时选择有诊断价值的下一次尝试，何时证据足够写成Skill。",
+        "I6：多采样是否给未来真实纠错带来增量价值，而非仅当前pass@k。",
+        "I9：学习阶段可能改变额外计算的价值，但本论文尚未证明LLM真实学习历史效应。",
+        "I13：在安全更新提交前选择是否投入额外验证；安全不变量独立且不可改。"
+      ],
+      "next_test": "P0：同一父版本分叉，对比立即按现有证据更新、先额外采样K条、主动获取辨别证据、回放已有经验；记录完整成本并加同数量随机时机对照。P1区分知识不足、搜索不足、规则冲突，评测撤辅后的新题净增益。P2若效应存在再训练事前选择器。全部尚待实验。",
+      "links": {
+        "html": "https://www.nature.com/articles/s41593-024-01675-7",
+        "pdf": "https://www.nature.com/articles/s41593-024-01675-7.pdf",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11239510/",
+        "code": "https://github.com/KrisJensen/planning_code"
+      },
+      "deep_read": {
+        "focus": "每一次内部思考都需要付出时间成本；作者让Meta-RL学会何时Think，证明同数量随机时机的rollout更差。对RSI的延伸是何时继续采样、搜索、回放或执行真正持久更新。",
+        "summary": "94人迷宫反应时、5个训练网络与37动物记录session提供计算、行为和重放结构的相互参照；模型改变的是RNN hidden state，动物关联不等于因果。本站延伸P0/P1/P2均尚待实验。",
+        "terms": [
+          {
+            "name": "Think / rollout",
+            "meaning": "模型先模拟最多8步动作，得到预测路径与是否到目标，再返回当前状态选择动作；模拟不是实际移动。"
+          },
+          {
+            "name": "Opportunity cost",
+            "meaning": "规划占用20秒总预算中的120毫秒，使真实可执行动作的时间减少。"
+          },
+          {
+            "name": "Meta-RL 与 hidden state",
+            "meaning": "跨任务慢速训练更新权重；新任务执行时参数固定，RNN通过隐藏状态变化实现快速适配。"
+          },
+          {
+            "name": "Replay",
+            "meaning": "动物静止时解码到的连续位置序列；相似于模型模拟轨迹，但不能等同每次权重学习。"
+          },
+          {
+            "name": "Net learning value（本站假设）",
+            "meaning": "固定后续训练预算时，额外采样/诊断带来的未见题独立增益减去旧能力损失及全部成本。"
+          }
+        ],
+        "metric_summary_title": "先记住五个原文事实",
+        "metric_summary_intro": "把模型设定、人类相似性与动作因果控制分开阅读。以下是原论文，不是RSI实验结果。",
+        "metric_summary": [
+          {
+            "family": "Human",
+            "metrics": "n=94",
+            "meaning": "人类在线迷宫参与者",
+            "result": "思考时间在首动作、远距离条件下更长；属于反应时分解得到的估计。"
+          },
+          {
+            "family": "RNN",
+            "metrics": "5 agents",
+            "meaning": "主要独立强化学习模型重复数",
+            "result": "Think动作通过世界模型模拟，影响隐藏状态；训练阶段才更新参数。"
+          },
+          {
+            "family": "Budget",
+            "metrics": "400 ms / 120 ms",
+            "meaning": "物理行动／一次rollout假设的时间成本",
+            "result": "在20秒episode内，额外思考减少物理行动机会。"
+          },
+          {
+            "family": "Correlation",
+            "metrics": "r=0.186; partial r=0.070",
+            "meaning": "人类思考时间与模型rollout倾向的相似性",
+            "result": "均显著高于随机水平，但不是高精度或因果性的行为重建。"
+          },
+          {
+            "family": "Replay",
+            "metrics": "37 rat sessions",
+            "meaning": "重新分析的动物海马回放记录",
+            "result": "少穿墙、偏向已知目标；连续第2/3次相较第1次 P=0.068/0.009。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "question",
+            "stage": "challenge",
+            "title": "难点｜已有策略能行动，为什么还要停下来想？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "迷宫路线已经足够由当前状态决定，但人仍会在距离目标远、刚被传送到新起点时想得更久。额外规划不增加真实世界的新事实，却可能避免之后执行错误路径；它也占用宝贵时间。作者研究的是何时为了更好的当前行动而付出规划成本。"
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "一眼看懂",
+                "text": "知道目标在迷宫右上方，沿哪条有墙的路过去并不直观。可以直接向右试，也可以先在脑中模拟右—上—左的结果。模拟可能避免撞墙，但实际比赛有20秒倒计时。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "本文不是训练后即时更新权重",
+                "text": "Meta-RL在大量迷宫任务上慢速更新网络参数，单个任务里Think只影响RNN隐藏状态。RSI里“多采样再纠错还是立即写入参数/Skill”属于下一层待验证问题。"
+              }
+            ]
+          },
+          {
+            "id": "model-task",
+            "stage": "design",
+            "title": "Figure 1｜让Think成为第五个真正有成本的动作",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "设计量",
+                  "原论文设置",
+                  "为何重要"
+                ],
+                "rows": [
+                  [
+                    "环境",
+                    "4×4周期边界、有墙、隐藏目标的迷宫",
+                    "简单但需要多步决策；每轮换墙与目标"
+                  ],
+                  [
+                    "任务时限",
+                    "20秒/episode",
+                    "不能无限模拟；思考占真实行动机会"
+                  ],
+                  [
+                    "行动",
+                    "上/下/左/右 or Think",
+                    "规划与移动同属策略动作"
+                  ],
+                  [
+                    "时长",
+                    "物理行动400ms；一次完整rollout 120ms",
+                    "一个Rollout可想象最多8个行动而更快"
+                  ],
+                  [
+                    "行为/模型样本",
+                    "94名参与者；主要分析5个独立RL模型",
+                    "不能把5个网络的曲线当成94个独立模型"
+                  ],
+                  [
+                    "动物重放",
+                    "已发表数据重新分析37个记录session",
+                    "动物证据独立于新模型训练，主要是关联"
+                  ]
+                ]
+              },
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "探索",
+                    "text": "每个episode首先探索找到隐藏目标，获得奖励后重置至新的随机起点。"
+                  },
+                  {
+                    "title": "利用",
+                    "text": "同一episode内目标位置不变，从新的起点重复前往目标。"
+                  },
+                  {
+                    "title": "可选规划",
+                    "text": "Think时沿当前策略在世界模型中开放环采样想象路径；达到目标或8步时停止。"
+                  },
+                  {
+                    "title": "反馈",
+                    "text": "把路径与预测是否到达目标等信息送给下一次RNN状态，随后再次选择Think或移动。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "实现范围",
+                "text": "作者使用GRU型RNN，世界模型同时预测下一状态与目标相关信息。作者代码提供训练和分析脚本，公开代码不等于我们已复现所有结果。"
+              }
+            ]
+          },
+          {
+            "id": "learning-dynamics",
+            "stage": "insight",
+            "title": "机制｜训练学会的是何时规划，执行时改变的是隐藏状态",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "跨任务训练目标（论文的累计奖励表达）",
+                "expression": "J(θ)=E_{π_θ}[∑_{k=1}^K r_k]",
+                "meaning": "用策略梯度在大量随机迷宫上训练，使策略学到什么时候在给定时间内模拟更合算。论文还包括值函数预测、熵等辅助项。",
+                "boundary": "此式是跨episode慢更新的目标；不能将一次测试期Think误写为一次新参数训练。"
+              },
+              {
+                "type": "formula",
+                "label": "RNN隐藏状态的近似策略改善方向（Supplementary Note 1）",
+                "expression": "Δh ∝ (R_rollout − b) · ∇_h log P(rollout)",
+                "meaning": "想象路径比期望好时，提高相关行动倾向；比期望差时降低对应倾向。更新发生在RNN状态h中。",
+                "boundary": "作者用于解释/检验网络动力学与策略梯度方向的近似关系；不是在线反向传播至网络权重θ，也不是本文主训练损失。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最值得借鉴的设计思想",
+                "text": "把更多计算当作明确需要“付费”的选项；只有未来决策改善足以补偿当前行动机会损失，继续Think才值得。"
+              }
+            ]
+          },
+          {
+            "id": "fig2-human",
+            "stage": "result",
+            "title": "Figure 2｜人类在哪些情境思考更久？模型是否学会类似时机？",
+            "blocks": [
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "人类行为估计",
+                    "setup": "94名在线参与者完成迷宫任务；用有提示的引导试次估计感知与动作延迟，分离出思考时间。",
+                    "result": "首个行动和起始距离目标较远的情境，估计思考时间较长。",
+                    "supports": "人类思考时间具有任务结构，不只是随机反应迟缓。",
+                    "not_proven": "估计思考时间不是侵入式脑区规划测量。"
+                  },
+                  {
+                    "domain": "模型匹配同一历史",
+                    "setup": "给RL模型相同迷宫及人类真实行动历史，允许其继续选择虚拟rollout。",
+                    "result": "人类思考时间与π(rollout)的平均相关r=0.186±0.007；控制瞬时目标距离后的相关r=0.070±0.006。",
+                    "supports": "模型学到的规划时机可解释一部分人类思考时间差异。",
+                    "not_proven": "相关系数不大；不能声称精准预测每个人规划或识别生物神经因果路径。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "fig3-timing",
+            "stage": "result",
+            "title": "Figure 3a–c｜最强消融：规划数量相同，只把时间打乱",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "对照",
+                  "原始结果",
+                  "能排除的普通解释"
+                ],
+                "rows": [
+                  [
+                    "强制0至至少15次rollout，随后禁用额外规划",
+                    "到目标需要的物理步数随rollout数增加而减少",
+                    "内部模拟可改善当前行为"
+                  ],
+                  [
+                    "Rollout存在，但向RNN反馈设为0",
+                    "改善远弱于有效反馈",
+                    "并非只靠更多次RNN计算迭代"
+                  ],
+                  [
+                    "直接禁止所有rollout",
+                    "平均每回合奖励下降",
+                    "规划本身有净价值"
+                  ],
+                  [
+                    "保留每回合rollout数量，随机改变其时机",
+                    "平均奖励仍下降",
+                    "最佳规划时机携带独立决策信息"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "作者先强制规划再测试后续路径（排除规划期间的额外行动），随后在固定20秒时间预算下比较自然规划与两个对照。注意：强制多次规划可改善后续路径，不代表无限规划能提高整回合最终收益。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "直接迁移到RSI的强对照",
+                "text": "比较固定K次采样与“同K次采样、但随机放在错误处理流程中的其他时刻”。若新策略仍更好，才能证明选择‘何时计算’而非只证明‘多计算有用’。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "时机随机化要保持可执行性",
+                "text": "原论文会在奖励发生等无法做rollout的时间点重采样，确保同等规划次数；迁移到Agent也要匹配可执行机会，而非把诊断强塞入已终止任务。"
+              }
+            ]
+          },
+          {
+            "id": "fig3-feedback",
+            "stage": "result",
+            "title": "Figure 3d–e｜规划并非单纯增加候选，成功和失败会改变当前策略",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "在同一模型状态下采样",
+                    "text": "固定迷宫、当前位置和隐藏状态；通过拒绝采样获得一次成功和一次失败的内部rollout，避免两组初始状态不同。"
+                  },
+                  {
+                    "title": "只看其首个模拟动作",
+                    "text": "比较rollout前后，模型选择这次模拟首动作的概率。"
+                  },
+                  {
+                    "title": "成功路径与失败路径分开",
+                    "text": "到达虚拟目标的rollout提高对应动作概率，失败则降低。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "匹配同一hidden state比“成功轨迹更好”有说服力",
+                "text": "成功与失败rollout可能在生成概率上本就不同。论文显式用同一状态配对抽样；在RSI中需固定学生检查点和教师正确反馈，分叉比较轨迹本身的作用。"
+              }
+            ]
+          },
+          {
+            "id": "fig4-rodent",
+            "stage": "result",
+            "title": "Figure 4｜啮齿动物海马体重放和模型rollout哪里相似？",
+            "blocks": [
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "重放路径的环境合理性",
+                    "setup": "37个啮齿动物记录session，以贝叶斯位置解码重构静止期间至少3个相邻位置的replay。",
+                    "result": "真实replay比随机控制更少穿墙，偏向曾学习的home目标（Fig.4b,c，置换检验P<0.001）。",
+                    "supports": "重放内容带有环境结构和目标信息，与模型中的世界模型模拟有相似性。",
+                    "not_proven": "不是在动物体内人工控制replay后验证目标选择因果改变。"
+                  },
+                  {
+                    "domain": "后续行动与重放首动作",
+                    "setup": "把replay分为预测到达home目标/未到达两类，比较之后真实首动作是否与重放一致；away未知目标作对照。",
+                    "result": "home试次成功replay对应的首动作更常被动物采用（P<0.001）；away对照P=0.129。",
+                    "supports": "重放和行为的联系具有目标条件，不只是任何模拟都能影响后续动作。",
+                    "not_proven": "动物原本计划走这条路也可能同时促成成功replay与真实行动。"
+                  },
+                  {
+                    "domain": "连续重放是否越来越指向目标",
+                    "setup": "仅选择至少连续3次重放的事件，控制时间因素。",
+                    "result": "第2、3次相对第1次目标过表征上升，对应P=0.068和0.009。",
+                    "supports": "至少后续某些重放具有更高目标相关性。",
+                    "not_proven": "第2次P=0.068不达通常0.05阈值；持续重放的选择偏差未被完全排除。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "原文对动物结果非常谨慎",
+                "text": "作者能在人工RNN中读出政策并对rollout的反馈做干预，但不能直接观察动物的内在policy。成功replay与后续选择的关系仍可能来自先有行为倾向。"
+              }
+            ]
+          },
+          {
+            "id": "extended2-stages",
+            "stage": "result",
+            "title": "Extended Data Figure 2｜早中晚期多想的价值并不单调",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "训练阶段（教学概括）",
+                  "Rollout使用趋势",
+                  "作者给出的可能解释"
+                ],
+                "rows": [
+                  [
+                    "早期",
+                    "规划被抑制到低于随机水平",
+                    "内部世界模型尚未足够可靠，或网络尚未学会利用模拟反馈"
+                  ],
+                  [
+                    "中期",
+                    "规划使用上升",
+                    "世界模型和利用它的策略开始有效，额外计算值得投入"
+                  ],
+                  [
+                    "后期",
+                    "规划使用下降",
+                    "基础行动策略更好，不额外模拟也能作出较优选择"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "原文训练了60/80/100隐藏单元的不同网络，各规模5个训练实例。较小网络在控制学习速度后也更频繁使用rollout，说明容量与训练阶段都影响计算需求。三段只是对连续学习曲线的说明，并非网络被显式标注为三种状态。"
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "对应到RSI的可证伪假设",
+                "text": "同一错误终点与相同当前答题正确率，历史训练和前置知识可能改变额外思考的边际价值；需要在LLM真实更新后测下一轮能力，不能由动物与小RNN曲线直接推出。"
+              }
+            ]
+          },
+          {
+            "id": "related",
+            "stage": "result",
+            "title": "相关研究：什么已经做过，什么还没做？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "已有研究",
+                  "真正研究的问题",
+                  "本次RSI延伸需要区别的地方"
+                ],
+                "rows": [
+                  [
+                    "Mattar & Daw, Nature Neuroscience 2018（E356）",
+                    "Need × Gain优先访问哪些记忆以改善未来决策",
+                    "不能再将按预期收益选择replay称为首次；应研究replay与真实能力更新的取舍"
+                  ],
+                  [
+                    "Jensen et al., Nature Neuroscience 2024（本篇）",
+                    "学习何时用内部模拟细化当前决策",
+                    "未比较内部采样与Skill/LoRA持久更新带来的未来学习收益"
+                  ],
+                  [
+                    "BEACON, Findings EMNLP 2026（S48）",
+                    "当前推理时何时停止生成额外候选",
+                    "未直接以真实权重更新后的独立迁移作为停止目标"
+                  ],
+                  [
+                    "I4／I6（我们已有方向）",
+                    "诊断失败、失败轨迹学习价值、何时停采/重访",
+                    "只作为机制与最强对照，不新增同义Idea"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "Need × Gain 与未来RSI增益不是同一个量",
+                "text": "2018年的Gain衡量记忆访问改进决策价值；我们拟研究的Gain需真实执行固定训练器，撤掉帮助后测试未见题及旧能力，并将所有额外采样/诊断成本计入。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-action-space",
+            "stage": "next",
+            "title": "RSI迁移：什么时候继续采样、诊断、回放或直接更新？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "动作",
+                  "新增资源／状态",
+                  "待测适用条件"
+                ],
+                "rows": [
+                  [
+                    "继续采样/内部规划",
+                    "更多候选推理；未必获得真实新事实",
+                    "知识可能已具备，只是没有找到合适路径"
+                  ],
+                  [
+                    "主动搜索/诊断",
+                    "获得可区分竞争解释的外部反馈",
+                    "错误原因不明、缺关键证据"
+                  ],
+                  [
+                    "回放已有经验",
+                    "重提取或重组织已有轨迹",
+                    "相关规则存在但提取或保持不足"
+                  ],
+                  [
+                    "立即持久更新",
+                    "修改Skill、Memory或LoRA参数",
+                    "反馈充分、继续试验的边际价值偏低"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "example",
+                "label": "同题同错，行动价值可能不同",
+                "text": "A已经掌握公式却选错路径，继续采样可能有效；B尚未掌握关键公式，再模拟旧知识可能无法改善；C具备知识但忘记调用旧Skill，回放可能更好。这些都是研究假设而非本文实验结果。"
+              },
+              {
+                "type": "formula",
+                "label": "拟研究的选择目标（我们的简化，不是Jensen论文公式）",
+                "expression": "c* = argmax_c E[Δ independent learned competence | s,c] − λ · Cost(c)",
+                "meaning": "c选继续采样、主动诊断、回放或立即更新。Δ是实际更新后撤辅的新题净增益，减去旧能力损失；成本包括生成、调用、探测、训练、回退。",
+                "boundary": "价值估计只看决策前信息；未来测试成绩不能用于选动作。安全关键的更新需通过独立不可绕过的验收门。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-p0",
+            "stage": "next",
+            "title": "P0｜同一父检查点，比较立即学与先多想一次",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "先固定任务和可验证规则",
+                    "text": "用数学规则、程序化代码或工具状态任务，定义搜索不足、前置知识缺口、规则冲突等类型；先做小规模自然失败审计，避免按预设标签使某动作天然赢。"
+                  },
+                  {
+                    "title": "四分支随机化",
+                    "text": "A直接按现有证据进行固定纠错；B先用K条新的候选轨迹；C先得到一条辨别性外部反馈；D先调用已有轨迹/记忆，然后进入同一既定更新器。"
+                  },
+                  {
+                    "title": "额外加关键对照",
+                    "text": "B与同样K次但时机随机化的分支比较；C加等信息、等token的无诊断性反馈；D加仅重复原始材料；所有分支同总预算。"
+                  },
+                  {
+                    "title": "更新与撤辅后测",
+                    "text": "固定LoRA/Skill更新程序，独立测异表面同规则新题、同表面不同规则干扰、旧能力和后续新任务学习曲线。"
+                  }
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "同预算净学习收益（建议操作化）",
+                "expression": "NetGain(c)=ΔAcc_unseen(c) − α·OldLoss(c) − λ·Cost_total(c)",
+                "meaning": "用同一父版本得到可比较的处理效应；成本包括采样、诊断、读取、训练和回退。Oracle只能作为事后上界。",
+                "boundary": "权重α、λ、冻结测试集与统计单位须在独立终测前确定；不把当前pass@k提高当作持久学习收益。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不能把更多‘信息’与更多‘计算’混为一个处理",
+                "text": "内部rollout不引入环境新证据，主动诊断可能改变外部知识可得性；必须报告两者的差异，并用同信息控制与等预算控制分别消除混淆。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-p1",
+            "stage": "next",
+            "title": "P1｜状态分层与计算时机价值反转",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "状态匹配",
+                    "design": "先测前置知识、旧能力、错误稳定性和搜索多样性，再在同题/同错误终点下分层。",
+                    "decisive": "相似当前正确率但不同知识/搜索状态，对多计算与立即更新的净收益有可重复反转。"
+                  },
+                  {
+                    "name": "固定采样数量，仅变时机",
+                    "design": "训练前预先定义多个插入点，控制相同K条轨迹与可用证据，仅让何时追加rollout变化。",
+                    "decisive": "相同总体成本、信息和更新器下，时机选择超越随机时机、固定K和固定阈值。"
+                  },
+                  {
+                    "name": "跨任务独立效应",
+                    "design": "在开发规则族形成简单判定依据，在未见规则族/模型快照上比较当前基线、旧能力及真实训练后效果。",
+                    "decisive": "预测谁该先多想而非谁现在答不对，并且提高后续撤辅能力。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "最强反例",
+                "text": "如果多计算的所有收益可由增加token/反馈信息解释，或者最佳行为只由一个固定K/简单置信度阈值决定，不应声称发现独立的计算时机机制。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-p2",
+            "stage": "next",
+            "title": "P2｜只有P0/P1成立，才训练可迁移的元计算策略",
+            "blocks": [
+              {
+                "type": "steps",
+                "items": [
+                  {
+                    "title": "使用可追踪的收益标签",
+                    "text": "用随机对照训练分支的真实独立净学习值建立离线训练集，不能用模型自评、未来独立终测或神经重放相关性当真值。"
+                  },
+                  {
+                    "title": "有限元策略",
+                    "text": "以同容量模型比较固定K、随机、BEACON式停止、近期学习进展、基于诊断的策略。动作是计算／诊断／回放／更新，不自动更换训练器。"
+                  },
+                  {
+                    "title": "冻结策略并重置学习者",
+                    "text": "旧策略与新策略在相同父版本、任务流和预算里交叉评价，考察是否提高多个后代版本净能力。"
+                  },
+                  {
+                    "title": "安全场景独立约束",
+                    "text": "I13只把额外计算作为安全更新提交前的可选诊断成本；安全硬门不能被候选更新修改。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "主线归属，不新增编号",
+                "text": "I4直接吸收‘诊断何时值得’、I6直接吸收‘失败采样何时停止’，I9与I13仅保留交叉机制引用。若未来P0证实“计算优于立即更新”的独立、可预测反转，才重新评估是否成为新I。"
+              }
+            ]
+          },
+          {
+            "id": "scope",
+            "stage": "next",
+            "title": "结果边界和阅读后的三句话",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "原文证明内部模拟能改善当前决策、规划时机重要；没有证明LLM每次多想之后应当更新权重。",
+                  "最强可复用实验是保持rollout总数、随机打乱时机；动物重放是重要相似性证据，但因果解释仍有限。",
+                  "RSI若要独立成篇，必须把当前动作改进和后续持久能力提升严格分开，先观察真实训练中的边际价值反转。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "paper",
+                "label": "数据与代码",
+                "text": "Nature Neuroscience DOI 10.1038/s41593-024-01675-7；模型训练及人类数据代码见 github.com/KrisJensen/planning_code；动物数据由原记录作者按申请提供。本站不声称已运行或复现作者代码。"
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

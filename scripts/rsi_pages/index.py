@@ -52,6 +52,7 @@ PAGE = {
 <a href="literature.html#rsi-landscape-20261003"><b>RSI 领域全景与竞争边界</b><span>新增 2026-10-03 综述导读：改什么、固定什么，四问 + 安全与一手证据。</span></a>
 <a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>
 <a href="reading-notes.html#deep-lake-baroni-mlc-nature2023"><b>Nature 2023 · MLC 元学习与系统性组合泛化</b><span>10节完整精读、20%错误监督为什么存在、Table1与Table2的不同指标及外推边界。[[E350]]</span></a>
+<a href="reading-notes.html#deep-nn2024-planning-replay-jensen"><b>Nature Neuroscience 2024 · Planning &amp; Hippocampal Replay 完整精读</b><span>Think vs Act；94人/5模型/37动物session；Figure 3 同数量随机时机对照，迁移到I4/I6的多采样 vs 立即更新 P0。[[E355]]</span></a>
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
 <a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023"><b>Nature Neuroscience 2023 · OFC快慢元强化学习</b><span>小鼠概率反转任务、5个A2C递归模型、早期/专家可塑性抑制与OFC活动抑制，区分当前任务改进和学习策略形成。</span></a>
 <a href="reading-notes.html#deep-nonlocal-replay-science2021-liu"><b>Science 2021 · 非局部学习与反向重放</b><span>29人的奖励路径实验、MEG证据、Need × Gain与8篇LLM最近邻；接到I8单次纠错的独立迁移实验。</span></a>

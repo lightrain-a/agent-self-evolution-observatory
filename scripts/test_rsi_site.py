@@ -39,6 +39,23 @@ def main():
     question_ids={q['id'] for q in questions}
     check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
     check(len({p['id'] for p in cards})==len(cards),'Duplicate reading card ID')
+    nn_paper=next((p for p in cards if p['id']=='nn2024-planning-replay-jensen'),None)
+    check({'E355','E356'}<=refs and nn_paper is not None
+          and nn_paper.get('doi')=='10.1038/s41593-024-01675-7'
+          and len(nn_paper.get('deep_read',{}).get('sections',[]))>=12,
+          'Nature Neuroscience 2024 planning/replay source or complete deep read missing')
+    nn_ids={s['id'] for s in nn_paper['deep_read']['sections']}
+    check({'fig2-human','fig3-timing','fig3-feedback','fig4-rodent','extended2-stages',
+           'rsi-p0','rsi-p1','rsi-p2'}<=nn_ids,
+          'Nature Neuroscience reading must preserve figures and RSI experiments')
+    note=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    check('deep-nn2024-planning-replay-jensen--fig3-timing' in note
+          and 'deep-nn2024-planning-replay-jensen--rsi-p0' in note,
+          'Nature Neuroscience deep-read anchors missing')
+    for path in ('ideas.html','idea-i6-failure-value.html','idea-i9-practice-switching.html','learning-admission.html','index.html'):
+        check('reading-notes.html#deep-nn2024-planning-replay-jensen' in
+              (ROOT/'rsi'/path).read_text(encoding='utf-8'),
+              'Missing planning/replay reading backlink in '+path)
     theory_data=json.loads((ROOT/'rsi/theory-notes.json').read_text(encoding='utf-8'))
     check(theory_data['schema_version']==1 and len(theory_data['entries'])>=7,'Missing reusable theory registry')
     theory_entries=theory_data['entries']

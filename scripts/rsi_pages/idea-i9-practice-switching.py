@@ -121,7 +121,7 @@ PAGE = {
 <p><b>为什么归到 I9：</b>I9 的主处理变量仍是跨主题学习顺序。原方案比较集中/交错对当前与延迟迁移的影响；新增轨道把“训练结束后的当前能力”进一步与“之后学习新任务的能力”分开。I9 内保留两个明确的评测目标，不另起 I10，也不把跨任务先后顺序偷换成 I7 的单题先学/先试。</p>
 '''),
     ("future-geometry", "Mechanism｜Lie bracket 可预测当前顺序差异，能否进一步解释未来学习增益？", '''
-<p><b>Sweeney 原论文已经做到：</b>在近似一步 SGD 的条件下，两种课程训练顺序对应的参数位置不同；将这段方向投影到给定目标 E 的梯度上，可近似比较 A/B 结束后的 <strong>E 当前损失</strong>。论文报告指令 SFT/DPO 在 k=1 时成对方向判断准确率 98.1%/98.9%，k=20 时降至 73.1%/72.2%。这不是 C 训练后的学习速度实验。[[M18]]</p>
+<p class="note"><b>Nature Neuroscience 2024 的阶段性反转线索：</b>Jensen 等的GRU在训练初期压低内部rollout、中期增加、后期随着基础策略改善又减少（Extended Data Fig.2）。<a href="reading-notes.html#deep-nn2024-planning-replay-jensen--extended2-stages">查看原文与统计边界 →</a>。[[E355]] 这支持“额外计算的边际价值随状态变化”作为研究动机，但不是 A→B/B→A 学习历史对LLM未来C学习速度的证据；I9仍只改变跨主题课程顺序。</p><p><b>Sweeney 原论文已经做到：</b>在近似一步 SGD 的条件下，两种课程训练顺序对应的参数位置不同；将这段方向投影到给定目标 E 的梯度上，可近似比较 A/B 结束后的 <strong>E 当前损失</strong>。论文报告指令 SFT/DPO 在 k=1 时成对方向判断准确率 98.1%/98.9%，k=20 时降至 73.1%/72.2%。这不是 C 训练后的学习速度实验。[[M18]]</p>
 <div class="equation">g<sub>A</sub> = ∇L<sub>A</sub>, &nbsp; g<sub>B</sub> = ∇L<sub>B</sub>, &nbsp; H<sub>A</sub> = ∇²L<sub>A</sub>, &nbsp; H<sub>B</sub> = ∇²L<sub>B</sub><br>
 b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 θ<sub>AB</sub> − θ<sub>BA</sub> ≈ η²b<sub>AB</sub></div>
