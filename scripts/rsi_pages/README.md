@@ -57,6 +57,13 @@ NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human rewar
 - **未编号研究提案**：`scripts/rsi_pages/experience-consolidation.py` → `rsi/experience-consolidation.html`，P0/P1/P2 设计分别验证固定正确Episode下巩固正负效应、Memory选择与巩固的正交因果作用、Skill/LoRA撤辅后的独立能力。与I6错误轨迹价值、I8单点非局部迁移、I13安全接纳保持边界；不能把已有Auto/Force/History-Deletion包装成首创。
 - **测试契约**：`scripts/test_rsi_site.py` 检查新论文/版本、原始结果统计口径、Theory对应来源、候选页及导航，生成产物统一来自结构源与页面源，不直接编辑静态HTML。
 
+## Science Advances 2020 · 高水平学习者的训练信号瓶颈（2026-10-29）
+
+- 完整精读的唯一源：`rsi/reading-cards.json` 中 `scienceadv2020-expert-haptic-ceiling-hirano`，正式 DOI `10.1126/sciadv.abd2558`，2024 后续 iScience 用 `E381` 单独注明。正文实验必须保留：Exp1专家36（AHT/普通练习/休息各12）；AHT400组二择≈800按键、普通重复400按键，任务/反馈/数量并未严格配平；Exp2专家13+13/非音乐家13，训练指有反馈组效果与食指不迁移；Exp3专家12/非音乐家12，直接100次误差练习专家p=0.95、非音乐家p<0.01。30分钟保持不能宣称跨月保持。
+- 未编号独立候选：`scripts/rsi_pages/learning-signal-bottlenecks.py` → `/rsi/learning-signal-bottlenecks.html`。目标不是“更密奖励通用有效”，而是事前确认高能力平台、诊断可训练但尚未掌握的相关辨别能力，再在同样模型/样本/LoRA成本下比较 **直接执行反馈、更多普通练习、对症辨别+正确反馈、对症辨别无反馈、非诊断性辨别+反馈**。撤辅后必须测原任务未见对象/组合规则/旧能力。
+- 边界：I9变课程顺序、I10变规则区分样本D、I12变前置知识，学习规则自进化候选变更新规则/元目标，本候选只改变监督目标及任务相关反馈。SOAR（ICML 2026）已经研究低成功稀疏奖励的stepping stones；本候选研究目标任务已高水平但保留细微残余错误的诊断性训练。没有P0因果机制前不占新的I编号，也不修改当前已发布的研究方向排序。
+- 上线入口应由生成器自动产生；构建、站内链接、RSI浏览器与移动端检查全部通过才推送。
+
 ## 快慢Meta-RL及学习规则自进化候选（2026-10-29）
 
 - **Hattori 完整精读**：`hattori-ofc-metarl-nn2023`，Nature Neuroscience 2023（小鼠OFC + 5个A2C-RNN，13节）。实验标准：奖励概率反转任务与baiting；每个session 500trial时RNN权重冻结、跨session才更新；早期5+5只小鼠用paAIP2阻断慢可塑性、专家另5只做交替同类阻断、活动抑制再测快RL；不把“没有显著差异”写成证明绝对没有可塑性。

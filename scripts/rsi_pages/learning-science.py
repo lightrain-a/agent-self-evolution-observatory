@@ -35,6 +35,15 @@ PAGE = {
 <p><b>不能推广成大模型配方：</b>ICLR 2025、ACL 2026和NeurIPS 2024–ICLR 2026的LLM/VLM研究表明，任务分布、模型能力、训练顺序及更新器都影响策略偏好与遗忘；不能直接假设“先多样后重复”适用于所有LLM。[[M500]][[M501]][[M502]][[M505]][[M506]]</p>
 <p><a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">十节精读、Figure4原文指标 →</a> · <a href="curriculum-scale-evidence.html">LLM/VLM顶会证据矩阵 →</a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html#nhb-f4-patterns">F4b/c/e绘图素材 →</a></p>
 '''),
+("sciadv2020-expert-ceiling","Science Advances 2020｜专家已经很强，为什么换训练任务还能改善细微表现？",'''
+<p><b>作者的真实实验：</b>Hirano、Sakurada 与 Furuya在三项实验中研究专业钢琴家的细微琴键控制。Exp1主动触觉训练要求在两次主动按键中辨别哪次阻力更重，提供对错反馈，并在区块正确率超过80%后逐步减少重量差；专业钢琴家训练指的低力度控制误差改善，而普通重复/休息没有同样改善。Exp2没有辨别正确性反馈的专家组没有相同改善，且未迁移至未训练食指；Exp3给予100次直接运动误差反馈，非音乐家改善而钢琴家p=0.95。[[E380]]</p>
+<div class="table-wrap"><table><thead><tr><th>三个不同层次</th><th>与RSI的联系</th><th>不能直接推论</th></tr></thead><tbody>
+<tr><td><b>平台期是否真实？</b></td><td>高水平模型在一定预算下继续直接练习确实几乎无益吗？</td><td>一次无显著提升不是永久物理能力上限</td></tr>
+<tr><td><b>哪种基础辨别仍存在缺口？</b></td><td>训练“找出哪个对象/规则条件错了”是否比直接生成完整答案更有信息？</td><td>辨别题自己变好不等于目标执行变好</td></tr>
+<tr><td><b>改变监督目标是否真的有额外效应？</b></td><td>对比直接训练、同等更多练习、诊断/非诊断性辨别、有/无正确性反馈，真正运行LoRA后测未见任务</td><td>Exp1主动触觉约800次按键、普通重复400次，不能宣称严格只改奖励密度</td></tr>
+</tbody></table></div>
+<p><b>更深的机制边界：</b>2024年同组iScience研究显示肌肉协调、主动探索与预测性感觉整合变化，并非简单全局感觉敏感度提高。[[E381]] 这为本站<a href="learning-signal-bottlenecks.html">未编号学习信号瓶颈候选</a>提供了问题起点；<a href="idea-i9-practice-switching.html">I9</a>只变课程顺序、<a href="idea-i10-learning-novelty.html">I10</a>只变规则区分性样本、<a href="idea-i12-prerequisite-bottleneck.html">I12</a>补必需前置关系，三者与“固定样本、改监督目标”要分开。<a href="reading-notes.html#deep-scienceadv2020-expert-haptic-ceiling-hirano">完整精读与三实验 →</a>。</p>
+'''),
 ("nhb2026-memory-reward-state","Nature Human Behaviour 2026｜奖励历史是怎样影响下一次学习反应的？",'''
 <p><b>原论文：</b>Eckstein等研究862人的四臂非平稳奖励选择，提出结合可解释Q/c决策变量与独立、灵活的多尺度记忆潜变量的Memory-ANN。五组同口径人类行为预测：Best RL约60.6%、RL-ANN60.8%、Context-ANN65.4%、Memory-ANN68.3%、Vanilla RNN68.3%。只给更新公式增加非线性帮助很小，竞争选项上下文与独立历史记忆带来更强的行为拟合。[[E370]]</p>
 <div class="table-wrap"><table><thead><tr><th>原文真实证据</th><th>不能直接推出</th><th>我们要做的独立检验</th></tr></thead><tbody>

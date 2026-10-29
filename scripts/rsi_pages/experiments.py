@@ -63,6 +63,15 @@ PAGE = {
 </tbody></table></div>
 <p>已有大模型强基线及VLM遗忘证据见<a href="curriculum-scale-evidence.html">跨规模调研页</a>。<a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">论文精读</a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html#nhb-f4-patterns">Figure4b/c/e 数据结构与绘图参考</a>。</p>
 '''),
+("signal-ceiling-sciadv2020","未编号候选：高能力平台期应该改变训练信号吗？",'''
+<p><b>科学现象：</b>Science Advances 2020在专业钢琴家中观察到：直接100次低力度按键误差练习没有可检测增益（p=0.95），但有反馈的主动触觉辨别能改善训练指的特定细微控制；2024后续研究指出主动探索和感觉预测整合也可能起作用。两种训练的任务和运动次数并非严格相同，不能当作“只调整reward granularity”的证明。[[E380]][[E381]]</p>
+<div class="table-wrap"><table><thead><tr><th>计划阶段</th><th>配对条件</th><th>Go证据</th></tr></thead><tbody>
+<tr><td><b>P0-qualification</b></td><td>高水平S1、未掌握S0；当前目标成绩与相关基础辨别探针分开测试</td><td>真实直接练习近平台，且S1在相关辨别任务仍存在独立缺口</td></tr>
+<tr><td><b>P0-feedback</b></td><td>同样模型与数据/时间，目标执行反馈vs诊断性辨别+反馈vs无反馈vs非诊断性辨别vs更多普通练习</td><td>对症辨别改善训练目标与未见任务的真实LoRA增益，且非简单更多token和调用</td></tr>
+<tr><td><b>P1-transfer</b></td><td>撤除教学示例，测未见对象、规则组合/反转、旧能力与未来任务C学习曲线</td><td>专长阶段×训练目标具有额外跨规则/模型的稳定交互</td></tr>
+</tbody></table></div>
+<p><b>正交边界：</b><a href="idea-i9-practice-switching.html">I9</a>固定材料只变顺序；<a href="idea-i10-learning-novelty.html">I10</a>固定反馈只变样本的规则区分性；<a href="idea-i12-prerequisite-bottleneck.html">I12</a>补共有前置知识。<a href="learning-signal-bottlenecks.html#p0">学习信号候选详细 P0、强基线与停止条件 →</a>。</p>
+'''),
 ("i10-rule-learning","I10：从区分性例题到真正的规则组合迁移",'''
 <p><b>研究依据：</b>MLC（Nature 2023）已在部分 SCAN/COGS 词汇组合基准显著优于普通Seq2Seq，但元测试时权重冻结，且结构/长度泛化失败。它没有研究新规则的持续参数更新。<a href="reading-notes.html#deep-lake-baroni-mlc-nature2023">完整精读、Table1/2与20%错误监督解释</a>。[[E350]][[E351]][[E352]]</p>
 <div class="table-wrap"><table><thead><tr><th>实验</th><th>固定与改变</th><th>决定性检验</th></tr></thead><tbody>

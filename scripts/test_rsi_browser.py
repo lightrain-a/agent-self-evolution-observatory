@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','teaching','idea-i6','experiments','references']
+PAGES=['index','timeline','literature','reading-cards','reading-notes','cross-domain','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','teaching','idea-i6','experiments','references']
 
 def port():
     with socket.socket() as sock:
@@ -427,7 +427,7 @@ def main():
         time.sleep(.4)
         screenshot('idea-i11-five-stage-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','reading-notes','curriculum-scale-evidence','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','idea-i6','teaching','experiments','references']:
+        for slug in ['index','timeline','reading-cards','reading-notes','curriculum-scale-evidence','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
@@ -452,6 +452,11 @@ def main():
               'Memory candidate differentiation and real update experiment missing')
         check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'RSI memory map mobile overflow')
         screenshot('rsi-memory-research-map-mobile.png')
+        nav('rsi/learning-signal-bottlenecks.html')
+        check(js("return ['phenomenon','mechanism','closest','design','p0','limits','gate'].every(x=>document.getElementById(x)!==null)"), 'Expert plateau signal candidate sections missing')
+        check(js("return document.querySelector('#p0').textContent.includes('F1-no-FB') && document.querySelector('#limits').textContent.includes('400')"), 'Expert plateau controls and dose caveat missing')
+        check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'Signal plateau candidate mobile overflow')
+        screenshot('signal-bottleneck-candidate-mobile.png')
         nav('rsi/idea-i10-learning-novelty.html')
         check(js("return ['question','case','mlc-nature2023','experiment','go'].every(x=>document.getElementById(x)!==null)"), 'I10 details missing')
         check(not js('return document.documentElement.scrollWidth>innerWidth+1'), 'I10 mobile overflow')

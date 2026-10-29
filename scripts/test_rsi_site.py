@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -268,7 +268,7 @@ def main():
         'methods':['cross-domain.html','theory-notes.html','learning-science.html','curriculum-scale-evidence.html'],
         'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html','memory-research-map.html','experience-consolidation.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html','memory-research-map.html','learning-signal-bottlenecks.html','experience-consolidation.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -1038,6 +1038,27 @@ def main():
           'Figure4 paper reading lacks effect strength, sample evidence or curriculum-label warning')
     check((ROOT/'figure-reference-assets/nhb-fig4-bce-inputs.json').is_file(),
           'NHB figure reproduction contract missing')
+    # Science Advances 2020: active haptic training and unnumbered RSI signal-bottleneck candidate.
+    haptic=next((p for p in cards if p['id']=='scienceadv2020-expert-haptic-ceiling-hirano'),None)
+    check(haptic is not None and haptic.get('doi')=='10.1126/sciadv.abd2558'
+          and len(haptic['deep_read']['sections'])==10 and len(haptic['deep_read']['metric_summary'])==5,
+          'Science Advances 2020 haptic deep read or DOI missing')
+    check({'E380','E381'}<=refs and 'id="scienceadv2020-expert-haptic-ceiling-hirano"' in card_html
+          and 'id="deep-scienceadv2020-expert-haptic-ceiling-hirano"' in notes_html,
+          'Science Advances original and iScience follow-up not sourced or displayed')
+    sig=(ROOT/'rsi/learning-signal-bottlenecks.html').read_text(encoding='utf-8')
+    check(all('id="'+sid+'"' in sig for sid in
+              ('phenomenon','mechanism','closest','design','p0','limits','gate'))
+          and all(term in sig for term in ('F1-no-FB','F1-irrelevant','S1 高水平','100次')),
+          'Learning-signal candidate missing expert/novice, dose and feedback controls')
+    check('id="sciadv2020-expert-ceiling"' in learn_sci
+          and 'id="sciadv2020-feedback-boundary"' in i9_text
+          and 'id="sciadv2020-signal-control"' in i10
+          and 'id="signal-ceiling-sciadv2020"' in experiments_html,
+          'Haptic learning-signal mechanism needs I9/I10/science and experiment crosslinks')
+    check('href="learning-signal-bottlenecks.html"' in overview
+          and 'deep-scienceadv2020-expert-haptic-ceiling-hirano' in overview,
+          'Haptic reading or idea candidate missing from homepage')
     # NHB 2026: rich history-state evidence, distinct RSI-memory candidate pool.
     memory_paper=next((p for p in cards if p['id']=='nhb2026-hybrid-memory-eckstein'),None)
     check(memory_paper is not None and memory_paper.get('doi')=='10.1038/s41562-025-02324-0'
