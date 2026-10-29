@@ -2531,6 +2531,26 @@
       "level": "ACL Anthology 2026正式摘要核对；2026-10-29",
       "note": "MSCE以证据链接、适用条件、反思值回填将episode经验转成可调用skills；训练free治理已有先例，本站需证明真实LoRA更新后的独立净收益。",
       "code": ""
+    },
+    {
+      "id": "E355",
+      "group": "学习科学",
+      "title": "A recurrent network model of planning explains hippocampal replay and human behavior",
+      "date": "Nature Neuroscience 27, 1340–1348 (2024-06-07)",
+      "url": "https://www.nature.com/articles/s41593-024-01675-7",
+      "level": "Nature Neuroscience 正式全文 Fig.1–4、Extended Data Fig.2、Methods、代码和作者机构核对；2026-10-29；未复现",
+      "note": "94人/5个主要模型/37动物session。Think以120ms成本模拟最多8步并反馈隐藏状态；禁用规划或保持数量但随机化时机均降低奖励。人类思考时间相关r=0.186±0.007；动物重放相关不能直接证明因果。原文不研究LLM持久权重更新。",
+      "code": "https://github.com/KrisJensen/planning_code"
+    },
+    {
+      "id": "E356",
+      "group": "学习科学",
+      "title": "Prioritized memory access explains planning and hippocampal replay",
+      "date": "Nature Neuroscience 21, 1609–1617 (2018-10-22)",
+      "url": "https://www.nature.com/articles/s41593-018-0232-z",
+      "level": "Nature Neuroscience 官方正文/摘要核对；2026-10-29；未复现",
+      "note": "Mattar和Daw提出按Need×Gain优先访问记忆以最大化未来决策回报；不是2024论文首次提出按价值优先Replay，亦不等同持久更新后的独立学习收益。",
+      "code": ""
     }
   ]
 }

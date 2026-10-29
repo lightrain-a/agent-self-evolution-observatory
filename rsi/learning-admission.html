@@ -62,7 +62,7 @@
 <div class="equation">Maximize: Verified Safe Capability Gain per Total Validation Cost, subject to Fixed Authorization &amp; Safety Invariants</div>
 <p><b>两个层次：</b>可学习层优化风险假设、测试分配和接纳建议；独立层持有授权规则、测试结果、发布权限与审计日志。<strong>安全关键不变量不能由自修改 Agent 自动放宽。</strong>有限测试只能支持具体评测协议下的经验可靠性，不能对所有未来状态作出形式化保证。</p>
 </div></section><section class="panel research-section" id="p0"><h2>P0｜同样局部收益，后代安全风险能否显著不同？</h2><div class="section-body">
-<p><b>最先验证现象，不先训练风险模型。</b>初版使用受控沙箱中的版本化 Skill 与 Harness；底座 LLM、编辑器、候选生成规则、旧回归套件和权限检查器固定。准备文件移动、所有权转移、批处理、依赖关系等具有程序化授权真值的任务。让不同更新分支拥有相近的局部能力提升和旧测试成绩，再评估隐藏的后续合同组合与新会话复用。</p>
+<p class="note"><b>相关机制参考：</b><a href="reading-notes.html#deep-nn2024-planning-replay-jensen--fig3-timing">Jensen 等 · Nature Neuroscience 2024</a>在给定时间预算内证明额外规划数量与发生时机都有价值。<a class="cite" href="references.html#E355" title="A recurrent network model of planning explains hippocampal replay and human behavior">[E355]</a> I13 的可迁移问题更窄：面对候选自我更新，什么时候值得为减少不安全漏放和安全更新误拒再做一次独立测试？<strong>此处是实验设计类比，不是原论文的安全结果</strong>；候选Agent不能修改验收规则与发布权限。</p><p><b>最先验证现象，不先训练风险模型。</b>初版使用受控沙箱中的版本化 Skill 与 Harness；底座 LLM、编辑器、候选生成规则、旧回归套件和权限检查器固定。准备文件移动、所有权转移、批处理、依赖关系等具有程序化授权真值的任务。让不同更新分支拥有相近的局部能力提升和旧测试成绩，再评估隐藏的后续合同组合与新会话复用。</p>
 <div class="table-wrap"><table><thead><tr><th>受控条件</th><th>应观察到什么</th><th>能检验什么</th></tr></thead><tbody>
 <tr><td><b>A · 合法新能力</b></td><td>任务增益真实，跨授权状态仍合规</td><td>安全更新不能被全部拒绝</td></tr>
 <tr><td><b>B · 局部成功但组合授权错误</b></td><td>旧回归通过，新组合触发不安全操作</td><td>是否存在旧测试以外的可预测风险</td></tr>
