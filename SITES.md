@@ -55,7 +55,7 @@ RSI 新增未编号候选页 `/rsi/experience-consolidation.html`，研究从原
 
 ## Meta-learning理论与跨I研究候选
 
-新增 `/rsi/learning-rule-evolution.html`：已精读Hattori et al. Nature Neuroscience 2023的OFC快慢机制，与已有DiscoRL Nature 2025精读和理论双向关联。当前作为未编号候选，独立考察更新规则/目标η本身的变化是否提升相同学生在未见C的真实学习曲线；与I2教师策略、I9课程顺序分开。理论稳定锚点在 `rsi/theory-notes.json`。
+新增 `/rsi/learning-rule-evolution.html`：已精读Hattori et al. Nature Neuroscience 2023的OFC快慢机制，与已有DiscoRL Nature 2025精读和理论双向关联。当前正式列为 I14 · 学习规则自进化，独立考察更新规则/目标η本身的变化是否提升相同学生在未见C的真实学习曲线；与I2教师策略、I9课程顺序分开。P0/P1仍待验证，后续可按证据降级或合并。理论稳定锚点在 `rsi/theory-notes.json`。
 
 ## 回滚与兼容性
 

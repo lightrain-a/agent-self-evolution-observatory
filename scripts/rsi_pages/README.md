@@ -45,7 +45,7 @@
 
 NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human reward learning》已纳入完整十节精读 `nhb2026-hybrid-memory-eckstein`（正式 Nature DOI、Google DeepMind 代码、OSF 数据均有链接）。作者用862名人的四臂奖励行为对照传统Q、Context-ANN、Memory-ANN；得到的是**人类行为拟合**，并未测LLM未来LoRA净学习。Figure 3i / 4g 的历史滞后系数设计已留绘图字段，不能拿人类数据冒充本站LLM成果。
 
-`scripts/rsi_pages/memory-research-map.py` 为未编号研究候选池，按正交控制变量整理：A 学习历史作为**状态预测信号**（最接近I9）；B 外部Episode的**随机检索因果收益**；C 正确经验的**Raw/Abstract/Skill/LoRA巩固方式**（保留已有 `experience-consolidation.py`）；D Meta-Agent依据历史做**读写/检索/停止/写回选择**。这些不是新发布的I14–I17。候选拆分只有在独立现象、可证伪机制、明确最近邻和同预算真实更新结果成立时进行。
+`scripts/rsi_pages/memory-research-map.py` 为未编号研究候选池，按正交控制变量整理：A 学习历史作为**状态预测信号**（最接近I9）；B 外部Episode的**随机检索因果收益**；C 正确经验的**Raw/Abstract/Skill/LoRA巩固方式**（保留已有 `experience-consolidation.py`）；D Meta-Agent依据历史做**读写/检索/停止/写回选择**。I14（学习规则自进化）已经独立编号；本页A/B/C/D记忆候选没有另外占用I15及后续编号。候选拆分只有在独立现象、可证伪机制、明确最近邻和同预算真实更新结果成立时进行。
 
 特别注意：历史日志帮助预测当前参数状态，与Meta-controller**实际读取历史并改变学习动作**是两条不同因果路径；必须保留当前梯度、优化器状态、简单窗口统计等强基线。Memory-R1（ACL 2026）已有学习记忆读写；Memory→Skill相关系统亦有先例，不因换一个记忆名称声明创新。
 
@@ -62,7 +62,7 @@ NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human rewar
 - **Hattori 完整精读**：`hattori-ofc-metarl-nn2023`，Nature Neuroscience 2023（小鼠OFC + 5个A2C-RNN，13节）。实验标准：奖励概率反转任务与baiting；每个session 500trial时RNN权重冻结、跨session才更新；早期5+5只小鼠用paAIP2阻断慢可塑性、专家另5只做交替同类阻断、活动抑制再测快RL；不把“没有显著差异”写成证明绝对没有可塑性。
 - **DiscoRL 已存在，不重复建档**：`discorl-nature2025-oh`的完整精读（Nature 2025）和原来的七条理论保留；只新增一个Hattori对照章节，区分OFC机制证据与Meta-gradient目标发现。
 - **三条理论笔记**：`#metarl-two-timescale-learning`、`#policy-history-kernel-measurement`、`#meta-improvement-intervention-contract`。Eq.(12)历史回归以及Policy Axis来自Hattori，未来任务C的AULC是本站未验证指标；作者原证据与教学简式分开。
-- **新研究候选（未编号）**：`scripts/rsi_pages/learning-rule-evolution.py` → `/rsi/learning-rule-evolution.html`。主处理变量为学习规则η或更新目标，固定学生、样本、教材顺序、教师及训练预算；P0检验可学习性现象，P1以Old/New/Best Fixed/Shuffled History/No Student Update做分阶段验证。I2变化教师教法，I9变化课程顺序，本候选不抢I14或改变I1–I13正式排名。
+- **I14 正式管理编号（2026-10-29）**：`scripts/rsi_pages/learning-rule-evolution.py` → `/rsi/learning-rule-evolution.html`，左侧导航与研究池统一标记为 I14 · 学习规则自进化。只改变学习规则 η / 更新目标，固定学生、数据、教材顺序、教师及预算；P0 检验未来可学习性差异，P1 以 Old/New/Best Fixed/Shuffled History/No Student Update 做冻结与重置干预。I2改变教师，I9改变课程；I14是否独立成稿由Go/缩题/降级证据决定，编号本身不意味着已经验证。历史I1–I13排名留存，I14待同口径打分。
 - **测试**：`scripts/test_rsi_site.py` 校验两篇论文、两者关系章节、理论锚点、候选P0/P1和目录仍只有I1–I13正式编号。数据链接采用原论文官方Zenodo `10.5281/zenodo.8378063`、代码 `ryhattori/MetaRL-PRL`。
 
 ## RSI 研究时间轴与会议 DDL

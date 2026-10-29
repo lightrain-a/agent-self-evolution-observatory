@@ -53,7 +53,7 @@ PAGE = {
     '''),
     ("ofc-metarl-boundary", "Nature Neuroscience 2023｜训练顺序改变学法，与直接修改学法必须区分", '''
 <p><b>原动物+模型实验：</b>Hattori 等（<i>Nature Neuroscience</i>，2023）用小鼠OFC长期可塑性与当前活动的不同干预，证明跨会话的元学习策略形成和会话内快速奖励适应可被选择性区分。人工5个A2C RNN也采取500次trial内权重固定、跨session才更新的设置。<a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">进入13节精读及三个干预证据 →</a></p>
-<p><b>I9保持处理变量：</b>固定同一更新器和教材，只交换集中/交错、A→B/B→A等顺序，问当前能力匹配后是否改变未来C学习曲线。<a href="learning-rule-evolution.html">学习规则自进化未编号候选</a>则固定顺序/任务/教师，只改变学习目标或更新规则，利用Meta-Rule冻结/重置检验元学习增益。二者可以共用未来C评测平台，但<strong>不能把课程顺序收益当作参数更新规则进化的独立贡献</strong>。</p>
+<p><b>I9保持处理变量：</b>固定同一更新器和教材，只交换集中/交错、A→B/B→A等顺序，问当前能力匹配后是否改变未来C学习曲线。<a href="learning-rule-evolution.html">I14 · 学习规则自进化</a>则固定顺序/任务/教师，只改变学习目标或更新规则，利用Meta-Rule冻结/重置检验元学习增益。二者可以共用未来C评测平台，但<strong>不能把课程顺序收益当作参数更新规则进化的独立贡献</strong>。</p>
 <p class="note">Hattori的跨会话训练仍发生在同类左右概率反转任务，并没有直接证明LLM跨不同规则族学得更快；训练后真实LoRA曲线属于我们的新研究设计，不是原文结果。</p>
 '''),
     ("related", "现有工作｜别人已经研究到了哪一步？", '''

@@ -1,20 +1,21 @@
-"""Cross-idea, unnumbered RSI research candidate: learning the parameter-update rule.
+"""I14: Learning-rule self-evolution, formally numbered for research tracking.
 
-Not a new numbered I without a controlled learnability phenomenon and nearest-work
-baseline. Keep task data, teaching, curriculum and safety admission orthogonal.
+The scientific hypothesis and P0/P1 remain unverified. Keep task data,
+teaching, curriculum and safety admission orthogonal; demote or merge if
+matched-cost experimental evidence fails the stated gates.
 """
 PAGE = {
 "slug":"learning-rule-evolution",
-"title":"研究候选 · Agent 何时真正变得更会学习？",
-"en":"Meta-Improvement of Learning Rules · Same Ability, Different Future Learnability",
-"lead":"Hattori（Nature Neuroscience 2023）提供快/慢机制的分阶段干预，DiscoRL（Nature 2025）提供可学习的训练目标生成。这里研究相同学生、相同数据和预算下，学习规则本身的改变是否提升未见任务的真实学习能力。暂不编号为 I14。",
+"title":"I14 · 学习规则自进化：Agent 何时真正变得更会学习？",
+"en":"I14 · Learning Rule Self-Evolution · Same Ability, Different Future Learnability",
+"lead":"Hattori（Nature Neuroscience 2023）提供快/慢机制的分阶段干预，DiscoRL（Nature 2025）提供可学习的训练目标生成。这里研究相同学生、相同数据和预算下，学习规则本身的改变是否提升未见任务的真实学习能力。正式编号 I14，现象与方法尚待实验验证。",
 "updated":"2026-10-29",
 "sections":[
-("decision","立项结论：独立保留候选，不立即升级 I14",'''
-<div class="decision"><span class="kicker">RSI THEORY → TESTABLE HYPOTHESIS · UNNUMBERED · 2026-10-29</span>
+("decision","I14 · 正式研究方向：学会任务，与学会学习有什么不同？",'''
+<div class="decision"><span class="kicker">I14 · RSI META-LEARNING · P0/P1 UNVERIFIED · 2026-10-29</span>
 <h3>Same Current Ability, Different Future Learnability</h3>
 <p><b>观察问题：</b>两个 Agent 当前都能完成同样的 A/B 任务，但过去使用过不同的更新机制；即使它们在 A/B 后测能力相近、当前 C 前测也匹配，后续学习陌生规则 C 的速度是否仍然不同？如果有，这种差异是否来自<strong>学习规则本身</strong>，而不是更多样本、课程顺序、教师提示或优化器状态？</p>
-<p><b>组织判断：</b>本页作为未编号候选保存。快环/慢环、元学习、直接优化学习目标已经有成熟先例；只有在严格配对后证明学习规则改进对未来真实能力产生额外、可预测、可迁移的净收益，才考虑晋升I14。该方向不并入I2或I9的处理变量，也不改变当前I1–I13的研究排名。</p>
+<p><b>编号与证据状态：</b><strong>I14 已正式纳入 RSI 研究池，用于独立跟踪文献、假设、实验和版本。</strong>编号不表示方法已经被验证，也不意味着元学习概念本身是首次提出。快环/慢环与自动学习训练目标都有成熟先例；研究仍须通过同预算真实学习实验。若关键现象不成立，后续允许降级、收窄或合并。I14 不改变 I2 的教学策略或 I9 的课程顺序；原 I1–I13 的历史排名暂时保留，I14 尚待单独评估。</p>
 </div>
 '''),
 ("papers","两篇已经精读的论文：谁负责提出机制，谁负责给出算法？",'''
@@ -62,7 +63,7 @@ PAGE = {
 <div class="equation">ΔMeta = AULC_future(η_new, θ₀) − AULC_future(η_old, θ₀)</div>
 <p>主结果包括未来C曲线面积、固定预算下最终未见变式、旧能力回归、元发现成本、不同任务族及模型版本上的效应。AULC不是本篇Nature原公式，是我们研究协议的学习能力指标。</p>
 '''),
-("related","与已有 I1–I13 怎样组织？不让新候选吞掉旧主线",'''
+("related","I14 与 I1–I13 的正交关系：不让更新规则吞掉旧主线",'''
 <div class="table-wrap"><table><thead><tr><th>现有方案</th><th>原本的独立处理变量</th><th>本方向怎么取边界</th></tr></thead><tbody>
 <tr><td><a href="idea-i2.html">I2 · 教学策略进化</a></td><td>学生真实回应如何改变教师教法</td><td>固定教师和材料，只改学生参数更新目标</td></tr>
 <tr><td><a href="idea-i6-failure-value.html">I6 · 失败过程价值</a></td><td>同题同错，选哪条失败轨迹值得学</td><td>固定错误/反馈池，不换候选轨迹</td></tr>
@@ -72,11 +73,11 @@ PAGE = {
 </tbody></table></div>
 <p>评审中最容易质疑：元学习训练规则在RL²/DiscoRL已有，为什么这不是简单的领域迁移？需要将科学问题压缩到<strong>真实LLM多轮参数更新中，何种已观察学习状态使新旧规则的未来增益出现可预测交互，以及不同规则对长期旧能力保持的影响</strong>，而不是再次证明Meta-RL概念。</p>
 '''),
-("gate","晋升I14的条件、成本与止损边界",'''
-<p><b>升级为独立I的条件：</b>（1）同数据/同顺序/同教师/同预算下，在多个任务族重复发现‘当前能力相近但学法变化影响未来C’；（2）提前的历史状态信号能够预测哪种更新规则有利，且对未知任务关系仍稳定；（3）冻结和重置干预显示增益来自可继承的η而不是上下文/样本选择；（4）胜过最佳固定Rule和随机历史，扣除元发现成本依然有净收益。</p>
-<p><b>如果只满足现象：</b>归入I9‘学习历史改变未来可学习性’的机制对照，或以跨I科学测量发表，不急于建大模型。<b>如果固定最佳Rule同样好：</b>不训练Meta-Updater；保留负面结果和失效条件。<b>如果只提高当前任务：</b>只证明训练方法更有效，不能主张递归地更会学习。</p>
+("gate","I14 · Go / 缩题 / 降级：何时继续投入元学习规则？",'''
+<p><b>I14 保持独立推进的 Go 条件：</b>（1）同数据/同顺序/同教师/同预算下，在多个任务族重复发现‘当前能力相近但学法变化影响未来C’；（2）提前的历史状态信号能够预测哪种更新规则有利，且对未知任务关系仍稳定；（3）冻结和重置干预显示增益来自可继承的η而不是上下文/样本选择；（4）胜过最佳固定Rule和随机历史，扣除元发现成本依然有净收益。</p>
+<p><b>若证据不足，允许降级：</b>只有训练历史导致未来C差异、却无法归因于学习规则本身时，可并入I9的历史可学习性机制；也可保留为跨I科学测量，不扩建Meta-Updater。<b>如果固定最佳Rule同样好：</b>不训练Meta-Updater；保留负面结果和失效条件。<b>如果只提高当前任务：</b>只证明训练方法更有效，不能主张递归地更会学习。</p>
 <p>技术上优先用小模型、受控合成规则和独立版本分支，先验证因果效应，再决定是否投入DiscoRL级别的Meta-gradient算力。所有结论都需在没有教师/测试答案泄漏的独立未来任务上测量。</p>
-<div class="links"><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori原文完整精读</a><a class="link-btn" href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL原文完整精读</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI理论与指标</a><a class="link-btn" href="idea-prioritization.html">现有I1–I13优先级</a></div>
+<div class="links"><a class="link-btn" href="ideas.html">返回 I1–I14 研究池</a><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori原文完整精读</a><a class="link-btn" href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL原文完整精读</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI理论与指标</a><a class="link-btn" href="idea-prioritization.html">I14 待评分及历史 I1–I13 排序</a></div>
 ''')
 ]
 }

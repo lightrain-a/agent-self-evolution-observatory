@@ -101,7 +101,7 @@ def main():
     meta_candidate=(ROOT/'rsi/learning-rule-evolution.html').read_text(encoding='utf-8')
     check(all('id="'+x+'"' in meta_candidate for x in
               ('decision','papers','three-layers','mechanism','p0','p1','related','gate')),
-          'Unnumbered meta-learning candidate missing scientific contract')
+          'I14 meta-learning idea missing falsifiable scientific contract')
     check(all(x in meta_candidate for x in
               ('deep-hattori-ofc-metarl-nn2023','deep-discorl-nature2025-oh',
                'Fixed Best Rule','No Student Update','meta-improvement-intervention-contract')),
@@ -111,8 +111,11 @@ def main():
           and 'id="ofc-metarl-boundary"' in
           (ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8'),
           'Meta-learning candidate missing homepage or I9 orthogonality boundary')
-    check('I14 ·' not in (ROOT/'rsi/site-nav.js').read_text(encoding='utf-8'),
-          'Unverified candidate must not take formal I14 rank')
+    check('I14 · 学习规则自进化' in (ROOT/'rsi/site-nav.js').read_text(encoding='utf-8')
+          and 'I14 · 学习规则自进化' in meta_candidate
+          and 'P0/P1' in meta_candidate
+          and '降级' in meta_candidate,
+          'I14 must be formally numbered while retaining unverified experiment and demotion gates')
     check({'awake-ripple-memory-tagging','experience-tag-vs-consolidation-utility'}<=theory_ids,
           'Science 2024 memory tagging theory missing')
     mouse_paper=next((p for p in cards if p['id']=='sharp-wave-ripples-science2024-yang'),None)
@@ -265,7 +268,7 @@ def main():
         'methods':['cross-domain.html','theory-notes.html','learning-science.html','curriculum-scale-evidence.html'],
         'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','memory-research-map.html','experience-consolidation.html','learning-rule-evolution.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html','memory-research-map.html','experience-consolidation.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -278,12 +281,18 @@ def main():
           'Visible RSI pages must exclude only linked historical research')
     research_links=groups[-1]['pages']
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,14)],'Research ideas I1–I13 must appear once and in order')
+    check(numbered==[f'I{i}' for i in range(1,15)],'Research ideas I1–I14 must appear once and in order')
     ranking=(ROOT/'rsi/idea-prioritization.html').read_text(encoding='utf-8')
     check('科学上限' in ranking and '完成把握' in ranking and 'Go' in ranking,
           'Ranking page missing the editorial contract')
-    check(all(f'id="idea-{i}"' in ranking for i in range(1,14)),
-          'Ranking page missing one or more original Idea anchors')
+    check(all(f'id="idea-{i}"' in ranking for i in range(1,15))
+          and 'I14 · 学习规则自进化' in ranking and '待评估' in ranking
+          and '历史 I1–I13' in ranking,
+          'Ranking page must register all I1–I14 ideas without fabricating an I14 rank')
+    check('href="learning-rule-evolution.html"' in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
+          and 'I1–I14' in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
+          and 'I14 · 学习规则自进化' in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
+          'I14 missing from canonical idea board or homepage')
     check('href="idea-prioritization.html"' in (ROOT/'rsi/index.html').read_text(encoding='utf-8')
           and 'href="idea-prioritization.html"' in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8'),
           'Ranking page not reachable from RSI homepage and ideas overview')

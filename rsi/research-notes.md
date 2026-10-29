@@ -4,7 +4,7 @@
 
 本文件包含证据综述与待验证提案，不包含本项目实验结果。
 
-## RSI × 自主学习研究 / 当前研究池：I1–I13 · 十三个研究方向
+## RSI × 自主学习研究 / 当前研究池：I1–I14 · 十四个研究方向
 
 <p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
 <div class="idea-board">
@@ -21,10 +21,12 @@
 <a class="idea-board-card" href="idea-i11-emotional-rsi.html"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>鼓励、批评还是中性反馈，能让我下一版真正变强？</b></a>
 <a class="idea-board-card" href="idea-i12-prerequisite-bottleneck.html"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否让多个任务开始学得会？</b></a>
 <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · RSI 安全更新接纳</span><b>哪些自我修改可以安全继承？</b></a>
+<a class="idea-board-card" href="learning-rule-evolution.html"><span class="idea-id">I14 · 学习规则自进化</span><b>学会做题后，能否越来越会学习？</b></a>
 </div>
 <p><b>I13 · Safety-Aware Update Admission：</b><a href="learning-admission.html">研究跨代安全风险的事前诊断与有限预算验证</a>。候选更新可以被接纳、隔离、暂缓或拒绝；最关键是同时降低不安全更新漏放和安全更新误拒，并让 Meta-Admission 的诊断策略跨代改进。安全不变量和最终发布权仍由独立验证层掌握。P0/P1/P2 均待实验。</p>
+<p><b>I14 · 正式编号：</b><a href="learning-rule-evolution.html">Learning Rule Evolution</a> 已纳入研究池，固定同一学生、数据、训练顺序和教师，研究更新规则 η 能否提高未见任务 C 的真实学习曲线。<a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori 2023</a> 提供快/慢机制和干预范式，<a href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL 2025</a> 提供可学习目标生成先例。编号不代表已经完成 P0；结果不足可降级合并。</p>
 <p><b>I2 最新合并：</b>保留因材施教与小预算试学，增加教师自身的教学更新；分别证明学生独立能力和教师教学能力增长。<a href="idea-i2.html">进入师生共进化方案</a>。</p>
-<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I10</b> 在同一规则下比较区分性反例能否经真实参数更新产生组合泛化；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益；<b>I12</b> 固定学习器、反馈与后续目标题流，研究修复共同因果前置知识能否解锁新一轮学习。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i10-learning-novelty.html">I10</a> · <a href="idea-i11-emotional-rsi.html">I11</a> · <a href="idea-i12-prerequisite-bottleneck.html">I12</a> · <a href="learning-admission.html">I13</a></p>
+<p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I10</b> 在同一规则下比较区分性反例能否经真实参数更新产生组合泛化；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益；<b>I12</b> 固定学习器、反馈与后续目标题流，研究修复共同因果前置知识能否解锁新一轮学习。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i10-learning-novelty.html">I10</a> · <a href="idea-i11-emotional-rsi.html">I11</a> · <a href="idea-i12-prerequisite-bottleneck.html">I12</a> · <a href="learning-admission.html">I13</a> · <a href="learning-rule-evolution.html">I14</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a><a class="cite" href="references.html#S28" title="RSIFlow: Adaptive Self-Improvement Workflows with an Evolving Meta-Agent">[S28]</a><a class="cite" href="references.html#S29" title="Harness Continual Learning: Continual Adaptation Beyond Model Parameters">[S29]</a><a class="cite" href="references.html#S30" title="Rethinking Self-Evolution: A Constrained Exploration-Exploitation Process for Mitigating Skill Overfitting (SkillBoost)">[S30]</a><a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a><a class="cite" href="references.html#S34" title="Multi-Agent LLMs Fail to Explore Each Other (MACE: Multi-Agent Contextual Exploration)">[S34]</a></p>
 
 ## RSI × 自主学习研究 / 研究导航：从证据走到可执行实验
@@ -34,8 +36,8 @@
 <a href="idea-i2.html#learner-response-question"><b>I2 扩展：训练前预测学习者对教学的真实响应</b><span>Centaur × StudentSim：下一次回答与真实 LoRA 更新后的独立能力不同；已设计 LR-P0/P1/P2、强基线与成本账本。</span></a>
 <a href="reading-notes.html#deep-nature2025-centaur-binz"><b>Nature 2025 · Centaur 完整精读</b><span>Psych-101、QLoRA、未见实验 OOD、开放环、fMRI 与认知机制发现；对照 StudentSim 的直接最近邻。</span></a>
 <a href="timeline.html"><b>研究时间轴</b><span>CVPR / ICML / ACL DDL、论文阅读进度与研究节点。</span></a>
-<a href="idea-prioritization.html"><b>新增：I1–I13 优先级与决定性实验（2026-10-29）</b><span>科学上限与完成把握分别排序；每项的最小 P0、强基线、Go 条件与投稿风险，以及 NC／Nature／顶会实验设计借鉴。</span></a>
-<a href="ideas.html"><b>I1–I13：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
+<a href="idea-prioritization.html"><b>I1–I14 · 优先级与决定性实验（2026-10-29）</b><span>I1–I13 保留历史双排名，I14 已编号但分数待评估；列出 P0、强基线、Go/降级标准与原始论文依据。</span></a>
+<a href="ideas.html"><b>I1–I14：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
 <a href="idea-i5.html"><b>I5：十模型互教与交换舞伴</b><span>Nature 群体学习、Jigsaw 与双向共进化的动态伙伴网络。</span></a>
 <a href="idea-i6-failure-value.html"><b>I6：哪些失败值得学，何时该停？</b><span>同题同错误终点的轨迹为什么学习价值不同；何时换错题、暂缓和重访？</span></a>
 <a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
@@ -48,9 +50,9 @@
 <a href="idea-i10-learning-novelty.html"><b>I10：规则区分、参数吸收与组合泛化</b><span>Nature 2023 MLC、100%正确监督与20%人类式错误标签的区别；T1/T2对照及受控 P0。</span></a>
 <a href="idea-i11-emotional-rsi.html"><b>I11：哪种情绪反馈能改善长期自我迭代？</b><span>固定真实反馈，只改鼓励/批评/紧迫/中性措辞；测校准、学习动作及 Skill/LoRA 多轮净增益。</span></a>
 <a href="idea-i12-prerequisite-bottleneck.html"><b>I12：发现共同前置知识瓶颈</b><span>Nature 高阶知识骨架与真实 RSI 因果验证：为什么先补一个关键规则，会让多任务下游训练变得有效？</span></a>
-<a href="memory-research-map.html"><b>新增：RSI 记忆研究地图 · 先拆清四种研究问题</b><span>从NHB 2026的历史潜变量出发，整理历史状态诊断、记忆检索、经验巩固与元记忆调控；保留各自决定性P0，不急着增加I14。<a class="cite" href="references.html#E370" title="Hybrid neural–cognitive models reveal how memory shapes human reward learning">[E370]</a><a class="cite" href="references.html#M530" title="Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning">[M530]</a></span></a>
+<a href="memory-research-map.html"><b>RSI 记忆研究地图 · 历史、检索、巩固和记忆策略</b><span>梳理历史状态诊断、记忆检索、经验巩固与元记忆控制。学习规则自身的更新已编号I14；记忆子问题仍保持未编号候选。<a class="cite" href="references.html#E370" title="Hybrid neural–cognitive models reveal how memory shapes human reward learning">[E370]</a><a class="cite" href="references.html#M530" title="Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning">[M530]</a></span></a>
 <a href="reading-notes.html#deep-nhb2026-hybrid-memory-eckstein"><b>Nature Human Behaviour 2026 · Hybrid Memory-ANN完整精读</b><span>862人、617871次选择、Q值 vs Context-ANN vs Memory-ANN，Figure 3i/4g的多时间尺度历史、与RSI未来LoRA学习状态的边界。<a class="cite" href="references.html#E370" title="Hybrid neural–cognitive models reveal how memory shapes human reward learning">[E370]</a></span></a>
-<a href="learning-rule-evolution.html"><b>研究候选：Agent什么时候真正变得更会学习？</b><span>Nature Neuroscience 2023 快慢元学习的阶段干预 + DiscoRL 2025 的更新目标生成；只改变学习规则，验证新任务的真实学习曲线，暂不升I14。</span></a>
+<a href="learning-rule-evolution.html"><b>I14 · 学习规则自进化：Agent 什么时候真正变得更会学习？</b><span>Hattori 2023 的快慢元学习干预 + DiscoRL 2025 的更新目标生成；只改变学习规则，验证未见任务C的真实学习曲线。</span></a>
 <a href="experience-consolidation.html"><b>研究候选：经验何时升级成长期能力？</b><span>结合Science 2024、ACL 2026与Faulty Memory预印本；保留原始Episode、抽象Skill或真实LoRA更新怎样选择、验证与继承？</span></a>
 <a href="learning-admission.html"><b>I13：Safe to Inherit？RSI 安全更新接纳</b><span>已核对跨代故障与 Skill 持久风险；固定独立硬门，学习风险诊断和选择性测试，比较漏放、误拒及长期安全净能力。</span></a>
 <a href="reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal"><b>NC 2025 · 局部信心与整体自评</b><span>真实反馈选择如何改变总体自评？全文精读、D1/D2/D3 与 I11 实验。<a class="cite" href="references.html#E29" title="Distorted learning from local metacognition supports transdiagnostic underconfidence">[E29]</a></span></a>
@@ -101,7 +103,7 @@
 <p><a href="idea-i5.html#teaching-feedback">I5 统一详情页</a>同时保留“教学反馈诊断”作为历史研究支线：学生的误解能否暴露教师自己的隐性缺陷。它与当前的“动态伙伴选择”有不同的研究问题，因此在详情页中区分，不再在左侧目录重复出现。</p>
 <p><a href="idea-i9-practice-switching.html">I9</a> 固定教材，研究跨主题集中/交错的切换，并增加同材料不同顺序的第三任务学习曲线实验；<a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
-<div class="status-strip"><b>截至 2026-10-28</b><span>I1–I13 已整理，I10 有独立研究页</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
+<div class="status-strip"><b>截至 2026-10-28</b><span>I1–I14 已整理，I14 P0/P1 待实验</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
 
 ## RSI 研究时间轴 / 投稿目标与时间轴概览
 
@@ -592,7 +594,7 @@
       <h4>核心机制 · 记住这几个公式</h4><ol class="reading-mechanisms"><li><b>两个时间尺度是机制，不是两个命名模块</b><p>外层改网络连接，内层用当前连接把新奖赏映射到活动状态/行动；只有对两者分阶段干预才能辨认‘学法形成’与‘用学法解决眼前任务’。</p><code class="reading-formula">h[t+1]=f_φ(h[t],a[t],r[t]);  φ[k+1]=MetaUpdate(φ[k],Session[k])  [teaching notation]</code></li><li><b>策略本身可以通过历史核被测量</b><p>Logistic回归把前五轮左右奖励差和选择差的系数当作可观测策略核，不只报告任务总准确率。</p><code class="reading-formula">logit P_L(t)=β0+Σ_i βr,i Δr[t−i]+Σ_i βc,i Δc[t−i], i=1..5</code></li><li><b>策略轴是跨会话学法变化的代理</b><p>奖励系数向量βr(k)的夹角随学习逐步变小；反映怎样利用历史的方向逐渐稳定，仍须与行为收益独立联合报告。</p><code class="reading-formula">PolicySim(k,j)=cos(βr(k),βr(j))</code></li><li><b>阶段交叉干预提供因果辨别</b><p>学习初期阻断OFC可塑性损害慢形成；已成专家再阻断并无可检测损害；临时抑制OFC活动降低专家实时利用历史。</p><code class="reading-formula">do(block plasticity during learning)≠do(block plasticity in experts)≠do(silence activity in experts)</code></li><li><b>价值编码与行为策略共同稳定</b><p>长期纵向记录显示OFC的Q_ch/ΣQ等价值表征的强度和跨会话编码方向逐渐稳定，并与奖励历史策略轴相联系。</p><code class="reading-formula">cos(value_axis[k],value_axis[j]) ↔ cos(policy_axis[k],policy_axis[j])  (association)</code></li></ol>
       <h4>实验证据（作者报告，未复现）</h4><ul><li>Fig.1a：小鼠在左右舔水口做概率反转学习，奖励分配概率0.6 vs0.1或0.525 vs0.175，反转约每60–80 trial；baiting使真正到口奖励概率不是上述分配概率。</li><li>Fig.1c–g/Methods：5个独立训练的A2C-tanh递归网络；输入最近选择及奖励三个单元，500 trials一session中权重固定；每session之后更新权重、训练300 sessions，lr=5e−4，γ=0.5，BPTT unroll=50。</li><li>Fig.1h–l：用过去5 trial的奖励/选择历史Logistic系数构造奖励/选择policy axis；真实小鼠和深度RNN都随跨会话训练增强奖励历史依赖、轴余弦相似更稳定。</li><li>Fig.1：五个独立网络与七只OFC成像小鼠用于部分行为与历史回归对照；RNN学会更强的无奖励选择交替来利用baiting，而小鼠更多选择高分配概率一侧，两者行为规则并不完全相同。</li><li>Fig.2f–j：学习早期5只paAIP2与5只EGFP对照，连续30会话每次选择后3秒抑制OFC CaMKII相关可塑性；中期/后期高奖励侧选择差异p=1.89×10^-5/5.36×10^-6。</li><li>Fig.2h：奖励历史权重中期/后期组间p=1.58×10^-8/2.37×10^-3；选择历史权重没有一致显著组间差异。策略轴稳定性也受损。</li><li>Fig.3：另5只小鼠先训练至专家，然后交替10个光刺激与10个对照会话；同类paAIP2可塑性阻断没有对奖励历史利用或选择成绩造成可检测的显著影响。</li><li>Fig.4：7只OFC成像小鼠、14个可追踪神经群体；跨试次变化量分析可从OFC群体解码价值差ΔQ、已选值Q_ch和总值ΣQ，避免只看缓慢共同时间漂移形成的相关。</li><li>Fig.5：在模型及专家小鼠随机约13%试次短暂抑制活动，削弱奖励历史利用；OFC光遗传抑制组ChrimsonR 6只小鼠/43会话，对照tdTomato 5只/30会话。</li><li>Fig.7：跨会话跟踪神经群体，Q_ch和ΣQ价值信号增强并形成较稳定的价值轴，其跨会话稳定程度与行为策略核稳定程度正相关；不是证明鼠脑完全在做A2C梯度。</li><li>Change history：2024-07-02作者更正定位方法坐标；当前官方Nature正文为已更新版本，主要研究结果未因此改变。</li><li>全部原始鼠脑行为/神经数据：https://doi.org/10.5281/zenodo.8378063；模型训练/行为分析代码：https://github.com/ryhattori/MetaRL-PRL。</li></ul>
       <h4>限制与易错理解</h4><ul><li>不是LLM实验。真实小鼠在同一概率反转任务家族中跨会话逐渐提高；论文没有检验跨数学/代码/新规则族的泛化，因此不能称为跨任意新任务的通用元学习证据。</li><li>人工RNN固定session内权重、跨session更新，与真实小鼠具体神经更新的生物机制并非数学完全同一；不能说动物脑使用A2C反向传播。</li><li>paAIP2阻断CaMKII依赖可塑性诱导，不阻断所有可塑性类型；专家阶段结果是未检测到损害，不等于任何新的突触变化绝不可能发生。</li><li>学习阶段OFC可塑性抑制引起形成延迟，其学法测量依赖行为历史回归；应与任务参与、选择偏好和不同奖励概率控制一起解读。</li><li>OFC活动暂时抑制影响专家状态使用，证明活动必要性，但不说明整个RL系统只由OFC组成，VTA/纹状体等有其他角色。</li><li>在奖励带有baiting规则的任务中，动物与人工RNN选择历史偏好不同；二者的表征相似不是算法一致的身份证明。</li><li>Policy Axis余弦相似和价值编码轴稳定只是机制代理；高相似度可表示一种坏策略稳定，不代表元学习真正改善，仍需任务表现与留出适应曲线。</li><li>更正发表在2024-07-02，为Methods中OFC定位坐标，引用当前修正版，不把更正误写成主要结果撤回。</li><li>元学习先例包括RL²、Learning to Reinforcement Learn、DiscoRL等。只画慢环/快环、用RNN存短期回报或报未来任务学得快，均不自动具备独立创新性。</li></ul>
-      <h4>对我们的 RSI 研究有什么启发？</h4><ul><li>将‘任务学会’与‘学会更新策略’作为不同对象：当前任务成绩、持久任务知识、元学习规则三层都需单独冻结/替换并在未见任务上验收。</li><li>给元学习证据增加干预对照：禁止更新Meta-Policy但保留内层学习，允许Meta更新但冻结任务Agent；已经学会后冻结Meta-Policy，再观察既有学法是否可使用。</li><li>I2教师共进化已有教师自身更新：借鉴Hattori的策略形成/使用分离，但不把“教师变强”说成Agent内层更新算法变更。</li><li>I9训练顺序研究同样材料的不同历史可能改变未来C可学习性：这里强调同数据、同顺序，仅让更新规则变化才可与I9正交。</li><li>DiscoRL学到共享的训练目标生成函数η；Hattori提出分阶段干预验证慢形成和快执行，两篇互补，但都已研究元学习，不应仅凭这些机制宣称首次提出Meta-RSI。</li><li>未编号候选Learning Rule Evolution：比较同任务样本、同学生快照、固定教师、同计算预算下旧/新学习规则对留出规则家族未来学习曲线的作用；若静态Best Rule、简单状态路由同样好，则保留指标贡献而非升级为新I。</li></ul>
+      <h4>对我们的 RSI 研究有什么启发？</h4><ul><li>将‘任务学会’与‘学会更新策略’作为不同对象：当前任务成绩、持久任务知识、元学习规则三层都需单独冻结/替换并在未见任务上验收。</li><li>给元学习证据增加干预对照：禁止更新Meta-Policy但保留内层学习，允许Meta更新但冻结任务Agent；已经学会后冻结Meta-Policy，再观察既有学法是否可使用。</li><li>I2教师共进化已有教师自身更新：借鉴Hattori的策略形成/使用分离，但不把“教师变强”说成Agent内层更新算法变更。</li><li>I9训练顺序研究同样材料的不同历史可能改变未来C可学习性：这里强调同数据、同顺序，仅让更新规则变化才可与I9正交。</li><li>DiscoRL学到共享的训练目标生成函数η；Hattori提出分阶段干预验证慢形成和快执行，两篇互补，但都已研究元学习，不应仅凭这些机制宣称首次提出Meta-RSI。</li><li>I14 · Learning Rule Evolution：比较同任务样本、同学生快照、固定教师、同计算预算下旧/新学习规则对留出规则家族未来学习曲线的作用；如果最佳固定规则或简单状态路由同样好，则缩题、降级或合并，不继续增加昂贵Meta模块。</li></ul>
       <div class="reading-next"><b>下一步最值得做的辨别实验</b><p>P0固定同一种新任务C的训练样本、学生检查点θ0、反馈、采样、token与实际LoRA预算，只更换由过去独立任务学习的更新规则η_old/η_new；每条规则可生成更新目标或训练协议，但不可换题、换教师或偷看C最终标签。设计快层任务状态重置与慢层规则冻结的2×2：不更新学生/更新学生 × 固定旧规则/更新新规则，并监测当前策略核与学习曲线。主指标为AULC_C(η_new)-AULC_C(η_old)减旧能力下降与发现规则成本。P1留出任务族及模型规模，测试持续多轮学习规则改进的真实外推。</p></div>
     </div>
   </details>
@@ -1533,7 +1535,7 @@
 
 ## 论文完整精读 / 精读 · OFC Meta-RL · Nat Neurosci 2023
 
-<div class="deep-paper-head"><p class="deep-meta">University of California San Diego · Nature Neuroscience · 26:2182–2191 (2023) · DOI:10.1038/s41593-023-01485-3 · 2026-10-29 精读</p><h3>Meta-reinforcement learning via orbitofrontal cortex</h3><p class="deep-focus">这篇Nature Neuroscience是动物神经干预+人工A2C-RNN的配对机制研究，不是LLM。依次看：小鼠概率反转任务、历史核/Policy Axis定量、早期paAIP2可塑性干预、专家阶段同类抑制、专家OFC活动抑制、神经价值轴长期编码。最后与DiscoRL对照并设计LLM中可真正冻结/干预的两层更新。</p><p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。这份笔记区分作者结果、教学举例和我们的研究想法，尚未独立复现。</p><aside class="deep-note deep-note--insight"><b>公式推导与可复用理论索引</b><p>下列主题已单独整理为稳定锚点；后续 Idea 可直接引用理论页，区分原论文机制、教学推导和研究假设。</p><div class="links"><a class="link-btn" href="theory-notes.html#metarl-two-timescale-learning">快学习与慢元学习：任务内状态变化和跨会话学法形成如何分离？</a><a class="link-btn" href="theory-notes.html#policy-history-kernel-measurement">Policy Axis：怎样定量测量学习方式的改变而不只看最终任务分数？</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI 决定性干预：区分学法形成、任务执行与持久学习收益</a></div></aside><div class="deep-glossary"><p class="deep-glossary-title">先记住这些术语</p><dl class="deep-terms"><div><dt>Probabilistic Reversal Learning</dt><dd>在左右水奖励概率随时间无提示反转的任务里，持续根据反馈调整左右选择。</dd></div><div><dt>Baiting</dt><dd>某侧已分配但未领取的水奖励跨试次保留，导致实际可领取概率与新分配概率不同。</dd></div><div><dt>Fast RL / Within-session</dt><dd>同一会话内，使用已建立的神经网络活动状态累计奖赏历史，快速调整当前选择。</dd></div><div><dt>Slow Meta-RL / Across-session</dt><dd>跨许多会话逐渐形成一种更有效地利用反馈的策略；神经实验中的关键候选机制是长期OFC可塑性。</dd></div><div><dt>OFC</dt><dd>Orbitofrontal Cortex，眶额皮层；记录与干预奖励价值相关活动的脑区。</dd></div><div><dt>CaMKII / paAIP2</dt><dd>CaMKII相关的突触可塑性可被光控抑制工具paAIP2抑制，以区分长期形成和专家阶段执行。</dd></div><div><dt>Reward History Kernel</dt><dd>过去五次左右奖励差的Logistic回归系数，用于定量测量奖励如何影响当前选择。</dd></div><div><dt>Policy Axis</dt><dd>历史核系数组成的向量；跨会话余弦相似度用于评估学法变化与趋稳。</dd></div><div><dt>Value Difference / Chosen / Sum</dt><dd>ΔQ、Q_ch、ΣQ为从OFC群体活动尝试解码的三个动作价值信号。</dd></div><div><dt>A2C recurrent meta-RL</dt><dd>人工RNN通过跨session A2C形成内部动态适应机制，session内不通过梯度改变权重。</dd></div></dl></div><section class="deep-metric-overview"><h4>五组关键因果/关联证据：任务、可塑性、专家执行与神经价值编码</h4><p>小鼠和RNN采用同类环境，但算法并非相同；会话、试次、动物样本各是不同统计单位。p值来自原文对应组间模型检验而不是成功率。</p><div class="deep-metric-list"><article class="deep-metric-item"><h4>① 任务与人工模型</h4><p class="deep-metric-subtypes">两侧奖励概率0.6/0.1 或0.525/0.175</p><p>约60–80 trial反转，baiting使奖励实际可领取概率与分配概率不同；人工网络有5个独立种子。</p><p class="deep-metric-result">每个RNN session 500试次内权重冻结，跨session外层更新，共300训练session。</p></article><article class="deep-metric-item"><h4>② 学习早期可塑性抑制</h4><p class="deep-metric-subtypes">Fig.2 · 5 vs5 mice · 30 sessions</p><p>paAIP2阻断OFC CaMKII相关可塑性，检验慢速学法形成。</p><p class="deep-metric-result">中/后期高奖励侧选择组间p=1.89×10^-5/5.36×10^-6；历史利用与策略稳定性受损。</p></article><article class="deep-metric-item"><h4>③ 专家阶段同类抑制</h4><p class="deep-metric-subtypes">Fig.3 · 5 mice / 10+10交替session</p><p>先学成专家，再在光刺激和对照会话交替阻断可塑性。</p><p class="deep-metric-result">未发现专家奖励历史利用或成绩的显著干预损害。</p></article><article class="deep-metric-item"><h4>④ 专家临时抑制OFC活动</h4><p class="deep-metric-subtypes">Fig.5 · 6+5 mice / ~13% trials</p><p>阻断的是活动而非可塑性诱导；检验当前快时间尺度执行。</p><p class="deep-metric-result">奖励历史对当前选择的影响显著下降，但并非动物完全无法做任务。</p></article><article class="deep-metric-item"><h4>⑤ 长期价值编码</h4><p class="deep-metric-subtypes">Fig.4/7 · 7 mice /14 populations</p><p>跨会话追踪OFC神经活动与历史核的策略轴、价值轴变化。</p><p class="deep-metric-result">Q_ch与ΣQ价值表示逐步增强和稳定，与reward-history policy axis稳定性相关；不是直接证明跨领域新任务元学习。</p></article></div></section><nav class="deep-shortcuts" aria-label="OFC Meta-RL · Nat Neurosci 2023 四步精读"><a href="#deep-hattori-ofc-metarl-nn2023--stage-challenge">Challenge · 难在哪里</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-insight">Insight · 为什么可解</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-design">Design · 具体怎么做</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-result">Result · 结果怎么样</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-next">Next · 哪些问题还没解决</a></nav><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-challenge" data-story-stage="challenge"><header class="deep-stage-head"><span>01 · Challenge</span><h4>难在哪里</h4></header><p class="deep-stage-lead">当前任务成绩提高，未必说明Agent更会学习；小鼠每轮用新奖励调动作，和跨天逐渐形成更好的学习方法如何区分？</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--study-subjects"><summary>实验对象是谁？为何既要小鼠又要人工RNN？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">真实小鼠在左右舔水口学习不断反转的奖赏概率；人工部分是5个独立A2C-tanh RNN，模拟同样的任务结构。小鼠脑内的OFC通过长期生物可塑性形成快速奖赏策略，而RNN通过跨session梯度形成快速活动状态策略；作者比较的是可分离的时间尺度机制，不是把神经元参数逐项等同RNN梯度。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">对象</th><th scope="col">真正可变的是什么</th><th scope="col">后测解释</th></tr></thead><tbody><tr><td>小鼠</td><td>慢：CaMKII相关OFC突触可塑性；快：OFC群体活动</td><td>光控干预因果辨别</td></tr><tr><td>人工RNN</td><td>慢：session结束后A2C/RMSProp更新权重；快：固定权重下隐藏状态随奖励改变</td><td>在人工网络中控制两条时间尺度</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>不要把小鼠变成“用GPU训练的Agent”</b><p>两类实验相互提供机制解释，但生物脑学习算法尚未被证明与人工A2C一模一样。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--baited-reversal-task"><summary>Fig.1a：左右水奖励的概率反转究竟怎样设置？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">小鼠头固定，听到准备信号后向左/右舔水口作答。左右分配0.6/0.1或0.525/0.175；每60–80 trial突然翻转高低侧，环境不提前告知。已经分配给某侧、暂时没人领取的水会留在该侧直到被舔，因此右侧低分配概率经过多个未选trial后，下一次可能仍有奖励。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">机制</th><th scope="col">实验参数</th><th scope="col">为什么重要</th></tr></thead><tbody><tr><td>奖励分配</td><td>0.6:0.1 / 0.525:0.175</td><td>让小鼠有必要用最近反馈更新价值</td></tr><tr><td>反转</td><td>每60–80 trial，无提示</td><td>检查适应改变，而非静态记住永远选左</td></tr><tr><td>Baiting</td><td>已分配未领取奖励可累积</td><td>小鼠与人工RNN可以利用不同策略获得奖励</td></tr></tbody></table></div><aside class="deep-note deep-note--insight"><b>小鼠和人工RNN有行为差异</b><p>人工RNN学会更明显的无奖励驱动选择交替，利用baiting；小鼠更多维持选择高分配侧。二者并非相同算法复刻。</p></aside></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-insight" data-story-stage="insight"><header class="deep-stage-head"><span>02 · Insight</span><h4>为什么可解</h4></header><p class="deep-stage-lead">会话内活动状态更新与跨会话长期可塑性属于不同时间尺度；在不同阶段单独阻断它们，才能检验各自必要性。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--reward-kernel"><summary>Eq.(12)/Fig.1h：作者怎样量化‘越来越会利用经验’？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-formula"><b>奖励/选择历史Logistic回归（论文方法结构）</b><code>logit P_left(t)=β0+Σ_{i=1..5}βr,i·(r_left(t−i)−r_right(t−i))+Σ_{i=1..5}βc,i·(c_left(t−i)−c_right(t−i))</code><p><strong>怎么理解：</strong>逐会话拟合五轮奖励差和动作差对本次选择的影响，形成可比较的历史依赖核。</p><p class="deep-caveat"><strong>边界：</strong>符号左右指示按作者编码形式整理；β只是行为拟合出的代理参数，不等同真实神经突触连接。</p></div><p class="deep-prose">奖励核的强度告诉我们学习者是否利用历史，而核的形状/方向告诉我们怎样组合不同时间的反馈。作者把它们拆开，并通过跨session比较观察策略形成；这比只报告总奖励更有诊断性。</p><aside class="deep-note deep-note--insight"><b>应用到RSI时该测什么？</b><p>当前成功率相同的两个Agent，其对近期失败、旧能力退化、验证反馈的学习决策权重可能不同。但策略系数变化本身仍须用后续学习收益验收。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--policy-axis"><summary>Fig.1j–l：怎样判断学到的学习策略逐渐稳定？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-formula"><b>策略轴（教学命名）</b><code>p_r[k] = [βr,1[k],…,βr,5[k]]</code><p><strong>怎么理解：</strong>用同一会话的五个奖励历史回归系数构成奖励策略方向；choice history也有独立轴。</p><p class="deep-caveat"><strong>边界：</strong>这是行为策略的代理表示，无法保证相近轴就产生等价神经机制。</p></div><div class="deep-formula"><b>策略轴余弦相似</b><code>sim(k,j)=&lt;p_r[k],p_r[j]&gt;/(||p_r[k]||·||p_r[j]||)</code><p><strong>怎么理解：</strong>越接近1，两个会话倾向用相似方式加权五轮奖励；早期相邻轴方向差异大，后期逐渐稳定。</p><p class="deep-caveat"><strong>边界：</strong>即使一个糟糕的学习策略也可能稳定；不能直接用cosine高低当成元学习效果大小。</p></div><p class="deep-prose">策略核的强度、形状及稳定性联合形成对‘学法本身是否改变’的证据，而不是把新题得分作为唯一变量。</p></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-design" data-story-stage="design"><header class="deep-stage-head"><span>03 · Design</span><h4>具体怎么做</h4></header><p class="deep-stage-lead">小鼠在左右水奖励概率无提示反转任务中学习；用历史回归量化策略，再分别抑制学习早期可塑性、专家可塑性和专家OFC活动。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--two-timescale-rnn"><summary>Fig.1c–g：RNN里哪部分每trial更新，哪部分仅跨session更新？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-formula"><b>快速状态转移（教学简式）</b><code>h[t+1] = f_φ(h[t],a[t],r[t])</code><p><strong>怎么理解：</strong>RNN只读上一轮选择及奖励和自身隐藏状态，形成累计历史，动作概率由活动状态产生。</p><p class="deep-caveat"><strong>边界：</strong>原网络的真实time step每trial约4–5个；此式用trial索引压缩显示，非作者逐符号公式。</p></div><div class="deep-formula"><b>慢速外层参数改变（教学简式）</b><code>φ[k+1] = A2C_Update(φ[k]; rewards and trajectories from session k)</code><p><strong>怎么理解：</strong>每500个trial形成一个训练会话，会话内φ固定，结束后才更新网络权重；共300训练会话。</p><p class="deep-caveat"><strong>边界：</strong>原实现用A2C、RMSProp和BPTT，不是本文提出全新优化器。</p></div><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">模型技术</th><th scope="col">作者设置</th><th scope="col">对实验的作用</th></tr></thead><tbody><tr><td>RNN输入</td><td>上一步奖励、左右动作3个单元</td><td>限制眼前信息，迫使网络活动累积历史</td></tr><tr><td>内层</td><td>每session500 trials，权重固定</td><td>检查活动状态实现trial内适应</td></tr><tr><td>外层</td><td>300 sessions，A2C更新权重</td><td>逐渐形成稳定的快速利用历史的策略</td></tr><tr><td>优化器</td><td>学习率0.0005，γ=0.5，unroll=50</td><td>解释可执行人工元学习实例</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>快层不是每道题给LoRA梯度</b><p>此实验中快层活动状态更新而非权重改变。迁移到RSI可以另定义快=任务参数更新、慢=学习更新规则，但那是我们新的操作定义。</p></aside></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-result" data-story-stage="result"><header class="deep-stage-head"><span>04 · Result</span><h4>结果怎么样</h4></header><p class="deep-stage-lead">早期抑制CaMKII依赖可塑性削弱跨会话学习，专家阶段同类抑制不伤当前历史利用；暂时抑制OFC活动则损害快速学习。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--early-plasticity-intervention"><summary>Fig.2：在新手阶段阻止OFC可塑性，哪些结果受损？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">在OFC表达光控paAIP2（5只）和EGFP对照（5只），连续30天训练期间每次选择后3秒激活光照，主要抑制CaMKII相关突触可塑性诱导。论文用行为成绩、历史权重及策略轴与对照联合评价。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><caption>组间双侧检验p值（不是成功率）。</caption><thead><tr><th scope="col">分析</th><th scope="col">早期Day1–5</th><th scope="col">中期Day6–20</th><th scope="col">后期Day21–30</th></tr></thead><tbody><tr><td>选择高分配侧：p值</td><td>0.95</td><td>1.89×10^-5</td><td>5.36×10^-6</td></tr><tr><td>Optimality：p值</td><td>0.66</td><td>0.0138</td><td>0.000274</td></tr><tr><td>奖励历史核：p值</td><td>0.41</td><td>1.58×10^-8</td><td>0.00237</td></tr></tbody></table></div><p class="deep-prose">中后期干预组无法像对照组那样快速形成奖励历史依赖策略；作者还检查任务参与、放电性质与一般反应，降低‘光照让小鼠不能行动’的替代解释。</p><aside class="deep-note deep-note--paper"><b>可以支持的因果解释</b><p>在这套小鼠任务中，OFC CaMKII依赖可塑性对高效形成跨会话学习策略是必要的候选机制；不是所有突触变化都被阻断。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--expert-plasticity"><summary>Fig.3：已经学会后再阻止同类可塑性，为什么未发现损害？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">另一批5只表达paAIP2的小鼠先在没有抑制的条件下达到专家：最近7天中奖励和选择权重之和变化标准差都小于0.025，且至少训练17天。然后交替10个光刺激、10个对照会话，仅在专家阶段施加同一类OFC可塑性阻断。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">阶段</th><th scope="col">干预对象</th><th scope="col">结果</th></tr></thead><tbody><tr><td>新手形成时</td><td>OFC可塑性诱导</td><td>策略形成明显受损</td></tr><tr><td>专家使用时</td><td>同类OFC可塑性诱导</td><td>选择、奖励历史依赖及optimality未检测到显著损害</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>未观察到影响≠证明不存在任何可塑性</b><p>paAIP2只针对CaMKII相关通路，无法排除CaMKII非依赖的短期/其他可塑性或其他脑区的参与。作者的主张是对其干预对象的时间尺度选择性。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--expert-activity-suppression"><summary>Fig.5：专家阶段不是不需要OFC，而是需要OFC活动<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">研究用ChrimsonR介导的光遗传方法在随机约13%的专家试次、当前选择前短暂抑制OFC群体活动，并控制每次干预后有足够连续非干预试次。结果显示选择不再同样依赖过去奖赏，小鼠更多退回奖励无关的偏好；后续试次可恢复。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">干预</th><th scope="col">组别</th><th scope="col">主要解读</th></tr></thead><tbody><tr><td>短暂OFC活动抑制</td><td>ChrimsonR 6鼠/43会话</td><td>历史依赖降低，当前快速RL受损</td></tr><tr><td>对照光照</td><td>tdTomato 5鼠/30会话</td><td>用于排除光照或操作本身</td></tr><tr><td>人工RNN同类试验</td><td>~13%随机试次抑制部分recurrent神经元活动</td><td>活动依赖性同向，非生物机制逐项复刻</td></tr></tbody></table></div><aside class="deep-note deep-note--insight"><b>最值得迁移到Agent的分离试验</b><p>只冻结元规则还能用已有学法，说明‘形成’和‘执行’分开；但禁止调用已经学会的规则/状态会损害实时适应。两种实验不能被一个‘关闭训练’代替。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--ofc-value-coding"><summary>Fig.4：为什么需要从OFC神经群体解码多类价值？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">价值信号</th><th scope="col">定义</th><th scope="col">作用</th></tr></thead><tbody><tr><td>左右价值差</td><td>ΔQ=Q_L−Q_R</td><td>近期哪个动作更值得选</td></tr><tr><td>已选动作价值</td><td>Q_ch=Q(a_chosen)</td><td>上一决策/奖赏关联的已选价值</td></tr><tr><td>总价值</td><td>ΣQ=Q_L+Q_R</td><td>综合的动作价值背景</td></tr></tbody></table></div><p class="deep-prose">双光子成像获得7只小鼠/14群体OFC神经活动。作者不仅拟合绝对值，还分析相邻试次的神经与价值变化，并分别在同会话与跨会话打乱，减少缓慢漂移带来的伪相关。神经活动对三类价值信号具有可解码性，特别是在下一次选择前仍包含信息。</p><aside class="deep-note deep-note--boundary"><b>可解码值≠证明完整critic在OFC</b><p>论文讨论OFC可能至少包含Actor相关功能，critic/TD误差信号还可能涉及VTA、纹状体等其它脑区。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--longitudinal-value-axis"><summary>Fig.7：价值轴和策略轴为什么一起稳定？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">作者跨会话追踪同一神经群体，发现随着训练进行，OFC活动中Q_ch和ΣQ的价值解码逐渐增强；价值编码轴在会话之间更稳定，且编码轴稳定性与行为奖励策略轴稳定性呈正相关。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">测量</th><th scope="col">观察结果</th><th scope="col">可支持什么</th></tr></thead><tbody><tr><td>价值信号强度</td><td>Q_ch、ΣQ随训练增强</td><td>活动状态开始包含更可靠的价值信息</td></tr><tr><td>跨会话编码轴余弦</td><td>逐渐趋稳</td><td>类似的价值可以由更稳定的神经方向表达</td></tr><tr><td>编码轴与行为策略轴对应</td><td>稳定性相关</td><td>慢可塑性与快行为策略形成相联系</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>不要把关联写成新物理定律</b><p>模型的ΔQ信号与历史利用关联更强；在小鼠OFC中这项关联未始终成立，不应声称生物与RNN学到同一具体内部算法。</p></aside></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-next" data-story-stage="next"><header class="deep-stage-head"><span>06 · Next</span><h4>哪些问题还没解决</h4></header><p class="deep-stage-lead">以下LLM/RSI更新规则冻结、LoRA对照、未来C的AULC属于本站研究转化。Hattori原文没有Agent长程自修改或异领域语言模型实验。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--causal-identification"><summary>从三个干预提炼元学习的严格证据标准<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">干预</th><th scope="col">保留的能力</th><th scope="col">被干预的机制</th><th scope="col">得到哪一级因果证据</th></tr></thead><tbody><tr><td>新手阶段抑制慢可塑性</td><td>任务执行能力仍可测</td><td>长期策略形成</td><td>慢形成必要性</td></tr><tr><td>专家阶段抑制慢可塑性</td><td>已形成的奖励历史策略</td><td>继续诱导同类长期连接变化</td><td>已有学法可被使用</td></tr><tr><td>专家阶段短暂抑制活动</td><td>长期形成的连接</td><td>实时回路活动</td><td>当前学法的执行依赖</td></tr></tbody></table></div><p class="deep-prose">对RSI可操作成3种干预：冻结Meta-Updater但保留学生更新、在执行期不给元策略状态/指令、只在新任务到来时保留旧/新元策略进行配对试训。其核心不是硬生生套同一生物部件，而是通过冻结操作分离机制。</p><aside class="deep-note deep-note--proposal"><b>最关键的双重否证</b><p>如果冻结Meta不会改变未来学习速度，说明可能没有学法改进；如果只靠额外上下文就能做到相同效果，说明没有持久独立学习；若meta改善只发生已见任务族，必须缩小泛化主张。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--metarl-nearest"><summary>与DiscoRL/传统元RL已有研究相比，我们新在哪里？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">工作</th><th scope="col">已经研究了什么</th><th scope="col">是否自动产生新更新规则</th></tr></thead><tbody><tr><td>RL² / Learning to Reinforcement Learn (2016/2018)</td><td>跨任务训练RNN，让固定网络在新episode根据奖励快速改变隐藏状态</td><td>通常固定元训练结构/在推理状态中学习</td></tr><tr><td>Hattori et al. 2023</td><td>小鼠OFC快慢机制的分阶段抑制与行为历史核</td><td>动物实验，非新LLM更新器</td></tr><tr><td>DiscoRL · Nature 2025</td><td>跨57/103复杂环境训练元网络生成策略与新预测训练目标，并验证未见领域</td><td>已自动学习新的RL目标规则</td></tr><tr><td>I2 · 教师共进化</td><td>教师根据学生真实回应学习更好教法</td><td>变的是教师教学策略，不一定改变学生的参数更新规则</td></tr><tr><td>I9 · 训练顺序</td><td>相同数据A→B/B→A影响未来任务C的可学习性</td><td>变的是学习材料的次序</td></tr><tr><td>RSI未编号候选 · 更新规则的条件性演化</td><td>固定样本、顺序、教师、基础模型，只变参数更新目标/规则</td><td>要证明长期持续净收益，非简单重复已有元RL</td></tr></tbody></table></div><p class="deep-prose">DiscoRL已有完整公式、消融和资源规模精读：https://agent-evolution.lightrain.asia/rsi/reading-notes.html#deep-discorl-nature2025-oh；本篇主要补‘什么时候形成、什么时候执行，怎样用分阶段干预识别’的强证据。</p><aside class="deep-note deep-note--boundary"><b>跨时间尺度本身已是Meta-RL常识</b><p>新颖性必须在LLM真实持久更新上解释何种历史状态需要改变什么学习规则、训练前可预测、未来保持与未见任务族迁移，而不是发明两个Loop。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--rsi-protocol"><summary>P0：Same Current Ability, Different Future Learnability如何验证慢规则真的变好？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><ol class="deep-steps"><li><strong>定义处理变量</strong><p>同样底座θ0、学生、A/B/C题目池、学习顺序、教师反馈与token/FLOPs，仅更换更新规则η_old或η_new；先不同时选择新题。</p></li><li><strong>形成元规则</strong><p>在多个开发任务上观察同预算更新的真实好坏，用这些后果训练候选Meta-Updater；不让C的测试结果进入元目标。</p></li><li><strong>快层/慢层分离</strong><p>新学生θ0+旧规则、θ0+新规则分别学习未见C；另做冻结元规则但允许学生更新，以及仅给学法提示却不允许参数更新。</p></li><li><strong>当前能力匹配</strong><p>开始学习C之前，用独立A/B/必要前置探针确认当前能力相近，且训练C数据完全一致。</p></li><li><strong>读取未来学习增益</strong><p>完整曲线AULC_C、最终未见C变式、A/B旧能力保持、元规则发现+使用总成本和跨任务族稳定性。</p></li></ol><div class="deep-formula"><b>未来学习曲线增益（本站简式）</b><code>MetaGain = AULC_C(η_new,θ0) − AULC_C(η_old,θ0) − λ OldRegression − β MetaCost</code><p><strong>怎么理解：</strong>用于比较相同初始任务学生在不同更新规则下，未来任务学习曲线的真实变化。</p><p class="deep-caveat"><strong>边界：</strong>这是本站候选RSI指标，不是Nature Neuroscience作者原始公式；AULC和Cost须预先设评估合同。</p></div><aside class="deep-note deep-note--proposal"><b>升级独立I的明确判据</b><p>只有固定任务/顺序/反馈及总成本后，学习规则本身改变带来可重复的正/负迁移交互，并在新规则族与模型快照上比最佳固定/简单路由方法更好，才值得正式定为I14。</p></aside></div></details></div></section><div class="deep-back"><a href="reading-cards.html#hattori-ofc-metarl-nn2023">返回论文速览卡片</a></div><div class="links deep-source-links"><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://www.nature.com/articles/s41593-023-01485-3">官方论文页</a><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://github.com/ryhattori/MetaRL-PRL">代码</a><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://doi.org/10.5281/zenodo.8378063">公开数据</a><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10689244/">其他开放版本</a></div></div>
+<div class="deep-paper-head"><p class="deep-meta">University of California San Diego · Nature Neuroscience · 26:2182–2191 (2023) · DOI:10.1038/s41593-023-01485-3 · 2026-10-29 精读</p><h3>Meta-reinforcement learning via orbitofrontal cortex</h3><p class="deep-focus">这篇Nature Neuroscience是动物神经干预+人工A2C-RNN的配对机制研究，不是LLM。依次看：小鼠概率反转任务、历史核/Policy Axis定量、早期paAIP2可塑性干预、专家阶段同类抑制、专家OFC活动抑制、神经价值轴长期编码。最后与DiscoRL对照并设计LLM中可真正冻结/干预的两层更新。</p><p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。这份笔记区分作者结果、教学举例和我们的研究想法，尚未独立复现。</p><aside class="deep-note deep-note--insight"><b>公式推导与可复用理论索引</b><p>下列主题已单独整理为稳定锚点；后续 Idea 可直接引用理论页，区分原论文机制、教学推导和研究假设。</p><div class="links"><a class="link-btn" href="theory-notes.html#metarl-two-timescale-learning">快学习与慢元学习：任务内状态变化和跨会话学法形成如何分离？</a><a class="link-btn" href="theory-notes.html#policy-history-kernel-measurement">Policy Axis：怎样定量测量学习方式的改变而不只看最终任务分数？</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI 决定性干预：区分学法形成、任务执行与持久学习收益</a></div></aside><div class="deep-glossary"><p class="deep-glossary-title">先记住这些术语</p><dl class="deep-terms"><div><dt>Probabilistic Reversal Learning</dt><dd>在左右水奖励概率随时间无提示反转的任务里，持续根据反馈调整左右选择。</dd></div><div><dt>Baiting</dt><dd>某侧已分配但未领取的水奖励跨试次保留，导致实际可领取概率与新分配概率不同。</dd></div><div><dt>Fast RL / Within-session</dt><dd>同一会话内，使用已建立的神经网络活动状态累计奖赏历史，快速调整当前选择。</dd></div><div><dt>Slow Meta-RL / Across-session</dt><dd>跨许多会话逐渐形成一种更有效地利用反馈的策略；神经实验中的关键候选机制是长期OFC可塑性。</dd></div><div><dt>OFC</dt><dd>Orbitofrontal Cortex，眶额皮层；记录与干预奖励价值相关活动的脑区。</dd></div><div><dt>CaMKII / paAIP2</dt><dd>CaMKII相关的突触可塑性可被光控抑制工具paAIP2抑制，以区分长期形成和专家阶段执行。</dd></div><div><dt>Reward History Kernel</dt><dd>过去五次左右奖励差的Logistic回归系数，用于定量测量奖励如何影响当前选择。</dd></div><div><dt>Policy Axis</dt><dd>历史核系数组成的向量；跨会话余弦相似度用于评估学法变化与趋稳。</dd></div><div><dt>Value Difference / Chosen / Sum</dt><dd>ΔQ、Q_ch、ΣQ为从OFC群体活动尝试解码的三个动作价值信号。</dd></div><div><dt>A2C recurrent meta-RL</dt><dd>人工RNN通过跨session A2C形成内部动态适应机制，session内不通过梯度改变权重。</dd></div></dl></div><section class="deep-metric-overview"><h4>五组关键因果/关联证据：任务、可塑性、专家执行与神经价值编码</h4><p>小鼠和RNN采用同类环境，但算法并非相同；会话、试次、动物样本各是不同统计单位。p值来自原文对应组间模型检验而不是成功率。</p><div class="deep-metric-list"><article class="deep-metric-item"><h4>① 任务与人工模型</h4><p class="deep-metric-subtypes">两侧奖励概率0.6/0.1 或0.525/0.175</p><p>约60–80 trial反转，baiting使奖励实际可领取概率与分配概率不同；人工网络有5个独立种子。</p><p class="deep-metric-result">每个RNN session 500试次内权重冻结，跨session外层更新，共300训练session。</p></article><article class="deep-metric-item"><h4>② 学习早期可塑性抑制</h4><p class="deep-metric-subtypes">Fig.2 · 5 vs5 mice · 30 sessions</p><p>paAIP2阻断OFC CaMKII相关可塑性，检验慢速学法形成。</p><p class="deep-metric-result">中/后期高奖励侧选择组间p=1.89×10^-5/5.36×10^-6；历史利用与策略稳定性受损。</p></article><article class="deep-metric-item"><h4>③ 专家阶段同类抑制</h4><p class="deep-metric-subtypes">Fig.3 · 5 mice / 10+10交替session</p><p>先学成专家，再在光刺激和对照会话交替阻断可塑性。</p><p class="deep-metric-result">未发现专家奖励历史利用或成绩的显著干预损害。</p></article><article class="deep-metric-item"><h4>④ 专家临时抑制OFC活动</h4><p class="deep-metric-subtypes">Fig.5 · 6+5 mice / ~13% trials</p><p>阻断的是活动而非可塑性诱导；检验当前快时间尺度执行。</p><p class="deep-metric-result">奖励历史对当前选择的影响显著下降，但并非动物完全无法做任务。</p></article><article class="deep-metric-item"><h4>⑤ 长期价值编码</h4><p class="deep-metric-subtypes">Fig.4/7 · 7 mice /14 populations</p><p>跨会话追踪OFC神经活动与历史核的策略轴、价值轴变化。</p><p class="deep-metric-result">Q_ch与ΣQ价值表示逐步增强和稳定，与reward-history policy axis稳定性相关；不是直接证明跨领域新任务元学习。</p></article></div></section><nav class="deep-shortcuts" aria-label="OFC Meta-RL · Nat Neurosci 2023 四步精读"><a href="#deep-hattori-ofc-metarl-nn2023--stage-challenge">Challenge · 难在哪里</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-insight">Insight · 为什么可解</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-design">Design · 具体怎么做</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-result">Result · 结果怎么样</a><a href="#deep-hattori-ofc-metarl-nn2023--stage-next">Next · 哪些问题还没解决</a></nav><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-challenge" data-story-stage="challenge"><header class="deep-stage-head"><span>01 · Challenge</span><h4>难在哪里</h4></header><p class="deep-stage-lead">当前任务成绩提高，未必说明Agent更会学习；小鼠每轮用新奖励调动作，和跨天逐渐形成更好的学习方法如何区分？</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--study-subjects"><summary>实验对象是谁？为何既要小鼠又要人工RNN？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">真实小鼠在左右舔水口学习不断反转的奖赏概率；人工部分是5个独立A2C-tanh RNN，模拟同样的任务结构。小鼠脑内的OFC通过长期生物可塑性形成快速奖赏策略，而RNN通过跨session梯度形成快速活动状态策略；作者比较的是可分离的时间尺度机制，不是把神经元参数逐项等同RNN梯度。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">对象</th><th scope="col">真正可变的是什么</th><th scope="col">后测解释</th></tr></thead><tbody><tr><td>小鼠</td><td>慢：CaMKII相关OFC突触可塑性；快：OFC群体活动</td><td>光控干预因果辨别</td></tr><tr><td>人工RNN</td><td>慢：session结束后A2C/RMSProp更新权重；快：固定权重下隐藏状态随奖励改变</td><td>在人工网络中控制两条时间尺度</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>不要把小鼠变成“用GPU训练的Agent”</b><p>两类实验相互提供机制解释，但生物脑学习算法尚未被证明与人工A2C一模一样。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--baited-reversal-task"><summary>Fig.1a：左右水奖励的概率反转究竟怎样设置？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">小鼠头固定，听到准备信号后向左/右舔水口作答。左右分配0.6/0.1或0.525/0.175；每60–80 trial突然翻转高低侧，环境不提前告知。已经分配给某侧、暂时没人领取的水会留在该侧直到被舔，因此右侧低分配概率经过多个未选trial后，下一次可能仍有奖励。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">机制</th><th scope="col">实验参数</th><th scope="col">为什么重要</th></tr></thead><tbody><tr><td>奖励分配</td><td>0.6:0.1 / 0.525:0.175</td><td>让小鼠有必要用最近反馈更新价值</td></tr><tr><td>反转</td><td>每60–80 trial，无提示</td><td>检查适应改变，而非静态记住永远选左</td></tr><tr><td>Baiting</td><td>已分配未领取奖励可累积</td><td>小鼠与人工RNN可以利用不同策略获得奖励</td></tr></tbody></table></div><aside class="deep-note deep-note--insight"><b>小鼠和人工RNN有行为差异</b><p>人工RNN学会更明显的无奖励驱动选择交替，利用baiting；小鼠更多维持选择高分配侧。二者并非相同算法复刻。</p></aside></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-insight" data-story-stage="insight"><header class="deep-stage-head"><span>02 · Insight</span><h4>为什么可解</h4></header><p class="deep-stage-lead">会话内活动状态更新与跨会话长期可塑性属于不同时间尺度；在不同阶段单独阻断它们，才能检验各自必要性。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--reward-kernel"><summary>Eq.(12)/Fig.1h：作者怎样量化‘越来越会利用经验’？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-formula"><b>奖励/选择历史Logistic回归（论文方法结构）</b><code>logit P_left(t)=β0+Σ_{i=1..5}βr,i·(r_left(t−i)−r_right(t−i))+Σ_{i=1..5}βc,i·(c_left(t−i)−c_right(t−i))</code><p><strong>怎么理解：</strong>逐会话拟合五轮奖励差和动作差对本次选择的影响，形成可比较的历史依赖核。</p><p class="deep-caveat"><strong>边界：</strong>符号左右指示按作者编码形式整理；β只是行为拟合出的代理参数，不等同真实神经突触连接。</p></div><p class="deep-prose">奖励核的强度告诉我们学习者是否利用历史，而核的形状/方向告诉我们怎样组合不同时间的反馈。作者把它们拆开，并通过跨session比较观察策略形成；这比只报告总奖励更有诊断性。</p><aside class="deep-note deep-note--insight"><b>应用到RSI时该测什么？</b><p>当前成功率相同的两个Agent，其对近期失败、旧能力退化、验证反馈的学习决策权重可能不同。但策略系数变化本身仍须用后续学习收益验收。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--policy-axis"><summary>Fig.1j–l：怎样判断学到的学习策略逐渐稳定？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-formula"><b>策略轴（教学命名）</b><code>p_r[k] = [βr,1[k],…,βr,5[k]]</code><p><strong>怎么理解：</strong>用同一会话的五个奖励历史回归系数构成奖励策略方向；choice history也有独立轴。</p><p class="deep-caveat"><strong>边界：</strong>这是行为策略的代理表示，无法保证相近轴就产生等价神经机制。</p></div><div class="deep-formula"><b>策略轴余弦相似</b><code>sim(k,j)=&lt;p_r[k],p_r[j]&gt;/(||p_r[k]||·||p_r[j]||)</code><p><strong>怎么理解：</strong>越接近1，两个会话倾向用相似方式加权五轮奖励；早期相邻轴方向差异大，后期逐渐稳定。</p><p class="deep-caveat"><strong>边界：</strong>即使一个糟糕的学习策略也可能稳定；不能直接用cosine高低当成元学习效果大小。</p></div><p class="deep-prose">策略核的强度、形状及稳定性联合形成对‘学法本身是否改变’的证据，而不是把新题得分作为唯一变量。</p></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-design" data-story-stage="design"><header class="deep-stage-head"><span>03 · Design</span><h4>具体怎么做</h4></header><p class="deep-stage-lead">小鼠在左右水奖励概率无提示反转任务中学习；用历史回归量化策略，再分别抑制学习早期可塑性、专家可塑性和专家OFC活动。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--two-timescale-rnn"><summary>Fig.1c–g：RNN里哪部分每trial更新，哪部分仅跨session更新？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-formula"><b>快速状态转移（教学简式）</b><code>h[t+1] = f_φ(h[t],a[t],r[t])</code><p><strong>怎么理解：</strong>RNN只读上一轮选择及奖励和自身隐藏状态，形成累计历史，动作概率由活动状态产生。</p><p class="deep-caveat"><strong>边界：</strong>原网络的真实time step每trial约4–5个；此式用trial索引压缩显示，非作者逐符号公式。</p></div><div class="deep-formula"><b>慢速外层参数改变（教学简式）</b><code>φ[k+1] = A2C_Update(φ[k]; rewards and trajectories from session k)</code><p><strong>怎么理解：</strong>每500个trial形成一个训练会话，会话内φ固定，结束后才更新网络权重；共300训练会话。</p><p class="deep-caveat"><strong>边界：</strong>原实现用A2C、RMSProp和BPTT，不是本文提出全新优化器。</p></div><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">模型技术</th><th scope="col">作者设置</th><th scope="col">对实验的作用</th></tr></thead><tbody><tr><td>RNN输入</td><td>上一步奖励、左右动作3个单元</td><td>限制眼前信息，迫使网络活动累积历史</td></tr><tr><td>内层</td><td>每session500 trials，权重固定</td><td>检查活动状态实现trial内适应</td></tr><tr><td>外层</td><td>300 sessions，A2C更新权重</td><td>逐渐形成稳定的快速利用历史的策略</td></tr><tr><td>优化器</td><td>学习率0.0005，γ=0.5，unroll=50</td><td>解释可执行人工元学习实例</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>快层不是每道题给LoRA梯度</b><p>此实验中快层活动状态更新而非权重改变。迁移到RSI可以另定义快=任务参数更新、慢=学习更新规则，但那是我们新的操作定义。</p></aside></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-result" data-story-stage="result"><header class="deep-stage-head"><span>04 · Result</span><h4>结果怎么样</h4></header><p class="deep-stage-lead">早期抑制CaMKII依赖可塑性削弱跨会话学习，专家阶段同类抑制不伤当前历史利用；暂时抑制OFC活动则损害快速学习。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--early-plasticity-intervention"><summary>Fig.2：在新手阶段阻止OFC可塑性，哪些结果受损？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">在OFC表达光控paAIP2（5只）和EGFP对照（5只），连续30天训练期间每次选择后3秒激活光照，主要抑制CaMKII相关突触可塑性诱导。论文用行为成绩、历史权重及策略轴与对照联合评价。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><caption>组间双侧检验p值（不是成功率）。</caption><thead><tr><th scope="col">分析</th><th scope="col">早期Day1–5</th><th scope="col">中期Day6–20</th><th scope="col">后期Day21–30</th></tr></thead><tbody><tr><td>选择高分配侧：p值</td><td>0.95</td><td>1.89×10^-5</td><td>5.36×10^-6</td></tr><tr><td>Optimality：p值</td><td>0.66</td><td>0.0138</td><td>0.000274</td></tr><tr><td>奖励历史核：p值</td><td>0.41</td><td>1.58×10^-8</td><td>0.00237</td></tr></tbody></table></div><p class="deep-prose">中后期干预组无法像对照组那样快速形成奖励历史依赖策略；作者还检查任务参与、放电性质与一般反应，降低‘光照让小鼠不能行动’的替代解释。</p><aside class="deep-note deep-note--paper"><b>可以支持的因果解释</b><p>在这套小鼠任务中，OFC CaMKII依赖可塑性对高效形成跨会话学习策略是必要的候选机制；不是所有突触变化都被阻断。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--expert-plasticity"><summary>Fig.3：已经学会后再阻止同类可塑性，为什么未发现损害？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">另一批5只表达paAIP2的小鼠先在没有抑制的条件下达到专家：最近7天中奖励和选择权重之和变化标准差都小于0.025，且至少训练17天。然后交替10个光刺激、10个对照会话，仅在专家阶段施加同一类OFC可塑性阻断。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">阶段</th><th scope="col">干预对象</th><th scope="col">结果</th></tr></thead><tbody><tr><td>新手形成时</td><td>OFC可塑性诱导</td><td>策略形成明显受损</td></tr><tr><td>专家使用时</td><td>同类OFC可塑性诱导</td><td>选择、奖励历史依赖及optimality未检测到显著损害</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>未观察到影响≠证明不存在任何可塑性</b><p>paAIP2只针对CaMKII相关通路，无法排除CaMKII非依赖的短期/其他可塑性或其他脑区的参与。作者的主张是对其干预对象的时间尺度选择性。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--expert-activity-suppression"><summary>Fig.5：专家阶段不是不需要OFC，而是需要OFC活动<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">研究用ChrimsonR介导的光遗传方法在随机约13%的专家试次、当前选择前短暂抑制OFC群体活动，并控制每次干预后有足够连续非干预试次。结果显示选择不再同样依赖过去奖赏，小鼠更多退回奖励无关的偏好；后续试次可恢复。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">干预</th><th scope="col">组别</th><th scope="col">主要解读</th></tr></thead><tbody><tr><td>短暂OFC活动抑制</td><td>ChrimsonR 6鼠/43会话</td><td>历史依赖降低，当前快速RL受损</td></tr><tr><td>对照光照</td><td>tdTomato 5鼠/30会话</td><td>用于排除光照或操作本身</td></tr><tr><td>人工RNN同类试验</td><td>~13%随机试次抑制部分recurrent神经元活动</td><td>活动依赖性同向，非生物机制逐项复刻</td></tr></tbody></table></div><aside class="deep-note deep-note--insight"><b>最值得迁移到Agent的分离试验</b><p>只冻结元规则还能用已有学法，说明‘形成’和‘执行’分开；但禁止调用已经学会的规则/状态会损害实时适应。两种实验不能被一个‘关闭训练’代替。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--ofc-value-coding"><summary>Fig.4：为什么需要从OFC神经群体解码多类价值？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">价值信号</th><th scope="col">定义</th><th scope="col">作用</th></tr></thead><tbody><tr><td>左右价值差</td><td>ΔQ=Q_L−Q_R</td><td>近期哪个动作更值得选</td></tr><tr><td>已选动作价值</td><td>Q_ch=Q(a_chosen)</td><td>上一决策/奖赏关联的已选价值</td></tr><tr><td>总价值</td><td>ΣQ=Q_L+Q_R</td><td>综合的动作价值背景</td></tr></tbody></table></div><p class="deep-prose">双光子成像获得7只小鼠/14群体OFC神经活动。作者不仅拟合绝对值，还分析相邻试次的神经与价值变化，并分别在同会话与跨会话打乱，减少缓慢漂移带来的伪相关。神经活动对三类价值信号具有可解码性，特别是在下一次选择前仍包含信息。</p><aside class="deep-note deep-note--boundary"><b>可解码值≠证明完整critic在OFC</b><p>论文讨论OFC可能至少包含Actor相关功能，critic/TD误差信号还可能涉及VTA、纹状体等其它脑区。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--longitudinal-value-axis"><summary>Fig.7：价值轴和策略轴为什么一起稳定？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><p class="deep-prose">作者跨会话追踪同一神经群体，发现随着训练进行，OFC活动中Q_ch和ΣQ的价值解码逐渐增强；价值编码轴在会话之间更稳定，且编码轴稳定性与行为奖励策略轴稳定性呈正相关。</p><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">测量</th><th scope="col">观察结果</th><th scope="col">可支持什么</th></tr></thead><tbody><tr><td>价值信号强度</td><td>Q_ch、ΣQ随训练增强</td><td>活动状态开始包含更可靠的价值信息</td></tr><tr><td>跨会话编码轴余弦</td><td>逐渐趋稳</td><td>类似的价值可以由更稳定的神经方向表达</td></tr><tr><td>编码轴与行为策略轴对应</td><td>稳定性相关</td><td>慢可塑性与快行为策略形成相联系</td></tr></tbody></table></div><aside class="deep-note deep-note--boundary"><b>不要把关联写成新物理定律</b><p>模型的ΔQ信号与历史利用关联更强；在小鼠OFC中这项关联未始终成立，不应声称生物与RNN学到同一具体内部算法。</p></aside></div></details></div></section><section class="deep-stage" id="deep-hattori-ofc-metarl-nn2023--stage-next" data-story-stage="next"><header class="deep-stage-head"><span>06 · Next</span><h4>哪些问题还没解决</h4></header><p class="deep-stage-lead">以下LLM/RSI更新规则冻结、LoRA对照、未来C的AULC属于本站研究转化。Hattori原文没有Agent长程自修改或异领域语言模型实验。</p><div class="deep-stage-details"><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--causal-identification"><summary>从三个干预提炼元学习的严格证据标准<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">干预</th><th scope="col">保留的能力</th><th scope="col">被干预的机制</th><th scope="col">得到哪一级因果证据</th></tr></thead><tbody><tr><td>新手阶段抑制慢可塑性</td><td>任务执行能力仍可测</td><td>长期策略形成</td><td>慢形成必要性</td></tr><tr><td>专家阶段抑制慢可塑性</td><td>已形成的奖励历史策略</td><td>继续诱导同类长期连接变化</td><td>已有学法可被使用</td></tr><tr><td>专家阶段短暂抑制活动</td><td>长期形成的连接</td><td>实时回路活动</td><td>当前学法的执行依赖</td></tr></tbody></table></div><p class="deep-prose">对RSI可操作成3种干预：冻结Meta-Updater但保留学生更新、在执行期不给元策略状态/指令、只在新任务到来时保留旧/新元策略进行配对试训。其核心不是硬生生套同一生物部件，而是通过冻结操作分离机制。</p><aside class="deep-note deep-note--proposal"><b>最关键的双重否证</b><p>如果冻结Meta不会改变未来学习速度，说明可能没有学法改进；如果只靠额外上下文就能做到相同效果，说明没有持久独立学习；若meta改善只发生已见任务族，必须缩小泛化主张。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--metarl-nearest"><summary>与DiscoRL/传统元RL已有研究相比，我们新在哪里？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><div class="deep-table" tabindex="0" role="region" aria-label="精读内容比较表"><table><thead><tr><th scope="col">工作</th><th scope="col">已经研究了什么</th><th scope="col">是否自动产生新更新规则</th></tr></thead><tbody><tr><td>RL² / Learning to Reinforcement Learn (2016/2018)</td><td>跨任务训练RNN，让固定网络在新episode根据奖励快速改变隐藏状态</td><td>通常固定元训练结构/在推理状态中学习</td></tr><tr><td>Hattori et al. 2023</td><td>小鼠OFC快慢机制的分阶段抑制与行为历史核</td><td>动物实验，非新LLM更新器</td></tr><tr><td>DiscoRL · Nature 2025</td><td>跨57/103复杂环境训练元网络生成策略与新预测训练目标，并验证未见领域</td><td>已自动学习新的RL目标规则</td></tr><tr><td>I2 · 教师共进化</td><td>教师根据学生真实回应学习更好教法</td><td>变的是教师教学策略，不一定改变学生的参数更新规则</td></tr><tr><td>I9 · 训练顺序</td><td>相同数据A→B/B→A影响未来任务C的可学习性</td><td>变的是学习材料的次序</td></tr><tr><td>I14 · 更新规则的条件性演化</td><td>固定样本、顺序、教师、基础模型，只变参数更新目标/规则</td><td>要证明长期持续净收益，非简单重复已有元RL</td></tr></tbody></table></div><p class="deep-prose">DiscoRL已有完整公式、消融和资源规模精读：https://agent-evolution.lightrain.asia/rsi/reading-notes.html#deep-discorl-nature2025-oh；本篇主要补‘什么时候形成、什么时候执行，怎样用分阶段干预识别’的强证据。</p><aside class="deep-note deep-note--boundary"><b>跨时间尺度本身已是Meta-RL常识</b><p>新颖性必须在LLM真实持久更新上解释何种历史状态需要改变什么学习规则、训练前可预测、未来保持与未见任务族迁移，而不是发明两个Loop。</p></aside></div></details><details class="deep-chapter" id="deep-hattori-ofc-metarl-nn2023--rsi-protocol"><summary>P0：Same Current Ability, Different Future Learnability如何验证慢规则真的变好？<span class="deep-chapter-hint">展开细节</span></summary><div class="deep-chapter-body"><ol class="deep-steps"><li><strong>定义处理变量</strong><p>同样底座θ0、学生、A/B/C题目池、学习顺序、教师反馈与token/FLOPs，仅更换更新规则η_old或η_new；先不同时选择新题。</p></li><li><strong>形成元规则</strong><p>在多个开发任务上观察同预算更新的真实好坏，用这些后果训练候选Meta-Updater；不让C的测试结果进入元目标。</p></li><li><strong>快层/慢层分离</strong><p>新学生θ0+旧规则、θ0+新规则分别学习未见C；另做冻结元规则但允许学生更新，以及仅给学法提示却不允许参数更新。</p></li><li><strong>当前能力匹配</strong><p>开始学习C之前，用独立A/B/必要前置探针确认当前能力相近，且训练C数据完全一致。</p></li><li><strong>读取未来学习增益</strong><p>完整曲线AULC_C、最终未见C变式、A/B旧能力保持、元规则发现+使用总成本和跨任务族稳定性。</p></li></ol><div class="deep-formula"><b>未来学习曲线增益（本站简式）</b><code>MetaGain = AULC_C(η_new,θ0) − AULC_C(η_old,θ0) − λ OldRegression − β MetaCost</code><p><strong>怎么理解：</strong>用于比较相同初始任务学生在不同更新规则下，未来任务学习曲线的真实变化。</p><p class="deep-caveat"><strong>边界：</strong>这是本站候选RSI指标，不是Nature Neuroscience作者原始公式；AULC和Cost须预先设评估合同。</p></div><aside class="deep-note deep-note--proposal"><b>升级独立I的明确判据</b><p>只有固定任务/顺序/反馈及总成本后，学习规则本身改变带来可重复的正/负迁移交互，并在新规则族与模型快照上比最佳固定/简单路由方法更好，才值得让已编号的I14持续作为独立研究方向投入。</p></aside></div></details></div></section><div class="deep-back"><a href="reading-cards.html#hattori-ofc-metarl-nn2023">返回论文速览卡片</a></div><div class="links deep-source-links"><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://www.nature.com/articles/s41593-023-01485-3">官方论文页</a><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://github.com/ryhattori/MetaRL-PRL">代码</a><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://doi.org/10.5281/zenodo.8378063">公开数据</a><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10689244/">其他开放版本</a></div></div>
 
 ## 论文完整精读 / 精读 · NHB 2026 · Hybrid Memory-ANN
 
@@ -1693,7 +1695,7 @@
 
 ## 理论工具箱：学习规则、信用分配与元梯度 / Meta-RSI 决定性干预：区分学法形成、任务执行与持久学习收益
 
-<div class="theory-meta"><span>RSI 研究假设（待验证）</span><span>Causal Meta-Improvement Validation</span></div><p class="theory-question"><b>研究问题：</b>怎样排除‘Agent只是当前做得更好’，证明它经过历史学习以后真的更会更新自己？</p><p><strong>机制主张：</strong>独立冻结/替换任务学习器和元学习规则，用相同初始检查点、相同学习材料、相同反馈及总预算比较新/旧元策略在真正未见任务的学习曲线增益。</p><h3>关键公式与含义</h3><div class="deep-formula theory-formula"><b>未见C任务的元学习增益（本站假设）</b><code>ΔMeta= AULC_C(ηnew,θ0) − AULC_C(ηold,θ0)</code><p><strong>逐项解释：</strong>仅改变元更新规则η、固定任务学习者θ0与新任务C数据/训练步骤，比较从零真实学习曲线面积。</p><p class="deep-caveat"><strong>边界：</strong>AULC的积分点、归一化、总训练预算都须事先固定；不同初始C可解性不能被算作学法提升。</p><details class="theory-latex"><summary>LaTeX 源码（用于论文与笔记引用）</summary><pre><code>\Delta_{\rm Meta}=\operatorname{AULC}_C(\eta_{\rm new},\theta_0)-\operatorname{AULC}_C(\eta_{\rm old},\theta_0)</code></pre></details></div><div class="deep-formula theory-formula"><b>考虑旧能力与总成本的净目标（本站假设）</b><code>G_net=ΔMeta − λ OldRegress − β TotalCost(η discovery+evaluation)</code><p><strong>逐项解释：</strong>既要计算新的未来学习，又要结算元规则训练开销、每次目标生成调用/训练成本和旧能力退化。</p><p class="deep-caveat"><strong>边界：</strong>不是Hattori/DiscoRL原始统一指标；两篇论文没有在LLM持续LoRA学习上实测它。</p><details class="theory-latex"><summary>LaTeX 源码（用于论文与笔记引用）</summary><pre><code>G_{\rm net}=\Delta_{\rm Meta}-\lambda \operatorname{Regress}_{\rm old}-\beta C_{\rm meta+eval}</code></pre></details></div><h3>推导顺序 / 机制解释</h3><ol class="research-steps"><li><b>只改规则不换题</b>：A/B训练池与顺序、教师、反馈、学生初始化、每次更新token/FLOPs均固定；ηold/ηnew是唯一主干预。</li><li><b>新任务学生重置</b>：在C之前从相同θ0和相同LoRA优化器状态起跑，只继承已验证元策略，不继承旧任务答案或上下文。</li><li><b>分阶段冻结与移除</b>：比较允许/禁止Meta更新、允许/禁止任务学生更新、是否移除Meta策略输入；把‘形成/执行’与‘应用后实际学习’分开。</li><li><b>超越先例的必要条件</b>：胜过最优固定学习规则、同容量历史条件路由、静态Loss调整及随机历史；在未见规则族和模型快照保持效果，才有足够基础考虑升级I14。</li></ol><div class="deep-note"><b>后续何时回来看</b><p>统一RSI讨论‘模型本身变强’‘教师变强’‘学习规则变强’和‘多轮变强’时，作为证据标准与I14候选晋级门槛。</p></div><div class="deep-note deep-note--boundary"><b>不可越界解释</b><p>如果改变的是题目顺序，那属于I9；改变教师干预属于I2；仅抑制/接纳危险更新属于I13。独立学习规则改进必须真改变参数更新目标与之后实际学习能力。</p></div><p class="theory-source">出处与证据位置：Meta-reinforcement learning via orbitofrontal cortex · 本站根据Hattori 2023分阶段神经干预+DiscoRL 2025更新目标生成设计的LLM实验合同；非作者原式</p><div class="links theory-references"><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023--rsi-protocol">返回原论文精读的对应章节</a><a class="link-btn" href="reading-cards.html#hattori-ofc-metarl-nn2023">论文速览卡片</a><a class="link-btn" href="https://www.nature.com/articles/s41593-023-01485-3" target="_blank" rel="noopener noreferrer">正式论文原文</a></div><div class="links theory-references"><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://www.nature.com/articles/s41586-025-09761-x">自动学习更新目标的最近邻 · DiscoRL · Nature 2025</a></div>
+<div class="theory-meta"><span>RSI 研究假设（待验证）</span><span>Causal Meta-Improvement Validation</span></div><p class="theory-question"><b>研究问题：</b>怎样排除‘Agent只是当前做得更好’，证明它经过历史学习以后真的更会更新自己？</p><p><strong>机制主张：</strong>独立冻结/替换任务学习器和元学习规则，用相同初始检查点、相同学习材料、相同反馈及总预算比较新/旧元策略在真正未见任务的学习曲线增益。</p><h3>关键公式与含义</h3><div class="deep-formula theory-formula"><b>未见C任务的元学习增益（本站假设）</b><code>ΔMeta= AULC_C(ηnew,θ0) − AULC_C(ηold,θ0)</code><p><strong>逐项解释：</strong>仅改变元更新规则η、固定任务学习者θ0与新任务C数据/训练步骤，比较从零真实学习曲线面积。</p><p class="deep-caveat"><strong>边界：</strong>AULC的积分点、归一化、总训练预算都须事先固定；不同初始C可解性不能被算作学法提升。</p><details class="theory-latex"><summary>LaTeX 源码（用于论文与笔记引用）</summary><pre><code>\Delta_{\rm Meta}=\operatorname{AULC}_C(\eta_{\rm new},\theta_0)-\operatorname{AULC}_C(\eta_{\rm old},\theta_0)</code></pre></details></div><div class="deep-formula theory-formula"><b>考虑旧能力与总成本的净目标（本站假设）</b><code>G_net=ΔMeta − λ OldRegress − β TotalCost(η discovery+evaluation)</code><p><strong>逐项解释：</strong>既要计算新的未来学习，又要结算元规则训练开销、每次目标生成调用/训练成本和旧能力退化。</p><p class="deep-caveat"><strong>边界：</strong>不是Hattori/DiscoRL原始统一指标；两篇论文没有在LLM持续LoRA学习上实测它。</p><details class="theory-latex"><summary>LaTeX 源码（用于论文与笔记引用）</summary><pre><code>G_{\rm net}=\Delta_{\rm Meta}-\lambda \operatorname{Regress}_{\rm old}-\beta C_{\rm meta+eval}</code></pre></details></div><h3>推导顺序 / 机制解释</h3><ol class="research-steps"><li><b>只改规则不换题</b>：A/B训练池与顺序、教师、反馈、学生初始化、每次更新token/FLOPs均固定；ηold/ηnew是唯一主干预。</li><li><b>新任务学生重置</b>：在C之前从相同θ0和相同LoRA优化器状态起跑，只继承已验证元策略，不继承旧任务答案或上下文。</li><li><b>分阶段冻结与移除</b>：比较允许/禁止Meta更新、允许/禁止任务学生更新、是否移除Meta策略输入；把‘形成/执行’与‘应用后实际学习’分开。</li><li><b>超越先例的必要条件</b>：胜过最优固定学习规则、同容量历史条件路由、静态Loss调整及随机历史；在未见规则族和模型快照保持效果，才有足够基础支持已编号的I14继续独立推进。</li></ol><div class="deep-note"><b>后续何时回来看</b><p>统一RSI讨论‘模型本身变强’‘教师变强’‘学习规则变强’和‘多轮变强’时，作为已编号I14的持续独立推进或降级依据。</p></div><div class="deep-note deep-note--boundary"><b>不可越界解释</b><p>如果改变的是题目顺序，那属于I9；改变教师干预属于I2；仅抑制/接纳危险更新属于I13。独立学习规则改进必须真改变参数更新目标与之后实际学习能力。</p></div><p class="theory-source">出处与证据位置：Meta-reinforcement learning via orbitofrontal cortex · 本站根据Hattori 2023分阶段神经干预+DiscoRL 2025更新目标生成设计的LLM实验合同；非作者原式</p><div class="links theory-references"><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023--rsi-protocol">返回原论文精读的对应章节</a><a class="link-btn" href="reading-cards.html#hattori-ofc-metarl-nn2023">论文速览卡片</a><a class="link-btn" href="https://www.nature.com/articles/s41593-023-01485-3" target="_blank" rel="noopener noreferrer">正式论文原文</a></div><div class="links theory-references"><a class="link-btn" target="_blank" rel="noopener noreferrer" href="https://www.nature.com/articles/s41586-025-09761-x">自动学习更新目标的最近邻 · DiscoRL · Nature 2025</a></div>
 
 ## 理论工具箱：学习规则、信用分配与元梯度 / Experience-Following 与单条 Memory 的反事实使用价值
 
@@ -2072,11 +2074,11 @@
 <div class="note"><b>结论：</b>“数据频次改变策略”和“规则遗忘可能发生”已被研究；大模型的难点不是证明这两点第一次出现，而是找出在<b>固定材料、多种更新器、不同模型掌握状态</b>下，何时能兼得旧实例和新规则，并且未来持续学习更快。<a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">返回NHB Figure4精读</a>。</div>
 
 
-## I1–I13：十三个研究问题 / 研究方向，一眼看懂
+## I1–I14：十四个研究问题 / 研究方向，一眼看懂
 
 
- <p class="note"><strong>新增 · 2026-10-29：</strong><a href="idea-prioritization.html">查看 I1–I13 科学上限、完成把握与实验优先级总表 →</a>。该页分别列出两条排名、十三项 P0、主要中稿障碍和 Nature／Science／NC／顶会论文的可迁移对照范式。优先级是研究判断，所有 P0 尚待实测。</p>
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及未来任务 C 的学习速度；I10 研究同规则反例的区分信息、参数吸收与未见组合；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险。</p>
+ <p class="note"><strong>新增 · 2026-10-29：</strong><a href="idea-prioritization.html">查看 I1–I14 的研究优先级与决定性实验 →</a>。原 I1–I13 的科学上限/完成把握双排名仍作为历史快照；I14 已正式编号，其 P0 与 Go/降级条件已收录，但尚未在相同口径下评分。所有实验假设均待实测。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及未来任务 C 的学习速度；I10 研究同规则反例的区分信息、参数吸收与未见组合；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险；<strong>I14 则固定学习材料、顺序、教师和学生，研究学习规则本身能否跨代改进，使新任务真实学习得更快。</strong></p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -2091,14 +2093,15 @@
  <a class="idea-board-card" href="#idea-11"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>什么反馈语气能让 Agent 下一轮真正学得更好？</b><small>鼓励 / 冷静批评 / 紧迫 / 中性；学习决策、版本更新与净收益</small></a>
  <a class="idea-board-card" href="#idea-12"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否解锁一批原本学不会的任务？</b><small>发现因果前置缺口，验证下游真正新增学习收益</small></a>
  <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · RSI 安全更新接纳</span><b>哪些自我修改可以安全地被下一代继承？</b><small>历史风险诊断、预算内选择性测试、漏放/误拒与跨代安全改进</small></a>
+ <a class="idea-board-card" href="learning-rule-evolution.html"><span class="idea-id">I14 · 学习规则自进化</span><b>Agent 当前会做题，是否意味着它下一轮更会学习？</b><small>固定学生/数据/顺序，只改更新规则；Hattori × DiscoRL 的快慢机制与真实学习曲线</small></a>
  </div>
  <p class="note"><b>I13 · Safety-First 修订：</b><a href="learning-admission.html">安全感知的更新接纳</a>研究候选 Skill/Harness 修改在提交前是否值得信任，以及如何依据历史版本后果选择有限的额外测试。<a href="#idea-3">I3</a> 修复已发生的规则冲突，<a href="#idea-1">I1</a> 研究知识内化与外置；I13 以<strong>独立安全不变量、实际部署版本、跨代风险和安全更新误拒</strong>为中心。安全规则和发布权不允许被候选 Agent 自己修改。P0/P1/P2 尚未执行。</p>
- <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I13 均保留独立详情页。</p>
- <p class="status">状态：I1–I13 共十三个研究方向已整理；I10 规则学习与 I13 安全接纳的受控实验均尚未开展，不将原始论文结果冒充本项目已验证的机制。</p>
+ <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I14 均保留独立详情页。</p>
+ <p class="status">状态：I1–I14 共十四个正式管理编号已整理；I14 已进入研究池，但其 P0/P1 尚未执行。编号用于持续跟踪，后续可依据 Go/缩题/降级标准调整；不把已有 Meta-RL 论文结果当作本项目发现。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
 
 
-## I1–I13：十三个研究问题 / I1：脚手架学习法——哪些该自己学会，哪些用时再查？
+## I1–I14：十四个研究问题 / I1：脚手架学习法——哪些该自己学会，哪些用时再查？
 
 
  <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>调试思路最好自己掌握，但经常变化的 API 规则可以用时再查。Agent 能自己判断哪些该学会、哪些该留作外部帮助吗？</p></div>
@@ -2111,7 +2114,7 @@
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备稳定的调试技巧与会变动的 API 规则，在相同预算下比较<strong>全部内化、全部外置、固定渐隐、自适应取舍</strong>，并与 R²Orch/PATS 的可复现做法比较。重点看无辅助的新任务成功率、API 更新后的适应性、调用成本和旧能力退化。如果固定规则同样好，说明动态选择还没有额外价值。</p></div>
  </div>
 
-## I1–I13：十三个研究问题 / I2：因材施教——学生变强，教师也能越来越会教吗？
+## I1–I14：十四个研究问题 / I2：因材施教——学生变强，教师也能越来越会教吗？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>学生通过教学学会解题，教师通过学生真正的学习结果学会教学；当学生能力变化，教师继续修订教法。</p></div>
@@ -2125,7 +2128,7 @@
  <p class="idea-side-note"><b>Centaur × StudentSim 新增实验支线：</b>二者已经研究行为或即时指导响应，我们只在 I2 中进一步测<strong>给定学生状态和教学方案，能否在真正 LoRA 更新之前预测无辅助新题净收益</strong>。先做状态×教法异质性 P0，再做收益预测 P1、真实 RSI 六轮 P2；没有超过同信息普通回归和少量真实试训，就不另起模型框架。<a href="idea-i2.html#learner-response-question">查看 I2 学习响应模型的公式、三阶段实验和强基线 →</a>。</p>
 </div>
 
-## I1–I13：十三个研究问题 / I3：温故知新——新方法有用，却和旧方法冲突怎么办？
+## I1–I14：十四个研究问题 / I3：温故知新——新方法有用，却和旧方法冲突怎么办？
 
 
  <div class="idea-focus"><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>一句话：</b>Agent 学会一个更快的新方法，却把以前在另一种场景下正确的做法弄坏了。新旧本事能不能都留下来？</p></div>
@@ -2138,7 +2141,7 @@
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>准备两套分别有效、合起来容易冲突的 Skill，并加入自然学习中出现的冲突案例。比较<strong>退化即回滚、均匀重放、MIR 风格重放、针对冲突条件复习</strong>；固定复习次数和记忆预算。分别测旧能力保持、新能力增益、组合任务成功率。如果优势只来自存了更多规则或多练了题，就不能归因于我们的复习方法。<a class="cite" href="references.html#M09" title="Online Continual Learning with Maximally Interfered Retrieval">[M09]</a></p><p><b>NC 2021 带来的评测提醒：</b>Ten 等在人类活动选择模型中使用学习表现变化的<strong>绝对值</strong>作为 LP，下降和上升都可能形成高变化信号；检测退步的做法与既有 TSCL/MIR 有关，不是 I3 的新颖性。<a class="cite" href="references.html#E19" title="Humans monitor learning progress in curiosity-driven exploration">[E19]</a><a class="cite" href="references.html#M04" title="Teacher-Student Curriculum Learning (TSCL)">[M04]</a> I3 可以额外构造“旧技能退化 → 重练恢复 → 再次退化”的对照轨迹，报告三个不同指标：①近期能力变化绝对值；②真正新增技能的独立收益；③经历其他更新后仍保留的<strong>净能力增益</strong>。若前者很高、后两者趋零，就不能把系统描述为持续变好。这是待验证的 RSI 失败模式，不是 NC 论文已经发现的 LLM 现象。</p><p><b>ACL 2026 新近邻：</b>训练早期 10% 样本 ROUGE-L 经 shuffle+重采样从 0.41 到 0.53，但末尾 10% 从 0.61 略降到 0.60。I3 必须与普通重采样直接比较，并在旧/新/混合任务上确认<strong>修复的是规则适用边界</strong>，而非仅靠增加曝光恢复旧题。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">精读五种 ILP 原因及对应实验</a>。<a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a></p><p><b>NC 2025 的表征干扰补充：</b>Menghi 等让人交错学习结构相同或正交的两任务，相同结构组训练期正确率反而更低，练习后组间差距消失。I3 的<strong>旧 A 与新 B 分别都对，但混合任务用错规则</strong>可能是表征和情境选择问题，不一定是原有知识已经从参数中消失；这仍需在 LLM 的真实更新中单独验证。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">精读 Figure 2–6</a>。<a class="cite" href="references.html#E99" title="The effects of task similarity during representation learning in brains and neural networks">[E99]</a></p><p class="idea-side-note"><b>Nature Human Behaviour 2025/2026 · 顺序学习的迁移—干扰权衡：</b>Holton 等在 305 人及配对线性网络的 <b>A→B→A</b> 实验中，仅改变新旧旋转规则相似度：Same（相同）、Near（相差30°）、Far（相差180°）。Near 比 Far 更容易从旧A迁移到B，却更容易在重测A时错误使用B规则；发现/复现干扰差异分别为 <b>P=0.006 / P=0.013</b>。Near的 Lumpers 更善迁移与泛化，Splitters 更善记住个体位置和来源。<strong>对 I3 的具体改变：</strong>先测A复测中“确实错误套用B规则”的比例，再区分旧知识被擦除与规则选择/上下文边界错用；只有前者才有充分理由直接重训旧知识。原文没有测LLM或Agent，也没有测人脑子空间。<a href="reading-notes.html#deep-nhb2025-transfer-interference-holton">完整精读 Fig.1–4、方法与I3 P0/P1/P2 →</a>。<a class="cite" href="references.html#E100" title="Humans and neural networks show similar patterns of transfer and interference during continual learning">[E100]</a></p><p class="idea-side-note"><b>NC 2026 · Schema Reuse：</b>3 只猕猴的相似映射学习展示了决策结构复用与刺激表征变化，但反转规则时旧结构复用降低、学习变慢。它提示 I3 修复旧规则冲突时不能一律冻结；更进一步的 RSI 候选是学习“保留、局改、分支或废弃”这一继承规则并跨代检验其进步。<a href="reading-notes.html#deep-nc2026-schema-reuse-tian">精读原文、表征证据及 P0/P1 →</a>。<a class="cite" href="references.html#E320" title="Domain-specific schema reuse supports flexible learning to learn in the primate brain">[E320]</a></p><p class="idea-side-note"><b>与 I13 的事前接纳分开：</b>I3 已经发生旧能力退化，研究如何修复；<a href="learning-admission.html">I13 · Learning Admission</a> 则在正式更新之前判断是否应该内化、隔离、委托或暂缓。二者可以共享旧能力回归和验证器，但不能把事前拒学与事后修复写成同一个变量。</p><p class="idea-side-note"><b>Nature 2026 · 非局部行为副作用：</b>在狭窄的不安全代码微调后，部分模型会在无关普通问题上出现不当行为；这与“旧任务正确率下降”不是同一评价指标。对 I3 来说，即使修好了原来的冲突，也必须独立检查跨领域的行为可靠性；该论文没有证明任意正常局部修复必然失准。<a href="reading-notes.html#deep-nature2026-narrow-misalignment-betley">查看原文控制组、训练动态与局限</a>。<a class="cite" href="references.html#M450" title="Training large language models on narrow tasks can lead to broad misalignment">[M450]</a></p></div>
  </div>
 
-## I1–I13：十三个研究问题 / I4：生产性失败——失败一次就总结，还是再试几次？
+## I1–I14：十四个研究问题 / I4：生产性失败——失败一次就总结，还是再试几次？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>API 超时一次，Agent 就总结“这个工具以后别用”，可能学错。什么时候应该继续试，什么时候才值得把经验写进 Skill？</p></div>
@@ -2151,7 +2154,7 @@
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>在 API 异常、工具使用和代码执行任务上，比较<strong>失败后立即总结、固定重试 N 次、随机补充尝试、针对可能原因选试验并决定停止</strong>。匹配 Token、环境调用和总预算，混合可控故障与自然失败。主要比较写入错误规则的比例、未见场景的迁移、单位成本的学习收益；不把“多试几次自然多成功”误当成新机制。整个过程不需要外部教师告诉标准答案。</p><p class="idea-side-note"><b>Nature Neuroscience 2024 · 规划时机实验：</b>Jensen 等把 Think 作为有时间成本的选择，证明额外 rollout 的数量、反馈及发生时机均重要；尤其是 <b>同数量 rollout 仅随机打乱时机，表现仍下降</b>。I4 可借鉴“有/无诊断价值 × 何时做”的双控制，但模型只改变隐藏状态，并未做 Skill 或权重写回；我们的终测必须测真正写入后的新任务表现。<a href="reading-notes.html#deep-nn2024-planning-replay-jensen--fig3-timing">完整精读 Figure 3 →</a>。<a class="cite" href="references.html#E355" title="A recurrent network model of planning explains hippocampal replay and human behavior">[E355]</a></p><p><b>npj 2026 带来的强对照：</b>加入“两个竞争假设对下一步预测相同”的<b>无诊断性重试</b>，与“预测不同的辨别性试验”匹配当前成功率、调用成本和反馈质量。训练结束后不能只看原故障是否恢复，还要让新场景排除局部技巧；若两组独立迁移没有差异，就不额外宣称假设检验机制。<a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></p></div>
  </div>
 
-## I1–I13：十三个研究问题 / I5：十模型互教——什么时候交换舞伴，才能一起变强？
+## I1–I14：十四个研究问题 / I5：十模型互教——什么时候交换舞伴，才能一起变强？
 
 
 <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>十个模型各自持续更新。我们不仅问谁更强，而是问谁教的东西我现在学得进、继续交流还有多少收益、何时换人才能共同成长。</p></div>
@@ -2164,7 +2167,7 @@
 <p class="idea-side-note"><b>方向 B 已合入 I5：</b>对同一个学生早／中／晚期冻结快照，给四名候选教师相同教法和真实更新预算，检测最优教师的<strong>双向独立净学习收益排名</strong>是否反转；不把更强教师或更正确答案直接当作好伙伴。<a href="idea-i5.html#idea-b-merged">查看学生阶段 × 教师的交换实验 →</a>。</p>
 </div>
 
-## I1–I13：十三个研究问题 / I6：失败学习价值——同样答错，哪条失败更值得学习？
+## I1–I14：十四个研究问题 / I6：失败学习价值——同样答错，哪条失败更值得学习？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><p><b>一句话：</b>同一个模型解同一道积分题，两次都给出相同的错误答案：一次直接套错公式，一次尝试了几个正确步骤却仍答错。<strong>用哪一次失败来学习，才能让以后更多新题做对？又该在什么时候停止重试、改天再学？</strong></p></div>
@@ -2177,7 +2180,7 @@
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先做同题配对实验，比较<strong>只看正确解法、随机失败、最长失败、最接近正确的失败、按置信度选、预测学习增益选</strong>；模型快照、教师反馈和总 token/FLOPs 匹配。报告无提示未见题提升、旧能力损失与失败价值的跨题稳定性。再比较固定重试 K 次、简单学习进展阈值、收益驱动停止/暂缓，并事先约定重访条件。如果差异只来自更长轨迹或更多训练，或早停没超过简单阈值，就缩小主张，不另加复杂停止模块。<a class="cite" href="references.html#M12" title="Automated Curriculum Learning for Neural Networks">[M12]</a><a class="cite" href="references.html#S45" title="SPaCe: Unlocking Sample-Efficient Large Language Models Training With Self-Pace Curriculum Learning">[S45]</a></p><p><b>ILP 诊断作为匹配条件，不是新任务：</b>先用相同的前置知识探针、标注审计、训练位置记录，匹配“缺知识/存在冲突/训练不足”等可能状态，再比较同题不同失败轨迹经固定更新后的未见题净收益。否则效果可能只是两组错误的基础状态不同。<a href="reading-notes.html#deep-acl2026-sft-ilp-xue">ACL 2026 五种失败原因与证据</a>。<a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a></p><p class="idea-side-note"><b>正交边界：</b>I6 固定<strong>先试还是先学</strong>（交给 <a href="#idea-7">I7</a>）和<strong>纠错规则类型</strong>（交给 <a href="#idea-8">I8</a>），只研究失败中间过程的增量价值与是否继续投入。<a href="idea-i6-failure-value.html">查看同题配对、停学与重访的完整实验 →</a></p></div>
  </div>
 
-## I1–I13：十三个研究问题 / I7：学习顺序——先看例题，还是先独立尝试？
+## I1–I14：十四个研究问题 / I7：学习顺序——先看例题，还是先独立尝试？
 
 
  <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>学同一道多步骤数学题，模型 A 先看完整解法再练习，模型 B 先独立尝试、失败后再看同一解法。<strong>学完撤掉例题，谁更会解新题？这种优势会不会随着模型变强而反过来？</strong></p></div>
@@ -2190,7 +2193,7 @@
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>先选一类多步骤数学题，比较<strong>固定先学、固定先试、匹配次数的额外练习、无示范基线</strong>；后续只有在发现稳定顺序异质性时，才增加按历史能力选择和 contextual bandit 对照。用同预算的无提示 pass@1、固定 k 下的 pass@k、<strong>不同且正确的解法数量</strong>、旧能力保持及跨多轮更新的迁移作为指标。按知识点聚类统计，不按同题多次采样扩大样本量。如果优势只是练习次数更多或无效答案更多，就不能说顺序提高了探索与自我改进。</p><p class="idea-side-note"><b>正交边界：</b>I7 只改变<strong>尝试与示范的顺序</strong>；<a href="#idea-6">I6</a> 在顺序固定时选择哪条失败过程，<a href="#idea-8">I8</a> 在纠错方式固定时研究哪类错误有跨题迁移价值。<a href="idea-i7-learning-order.html">查看人类教学的前作边界、两顺序协议与长期对照 →</a></p></div>
  </div>
 
-## I1–I13：十三个研究问题 / I8：错误学习迁移——为什么改正一种错误能学会一类题？
+## I1–I14：十四个研究问题 / I8：错误学习迁移——为什么改正一种错误能学会一类题？
 
 
  <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">吸收了会不会丢</span><span class="idea-axis">安全</span><p><b>一句话：</b>两个模型都把一道积分题做错。一个看完正确答案只会重做原题；另一个却学会同一公式，连几十道新题也能做。<strong>纠正哪个错误更可能举一反三？能否在真正训练前判断？</strong></p></div>
@@ -2204,7 +2207,7 @@
  <p class="idea-side-note"><b>方向 A 已合入 I8：</b>将同一错误的重复错误规则、有效假设数量、置信度与前置准备结合为纠错前诊断，固定纠错方式测异结构同规则新题收益。单条失败过程选择仍属于 I6，补 P 解锁其他任务属于 I12。<a href="i8.html#idea-a-merged">查看 A 的配对控制 →</a>。</p>
 </div>
 
-## I1–I13：十三个研究问题 / I9：集中还是交错——什么时候应该切换练习方式？
+## I1–I14：十四个研究问题 / I9：集中还是交错——什么时候应该切换练习方式？
 
 
  <div class="idea-focus"><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>同样练 A、B、C 三类题，连续做 A 可能越做越顺，混合起来却容易用错方法；但基础尚未形成就直接交错，也可能学不进去。<strong>模型什么时候该集中建立规则，什么时候该交错练习不同规则？</strong>进一步问：同一批 A/B 材料不同顺序后，即使当前能力相近，下一次学习未见规则 C 的速度是否仍不同？</p></div>
@@ -2217,7 +2220,7 @@
  <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p>从同一检查点比较<strong>固定集中、随机交错、循环交错、先集中后交错、先交错后集中、固定时点切换</strong>；第二阶段才加入状态切换，与同特征 contextual bandit 和仅看训练正确率的规则比较。按规则相似度与前置知识高低分层，补充复习间隔对照。报告无提示单主题/混合题正确率、规则错选率、跨规则题、后续干扰后的保持与总预算。如果优势仅来自间隔或随机交错已经最好，就不强行加入复杂 Router。扩展实验还须重置优化器状态，使用 C 初始损失、Lie bracket 当前损失排序、readout 可塑性等同预算强基线；将新任务 C 分为<strong>共享可组合规则（C₁）、必须排除旧捷径（C₂）、无关规则负对照（C₃）</strong>，检查未来收益是否随规则关系出现交叉反转，还是仅反映整体可塑性下降。若不能匹配当前能力就不强行声称未来效应。<a href="idea-i9-practice-switching.html#future-question">查看“当前能力相同、未来可学性不同”的完整扩展 →</a></p><p class="idea-side-note"><b>正交边界：</b>I9 固定题目与每题内部教学顺序，只改变<strong>跨主题课程编排、集中/交错切换及 A/B 顺序</strong>；不选择 I6 的失败轨迹，不改变 I7 的示范先后，也不优化 I8 的纠错目标。<a href="idea-i9-practice-switching.html">查看 I9 完整最近邻与实验协议 →</a></p></div>
  </div>
 
-## I1–I13：十三个研究问题 / I10：为什么同规则反例有时只被记住，有时却教会规则？
+## I1–I14：十四个研究问题 / I10：为什么同规则反例有时只被记住，有时却教会规则？
 
 
 <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>十道题看起来都不一样，但模型可能一直在用同一条错误捷径；一道几乎相同的反例却能让正确规则和捷径产生分歧。<strong>新样本有规则区分信息，不代表 LLM 已通过参数更新吸收了这条规则。</strong></p></div>
@@ -2230,7 +2233,7 @@
 </div>
 
 
-## I1–I13：十三个研究问题 / I11：情绪反馈——怎样让 Agent 真正越迭代越强？
+## I1–I14：十四个研究问题 / I11：情绪反馈——怎样让 Agent 真正越迭代越强？
 
 
 <div class="idea-focus"><span class="idea-axis">信号对不对</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>同一 Agent 做错题后，一句鼓励可能让它继续尝试，一句冷静批评可能让它先核验；但它<strong>下一版的真实独立能力</strong>究竟有没有变强？<a href="idea-i11-emotional-rsi.html">进入 I11 完整机制与实验 →</a></p></div>
@@ -2243,7 +2246,7 @@
 </div>
 
 
-## I1–I13：十三个研究问题 / I12：共同前置知识瓶颈——为什么补一条规则能让一批任务开始学得会？
+## I1–I14：十四个研究问题 / I12：共同前置知识瓶颈——为什么补一条规则能让一批任务开始学得会？
 
 
 <div class="idea-focus"><span class="idea-axis">有没有新东西</span><span class="idea-axis">采不采得到</span><span class="idea-axis">吸收了会不会丢</span><p><b>一句话：</b>十多道失败题可能共享一条当前模型不会的前置规则。能否先用少量诊断发现它、真正补齐，再让这些任务在后续自主训练中获得原本没有的学习增益？</p></div>
@@ -2255,7 +2258,7 @@
 <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p><b>P0：</b>可验证规则 DAG，匹配因果前置与高频非前置，并设已经会 P 的负对照；<b>P1：</b>真实前置图对 Agent 隐藏，从失败中提案，比较 SkillGraph、SkillDAG、ESCO-PrereqSkill 和 SOAR 相关强基线；<b>P2：</b>两级依赖链中检验学习机会是否跨轮解锁。主指标是<strong>补 P 后再学 T 的第二阶段净学习增量</strong>、解锁任务族数量、旧能力回归和总成本。只提高当前题准确率就不独立立题。</p><p class="idea-side-note"><b>正交边界：</b>I8 纠正一个错误后测同规则迁移；I12 要证明补前置 P 后<strong>不同 T 的后续学习潜力增加</strong>；I9 只改课程顺序，I2 改教学方式。<a href="idea-i12-prerequisite-bottleneck.html">I12 完整论文定位、公式、P0–P2 与 Go/Merge/Stop →</a></p></div>
 </div>
 
-## I1–I13：十三个研究问题 / I6–I13：每个方向只研究一个变量
+## I1–I14：十四个研究问题 / I6–I14：每个方向只研究一个变量
 
 
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
@@ -2266,11 +2269,13 @@
 <tr><td><a href="idea-i10-learning-novelty.html">I10 · 区分性练习与规则学习</a></td><td>同规则反例能否排除竞争捷径并迁移到新组合</td><td>真实规则、教学反馈、更新器、顺序与预算</td><td>撤辅后的未见分歧题和组合泛化，而不只是复制原题</td></tr>
 <tr><td><a href="idea-i11-emotional-rsi.html">I11 · 情绪反馈与自我迭代</a></td><td>相同可信反馈的情绪语气及其影响的学习控制</td><td>模型、反馈事实、教学内容、持久更新器、评测和总预算</td><td>错误后核验/停止/写回等决策变化是否带来多轮撤辅净学习收益</td></tr>
 <tr><td><a href="idea-i12-prerequisite-bottleneck.html">I12 · 共同前置瓶颈</a></td><td>从多任务失败中选择哪条因果前置 P 来持久补救</td><td>下游目标任务 T、教师、更新器、诊断与总计算预算</td><td>补 P 后再训练 T 的第二阶段可学习性是否增加，且跨任务族有效</td></tr>
+<tr><td><a href="learning-admission.html">I13 · 安全更新接纳</a></td><td>候选更新的风险诊断与接纳测试</td><td>独立安全不变量与发布权限</td><td>跨代安全漏放/误拒及受限验证成本</td></tr>
+<tr><td><a href="learning-rule-evolution.html">I14 · 学习规则自进化</a></td><td>过去真实学习收益驱动的更新目标/规则 η</td><td>学生起点、训练任务、材料顺序、教师反馈和更新预算</td><td>冻结并重置学生后，新η在未见任务C产生更高同预算学习曲线净收益</td></tr>
 </tbody></table></div>
-<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。 I12 必须证明补共同前置后不同目标任务的后续学习增量，不只是 I8 的单次错误迁移。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。 I12 必须证明补共同前置后不同目标任务的后续学习增量，不只是 I8 的单次错误迁移；I14 只改变参数更新规则，不改变课程、教师或任务材料。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
 
 
-## I1–I13：十三个研究问题 / 这些 Idea 如何证明真的用于 RSI？
+## I1–I14：十四个研究问题 / 这些 Idea 如何证明真的用于 RSI？
 
 
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>
@@ -2283,7 +2288,7 @@
  <p class="status">截至 2026-10-28：这些是有明确近邻的研究提案，不能声称“首次把教育学用于 RSI”；也不能因为已有相关组件，就断言上述更细化的问题已被解决。</p>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / 当前立项建议
+## I1–I14 · 科学上限、完成把握与实验优先级 / 当前立项建议
 
 
 <div class="decision"><span class="kicker">RSI IDEA PORTFOLIO · 2026-10-29 · RESEARCH JUDGMENT</span>
@@ -2291,22 +2296,22 @@
 <p><a href="i8.html"><strong>I8</strong></a> 研究纠错何时改变共同规则，<a href="idea-i10-learning-novelty.html"><strong>I10</strong></a> 研究新增例子何时提供可吸收的区分信息。这两项可共用规则生成、真实更新与跨题迁移平台，但干预变量须分开。</p>
 <p><a href="idea-i12-prerequisite-bottleneck.html"><strong>I12</strong></a> 需要证明补前置知识改变第二阶段学习增益；<a href="idea-i9-practice-switching.html"><strong>I9</strong></a> 需要证明训练历史改变后续 C 的学习曲线。<a href="idea-i11-emotional-rsi.html">I11</a> 可轻量并行，I6/I7 先做小型受控检验，I2/I5 只运行资格实验。</p>
 <p><b>I13 的最新口径：</b>以候选更新的跨版本安全风险、独立验收、危险更新漏放与安全更新误拒为中心；既不让候选 Agent 改写安全硬门，也不把 I1 的存放方式选择当成 I13 的全部新颖性。</p>
-<p><b>新跨方向候选（本表不排名）：</b><a href="learning-rule-evolution.html">Learning Rule Evolution</a> 以Hattori 2023的快/慢干预与DiscoRL 2025的更新目标学习为理论参考，单独考察更新规则η能否在相同学生、相同任务样本/顺序下提高未来C真实学习。仅证明双层循环或当前任务提升不够升级I14；需先胜过最佳固定规则和随机历史，并控制元发现成本。</p>
-<p><b>证据状态：</b>所有名次是选题与实验设计判断，不是录用概率，不代表已完成训练。<a href="ideas.html">查看 I1–I13 原始定义 →</a></p></div>
+<p><b>I14 已正式编号，历史排名暂不调整：</b><a href="learning-rule-evolution.html">I14 · Learning Rule Evolution</a> 基于Hattori 2023的快/慢干预与DiscoRL 2025的更新目标生成，固定学生、训练材料与顺序，只改变更新规则η。该项的科学上限和完成把握<b>尚未在同一评分口径下评估</b>，本轮不凭印象加入旧名次。P0/P1需胜过最佳固定规则和随机历史并结算元发现成本；若失败，允许缩题或降级合并。</p>
+<p><b>证据状态：</b>原 I1–I13 两份排名保留为2026-10-29的编辑判断；I14正式进入研究池但尚待评分。名次不是录用概率，也不代表完成训练。<a href="ideas.html">查看 I1–I14 的研究定义 →</a></p></div>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / 三张排序表合在一起读
+## I1–I14 · 科学上限、完成把握与实验优先级 / 三张排序表合在一起读
 
 
 <p><b>科学上限</b>衡量在核心机制成立、排除最近邻解释时可形成多强的科学论文；<b>完成把握</b>衡量在现有资源下取得可复现、可解释证据的可行性。综合顺序不是两个名次相加，另外纳入实验平台复用、近邻占位与研究周期。</p>
 <div class="table-wrap"><table><thead><tr><th>投入顺序</th><th>原方案与唯一问题</th><th>科学上限名次</th><th>完成把握名次</th><th>下一步</th></tr></thead>
-<tbody><tr><td><strong>1</strong></td><td><a href="i8.html">I8 · 错误可学习性与迁移</a><br><small>纠正什么错误能修改共同规则，并迁移到未见题而不产生负迁移？</small></td><td>2</td><td>4</td><td><a href="#idea-8">主攻：规则正负迁移的受控 P0</a></td></tr><tr><td><strong>2</strong></td><td><a href="idea-i10-learning-novelty.html">I10 · 新增例子的规则区分信息</a><br><small>同一规则的新样本在何时能排除错误捷径，被模型真正吸收成可迁移能力？</small></td><td>4</td><td>3</td><td><a href="#idea-10">并行：区分性样本 2×2 P0</a></td></tr><tr><td><strong>3</strong></td><td><a href="idea-i12-prerequisite-bottleneck.html">I12 · 共同前置瓶颈与学习解锁</a><br><small>补一个共同前置知识是否使多个目标任务在下一阶段真正更容易学？</small></td><td>1</td><td>10</td><td><a href="#idea-12">先修补偿后第二阶段学习曲线</a></td></tr><tr><td><strong>4</strong></td><td><a href="idea-i9-practice-switching.html">I9 · 练习切换与学习历史</a><br><small>当前能力相近时，集中/交错的不同历史是否仍改变未来学习 C 的速度？</small></td><td>3</td><td>8</td><td><a href="#idea-9">不同学习历史 × 后续 C 关系</a></td></tr><tr><td><strong>5</strong></td><td><a href="idea-i11-emotional-rsi.html">I11 · 反馈、自评与长期自迭代</a><br><small>相同事实的反馈语气/展示方式如何影响自评、学习行动与真实持久增益？</small></td><td>7</td><td>5</td><td><a href="#idea-11">反馈展示 → 自评 → 学习动作</a></td></tr><tr><td><strong>6</strong></td><td><a href="idea-i6-failure-value.html">I6 · 失败过程的学习价值</a><br><small>同题同错误终点，不同失败过程经过相同纠错为什么迁移收益不同？</small></td><td>8</td><td>2</td><td><a href="#idea-6">同题同错，只换失败轨迹</a></td></tr><tr><td><strong>7</strong></td><td><a href="learning-admission.html">I13 · 跨版本安全更新接纳</a><br><small>如何事前预测候选自我修改的后代安全风险，同时减少危险漏放与安全更新误拒？</small></td><td>5</td><td>12</td><td><a href="#idea-13">先收窄跨代安全风险与误拒</a></td></tr><tr><td><strong>8</strong></td><td><a href="idea-i7-learning-order.html">I7 · 学习顺序：先试还是先学</a><br><small>同信息同预算的尝试/示范次序能否改变持久学习，最优次序会否反转？</small></td><td>13</td><td>1</td><td><a href="#idea-7">严格同信息、交换先后</a></td></tr><tr><td><strong>9</strong></td><td><a href="ideas.html#idea-4">I4 · 生产性失败：辨别还是总结</a><br><small>失败之后下一次测试什么、什么时候证据足以写入 Skill？</small></td><td>9</td><td>9</td><td><a href="#idea-4">对照有/无诊断性的重试</a></td></tr><tr><td><strong>10</strong></td><td><a href="ideas.html#idea-3">I3 · 温故知新：冲突修复</a><br><small>新旧规则分别有效，但在适用边界处混淆时怎样修复并保留双方？</small></td><td>12</td><td>6</td><td><a href="#idea-3">MIR 和混合规则强基线</a></td></tr><tr><td><strong>11</strong></td><td><a href="ideas.html#idea-1">I1 · 脚手架学习：内化还是外置</a><br><small>稳定方法、易变规则与临时支架，哪些值得长期内化，哪些应按需外置？</small></td><td>11</td><td>7</td><td><a href="#idea-1">超越固定成本阈值的存放取舍</a></td></tr><tr><td><strong>12</strong></td><td><a href="idea-i2.html">I2 · 因材施教：师生共进化</a><br><small>真实学生回应能给教师什么不可替代的信息，学到的教法能否迁移？</small></td><td>10</td><td>11</td><td><a href="#idea-2">先证明真实学生回应增量</a></td></tr><tr><td><strong>13</strong></td><td><a href="idea-i5.html">I5 · 费曼学习法：动态换伴</a><br><small>最佳教师是否随学生能力变化，重新配对能否提高双向独立净学习？</small></td><td>6</td><td>13</td><td><a href="#idea-5">四模型合格再十模型</a></td></tr></tbody></table></div>
-<p><strong>科学问题与投稿上限：</strong>I12 ＞ I8 ＞ I9 ＞ I10 ＞ I13 ＞ I5 ＞ I11 ＞ I6 ＞ I4 ＞ I2 ＞ I1 ＞ I3 ＞ I7。</p>
-<p><strong>有限资源下完成决定性证据的把握：</strong>I7 ＞ I6 ＞ I10 ＞ I8 ＞ I11 ＞ I3 ＞ I1 ＞ I9 ＞ I4 ＞ I12 ＞ I2 ＞ I13 ＞ I5。</p>
+<tbody><tr><td><strong>1</strong></td><td><a href="i8.html">I8 · 错误可学习性与迁移</a><br><small>纠正什么错误能修改共同规则，并迁移到未见题而不产生负迁移？</small></td><td>2</td><td>4</td><td><a href="#idea-8">主攻：规则正负迁移的受控 P0</a></td></tr><tr><td><strong>2</strong></td><td><a href="idea-i10-learning-novelty.html">I10 · 新增例子的规则区分信息</a><br><small>同一规则的新样本在何时能排除错误捷径，被模型真正吸收成可迁移能力？</small></td><td>4</td><td>3</td><td><a href="#idea-10">并行：区分性样本 2×2 P0</a></td></tr><tr><td><strong>3</strong></td><td><a href="idea-i12-prerequisite-bottleneck.html">I12 · 共同前置瓶颈与学习解锁</a><br><small>补一个共同前置知识是否使多个目标任务在下一阶段真正更容易学？</small></td><td>1</td><td>10</td><td><a href="#idea-12">先修补偿后第二阶段学习曲线</a></td></tr><tr><td><strong>4</strong></td><td><a href="idea-i9-practice-switching.html">I9 · 练习切换与学习历史</a><br><small>当前能力相近时，集中/交错的不同历史是否仍改变未来学习 C 的速度？</small></td><td>3</td><td>8</td><td><a href="#idea-9">不同学习历史 × 后续 C 关系</a></td></tr><tr><td><strong>5</strong></td><td><a href="idea-i11-emotional-rsi.html">I11 · 反馈、自评与长期自迭代</a><br><small>相同事实的反馈语气/展示方式如何影响自评、学习行动与真实持久增益？</small></td><td>7</td><td>5</td><td><a href="#idea-11">反馈展示 → 自评 → 学习动作</a></td></tr><tr><td><strong>6</strong></td><td><a href="idea-i6-failure-value.html">I6 · 失败过程的学习价值</a><br><small>同题同错误终点，不同失败过程经过相同纠错为什么迁移收益不同？</small></td><td>8</td><td>2</td><td><a href="#idea-6">同题同错，只换失败轨迹</a></td></tr><tr><td><strong>7</strong></td><td><a href="learning-admission.html">I13 · 跨版本安全更新接纳</a><br><small>如何事前预测候选自我修改的后代安全风险，同时减少危险漏放与安全更新误拒？</small></td><td>5</td><td>12</td><td><a href="#idea-13">先收窄跨代安全风险与误拒</a></td></tr><tr><td><strong>8</strong></td><td><a href="idea-i7-learning-order.html">I7 · 学习顺序：先试还是先学</a><br><small>同信息同预算的尝试/示范次序能否改变持久学习，最优次序会否反转？</small></td><td>13</td><td>1</td><td><a href="#idea-7">严格同信息、交换先后</a></td></tr><tr><td><strong>9</strong></td><td><a href="ideas.html#idea-4">I4 · 生产性失败：辨别还是总结</a><br><small>失败之后下一次测试什么、什么时候证据足以写入 Skill？</small></td><td>9</td><td>9</td><td><a href="#idea-4">对照有/无诊断性的重试</a></td></tr><tr><td><strong>10</strong></td><td><a href="ideas.html#idea-3">I3 · 温故知新：冲突修复</a><br><small>新旧规则分别有效，但在适用边界处混淆时怎样修复并保留双方？</small></td><td>12</td><td>6</td><td><a href="#idea-3">MIR 和混合规则强基线</a></td></tr><tr><td><strong>11</strong></td><td><a href="ideas.html#idea-1">I1 · 脚手架学习：内化还是外置</a><br><small>稳定方法、易变规则与临时支架，哪些值得长期内化，哪些应按需外置？</small></td><td>11</td><td>7</td><td><a href="#idea-1">超越固定成本阈值的存放取舍</a></td></tr><tr><td><strong>12</strong></td><td><a href="idea-i2.html">I2 · 因材施教：师生共进化</a><br><small>真实学生回应能给教师什么不可替代的信息，学到的教法能否迁移？</small></td><td>10</td><td>11</td><td><a href="#idea-2">先证明真实学生回应增量</a></td></tr><tr><td><strong>13</strong></td><td><a href="idea-i5.html">I5 · 费曼学习法：动态换伴</a><br><small>最佳教师是否随学生能力变化，重新配对能否提高双向独立净学习？</small></td><td>6</td><td>13</td><td><a href="#idea-5">四模型合格再十模型</a></td></tr><tr><td><strong>待排序</strong></td><td><a href="learning-rule-evolution.html">I14 · 学习规则自进化</a><br><small>相同学生、数据、顺序与预算，学习目标/更新规则改变是否提升未来C真实学习？</small></td><td>待评估</td><td>待评估</td><td><a href="#idea-14">P0 学法差异；P1 元规则冻结/重置</a></td></tr></tbody></table></div>
+<p><strong>科学问题与投稿上限（历史 I1–I13）：</strong>I12 ＞ I8 ＞ I9 ＞ I10 ＞ I13 ＞ I5 ＞ I11 ＞ I6 ＞ I4 ＞ I2 ＞ I1 ＞ I3 ＞ I7。</p>
+<p><strong>有限资源下完成决定性证据的把握（历史 I1–I13）：</strong>I7 ＞ I6 ＞ I10 ＞ I8 ＞ I11 ＞ I3 ＞ I1 ＞ I9 ＞ I4 ＞ I12 ＞ I2 ＞ I13 ＞ I5。</p>
 <div class="note">相邻名次不宜过度精确化。容易跑完程序不等于容易中稿；顶刊已有现象只能作为研究动机，不能替代 LLM RSI 的真实证据。本页若发现新强近邻、预实验无效或算力不可承受，应主动重排。</div>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / 影响中稿与完成的评审准则
+## I1–I14 · 科学上限、完成把握与实验优先级 / 影响中稿与完成的评审准则
 
 
 <div class="table-wrap"><table><thead><tr><th>考察因素</th><th>关键问题</th><th>常见减分原因</th></tr></thead><tbody>
@@ -2320,7 +2325,7 @@
 <p>严格区分<strong>当前任务更会做</strong>、<strong>撤掉帮助后持久能力增强</strong>、<strong>改进器自身跨任务变得更会改进</strong>三个尺度。第三层需要固定任务 Agent，比较新旧元策略在相同初始条件和任务流中的作用。</p>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / Nature／Science／NC 与顶会可迁移的实验设计
+## I1–I14 · 科学上限、完成把握与实验优先级 / Nature／Science／NC 与顶会可迁移的实验设计
 
 
 <div class="table-wrap"><table><thead><tr><th>原始研究</th><th>值得借鉴的实验辨别逻辑</th><th>对应</th></tr></thead><tbody>
@@ -2339,7 +2344,7 @@
 <p>这里借鉴的是<strong>控制变量与证据结构</strong>，不将人类或动物学习结论外推为 LLM 已经具备的机制。参考文献发表状态、官方链接和核验深度见 <a href="references.html">来源台账</a>。</p>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / 十三项共用的受控实验契约
+## I1–I14 · 科学上限、完成把握与实验优先级 / 十四项共用的受控实验契约
 
 
 <ol class="research-steps">
@@ -2351,62 +2356,70 @@
 <li><b>跨规则族和训练种子重复。</b>主要置信区间按规则族/独立训练计算；同题重复采样不可当成独立实验。</li>
 <li><b>预定义 Go / Merge / Stop。</b>核心现象不成立就收缩主张；简单对照同效就不继续堆元控制器。</li>
 </ol>
-<p>资源紧张时先用可训练小模型与两个规则族完成代码路径和方差评估，再决定扩大模型/种子规模。不同时启动十三项完整 RSI 闭环。</p>
+<p>资源紧张时先用可训练小模型与两个规则族完成代码路径和方差评估，再决定扩大模型/种子规模。不同时启动十四项完整 RSI 闭环。</p>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I1 · 脚手架学习：内化还是外置｜科学上限 #11 · 完成把握 #7
+## I1–I14 · 科学上限、完成把握与实验优先级 / I1 · 脚手架学习：内化还是外置｜科学上限 #11 · 完成把握 #7
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>稳定方法、易变规则与临时支架，哪些值得长期内化，哪些应按需外置？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>稳定调试技巧 × 快速变化的 API 规则；同版本、同预算对比全内化、全外置、固定渐隐、自适应存放。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定调用频率、检索可靠性、教师输入和长期费用；分开测 Core-only 与 System-with-Experts。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>最优存放方式随规则稳定性和长期成本发生可预测反转，胜过固定规则。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>R²Orch/PATS 已研究支架内化与撤除；仅增加检索路由器不足以独立成篇。<a class="cite" href="references.html#S26" title="R²Orch: Recursive Self-Improvement for Agent Orchestration via Self-Play within a Skill-Internalization Loop">[S26]</a><a class="cite" href="references.html#S27" title="PATS: Policy-Aware Training Scaffolding for Agentic Reinforcement Learning">[S27]</a></p></div></div><p><a href="ideas.html#idea-1">返回 I1 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I2 · 因材施教：师生共进化｜科学上限 #10 · 完成把握 #11
+## I1–I14 · 科学上限、完成把握与实验优先级 / I2 · 因材施教：师生共进化｜科学上限 #10 · 完成把握 #11
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>真实学生回应能给教师什么不可替代的信息，学到的教法能否迁移？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>固定学生快照，交叉给予真实回应、错配学生回应、只有标签的回应；学生真实等预算更新、撤师后测新题，再冻结学生交叉测新旧教师。</p></div><div class="idea-step"><h3>最强控制</h3><p>对照 SOAR 式真实收益优化；同题材、同训练器，区分教师版本变强和学生版本变强。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>真实回应的额外教学价值能在未见学生/任务族复现，而非仅帮助当前做题。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>SOAR 已用学生真实增益优化教学，双重训练与配对评估成本高。<a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a></p></div></div><p><a href="idea-i2.html">返回 I2 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I3 · 温故知新：冲突修复｜科学上限 #12 · 完成把握 #6
+## I1–I14 · 科学上限、完成把握与实验优先级 / I3 · 温故知新：冲突修复｜科学上限 #12 · 完成把握 #6
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>新旧规则分别有效，但在适用边界处混淆时怎样修复并保留双方？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>构造 A/B 各自正确、混合应用时易出错的规则，比较回滚、均匀重放、MIR 和针对适用条件的复习。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定复习次数、存储与训练预算；分测旧 A、新 B、混合规则题，区分真遗忘和错误选规则。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>比强重放基线更会恢复规则边界，且后续更新后仍稳定。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>MIR 与持续学习竞争成熟，若只是多练旧题就没有明显贡献。<a class="cite" href="references.html#M09" title="Online Continual Learning with Maximally Interfered Retrieval">[M09]</a><a class="cite" href="references.html#E99" title="The effects of task similarity during representation learning in brains and neural networks">[E99]</a></p></div></div><p><a href="ideas.html#idea-3">返回 I3 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I4 · 生产性失败：辨别还是总结｜科学上限 #9 · 完成把握 #9
+## I1–I14 · 科学上限、完成把握与实验优先级 / I4 · 生产性失败：辨别还是总结｜科学上限 #9 · 完成把握 #9
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>失败之后下一次测试什么、什么时候证据足以写入 Skill？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>在受控工具故障中构造‘竞争假设对试验预测相同’和‘预测不同’两类尝试，对比立即总结、固定重试、随机试验和诊断性试验。</p></div><div class="idea-step"><h3>最强控制</h3><p>匹配调用、token、当前成功率与反馈；写入 Skill 后在未见故障独立验证。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>同预算显著降低错误规则写入，并有可迁移收益，停止时机超过固定阈值。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>主动失败探测/轨迹转 Skill 已是直接近邻，单靠增加验证次数不够。<a class="cite" href="references.html#S16" title="ActiveSaddler: Automated Curriculum Learning for Agent Harness Optimization">[S16]</a><a class="cite" href="references.html#S31" title="Trace2Skill: Distill Trajectory-Local Lessons into Transferable Agent Skills">[S31]</a><a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></p></div></div><p><a href="ideas.html#idea-4">返回 I4 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I5 · 费曼学习法：动态换伴｜科学上限 #6 · 完成把握 #13
+## I1–I14 · 科学上限、完成把握与实验优先级 / I5 · 费曼学习法：动态换伴｜科学上限 #6 · 完成把握 #13
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>最佳教师是否随学生能力变化，重新配对能否提高双向独立净学习？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>先做四模型六配对；固定互教更新器，对早、中、晚学生快照计算候选教师教学后的双向独立净收益。</p></div><div class="idea-step"><h3>最强控制</h3><p>比较固定、随机、轮换、能力匹配、即时收益；含试教/回退成本并固定边集合与接触次数。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>最佳伙伴排名随阶段可重复反转，四模型收益成立后才扩至十模型。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>CORY/PopuLoRA/OPCoD 等已有互教，群体配对和双向学习极其昂贵。<a class="cite" href="references.html#S200" title="Coevolving with the Other You: Fine-Tuning LLM with Sequential Cooperative Multi-Agent Reinforcement Learning (CORY)">[S200]</a><a class="cite" href="references.html#S32" title="PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play">[S32]</a><a class="cite" href="references.html#S33" title="Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback (OPCoD)">[S33]</a></p></div></div><p><a href="idea-i5.html">返回 I5 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I6 · 失败过程的学习价值｜科学上限 #8 · 完成把握 #2
+## I1–I14 · 科学上限、完成把握与实验优先级 / I6 · 失败过程的学习价值｜科学上限 #8 · 完成把握 #2
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>同题同错误终点，不同失败过程经过相同纠错为什么迁移收益不同？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同父模型同题采集多条失败，尽量匹配错误答案、长度与正确信息；固定正确反馈和更新预算，只换失败轨迹。</p></div><div class="idea-step"><h3>最强控制</h3><p>对比随机、最长、最近正确、仅正确示范、收益预测；按规则族而非单题采样作独立重复。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>纠错前的失败结构还能预测异题净收益，超出轨迹长度、正确子步骤和知识准备。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>已有失败选样及未学会原因分析，需机制而非一般‘好负例’效应。<a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a><a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a><a class="cite" href="references.html#E26" title="Hypothesis testing governs strategic motor learning">[E26]</a></p></div></div><p><a href="idea-i6-failure-value.html">返回 I6 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I7 · 学习顺序：先试还是先学｜科学上限 #13 · 完成把握 #1
+## I1–I14 · 科学上限、完成把握与实验优先级 / I7 · 学习顺序：先试还是先学｜科学上限 #13 · 完成把握 #1
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>同信息同预算的尝试/示范次序能否改变持久学习，最优次序会否反转？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同 checkpoint 比较示范→尝试、尝试→示范、相同信息集合仅重排顺序及额外练习基线；将轨迹写入持久更新后撤辅测新题。</p></div><div class="idea-step"><h3>最强控制</h3><p>明确尝试如何影响真实写回；匹配示范、尝试次数、token 与训练预算。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>顺序优势随前置知识阶段可预测反转，能改善新题及正确解法探索。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>经典教育问题，简单平均分差距不足以形成高上限投稿。<a class="cite" href="references.html#E20" title="Interleaved practice enhances memory and problem-solving ability in undergraduate physics">[E20]</a><a class="cite" href="references.html#E22" title="Tailoring interleaved practice: Does adaptive sequencing boost the interleaving effect?">[E22]</a></p></div></div><p><a href="idea-i7-learning-order.html">返回 I7 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I8 · 错误可学习性与迁移｜科学上限 #2 · 完成把握 #4
+## I1–I14 · 科学上限、完成把握与实验优先级 / I8 · 错误可学习性与迁移｜科学上限 #2 · 完成把握 #4
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>纠正什么错误能修改共同规则，并迁移到未见题而不产生负迁移？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同一模型快照、固定纠错方式，对比共享错误规则与局部错误；测同表面同规则、异表面同规则、同表面不同规则、无关规则四类题，并交叉前置知识状态。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定错误难度、反馈、轨迹长度、LoRA/Skill 预算；去除纠错材料中的关键规则区分信息作机制干预。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>在纠错前预测未见规则族上的正迁移、无迁移和负迁移，且跨模型复现。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>单纯错题采样与负例学习竞争密集；核心应是知识准备 × 规则覆盖 × 迁移。<a class="cite" href="references.html#E100" title="Humans and neural networks show similar patterns of transfer and interference during continual learning">[E100]</a><a class="cite" href="references.html#E99" title="The effects of task similarity during representation learning in brains and neural networks">[E99]</a><a class="cite" href="references.html#M27" title="Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models">[M27]</a></p></div></div><p><a href="i8.html">返回 I8 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I9 · 练习切换与学习历史｜科学上限 #3 · 完成把握 #8
+## I1–I14 · 科学上限、完成把握与实验优先级 / I9 · 练习切换与学习历史｜科学上限 #3 · 完成把握 #8
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>当前能力相近时，集中/交错的不同历史是否仍改变未来学习 C 的速度？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>相同 A/B 样本、曝光、预算仅换顺序；接着统一训练共享规则 C1、冲突规则 C2、无关规则 C3，测整条学习曲线。</p></div><div class="idea-step"><h3>最强控制</h3><p>保留全随机分配结果，不仅挑当前分数接近种子；重置优化器，不额外追平准确率。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>不同历史对 C 的学习产生与规则关系一致的、不能由当前分数解释的可重复差异。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>顺序学习几何已是强近邻，普通交错平均涨分不够。<a class="cite" href="references.html#M18" title="The Geometry of Sequential Learning: Lie-Bracket Prediction of Transfer Order">[M18]</a><a class="cite" href="references.html#E20" title="Interleaved practice enhances memory and problem-solving ability in undergraduate physics">[E20]</a><a class="cite" href="references.html#E100" title="Humans and neural networks show similar patterns of transfer and interference during continual learning">[E100]</a></p></div></div><p><a href="idea-i9-practice-switching.html">返回 I9 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I10 · 新增例子的规则区分信息｜科学上限 #4 · 完成把握 #3
+## I1–I14 · 科学上限、完成把握与实验优先级 / I10 · 新增例子的规则区分信息｜科学上限 #4 · 完成把握 #3
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>同一规则的新样本在何时能排除错误捷径，被模型真正吸收成可迁移能力？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>表面多样性高/低 × 规则区分力高/低；构造两个在旧题上等价、关键新题上分歧的候选规则，跨掌握阶段真实参数更新。</p></div><div class="idea-step"><h3>最强控制</h3><p>固定题数、token、标签、难度与课程顺序；测未见分歧题、未见组合与旧能力。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>表面相似却能排除错误捷径的例子胜过表面多样但无区分信息的例子，且随学习阶段变化。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>必须超过‘更有效的信息更有用’，记忆与对比教学已有强近邻。<a class="cite" href="references.html#M17" title="The mosaic memory of large language models">[M17]</a><a class="cite" href="references.html#E350" title="Human-like systematic generalization through a meta-learning neural network">[E350]</a></p></div></div><p><a href="idea-i10-learning-novelty.html">返回 I10 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I11 · 反馈、自评与长期自迭代｜科学上限 #7 · 完成把握 #5
+## I1–I14 · 科学上限、完成把握与实验优先级 / I11 · 反馈、自评与长期自迭代｜科学上限 #7 · 完成把握 #5
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>相同事实的反馈语气/展示方式如何影响自评、学习行动与真实持久增益？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>独立操纵语气与真实反馈展示频率，固定事实与训练器所见纠错材料；只让学习控制器获得不同呈现，多轮更新后撤辅测新题。</p></div><div class="idea-step"><h3>最强控制</h3><p>匹配动作指令、文本长度、总调用预算；替换自评估计或强制同学习计划检验中介机制。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>反馈导致的长期差异可解释为自评→行动→持久学习，而不仅是信心或当前回答改变。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>NC 已研究反馈扭曲自评；单纯情绪提示提高即时分数不够。<a class="cite" href="references.html#E29" title="Distorted learning from local metacognition supports transdiagnostic underconfidence">[E29]</a></p></div></div><p><a href="idea-i11-emotional-rsi.html">返回 I11 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I12 · 共同前置瓶颈与学习解锁｜科学上限 #1 · 完成把握 #10
+## I1–I14 · 科学上限、完成把握与实验优先级 / I12 · 共同前置瓶颈与学习解锁｜科学上限 #1 · 完成把握 #10
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>补一个共同前置知识是否使多个目标任务在下一阶段真正更容易学？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>第一阶段分别学习真实前置 P、表面相关但非前置规则、无关规则、或直接多练目标；第一阶段独立测分后，各组再接受完全相同的目标训练流。</p></div><div class="idea-step"><h3>最强控制</h3><p>比较第二阶段新增收益和完整学习曲线；加已掌握 P 模型、不依赖 P 任务作负例，控制初始成绩与天花板。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>P 的补充能选择性提高多个依赖目标的后续学习增益，隐藏依赖图仍能识别瓶颈。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>课程图/中间踏脚石已有研究，当前涨分不能算后续可学习性解锁。<a class="cite" href="references.html#E401" title="Compressive learning scaffolds higher-order network structure to enhance human knowledge acquisition">[E401]</a><a class="cite" href="references.html#S47" title="Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability (SOAR)">[S47]</a></p></div></div><p><a href="idea-i12-prerequisite-bottleneck.html">返回 I12 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / I13 · 跨版本安全更新接纳｜科学上限 #5 · 完成把握 #12
+## I1–I14 · 科学上限、完成把握与实验优先级 / I13 · 跨版本安全更新接纳｜科学上限 #5 · 完成把握 #12
 
 <div class="idea-focus"><p><b>唯一科学问题：</b>如何事前预测候选自我修改的后代安全风险，同时减少危险漏放与安全更新误拒？</p></div><div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性对照</h3><p>同父版本、相近局部收益的 Skill/Harness 变更池；独立安全门保持不变，比较固定全量测试、随机测试、简单风险阈值与历史证据驱动的有限预算测试。</p></div><div class="idea-step"><h3>最强控制</h3><p>追踪真实部署版本与后续编辑起点；漏放和误拒同时报告，测试与回滚成本入账，安全不变量不可由被评估 Agent 修改。</p></div><div class="idea-step"><h3>Go · 决定升级的证据</h3><p>未见更新族及后代版本上风险诊断同时改善有限预算的漏放/误拒权衡，并更安全继承。</p></div><div class="idea-step"><h3>最近邻与中稿风险</h3><p>跨代故障与 Skill 不安全传播已有直接前作，单加安全门或更多测试不新。<a class="cite" href="references.html#S450" title="Safety Must Survive Self-Improvement: Why Failures Persist and How Agents Recover">[S450]</a><a class="cite" href="references.html#S451" title="Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents">[S451]</a><a class="cite" href="references.html#M450" title="Training large language models on narrow tasks can lead to broad misalignment">[M450]</a></p></div></div><p><a href="learning-admission.html">返回 I13 详细研究页 →</a></p>
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / 实际推进与何时重新排序
+## I1–I14 · 科学上限、完成把握与实验优先级 / I14 · 学习规则自进化｜科学上限与完成把握待统一评估
+
+
+<div class="idea-focus"><p><b>唯一科学问题：</b>固定学生模型检查点、学习任务/材料/顺序/教师及预算，仅改变由历史真实学习收益积累的更新规则 η，能否让相同起点学习者在未见C任务上取得更好的持久净学习收益？</p></div>
+<div class="idea-steps"><div class="idea-step"><h3>P0 · 决定性现象</h3><p>同样数据、同样课程顺序，比较固定SFT、保持旧能力的约束更新与目标生成式更新；匹配当前A/B能力及C前测，真实继续学习C并报告全曲线AULC。允许零效果和反向效果，不根据结果事后挑选模型快照。</p></div><div class="idea-step"><h3>最强对照</h3><p>Fixed Best Rule、Old/New Meta-Rule、打乱历史、无任务学生更新；相同θ₀和优化器状态，计入Meta训练、选择与验证全部成本。与I9仅改训练顺序严格区分。</p></div><div class="idea-step"><h3>Go / 缩题 / 降级</h3><p>只有冻结/重置实验支持学习规则本身的可继承净收益、并在未见规则族与模型快照上优于强固定规则，才继续投入完整元规则训练。若解释仅为训练历史或课程安排，降级并入I9或保留机制测量；如复杂Meta与固定规则同效，停止增加模块。</p></div><div class="idea-step"><h3>最近邻与论文依据</h3><p><a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori 2023</a> 验证快/慢机制与阶段干预；<a href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL 2025</a> 已研究自动学习目标生成。不能把两个循环本身当成首次提出。</p></div></div>
+<p><a href="learning-rule-evolution.html"><b>进入 I14 完整研究与 P0/P1 →</b></a></p>
+
+
+## I1–I14 · 科学上限、完成把握与实验优先级 / 实际推进与何时重新排序
 
 
 <div class="table-wrap"><table><thead><tr><th>研究组</th><th>本轮动作</th><th>停止继续堆叠模块的条件</th></tr></thead><tbody>
@@ -2414,14 +2427,15 @@
 <tr><td>高上限 P0</td><td><a href="#idea-12">I12</a> 第一阶段 P → 第二阶段 T；<a href="#idea-9">I9</a> A/B 历史 → C 学习曲线。</td><td>后续收益完全由第一阶段起点、优化器状态或筛选偏差解释。</td></tr>
 <tr><td>轻量并行</td><td><a href="#idea-11">I11</a> 反馈自评链；<a href="#idea-6">I6</a> 轨迹配对；<a href="#idea-7">I7</a> 同信息顺序。</td><td>只出现即时回答或自评变化，无法证明持久独立学习。</td></tr>
 <tr><td>储备／收窄</td><td><a href="#idea-13">I13</a> 跨代安全风险；I1/I3/I4 补强对照；I2/I5 先资格实验。</td><td>固定门、固定老师或简单互教已经等效，复杂层没有增量。</td></tr>
+<tr><td>新增编号待评分</td><td><a href="#idea-14">I14</a> 更新规则自进化，先做固定学生、相同教材/预算的P0。</td><td>若Meta规则与最佳固定Rule同效、或只提升当前任务分数，缩题/降级；不直接投入大规模Meta-gradient。</td></tr>
 </tbody></table></div>
 <p><b>重排依据：</b>新近邻、P0 效应规模/重复性、实际计算成本和能否解释反例。任何图表的视觉吸引力都不改变证据级别。</p>
 
 
-## I1–I13 · 科学上限、完成把握与实验优先级 / 状态、编号与引用边界
+## I1–I14 · 科学上限、完成把握与实验优先级 / 状态、编号与引用边界
 
 
-<p><b>2026-10-29 · 研究方案排序，非已完成实验。</b>现有 I1–I13 编号保持不变，当前 I6 是失败轨迹的学习价值（旧跨轮瓶颈切换仅留归档）；I9 为课程切换与未来学习历史的增强版；I10 已有规则区分和组合学习详情；I13 采用跨版本安全接纳主线。所有新机制、P0 与主张均待真实验证。</p>
+<p><b>2026-10-29 · 研究方案排序，非已完成实验。</b>现有 I1–I13 编号保持不变，<b>I14 已正式追加为学习规则自进化</b>；I14 暂未进入历史13项名次，待P0结果或同口径评估后排序。当前 I6 是失败轨迹的学习价值（旧跨轮瓶颈切换仅留归档）；I9 为课程切换与未来学习历史的增强版；I10 已有规则区分和组合学习详情；I13 采用跨版本安全接纳主线。所有新机制、P0 与主张均待真实验证。</p>
 <p>本页的原始论文依照 <a href="references.html">站内逐条核验来源</a>标注；“论文原始发现”不等于“我们实验已得到同样结果”。优先级可在新证据到来后修改，保留研究过程与排序理由。</p>
 
 
@@ -3333,7 +3347,7 @@
 
 
 <p><b>原动物+模型实验：</b>Hattori 等（<i>Nature Neuroscience</i>，2023）用小鼠OFC长期可塑性与当前活动的不同干预，证明跨会话的元学习策略形成和会话内快速奖励适应可被选择性区分。人工5个A2C RNN也采取500次trial内权重固定、跨session才更新的设置。<a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">进入13节精读及三个干预证据 →</a></p>
-<p><b>I9保持处理变量：</b>固定同一更新器和教材，只交换集中/交错、A→B/B→A等顺序，问当前能力匹配后是否改变未来C学习曲线。<a href="learning-rule-evolution.html">学习规则自进化未编号候选</a>则固定顺序/任务/教师，只改变学习目标或更新规则，利用Meta-Rule冻结/重置检验元学习增益。二者可以共用未来C评测平台，但<strong>不能把课程顺序收益当作参数更新规则进化的独立贡献</strong>。</p>
+<p><b>I9保持处理变量：</b>固定同一更新器和教材，只交换集中/交错、A→B/B→A等顺序，问当前能力匹配后是否改变未来C学习曲线。<a href="learning-rule-evolution.html">I14 · 学习规则自进化</a>则固定顺序/任务/教师，只改变学习目标或更新规则，利用Meta-Rule冻结/重置检验元学习增益。二者可以共用未来C评测平台，但<strong>不能把课程顺序收益当作参数更新规则进化的独立贡献</strong>。</p>
 <p class="note">Hattori的跨会话训练仍发生在同类左右概率反转任务，并没有直接证明LLM跨不同规则族学得更快；训练后真实LoRA曲线属于我们的新研究设计，不是原文结果。</p>
 
 
@@ -4094,6 +4108,98 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 <div class="links"><a class="link-btn" href="ideas.html">返回研究 Idea 总览</a><a class="link-btn" href="reading-notes.html#deep-nature2026-narrow-misalignment-betley">Nature 2026 非局部失准</a><a class="link-btn" href="reading-notes.html#deep-nature2024-loss-plasticity-dohare">Nature 2024 可塑性</a><a class="link-btn" href="references.html">Related Work 来源台账</a></div>
 
 
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / I14 · 正式研究方向：学会任务，与学会学习有什么不同？
+
+
+<div class="decision"><span class="kicker">I14 · RSI META-LEARNING · P0/P1 UNVERIFIED · 2026-10-29</span>
+<h3>Same Current Ability, Different Future Learnability</h3>
+<p><b>观察问题：</b>两个 Agent 当前都能完成同样的 A/B 任务，但过去使用过不同的更新机制；即使它们在 A/B 后测能力相近、当前 C 前测也匹配，后续学习陌生规则 C 的速度是否仍然不同？如果有，这种差异是否来自<strong>学习规则本身</strong>，而不是更多样本、课程顺序、教师提示或优化器状态？</p>
+<p><b>编号与证据状态：</b><strong>I14 已正式纳入 RSI 研究池，用于独立跟踪文献、假设、实验和版本。</strong>编号不表示方法已经被验证，也不意味着元学习概念本身是首次提出。快环/慢环与自动学习训练目标都有成熟先例；研究仍须通过同预算真实学习实验。若关键现象不成立，后续允许降级、收窄或合并。I14 不改变 I2 的教学策略或 I9 的课程顺序；原 I1–I13 的历史排名暂时保留，I14 尚待单独评估。</p>
+</div>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / 两篇已经精读的论文：谁负责提出机制，谁负责给出算法？
+
+
+<div class="table-wrap"><table><thead><tr><th>论文</th><th>真实研究对象/改进层次</th><th>最值得继承的实验思想</th><th>不足以直接证明什么</th></tr></thead><tbody>
+<tr><td><a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023"><b>Hattori et al. · Nat Neurosci 2023</b></a></td><td>小鼠概率反转学习+5个A2C RNN。OFC慢速可塑性形成策略，活动动态执行快策略。</td><td>在新手/专家阶段分别抑制可塑性，再于专家阶段抑制活动；用奖励历史核与Policy Axis解释策略形成。</td><td>不是LLM权重更新；同类概率反转任务内的元学习不等于跨任意规则族泛化。</td></tr>
+<tr><td><a href="reading-notes.html#deep-discorl-nature2025-oh"><b>DiscoRL · Nature 2025</b></a></td><td>群体Agent跨57/103环境对目标生成元网络η做Meta-gradient，生成π̂/ŷ/ẑ等学习目标。</td><td>固定更新接口、让学习目标本身可学；重置Agent，用所得η在新环境重新训练。</td><td>没有让部署中的同一个LLM持续改写自己，也没有计入元发现成本的无条件训练效率优势。</td></tr>
+</tbody></table></div>
+<p><b>最近邻还包括：</b><a href="https://arxiv.org/abs/1611.05763" target="_blank" rel="noopener noreferrer">Learning to Reinforcement Learn</a>、<a href="https://openai.com/index/rl2/" target="_blank" rel="noopener noreferrer">RL²</a>，以及 <a href="https://arxiv.org/abs/2505.18524" target="_blank" rel="noopener noreferrer">metaTextGrad</a>。因此双层优化、RNN历史学习、自动调学习目标或文本优化器都不是首次提出；需要在持续LLM参数更新的独立未来学习收益上建立剩余科学问题。</p>
+<div class="links"><a class="link-btn" href="theory-notes.html#metarl-two-timescale-learning">快/慢机制理论</a><a class="link-btn" href="theory-notes.html#policy-history-kernel-measurement">Policy Axis测量</a><a class="link-btn" href="theory-notes.html#learning-target-generation">DiscoRL Target Generation</a></div>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / 为什么必须区分当前任务、持久知识和元策略三个不同的进步？
+
+
+<div class="table-wrap"><table><thead><tr><th>能力层级</th><th>在机器中真实改变的对象</th><th>最低证据要求</th><th>常见误判</th></tr></thead><tbody>
+<tr><td><b>L1 · 当前任务执行变好</b></td><td>Context / RNN hidden state / 临时工具或工作记忆</td><td>同一上下文的新反馈能改善当前执行</td><td>当场接受提示后答对，就叫学会</td></tr>
+<tr><td><b>L2 · 长期任务能力变好</b></td><td>可版本化Memory、Skill或参数θ</td><td>撤除老师及一次性答案，未见任务仍有独立收益</td><td>还在检索答案或直接使用Teacher</td></tr>
+<tr><td><b>L3 · 学习规则本身变好</b></td><td>从过去学得的更新规则η或Meta-policy</td><td>重置同一任务学习者后，新η比旧η使后续任务真实更新得更快或更稳</td><td>只是当前任务分数更高、更多任务样本或更会挑题</td></tr>
+</tbody></table></div>
+<p>重要的是快层在Hattori动物/人工RNN中主要为<strong>活动状态</strong>而非每trial权重更新。映射到LLM RSI时，可以重新操作性定义为任务Skill/LoRA真实更新，但不能声称其神经机制同一。慢层策略变化必须与未来任务C的独立学习证据联合报告。</p>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / 核心科学假设：同样会做题，学法的适用条件可能已经不同
+
+
+<p>设任务学习者为θ、历史状态为b、元规则为η。与I9固定更新器只改变A/B题目顺序不同，这里<strong>固定A/B的具体数据和训练顺序</strong>，只允许η决定相同材料形成何种目标或更新操作。例如目标生成、稳定旧能力的梯度约束、轨迹条件化的预测目标；都要由同等反馈与训练预算形成。</p>
+<div class="equation">θ[k+1] = Update(θ[k] ; Data[k], η, feedback[k])</div>
+<div class="equation">η[new] = MetaUpdate(η[old] ; prior training outcomes)</div>
+<p>如果学习历史提供了真实的状态信息，新的η可能能够识别哪些规则需要保持、哪些预测目标需要改变；若只是复杂模型容量增加，历史打乱后也可能同样提升，因此要设置同容量随机历史及最优固定更新器基线。</p>
+<div class="note"><b>两个可证伪假设：</b>H1，相同初始能力的学生对不同更新规则有不同的未来学习响应，且这种差异随任务规则冲突/共享结构系统变化；H2，历史学习结果能帮助η预测这种响应并改善未见任务的同预算净增益。H1不成立就不能直接投入昂贵的元梯度系统。</div>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / P0 · 现象验证：相同任务数据，不同学法是否产生未来可学习性差异？
+
+
+<p>第一阶段先<strong>不训练复杂的Meta-Updater</strong>，只建立可复现的学习规则对照。在可验证数学规则或简化代码/形式任务中，固定同一基础模型、A/B相同样本multiset、相同顺序与教师反馈。比较普通SFT、旧能力兼容约束、目标生成式更新等；为每种情况准备完全相同的C训练与留出测试。若参数预算不同，匹配可训练参数/训练步数并单列额外诊断及元训练成本。</p>
+<div class="table-wrap"><table><thead><tr><th>分支</th><th>固定条件</th><th>唯一变量</th><th>读什么</th></tr></thead><tbody>
+<tr><td>普通SFT</td><td>θ₀、A/B样本、更新预算</td><td>标准token CE更新</td><td>当前A/B，未来C增益</td></tr>
+<tr><td>Retention-aware update</td><td>同样Data及反馈</td><td>更新目标/梯度约束，非额外Replay数据</td><td>A/B保持、未来C迁移</td></tr>
+<tr><td>Prediction-target update</td><td>同样数据/任务学生</td><td>固定接口上的目标生成方式</td><td>未见C规则的真实学习曲线</td></tr>
+<tr><td>Matched current state</td><td>初始C前测及A/B能力区间匹配</td><td>不同学习历史后的更新规则选择</td><td>控制当前能力差异后，C是否仍有独立变化</td></tr>
+</tbody></table></div>
+<p>训练C之前必须锁定C测试集、学生检查点和优化器状态。若更新历史使θ本身不同，本组证明的是“历史对可学习性的差异”，还不能直接归因于η；独立的双层分叉在P1完成。</p>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / P1 · 元策略必要性：分阶段冻结、重置、打乱历史和移除更新
+
+
+<div class="table-wrap"><table><thead><tr><th>实验组</th><th>元规则η</th><th>任务学生θ</th><th>排除的替代解释</th></tr></thead><tbody>
+<tr><td>Fixed Best Rule</td><td>开发集最优固定规则</td><td>新θ₀，C真实更新</td><td>复杂Meta是否必要</td></tr>
+<tr><td>Old Meta-Rule</td><td>η_old冻结</td><td>同一新θ₀，C真实更新</td><td>元规则改进前基线</td></tr>
+<tr><td>New Meta-Rule</td><td>η_new冻结</td><td>同一新θ₀，C真实更新</td><td>保留何种元经验真正有益</td></tr>
+<tr><td>Shuffled-History</td><td>同容量，但打乱历史更新—结果对应</td><td>同一新θ₀</td><td>是否只是更多Token与容量</td></tr>
+<tr><td>No Student Update</td><td>η_new仍可被调用</td><td>θ固定、不允许真实参数更新</td><td>是否只有推理期帮助而非学习</td></tr>
+<tr><td>Meta Freeze Through Generations</td><td>η在后续代际不再改进</td><td>θ仍随任务更新</td><td>当前能力提高≠元策略跨代提高</td></tr>
+</tbody></table></div>
+<div class="equation">ΔMeta = AULC_future(η_new, θ₀) − AULC_future(η_old, θ₀)</div>
+<p>主结果包括未来C曲线面积、固定预算下最终未见变式、旧能力回归、元发现成本、不同任务族及模型版本上的效应。AULC不是本篇Nature原公式，是我们研究协议的学习能力指标。</p>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / I14 与 I1–I13 的正交关系：不让更新规则吞掉旧主线
+
+
+<div class="table-wrap"><table><thead><tr><th>现有方案</th><th>原本的独立处理变量</th><th>本方向怎么取边界</th></tr></thead><tbody>
+<tr><td><a href="idea-i2.html">I2 · 教学策略进化</a></td><td>学生真实回应如何改变教师教法</td><td>固定教师和材料，只改学生参数更新目标</td></tr>
+<tr><td><a href="idea-i6-failure-value.html">I6 · 失败过程价值</a></td><td>同题同错，选哪条失败轨迹值得学</td><td>固定错误/反馈池，不换候选轨迹</td></tr>
+<tr><td><a href="idea-i9-practice-switching.html">I9 · 集中/交错与未来C学习</a></td><td>题目顺序、切换时机影响C可学习性</td><td>固定顺序、教材，只有学习规则变化</td></tr>
+<tr><td><a href="experience-consolidation.html">候选 · 经验巩固</a></td><td>同Episode原样保存、Skill抽象或LoRA内化</td><td>固定持久化表面，只改更新目标生成</td></tr>
+<tr><td><a href="learning-admission.html">I13 · 安全更新接纳</a></td><td>候选风险测试和接纳/隔离</td><td>元策略不能修改独立安全硬门和权限</td></tr>
+</tbody></table></div>
+<p>评审中最容易质疑：元学习训练规则在RL²/DiscoRL已有，为什么这不是简单的领域迁移？需要将科学问题压缩到<strong>真实LLM多轮参数更新中，何种已观察学习状态使新旧规则的未来增益出现可预测交互，以及不同规则对长期旧能力保持的影响</strong>，而不是再次证明Meta-RL概念。</p>
+
+
+## I14 · 学习规则自进化：Agent 何时真正变得更会学习？ / I14 · Go / 缩题 / 降级：何时继续投入元学习规则？
+
+
+<p><b>I14 保持独立推进的 Go 条件：</b>（1）同数据/同顺序/同教师/同预算下，在多个任务族重复发现‘当前能力相近但学法变化影响未来C’；（2）提前的历史状态信号能够预测哪种更新规则有利，且对未知任务关系仍稳定；（3）冻结和重置干预显示增益来自可继承的η而不是上下文/样本选择；（4）胜过最佳固定Rule和随机历史，扣除元发现成本依然有净收益。</p>
+<p><b>若证据不足，允许降级：</b>只有训练历史导致未来C差异、却无法归因于学习规则本身时，可并入I9的历史可学习性机制；也可保留为跨I科学测量，不扩建Meta-Updater。<b>如果固定最佳Rule同样好：</b>不训练Meta-Updater；保留负面结果和失效条件。<b>如果只提高当前任务：</b>只证明训练方法更有效，不能主张递归地更会学习。</p>
+<p>技术上优先用小模型、受控合成规则和独立版本分支，先验证因果效应，再决定是否投入DiscoRL级别的Meta-gradient算力。所有结论都需在没有教师/测试答案泄漏的独立未来任务上测量。</p>
+<div class="links"><a class="link-btn" href="ideas.html">返回 I1–I14 研究池</a><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori原文完整精读</a><a class="link-btn" href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL原文完整精读</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI理论与指标</a><a class="link-btn" href="idea-prioritization.html">I14 待评分及历史 I1–I13 排序</a></div>
+
+
 ## RSI 记忆研究地图｜历史、检索、巩固与未来可学习性 / 现象：当前成绩相同，不代表下次会同样学得好
 
 
@@ -4124,7 +4230,7 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
  <tr><td><b>C · 原始经验的巩固</b><br>正确经验什么时候值得变成规则/Skill/LoRA？</td><td>固定入选Episode，正交比较Raw/Abstract/Skill/LoRA及必要时Defer</td><td>撤辅后独立迁移与新条件误用、旧能力回归和全成本；抽象有时好有时坏的可预测交互</td><td>本站已有<a href="experience-consolidation.html">经验巩固候选</a>；MSCE已做有证据的Memory→Skill <a class="cite" href="references.html#M534" title="From Memory to Skills: Evidence-Grounded Governance for Long-Horizon LLM Agents">[M534]</a></td></tr>
  <tr><td><b>D · 记忆与学习控制</b><br>历史会帮助下一轮选题、停学、更新接纳吗？</td><td>固定候选动作、任务池、训练预算和验证器，仅改变策略读取历史状态与否</td><td>新规则家族的长期净学习曲线高于简单固定/随机/上下文只读与强记忆管理器</td><td>Memory-R1、<a href="ideas.html#idea-1">I1</a> 与<a href="learning-admission.html">I13</a>存在明显交叉 <a class="cite" href="references.html#M530" title="Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning">[M530]</a><a class="cite" href="references.html#M531" title="From Storage to Experience: A Survey on the Evolution of LLM Agent Memory Mechanisms">[M531]</a></td></tr>
  </tbody></table></div>
- <p><b>不建议立即增加I14–I17：</b>A可以先放进I9的机制实验；C保持已有独立候选；B/D已经有直接的记忆管理/元控制文献，需要进一步证明新机制。后续若A发现跨任务可复现的“当前状态无法解释的学习响应”，再考虑单独提升为I编号。</p>
+ <p><b>本记忆地图不新增编号：</b><a href="learning-rule-evolution.html">I14 已独立研究学习规则自进化</a>，固定任务、顺序与教师，只改变更新规则。这里的A历史状态诊断可先进入I9/I14的机制对照；C保留经验巩固候选；B/D已有记忆管理与元控制近邻，必须先得到独立因果证据，才考虑未来是否另占I15及后续编号。</p>
 
 
 ## RSI 记忆研究地图｜历史、检索、巩固与未来可学习性 / 最值得先做的P0：历史预测与真实LoRA学习收益
@@ -4308,98 +4414,6 @@ b<sub>AB</sub> = H<sub>B</sub>g<sub>A</sub> − H<sub>A</sub>g<sub>B</sub><br>
 <p><b>Stop：</b>严格控制原始轨迹质量、检索长度、更新步骤和额外验证成本后，全部差异消失；或者所谓收益仅来自本轮上下文帮助，撤辅后没有真实能力增益。</p>
 <p><b>应长期保存的数据：</b>Episode ID及版本、模型/任务状态、候选抽象全文、规则前提/反例、预注册干预、独立测试结果、预算及回滚结果。后续可供 <a href="theory-notes.html#experience-tag-vs-consolidation-utility">理论工具箱</a>和I6/I13的真实学习响应模型复用。</p>
 <div class="links"><a class="link-btn" href="reading-notes.html#deep-memory-management-acl2026-xiong">ACL 2026 完整精读</a><a class="link-btn" href="reading-notes.html#deep-faulty-memory-arxiv2026-zhang">2026 Faulty Memory 完整精读</a><a class="link-btn" href="reading-notes.html#deep-sharp-wave-ripples-science2024-yang">Science 2024 实验证据</a></div>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / 立项结论：独立保留候选，不立即升级 I14
-
-
-<div class="decision"><span class="kicker">RSI THEORY → TESTABLE HYPOTHESIS · UNNUMBERED · 2026-10-29</span>
-<h3>Same Current Ability, Different Future Learnability</h3>
-<p><b>观察问题：</b>两个 Agent 当前都能完成同样的 A/B 任务，但过去使用过不同的更新机制；即使它们在 A/B 后测能力相近、当前 C 前测也匹配，后续学习陌生规则 C 的速度是否仍然不同？如果有，这种差异是否来自<strong>学习规则本身</strong>，而不是更多样本、课程顺序、教师提示或优化器状态？</p>
-<p><b>组织判断：</b>本页作为未编号候选保存。快环/慢环、元学习、直接优化学习目标已经有成熟先例；只有在严格配对后证明学习规则改进对未来真实能力产生额外、可预测、可迁移的净收益，才考虑晋升I14。该方向不并入I2或I9的处理变量，也不改变当前I1–I13的研究排名。</p>
-</div>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / 两篇已经精读的论文：谁负责提出机制，谁负责给出算法？
-
-
-<div class="table-wrap"><table><thead><tr><th>论文</th><th>真实研究对象/改进层次</th><th>最值得继承的实验思想</th><th>不足以直接证明什么</th></tr></thead><tbody>
-<tr><td><a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023"><b>Hattori et al. · Nat Neurosci 2023</b></a></td><td>小鼠概率反转学习+5个A2C RNN。OFC慢速可塑性形成策略，活动动态执行快策略。</td><td>在新手/专家阶段分别抑制可塑性，再于专家阶段抑制活动；用奖励历史核与Policy Axis解释策略形成。</td><td>不是LLM权重更新；同类概率反转任务内的元学习不等于跨任意规则族泛化。</td></tr>
-<tr><td><a href="reading-notes.html#deep-discorl-nature2025-oh"><b>DiscoRL · Nature 2025</b></a></td><td>群体Agent跨57/103环境对目标生成元网络η做Meta-gradient，生成π̂/ŷ/ẑ等学习目标。</td><td>固定更新接口、让学习目标本身可学；重置Agent，用所得η在新环境重新训练。</td><td>没有让部署中的同一个LLM持续改写自己，也没有计入元发现成本的无条件训练效率优势。</td></tr>
-</tbody></table></div>
-<p><b>最近邻还包括：</b><a href="https://arxiv.org/abs/1611.05763" target="_blank" rel="noopener noreferrer">Learning to Reinforcement Learn</a>、<a href="https://openai.com/index/rl2/" target="_blank" rel="noopener noreferrer">RL²</a>，以及 <a href="https://arxiv.org/abs/2505.18524" target="_blank" rel="noopener noreferrer">metaTextGrad</a>。因此双层优化、RNN历史学习、自动调学习目标或文本优化器都不是首次提出；需要在持续LLM参数更新的独立未来学习收益上建立剩余科学问题。</p>
-<div class="links"><a class="link-btn" href="theory-notes.html#metarl-two-timescale-learning">快/慢机制理论</a><a class="link-btn" href="theory-notes.html#policy-history-kernel-measurement">Policy Axis测量</a><a class="link-btn" href="theory-notes.html#learning-target-generation">DiscoRL Target Generation</a></div>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / 为什么必须区分当前任务、持久知识和元策略三个不同的进步？
-
-
-<div class="table-wrap"><table><thead><tr><th>能力层级</th><th>在机器中真实改变的对象</th><th>最低证据要求</th><th>常见误判</th></tr></thead><tbody>
-<tr><td><b>L1 · 当前任务执行变好</b></td><td>Context / RNN hidden state / 临时工具或工作记忆</td><td>同一上下文的新反馈能改善当前执行</td><td>当场接受提示后答对，就叫学会</td></tr>
-<tr><td><b>L2 · 长期任务能力变好</b></td><td>可版本化Memory、Skill或参数θ</td><td>撤除老师及一次性答案，未见任务仍有独立收益</td><td>还在检索答案或直接使用Teacher</td></tr>
-<tr><td><b>L3 · 学习规则本身变好</b></td><td>从过去学得的更新规则η或Meta-policy</td><td>重置同一任务学习者后，新η比旧η使后续任务真实更新得更快或更稳</td><td>只是当前任务分数更高、更多任务样本或更会挑题</td></tr>
-</tbody></table></div>
-<p>重要的是快层在Hattori动物/人工RNN中主要为<strong>活动状态</strong>而非每trial权重更新。映射到LLM RSI时，可以重新操作性定义为任务Skill/LoRA真实更新，但不能声称其神经机制同一。慢层策略变化必须与未来任务C的独立学习证据联合报告。</p>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / 核心科学假设：同样会做题，学法的适用条件可能已经不同
-
-
-<p>设任务学习者为θ、历史状态为b、元规则为η。与I9固定更新器只改变A/B题目顺序不同，这里<strong>固定A/B的具体数据和训练顺序</strong>，只允许η决定相同材料形成何种目标或更新操作。例如目标生成、稳定旧能力的梯度约束、轨迹条件化的预测目标；都要由同等反馈与训练预算形成。</p>
-<div class="equation">θ[k+1] = Update(θ[k] ; Data[k], η, feedback[k])</div>
-<div class="equation">η[new] = MetaUpdate(η[old] ; prior training outcomes)</div>
-<p>如果学习历史提供了真实的状态信息，新的η可能能够识别哪些规则需要保持、哪些预测目标需要改变；若只是复杂模型容量增加，历史打乱后也可能同样提升，因此要设置同容量随机历史及最优固定更新器基线。</p>
-<div class="note"><b>两个可证伪假设：</b>H1，相同初始能力的学生对不同更新规则有不同的未来学习响应，且这种差异随任务规则冲突/共享结构系统变化；H2，历史学习结果能帮助η预测这种响应并改善未见任务的同预算净增益。H1不成立就不能直接投入昂贵的元梯度系统。</div>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / P0 · 现象验证：相同任务数据，不同学法是否产生未来可学习性差异？
-
-
-<p>第一阶段先<strong>不训练复杂的Meta-Updater</strong>，只建立可复现的学习规则对照。在可验证数学规则或简化代码/形式任务中，固定同一基础模型、A/B相同样本multiset、相同顺序与教师反馈。比较普通SFT、旧能力兼容约束、目标生成式更新等；为每种情况准备完全相同的C训练与留出测试。若参数预算不同，匹配可训练参数/训练步数并单列额外诊断及元训练成本。</p>
-<div class="table-wrap"><table><thead><tr><th>分支</th><th>固定条件</th><th>唯一变量</th><th>读什么</th></tr></thead><tbody>
-<tr><td>普通SFT</td><td>θ₀、A/B样本、更新预算</td><td>标准token CE更新</td><td>当前A/B，未来C增益</td></tr>
-<tr><td>Retention-aware update</td><td>同样Data及反馈</td><td>更新目标/梯度约束，非额外Replay数据</td><td>A/B保持、未来C迁移</td></tr>
-<tr><td>Prediction-target update</td><td>同样数据/任务学生</td><td>固定接口上的目标生成方式</td><td>未见C规则的真实学习曲线</td></tr>
-<tr><td>Matched current state</td><td>初始C前测及A/B能力区间匹配</td><td>不同学习历史后的更新规则选择</td><td>控制当前能力差异后，C是否仍有独立变化</td></tr>
-</tbody></table></div>
-<p>训练C之前必须锁定C测试集、学生检查点和优化器状态。若更新历史使θ本身不同，本组证明的是“历史对可学习性的差异”，还不能直接归因于η；独立的双层分叉在P1完成。</p>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / P1 · 元策略必要性：分阶段冻结、重置、打乱历史和移除更新
-
-
-<div class="table-wrap"><table><thead><tr><th>实验组</th><th>元规则η</th><th>任务学生θ</th><th>排除的替代解释</th></tr></thead><tbody>
-<tr><td>Fixed Best Rule</td><td>开发集最优固定规则</td><td>新θ₀，C真实更新</td><td>复杂Meta是否必要</td></tr>
-<tr><td>Old Meta-Rule</td><td>η_old冻结</td><td>同一新θ₀，C真实更新</td><td>元规则改进前基线</td></tr>
-<tr><td>New Meta-Rule</td><td>η_new冻结</td><td>同一新θ₀，C真实更新</td><td>保留何种元经验真正有益</td></tr>
-<tr><td>Shuffled-History</td><td>同容量，但打乱历史更新—结果对应</td><td>同一新θ₀</td><td>是否只是更多Token与容量</td></tr>
-<tr><td>No Student Update</td><td>η_new仍可被调用</td><td>θ固定、不允许真实参数更新</td><td>是否只有推理期帮助而非学习</td></tr>
-<tr><td>Meta Freeze Through Generations</td><td>η在后续代际不再改进</td><td>θ仍随任务更新</td><td>当前能力提高≠元策略跨代提高</td></tr>
-</tbody></table></div>
-<div class="equation">ΔMeta = AULC_future(η_new, θ₀) − AULC_future(η_old, θ₀)</div>
-<p>主结果包括未来C曲线面积、固定预算下最终未见变式、旧能力回归、元发现成本、不同任务族及模型版本上的效应。AULC不是本篇Nature原公式，是我们研究协议的学习能力指标。</p>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / 与已有 I1–I13 怎样组织？不让新候选吞掉旧主线
-
-
-<div class="table-wrap"><table><thead><tr><th>现有方案</th><th>原本的独立处理变量</th><th>本方向怎么取边界</th></tr></thead><tbody>
-<tr><td><a href="idea-i2.html">I2 · 教学策略进化</a></td><td>学生真实回应如何改变教师教法</td><td>固定教师和材料，只改学生参数更新目标</td></tr>
-<tr><td><a href="idea-i6-failure-value.html">I6 · 失败过程价值</a></td><td>同题同错，选哪条失败轨迹值得学</td><td>固定错误/反馈池，不换候选轨迹</td></tr>
-<tr><td><a href="idea-i9-practice-switching.html">I9 · 集中/交错与未来C学习</a></td><td>题目顺序、切换时机影响C可学习性</td><td>固定顺序、教材，只有学习规则变化</td></tr>
-<tr><td><a href="experience-consolidation.html">候选 · 经验巩固</a></td><td>同Episode原样保存、Skill抽象或LoRA内化</td><td>固定持久化表面，只改更新目标生成</td></tr>
-<tr><td><a href="learning-admission.html">I13 · 安全更新接纳</a></td><td>候选风险测试和接纳/隔离</td><td>元策略不能修改独立安全硬门和权限</td></tr>
-</tbody></table></div>
-<p>评审中最容易质疑：元学习训练规则在RL²/DiscoRL已有，为什么这不是简单的领域迁移？需要将科学问题压缩到<strong>真实LLM多轮参数更新中，何种已观察学习状态使新旧规则的未来增益出现可预测交互，以及不同规则对长期旧能力保持的影响</strong>，而不是再次证明Meta-RL概念。</p>
-
-
-## 研究候选 · Agent 何时真正变得更会学习？ / 晋升I14的条件、成本与止损边界
-
-
-<p><b>升级为独立I的条件：</b>（1）同数据/同顺序/同教师/同预算下，在多个任务族重复发现‘当前能力相近但学法变化影响未来C’；（2）提前的历史状态信号能够预测哪种更新规则有利，且对未知任务关系仍稳定；（3）冻结和重置干预显示增益来自可继承的η而不是上下文/样本选择；（4）胜过最佳固定Rule和随机历史，扣除元发现成本依然有净收益。</p>
-<p><b>如果只满足现象：</b>归入I9‘学习历史改变未来可学习性’的机制对照，或以跨I科学测量发表，不急于建大模型。<b>如果固定最佳Rule同样好：</b>不训练Meta-Updater；保留负面结果和失效条件。<b>如果只提高当前任务：</b>只证明训练方法更有效，不能主张递归地更会学习。</p>
-<p>技术上优先用小模型、受控合成规则和独立版本分支，先验证因果效应，再决定是否投入DiscoRL级别的Meta-gradient算力。所有结论都需在没有教师/测试答案泄漏的独立未来任务上测量。</p>
-<div class="links"><a class="link-btn" href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori原文完整精读</a><a class="link-btn" href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL原文完整精读</a><a class="link-btn" href="theory-notes.html#meta-improvement-intervention-contract">Meta-RSI理论与指标</a><a class="link-btn" href="idea-prioritization.html">现有I1–I13优先级</a></div>
 
 
 ## 教学反馈诊断 · I5 的早期研究支线 / 研究目标：更新教师，而不是帮学生提高分数

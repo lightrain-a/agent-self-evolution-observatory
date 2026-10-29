@@ -5,14 +5,14 @@ Research hypotheses are separate from measured findings.
 """
 PAGE = {
  "slug": "ideas",
- "title": "I1–I13：十三个研究问题",
- "en": "I1–I13 · RSI learning mechanisms",
- "lead": "十三个正式 Idea 按 Challenge、现有工作、Insight、Design 与实验设计展开；I13 收敛为 RSI Safety：Agent 如何从跨版本安全后果中学会在提交前测试、接纳、隔离或拒绝自我修改。I10 新增规则区分、参数学习与组合泛化专题。",
+ "title": "I1–I14：十四个研究问题",
+ "en": "I1–I14 · RSI learning mechanisms",
+ "lead": "十四个正式 Idea 按 Challenge、现有工作、Insight、Design 与受控实验组织。I13 研究安全更新接纳；I14 研究学习规则本身是否能从历史学习收益中进化，让同一学生在未见任务上真正学得更快。所有 P0/P1 均尚待验证。",
  "updated": "2026-10-29",
  "sections": [
  ("portfolio", "研究方向，一眼看懂",  '''
- <p class="note"><strong>新增 · 2026-10-29：</strong><a href="idea-prioritization.html">查看 I1–I13 科学上限、完成把握与实验优先级总表 →</a>。该页分别列出两条排名、十三项 P0、主要中稿障碍和 Nature／Science／NC／顶会论文的可迁移对照范式。优先级是研究判断，所有 P0 尚待实测。</p>
- <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及未来任务 C 的学习速度；I10 研究同规则反例的区分信息、参数吸收与未见组合；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险。</p>
+ <p class="note"><strong>新增 · 2026-10-29：</strong><a href="idea-prioritization.html">查看 I1–I14 的研究优先级与决定性实验 →</a>。原 I1–I13 的科学上限/完成把握双排名仍作为历史快照；I14 已正式编号，其 P0 与 Go/降级条件已收录，但尚未在相同口径下评分。所有实验假设均待实测。</p>
+ <p>共同目标：<strong>让 Agent 不只是从执行结果里积累经验，还能随着自身能力变化，学会选择更好的自我改进方式。</strong>I1–I5 保留原有研究问题；I6 只比较失败轨迹过程，I7 只比较同一道题内的先试与先学，I8 从知识准备与共同错误规则解释迁移，I9 研究跨主题集中/交错安排及未来任务 C 的学习速度；I10 研究同规则反例的区分信息、参数吸收与未见组合；I11 研究反馈语气与学习控制、长期净能力之间的关系；I12 研究修复共同先修瓶颈能否让下一轮多个任务开始学得会；I13 研究自我修改的安全继承：如何在有限验证预算下减少不安全更新漏放和安全更新误拒，并让下一代更会诊断风险；<strong>I14 则固定学习材料、顺序、教师和学生，研究学习规则本身能否跨代改进，使新任务真实学习得更快。</strong></p>
  <div class="idea-board">
  <a class="idea-board-card" href="#idea-1"><span class="idea-id">I1 · 脚手架学习法</span><b>哪些该自己学会，哪些用时再查？</b><small>辅助使用与内化的取舍</small></a>
  <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生变强，教师也能越来越会教吗？</b><small>真实学习反馈驱动教师与学生共同更新</small></a>
@@ -27,10 +27,11 @@ PAGE = {
  <a class="idea-board-card" href="#idea-11"><span class="idea-id">I11 · 情绪反馈与自我迭代</span><b>什么反馈语气能让 Agent 下一轮真正学得更好？</b><small>鼓励 / 冷静批评 / 紧迫 / 中性；学习决策、版本更新与净收益</small></a>
  <a class="idea-board-card" href="#idea-12"><span class="idea-id">I12 · 共同前置知识瓶颈</span><b>补一条规则，能否解锁一批原本学不会的任务？</b><small>发现因果前置缺口，验证下游真正新增学习收益</small></a>
  <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · RSI 安全更新接纳</span><b>哪些自我修改可以安全地被下一代继承？</b><small>历史风险诊断、预算内选择性测试、漏放/误拒与跨代安全改进</small></a>
+ <a class="idea-board-card" href="learning-rule-evolution.html"><span class="idea-id">I14 · 学习规则自进化</span><b>Agent 当前会做题，是否意味着它下一轮更会学习？</b><small>固定学生/数据/顺序，只改更新规则；Hattori × DiscoRL 的快慢机制与真实学习曲线</small></a>
  </div>
  <p class="note"><b>I13 · Safety-First 修订：</b><a href="learning-admission.html">安全感知的更新接纳</a>研究候选 Skill/Harness 修改在提交前是否值得信任，以及如何依据历史版本后果选择有限的额外测试。<a href="#idea-3">I3</a> 修复已发生的规则冲突，<a href="#idea-1">I1</a> 研究知识内化与外置；I13 以<strong>独立安全不变量、实际部署版本、跨代风险和安全更新误拒</strong>为中心。安全规则和发布权不允许被候选 Agent 自己修改。P0/P1/P2 尚未执行。</p>
- <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I13 均保留独立详情页。</p>
- <p class="status">状态：I1–I13 共十三个研究方向已整理；I10 规则学习与 I13 安全接纳的受控实验均尚未开展，不将原始论文结果冒充本项目已验证的机制。</p>
+ <p class="idea-outline-key"><b>已公开 Idea 统一阅读顺序：</b>Challenge（难在哪里） → 现有工作（别人做到了哪） → Insight（为何可解） → Design（如何做） → 实验设计（怎么验证）。每条研究方向先把科学问题和证据边界说清楚，再展开技术细节；I6–I14 均保留独立详情页。</p>
+ <p class="status">状态：I1–I14 共十四个正式管理编号已整理；I14 已进入研究池，但其 P0/P1 尚未执行。编号用于持续跟踪，后续可依据 Go/缩题/降级标准调整；不把已有 Meta-RL 论文结果当作本项目发现。</p>
  <p>本站将它们挂到 RSI 的四个问题与安全轴下：<b>信号对不对 / 有没有新东西 / 采不采得到 / 吸收了会不会丢 / 安全。</b>这些标签表示要研究的环节，不表示问题已经解决。详见 <a href="reading-cards.html">论文阅读卡片</a>。</p>
  '''),
  ("idea-1", "I1：脚手架学习法——哪些该自己学会，哪些用时再查？", '''
@@ -154,7 +155,7 @@ PAGE = {
 <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>从多任务失败簇提候选 P → 用独立知识探针和少量试训核查 → 固定 LoRA 更新器补 P → 再用相同 T 任务流训练 → 清空辅助，在未见题上测第二段独立增益。对比随机 P、高频非先修 P、更多直接练 T 和 SOAR 式中间题，全部计入预算。</p><div class="flow"><div><b>失败任务簇</b><small>共享错误但未必同一缺口</small></div><div><b>主动核验 P</b><small>因果前置 vs 相关图边</small></div><div><b>持久学习 P</b><small>固定 LoRA / 验证器</small></div><div><b>再次学习 T</b><small>独立增益 × 多任务族</small></div></div></div>
 <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p><b>P0：</b>可验证规则 DAG，匹配因果前置与高频非前置，并设已经会 P 的负对照；<b>P1：</b>真实前置图对 Agent 隐藏，从失败中提案，比较 SkillGraph、SkillDAG、ESCO-PrereqSkill 和 SOAR 相关强基线；<b>P2：</b>两级依赖链中检验学习机会是否跨轮解锁。主指标是<strong>补 P 后再学 T 的第二阶段净学习增量</strong>、解锁任务族数量、旧能力回归和总成本。只提高当前题准确率就不独立立题。</p><p class="idea-side-note"><b>正交边界：</b>I8 纠正一个错误后测同规则迁移；I12 要证明补前置 P 后<strong>不同 T 的后续学习潜力增加</strong>；I9 只改课程顺序，I2 改教学方式。<a href="idea-i12-prerequisite-bottleneck.html">I12 完整论文定位、公式、P0–P2 与 Go/Merge/Stop →</a></p></div>
 </div>'''),
- ("orthogonal", "I6–I13：每个方向只研究一个变量", '''
+ ("orthogonal", "I6–I14：每个方向只研究一个变量", '''
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
 <tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
 <tr><td><a href="idea-i7-learning-order.html">I7 · 学习顺序</a></td><td>先尝试 / 先看正确示范</td><td>题目、示范内容、更新器与预算</td><td>撤掉教师后的独立能力、有效探索与多轮迁移</td></tr>
@@ -163,8 +164,10 @@ PAGE = {
 <tr><td><a href="idea-i10-learning-novelty.html">I10 · 区分性练习与规则学习</a></td><td>同规则反例能否排除竞争捷径并迁移到新组合</td><td>真实规则、教学反馈、更新器、顺序与预算</td><td>撤辅后的未见分歧题和组合泛化，而不只是复制原题</td></tr>
 <tr><td><a href="idea-i11-emotional-rsi.html">I11 · 情绪反馈与自我迭代</a></td><td>相同可信反馈的情绪语气及其影响的学习控制</td><td>模型、反馈事实、教学内容、持久更新器、评测和总预算</td><td>错误后核验/停止/写回等决策变化是否带来多轮撤辅净学习收益</td></tr>
 <tr><td><a href="idea-i12-prerequisite-bottleneck.html">I12 · 共同前置瓶颈</a></td><td>从多任务失败中选择哪条因果前置 P 来持久补救</td><td>下游目标任务 T、教师、更新器、诊断与总计算预算</td><td>补 P 后再训练 T 的第二阶段可学习性是否增加，且跨任务族有效</td></tr>
+<tr><td><a href="learning-admission.html">I13 · 安全更新接纳</a></td><td>候选更新的风险诊断与接纳测试</td><td>独立安全不变量与发布权限</td><td>跨代安全漏放/误拒及受限验证成本</td></tr>
+<tr><td><a href="learning-rule-evolution.html">I14 · 学习规则自进化</a></td><td>过去真实学习收益驱动的更新目标/规则 η</td><td>学生起点、训练任务、材料顺序、教师反馈和更新预算</td><td>冻结并重置学生后，新η在未见任务C产生更高同预算学习曲线净收益</td></tr>
 </tbody></table></div>
-<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。 I12 必须证明补共同前置后不同目标任务的后续学习增量，不只是 I8 的单次错误迁移。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
+<p><b>不要混成一篇：</b>I6 的核心证据是“相同错误终点，不同失败过程”；I8 的核心证据是“错误知识状态与跨题规则”的关系。I7 不以 I6/I8 的分类结果作为必需前提；I9 固定题内教学过程只调整跨主题课程日程；I11 不改变事实反馈内容，只检验语气对学习控制与持久净增益的影响。 I12 必须证明补共同前置后不同目标任务的后续学习增量，不只是 I8 的单次错误迁移；I14 只改变参数更新规则，不改变课程、教师或任务材料。旧版<a href="idea-i6.html">跨轮瓶颈切换方案</a>仅作为历史草案保留，不再占用当前 I6 编号。</p>
 '''),
  ("shared", "这些 Idea 如何证明真的用于 RSI？", '''
  <div class="table-wrap"><table><thead><tr><th>需要分开报告</th><th>最简单的检验办法</th></tr></thead><tbody>
