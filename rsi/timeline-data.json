@@ -112,7 +112,11 @@
       "description": "网站形成 RSI 文献、跨领域学习科学、候选方向和实验方案的资料页；属于研究文档整理，不代表实验验证完成。",
       "source_url": "index.html",
       "source_label": "专题总览",
-      "tags": ["RSI", "资料整理", "研究站点"]
+      "tags": [
+        "RSI",
+        "资料整理",
+        "研究站点"
+      ]
     },
     {
       "id": "rsi-i8-mechanism-20261027",
@@ -122,7 +126,11 @@
       "description": "从 Hypercorrection 原始研究出发，提出已有知识、共享错误规则与更新兼容性的待验证关系，列明匹配对照和否定条件；尚无实际训练结果。",
       "source_url": "i8.html",
       "source_label": "I8 完整研究记录",
-      "tags": ["I8", "错误纠正", "跨题迁移"]
+      "tags": [
+        "I8",
+        "错误纠正",
+        "跨题迁移"
+      ]
     },
     {
       "id": "rsi-i2-coevolution-20261027",
@@ -132,7 +140,11 @@
       "description": "核对 Bayesian Teaching、RLT、SOAR、Sherpa、Eduardo、OPCoD 与学生感知蒸馏；区分教师教学能力与学生解题能力，形成交叉验证方案。仅文献与方案更新，无本项目实验结果。",
       "source_url": "idea-i2.html",
       "source_label": "I2 完整方案",
-      "tags": ["I2", "师生共进化", "教学策略"]
+      "tags": [
+        "I2",
+        "师生共进化",
+        "教学策略"
+      ]
     },
     {
       "id": "rsi-i9-sequential-future-learnability-20261028",
@@ -142,7 +154,11 @@
       "description": "核对 ICML 2026 Sweeney 的 Lie-bracket 顺序预测、npj 2026 假设检验、Nature 可塑性与 2026 LLM 未来可学习性近邻；固定 A/B 材料与预算、当前能力匹配、重置优化器，计划测学习 C 的真实独立曲线。属于方案，不是训练成果。",
       "source_url": "idea-i9-practice-switching.html#future-question",
       "source_label": "I9 · 未来可学习性扩展",
-      "tags": ["I9", "课程顺序", "未来可学习性"]
+      "tags": [
+        "I9",
+        "课程顺序",
+        "未来可学习性"
+      ]
     },
     {
       "id": "rsi-i14-learning-rule-evolution-20261029",
@@ -152,7 +168,33 @@
       "description": "将快慢两时间尺度 Meta-RL 与学习规则发现整理为独立的 I14，固定学生、数据、教师和预算，计划比较学习规则变化后的未见任务学习曲线。正式编号不代表机制已被实验验证。",
       "source_url": "learning-rule-evolution.html",
       "source_label": "I14 完整研究方案",
-      "tags": ["I14", "Meta-RL", "学习规则", "未来可学习性"]
+      "tags": [
+        "I14",
+        "Meta-RL",
+        "学习规则",
+        "未来可学习性"
+      ]
+    },
+    {
+      "id": "four-learning-functions-20261029",
+      "date": "2026-10-29",
+      "title": "四项学习功能统一 RSI 研究框架",
+      "description": "将经验获取、学习信号、能力形成和学习调控作为唯一主体分类；泛化贯穿证据评价，记忆按实际功能归位，保留 I1–I14。",
+      "source_url": "research-map.html",
+      "source_label": "查看统一研究地图",
+      "tags": [
+        "经验获取",
+        "学习信号",
+        "能力形成",
+        "学习调控",
+        "综述框架"
+      ],
+      "functions": [
+        "experience",
+        "signal",
+        "capability",
+        "regulation"
+      ]
     }
   ]
 }

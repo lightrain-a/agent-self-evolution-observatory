@@ -580,7 +580,16 @@
         "html": "https://www.science.org/doi/10.1126/sciadv.abd2558",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7679166/",
         "data": "https://pubmed.ncbi.nlm.nih.gov/33219034/"
-      }
+      },
+      "primary_function": "signal",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "主动触觉与反馈改变专家可用的训练信号；不是单纯增加练习量。",
+      "source_ids": [
+        "E380"
+      ]
     },
     {
       "id": "hattori-ofc-metarl-nn2023",
@@ -1365,7 +1374,13 @@
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10689244/",
         "code": "https://github.com/ryhattori/MetaRL-PRL",
         "data": "https://doi.org/10.5281/zenodo.8378063"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "跨时间尺度区分快速任务适应与慢速学习机制的形成。",
+      "source_ids": []
     },
     {
       "id": "nhb2026-hybrid-memory-eckstein",
@@ -1925,7 +1940,15 @@
         "code": "https://github.com/google-deepmind/hybrid_rnns_reward_learning",
         "data": "https://osf.io/8xz3w/",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13212159/"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "保留历史状态的记忆表示怎样支持后续奖励学习。",
+      "source_ids": [
+        "E370"
+      ]
     },
     {
       "id": "nhb2025-distribution-curriculum-pesnot-lerousseau",
@@ -2368,7 +2391,16 @@
         "pdf": "https://ora.ox.ac.uk/objects/uuid%3Aa42ab670-3973-4f24-9b82-0f81edf67857/files/rx346d6425",
         "code": "https://osf.io/xb43k",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13017502/"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "分布与课程改变上下文规则和参数记忆的形成及竞争。",
+      "source_ids": [
+        "E360"
+      ]
     },
     {
       "id": "nhb2025-transfer-interference-holton",
@@ -3053,7 +3085,15 @@
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12846915/",
         "code": "https://github.com/eleanorholton/transfer-interference",
         "data": "https://github.com/eleanorholton/transfer-interference"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "顺序任务中的规则复用同时带来迁移与干扰。",
+      "source_ids": [
+        "E100"
+      ]
     },
     {
       "id": "faulty-memory-arxiv2026-zhang",
@@ -3933,7 +3973,14 @@
         "html": "https://arxiv.org/html/2605.12978v2",
         "full_text": "https://arxiv.org/abs/2605.12978",
         "code": "https://github.com/DylanZSZ/Memory-Collapse-Eval"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "连续修订会使原本有用的记忆逐步失真，属于跨轮修订问题。",
+      "source_ids": []
     },
     {
       "id": "memory-management-acl2026-xiong",
@@ -4619,7 +4666,14 @@
         "html": "https://aclanthology.org/2026.acl-long.27/",
         "pdf": "https://aclanthology.org/2026.acl-long.27.pdf",
         "code": "https://github.com/yuplin2333/agent_memory_manage"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "signal"
+      ],
+      "classification_reason": "检验外部执行记忆的录入、删除和调用怎样改变后续行为。",
+      "source_ids": []
     },
     {
       "id": "sharp-wave-ripples-science2024-yang",
@@ -5266,7 +5320,14 @@
       "links": {
         "html": "https://www.science.org/doi/10.1126/science.adk8261",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11068097/"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "研究相似经历如何被标记并选择用于之后的记忆巩固。",
+      "source_ids": []
     },
     {
       "id": "lake-baroni-mlc-nature2023",
@@ -5860,7 +5921,16 @@
         "pdf": "https://www.nature.com/articles/s41586-023-06668-3.pdf",
         "code": "https://github.com/brendenlake/MLC",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10620072/"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "experience"
+      ],
+      "classification_reason": "元训练形成可组合映射能力；主问题是能力形成及其泛化边界。",
+      "source_ids": [
+        "E350"
+      ]
     },
     {
       "id": "nonlocal-replay-science2021-liu",
@@ -6641,7 +6711,14 @@
         "html": "https://www.science.org/doi/10.1126/science.abf1357",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7610948/",
         "code": "https://github.com/YunzheLiu/RLReplay"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "研究经验重放如何将反馈传播为非局部知识更新。",
+      "source_ids": []
     },
     {
       "id": "nature2026-narrow-misalignment-betley",
@@ -7320,7 +7397,15 @@
         "html": "https://www.nature.com/articles/s41586-025-09937-5",
         "pdf": "https://www.nature.com/articles/s41586-025-09937-5.pdf",
         "code": "https://github.com/emergent-misalignment/emergent-misalignment/"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "局部训练怎样干扰其他领域的行为约束。",
+      "source_ids": [
+        "M450"
+      ]
     },
     {
       "id": "nature2024-loss-plasticity-dohare",
@@ -7831,7 +7916,15 @@
         "pdf": "https://www.nature.com/articles/s41586-024-07711-7.pdf",
         "code": "https://github.com/shibhansh/loss-of-plasticity",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11338828/"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "持续训练历史怎样影响后来获取新能力的速度。",
+      "source_ids": [
+        "M22"
+      ]
     },
     {
       "id": "discorl-nature2025-oh",
@@ -8931,7 +9024,14 @@
         "html": "https://www.nature.com/articles/s41586-025-09761-x",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12695655/",
         "code": "https://github.com/google-deepmind/disco_rl"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "根据实际学习结果发现可迁移的RL更新规则。",
+      "source_ids": []
     },
     {
       "id": "recover-or-discover-npj2026-zhang",
@@ -9766,7 +9866,14 @@
       "links": {
         "html": "https://www.nature.com/articles/s41539-026-00414-w",
         "data": "https://osf.io/k864p/"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "区分旧策略表达受到反馈抑制、重新恢复与学习新策略。",
+      "source_ids": []
     },
     {
       "id": "reward-compression-nc2026-molinaro",
@@ -10461,7 +10568,13 @@
         "html": "https://www.nature.com/articles/s41467-026-78295-1",
         "code": "https://github.com/gaiamolinaro/reward-function-compression",
         "full_text": "https://arxiv.org/html/2509.06810v3"
-      }
+      },
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "从抽象结果构造可用奖励信号；压缩奖励规则支持后续学习。",
+      "source_ids": []
     },
     {
       "id": "onan-self-organized-interleaving-2024",
@@ -11198,7 +11311,15 @@
             ]
           }
         ]
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "改变自主安排学习顺序的元认知策略。",
+      "source_ids": [
+        "E310"
+      ]
     },
     {
       "id": "hgm-2510-21614",
@@ -11851,7 +11972,15 @@
             ]
           }
         ]
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "按后代潜力和有限补评预算选择演化分支。",
+      "source_ids": [
+        "S310"
+      ]
     },
     {
       "id": "inventive-production-pf-2023-kapur",
@@ -12227,7 +12356,15 @@
       "links": {
         "html": "https://www.nature.com/articles/s41539-023-00165-y",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10185511/"
-      }
+      },
+      "primary_function": "experience",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究自主产生不同解法的经历与随后学习收益之间的关系。",
+      "source_ids": [
+        "E98"
+      ]
     },
     {
       "id": "r2orch-2610-22740",
@@ -12328,7 +12465,16 @@
         "html": "https://arxiv.org/html/2610.22740v2",
         "pdf": "https://arxiv.org/pdf/2610.22740",
         "code": "https://github.com/beita6969/R2Orch"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "自博弈经验经技能抽象再内化到参数，结合技能撤除检验。",
+      "source_ids": [
+        "S26"
+      ]
     },
     {
       "id": "rsi-anything-2610-13912",
@@ -12870,7 +13016,16 @@
         "html": "https://arxiv.org/html/2610.13912",
         "pdf": "https://arxiv.org/pdf/2610.13912",
         "code": "https://github.com/Gen-Verse/RSI-Anything"
-      }
+      },
+      "primary_function": "experience",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "世界模型提供行动后果预测并支持后续探索与反馈修正。",
+      "source_ids": [
+        "S13"
+      ]
     },
     {
       "id": "optimal-practice-2020-eglington",
@@ -13232,7 +13387,15 @@
         "pdf": "https://www.nature.com/articles/s41539-020-00074-4.pdf",
         "code": "https://osf.io/d9rms/",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7567101/"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "按个体项目历史和时间成本分配复习。",
+      "source_ids": [
+        "E25"
+      ]
     },
     {
       "id": "mosaic-memory-2026-shilov",
@@ -13779,7 +13942,15 @@
         "pdf": "https://www.nature.com/articles/s41467-026-68603-0.pdf",
         "code": "https://github.com/computationalprivacy/mosaic_memory",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12957333/"
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "模糊重复如何累积为模型参数中的文本记忆。",
+      "source_ids": [
+        "M17"
+      ]
     },
     {
       "id": "hypothesis-testing-2026-ding",
@@ -14347,7 +14518,16 @@
         "pdf": "https://www.nature.com/articles/s41539-026-00428-4.pdf",
         "code": "https://osf.io/aknqj/",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13346944/"
-      }
+      },
+      "primary_function": "experience",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "辨别性目标和结构化尝试能区分竞争规则。",
+      "source_ids": [
+        "E26"
+      ]
     },
     {
       "id": "acl2026-good-curriculum-jia",
@@ -15196,7 +15376,16 @@
         "pdf": "https://aclanthology.org/2026.acl-long.1591.pdf",
         "code": "https://github.com/karpning/Curriculum_evaluation",
         "full_text": "https://arxiv.org/abs/2510.19099"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "模型与任务状态如何改变相同数据排序的学习收益。",
+      "source_ids": [
+        "M16",
+        "M501"
+      ]
     },
     {
       "id": "rote-learning-iclr2026-wu",
@@ -15637,7 +15826,15 @@
           "contribution": "Section 6.3 在受控合成事实中展示无害关联可被少量微调重新解释成不恰当关联的双重泛化风险。",
           "open_question": "只说明潜在风险，不是可靠的在线检测或防止恶意经验内化的 RSI 防线。"
         }
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "研究先记忆关系再语义化的两阶段能力形成。",
+      "source_ids": [
+        "M24"
+      ]
     },
     {
       "id": "soar-2601-18778",
@@ -16493,7 +16690,17 @@
       "links": {
         "html": "https://arxiv.org/html/2601.18778v3",
         "pdf": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/sundaram26a/sundaram26a.pdf"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "以实际学生学习增益更新出题教师，学习机制本身发生改变。",
+      "source_ids": [
+        "S17",
+        "S47"
+      ]
     },
     {
       "id": "acl2026-sft-ilp-xue",
@@ -17195,7 +17402,17 @@
         "html": "https://aclanthology.org/2026.acl-long.1393/",
         "pdf": "https://aclanthology.org/2026.acl-long.1393.pdf",
         "code": "https://github.com/xccc-8071/why-supervised-fine-tuning-fails-to-learn"
-      }
+      },
+      "primary_function": "signal",
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "对未吸收样本作失败诊断，并比较针对性补救。",
+      "source_ids": [
+        "S37",
+        "M27"
+      ]
     },
     {
       "id": "nc2025-task-similarity-menghi",
@@ -17699,7 +17916,15 @@
         "pdf": "https://www.nature.com/articles/s41467-025-66849-8.pdf",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12669730/",
         "data": "https://doi.org/10.6084/m9.figshare.30353515"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究任务相似性、跨任务干扰与表征分离。",
+      "source_ids": [
+        "E99"
+      ]
     },
     {
       "id": "nc2025-metacognition-underconfidence-katyal",
@@ -18237,7 +18462,15 @@
             ]
           }
         ]
-      }
+      },
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "局部真实反馈与整体能力判断之间可能产生系统偏差。",
+      "source_ids": [
+        "E29"
+      ]
     },
     {
       "id": "nhb2025-moral-strategy-maier",
@@ -18865,7 +19098,15 @@
         "pdf": "https://www.nature.com/articles/s41562-025-02271-w.pdf",
         "code": "https://osf.io/4up5z/",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12932093/"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "根据行动后果更新对整种策略的依赖。",
+      "source_ids": [
+        "E311"
+      ]
     },
     {
       "id": "nc2026-schema-reuse-tian",
@@ -19383,7 +19624,15 @@
         "html": "https://www.nature.com/articles/s41467-026-68692-x",
         "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12957312/",
         "code": "https://github.com/kathytian-kx/DomainSpecific_SchemaReuse"
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "结构复用怎样改变新任务学习及规则反转后的适应。",
+      "source_ids": [
+        "E320"
+      ]
     },
     {
       "id": "nature2025-centaur-binz",
@@ -20089,7 +20338,15 @@
         "code": "https://github.com/marcelbinz/Llama-3.1-Centaur-70B",
         "data": "https://huggingface.co/datasets/marcelbinz/Psych-101",
         "adapter": "https://huggingface.co/marcelbinz/Llama-3.1-Centaur-70B-adapter"
-      }
+      },
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "预测认知响应，为学习者状态建模提供跨领域机制参照。",
+      "source_ids": [
+        "E701"
+      ]
     },
     {
       "id": "nature2025-orthogonalized-state-machine-sun",
@@ -20697,7 +20954,15 @@
             ]
           }
         ]
-      }
+      },
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "学习经历形成可区分潜在状态的知识表示。",
+      "source_ids": [
+        "E353"
+      ]
     },
     {
       "id": "nn2024-planning-replay-jensen",
@@ -21408,7 +21673,144 @@
             ]
           }
         ]
-      }
+      },
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "学习何时付出规划成本，以及何时使用记忆重放。",
+      "source_ids": [
+        "E355"
+      ]
     }
-  ]
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29",
+  "learning_functions": [
+    {
+      "id": "experience",
+      "chapter": 3,
+      "section": "3",
+      "title": "经验获取",
+      "en": "Acquiring Learning Experiences",
+      "question": "下一步经历什么，才可能学到有用的东西？",
+      "summary": "识别能力缺口，构造有信息量的任务与交互，从教师、伙伴和工具获得新信息，选择与当前学习者相适配的经历。",
+      "subsections": [
+        {
+          "id": "3.1",
+          "title": "能力缺口与学习需求",
+          "question": "欠缺什么，哪些缺口当前可能被修复？"
+        },
+        {
+          "id": "3.2",
+          "title": "任务与交互的信息价值",
+          "question": "哪些经历提供原先缺少的信息，区分竞争解释？"
+        },
+        {
+          "id": "3.3",
+          "title": "教师、伙伴与工具",
+          "question": "外部信息是否超出学习者已有的知识与盲点？"
+        },
+        {
+          "id": "3.4",
+          "title": "经验选择与可学习性",
+          "question": "难度、新颖性和覆盖度何时对应实际学习价值？"
+        }
+      ]
+    },
+    {
+      "id": "signal",
+      "chapter": 4,
+      "section": "4",
+      "title": "学习信号",
+      "en": "Learning Signals and Credit Assignment",
+      "question": "这次经历说明了什么，应该改进哪里？",
+      "summary": "判断反馈是否可信，从结果诊断失败原因，归因步骤与记忆的作用，区分任务评价与实际学习收益。",
+      "subsections": [
+        {
+          "id": "4.1",
+          "title": "信号来源与可靠性",
+          "question": "环境、自己与同伴提供的评价何时可信？"
+        },
+        {
+          "id": "4.2",
+          "title": "从结果到失败诊断",
+          "question": "相同错误终点是否来自不同的可修复原因？"
+        },
+        {
+          "id": "4.3",
+          "title": "步骤、经验与记忆归因",
+          "question": "哪些步骤或记忆真正促成了当前决策？"
+        },
+        {
+          "id": "4.4",
+          "title": "从任务评价到学习收益",
+          "question": "正确反馈是否能被吸收，并改善未来表现？"
+        }
+      ]
+    },
+    {
+      "id": "capability",
+      "chapter": 5,
+      "section": "5",
+      "title": "能力形成",
+      "en": "Forming Knowledge and Updating Capabilities",
+      "question": "如何把经历变成以后能够使用的能力？",
+      "summary": "从实例形成规则与技能，在外部状态中保存和调用知识，将经验巩固到参数，协调外部支持与内部学习。",
+      "subsections": [
+        {
+          "id": "5.1",
+          "title": "从经历形成知识",
+          "question": "保留什么、抽象什么，形成的规则适用于何处？"
+        },
+        {
+          "id": "5.2",
+          "title": "外部状态中的能力",
+          "question": "记忆、技能与工具怎样改变后续行为？"
+        },
+        {
+          "id": "5.3",
+          "title": "经验的参数巩固",
+          "question": "什么信号与更新机制形成可迁移的能力？"
+        },
+        {
+          "id": "5.4",
+          "title": "外部支持与内部学习",
+          "question": "何时查询、保留实例或内化规则，怎样支持吸收？"
+        }
+      ]
+    },
+    {
+      "id": "regulation",
+      "chapter": 6,
+      "section": "6",
+      "title": "学习调控",
+      "en": "Regulating Sustained Self-Improvement",
+      "question": "如何使多次改进相互支持，并持续积累？",
+      "summary": "协调新旧知识、学习顺序与后续可学习性，动态分配学习动作和资源，改进教师、协同机制与更新规则。",
+      "subsections": [
+        {
+          "id": "6.1",
+          "title": "兼容、冲突与修订",
+          "question": "怎样保留旧能力，修复新旧规则的适用边界？"
+        },
+        {
+          "id": "6.2",
+          "title": "学习顺序与未来可学习性",
+          "question": "当前表现接近时，学习历史是否改变继续学习的能力？"
+        },
+        {
+          "id": "6.3",
+          "title": "学习动作与资源分配",
+          "question": "何时探索、总结、更新、复习、停止或接纳候选更新？"
+        },
+        {
+          "id": "6.4",
+          "title": "学习机制自身的改进",
+          "question": "教师策略、伙伴协同与更新规则能否从实际学习效果中改善？"
+        }
+      ]
+    }
+  ],
+  "diagnostic_dimensions_note": "research_questions/research_coverage保留原有诊断记录；唯一主体分类使用primary_function。"
 }

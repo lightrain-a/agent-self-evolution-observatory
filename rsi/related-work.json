@@ -223,6 +223,11 @@
           "decisive_test": "同状态访问规模与教师token监督量匹配，再测试规则拓扑操控是否仍能独立影响跨题迁移。",
           "verification": "官方期刊/会议/预印本原始摘要已核对；跨研究因果类比是本站分析，不是双方的直接对照"
         }
+      ],
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
       ]
     },
     {
@@ -234,10 +239,23 @@
       "scope_note": "最近邻 7 项优先比较；Agent0 和 AIDE² 用于理解课程与自主研究 Agent 的相邻发展。",
       "evidence_gap": "缺少在同一任务、同一完整预算下长期联合更新 Policy + World Model、并隔离验证 Pair Check 独立贡献的实验。",
       "evolution": [
-        {"period": "2023 · 技能积累", "summary": "Voyager 把任务经验存成可复用的技能代码，强调长期保留与调用。", "source_url": "https://arxiv.org/abs/2305.16291"},
-        {"period": "2025 · 自改写与反馈学习", "summary": "Darwin Gödel Machine 改 Agent 代码；CURE 让 Coder 与 Tester 从执行反馈中共同训练。"},
-        {"period": "2026 · 更多组件一起改变", "summary": "RLAnything 联合训练策略、奖励和环境；ScienceBuddy 让 Harness 与模型双环改进，Recuris 管理长程记忆。"},
-        {"period": "2026 · 世界预测进入改进回路", "summary": "JEPA-Anything 学习跨领域预测；RSI-Anything 用预测选反馈、用反馈修正预测器，并检查 Policy–WM 配对。"}
+        {
+          "period": "2023 · 技能积累",
+          "summary": "Voyager 把任务经验存成可复用的技能代码，强调长期保留与调用。",
+          "source_url": "https://arxiv.org/abs/2305.16291"
+        },
+        {
+          "period": "2025 · 自改写与反馈学习",
+          "summary": "Darwin Gödel Machine 改 Agent 代码；CURE 让 Coder 与 Tester 从执行反馈中共同训练。"
+        },
+        {
+          "period": "2026 · 更多组件一起改变",
+          "summary": "RLAnything 联合训练策略、奖励和环境；ScienceBuddy 让 Harness 与模型双环改进，Recuris 管理长程记忆。"
+        },
+        {
+          "period": "2026 · 世界预测进入改进回路",
+          "summary": "JEPA-Anything 学习跨领域预测；RSI-Anything 用预测选反馈、用反馈修正预测器，并检查 Policy–WM 配对。"
+        }
       ],
       "works": [
         {
@@ -447,6 +465,11 @@
           "relationship": "相邻领域：自主研究 Agent 自修改",
           "verification": "官方 arXiv 摘要已核对"
         }
+      ],
+      "primary_function": "experience",
+      "related_functions": [
+        "signal",
+        "regulation"
       ]
     },
     {
@@ -569,6 +592,10 @@
           "relationship": "已提出且验证个性化复习，不是当前论文首次提出",
           "verification": "Psychological Science 出版社记录与 PubMed 元数据核对"
         }
+      ],
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
       ]
     },
     {
@@ -695,6 +722,10 @@
           "relationship": "理论起点，非最近邻直接 baseline",
           "verification": "ICML 2009 官方会议摘要核对"
         }
+      ],
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
       ]
     },
     {
@@ -816,6 +847,11 @@
           "relationship": "基础邻近：学习曲线进展驱动课程安排",
           "verification": "PubMed及OpenAI作者项目摘要核对"
         }
+      ],
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
       ]
     },
     {
@@ -942,6 +978,11 @@
           "relationship": "I3 方向必需的长期遗忘邻近研究",
           "verification": "ACL Anthology 正式出版摘要核对"
         }
+      ],
+      "primary_function": "signal",
+      "related_functions": [
+        "capability",
+        "regulation"
       ]
     },
     {
@@ -1068,6 +1109,10 @@
           "relationship": "背景性框架，不是直接 baseline",
           "verification": "Nature Neuroscience 官方综述与 PubMed 记录"
         }
+      ],
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
       ]
     },
     {
@@ -1194,6 +1239,10 @@
           "relationship": "概念理论背景而非直接算法比较",
           "verification": "Personality and Social Psychology Review / PubMed 官方期刊记录已核对"
         }
+      ],
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
       ]
     },
     {
@@ -1343,7 +1392,12 @@
           "relationship": "背景性有效性框架，不当成直接性能 SOTA",
           "verification": "2026-01 arXiv 摘要核对"
         }
+      ],
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
       ]
     }
-  ]
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29"
 }

@@ -5,11 +5,51 @@
   "status": "research_design_not_executed",
   "purpose": "在十个持续更新的学习者中，只改变伙伴配对、接触持续时间和伙伴顺序，检验独立净学习增益。",
   "implementation_status": "方法与实验契约；不是已运行的训练器配置",
-  "fixed_variables": ["per_learner_task_stream", "peer_feedback_prompt", "feedback_gate", "OPCoD_style_LoRA_updater", "replay_rule", "verifier", "evaluation_budget"],
-  "changing_variables": ["partner_matching", "contact_duration", "partner_order", "history_features"],
+  "fixed_variables": [
+    "per_learner_task_stream",
+    "peer_feedback_prompt",
+    "feedback_gate",
+    "OPCoD_style_LoRA_updater",
+    "replay_rule",
+    "verifier",
+    "evaluation_budget"
+  ],
+  "changing_variables": [
+    "partner_matching",
+    "contact_duration",
+    "partner_order",
+    "history_features"
+  ],
   "population": {
-    "pilot": {"sizes_billion": [4, 8], "specialties": ["math", "code"], "n": 4, "unordered_pairs": 6, "directional_pairs": 12},
-    "main": {"sizes_billion": [1.7, 4, 8, 14, 32], "specialties": ["math", "code"], "n": 10, "unordered_pairs": 45, "directional_pairs": 90},
+    "pilot": {
+      "sizes_billion": [
+        4,
+        8
+      ],
+      "specialties": [
+        "math",
+        "code"
+      ],
+      "n": 4,
+      "unordered_pairs": 6,
+      "directional_pairs": 12
+    },
+    "main": {
+      "sizes_billion": [
+        1.7,
+        4,
+        8,
+        14,
+        32
+      ],
+      "specialties": [
+        "math",
+        "code"
+      ],
+      "n": 10,
+      "unordered_pairs": 45,
+      "directional_pairs": 90
+    },
     "family": "Qwen3",
     "model_revision": "must_be_pinned_before_training",
     "parameter_scale_is_not_intelligence": true,
@@ -33,10 +73,16 @@
     "formula": "G_i_from_j(h) = A(T_h(U_peer_j(s_i))) - A(T_h(U_solo(s_i)))",
     "evaluation_context": "independent, no peer, no temporary feedback, same inference budget",
     "unit": "domain-macro accuracy difference",
-    "h_candidates": [0, 2],
+    "h_candidates": [
+      0,
+      2
+    ],
     "h_unit": "matched subsequent update blocks, not elapsed wall time",
     "counterfactual": "same starting checkpoint, task stream, updater and update budget; paired seeds",
-    "solo_controls": ["matched_update_budget", "matched_total_compute_with_saved_feedback_cost_reallocated"],
+    "solo_controls": [
+      "matched_update_budget",
+      "matched_total_compute_with_saved_feedback_cost_reallocated"
+    ],
     "estimated_unobserved_edges_are_not_causal_labels": true,
     "only_probed_edges_have_measured_gain": true
   },
@@ -45,16 +91,42 @@
     "full_matchings_n10": 945,
     "normal_pairs_per_round": 5,
     "allow_solo": true,
-    "features": ["verified_skill_profile", "asymmetric_complementarity", "feedback_repair_and_break_rates", "observed_gain", "contact_history", "material_provenance", "learner_version", "peer_version", "estimate_age", "uncertainty"],
+    "features": [
+      "verified_skill_profile",
+      "asymmetric_complementarity",
+      "feedback_repair_and_break_rates",
+      "observed_gain",
+      "contact_history",
+      "material_provenance",
+      "learner_version",
+      "peer_version",
+      "estimate_age",
+      "uncertainty"
+    ],
     "predictor": "small contextual gain model; compare same-capacity history-free predictor",
     "objective": "maximize summed directional predicted gain plus constrained exploration minus switching cost",
-    "constraints": ["one_peer_per_learner", "total_compute_cap", "fixed_regression_gate", "safe_feedback_gate", "minimum_learning_opportunities_for_each_member"],
-    "duration_candidate_steps": {"minimum": 20, "check_every": 10, "mandatory_reassessment_at": 80, "force_switch_at_maximum": false},
+    "constraints": [
+      "one_peer_per_learner",
+      "total_compute_cap",
+      "fixed_regression_gate",
+      "safe_feedback_gate",
+      "minimum_learning_opportunities_for_each_member"
+    ],
+    "duration_candidate_steps": {
+      "minimum": 20,
+      "check_every": 10,
+      "mandatory_reassessment_at": 80,
+      "force_switch_at_maximum": false
+    },
     "switch_rule": "candidate advantage over continuing current matching exceeds switching cost and paired uncertainty for two checks",
     "hyperparameters_are_proposals_not_established_optima": true,
     "initial_balanced_exploration_rounds": 3,
-    "probe_budget_fraction": 0.10,
-    "probe_budget_dev_sensitivity": [0.05, 0.10, 0.20],
+    "probe_budget_fraction": 0.1,
+    "probe_budget_dev_sensitivity": [
+      0.05,
+      0.1,
+      0.2
+    ],
     "stale_estimates": "rolling evidence and refresh after capability/version drift",
     "exhaustive_45_edge_trial_each_round": false
   },
@@ -64,26 +136,165 @@
     "meta_valid": "freeze hyperparameters before confirmatory comparison",
     "test": "isolated scorer at predefined checkpoints; no results or answers returned to the router"
   },
-  "compute_ledger": ["learner_generation", "peer_feedback", "teacher_forward", "student_forward_backward", "probe_branches", "solo_branches", "delayed_labels", "verifier_calls", "matching_cpu", "wall_time", "peak_memory"],
+  "compute_ledger": [
+    "learner_generation",
+    "peer_feedback",
+    "teacher_forward",
+    "student_forward_backward",
+    "probe_branches",
+    "solo_branches",
+    "delayed_labels",
+    "verifier_calls",
+    "matching_cpu",
+    "wall_time",
+    "peak_memory"
+  ],
   "baselines": {
-    "same_kernel": ["solo", "fixed_pairs", "random_rewiring", "round_robin_9_rounds", "ability_matching", "knowledge_complementarity", "immediate_collaboration_reward", "gain_without_history", "gain_with_history"],
-    "paper_inspired_adaptations": ["PopuLoRA_style_match_signal", "CERA_or_MACE_style_current_competence_signal"],
-    "system_level_only": ["strongest_teacher_star", "full_populora_if_reproduced", "full_genome_if_reproduced"],
+    "same_kernel": [
+      "solo",
+      "fixed_pairs",
+      "random_rewiring",
+      "round_robin_9_rounds",
+      "ability_matching",
+      "knowledge_complementarity",
+      "immediate_collaboration_reward",
+      "gain_without_history",
+      "gain_with_history"
+    ],
+    "paper_inspired_adaptations": [
+      "PopuLoRA_style_match_signal",
+      "CERA_or_MACE_style_current_competence_signal"
+    ],
+    "system_level_only": [
+      "strongest_teacher_star",
+      "full_populora_if_reproduced",
+      "full_genome_if_reproduced"
+    ],
     "must_not_label_inspired_baseline_as_official_reproduction": true
   },
   "experiments": [
-    {"id":"E0", "question":"Does vetted peer feedback cause additional independent learning?", "controls":["matched_solo","no_weight_update","feedback_removed_at_test"]},
-    {"id":"E1", "question":"Do absorbable skill gaps predict directional gains beyond parameter size?", "controls":["same_size_population","capability_matched_pairs","anonymized_peer_ids"]},
-    {"id":"E2", "question":"Does gain-triggered contact duration improve budgeted learning?", "controls":["fixed_duration","equal_total_compute","equal_exposure_secondary"]},
-    {"id":"E3", "question":"Does contact history add effects beyond ordinary data-order curriculum?", "controls":["identical_frozen_material_reordering","frozen_tutors_live_feedback","both_peers_updated"], "fixed":["edge_multiset","edge_counts","task_sets","updates","seeds","testing_budget"]},
-    {"id":"E4", "question":"Does a ten-learner population sustain independent growth?", "controls":["fixed_pairs","random","round_robin","no_history_gain","shuffled_gain_feedback"]}
+    {
+      "id": "E0",
+      "question": "Does vetted peer feedback cause additional independent learning?",
+      "controls": [
+        "matched_solo",
+        "no_weight_update",
+        "feedback_removed_at_test"
+      ]
+    },
+    {
+      "id": "E1",
+      "question": "Do absorbable skill gaps predict directional gains beyond parameter size?",
+      "controls": [
+        "same_size_population",
+        "capability_matched_pairs",
+        "anonymized_peer_ids"
+      ]
+    },
+    {
+      "id": "E2",
+      "question": "Does gain-triggered contact duration improve budgeted learning?",
+      "controls": [
+        "fixed_duration",
+        "equal_total_compute",
+        "equal_exposure_secondary"
+      ]
+    },
+    {
+      "id": "E3",
+      "question": "Does contact history add effects beyond ordinary data-order curriculum?",
+      "controls": [
+        "identical_frozen_material_reordering",
+        "frozen_tutors_live_feedback",
+        "both_peers_updated"
+      ],
+      "fixed": [
+        "edge_multiset",
+        "edge_counts",
+        "task_sets",
+        "updates",
+        "seeds",
+        "testing_budget"
+      ]
+    },
+    {
+      "id": "E4",
+      "question": "Does a ten-learner population sustain independent growth?",
+      "controls": [
+        "fixed_pairs",
+        "random",
+        "round_robin",
+        "no_history_gain",
+        "shuffled_gain_feedback"
+      ]
+    }
   ],
-  "statistics": {"pilot_seeds_target":3, "confirmatory_seeds_target":5, "cluster_units":["training_seed","task_family"], "no_rollout_pseudoreplication":true, "report_actual_denominators":true},
-  "primary_metrics": ["individual_pass_at_1", "macro_independent_gain", "gain_curve_auc_by_total_flops", "worst_member_and_lower_quartile_gain", "original_specialty_retention"],
-  "secondary_metrics": ["verified_skill_coverage", "error_correlation", "break_rate", "matching_turnover", "cost_of_probes", "compositional_transfer"],
+  "statistics": {
+    "pilot_seeds_target": 3,
+    "confirmatory_seeds_target": 5,
+    "cluster_units": [
+      "training_seed",
+      "task_family"
+    ],
+    "no_rollout_pseudoreplication": true,
+    "report_actual_denominators": true
+  },
+  "primary_metrics": [
+    "individual_pass_at_1",
+    "macro_independent_gain",
+    "gain_curve_auc_by_total_flops",
+    "worst_member_and_lower_quartile_gain",
+    "original_specialty_retention"
+  ],
+  "secondary_metrics": [
+    "verified_skill_coverage",
+    "error_correlation",
+    "break_rate",
+    "matching_turnover",
+    "cost_of_probes",
+    "compositional_transfer"
+  ],
   "novel_solution_definition": "newly observed under a locked finite sampling budget; not proof of absolute previous inability",
-  "orthogonality": {"I1":"internalize or retrieve", "I2":"teaching/update method", "I3":"consolidation", "I4":"within-failure exploration", "I6":"failed-trajectory value and revisit", "I7":"attempt versus example order within teaching", "I8":"which errors transfer"},
-  "safety": ["frozen_independent_verifier", "untrusted_peer_text", "no_shared_credentials", "isolated_code_execution", "no_external_network", "checkpoint_rollback", "no_test_feedback_to_router"],
-  "source_ids": ["S32","S33","S34","S90","S200","S201","S202","S203","S204","S205","B200"],
-  "publication_corrections": {"partner_selection":"AAMAS 2026 SE Workshop, not main conference", "r_diverse":"arXiv confirmed; conference status not verified in this review", "populora_cost":"per-adapter matched updates and wall-clock throughput do not imply equal total population FLOPs"}
+  "orthogonality": {
+    "I1": "internalize or retrieve",
+    "I2": "teaching/update method",
+    "I3": "consolidation",
+    "I4": "within-failure exploration",
+    "I6": "failed-trajectory value and revisit",
+    "I7": "attempt versus example order within teaching",
+    "I8": "which errors transfer"
+  },
+  "safety": [
+    "frozen_independent_verifier",
+    "untrusted_peer_text",
+    "no_shared_credentials",
+    "isolated_code_execution",
+    "no_external_network",
+    "checkpoint_rollback",
+    "no_test_feedback_to_router"
+  ],
+  "source_ids": [
+    "S32",
+    "S33",
+    "S34",
+    "S90",
+    "S200",
+    "S201",
+    "S202",
+    "S203",
+    "S204",
+    "S205",
+    "B200"
+  ],
+  "publication_corrections": {
+    "partner_selection": "AAMAS 2026 SE Workshop, not main conference",
+    "r_diverse": "arXiv confirmed; conference status not verified in this review",
+    "populora_cost": "per-adapter matched updates and wall-clock throughput do not imply equal total population FLOPs"
+  },
+  "primary_function": "regulation",
+  "related_functions": [
+    "experience",
+    "signal"
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29"
 }

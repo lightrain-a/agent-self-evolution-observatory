@@ -1,24 +1,34 @@
-"""Cross-idea generalization and future learnability research synthesis.
-
-Not a numbered Idea: integrates I3/I8/I9/I10/I12/I14 and controlled evidence;
-all new causal hypotheses and protocols are unexecuted research designs.
-"""
+"""RSI research content organized by the four learning functions."""
 PAGE = {
- "slug": "generalization-learnability",
- "title": "泛化与未来可学习性｜从做对题到真正掌握，再到下一轮学得会",
- "en": "Generalization and Future Learnability · Structural Mastery, Learning History, and RSI",
- "lead": "我们真正关心的不是换一道相似题能否直接做对，而是：相同的当前表现是否掩盖了不同的知识结构？先前的学习经历是否改变后来学习真正新规则的能力？按证据层级组织已精读顶刊、顶会最近邻与 I3/I8/I9/I10/I12/I14 的可证伪实验，保持 I13 的安全主线独立。",
- "updated": "2026-10-29",
- "sections": [
- ("question","专题主问题｜为什么同样做对了，下一轮学新规则的能力却可能不同？",'''
+    'slug': 'generalization-learnability',
+    'title': '泛化与未来可学习性｜从做对题到真正掌握，再到下一轮学得会',
+    'en': 'Generalization and Future Learnability · Structural Mastery, Learning History, and RSI',
+    'lead': '我们真正关心的不是换一道相似题能否直接做对，而是：相同的当前表现是否掩盖了不同的知识结构？先前的学习经历是否改变后来学习真正新规则的能力？按证据层级组织已精读顶刊、顶会最近邻与 I3/I8/I9/I10/I12/I14 的可证伪实验，保持 I13 的安全主线独立。',
+    'updated': '2026-10-29',
+    'page_role': 'cross-cutting-evidence',
+    'chapter': 7,
+    'related_functions': ['experience', 'signal', 'capability', 'regulation'],
+    "sections": [
+        ('framework-position', '贯穿专题 · 在第7章集中检验证据', '''
+<p>泛化是贯穿四项学习功能的科学问题与评价标准。本专题在<a href="evidence.html">第7章 · 证据与评价</a>集中审视改进主张；机制解释分别放回它实际发生的环节。</p><div class="table-wrap"><table><thead><tr><th>功能</th><th>泛化在这里对应的问题</th></tr></thead><tbody>
+<tr><td><a href="experience.html">经验获取</a></td><td>哪些经历覆盖了规则变化，哪些只是表面不同的重复？</td></tr>
+<tr><td><a href="signals.html">学习信号</a></td><td>反馈是否帮助识别了能迁移到多道题的错误原因？</td></tr>
+<tr><td><a href="capabilities.html">能力形成</a></td><td>哪些表示与更新形成了能够复用、组合和修订的知识？</td></tr>
+<tr><td><a href="regulation.html">学习调控</a></td><td>收益是否经得住后续更新？历史怎样改变未来任务的学习过程？</td></tr>
+</tbody></table></div><p>下面的指标层次是评价维度，不替代四功能主分类。当前迁移、旧能力保持与未来可学习性分别报告，避免用一个当前测试分数回答所有问题。</p>
+'''),
+        ('question', '专题主问题｜为什么同样做对了，下一轮学新规则的能力却可能不同？', '''
+
 <div class="decision"><span class="kicker">CROSS-IDEA RESEARCH DOSSIER · 2026-10-29 · NOT A NEW I NUMBER</span>
 <h3>从“这次会做”到“真的掌握”，再到“以后学得进”</h3>
 <p>两个 Agent 都能完成原来的数学题：一个记住了答案和固定解题模板，另一个掌握了为什么要选这条规则、什么时候不能选它。面对少量新情境，二者可能立刻分开；面对真正新的规则 C，二者接受<strong>完全相同的后续教学</strong>后，也可能产生不同的学习收益。这两个差别需要分别测量，不可统称“更会泛化”。</p>
 <p><b>主科学问题：</b>过去的学习历史怎样改变模型<strong>掌握规则的结构</strong>，这种差异又在什么条件下改变它面对新任务的学习速度、适用边界、后续干扰和持续成长空间？</p>
 <div class="flow"><div><b>学习历史 H</b><small>材料、反馈、顺序、前置知识、更新规则</small></div><div><b>当前知识组织</b><small>记忆/规则、竞争捷径、任务边界、可组合结构</small></div><div><b>静态独立能力</b><small>撤辅后的分歧题、未见组合、规则切换</small></div><div><b>未来真实学习响应</b><small>未见 C + 相同训练材料与预算 + 全学习曲线</small></div><div><b>长期能力与下代改进</b><small>旧能力保持、净学习前沿、可更新的元策略</small></div></div>
 <p><b>研究组织：</b><a href="i8.html">I8</a> 研究纠正哪种错误会改变规则；<a href="idea-i9-practice-switching.html">I9</a> 研究历史顺序；<a href="idea-i10-learning-novelty.html">I10</a> 研究规则区分与吸收；<a href="idea-i12-prerequisite-bottleneck.html">I12</a> 研究修补前置后是否解锁下一段学习；<a href="learning-rule-evolution.html">I14</a> 研究学习规则本身的升级。<a href="ideas.html#idea-3">I3</a> 解释新旧规则错用。<b>这是横向领域专题，不新增编号，也不是通用大 Router 的系统方案。</b></p>
+
 '''),
- ("taxonomy","先把五个指标分开｜一次任务做对，并不足以说明学会了什么",'''
+        ('taxonomy', '先把五个指标分开｜一次任务做对，并不足以说明学会了什么', '''
+
 <div class="table-wrap"><table><thead><tr><th>研究层级</th><th>问题与测量</th><th>最容易混淆的解释</th></tr></thead><tbody>
 <tr><td><b>L0 · 当下任务表现</b></td><td>原题准确率、训练 Loss、当前任务完成率</td><td>答案记忆、额外提示、外部专家、训练模板</td></tr>
 <tr><td><b>L1 · 结构性掌握</b></td><td>撤去辅助后，竞争规则分歧题、反事实条件、未见组合、新规则适用边界</td><td>同题换数字、表面改写、单个抽象类成功</td></tr>
@@ -28,8 +38,10 @@ PAGE = {
 </tbody></table></div>
 <p><b>两种后期学习不可混用：</b>（a）同一训练流后期，模型可能从记忆到规则、也可能从上下文归纳换成权重记忆；（b）跨多轮训练后，当前模型可能已经更难从真正新任务吸收知识。前者是<strong>解法/策略随训练时长变化</strong>，后者是<strong>后续可塑性与学习响应</strong>，对应不同实验。[[M552]][[M553]][[M22]]</p>
 <p><b>实际泛化性的操作定义：</b>不能只靠一道OOD题证明真正掌握。先程序化构造正确规则与竞争捷径在新输入上会给出不同答案的测试，再按词汇新颖、结构组合、规则反转和跨情境选择分别报告。不同泛化层次有不同失败边界；高难度组合成功不自动保证未来学习速度更好。[[E350]][[M67]]</p>
+
 '''),
- ("history","历史脉络｜教育学的未来学习准备，怎样走到元学习与 RSI？",'''
+        ('history', '历史脉络｜教育学的未来学习准备，怎样走到元学习与 RSI？', '''
+
 <div class="table-wrap"><table><thead><tr><th>研究阶段与来源</th><th>原领域已经提出/验证什么</th><th>我们还能进一步问什么</th></tr></thead><tbody>
 <tr><td><b>2004 · Preparation for Future Learning</b> [[E710]]</td><td>Schwartz 与 Martin 的9年级统计教学研究将“无资源直接测试”和“有新资源继续学习的测试”分开；先发明再受教的优势可以出现在后者而非前者。</td><td>把“提供后续学习机会”改为真实 LLM/Agent 参数或 Skill 更新，独立检测下一轮学习增量。</td></tr>
 <tr><td><b>2015 · Learning vs Performance</b> [[E711]]</td><td>Soderstrom 与 Bjork 综述表明训练期看起来顺利与长期学习并非同一指标。</td><td>在现代模型中区分分数、规则内部结构、再学习和更新成本，不把“越难越好”当万能规律。</td></tr>
@@ -39,8 +51,10 @@ PAGE = {
 <tr><td><b>2025–2026 · 跨任务规则与自然科学实验</b> [[E100]][[E360]][[E320]][[E401]]</td><td>共享表示有迁移与干扰两面；人/小Transformer在记忆与上下文学习之间权衡；灵长类结构复用与人类网络结构预习提供机制线索。</td><td>这种知识组织是否能在大型可训练 LLM 上产生真实、持久、可操纵的未来可学习性差异？</td></tr>
 </tbody></table></div>
 <div class="note"><b>新颖性起点：</b>“表现≠学习”“未来学习速度是目标”“共享表征会干扰”“训练顺序有影响”“后期会损失塑性”都已经有明确前作。新论文只能依靠<strong>具体的学习历史干预 × 可辨别规则结构 × 真实下阶段更新的因果关系</strong>建立独立贡献。</div>
+
 '''),
- ("mechanisms","哪些 Insight 真正相通｜信息、表征、历史、可塑性是四种不同机制",'''
+        ('mechanisms', '哪些 Insight 真正相通｜信息、表征、历史、可塑性是四种不同机制', '''
+
 <div class="table-wrap"><table><thead><tr><th>机制组</th><th>核心关系</th><th>代表已精读工作及证据界限</th></tr></thead><tbody>
 <tr><td><b>A · 规则信息与可辨识性</b></td><td>训练题是否使正确规则与局部捷径给出不同预测？文本多样 ≠ 有效规则信息。</td><td>npj运动假设检验、NC2026 Mosaic Memory、Nature2023 MLC。原实验并未直接证明LLM持久更新。[[E26]][[M17]][[E350]]</td></tr>
 <tr><td><b>B · 共享结构与规则边界</b></td><td>复用旧表示可以让新任务更快，但相似而不完全一致的规则易互相干扰。</td><td>NHB Holton A→B→A；NC Menghi 的A/B交错；NC Tian 灵长类Schema复用。人类行为、动物神经统计与ANN机制分开。[[E100]][[E99]][[E320]]</td></tr>
@@ -49,8 +63,10 @@ PAGE = {
 <tr><td><b>E · 改进下一次学习的规则</b></td><td>不只存更多经验，而是使教学、材料选择或参数更新原则在后代任务上更有效。</td><td>SOAR以学生真实学习收益训练教师；DiscoRL发现更新目标；HGM选未来潜力版本。它们对象分别不同。[[S47]][[S310]][[S06]]</td></tr>
 </tbody></table></div>
 <p><b>最值得试验的总假设：</b>两个历史造成的当前成绩相近，<b>不保证其规则辨别、组合覆盖、任务适用边界和未来学习效率相同</b>。但必须允许负例：同一差异可能完全被C任务起点、已有特征或优化器状态解释；不能预设出现新效应。[[M550]][[M20]]</p>
+
 '''),
- ("evidence","精读文献群｜哪些原论文真正测到了哪一层？",'''
+        ('evidence', '精读文献群｜哪些原论文真正测到了哪一层？', '''
+
 <div class="table-wrap"><table><thead><tr><th>论文与精读入口</th><th>原文最有辨识度的观察</th><th>对RSI只可提出什么假设</th></tr></thead><tbody>
 <tr><td><a href="reading-notes.html#deep-hypothesis-testing-2026-ding">Hypothesis Testing · npj 2026</a> [[E26]]</td><td>局部运动成功与新位置上的真实规则识别可能分离。</td><td>I10的分歧样本；I8的可迁移纠错，不声称相同机制已出现在LLM。</td></tr>
 <tr><td><a href="reading-notes.html#deep-mosaic-memory-2026-shilov">Mosaic Memory · NC 2026</a> [[M17]]</td><td>不同表面形式的样本可以共同强化记忆。</td><td>分开“文面多样”“独立知识”“新增规则”；不能把去重率当知识新颖率。</td></tr>
@@ -65,8 +81,10 @@ PAGE = {
 <tr><td><a href="reading-notes.html#deep-soar-2601-18778">SOAR · ICML 2026</a> [[S47]]</td><td>用学生的实际更新收益而非仅训练题成功率改善教师。</td><td>I2/I12必须与真实增益教学/选题做强基线，不能声称首次使用学习增益。</td></tr>
 </tbody></table></div>
 <p><b>来源的阅读深度：</b>以上多篇已有详细精读。新调研的主要近邻先以正式原文/摘要和实验设计核对入来源台账，尚未逐篇完整复现；页面不会将它们写成本站的实验结果。</p>
+
 '''),
- ("new-papers","新补的顶刊顶会｜不能把现有方法重新命名为“真实泛化”",'''
+        ('new-papers', '新补的顶刊顶会｜不能把现有方法重新命名为“真实泛化”', '''
+
 <div class="table-wrap"><table><thead><tr><th>新增最近邻</th><th>原文已经证明/观察到什么</th><th>我们要守住的区别</th></tr></thead><tbody>
 <tr><td><b>Schwartz &amp; Martin · PFL</b><small>Cognition and Instruction 2004</small> [[E710]]</td><td>先进行发明式活动的人类学习者，在新资源辅助的测试中学得更多，传统无资源迁移测试可不显示差异。</td><td>“让未来更会学”并不是新颖性本身；需迁移到真实LLM版本更新与独立学习收益。</td></tr>
 <tr><td><b>Soderstrom &amp; Bjork · Learning vs Performance</b><small>Perspectives on Psychological Science 2015 · 综述</small> [[E711]]</td><td>训练时的好成绩和延迟学习结果可能分离，困难训练并不一定更差。</td><td>只提供现象与设计原则，不把“越难越好”写成普适算法。</td></tr>
@@ -80,8 +98,10 @@ PAGE = {
 </tbody></table></div>
 <p><b>其他直接近邻已入库：</b>MAML 已显式优化未来快速适应；<a href="https://proceedings.mlr.press/v306/sweeney26a.html" target="_blank" rel="noopener noreferrer">Lie-bracket 顺序分析</a> 已研究A→B/B→A的当前目标损失；LLM readout future learnability 已有预印本；<a href="https://proceedings.mlr.press/v267/kang25f.html" target="_blank" rel="noopener noreferrer">ICML 2025 学习动力学</a>已使用 pre-memorization train accuracy 预测测试表现。I9/I10必须与它们直接比较。[[M21]][[M18]][[M20]][[M11]]</p>
 <div class="note"><b>来源口径：</b>正式会议/期刊与 arXiv 预印本分别标记；ICLR/ICML/NeurIPS 论文提供的是特定模型/任务的结果，不是一般LLM、Agent与人的统一定理。更多3B–70B的混合/课程/遗忘研究已在 <a href="curriculum-scale-evidence.html">大模型证据专题</a> 展开，本页不重复该表。</div>
+
 '''),
- ("idea-map","与 I1–I14 如何连接｜共同评价语言，不合并独立研究问题",'''
+        ('idea-map', '与 I1–I14 如何连接｜共同评价语言，不合并独立研究问题', '''
+
 <div class="table-wrap"><table><thead><tr><th>分工</th><th>对应 I</th><th>唯一处理变量</th><th>应报告的主要科学终点</th></tr></thead><tbody>
 <tr><td><b>掌握规则</b></td><td><a href="idea-i10-learning-novelty.html">I10</a></td><td>区分正确规则/错误捷径的样本信息 × 组合覆盖</td><td>真实更新后，无辅助的分歧题、未见组合、规则适用域表现</td></tr>
 <tr><td><b>纠错价值</b></td><td><a href="i8.html">I8</a></td><td>选择纠正哪一种当前错误 / 错误来源与知识准备</td><td>未见同规则新题的真实净学习收益，不是原题修好</td></tr>
@@ -94,16 +114,20 @@ PAGE = {
 <tr><td><b>安全独立门</b></td><td><a href="learning-admission.html">I13</a></td><td>更新前测试/隔离/拒绝，独立授权门不能被自修改</td><td>跨代安全漏放、误拒与净能力；不能把规则错用率直接叫安全事故率</td></tr>
 </tbody></table></div>
 <p><b>核心科学链：</b> I10（学进去的规则是否正确）→ I8（一个错误的纠正是否带来规则级收益）→ I9（学习路径是否改变下一阶段学习）→ I12（补先修是否能主动创造新学习机会）。I3解释这条链中规则覆盖/错用，I14专门学习更新规则本身。<b>可以共用程序化任务生成器、独立评测器与预算账本，不能把不同干预混成一个模型组件并宣称同时解决所有问题。</b></p>
+
 '''),
- ("states","二维状态空间｜真正掌握与未来可学习性并不自动同向变化",'''
+        ('states', '二维状态空间｜真正掌握与未来可学习性并不自动同向变化', '''
+
 <p>下表是<strong>研究假设的分型框架</strong>，不是已有文献报告的四类模型占比。纵向为结构性掌握（通过规则分歧/组合/边界题），横向为在新的C任务上以相同训练资源获得的真实更新能力。</p>
 <div class="table-wrap"><table><thead><tr><th></th><th>未来 C 可学习性高</th><th>未来 C 可学习性低</th></tr></thead><tbody>
 <tr><td><b>当前结构性掌握高</b></td><td>已有知识可复用，且仍能适应后续新规则；理想但需实测</td><td>已有规则掌握较好，但后续冲突、过度僵化或参数敏感性使新学习困难</td></tr>
 <tr><td><b>当前结构性掌握低</b></td><td>现在可能依赖捷径，接受正确、可辨别的教学后仍能迅速掌握新规则</td><td>当前依赖局部模板，后续训练也难有效改变规则或带来明显回归</td></tr>
 </tbody></table></div>
 <p><b>反例比成功案例更有论文价值：</b>如果“现在会组合”的模型在C₂冲突规则上反而学得慢，或当前表现较弱的模型在严格监督后学得快，这能直接反驳一条过于单调的“掌握越深，以后越会学”假说。应报告相容C、规则冲突C和无关C的全部结果，避免只挑正例。[[E100]][[M554]]</p>
+
 '''),
- ("metrics","共同测量契约｜未来可学习性不能只报一个“后测分数”",'''
+        ('metrics', '共同测量契约｜未来可学习性不能只报一个“后测分数”', '''
+
 <p>令 S<sub>H</sub> 是同一起点经过训练历史 H 后的模型检查点。对从未在历史训练中出现的规则族 C，令 U(C,b) 表示使用固定训练器、教材与预算 b 的真实后续更新；T<sub>C</sub> 是隔离的独立测试集。</p>
 <div class="equation">L(H, C, b) = Perf( U(C,b)(S_H), T_C )</div>
 <p><b>直接迁移</b>是 L(H,C,0)；<b>后续学习响应</b>是 G(H,C,b)=L(H,C,b) − L(H,C,0)。比较两条历史 H₁/H₂ 的新学习增量时：</p>
@@ -117,8 +141,10 @@ PAGE = {
 <tr><td><b>RSI元策略真的成长了吗？</b></td><td>新旧元规则在相同学习者、候选、未来任务与预算上的交叉测试</td><td>仅旧/新版Agent整体成绩上升</td></tr>
 </tbody></table></div>
 <p><b>匹配能力的统计陷阱：</b>随机分配学习历史 H 后，先报告全部模型的当前能力分布；仅在事前规定的开发集上做匹配敏感性分析，披露未匹配样本。事后按最终 C 测试挑出“刚好同分”的检查点可能造成选择偏差，不能声称排除了所有隐藏差异。</p>
+
 '''),
- ("controls","统一实验平台｜可验证的规则依赖，不是一堆表面改写题",'''
+        ('controls', '统一实验平台｜可验证的规则依赖，不是一堆表面改写题', '''
+
 <p><b>建议先构建一个可程序核验、但学习者不能读取任务生成器真值的规则任务族。</b>包含基础数学规则、字符串/列表操作和受控代码工具任务，分开控制输入外观、真正算法依赖、竞争捷径及反馈质量。把完整程序规则保留为外部判定器，而不是给学习者直接读答案；再用代码单元测试和真实任务类型复核。</p>
 <div class="table-wrap"><table><thead><tr><th>测试任务C类别</th><th>构造方式</th><th>辨别的机制</th></tr></thead><tbody>
 <tr><td><b>C₁ · 相容的新规则/新组合</b></td><td>共享部分抽象操作但使用新实体、关系顺序或未见组合，不能只换数字</td><td>旧知识支持结构性迁移或下一轮学习准备</td></tr>
@@ -127,8 +153,10 @@ PAGE = {
 </tbody></table></div>
 <p><b>几项关键控制：</b>任务族和生成模板按规则依赖图划分；训练题/开发题/最终测试题不可共享模板答案。冻结起始模型、LoRA rank和可训练参数、学习率调度与训练Token预算。进入新C的主分支重置优化器动量；另保留继承动量的真实部署分支，分别报告。即使结果在C₁上很好，也不能宣称对C₃具有通用学习收益。</p>
 <div class="links"><a class="link-btn" href="generalization-protocol.json" download>下载本专题 P0–P3 机器可读实验契约</a><a class="link-btn" href="curriculum-scale-evidence.html">大模型/多模态课程证据与强基线</a><a class="link-btn" href="i12-experiment-protocol.json" download>I12 前置补救专项实验契约</a></div>
+
 '''),
- ("p0","P0｜先做最小判别：相同当前表现，是否学到了不同的规则？",'''
+        ('p0', 'P0｜先做最小判别：相同当前表现，是否学到了不同的规则？', '''
+
 <p><b>处理变量仅为训练材料能否排除竞争捷径、是否覆盖新组合。</b>在相同的目标任务、更新器、模型快照、训练Token和监督正确性下，构造2×2：规则区分信息 D+ / D− × 新组合覆盖 K+ / K−。每组由真实训练产生检查点，清空训练上下文后独立评估，不把正确答案直接复制到Prompt。</p>
 <div class="table-wrap"><table><thead><tr><th>分组</th><th>训练材料设置</th><th>最有辨别力的测试</th></tr></thead><tbody>
 <tr><td>D− / K−</td><td>旧捷径与正确规则均可解释训练题；组合很少</td><td>规则分歧题可能失败</td></tr>
@@ -138,8 +166,10 @@ PAGE = {
 </tbody></table></div>
 <p><b>强基线：</b>普通i.i.d.加数据、按训练Loss或pre-memorization accuracy挑题、简单词面/梯度多样性选题、仅加入相同数量容易题。观察L1的规则掌握和直接C起点，但<strong>不据此直接宣称 L3 未来可学习性改变</strong>。[[M11]][[M503]][[M553]]</p>
 <p><b>停止条件：</b>如果D+的优势在多规则族中只出现在训练同模板/近重述题，或者被同成本更多随机数据完全解释，就缩回一般数据选择问题。此实验主要对应 <a href="idea-i10-learning-novelty.html">I10</a> 和 <a href="i8.html">I8</a>，它不是新的专题级大模型方案。</p>
+
 '''),
- ("p1","P1｜学习历史本身会不会改变下一轮的真实学习曲线？",'''
+        ('p1', 'P1｜学习历史本身会不会改变下一轮的真实学习曲线？', '''
+
 <p><b>I9 的决定性干预：</b>同一初始检查点，固定所有 A/B 教材、反馈、种子配对和训练Token预算，只改变学习历史：A→B、B→A，或固定数量的Blocked/Interleaved日程。不能同时更换数据分布、优化器和教师。先报告全部分支的旧/新任务当前能力，再预注册能力可比的敏感性分析。</p>
 <p><b>同一后续学习条件：</b>从历史 H₁/H₂ 的检查点复制模型，分别使用相同的新任务 C 训练数据、固定训练器和独立测试题；在0、1、5、10、20、40个更新节点测曲线（这些检查点是实验建议，不是论文已报告结果）。C任务按相容C₁、冲突C₂、无关C₃分别报告，不只按成功的某一类下结论。</p>
 <div class="table-wrap"><table><thead><tr><th>结果模式</th><th>可能解释</th><th>必须再做的对照</th></tr></thead><tbody>
@@ -151,8 +181,10 @@ PAGE = {
 </tbody></table></div>
 <p>必须比较已有 <b>Lie-bracket当前目标损失排序</b>、<b>读出层plasticity诊断</b>、固定课程/随机交错、MAML/OML式适应性机制。梯度诊断若使用未来C支持集，属于<strong>C已知机制试验</strong>；C完全未知的事前选择轨道不能偷读其任何题。[[M18]][[M20]][[M21]][[M551]]</p>
 <p><b>解释优先于路由：</b>若发现同当前成绩却有稳定的未来差异，先用规则结构与优化器对照解释；若现有诊断已完全解释效应，则无需额外“未来学习预测网络”。</p>
+
 '''),
- ("p2","P2｜共同前置知识能否使原本难学的任务“变得可学”？",'''
+        ('p2', 'P2｜共同前置知识能否使原本难学的任务“变得可学”？', '''
+
 <p>这一层以 <a href="idea-i12-prerequisite-bottleneck.html">I12</a> 为核心，继承 PFL 的“先学习准备、再获得相同学习机会”，但把第二阶段严格变成真实模型更新，且需要明确先修因果关系。[[E710]][[E401]]</p>
 <div class="table-wrap"><table><thead><tr><th>第一阶段处理</th><th>第二阶段保持相同</th><th>可否支持“解锁后续学习”</th></tr></thead><tbody>
 <tr><td>A · 真正依赖的前置 P</td><td>同一批新的下游 T 任务、相同 U_T 和计算预算</td><td>若T增量超出强基线且只在依赖P的任务出现，才支持前置因果作用</td></tr>
@@ -163,14 +195,18 @@ PAGE = {
 </tbody></table></div>
 <p><b>两种收益必须分开：</b>ΔImmediate = Acc_T(U_P(S))−Acc_T(S) 衡量补P后直接得到的T能力；ΔSecondStage = Acc_T(U_T(U_P(S)))−Acc_T(U_P(S)) 衡量第二阶段还学了多少。只有与等预算对照比较后的第二项发生稳定差异，才符合本专题“未来可学习性”问题。</p>
 <p><b>可否证结果：</b>若补P后直接测T很高，但之后再学T没有额外增量，那是直接迁移；若各种相关H与P等效，机制可能只是训练量或数据匹配；若只在一个小模板有效，暂不扩张为多任务可学习前沿。已确认的依赖图不应交给I12诊断器当答案。[[S47]][[M27]][[S401]]</p>
+
 '''),
- ("p3","P3｜进入 RSI：不仅下一轮学得快，学习决策规则也需要持续变好",'''
+        ('p3', 'P3｜进入 RSI：不仅下一轮学得快，学习决策规则也需要持续变好', '''
+
 <p><b>长期 RSI 要回答更难的问题：</b>经过历史教学/纠错/排序/前置补救得到的新能力，是否改变下一代对“学什么、怎样学、何时隔离或重试”的决策？仅同一个模型连续更新很多轮，还不能证明更新策略本身进步。</p>
 <div class="flow"><div><b>第 k 代冻结任务模型</b><small>固定任务族、信息与预算</small></div><div><b>旧版/新版学习决策规则</b><small>I8错误选择、I9课程、I12前置、I14更新规则各自独立测试</small></div><div><b>执行真实参数/Skill更新</b><small>记录更新前/后规则掌握、未来 C 曲线和旧任务回归</small></div><div><b>在未见任务族验收</b><small>新旧元规则交叉、校准、全部成本</small></div><div><b>仅用发展集真实后果修订元规则</b><small>下一代再比较，不泄漏最终C标签</small></div></div>
 <p><b>研究顺序：</b>先复现P0真实规则区别和P1学习历史影响；再做P2前置因果。只有两项基础现象稳定后，才让某一项 I 的元决策器自行更新。对于I14，固定学生、样本、顺序，单独改变η学习规则；不允许把选择了更好的任务误写成发现更好的更新算法。[[S06]][[S310]]</p>
 <p><b>安全边界：</b><a href="learning-admission.html">I13</a> 独立评价自修改的发布安全、误拒和安全继承。一般规则错用不等于越权执行；要声称安全贡献，必须有真实授权契约和隔离执行验证。任务 Agent、更新器与安全门的权限分开。</p>
+
 '''),
- ("figures","专题拟图与 Go / Merge / Stop｜先画证据，再决定是否做方法",'''
+        ('figures', '专题拟图与 Go / Merge / Stop｜先画证据，再决定是否做方法', '''
+
 <div class="table-wrap"><table><thead><tr><th>图表候选</th><th>必须准备的真实数据</th><th>证明什么／会失败在哪里</th></tr></thead><tbody>
 <tr><td><b>F1 · 同当前成绩，不同结构掌握</b></td><td>规则差异D/K 2×2各组A/B训练成绩、分歧题、组合题、适用条件题</td><td>同分不等于相同规则；若差异只在同模板题，机制不成立</td></tr>
 <tr><td><b>F2 · 未来新C学习曲线</b></td><td>所有历史×C₁/C₂/C₃×更新步骤L(H,C,b)，配对旧能力回归</td><td>直接迁移与真实学习增量分开；不可只展示最终测试较好的H</td></tr>
@@ -185,7 +221,7 @@ PAGE = {
 </tbody></table></div>
 <p class="status"><b>证据状态（2026-10-29）：</b>本站已完成论文精读与顶刊顶会来源整理；本专题 P0–P3 为待执行研究设计，没有本站真实模型训练曲线，不宣称因果关系已成立。此页用于持续积累机制与实验，保持 I1–I14 独立编号。</p>
 <div class="links"><a class="link-btn" href="generalization-protocol.json" download>下载统一实验计划 JSON</a><a class="link-btn" href="idea-prioritization.html">I1–I14 研究优先级</a><a class="link-btn" href="learning-science.html">学习科学证据</a><a class="link-btn" href="references.html">来源与证据深度</a></div>
-'''),
 
- ]
+'''),
+    ]
 }

@@ -1,3 +1,23 @@
+# RSI 综述网站维护
+
+## 当前统一规则（2026-10-29）
+
+一级分类只使用 **经验获取、学习信号、能力形成、学习调控**，对应综述第3–6章。第1–2章定义问题与范围，第7章统一证据，第8章提出研究议程。泛化是贯穿问题和评价标准；记忆按贡献归入信号归因、能力保存、跨轮修订或效果检验。
+
+- 唯一分类源：`scripts/rsi_taxonomy.py`。FUNCTIONS定义4项功能，IDEAS保留I1–I14稳定索引，SOURCE_MAP覆盖来源，PAPER_MAP覆盖精读；FEATURED_SOURCE_IDS选择各章代表文献。
+- 新文献先按主要科学贡献填写唯一primary与可选related，再追加原始来源/精读数据。方法、载体、组织方式、来源领域和结果标签不作为并列主类。
+- 综述、独立评估和官方实验资源可以没有主功能，作为第2/7章或研究资源的支撑材料；必须写role与归类理由。
+- 全站生成由 `scripts/build_rsi_research.py` 协调，章节逻辑在 `scripts/rsi_framework.py`，网站导出由 `scripts/build_rsi_site.py` 完成。地图、来源表、精读、Idea、导航、时间轴与搜索共用分类。
+- I编号和原详情URL/section锚点保持稳定；原I6跨轮瓶颈草案与当前I6失败价值不是同一项，前者继续归档。
+- reading-cards.json中的research_questions/research_coverage是已保留的补充诊断记录，不再驱动主体分类或主筛选。筛选使用primary_function/related_functions。
+- 引用仍以sources.tsv的稳定来源ID展开；group保留来源领域，primary_function用于功能分类。
+- 构建后运行完整 `python scripts/test_rsi_site.py`，检查分类覆盖、旧链接与锚点、导航、搜索和导出。浏览器测试需要可用且经授权的浏览器能力。
+- 只提交RSI相关源文件与生成页面，保留并行任务的已有修改。发布后检查构建状态和deployment-manifest的提交号。
+
+以下为原有逐项研读记录与维护细节。遇到旧“五问主分类”等描述，以本节四功能规则为准；科学内容和证据记录继续保留。
+
+---
+
 # RSI 论文精读卡片 · 维护说明
 
 本站长期积累的精读卡片在 `rsi/reading-cards.json`，与 `rsi/sources.tsv` 的广覆盖来源台账分开。一次新增论文只追加 `papers` 数组中的一个 JSON 对象，不要直接手改生成的 `rsi/reading-cards.html`。

@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
+PAGES = ['research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda','index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -29,6 +29,17 @@ def parse(path):
 def check(condition, message):
     if not condition: raise AssertionError(message)
 
+def element_fragment(text, identifier):
+    """Read one complete element, including nested collapsible details."""
+    start = re.search(r'<([a-zA-Z][\w:-]*)\b[^>]*\bid="'+re.escape(identifier)+r'"[^>]*>', text)
+    check(start is not None, 'Missing element: '+identifier)
+    depth = 0
+    for tag in re.finditer(r'</?'+re.escape(start.group(1))+r'\b[^>]*>', text[start.start():]):
+        depth += -1 if tag.group().startswith('</') else 1
+        if depth == 0:
+            return text[start.start():start.start()+tag.end()]
+    raise AssertionError('Unclosed element: '+identifier)
+
 def main():
     source=json.loads((ROOT/'rsi/sources.json').read_text(encoding='utf-8'))
     refs={r['id'] for r in source['sources']}
@@ -37,7 +48,7 @@ def main():
     check(card_data['schema_version']==3 and len(cards)>0,'Invalid reading card registry')
     questions=card_data['research_questions']
     question_ids={q['id'] for q in questions}
-    check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Invalid RSI five-question taxonomy')
+    check(question_ids=={'signal','novelty','reach','retention','safety'} and len(questions)==5,'Legacy diagnostic dimensions must remain complete')
     check(len({p['id'] for p in cards})==len(cards),'Duplicate reading card ID')
     nn_paper=next((p for p in cards if p['id']=='nn2024-planning-replay-jensen'),None)
     check({'E355','E356'}<=refs and nn_paper is not None
@@ -204,8 +215,12 @@ def main():
     check('id="rsi-landscape-20261003"' in panorama
           and '思林广不记' in panorama and '2026-10-03' in panorama,
           'External RSI survey provenance / panorama anchor missing')
-    for category in ('信号对不对','有没有新东西','采不采得到','吸收了会不会丢','安全：跨越四问'):
-        check(category in panorama,'Panorama failure category missing: '+category)
+    for category in ('经验获取','学习信号','能力形成','学习调控'):
+        check(category in panorama,'Canonical literature learning function missing: '+category)
+    check('id="learning-functions"' in panorama and '不再承担全站一级分类或文献筛选' in panorama,
+          'Literature must distinguish the canonical functions from historical diagnostic dimensions')
+    for category in ('信号对不对','有没有新东西','采不采得到','吸收了会不会丢','跨功能的安全与副作用'):
+        check(category in panorama,'Historical panorama diagnostic evidence missing: '+category)
     for source_id in (f'R{i:02d}' for i in range(1,12)):
         check(f'references.html#{source_id}' in panorama,
               'Primary RSI panorama evidence not cited: '+source_id)
@@ -215,7 +230,7 @@ def main():
     check('href="literature.html#rsi-landscape-20261003"'
           in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
           'RSI homepage lacks a clear entry to curated panorama')
-    check(source['review_date']=='2026-10-28','Review date drift')
+    check(source['review_date']=='2026-10-29','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
     date.fromisoformat(timeline['verified_at'])
@@ -257,7 +272,7 @@ def main():
           'Timeline runtime assets missing')
     for id in ['rsi-tl-kind','rsi-tl-time','rsi-tl-query','rsi-tl-count']:
         check(f'id="{id}"' in timeline_html,f'Timeline filter missing: {id}')
-    check((ROOT/'rsi/timeline-reference.css').read_bytes()==(ROOT/'research-timeline.css').read_bytes(),
+    check((ROOT/'rsi/timeline-reference.css').read_text(encoding='utf-8')==(ROOT/'research-timeline.css').read_text(encoding='utf-8'),
           'RSI should reuse the original timeline stylesheet rather than a stale visual fork')
     check('rt-month-table rsi-month-table' in timeline_html and 'rt-week-summary-row' in timeline_html,
           'Reference monthly tables and weekly summaries missing')
@@ -270,12 +285,13 @@ def main():
     check(nav_text.startswith('window.NAV_GROUPS = '),'Invalid standalone RSI navigation module')
     groups=json.loads(nav_text[len('window.NAV_GROUPS = '):].strip().removesuffix(';'))
     expected_groups={
-        'overview':['index.html','timeline.html'],
-        'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
-        'methods':['cross-domain.html','theory-notes.html','learning-science.html','generalization-learnability.html','curriculum-scale-evidence.html'],
-        'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
-                    'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html','memory-research-map.html','learning-signal-bottlenecks.html','experience-consolidation.html','experiments.html'],
+        'overview':['index.html','research-map.html','foundations.html','timeline.html','ideas.html','idea-prioritization.html'],
+        'experience':['experience.html','idea-i10-learning-novelty.html'],
+        'signal':['signals.html','idea-i6-failure-value.html','i8.html','idea-i11-emotional-rsi.html','learning-signal-bottlenecks.html'],
+        'capability':['capabilities.html','ideas.html#idea-1','memory-research-map.html','experience-consolidation.html'],
+        'regulation':['regulation.html','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4','idea-i5.html','idea-i7-learning-order.html','idea-i9-practice-switching.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html'],
+        'evidence':['evidence.html','generalization-learnability.html','curriculum-scale-evidence.html','experiments.html','agenda.html'],
+        'literature':['literature.html','reading-cards.html','reading-notes.html','cross-domain.html','theory-notes.html','learning-science.html','references.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -286,9 +302,9 @@ def main():
         visible_slugs.extend(urlsplit(href).path.removesuffix('.html') for href in hrefs)
     check(set(visible_slugs)==set(PAGES)-{'teaching','idea-i6'},
           'Visible RSI pages must exclude only linked historical research')
-    research_links=groups[-1]['pages']
+    research_links=[item for g in groups if g['id'] in ('experience','signal','capability','regulation') for item in g['pages']]
     numbered=[label['zh'].split(' ·')[0] for _,label in research_links if label['zh'].startswith('I')]
-    check(numbered==[f'I{i}' for i in range(1,15)],'Research ideas I1–I14 must appear once and in order')
+    check(sorted(numbered,key=lambda x:int(x[1:]))==[f'I{i}' for i in range(1,15)],'Research ideas I1–I14 must appear exactly once in their functional group')
     ranking=(ROOT/'rsi/idea-prioritization.html').read_text(encoding='utf-8')
     check('科学上限' in ranking and '完成把握' in ranking and 'Go' in ranking,
           'Ranking page missing the editorial contract')
@@ -306,8 +322,8 @@ def main():
     check(not any(href in ('teaching.html','idea-i6.html') for href,_ in research_links),
           'Archived I5 or I6 content still duplicated in numbered navigation')
     page_parent={slug:g['id'] for g in groups for href,_ in g['pages']
-                 for slug in [urlsplit(href).path.removesuffix('.html')]}
-    page_parent.update({'teaching':'research','idea-i6':'research'})
+                 for slug in [urlsplit(href).path.removesuffix('.html')] if '#' not in href}
+    page_parent.update({'teaching':'regulation','idea-i6':'overview'})
     parsed={}
     site_asset_sources={'site-base.css':ROOT/'style.css', 'site-switch.css':ROOT/'site-switch.css', 'favicon.svg':ROOT/'favicon.svg'}
     for slug in PAGES:
@@ -316,7 +332,7 @@ def main():
         check(len(set(p.ids))==len(p.ids),f'{slug}: duplicate IDs')
         text=path.read_text(encoding='utf-8')
         check('[[' not in text,f'{slug}: unexpanded source token')
-        check('提案尚待实验' in text,f'{slug}: missing hypothesis status')
+        check('文献结论、研究推断和实验计划分别标注' in text,f'{slug}: missing evidence/proposal distinction')
         check('lang="zh-CN"' in text,f'{slug}: wrong content language')
         check('class="site-switcher"' in text and 'href="/rsi/"' in text and 'href="/"' in text,f'{slug}: missing two-site switch')
         check('src="site-nav.js"' in text and 'src="../data.js"' not in text,f'{slug}: navigation depends on Agent')
@@ -350,7 +366,7 @@ def main():
     check(card_html.count('class="reading-card"')==len(cards),'Wrong number of rendered paper cards')
     check(card_html.count('class="reading-story-step"')==4*len(cards),'Each paper must show four clear C-I-D-R steps')
     check(card_html.count('class="reading-overview"')==0,'Dense old paper overview should not lead the card')
-    check('id="reading-question-filter"' in card_html and 'id="reading-coverage-filter"' in card_html,'Missing five-question filters')
+    check('id="reading-function-filter"' in card_html and 'id="reading-relation-filter"' in card_html,'Missing shared four-function filters')
     for card in cards:
         check(card['lead_institution'] in card_html,'Missing author institution in HTML: '+card['id'])
         coverage='|'.join(f'{q["id"]}:{card["research_coverage"][q["id"]]["level"]}' for q in questions)
@@ -736,11 +752,13 @@ def main():
         for p in cards
     ),'Paper lacks a verified arXiv or publisher original link')
     ideas=parsed[ROOT/'rsi/ideas.html']
-    check(all(f'idea-{i}' in ideas.ids for i in range(1,13)),'I1–I9 and I11 anchors missing from research board')
+    check({identifier for identifier in ideas.ids if re.fullmatch(r'idea-\d+',identifier)}
+          =={f'idea-{i}' for i in range(1,15)},
+          'Research board must contain exactly the fourteen stable I1–I14 anchors')
     ideas_text=(ROOT/'rsi/ideas.html').read_text(encoding='utf-8')
     for name in ['R²Orch','PATS','RSIFlow','HCL','SkillBoost','Trace2Skill','PopuLoRA','OPCoD','MACE']:
         check(name in ideas_text,f'Missing nearest-work comparison: {name}')
-    # All eight independent ideas share one readable argument chain;
+    # All twelve full board narratives share one readable argument chain;
     # later ideas must not collapse to short summaries or links to detail pages.
     ordered_headings = (
         '<h3>Challenge <small>（难在哪里）</small></h3>',
@@ -750,19 +768,45 @@ def main():
         '<h3>实验设计 <small>（怎么验证）</small></h3>',
     )
     for idea_number in range(1,13):
-        section = ideas_text.split(f'id="idea-{idea_number}"', 1)[1].split('</section>', 1)[0]
+        section = element_fragment(ideas_text, f'idea-{idea_number}')
         locations = [section.find(heading) for heading in ordered_headings]
         check(all(pos >= 0 for pos in locations) and locations == sorted(locations),
               f'I{idea_number}: Challenge -> Related Work -> Insight -> Design -> Experiment order drift')
         check(section.count('class="idea-step"') == 5,
               f'I{idea_number}: expected exactly five argument blocks')
         check(section.count('class="flow"') >= 1, f'I{idea_number}: four-step method flow missing')
-    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in list(range(1,10))+[11,12]]
-    check(idea_positions == sorted(idea_positions),'Published I1–I9 and I11 sections are out of order')
-    check(ideas_text.index('id="orthogonal"') > idea_positions[-1],
-          'Independent I6-I9 and I11 comparison must follow full scientific narratives')
+    # I13/I14 have concise five-part introductions; their full protocols remain
+    # on stable detail pages and do not need a duplicate overview flow diagram.
+    short_headings = (
+        '<h3>Challenge <small>（科学问题）</small></h3>',
+        '<h3>现有工作 <small>（直接近邻）</small></h3>',
+        '<h3>Insight <small>（待验关系）</small></h3>',
+        '<h3>Design <small>（研究设计）</small></h3>',
+        '<h3>实验设计 <small>（决定性证据）</small></h3>',
+    )
+    for idea_number,detail in ((13,'learning-admission.html'),(14,'learning-rule-evolution.html')):
+        section=element_fragment(ideas_text,f'idea-{idea_number}')
+        locations=[section.find(heading) for heading in short_headings]
+        check(all(pos>=0 for pos in locations) and locations==sorted(locations)
+              and section.count('class="idea-step"')==5,
+              f'I{idea_number}: concise scientific narrative must retain all five ordered parts')
+        check(f'href="{detail}"' in section and '提案待实验' in section,
+              f'I{idea_number}: full protocol link or proposal status missing')
+    board_taxonomy=json.loads((ROOT/'rsi/taxonomy.json').read_text(encoding='utf-8'))
+    expected_board=[i for f in board_taxonomy['functions'] for i in range(1,15)
+                    if board_taxonomy['ideas'][f'I{i}']['primary']==f['id']]
+    for idea_number in range(1,15):
+        section=element_fragment(ideas_text,f'idea-{idea_number}')
+        primary=board_taxonomy['ideas'][f'I{idea_number}']['primary']
+        check('data-primary-function="'+primary+'"' in section,
+              f'I{idea_number}: overview category differs from the shared taxonomy')
+    idea_positions = [ideas_text.index(f'id="idea-{i}"') for i in expected_board]
+    check(idea_positions == sorted(idea_positions),
+          'Idea narratives must follow the four functions while preserving stable I identifiers')
+    check(ideas_text.index('id="orthogonal"') > max(idea_positions),
+          'Independent Idea comparison must follow all full scientific narratives')
     for i, detail in ((6,'idea-i6-failure-value.html'),(7,'idea-i7-learning-order.html'),(8,'i8.html'),(9,'idea-i9-practice-switching.html'),(10,'idea-i10-learning-novelty.html'),(11,'idea-i11-emotional-rsi.html'),(12,'idea-i12-prerequisite-bottleneck.html')):
-        section = ideas_text.split(f'id="idea-{i}"', 1)[1].split('</section>', 1)[0]
+        section = element_fragment(ideas_text, f'idea-{i}')
         check(f'href="{detail}"' in section, f'I{i}: full scientific detail page must remain linked')
         check('正交边界' in section,'I6-I9 separation lost in I'+str(i))
     check('十模型互教' in ideas_text and '不需要外部教师告诉标准答案' in ideas_text,'I5/I4 hypothesis drift')
@@ -1078,7 +1122,7 @@ def main():
     check(all(f'id="{anchor}"' in memory_map for anchor in
               ('phenomenon','layers','candidates','p0','literature','visuals','route')),
           'Unnumbered memory research map must retain four orthogonal axes, P0 and figure notes')
-    check(all(s in memory_map for s in ('A · 历史状态诊断', 'B · 记忆检索', 'C · 原始经验', 'D · 记忆与学习控制')),
+    check(all(s in memory_map for s in ('M1 · 历史状态诊断', 'M2 · 记忆检索', 'M3 · 原始经验', 'M4 · 记忆与学习控制')),
           'Memory candidate pool missing state/retrieval/consolidation/meta-control alternatives')
     check('id="deep-nhb2026-hybrid-memory-eckstein"' in notes_html
           and 'id="nhb2026-memory-reward-state"' in learn_sci
@@ -1278,6 +1322,39 @@ def main():
     for r in records:
         u=urlsplit(r['url']); p=ROOT/'rsi'/u.path
         check(p in parsed and u.fragment in parsed[p].ids,'Search result target missing: '+r['url'])
+    taxonomy=json.loads((ROOT/'rsi/taxonomy.json').read_text(encoding='utf-8'))
+    functions={f['id']:f for f in taxonomy['functions']}
+    check(list(functions)==['experience','signal','capability','regulation'],'Exactly four learning functions are required')
+    check([f['chapter'] for f in functions.values()]==[3,4,5,6],'Functional chapters must be 3–6')
+    expected_ideas={'I1':'capability','I2':'regulation','I3':'regulation','I4':'regulation','I5':'regulation',
+                    'I6':'signal','I7':'regulation','I8':'signal','I9':'regulation','I10':'experience',
+                    'I11':'signal','I12':'regulation','I13':'regulation','I14':'regulation'}
+    check({iid:v['primary'] for iid,v in taxonomy['ideas'].items()}==expected_ideas,
+          'Idea scientific contribution mapping changed unexpectedly')
+    check(set(taxonomy['sources'])==refs,'Every source must have one reviewed classification record')
+    check(set(taxonomy['papers'])=={p['id'] for p in cards},'Every deep-read paper needs a functional assignment')
+    for paper in cards:
+        mapping=taxonomy['papers'][paper['id']]
+        check(paper['primary_function']==mapping['primary'] and paper['related_functions']==mapping['related'],
+              'Reading registry taxonomy drift: '+paper['id'])
+        check(paper['primary_function'] in functions,'Reading paper lacks a primary function')
+        check(paper['primary_function'] not in paper['related_functions'],'Primary must not also appear as related')
+        check('data-primary-function="'+paper['primary_function']+'"' in card_html,'Reading category badge missing')
+    source_by_id={r['id']:r for r in source['sources']}
+    for sid,mapping in taxonomy['sources'].items():
+        check(source_by_id[sid]['primary_function']==mapping['primary'],'Source registry taxonomy drift: '+sid)
+        check(mapping['primary'] is None or mapping['primary'] in functions,'Invalid source function: '+sid)
+    for iid,v in taxonomy['ideas'].items():
+        u=urlsplit(v['href']);path=ROOT/'rsi'/u.path
+        check(path in parsed and (not u.fragment or u.fragment in parsed[path].ids),'Stable Idea URL broken: '+iid)
+    check('rsi-tl-function' in timeline_html,'Timeline must expose the same four-function filter')
+    check('data-functions=' in timeline_html,'Timeline events lack functional metadata')
+    for slug in ['research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda']:
+        check(slug in PAGES and (ROOT/'rsi'/f'{slug}.html').exists(),'Missing review chapter or map: '+slug)
+    check('泛化' in (ROOT/'rsi/evidence.html').read_text(encoding='utf-8')
+          and '未来可学习性' in (ROOT/'rsi/evidence.html').read_text(encoding='utf-8'),'Evaluation questions missing')
+    for filename in ('framework.js','research-map.js'):
+        subprocess.run(['node','--check',str(ROOT/'rsi'/filename)],check=True)
     subprocess.run(['node','--check',str(ROOT/'rsi/research.js')],check=True)
     subprocess.run(['node','--check',str(ROOT/'rsi/timeline-view.js')],check=True)
     public=ROOT/'_site'
@@ -1286,16 +1363,16 @@ def main():
             check((public/'rsi'/f'{slug}.html').is_file(),f'Not exported: {slug}')
         for filename in ['timeline-data.json','timeline-view.js','timeline.css','timeline-reference.css','compact.css']:
             check((public/'rsi'/filename).is_file(),f'RSI timeline asset not exported: {filename}')
-            check((public/'rsi'/filename).read_bytes()==(ROOT/'rsi'/filename).read_bytes(),
+            check((public/'rsi'/filename).read_text(encoding='utf-8')==(ROOT/'rsi'/filename).read_text(encoding='utf-8'),
                   f'RSI timeline export differs from source: {filename}')
         for name,src in site_asset_sources.items():
             check((public/'rsi'/name).is_file(),f'RSI standalone asset missing: {name}')
-            check((public/'rsi'/name).read_bytes()==src.read_bytes(),f'RSI standalone asset drift: {name}')
-        check((public/'rsi/site-nav.js').read_bytes()==(ROOT/'rsi/site-nav.js').read_bytes(),'RSI nav export drift')
-        check((public/'rsi/related-work.json').read_bytes()==(ROOT/'rsi/related-work.json').read_bytes(),
+            check((public/'rsi'/name).read_text(encoding='utf-8')==src.read_text(encoding='utf-8'),f'RSI standalone asset drift: {name}')
+        check((public/'rsi/site-nav.js').read_text(encoding='utf-8')==(ROOT/'rsi/site-nav.js').read_text(encoding='utf-8'),'RSI nav export drift')
+        check((public/'rsi/related-work.json').read_text(encoding='utf-8')==(ROOT/'rsi/related-work.json').read_text(encoding='utf-8'),
               'Published related-work source differs from reviewed registry')
         check(not list(public.rglob('*.py')),'Python leaked into public output')
-        check((public/'rsi/sources.json').read_bytes()==(ROOT/'rsi/sources.json').read_bytes(),'Exported source manifest differs')
+        check((public/'rsi/sources.json').read_text(encoding='utf-8')==(ROOT/'rsi/sources.json').read_text(encoding='utf-8'),'Exported source manifest differs')
     print(f'PASS: {len(PAGES)} RSI pages, {len(refs)} sources, {len(records)} search records, local links/anchors, nav and public export.')
 
 if __name__=='__main__': main()

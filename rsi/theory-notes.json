@@ -53,7 +53,11 @@
         }
       ],
       "when_to_use": "构建RSI‘任务能力vs学习策略能力’评价协议、解释为何冻结改进器不等于冻结Agent，以及设置必要性消融时引用。",
-      "caution": "小鼠实验限同类概率反转情景；快层是神经/隐藏状态，RSI把任务LoRA作为内层更新只是新的工程操作定义，并非论文已证明的生物对应。"
+      "caution": "小鼠实验限同类概率反转情景；快层是神经/隐藏状态，RSI把任务LoRA作为内层更新只是新的工程操作定义，并非论文已证明的生物对应。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ]
     },
     {
       "id": "policy-history-kernel-measurement",
@@ -100,7 +104,11 @@
         }
       ],
       "when_to_use": "以后写I2/I9或Meta-RSI的机制图、策略更新测量、回归模型公式、跨代学习决策的观测指标时引用。",
-      "caution": "Policy Axis测的是回归代理，不是神经网络参数、真正的学习规则源码或不同策略的因果效率。"
+      "caution": "Policy Axis测的是回归代理，不是神经网络参数、真正的学习规则源码或不同策略的因果效率。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ]
     },
     {
       "id": "meta-improvement-intervention-contract",
@@ -154,6 +162,10 @@
           "url": "https://www.nature.com/articles/s41586-025-09761-x",
           "role": "自动学习更新目标的最近邻"
         }
+      ],
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
       ]
     },
     {
@@ -208,7 +220,12 @@
         }
       ],
       "when_to_use": "I6经验效用、跨任务Memory Add/Delete、失败轨迹价值估计，以及研究真实“能不能帮后代”时引用。",
-      "caution": "随机召回与阻断要保护独立测试集；即使推理期召回有益，也不能证明权重出现持久学习。"
+      "caution": "随机召回与阻断要保护独立测试集；即使推理期召回有益，也不能证明权重出现持久学习。",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "signal"
+      ]
     },
     {
       "id": "memory-consolidation-fidelity",
@@ -262,7 +279,12 @@
         }
       ],
       "when_to_use": "讨论Episode何时升级Skill、强制抽象为何有害、如何给长期Agent Memory设立写回验证和版本回滚条件时引用。",
-      "caution": "2026年预印本不是通用禁止抽象结论；一些任务里摘要仍胜出。外部文本记忆的退化也不是权重灾难遗忘。"
+      "caution": "2026年预印本不是通用禁止抽象结论；一些任务里摘要仍胜出。外部文本记忆的退化也不是权重灾难遗忘。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ]
     },
     {
       "id": "awake-ripple-memory-tagging",
@@ -309,7 +331,12 @@
         }
       ],
       "when_to_use": "讨论Agent应先选哪些经历进入巩固候选队列、如何分离‘选择内容’与‘写回以后真正学到’时引用。",
-      "caution": "作者未随机操控神经重放以观察长期行为记忆，并且没有比较成功和失败经验的巩固价值。"
+      "caution": "作者未随机操控神经重放以观察长期行为记忆，并且没有比较成功和失败经验的巩固价值。",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ]
     },
     {
       "id": "experience-tag-vs-consolidation-utility",
@@ -356,7 +383,12 @@
         }
       ],
       "when_to_use": "I6 失败价值与长期 Memory 方向、I13 写回接纳、或对照ACL2026 Add/Delete与arXiv2026 Lossy Consolidation时引用。",
-      "caution": "这个完整三阶段控制实验尚未完成，不能把小鼠清醒SPW-R/睡眠重放关联当作Agent长期巩固效用的验证。"
+      "caution": "这个完整三阶段控制实验尚未完成，不能把小鼠清醒SPW-R/睡眠重放关联当作Agent长期巩固效用的验证。",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ]
     },
     {
       "id": "nonlocal-credit-assignment",
@@ -403,7 +435,12 @@
         }
       ],
       "when_to_use": "需要区分“模型原题已修好”与“未直接训练的规则依赖题也被纠正”时，引入共同结构和独立迁移测试。",
-      "caution": "原文人类实验事前已学会路径关系；LLM的符号知识编辑/参数迁移与之不是同一操作，需先验结构可测且不能用B测试答案作训练。"
+      "caution": "原文人类实验事前已学会路径关系；LLM的符号知识编辑/参数迁移与之不是同一操作，需先验结构可测且不能用B测试答案作训练。",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ]
     },
     {
       "id": "need-gain-prioritized-replay",
@@ -413,7 +450,13 @@
       "source_paper_id": "nonlocal-replay-science2021-liu",
       "source_anchor": "need-gain",
       "source_locator": "Mattar & Daw (Nature Neuroscience 2018) 提出理论；Liu et al. Science 2021 以MEG和行为检验关联",
-      "additional_sources": [{"title": "Mattar & Daw · Nature Neuroscience 2018 · 原始 Need × Gain 理论", "url": "https://www.nature.com/articles/s41593-018-0232-z", "role": "理论原始来源"}],
+      "additional_sources": [
+        {
+          "title": "Mattar & Daw · Nature Neuroscience 2018 · 原始 Need × Gain 理论",
+          "url": "https://www.nature.com/articles/s41593-018-0232-z",
+          "role": "理论原始来源"
+        }
+      ],
       "question": "当一次反馈关联多条未经历路径，优先处理哪条才能真正提高未来决策？",
       "insight": "重放不是只按错误程度或状态频率排序；未来访问Need和更新后决策改善Gain的乘积更接近规范性优先级。",
       "equations": [
@@ -458,7 +501,12 @@
         }
       ],
       "when_to_use": "设计I8候选纠错优先级、I6重访和有限预算重放策略时引用Need/Gain区别，而不直接宣称新奖励排序器首次提出。",
-      "caution": "这是前人规范性重放理论与Science人类神经关联证据。未证明LLM按Need×Gain排序在同预算下有效，也未独立随机操控Gain。"
+      "caution": "这是前人规范性重放理论与Science人类神经关联证据。未证明LLM按Need×Gain排序在同预算下有效，也未独立随机操控Gain。",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ]
     },
     {
       "id": "single-edit-gradient-transfer",
@@ -468,7 +516,13 @@
       "source_paper_id": "nonlocal-replay-science2021-liu",
       "source_anchor": "grad-propagation",
       "source_locator": "Qin et al. EMNLP 2024 GradSim；本条一阶泰勒展开是本站教学推导，不是Science神经实验公式",
-      "additional_sources": [{"title": "Qin et al. · EMNLP 2024 · GradSim 原论文", "url": "https://aclanthology.org/2024.emnlp-main.700/", "role": "LLM梯度传播来源"}],
+      "additional_sources": [
+        {
+          "title": "Qin et al. · EMNLP 2024 · GradSim 原论文",
+          "url": "https://aclanthology.org/2024.emnlp-main.700/",
+          "role": "LLM梯度传播来源"
+        }
+      ],
       "question": "在LLM参数空间里，同一条纠错反馈为什么能够或不能够改善从未直接训练的相关题？",
       "insight": "小步SGD时B损失的改变由A/B梯度内积的一阶近似决定；梯度对齐是可能的解释线索，而非充分因果证明。",
       "equations": [
@@ -506,7 +560,12 @@
         }
       ],
       "when_to_use": "比较GradSim、语义相似、规则图与实际未训练B净收益时引用，不要将同规则关系与梯度方向自动画等号。",
-      "caution": "梯度余弦相似仅为局部线性代理；该理论与Science神经反向重放不是同一种机制。"
+      "caution": "梯度余弦相似仅为局部线性代理；该理论与Science神经反向重放不是同一种机制。",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ]
     },
     {
       "id": "nonlocal-net-transfer-i8",
@@ -553,7 +612,12 @@
         }
       ],
       "when_to_use": "为I8未来实验撰写Goal、净迁移指标、强对照和训练前诊断协议时引用，暂不占用独立Idea编号。",
-      "caution": "此条是待验证的本项目研究假设。Science没有在LLM进行LoRA编辑；RippleEdits、LEAP等已有相关但不完全相同的实验。"
+      "caution": "此条是待验证的本项目研究假设。Science没有在LLM进行LoRA编辑；RippleEdits、LEAP等已有相关但不完全相同的实验。",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ]
     },
     {
       "id": "learning-target-generation",
@@ -607,7 +671,12 @@
         }
       ],
       "when_to_use": "提出“同样的训练样本，是否应该学习不同的目标而不是只调学习率/采样比例”时引用。",
-      "caution": "元网络没有从零发明梯度算法；接口、KL、优化器和已知价值辅助目标仍是人工设定。"
+      "caution": "元网络没有从零发明梯度算法；接口、KL、优化器和已知价值辅助目标仍是人工设定。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     },
     {
       "id": "semi-gradient-expressivity",
@@ -661,7 +730,12 @@
         }
       ],
       "when_to_use": "讨论更新规则搜索空间、TD bootstrap、为什么不只做 Loss-weight 或 Learning-rate search 时引用。",
-      "caution": "“严格更有表达力”的比较对象是普通完整梯度式标量损失，不是所有允许 stop_gradient/自定义微分的程序。"
+      "caution": "“严格更有表达力”的比较对象是普通完整梯度式标量损失，不是所有允许 stop_gradient/自定义微分的程序。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     },
     {
       "id": "meta-gradient-chain",
@@ -715,7 +789,12 @@
         }
       ],
       "when_to_use": "研究“真正改变训练规则，是否提升未来独立学习收益”以及是否值得计算昂贵 Meta-gradient 时引用。",
-      "caution": "大规模 Actor–Critic 与 Adam 的真实元梯度比这个 SGD 教学公式复杂；不能直接以递推式作为论文中的完整实现声称。"
+      "caution": "大规模 Actor–Critic 与 Adam 的真实元梯度比这个 SGD 教学公式复杂；不能直接以递推式作为论文中的完整实现声称。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     },
     {
       "id": "dual-timescales",
@@ -762,7 +841,12 @@
         }
       ],
       "when_to_use": "设计 RSI 学习历史状态、跨轮参数更新反馈或长时自我改进研究时引用。",
-      "caution": "“双时间尺度”是元网络架构事实；把它解释成长期递归自我改进的内部记忆，目前没有实验证据。"
+      "caution": "“双时间尺度”是元网络架构事实；把它解释成长期递归自我改进的内部记忆，目前没有实验证据。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     },
     {
       "id": "prediction-bootstrapping",
@@ -809,7 +893,12 @@
         }
       ],
       "when_to_use": "研究 RSI 无预定义语义中间预测、错误预兆、未来遗忘/可迁移性表征时引用。",
-      "caution": "探针相关不意味着变量具有唯一语义；性能消融支持在给定系统中的因果贡献，但不保证任何新辅助头都能带来提升。"
+      "caution": "探针相关不意味着变量具有唯一语义；性能消融支持在给定系统中的因果贡献，但不保证任何新辅助头都能带来提升。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     },
     {
       "id": "meta-stabilization",
@@ -863,7 +952,12 @@
         }
       ],
       "when_to_use": "设计跨多模型/多任务的元更新器、联合训练规则池或长周期 RSI 稳定门控时引用。",
-      "caution": "数值稳定化不等于安全性、可信性或反奖励投机；不能把它当作完整的自改进治理方案。"
+      "caution": "数值稳定化不等于安全性、可信性或反奖励投机；不能把它当作完整的自改进治理方案。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     },
     {
       "id": "rsi-future-learnability-objective",
@@ -910,7 +1004,13 @@
         }
       ],
       "when_to_use": "I3/I6/I8/I9/I12 与未来 Learning Rule Evolution 联合设计时，作为跨 idea 的评测口径参考。",
-      "caution": "本条是未验证的 RSI 研究提案；不能写成 DiscoRL 本文结果或已达成的实验发现。"
+      "caution": "本条是未验证的 RSI 研究提案；不能写成 DiscoRL 本文结果或已达成的实验发现。",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ]
     }
-  ]
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29"
 }

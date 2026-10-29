@@ -102,5 +102,12 @@
     "S47",
     "M27",
     "R04"
-  ]
+  ],
+  "primary_function": "regulation",
+  "related_functions": [
+    "experience",
+    "capability",
+    "signal"
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29"
 }

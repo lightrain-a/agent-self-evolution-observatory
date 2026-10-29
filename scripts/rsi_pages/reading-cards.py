@@ -1,4 +1,4 @@
-"""Data-driven RSI paper-reading cards with comparable five-question coverage.
+"""Data-driven RSI paper-reading cards with the shared four-function taxonomy.
 
 New papers change only rsi/reading-cards.json. The same taxonomy, institution
 fields, evidence limits, filters, and search-index records apply to every card.
@@ -9,6 +9,7 @@ import html
 import json
 import re
 from pathlib import Path
+from rsi_framework import FUNCTIONS, BY_ID, paper_assignment, function_badges
 
 SOURCE = Path(__file__).resolve().parents[2] / "rsi" / "reading-cards.json"
 DATA = json.loads(SOURCE.read_text(encoding="utf-8"))
@@ -111,6 +112,7 @@ def validate(p: dict) -> None:
 
 def reading_card(p: dict) -> str:
     validate(p)
+    classification = paper_assignment(p)
     tags = "".join(f'<span class="reading-tag">{esc(tag)}</span>' for tag in p["tags"])
     mechanisms = "".join(
         f'<li><b>{esc(m["name"])}</b><p>{esc(m["summary"])}</p>'
@@ -128,7 +130,7 @@ def reading_card(p: dict) -> str:
     all_institutions = " · ".join(p["institutions"])
     publication_badge = (p['publication'].split('·')[0].strip() if p.get('conference_official_primary')
         else 'arXiv:'+p['arxiv'] if p.get('arxiv') else p['publication'].split('·')[0].strip())
-    return f'''<article class="reading-card" id="{esc(p['id'])}" data-paper-tags="{esc('|'.join(p['tags']))}" data-question-coverage="{esc(coverage)}">
+    return f'''<article class="reading-card" id="{esc(p['id'])}" data-paper-tags="{esc('|'.join(p['tags']))}" data-question-coverage="{esc(coverage)}" data-primary-function="{esc(classification['primary'] or 'support')}" data-related-functions="{esc('|'.join(classification['related']))}">
   <div class="reading-card-head">
     <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>{esc(publication_badge)}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}<a class="reading-timeline-link" href="timeline.html#reading-{esc(p['id'])}" title="返回时间轴中的该次论文精读记录">在研究时间轴中查看 ↗</a></div>
     <h3>{esc(p['short_title'])}</h3>
@@ -138,15 +140,15 @@ def reading_card(p: dict) -> str:
   </div>
   <p class="reading-one-sentence">{esc(p['one_sentence'])}</p>
   {story_view(p)}
-  <div class="reading-issues"><p class="reading-issues-title">自我改进四问 + 安全：这篇研究到哪一步？</p><div class="reading-issue-tags">{issue_badges(p)}</div></div>
+  {function_badges(classification["primary"], classification["related"])}<p class="reading-classification-note">{esc(classification.get("reason",""))}</p>
   <details class="reading-expand">
     <summary>继续看：真实证据、公式和没解决的问题</summary>
     <div class="reading-expanded-content">
       <div class="reading-source-line"><b>作者</b> {esc(p['authors'])} · <b>首发</b> {esc(p['first_posted'])} · <b>版本</b> {esc(p['version'])} · <b>阅读范围</b> {esc(p['reading_level'])}</div>
       <p class="reading-institutions-full"><b>全部作者单位：</b>{esc(all_institutions)}<br><b>发表状态：</b>{esc(p['publication'])} · <b>核对位置：</b>{esc(p['institution_source'])}</p>
       <h4>更新的是哪一部分？</h4><p>{esc(p.get("updates", p["setup"]))}</p>
-      <h4>自我改进五问：论文做到哪里、还缺什么</h4>
-      <p class="reading-taxonomy-caveat">“重点研究”表示直接针对该问题提出机制或证据，不代表问题已被彻底解决。分类属于本站的文献研读判断。</p>
+      <h4>补充诊断维度：信号、信息、探索、保持与安全</h4>
+      <p class="reading-taxonomy-caveat">“重点研究”表示直接针对该问题提出机制或证据，不代表问题已被彻底解决。这些维度补充机制与证据记录；主要功能分类以卡片上方的归属为准。</p>
       {issue_details(p)}
       <h4>核心机制 · 记住这几个公式</h4><ol class="reading-mechanisms">{mechanisms}</ol>
       <h4>实验证据（作者报告，未复现）</h4>{make_list(p['evidence'])}
@@ -171,41 +173,41 @@ question_options = "".join(
     f'<option value="{esc(q["id"])}">{esc(q["label"])}</option>'
     for q in QUESTIONS
 )
+function_options = "".join(f'<option value="{f["id"]}">{esc(f["title"])}</option>' for f in FUNCTIONS)
+function_guide = "".join(f'<div class="reading-question-guide"><b>第{f["chapter"]}章 · {esc(f["title"])}</b><p>{esc(f["question"])}</p></div>' for f in FUNCTIONS)
 PAGE = {
     "slug": "reading-cards",
     "title": "论文精读卡片",
     "en": "Paper reading cards · remember the mechanism, not the abstract",
-    "lead": f"目前收录 {len(PAPERS)} 篇。先用 Challenge、Insight、Design、Result 四个问题读懂，再按自我改进四问 + 安全查看研究边界。",
+    "lead": f"目前收录 {len(PAPERS)} 篇。按经验获取、学习信号、能力形成、学习调控检索；每篇保留 Challenge、Insight、Design、Result 和完整精读。",
     "updated": updated,
     "sections": [
         ("library", f"论文卡片库 · {len(PAPERS)} 篇",
          '<div class="reading-tools"><label for="reading-card-filter">搜索卡片</label>'
          '<input type="search" id="reading-card-filter" placeholder="论文、单位、方法或机制…" autocomplete="off">'
-         '<label for="reading-question-filter">对应问题</label>'
-         f'<select id="reading-question-filter"><option value="all">全部问题</option>{question_options}</select>'
-         '<label for="reading-coverage-filter">涉及程度</label>'
-         '<select id="reading-coverage-filter"><option value="addressed">重点或部分涉及</option><option value="core">重点研究</option><option value="partial">部分涉及</option><option value="not_addressed">未直接研究</option><option value="all">全部程度</option></select>'
+         '<label for="reading-function-filter">学习功能</label>'
+         f'<select id="reading-function-filter"><option value="all">全部功能</option>{function_options}</select>'
+         '<label for="reading-relation-filter">归属关系</label>'
+         '<select id="reading-relation-filter"><option value="primary">主要归属</option><option value="related">关联功能</option><option value="all">主要或关联</option></select>'
          '<span id="reading-card-count" aria-live="polite"></span></div>'
          f'<div class="reading-grid">{cards}</div>'
-         '<p class="reading-empty" id="reading-empty" hidden>没有匹配的论文；可更换问题、涉及程度或清空搜索。</p>'
+         '<p class="reading-empty" id="reading-empty" hidden>没有匹配的论文；可更换功能、归属关系或清空搜索。</p>'
          '<div class="links"><a class="link-btn" href="reading-cards.json" download>下载阅读卡片 JSON（可复用）</a></div>'),
-        ("guide", "五问标签怎么理解？",
-         '<p>四步读懂一篇论文之后，可以用这五个问题比较它研究到哪一步。'
-         '<strong>重点研究</strong>指有直接方法和证据，不代表已经彻底解决。</p>'
+        ("guide", "如何按学习功能阅读？",
+         '<p>每篇论文按主要科学贡献确定一个主归属，其他作用用关联功能表示。方法、载体、组织方式和结果作为独立描述字段。</p>'
+         f'<div class="reading-guide-grid">{function_guide}</div>'
+         '<p>泛化贯穿四项功能，在第7章集中检验证据；记忆按归因、保存、修订和效果检验归位。</p>'
+         '<details class="framework-fold"><summary>已有诊断记录：信号、信息、探索、保持与安全</summary>'
          f'<div class="reading-guide-grid">{question_guide}</div>'
-         '<p class="reading-legend"><span class="reading-level reading-level--core">重点研究</span>直接研究这一问题；'
-         '<span class="reading-level reading-level--partial">部分涉及</span>涉及其中一部分；'
-         '<span class="reading-level reading-level--not_addressed">未直接研究</span>没有专门机制或实验。</p>'
-         '<details class="reading-maintenance"><summary>以后如何新增论文？</summary>'
-         '<p>维护说明在 <code>scripts/rsi_pages/README.md</code>，每篇只需追加结构化记录，'
-         '网页和搜索由构建脚本自动生成。文献事实、阅读判断和待做实验分开记录。</p></details>'),
+         '<p>这些维度用于细读证据，不构成另一套主体分类。</p></details>'),
     ],
     "search_records": [
         {
             "title": f"精读卡片 · {p['short_title']}: {p['title']}",
             "url": f"reading-cards.html#{p['id']}",
+            "primary_function": paper_assignment(p)["primary"],
             "text": " ".join(
-                [p["one_sentence"], *[p["story"][key] for key, _, _ in STORY_STAGES],
+                [BY_ID.get(paper_assignment(p)["primary"],{}).get("title",""), p["one_sentence"], *[p["story"][key] for key, _, _ in STORY_STAGES],
                  p["problem"], p["setup"], p.get("updates", ""),
                  p["lead_institution"], p["publication"], *p["institutions"]]
                 + p["tags"]

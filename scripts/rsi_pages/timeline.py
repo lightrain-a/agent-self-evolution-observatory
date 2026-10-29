@@ -13,6 +13,7 @@ from collections import Counter
 from datetime import date, datetime
 from itertools import groupby
 from pathlib import Path
+from rsi_framework import FUNCTIONS, IDEAS, BY_ID, paper_assignment, function_badges
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = json.loads((ROOT / "rsi" / "timeline-data.json").read_text(encoding="utf-8"))
@@ -57,6 +58,8 @@ def event_card(event: dict) -> str:
     kind = event["kind"]
     due = event.get("due_at") or ""
     tags = event.get("tags", [])
+    functions = event.get("functions", [])
+    function_labels = (function_badges(functions[0], functions[1:]) if kind == "reading" or len(functions) == 1 else function_badges(None,functions)) if functions else ""
     attrs = ' target="_blank" rel="noopener noreferrer"' if event["source_url"].startswith("https://") else ""
     tag_buttons = "".join(
         f'<button type="button" class="rsi-tl-tag" data-filter-tag="{esc(tag)}" title="筛选 {esc(tag)}">{esc(tag)}</button>'
@@ -79,7 +82,7 @@ def event_card(event: dict) -> str:
                    f'<dl>{parts}</dl></details>')
     return f'''<details class="rsi-tl-item rt-event rsi-tl-item--{kind}" id="{esc(event["id"])}"
       data-kind="{kind}" data-date="{esc(event["date"])}" data-due-at="{esc(due)}"
-      data-tags="{esc("|".join(tags))}">
+      data-tags="{esc("|".join(tags))}" data-functions="{esc("|".join(functions))}">
       <summary class="rsi-tl-event-summary">
         <span class="rsi-rt-event-dot rsi-rt-event-dot--{kind}" aria-hidden="true"></span>
         <span class="rsi-tl-event-copy">
@@ -90,7 +93,7 @@ def event_card(event: dict) -> str:
         </span><span class="rsi-rt-fold-icon" aria-hidden="true"></span>
       </summary>
       <div class="rsi-tl-event-extra">
-        <div class="rsi-tl-tags" aria-label="论文与研究主题">{tag_buttons}</div>
+        <div class="rsi-tl-tags" aria-label="论文与研究主题">{tag_buttons}</div>{function_labels}
         {preview}<div class="rsi-tl-item-footer">
           <a href="{safe_url(event["source_url"])}"{attrs}>{esc(event["source_label"])} ↗</a>{f'<span class="rsi-tl-live" data-countdown="{esc(due)}" aria-live="off">AoE 正式截止</span>' if due else ""}
         </div>
@@ -140,6 +143,7 @@ for event in DATA["research_events"]:
         title=event["title"], description=event["description"],
         source_url=event["source_url"], source_label=event["source_label"],
         tags=event.get("tags", ["RSI 研究"]),
+        functions=event.get("functions") or list(dict.fromkeys(IDEAS[i]["primary"] for i in re.findall(r"\bI(?:1[0-4]|[1-9])\b", " ".join(event.get("tags", []))) if i in IDEAS)),
     ))
 
 for paper in PAPERS:
@@ -152,6 +156,7 @@ for paper in PAPERS:
         title=f'精读：{paper["short_title"]}',
         description=paper["one_sentence"], tags=paper["tags"],
         story=paper["story"], publication=paper["publication"],
+        functions=[paper_assignment(paper)["primary"]] + paper_assignment(paper)["related"],
         source_url="reading-cards.html#" + paper["id"],
         source_label="打开完整论文卡片",
     ))
@@ -308,6 +313,7 @@ deadlines = (
     'ICML 2027 及 ACL Commitment 尚待公布；未确认时不显示预测日期。</p></div></details>'
 )
 
+function_options = "".join(f'<option value="{f["id"]}">{esc(f["title"])}</option>' for f in FUNCTIONS)
 activity = (
     '<div class="rsi-tl-calendar-panel rt-heatmap-panel" id="rsi-tl-calendar-panel">'
     '<div class="rsi-tl-calendar-head rt-heatmap-heading"><div><span class="rsi-rt-small-label">RESEARCH ACTIVITY</span>'
@@ -327,6 +333,7 @@ activity = (
     '<label for="rsi-tl-time">时间<select id="rsi-tl-time">'
     '<option value="all">全部时间</option><option value="upcoming">尚未截止</option>'
     '<option value="past">已发生／已结束</option></select></label>'
+    '<label for="rsi-tl-function">学习功能<select id="rsi-tl-function"><option value="all">全部功能</option>'+function_options+'</select></label>'
     '<label for="rsi-tl-topic">研究主题<select id="rsi-tl-topic">'
     '<option value="all">全部标签</option>' + tag_options + '</select></label>'
     '<label class="rsi-tl-search" for="rsi-tl-query">搜索'
@@ -371,7 +378,8 @@ PAGE = {
         {
             "title": f"RSI 时间轴 · {e['title']}",
             "url": f"timeline.html#{e['id']}",
-            "text": e["date"] + " " + e["description"] + " " + e["title"] + " " + " ".join(e.get("tags", [])),
+            "text": e["date"] + " " + e["description"] + " " + e["title"] + " " + " ".join(e.get("tags", [])) + " " + " ".join(BY_ID[k]["title"] for k in e.get("functions",[])),
+            "primary_function": (e.get("functions") or [None])[0] if e["kind"]=="reading" or len(e.get("functions",[]))==1 else None,
         }
         for e in events
     ] + [

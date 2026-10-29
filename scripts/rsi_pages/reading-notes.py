@@ -10,6 +10,7 @@ import json
 import runpy
 import re
 from pathlib import Path
+from rsi_framework import BY_ID, paper_assignment, function_badges
 
 SOURCE = Path(__file__).resolve().parents[2] / "rsi" / "reading-cards.json"
 PAPERS = json.loads(SOURCE.read_text(encoding="utf-8"))["papers"]
@@ -127,6 +128,7 @@ def full_text(value) -> str:
 
 def render_paper(p: dict) -> str:
     validate_deep(p)
+    classification = paper_assignment(p)
     d = p["deep_read"]
     base = f"deep-{p['id']}"
     stage_nav = "".join(
@@ -206,6 +208,9 @@ def render_paper(p: dict) -> str:
         f'<div class="deep-paper-head"><p class="deep-meta">{e(p["lead_institution"])} · '
         f'{e(p["publication"])} · {e("arXiv:"+p["arxiv"] if p.get("arxiv") else "DOI:"+p["doi"])} · {e(p["read_on"])} 精读</p>'
         f'<h3>{e(p["title"])}</h3>'
+        + function_badges(classification["primary"],classification["related"])
+        + f'<p class="reading-classification-note">{e(classification.get("reason",""))}</p>'
+        +
         f'<p class="deep-focus">{e(d["focus"])}</p>'
         '<p class="deep-author-note">先读四个大标题下的一句话；要看例子、公式或实验细节时再展开。'
         '这份笔记区分作者结果、教学举例和我们的研究想法，尚未独立复现。</p>'
@@ -235,7 +240,8 @@ PAGE = {
         {
             "title": f'精读正文 · {p["short_title"]} · {section["title"]}',
             "url": f'reading-notes.html#deep-{p["id"]}--{section["id"]}',
-            "text": full_text(section["blocks"]) + ' ' + p["title"] + ' ' + p["lead_institution"],
+            "text": full_text(section["blocks"]) + ' ' + p["title"] + ' ' + p["lead_institution"] + ' ' + BY_ID.get(paper_assignment(p)["primary"],{}).get("title",""),
+            "primary_function": paper_assignment(p)["primary"],
         }
         for p in DEEP
         for section in p["deep_read"]["sections"]

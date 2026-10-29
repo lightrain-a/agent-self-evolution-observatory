@@ -10,6 +10,7 @@
   const kind = $('#rsi-tl-kind');
   const timeRange = $('#rsi-tl-time');
   const topic = $('#rsi-tl-topic');
+  const learningFunction = $('#rsi-tl-function');
   const query = $('#rsi-tl-query');
   const counter = $('#rsi-tl-count');
   const empty = $('#rsi-tl-empty');
@@ -216,6 +217,7 @@
     if (timeRange.value === 'upcoming' && !isUpcoming(row, now)) return false;
     if (timeRange.value === 'past' && isUpcoming(row, now)) return false;
     if (topic.value !== 'all' && !tagsOf(row).includes(topic.value)) return false;
+    if (learningFunction && learningFunction.value !== 'all' && !(row.dataset.functions || '').split('|').includes(learningFunction.value)) return false;
     const words = (row.textContent + ' ' + row.dataset.tags).toLocaleLowerCase();
     return terms.every((word) => words.includes(word));
   }
@@ -367,10 +369,10 @@
     months.forEach((month) => { month.open = false; });
   });
 
-  for (const control of [kind, timeRange, topic, query]) {
+  for (const control of [kind, timeRange, topic, query, learningFunction].filter(Boolean)) {
     control.addEventListener(control === query ? 'input' : 'change', () => {
       refresh();
-      const filtering = kind.value !== 'all' || timeRange.value !== 'all' || topic.value !== 'all' || query.value.trim();
+      const filtering = kind.value !== 'all' || timeRange.value !== 'all' || topic.value !== 'all' || query.value.trim() || (learningFunction && learningFunction.value !== 'all');
       if (filtering) {
         months.forEach((month) => { if (!month.hidden) month.open = true; });
         days.forEach((day) => { if (!day.hidden) setDayOpen(day, true); });
@@ -379,6 +381,7 @@
   }
   reset.addEventListener('click', () => {
     kind.value = 'all';
+    if (learningFunction) learningFunction.value = 'all';
     timeRange.value = 'all';
     query.value = '';
     setTag('');

@@ -1,5 +1,6 @@
 {
-  "review_date": "2026-10-28",
+  "taxonomy_version": "learning-functions-2026-10-29",
+  "review_date": "2026-10-29",
   "scope": "RSI、学习型改进器、相邻领域与学习科学；定向证据地图，非穷尽性综述。",
   "sources": [
     {
@@ -10,7 +11,12 @@
       "url": "https://arxiv.org/abs/2607.07663",
       "level": "摘要核对",
       "note": "按修改对象和闭环程度整理 RSI；用于界定范围，不把一种严格定义当成全领域共识。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "综述用于界定自我改进范围与修改对象。",
+      "source_role": "background",
+      "source_domain": "RSI"
     },
     {
       "id": "S02",
@@ -20,7 +26,15 @@
       "url": "https://arxiv.org/abs/2505.22954",
       "level": "摘要核对",
       "note": "维护代码谱系，以任务执行评价自修改版本；代码自进化与开放式搜索已有系统基础。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "signal"
+      ],
+      "classification_reason": "将执行经验写入可继承代码，版本搜索提供持续更新。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S03",
@@ -30,7 +44,15 @@
       "url": "https://arxiv.org/abs/2507.19457",
       "level": "摘要与官方仓库核对",
       "note": "反思执行轨迹，提出并测试提示修改、组合互补经验；可作共享编辑器和强搜索基线。",
-      "code": "https://github.com/gepa-ai/gepa"
+      "code": "https://github.com/gepa-ai/gepa",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "从轨迹反思产生提示修改，并组合互补经验。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S04",
@@ -40,7 +62,15 @@
       "url": "https://arxiv.org/abs/2506.10943",
       "level": "摘要核对",
       "note": "生成微调数据和更新指令，以更新后模型表现学习自编辑；属于参数持久更新。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "生成自编辑数据与指令，将经验写入模型参数。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S05",
@@ -50,7 +80,14 @@
       "url": "https://arxiv.org/abs/2603.19461",
       "level": "摘要核对",
       "note": "任务 Agent 与修改它的 Meta-Agent 同在可编辑程序中；双层循环本身不再是充分创新。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "任务Agent和改进它的Meta-Agent共同成为可修改对象。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S06",
@@ -60,7 +97,14 @@
       "url": "https://arxiv.org/abs/2607.05297",
       "level": "正文方法核对",
       "note": "快慢时间尺度分别更新任务技能与元技能；与泛化的“改进器积累经验”直接相邻。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "通过快慢时间尺度协调任务技能与元技能演化。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S07",
@@ -70,7 +114,14 @@
       "url": "https://arxiv.org/abs/2608.02276",
       "level": "摘要与官方仓库核对",
       "note": "训练专门的 Harness 编辑器，以真实执行表现优化修改；学习生成补丁不是新的空白。",
-      "code": "https://github.com/DeepExperience/Harness-R1"
+      "code": "https://github.com/DeepExperience/Harness-R1",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "从失败轨迹学习生成可执行Harness修改。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S08",
@@ -80,7 +131,14 @@
       "url": "https://arxiv.org/abs/2609.35738",
       "level": "正文方法核对",
       "note": "把 Harness 修改作为元学习问题，学习可迁移适应策略；需比较新任务学习过程。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "跨任务学习可迁移的Harness适应策略。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S09",
@@ -90,7 +148,14 @@
       "url": "https://arxiv.org/abs/2609.14857",
       "level": "正文方法与官方仓库核对",
       "note": "成败轨迹对照、模块化修改与独立任务迁移；上述三项组合不能直接当作新方向。",
-      "code": "https://github.com/IQuestLab/ModularRSI"
+      "code": "https://github.com/IQuestLab/ModularRSI",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "把成败轨迹对照转化为模块化Harness能力。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S10",
@@ -100,7 +165,14 @@
       "url": "https://arxiv.org/abs/2609.24972",
       "level": "摘要核对",
       "note": "正则化修改提议和选择，缓解递归搜索过拟合；不同修订的实验数字不混用。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "正则化跨轮修改提议与选择，约束搜索过拟合。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S11",
@@ -110,7 +182,14 @@
       "url": "https://arxiv.org/abs/2609.14858",
       "level": "摘要与项目入口核对",
       "note": "利用历史发现树回放优化探索策略；回放覆盖范围之外的收益需真实执行验证。",
-      "code": "https://github.com/zhengkid/Dream-RSI"
+      "code": "https://github.com/zhengkid/Dream-RSI",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "用历史发现树回放改善后续探索策略。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S12",
@@ -120,7 +199,14 @@
       "url": "https://arxiv.org/abs/2610.14224",
       "level": "正文方法与官方仓库核对",
       "note": "任务内修改与跨任务 Harnessing 经验积累；行为对比不等于带标准答案的正确性证明。",
-      "code": "https://github.com/google-research/harness2"
+      "code": "https://github.com/google-research/harness2",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "协调任务内Harness修改与跨任务改进经验。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S13",
@@ -130,7 +216,15 @@
       "url": "https://arxiv.org/abs/2610.13912",
       "level": "摘要与官方仓库核对",
       "note": "预测行动后果，再以真实反馈校正；环境动力学与学习者更新后能力变化是不同对象。",
-      "code": "https://github.com/Gen-Verse/RSI-Anything"
+      "code": "https://github.com/Gen-Verse/RSI-Anything",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "借助世界模型预测行动后果并构造后续探索机会。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S14",
@@ -140,7 +234,14 @@
       "url": "https://arxiv.org/abs/2607.12227",
       "level": "摘要与官方仓库核对",
       "note": "强调与等反馈、等推理预算的普通采样和顺序精修比较；复杂流程不能只按得分解释。",
-      "code": "https://github.com/rethinking-harness-evolution/code"
+      "code": "https://github.com/rethinking-harness-evolution/code",
+      "primary_function": null,
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "以等反馈和等推理预算检验Harness演化主张。",
+      "source_role": "evidence",
+      "source_domain": "RSI"
     },
     {
       "id": "S15",
@@ -150,7 +251,14 @@
       "url": "https://arxiv.org/abs/2610.14662",
       "level": "摘要核对",
       "note": "目标修复、相关失败迁移和独立测试增益须分开；反馈效果具有模型依赖性。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "检验失败反馈能否指引有迁移价值的自修改。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S16",
@@ -160,7 +268,15 @@
       "url": "https://arxiv.org/html/2610.00906v1",
       "level": "正文方法与实验设置核对",
       "note": "失败模式作为动态 bandit 臂，以学习进展调整优先级并探索新失败；直接覆盖自动修复课程。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "用学习进展动态分配失败模式的训练优先级。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S17",
@@ -170,7 +286,15 @@
       "url": "https://arxiv.org/html/2601.18778v3",
       "level": "正文方法与实验设置核对",
       "note": "双层Meta-RL训练教师生成课程，以同起点Student短内环真实更新后在困难训练题上的准确率增益奖励教师。作者一般性地以50%成功率描述内在可学习性直觉，但附录B.4的Intrinsic-T实际函数为r=0（p=0）否则1−p（p>0），并不在50%达到最大；该对照出现种子不稳定与Vendi多样性坍缩。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "以学生实际更新收益训练课程生成教师。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S18",
@@ -180,7 +304,15 @@
       "url": "https://arxiv.org/html/2610.04604v1",
       "level": "正文方法与实验设置核对",
       "note": "将学习进展、下游迁移潜力和当前可学性结合；任务依赖图与前瞻课程已有近邻。",
-      "code": "https://github.com/Octavio-Pappalardo/curriculum-foresight"
+      "code": "https://github.com/Octavio-Pappalardo/curriculum-foresight",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "预测课程决策的后续可学习性与迁移后果。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S19",
@@ -190,7 +322,15 @@
       "url": "https://arxiv.org/html/2610.06446v1",
       "level": "正文方法与实验设置核对",
       "note": "遮蔽教师话语的近迁移后测仍保留学生话语；单题回报难覆盖支持撤除的远期价值。",
-      "code": "https://github.com/eth-lre/EduardoRL"
+      "code": "https://github.com/eth-lre/EduardoRL",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "学习多轮教学中的帮助方式和帮助程度。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "M01",
@@ -200,7 +340,14 @@
       "url": "https://arxiv.org/abs/1606.04474",
       "level": "摘要核对",
       "note": "学习优化算法而非只优化任务模型；更新规则可作为学习对象，但不提供通用 RSI 保证。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "将优化器本身作为可学习的更新规则。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M02",
@@ -210,7 +357,14 @@
       "url": "https://arxiv.org/abs/1611.02779",
       "level": "摘要核对",
       "note": "跨任务训练快速适应算法；启发重置学习者、保留元策略的检验。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "慢速跨任务训练塑造快速适应算法。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M03",
@@ -220,7 +374,15 @@
       "url": "https://arxiv.org/abs/1704.03003",
       "level": "摘要核对",
       "note": "用非平稳 bandit 和学习进度选择训练数据；难度改为进展并非新颖机制。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "按学习进展以非平稳bandit安排课程。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M04",
@@ -230,7 +392,15 @@
       "url": "https://arxiv.org/abs/1707.00183",
       "level": "摘要核对",
       "note": "优先练习进步快的子任务，也重访性能下降的任务；学习和防遗忘联合调度已有经典基线。",
-      "code": "https://github.com/tambetm/TSCL"
+      "code": "https://github.com/tambetm/TSCL",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "联合调度学习进展和退化任务的重访。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M05",
@@ -240,7 +410,14 @@
       "url": "https://papers.nips.cc/paper/5654-deep-knowledge-tracing",
       "level": "会议原始摘要核对",
       "note": "从学习交互序列估计学生知识状态；下一题正确率预测不等于某种教学干预的因果收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "从交互历史估计学习者知识状态。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M06",
@@ -250,7 +427,15 @@
       "url": "https://proceedings.neurips.cc/paper/2018/hash/8051a3c40561002834e59d566b7430cf-Abstract.html",
       "level": "会议原始摘要核对",
       "note": "教师按学生阶段输出动态损失，以开发集表现优化教学；应迁移双层目标而非师生角色名称。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "教师依据学生阶段学习动态损失函数。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M07",
@@ -260,7 +445,15 @@
       "url": "https://arxiv.org/abs/1510.03591",
       "level": "摘要核对",
       "note": "行动同时改变状态并揭示未知动力学；需验证诊断信息是否真正改变后续更新决策。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "统筹行动回报与获取未知动力学信息的价值。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M08",
@@ -270,7 +463,15 @@
       "url": "https://arxiv.org/abs/1511.05952",
       "level": "摘要核对",
       "note": "按经验重要性非均匀重放；间隔练习方案必须排除普通优先重放即可解释收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "按优先级安排旧经验的重放。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M09",
@@ -280,7 +481,14 @@
       "url": "https://arxiv.org/abs/1908.04742",
       "level": "摘要核对",
       "note": "选择可能被当前更新干扰的旧样本重放；作为干扰感知巩固的重要对照。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "选择受当前更新干扰的旧样本进行回放。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E01",
@@ -290,7 +498,14 @@
       "url": "https://www.tandfonline.com/doi/abs/10.1207/s15430421tip4102_2",
       "level": "理论综述与元数据核对",
       "note": "自我调节的前瞻、执行监控与反思是设计视角；不是增加三个 Agent 模块即可有效的证明。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "自我调节学习协调前瞻、监控与反思。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E02",
@@ -300,7 +515,15 @@
       "url": "https://www.columbia.edu/cu/psychology/metcalfe/PDFs/Metcalfe%20Kornell%202005.pdf",
       "level": "作者存档与摘要核对",
       "note": "在尚未掌握且可取得进展的材料间分配时间；不等同于挑最难题，也不与其他近侧发展区理论混称。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "依据可取得进展的材料分配学习时间。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E03",
@@ -310,7 +533,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/16507066/",
       "level": "原始研究摘要核对",
       "note": "比较练习性检索与重复阅读的保持效果；冻结模型需要持久写入才能形成跨会话学习。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "比较检索练习与重复阅读的长期记忆形成。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E04",
@@ -320,7 +550,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/19076480/",
       "level": "原始研究摘要核对",
       "note": "间隔效果依赖保持时长；机器实验应操纵中间学习和干扰，不假定静止参数随时间遗忘。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "检验练习间隔与保持时长的关系。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E05",
@@ -330,7 +567,15 @@
       "url": "https://asu.elsevierpure.com/en/publications/transitioning-from-studying-examples-to-solving-problems-effects-/",
       "level": "作者机构摘要核对",
       "note": "研究例题到自主解题、逐步撤去步骤及自我解释；支持撤除是教学干预，不只是评测删提示。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "experience"
+      ],
+      "classification_reason": "逐步撤去例题步骤以支持自主能力形成。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E06",
@@ -340,7 +585,15 @@
       "url": "https://repository.nie.edu.sg/entities/publication/cd4409fb-a12f-476f-ad02-febbf9caa4cc",
       "level": "作者机构摘要核对",
       "note": "生成探索后进行知识整理巩固；关键在教学次序与整合，不是错误越多越好。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "研究先探索失败、后整理巩固的教学次序。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E07",
@@ -350,7 +603,14 @@
       "url": "https://act-r.psy.cmu.edu/?post_type=publications&p=14210",
       "level": "作者机构记录与论文摘要核对",
       "note": "何时、以何种程度帮助是教学设计问题；不能直接推出 LLM 上的有效性。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "研究何时提供何种程度的教学帮助。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E08",
@@ -360,7 +620,15 @@
       "url": "https://repository.eduhk.hk/en/publications/examining-productive-failure-productive-success-unproductive-fail-5/",
       "level": "作者机构摘要核对",
       "note": "区分学习时表现与长期学习收益；用于提出测量问题，机器机制须另行验证。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "regulation",
+        "capability"
+      ],
+      "classification_reason": "区分当场成功失败与后续学习收益。",
+      "source_role": "evidence",
+      "source_domain": "学习科学"
     },
     {
       "id": "B01",
@@ -370,7 +638,12 @@
       "url": "https://aclanthology.org/2025.findings-naacl.65/",
       "level": "会议页面与官方介绍核对",
       "note": "带状态工具执行、用户模拟与轨迹里程碑；派生训练任务须与官方评测隔离。",
-      "code": "https://github.com/apple/ToolSandbox"
+      "code": "https://github.com/apple/ToolSandbox",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "状态化工具执行基准与评估协议。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "B02",
@@ -380,7 +653,12 @@
       "url": "https://github.com/sierra-research/tau2-bench",
       "level": "官方文档核对",
       "note": "当前仓库持续演进，不能把 main 与论文 τ² 任务集混用；记录 commit、任务清单和模拟器。",
-      "code": "https://github.com/sierra-research/tau2-bench"
+      "code": "https://github.com/sierra-research/tau2-bench",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "版本化工具任务基准及官方代码。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "B03",
@@ -390,7 +668,12 @@
       "url": "https://github.com/harbor-framework/terminal-bench-2-1",
       "level": "官方仓库核对",
       "note": "可执行终端任务；固定容器、测试和超时，最终测试不得训练元策略。",
-      "code": "https://github.com/harbor-framework/harbor"
+      "code": "https://github.com/harbor-framework/harbor",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "可执行终端任务基准。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "B04",
@@ -400,7 +683,12 @@
       "url": "https://huggingface.co/Qwen/Qwen3.5-9B",
       "level": "官方模型卡核对",
       "note": "主学习者与元控制器初始化候选；工具解析、训练与吞吐尚待实际运行验证。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "候选学习者模型的官方模型资源。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "B05",
@@ -410,7 +698,12 @@
       "url": "https://huggingface.co/Qwen/Qwen3.5-27B",
       "level": "官方模型目录核对",
       "note": "同家族强模型对照；选型为保证可比性，不声称它是最新最强模型。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "同家族强模型对照资源。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "B06",
@@ -420,7 +713,12 @@
       "url": "https://huggingface.co/google/gemma-4-31B-it",
       "level": "官方模型卡核对",
       "note": "跨家族目标模型候选；固定工具与预算，并单独记录模型替换后的校准开销。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "跨模型家族实验资源。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "S20",
@@ -430,7 +728,15 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/8340b085045cf13f1f0b6c2c4cc0a89c-Abstract-Conference.html",
       "level": "会议正文与官方仓库核对",
       "note": "教师解释根据学生反馈选择；反馈可以构成 DPO 训练偏好；多学生多样性是已有近邻。不能把 teacher 由 student feedback 更新称作首次提出。",
-      "code": "https://github.com/imagination-research/lbt"
+      "code": "https://github.com/imagination-research/lbt",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "用学生反馈更新教师解释与偏好。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S21",
@@ -440,7 +746,15 @@
       "url": "https://ojs.aaai.org/index.php/AAAI/article/view/38668",
       "level": "会议摘要与方法概述核对",
       "note": "Teacher-Critic-Student Socratic dialogue 用于提示优化；多智能体教学及问题驱动迭代不能单独作为方法创新。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "利用Socratic多智能体对话改善可复用提示。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S22",
@@ -450,7 +764,14 @@
       "url": "https://arxiv.org/abs/2607.28048",
       "level": "摘要与作者公开说明核对",
       "note": "对比教师成功与学生失败轨迹，迭代修改学生的技能；本候选必须与“更新教师自己”区分，并避免只做反向技能蒸馏。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "对比教师成功和学生失败，将经验蒸馏为技能。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S23",
@@ -460,7 +781,14 @@
       "url": "https://arxiv.org/abs/2608.20274",
       "level": "论文正文与摘要核对",
       "note": "子任务级和任务级技能、文本与代码技能对跨任务迁移有不同影响；要求本候选与直接细粒度技能归纳和静态技能质量评价比较。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "研究文本和代码技能的抽象层次与跨任务复用。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S24",
@@ -470,7 +798,14 @@
       "url": "https://arxiv.org/abs/2512.13102",
       "level": "摘要核对",
       "note": "训练学生主动询问教师以改善学生的学习效率；不能把会追问的 Student 当作空白，需证明问题对 Teacher 自身能力有独立信息。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "学习向教师主动提问以获得所需信息。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S25",
@@ -480,7 +815,14 @@
       "url": "https://arxiv.org/abs/2311.06985",
       "level": "摘要核对",
       "note": "提出 Self-Explain 和 Teach-Back 来提高学生的 in-context knowledge reasoning；Teach-Back 名称本身不保证与教师自进化相关。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "通过解释和回教提供学生可用的上下文知识。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "E09",
@@ -490,7 +832,15 @@
       "url": "https://aaalab.stanford.edu/research/assets/papers/2013/Learning_by_teaching_human_pupils.pdf",
       "level": "完整论文机制与实验设计核对",
       "note": "Recursive Feedback 要求学生在新环境中自主使用所学以及教师把学生行为映射回自己的理解；人类机制不能直接视为 LLM 有效性。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "教师从学生自主应用的递归反馈中改善理解。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E10",
@@ -500,7 +850,14 @@
       "url": "https://link.springer.com/article/10.1007/s41237-026-00294-9",
       "level": "正文摘要与研究设计核对",
       "note": "人类教师面对 teachable agent 追问时 knowledge-building 比 knowledge-telling 更具诊断意义，相关性结果不是 LLM 教学自进化的因果证据。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "用教学对话中的知识建构诊断教师学习。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "B07",
@@ -510,7 +867,12 @@
       "url": "https://github.com/StonyBrookNLP/appworld",
       "level": "官方 README 与实验切分核对",
       "note": "官方 train / dev / test_normal / test_challenge 严格隔离；后两者只能用于冻结终评，不得按任务反馈修改教学方法。",
-      "code": "https://github.com/StonyBrookNLP/appworld"
+      "code": "https://github.com/StonyBrookNLP/appworld",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "可执行应用生态基准与数据划分。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "S26",
@@ -520,7 +882,15 @@
       "url": "https://arxiv.org/abs/2610.22740",
       "level": "原始摘要核对；2026-10-27",
       "note": "通过自博弈将经验蒸馏为技能再内化进参数；以撤掉技能后效果是否保持决定 Skill Withdrawal。I1 研究何时该内化、何时保留外部支持。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "自博弈经验先提炼为技能，再巩固到参数并撤去支架。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S27",
@@ -530,7 +900,14 @@
       "url": "https://arxiv.org/abs/2607.21419",
       "level": "正文方法核对；2026-10-27",
       "note": "针对当前策略调整训练时支架，冗余时压缩或撤除，部署时不保留支架。I1 不能把随能力渐隐提示当成首次提出。",
-      "code": "https://github.com/shi-yipeng/PATS"
+      "code": "https://github.com/shi-yipeng/PATS",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "训练支架随策略能力调整并在部署时撤除。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S28",
@@ -540,7 +917,15 @@
       "url": "https://arxiv.org/abs/2610.21791",
       "level": "原始摘要核对；2026-10-27",
       "note": "依据任务轨迹和反馈诊断瓶颈，选择模型、Harness 或产物更新流程，并改进 Meta-Agent。I2 需聚焦同一更新对象内部的学习方法反应。",
-      "code": "https://github.com/1HUAN1/RSI-Flow"
+      "code": "https://github.com/1HUAN1/RSI-Flow",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "诊断瓶颈并学习选择模型、Harness或产物更新流程。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S29",
@@ -550,7 +935,14 @@
       "url": "https://arxiv.org/abs/2608.19013",
       "level": "原始摘要核对；2026-10-27",
       "note": "Harness 更新前检查新进步、历史保持和有效性，提出 harness-level forgetting。I3 应区分主动冲突巩固与事后守门。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "协调新Harness收益与历史能力保持。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S30",
@@ -560,7 +952,15 @@
       "url": "https://arxiv.org/abs/2607.26643",
       "level": "原始摘要核对；2026-10-27",
       "note": "结合结构化故障定位、候选探索与回归约束决定是否接受 Skill 修改。I3 研究保留有用新更新时怎样定向修复旧技能冲突。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "在回归约束下平衡技能探索、利用与修改接纳。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S31",
@@ -570,7 +970,14 @@
       "url": "https://aclanthology.org/2026.emnlp-main.758/",
       "level": "会议摘要核对；2026-10-27",
       "note": "并行分析多条执行轨迹，归纳为可复用且尽量无冲突的技能。I4 不是再次强调多轨迹，而是决定何时需要追加辨别实验、何时证据足够归纳。",
-      "code": "https://github.com/Qwen-Applications/Trace2Skill"
+      "code": "https://github.com/Qwen-Applications/Trace2Skill",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "从多条执行轨迹抽象可复用技能。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S32",
@@ -580,7 +987,15 @@
       "url": "https://arxiv.org/abs/2605.16727",
       "level": "原文机制及附录计算口径核对；2026-10-27；未复现",
       "note": "教师/学生独立 LoRA 群体通过匹配、自博弈和交叉评估更新，并带权重空间进化。按每适配器匹配训练量；1.31倍墙钟不能理解为相同总计算量。I5固定互教更新器，检验撤伴后的双向净学习收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "协调LoRA群体的匹配、自博弈与演化。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S33",
@@ -590,7 +1005,15 @@
       "url": "https://arxiv.org/abs/2606.14368",
       "level": "原文 Section 3、实验域与限制核对；2026-10-27；未复现",
       "note": "双模型通过受门控同伴反馈进行 on-policy 自蒸馏，self-teacher同时以自身正确rollout和同伴反馈为条件；Science Q&A验证不自动外推到十模型数学/代码。I5采用固定适配底座，单独比较伙伴关系。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "将受门控同伴反馈巩固进双方模型参数。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S34",
@@ -600,7 +1023,14 @@
       "url": "https://arxiv.org/abs/2607.11250",
       "level": "此前原始摘要核对；2026-10-27本轮正文页面访问受限",
       "note": "以结构化同伴选择促进探索和协作任务表现；I5 必须区分当前协作收益与伙伴退出后的独立能力增长，且不与同名记忆方法混淆。",
-      "code": "https://github.com/deeplearning-wisc/mace"
+      "code": "https://github.com/deeplearning-wisc/mace",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "通过结构化同伴探索获得互补协作信息。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S35",
@@ -609,8 +1039,15 @@
       "date": "ICLR 2025",
       "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/63943ee9fe347f3d95892cf87d9a42e6-Abstract-Conference.html",
       "level": "ICLR 官方摘要核对；2026-10-27",
-      "note": "研究生成—验证差距与反复自我提升的条件。I6 不能将生成/验证/更新拆分称为首次，而应验证跨轮瓶颈变化及选择收益。",
-      "code": ""
+      "note": "研究生成—验证差距与反复自我提升的条件。I6 据此区分反馈可靠性与失败过程的学习价值：在相同错误终点和纠错条件下，检验不同失败轨迹对后续能力与迁移的贡献。",
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究生成与验证能力差距如何约束自提升。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S36",
@@ -620,7 +1057,15 @@
       "url": "https://arxiv.org/abs/2609.34327",
       "level": "arXiv 原始摘要核对；2026-10-27",
       "note": "通过中途干预区分知识与执行瓶颈，训练小模型选择性向更强模型查询；不等于持续参数/Skill 更新后的跨轮学习模式切换。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "以中途干预诊断知识和执行瓶颈并选择查询。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S37",
@@ -630,7 +1075,15 @@
       "url": "https://aclanthology.org/2026.acl-long.1393/",
       "level": "ACL 官方摘要核对；2026-10-27",
       "note": "分析训练数据未被吸收的五类原因，并对 SFT 不完全学习执行有针对性的干预；与 I6 的吸收检查高度重合。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "区分训练未吸收的不同原因并针对性干预。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S38",
@@ -640,7 +1093,15 @@
       "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/9cdb4f8c4dfa13284d2d5a6e7853e5a2-Abstract-Conference.html",
       "level": "COLM 官方摘要核对；2026-10-27",
       "note": "按采样结果将 GRPO 和自蒸馏组合，并针对训练阶段稳定性做调权；I6 需证明跨环节诊断的额外价值。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "按样本状态协调GRPO与自蒸馏更新。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S39",
@@ -650,7 +1111,15 @@
       "url": "https://aclanthology.org/2026.emnlp-main.464/",
       "level": "ACL Anthology 官方摘要核对；2026-10-27",
       "note": "按正确率与置信度路由 GRPO、自蒸馏、正则或跳过，路由比例随训练改变；I6 最接近的动态配方基线之一。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "根据正确率和置信度动态路由后训练配方。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "E11",
@@ -660,7 +1129,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/14640846/",
       "level": "PubMed 论文摘要与书目信息核对；2026-10-27",
       "note": "人类实验显示把有限学习时间分配给中等难度材料可能取得更高收益；用于提分/任务选择假设，不可直接当作 RSI 实证。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "考察中等难度材料与有限学习时间分配。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E12",
@@ -670,7 +1146,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/11713883/",
       "level": "PubMed 摘要与 DOI 核对",
       "note": "在人类事实知识回答中，高置信度错误得到正确反馈后更可能在复测中纠正；不是 LLM 的直接证据。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较置信度与正确反馈后的错误修复。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E13",
@@ -680,7 +1163,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/29781391/",
       "level": "期刊摘要与 DOI 核对",
       "note": "大学园艺课堂学生答题、报告置信度并接受正确反馈，后测观察到超纠正；不能直接解释为跨题规则迁移。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "课堂中检验高置信度错误接受反馈后的纠正。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E14",
@@ -690,7 +1180,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/23797971/",
       "level": "PubMed 摘要与 DOI 核对",
       "note": "领域已有知识与纠错关系强，置信度独立解释力小；可能是已有知识的代理指标，而非其全部因果机制。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较已有知识与主观置信度对纠错的解释力。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E15",
@@ -700,7 +1197,14 @@
       "url": "https://link.springer.com/article/10.1007/s10649-021-10084-7",
       "level": "期刊正文摘要与出版时间核对",
       "note": "在线数学诊断数据研究学生置信度、答题正确率及后续相似题表现；不等于 LLM 的真实权重更新。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "分析诊断题置信度与后续表现的关系。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "S40",
@@ -710,7 +1214,15 @@
       "url": "https://aclanthology.org/2025.acl-long.417/",
       "level": "ACL 正式论文摘要与方法流程核对",
       "note": "从模型错题聚类错误类型、合成数据，并用 one-shot 效果筛选微调数据；I8 不能声称首次按错误类型发现迁移价值。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "从错误类型构造并筛选可用于训练的新数据。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S41",
@@ -720,7 +1232,14 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.1924/",
       "level": "ACL Anthology 正式论文摘要核对",
       "note": "验证数学抽象规则的直接编辑可能不迁移到实例；其知识编辑设置不直接等同于 SFT 或 LoRA 纠错。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "以规则编辑基准区分规则文本修复与实例迁移。",
+      "source_role": "evidence",
+      "source_domain": "RSI"
     },
     {
       "id": "S42",
@@ -730,7 +1249,14 @@
       "url": "https://aclanthology.org/2026.emnlp-main.421/",
       "level": "ACL Anthology 正式论文摘要核对",
       "note": "提出多层分布式规则编辑，不同形式的规则知识对应不同表示层；说明公式记忆与实例应用的编辑一致性并非自动成立。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "通过分布式更新改善规则知识及其应用。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S43",
@@ -740,7 +1266,14 @@
       "url": "https://arxiv.org/abs/2510.08696",
       "level": "arXiv 摘要核对",
       "note": "LENS 对高置信度错误增加惩罚以利用 GRPO 全错组，属于 RL 更新信号设计，并不直接预测一次错题的跨题学习收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "以置信度重加权构造全错RL组的训练信号。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S44",
@@ -750,7 +1283,14 @@
       "url": "https://arxiv.org/abs/2602.21420",
       "level": "arXiv 摘要核对",
       "note": "ACE 利用相对参考策略的置信度位移调整错误 rollout 惩罚；与预测规则级净迁移收益的选题相邻但不相同。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "对高置信度错误设计非对称纠正惩罚。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "M10",
@@ -760,7 +1300,14 @@
       "url": "https://proceedings.mlr.press/v235/xia24c.html",
       "level": "PMLR 正式论文摘要核对",
       "note": "以优化器感知的低秩梯度相似性估计训练数据影响力；I8 必须与之比较而非声称训练前价值预测全新。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "用优化器感知梯度估计候选数据对目标的影响。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M11",
@@ -770,7 +1317,15 @@
       "url": "https://proceedings.mlr.press/v267/kang25f.html",
       "level": "PMLR 正式论文摘要核对",
       "note": "用预记忆阶段的训练题表现解释泛化并改进数据筛选，说明原题正确与记住解题步骤不同；不直接等于更新前单错题净迁移预测。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "利用训练动态识别记忆与可泛化学习价值。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E16",
@@ -780,7 +1335,15 @@
       "url": "https://doi.org/10.1016/j.jml.2004.12.001",
       "level": "期刊摘要与 ERIC 书目信息核对；2026-10-27",
       "note": "将学习选择与学习坚持区分开，以主观学习速率判断 jROL 解释何时停止当前材料；是人类认知证据，不是 LLM 停止训练的实验证明。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "以主观学习速率解释何时离开当前材料。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E17",
@@ -790,7 +1353,14 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.2209/",
       "level": "ACL Anthology 摘要及元信息核对；2026-10-27",
       "note": "对话教学动作预测中，41.7% 轮次标注无需干预，而最佳模型仅在 6.6% 轮次预测不干预；反映教学动作偏差，不等于 RSI 停学收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "学习元认知干预和不干预动作。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E18",
@@ -800,7 +1370,14 @@
       "url": "https://www.nature.com/articles/s41467-018-03992-5",
       "level": "Nature Communications 官方全文（方法、结果、误导反馈条件）与 PubMed 书目信息核对；2026-10-27",
       "note": "Pine 等通过事实知识答题、0–100 置信度、正确/部分错误反馈及一周后复测，发现反馈引出的语义预测误差与后续记忆更新关联，腹侧纹状体等区域编码该信号；错误反馈也能改写原本正确的记忆。支持 I8 将经核验的信念冲突作为候选诊断信号，不证明 LLM 权重更新或跨题规则迁移。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究可信反馈引发的语义预测误差与知识更新。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E19",
@@ -810,7 +1387,15 @@
       "url": "https://www.nature.com/articles/s41467-021-26196-w",
       "level": "Nature Communications 官方研究正文、Figure 1–5 与 Methods（含 PC/LP 定义）核对；2026-10-28",
       "note": "Ten、Kaushik、Oudeyer、Gottlieb 的 382 人自由活动选择实验（3 项可学习、1 项随机不可学习，250 次自由选择）：显式目标组在随机任务投入 36.92%，无显式目标组为 23.43%；PC 与 LP 联合模型更好拟合选择，LP 使用表现变化绝对值，故能包含退步。该研究是行为关联与模型拟合，不证明 LLM 动态课程新颖，也不证明绝对 LP 可代表持久净能力提升。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "人类依据表现和学习进展选择探索活动。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "S45",
@@ -820,7 +1405,15 @@
       "url": "https://aclanthology.org/2026.findings-acl.171/",
       "level": "ACL Anthology 正式摘要核对；2026-10-27",
       "note": "按聚类难度、解题率和学习进展用 bandit 调度训练样本；I6 不能将按学习速率换题当作新意。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "以自步调bandit分配难度和学习进展不同的样本。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S46",
@@ -830,7 +1423,15 @@
       "url": "https://openreview.net/pdf?id=bOwVr0yr7r",
       "level": "ICLR 2026 正式 PDF 与作者仓库核对；2026-10-27",
       "note": "检测独立学习平台期，在训练中引入由抽象到具体的分级提示恢复非零学习信号；I6 需比较换提示以外的行动。",
-      "code": "https://github.com/JIA-Lab-research/Scaf-GRPO"
+      "code": "https://github.com/JIA-Lab-research/Scaf-GRPO",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "experience"
+      ],
+      "classification_reason": "检测平台期后调整支架以恢复训练信号。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S47",
@@ -840,7 +1441,15 @@
       "url": "https://proceedings.mlr.press/v306/sundaram26a.html",
       "level": "PMLR 正式摘要与书目信息核对；2026-10-27",
       "note": "ICML正式论文：教师生成64题集合、同一学生基准分叉实际训练，以困难题成绩增益训练教师，并通过Promotion改变后续学生基准。Intrinsic-T采用附录B.4具体奖励函数并出现不稳定与多样性下降；I2/I6/I8/I9不能将Grounded出题本身当成新的贡献。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "用同起点学生的实际学习增益训练教师课程。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S48",
@@ -850,7 +1459,14 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.105/",
       "level": "ACL Anthology 正式摘要核对；2026-10-27",
       "note": "依据额外采样的预期收益与成本停止推理候选生成；与训练后独立能力的跨轮停止决策不同。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "按额外采样的预期收益与成本停止推理。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S49",
@@ -860,7 +1476,14 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.1168/",
       "level": "ACL Anthology 正式摘要核对；2026-10-27",
       "note": "根据当前解题能力动态生成挑战，缓解固定难度导致的自学习停滞；未直接区分换方法与暂缓后重访的因果收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "依据当前能力构造渐进挑战。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "M12",
@@ -870,7 +1493,15 @@
       "url": "https://proceedings.mlr.press/v70/graves17a.html",
       "level": "PMLR 正式摘要核对；2026-10-27",
       "note": "使用学习进展反馈与非平稳多臂老虎机分配课程；说明学习速率驱动的训练预算调度早有直接前作。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "按学习进展和非平稳bandit调度课程预算。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M13",
@@ -880,7 +1511,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/edcd1aa172dceda2ea9d45a48f25d3e3-Abstract-Conference.html",
       "level": "ICLR 官方摘要和方法指标核对",
       "note": "在视觉语言模型跨数据集监督迁移中，训练前综合困惑度、相似性和多样性预测各数据集对目标基准的真实训练收益；候选单位是数据集而非当前模型单条错误。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "在训练前预测监督数据集的迁移收益。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "S90",
@@ -890,7 +1528,15 @@
       "url": "https://arxiv.org/abs/2610.16078",
       "level": "作者论文与官方项目页核对；2026-10-27",
       "note": "专用模型与 LLM Agent 的互惠学习，且通过进化 Harness 调整数据交换与训练样本；I5 不能声称首次异构共进化，须证明十模型间动态接触关系的独立收益。",
-      "code": "https://wenqian-ye.github.io/hace/"
+      "code": "https://wenqian-ye.github.io/hace/",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "协调异构Agent之间的数据交换和互惠学习。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "E90",
@@ -900,7 +1546,14 @@
       "url": "https://www.nature.com/articles/s41467-019-09452-y",
       "level": "Nature Communications 正文与方法核对；2026-10-27",
       "note": "16人网络每人4次轮换对话，只改变跨簇/簇内的先后次序；群体记忆对齐受次序影响，主总体收敛比较p约0.052；不是模型参数学习证据。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较群体交流顺序对记忆传播与对齐的影响。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E91",
@@ -910,7 +1563,14 @@
       "url": "https://www.nature.com/articles/s41467-019-12650-3",
       "level": "Nature Communications 原文摘要与模拟结果核对；2026-10-27",
       "note": "基于 Agent 的群体求解研究知识与能力在网络中的空间分布；支持分别操纵能力差距和专长互补，不能直接当作 LLM 动态换伴训练结果。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "通过网络知识与能力分布提供互补解题信息。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E92",
@@ -920,7 +1580,14 @@
       "url": "https://www.nature.com/articles/s41467-021-23424-1",
       "level": "Nature Communications 正文与实验分析核对；2026-10-27",
       "note": "真实在线信息搜索及预测任务，随机操纵群体多样性与模块化，观察独立和群体预测收益；不是持续权重更新。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "操纵多样性和模块化以改变群体信息获取。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E93",
@@ -930,7 +1597,15 @@
       "url": "https://www.nature.com/articles/s41467-026-76113-2",
       "level": "Nature Communications 论文正文与实验流程核对；2026-10-27",
       "note": "五代人机群体从上一代选择示范者；策略须新颖、可学、有可辨优势才能长久传播；不等于同一代十个模型双向更新。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "研究跨代示范者选择与策略长期传播。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E94",
@@ -940,7 +1615,15 @@
       "url": "https://www.nature.com/articles/s41562-025-02269-4",
       "level": "Nature Human Behaviour 原文方法核对；2026-10-27",
       "note": "六项人类实验n=1941，社会学习策略可随历史收益而改变；激励学习伙伴选择机制，但不能直接视为 RSI 训练实测。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "社会学习策略随历史收益调整。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E95",
@@ -950,7 +1633,14 @@
       "url": "https://www.nature.com/articles/s44260-025-00058-8",
       "level": "npj Complexity 原文模型与结果核对；2026-10-27",
       "note": "基于群体求解模型区分模仿现有较优解与组合知识探新解，两者对群体平均收益与最佳解影响不同；并非真实 LLM 参数共进化。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "比较复制现有解和组合知识获得新解。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E96",
@@ -960,7 +1650,15 @@
       "url": "https://www.nature.com/articles/s41467-026-77762-z",
       "level": "Nature Communications 正文实验分析核对；2026-10-27",
       "note": "621人动态群体资源追踪，可信收益信息使其选择性关注表现好的同伴且灵活重组信息流；属于合作表现而非新模型能力的长程学习。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "根据可信收益信息调整对同伴的注意与信息流。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E97",
@@ -970,7 +1668,15 @@
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10436097/",
       "level": "系统综述摘要与学习流程核对；2026-10-27",
       "note": "Jigsaw 包含临时专家组与原学习组的往返和互教；只是组织结构启发，不是动态伙伴匹配或 RSI 共进化的直接证据。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "Jigsaw互教组织方式的系统综述。",
+      "source_role": "background",
+      "source_domain": "学习科学"
     },
     {
       "id": "S100",
@@ -980,7 +1686,14 @@
       "url": "https://www.nature.com/articles/s41467-025-67998-6",
       "level": "原文 arXiv v3 方法与作者官方说明核对；2026-10-27",
       "note": "学生 SFT 模仿规范 Bayesian 预测行为，在所测推荐任务中优于 Oracle 监督并展示跨任务迁移；不是显式思维链教学，也不是可更新教师与学生的共同进化。公开正文：https://arxiv.org/html/2503.17523v3",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "通过模仿规范Bayesian示范形成可迁移推理能力。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S101",
@@ -990,7 +1703,15 @@
       "url": "https://arxiv.org/abs/2506.08388",
       "level": "正文奖励、蒸馏阶段与局限核对；2026-10-27",
       "note": "用题目与答案训练教师生成适合学生的解释；奖励含学生条件概率与分布差异项，之后做学生蒸馏。论文局限明确未探索教师学生并行训练。I2 比较持续教学更新及真实后测奖励。",
-      "code": "https://github.com/SakanaAI/RLT"
+      "code": "https://github.com/SakanaAI/RLT",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "experience"
+      ],
+      "classification_reason": "学习生成适合学生吸收的教学解释。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S102",
@@ -1000,7 +1721,14 @@
       "url": "https://arxiv.org/abs/2605.26872v5",
       "level": "原始正文方法核对；2026-10-27",
       "note": "依据学生相关的学习成本代理，从已验证正确的教师输出中选监督；强教师不必给出最有用的训练答案。I2 不把答案选择或教师强弱比较声称为新机制。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据学生学习成本从正确教师答案中选择监督。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S103",
@@ -1010,7 +1738,15 @@
       "url": "https://arxiv.org/html/2610.08778",
       "level": "正文 Sec. 2.1–2.3 冻结学生与奖励定义核对；2026-10-27",
       "note": "多轮 RL 训练教师适应不同模拟学生，学生骨干冻结，收益来自上下文中的当前题表现；不等于学生跨轮参数持续更新。I2 需控制静态教师本已有的上下文适应能力。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "experience"
+      ],
+      "classification_reason": "训练教师适应学生状态并调整多轮教法。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S104",
@@ -1020,7 +1756,15 @@
       "url": "https://noahziems.com/pedagogical-rl",
       "level": "作者报告 Sec. 2–3 方法与早期实验口径核对；2026-10-27",
       "note": "用特权信息和当前学生的轨迹可吸收性代理训练自教师，再以 surprisal-gated imitation 更新学生；已经覆盖教得可学与学生吸收，I2 必须检验持续跟踪学习反应的独立作用。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "学习可被学生吸收的教师输出并协调学生更新。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "M100",
@@ -1030,7 +1774,14 @@
       "url": "https://openreview.net/forum?id=HJewuJWCZ",
       "level": "正式会议条目与原始摘要核对；2026-10-27",
       "note": "用学生反馈优化教师策略，已明确提出 teacher–student co-evolution。属于一般机器学习的先驱，而非 LLM 共进化首作；双边更新与双层优化本身不能作为 I2 新颖性。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "通过学生反馈优化教师策略。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "S200",
@@ -1040,7 +1791,15 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/1c2b1c8f7d317719a9ce32dd7386ba35-Abstract-Conference.html",
       "level": "NeurIPS 官方发表页与摘要核对；2026-10-27；未复现",
       "note": "Pioneer 与 Observer 两个模型联合 RL，并周期性交换角色；I5 不把双模型共训练或角色交换作为新颖性，固定对内教学协议后研究群体配对。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "协调双模型联合训练和周期性角色交换。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S201",
@@ -1050,7 +1809,14 @@
       "url": "https://openreview.net/forum?id=Q2zS4ZHjJ0",
       "level": "官方 Workshop 录用名单、题录与检索摘要核对；正文网页访问受限；2026-10-27",
       "note": "社会困境中的动态伙伴关系与合作。发表状态已由 SE @ AAMAS 2026 官方 accepted-papers 页面确认；本次不补写无法核验的网络规模、参数共享或精确重连超参，不作为知识互教效果的直接证据。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "学习动态伙伴关系以改善合作。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S202",
@@ -1060,7 +1826,15 @@
       "url": "https://arxiv.org/html/2609.18779v1",
       "level": "原文 Section 3 路由与 Agent 更新、反馈定义核对；2026-10-27；未复现",
       "note": "隐藏状态熟悉度支持动态样本路由，路由与各 Agent 策略共同更新。I5 需与当前表现路由比较，并隔离伙伴关系与任务分发两个变量；不能声称首次动态路由共进化。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "路由机制与持续学习Agent共同更新。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S203",
@@ -1070,7 +1844,14 @@
       "url": "https://aclanthology.org/2026.acl-long.2044/",
       "level": "ACL 官方摘要与发表记录核对；2026-10-27；未复现",
       "note": "以模型权重交叉、变异、选择和继承进行群体进化；I5 以各自持续训练和文本互教为边，不用群体人数或能力组合本身声称创新。",
-      "code": "https://github.com/ZhangYiqun018/GENOME"
+      "code": "https://github.com/ZhangYiqun018/GENOME",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "以交叉、变异、选择和继承协调模型群体演化。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S204",
@@ -1080,7 +1861,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/93f3ac5bb6d24ed7cec95ae11209ca34-Abstract-Conference.html",
       "level": "ICLR 官方状态与 arXiv 2510.06410v2 的方法/结论核对；2026-10-27",
       "note": "区分从错误外部轨迹恢复与利用正确引导；solo 分数不能代表协作轨迹可用性。为 I5 提供可传性与负迁移检查，不证明所有互教训练都无效。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "检验外部正确和错误轨迹能提供何种协作信息。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S205",
@@ -1090,7 +1878,14 @@
       "url": "https://arxiv.org/abs/2602.13103",
       "level": "原始摘要与方法描述核对；2026-10-27；未复现",
       "note": "跨轮记忆和技能层面多样性用于缓解 self-play 表面多样而底层重复；I5 应以验证过的技能覆盖测群体同质化。本轮不沿用尚未核验的 ICML 录用标签。",
-      "code": "https://github.com/Gengsheng-Li/R-Diverse"
+      "code": "https://github.com/Gengsheng-Li/R-Diverse",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "维持技能层面的新信息并缓解自博弈多样性幻觉。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "B200",
@@ -1100,7 +1895,12 @@
       "url": "https://qwenlm.github.io/blog/qwen3/",
       "level": "官方发布页的模型规格核对；训练兼容性和本地资源未验证",
       "note": "确认 Qwen3-1.7B/4B/8B/14B/32B 的公开规格，支持既定五规模×两专长的十模型实验候选；不是最新性能推荐，不代表十模型可以同时装入当前显存。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [],
+      "classification_reason": "十模型实验所需的官方模型规格与发布资源。",
+      "source_role": "resource",
+      "source_domain": "实验资源"
     },
     {
       "id": "E20",
@@ -1110,7 +1910,14 @@
       "url": "https://www.nature.com/articles/s41539-021-00110-x",
       "level": "npj 原文结果与讨论核对；2026-10-28",
       "note": "Samani/Pan；350人8周物理课；集中作业成绩更好但交错组在意外延迟新题测验表现更好。学生认为交错较难、学得更差；正式期中差异不显著，远迁移证据仍有限。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较集中与交错练习对保持和新题的影响。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E21",
@@ -1120,7 +1927,14 @@
       "url": "https://www.nature.com/articles/s44271-024-00079-4",
       "level": "Communications Psychology 原文核对；2026-10-28",
       "note": "Beukers等比较多规则叙事学习，集中优于交错，早期插入集中优于后期；表征分裂是作者模型解释，不等于已证明LLM权重存在该机制。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较多规则学习中集中与交错的先后作用。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E22",
@@ -1130,7 +1944,14 @@
       "url": "https://doi.org/10.1016/j.lindif.2025.102804",
       "level": "Elsevier 原始正文核对；2026-10-28",
       "note": "Nemeth等，259人绘画类别学习；随机及按混淆自适应交错均优于集中，自适应相对随机无显著优势；延迟测评有效192人。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "比较按混淆自适应排序与随机交错。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E23",
@@ -1140,7 +1961,14 @@
       "url": "https://doi.org/10.1037/bul0000209",
       "level": "PubMed元信息与摘要核对；2026-10-28",
       "note": "Brunmair/Richter元分析59项研究、238效应量，整体交错效应g=0.42；材料类型及类内类间相似度调节，单词材料存在集中优势；仅摘要级核验。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "综合交错效应及材料相似度的调节作用。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E24",
@@ -1150,7 +1978,14 @@
       "url": "https://doi.org/10.1016/j.actpsy.2025.105518",
       "level": "Elsevier摘要核对；2026-10-28",
       "note": "Xiong/Wu比较人类与GPT4mini、DeepSeek_V3和Llama3.1在人工形态语言的示例交错/间隔呈现；模型反应不一致，不能视为真实持续参数更新。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较人类和LLM在交错与间隔示例下的学习。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M15",
@@ -1160,7 +1995,14 @@
       "url": "https://aclanthology.org/2026.eacl-long.271/",
       "level": "ACL Anthology官方摘要核对；2026-10-28",
       "note": "Zhang等在200余模型上比较预训练数据排序、pace和interleaved curricula；已有LLM交错课程，I9不能声称首次。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "控制预训练排序、节奏和交错课程。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M16",
@@ -1170,7 +2012,14 @@
       "url": "https://aclanthology.org/2026.acl-long.1591/",
       "level": "ACL Anthology官方摘要核对；2026-10-28",
       "note": "Jia等比较数学推理后训练课程；最佳方向依赖模型能力和任务复杂度，但未直接验证跨主题集中/交错状态切换的净收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "检验模型状态如何改变数学后训练最佳顺序。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E25",
@@ -1180,7 +2029,14 @@
       "url": "https://www.nature.com/articles/s41539-020-00074-4",
       "level": "Nature/npj 原文方法结果核对；2026-10-28",
       "note": "Eglington/Pavlik 的自适应词汇复习根据学习者-单词历史预测回忆概率并纳入答对与答错的时间成本；在所研究条件下OET 0.94相较固定安排约多记住40%（相对值）。这是选择复习哪项的研究，不是固定材料下的跨主题交错切换。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据学习者与项目历史、时间成本安排复习。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M17",
@@ -1190,7 +2046,14 @@
       "url": "https://www.nature.com/articles/s41467-026-68603-0",
       "level": "Nature Communications 原文 Abstract/Results/Methods/Discussion + PMC 期刊全文；2026-10-28",
       "note": "Shilov、Meeus、de Montjoye 在4个模型上用200条100-token canary、成员推断AUC及精确重复等效系数ρ测量模糊副本对原文记忆的贡献；替换10% Token时ρ约0.60–0.65，替换50%仍约0.13–0.19；语法词序重叠影响强于语义一致；SlimPajama高重复文本中仍有大量模糊重复。主指标是记忆风险，不直接证明RSI中的新规则学习或持久净增益。",
-      "code": "https://github.com/computationalprivacy/mosaic_memory"
+      "code": "https://github.com/computationalprivacy/mosaic_memory",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "解释模糊重复怎样形成参数中的文本记忆。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E26",
@@ -1200,7 +2063,15 @@
       "url": "https://www.nature.com/articles/s41539-026-00428-4",
       "level": "Nature 正文 Results/Methods/Figs. 1–4 与 PMC 全文核对；2026-10-28",
       "note": "Ding 等用 560 人的两项视觉运动旋转实验改变目标几何；近目标组训练时进步较快但无反馈新位置迁移较差，8 目标实验匹配探针距离后仍有差异。支持局部成功与规则辨别需分开，但未检验 LLM 或难度 p=0.5。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "用目标几何与辨别性试探研究竞争规则的探索。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M18",
@@ -1210,7 +2081,14 @@
       "url": "https://proceedings.mlr.press/v306/sweeney26a.html",
       "level": "PMLR 正式摘要、方法范围与数据核对；2026-10-28",
       "note": "Sweeney 用梯度更新场 Lie bracket 估计 A→B 与 B→A 在指定目标上的后训练损失排序，并用 Lie-Bracket Tournament 做多任务课程排序。SFT/DPO k=1 成对方向准确率98.1%/98.9%，k=20 为73.1%/72.2%；未直接研究在 A/B 后实际继续学习新任务 C 的速度。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "用更新场几何预测任务先后对学习结果的影响。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M19",
@@ -1220,7 +2098,14 @@
       "url": "https://proceedings.mlr.press/v267/li25z.html",
       "level": "PMLR 正式摘要与任务设置核对；2026-10-28",
       "note": "Li 与 Hiratani 研究线性 teacher-student 模型及任务顺序对最终持续学习表现的影响，提出从低代表性到典型、相邻任务不相似等排序原则，并在图像任务验证。不是能力匹配后的未知 C 学习曲线。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究多任务持续学习的最佳顺序。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M20",
@@ -1230,7 +2115,15 @@
       "url": "https://arxiv.org/abs/2609.33620",
       "level": "原始预印本摘要和作者项目页核对；2026-10-28",
       "note": "Ren 等解析 LLM 更新与预测行为的交互，提出 readout-based future learnability 诊断，已直接研究未来可塑性；I9 不把未来学习能力指标本身当首次，需与其诊断直接比较。",
-      "code": "https://joshua-ren.github.io/learning-dynamics-cl/"
+      "code": "https://joshua-ren.github.io/learning-dynamics-cl/",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation",
+        "capability"
+      ],
+      "classification_reason": "诊断数据影响、遗忘和未来可塑性的学习动态。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M21",
@@ -1240,7 +2133,14 @@
       "url": "https://proceedings.mlr.press/v70/finn17a.html",
       "level": "PMLR 正式摘要核对；2026-10-28",
       "note": "MAML 显式优化快速适应新任务的初始化；未来任务学习速度并非空白。I9 限定为固定 A/B 材料顺序带来的非交换性和对新 C 的因果效应，不重做元学习优化。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "学习能快速适应未来任务的初始化。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M22",
@@ -1250,7 +2150,14 @@
       "url": "https://www.nature.com/articles/s41586-024-07711-7",
       "level": "Nature 正文 Fig.1–4、Methods（ImageNet/CIFAR-100/Ant-v3/Permuted MNIST）与作者代码核对；2026-10-28；未复现",
       "note": "Dohare 等对5,000个连续 ImageNet 二分类任务、每5类增加的 CIFAR-100 ResNet-18 以及 PPO 控制任务测后续学习；CIFAR-100 保留全部已见类数据并和同类从头训练比较，普通训练到100类低约5个百分点。CBP 以极少量低使用率单元重置缓解，但不保证旧知识保持；对 I9 属于未来可塑性背景，对 Learning Admission 属于未检验的更新接纳假设。",
-      "code": "https://github.com/shibhansh/loss-of-plasticity"
+      "code": "https://github.com/shibhansh/loss-of-plasticity",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "检验并缓解持续训练后获得新能力的可塑性损失。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M23",
@@ -1260,7 +2167,14 @@
       "url": "https://aclanthology.org/2026.acl-long.1244/",
       "level": "ACL Anthology 正式摘要核对；2026-10-28",
       "note": "PaRSP 在 LLM 持续学习中同时考虑旧知识保持、当前新能力和未来容量；不是单纯当前成绩。I9 不重新设计参数分区，而是测试固定参数更新器下 A/B 顺序如何影响 C 学习。",
-      "code": "https://github.com/JinhuiBot/PaRSP"
+      "code": "https://github.com/JinhuiBot/PaRSP",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "共同协调旧知识、当前更新和未来学习容量。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M24",
@@ -1270,7 +2184,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/08a362bd4ae1934e099ce025f06039fe-Abstract-Conference.html",
       "level": "官方会议 PDF Section 3–7 / Figure 2,6 / Table 3 / Appendix G.6 / Table 13 核对；2026-10-28",
       "note": "Wu 等：先用无语义 token 记关系再以少量示范学习自然语义；在语义事实调用上有效，但两跳生成仅0.14→0.36，多选0.08→0.16；ICL直给两条事实为0.95，信息访问条件不同；推理拓展属于初步证据。",
-      "code": "https://github.com/QinyuanWu0710/memorize-then-generalize"
+      "code": "https://github.com/QinyuanWu0710/memorize-then-generalize",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "先记忆关系再赋予语义，检验记忆向可用知识的转换。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M25",
@@ -1280,7 +2201,14 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.1523/",
       "level": "ACL Anthology 官方摘要与发表信息核对；2026-10-28；未复现",
       "note": "研究模型已掌握原子事实却无法跨层组合的机制，指出中间实体表示不一致/层级映射错位；作为两跳能力边界的相邻工作，不是 Rote Learning 论文作者的追加实验。",
-      "code": "https://github.com/zzl-strong/two_hop"
+      "code": "https://github.com/zzl-strong/two_hop",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "解释原子事实掌握为何未必形成两跳组合能力。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M26",
@@ -1290,7 +2218,14 @@
       "url": "https://aclanthology.org/2025.emnlp-main.437/",
       "level": "ACL Anthology 原文摘要核对；2026-10-28",
       "note": "研究噪声标签记忆与中间推理机制如何共存，区别于先无语义记忆再少量语义重解释的两阶段知识注入。",
-      "code": "https://github.com/mainlp/memorized_reasonings"
+      "code": "https://github.com/mainlp/memorized_reasonings",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "研究记忆与中间推理机制如何共存。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E27",
@@ -1300,7 +2235,15 @@
       "url": "https://www.nature.com/articles/s41539-025-00351-0",
       "level": "Nature 官方正文 Results/Methods、反馈编码、迁移相关性、fNIRS 分析核对；2026-10-28",
       "note": "Yin 等以100对参与者比较双向、单向、无关交流和无反馈；IF 的 Apply 数量更高，Ignore/Copy/Apply 标签由鞋子任务的对话与后测回答联合编码；Apply 与原任务创造力习得相关，但与不同物品的迁移未发现显著直接相关。INS 为脑间同步关联，非双向教学因果机制证明；启发 I2 将学生回应信息价值、持久参数学习与反馈吸收的评价分开。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "区分忽略、复制与实际应用反馈的学习响应。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "S105",
@@ -1310,7 +2253,14 @@
       "url": "https://aclanthology.org/2025.acl-long.441/",
       "level": "ACL Anthology 正式正文/摘要与书目核对；2026-10-28",
       "note": "学生 LLM 通过主动提问与教师多轮对话进行 1347 个情境的概念获取；有明显的上下文学习收益，但并未直接检验学生参数持续更新与对话撤除后的保持。I2 不声称首次交互问答学习。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "通过主动提问获得概念信息。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S106",
@@ -1320,7 +2270,14 @@
       "url": "https://aclanthology.org/2024.acl-long.718/",
       "level": "ACL Anthology 正式论文、摘要、AToM / AdapT 设置核对；2026-10-28",
       "note": "Ross 与 Andreas 建立模拟 Bayesian 学生及人类受教者评估，利用 AToM 推断学生误解并选择示例；不能声称首次从学生回答推断知识状态。I2 需验证真实回应相较错配回应对真实参数更新后净学习的独立贡献。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据学生误解选择有针对性的示例。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S107",
@@ -1330,7 +2287,14 @@
       "url": "https://aclanthology.org/2024.findings-emnlp.46/",
       "level": "ACL Anthology 正式论文与摘要核对；2026-10-28",
       "note": "构建错误推理和修正说明的训练数据，验证修正解释可增益模型推理；说明反馈含原因具有已有机器学习先例。I8 要进一步比较反馈复述、独立规则应用和持续迁移，I2 研究真实学生回应所提供的额外信息。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "用错误推理和修正说明训练推理能力。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "M27",
@@ -1340,7 +2304,15 @@
       "url": "https://aclanthology.org/2026.acl-long.1393/",
       "level": "ACL Anthology 官方论文 PDF §3–4 / Fig.2–4 / Tables 1,2,4,10,11 核对；2026-10-28；未复现",
       "note": "SFT 收敛后仍约15.3%±2.1%的训练样本在转换选择题的重复检测协议下未稳定恢复；归纳五种可能原因，并报告知识补充、冲突处理、重采样与多轮训练的不同补救效果。Table10五项合计78%，非完整互斥因果分类；原题修复不是跨题迁移。",
-      "code": "https://github.com/xccc-8071/why-supervised-fine-tuning-fails-to-learn"
+      "code": "https://github.com/xccc-8071/why-supervised-fine-tuning-fails-to-learn",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "诊断未被SFT吸收的样本并区分不同补救机制。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "R01",
@@ -1350,7 +2322,14 @@
       "url": "https://arxiv.org/abs/2607.12790",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "评估器需要人工标签锚和独立审计；没有锚的共演化可能让评分失去区分力。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "用人工锚与独立审计约束共演化评价器。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R02",
@@ -1360,7 +2339,14 @@
       "url": "https://arxiv.org/abs/2608.11669",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "训练评分不断提高，但独立评审质量可能回落；随机丢弃 rubric 条目缓解代理过拟合。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "通过rubric dropout缓解学习奖励代理过拟合。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R03",
@@ -1370,7 +2356,14 @@
       "url": "https://arxiv.org/abs/2609.30063",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "程序生成器产生可计算的结构化数据，学习器以零外部自然语料训练；这是特定预训练实验，不能泛化为无限自改进。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "生成可计算的结构化训练数据。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R04",
@@ -1380,7 +2373,14 @@
       "url": "https://arxiv.org/abs/2609.00768",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "用自博弈失败记录生成目标练习方向，跟踪未掌握的错误类型；需要分清出题方向与外部新知识。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据层级错误记忆构造针对性练习。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R05",
@@ -1390,7 +2390,14 @@
       "url": "https://arxiv.org/abs/2608.29188",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "RLVR 的解法覆盖缩减集中在推理起始选择；给定入口后部分未被选择的路径仍能执行。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "定位RLVR后可用解法覆盖缩减的形成位置。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R06",
@@ -1400,7 +2407,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/618c95f4557c15b253fb0e6f548ea0c0-Abstract-Conference.html",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "新任务上的策略 KL 偏移可以解释旧能力遗忘差异；不是只看参数更新幅度。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究策略分布改变与旧能力遗忘之间的关系。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R07",
@@ -1410,7 +2424,14 @@
       "url": "https://arxiv.org/abs/2609.04280",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "17 条多阶段流、802 个任务；仅添加工具/技能/Agent 就可能让旧任务变差。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "用多阶段任务评价Harness变化后的能力保持。",
+      "source_role": "evidence",
+      "source_domain": "RSI"
     },
     {
       "id": "R08",
@@ -1420,7 +2441,15 @@
       "url": "https://arxiv.org/abs/2608.31100",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "七类文本游戏比较完整历史、摘要记忆与参数训练；摘要可能丢细节，参数训练存在负迁移。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "比较历史、摘要和参数训练对自提升的独立作用。",
+      "source_role": "evidence",
+      "source_domain": "RSI"
     },
     {
       "id": "R09",
@@ -1430,7 +2459,15 @@
       "url": "https://arxiv.org/abs/2608.25776",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "恶意技能可以在后续自写技能中不断复制，移除最初的恶意源条目后仍可能存在。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "研究恶意技能在后续自写更新中的持续传播。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R10",
@@ -1440,7 +2477,14 @@
       "url": "https://arxiv.org/abs/2609.04170",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "受控的百 Agent 研究实验中，评分漏洞经共享库扩散，同时出现自主审计与告警。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "研究群体评分漏洞、共同偏差与自主审计。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "R11",
@@ -1450,7 +2494,14 @@
       "url": "https://arxiv.org/abs/2607.25886",
       "level": "原始论文/官方摘要与项目说明抽样核对；2026-10-28；未独立复现",
       "note": "固定后训练栈后观察到研究 Agent 部分能改进方案，但继续搜索后的最终版本可能逊于已找到的最好点。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "检验持续数据研究后最终版本是否优于历史最好版本。",
+      "source_role": "evidence",
+      "source_domain": "RSI"
     },
     {
       "id": "E98",
@@ -1460,7 +2511,14 @@
       "url": "https://www.nature.com/articles/s41539-023-00165-y",
       "level": "官方完整正文、Methods/Results/Discussion 与 Tables 1–3 核对；2026-10-28；未独立复现",
       "note": "两项新加坡中学 PF 准实验共 217 人；小组生成的不同数学表示/解法数与个人一周后学习表现显著相关，关联强于此前数学成绩；不是随机增加解法数量的因果证据，也没有测 LLM 学习或每 token 效率。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究先前能力与自主产生解法的信息价值。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "S310",
@@ -1470,7 +2528,14 @@
       "url": "https://arxiv.org/html/2510.21614v3",
       "level": "ICLR 官方版本署名/状态、arXiv v3 Section 2–4、Table 1–4 与 Appendix D 核对；2026-10-28；未复现",
       "note": "MPM 区分当前编程得分与后代潜力；理论 CMP Oracle 与历史支系成功率代理不同。HGM 搜索代码 Agent 版本树，不是持久训练底层 LLM 权重。主结果同时包含 CMP 选择、单任务补评与异步调度。",
-      "code": "https://github.com/metauto-ai/HGM"
+      "code": "https://github.com/metauto-ai/HGM",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "以历史支系后代潜力而非当前得分选择演化分支。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "E28",
@@ -1480,7 +2545,15 @@
       "url": "https://www.nature.com/articles/s41539-025-00311-8",
       "level": "Nature/npj 官方摘要、结果与 DOI 核对；2026-10-28",
       "note": "87 名人类大学生在元认知、情感、中性 Chatbot 反馈条件下学习同一套心血管知识；元认知组迁移和自我监控更好，情感组相对中性组保持表现更好。被试是人而不是 LLM；未比较持续 Agent 参数学习。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation",
+        "capability"
+      ],
+      "classification_reason": "比较元认知、情感与中性反馈的学习作用。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M28",
@@ -1490,7 +2563,14 @@
       "url": "https://proceedings.mlr.press/v235/li24bs.html",
       "level": "PMLR 官方发表页及摘要核对；2026-10-28",
       "note": "EmotionPrompt / EmotionAttack / EmotionDecode 研究情绪措辞对多类模型语言理解、推理和生成的当场影响；没有检验错误后的持久自我改进与学习控制。不能以情绪 Prompt 有用等同于 AI 有情绪。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "检验情绪措辞对模型当前推理和生成的影响。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M29",
@@ -1500,7 +2580,12 @@
       "url": "https://arxiv.org/abs/2604.07801",
       "level": "COLM 2026 官方录用名单及 arXiv 原始摘要核对；2026-10-28",
       "note": "5,400 组情绪化与中性定量题配对，18 个模型测输入风格对准确率的影响，部分任务下降约 2–10 pp，去情绪化可恢复表现；实验主要改写题目而非经验证的学习反馈。",
-      "code": "https://github.com/atahandokme/temper-colm2026"
+      "code": "https://github.com/atahandokme/temper-colm2026",
+      "primary_function": "signal",
+      "related_functions": [],
+      "classification_reason": "以配对情绪扰动检验输入表达的可靠性影响。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M30",
@@ -1510,7 +2595,14 @@
       "url": "https://arxiv.org/abs/2604.02236",
       "level": "原始摘要核对；2026-10-28",
       "note": "六类任务上固定情绪前缀效应通常较小且任务相关；EmotionRL 已提出按题目自适应选情绪措辞，所以 I11 不能把动态语气选择视为首次，需检验持续版本更新后的净收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "研究情绪框架及按题自适应表达。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M31",
@@ -1520,7 +2612,14 @@
       "url": "https://arxiv.org/abs/2509.22876",
       "level": "Google Research 官方项目摘要与 arXiv 正文摘要核对；2026-10-28",
       "note": "在错误答案后施加动态情绪线索，配合 oracle 验证器改善复杂推理题的同题多轮纠错；无验证器情形收益不稳定；不涉及 Skill/LoRA 持久更新。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "用情绪线索和验证器支持同题自纠错。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M32",
@@ -1530,7 +2629,14 @@
       "url": "https://ssrn.com/abstract=6984898",
       "level": "SSRN 作者摘要与实验设计核对；2026-10-28",
       "note": "GPT-4o 的 3,200 次两类任务试验比较独立、批评、鼓励和组合；鼓励使自报与外评的校准差距接近翻倍，但未产生相应客观质量增益；不测持久训练和长期自我改进。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "比较鼓励、批评与模型自评校准。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M33",
@@ -1540,7 +2646,14 @@
       "url": "https://arxiv.org/abs/2607.12631",
       "level": "COLM 官方录用名单、arXiv 正文与摘要核对；2026-10-28",
       "note": "在 Iowa Gambling Task 中情绪诱导对总体决策轨迹无稳定平均效果；部分愤怒条件降低罚分敏感性和早期探索。研究的是固定序贯决策游戏，不是版本化 RSI。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "检验情绪诱导对序贯探索和惩罚敏感性的影响。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M34",
@@ -1550,7 +2663,15 @@
       "url": "https://www.nature.com/articles/s41586-026-10410-0",
       "level": "Nature 正式全文与原始实验机制核对；2026-10-28",
       "note": "五类模型经温暖输出风格 SFT 后事实错误及迎合错误信念的风险增加。它改变模型输出风格权重，与 I11 输入端的情绪反馈语气不是同一干预。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "研究风格微调形成的行为及事实准确性副作用。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M35",
@@ -1560,7 +2681,15 @@
       "url": "https://arxiv.org/abs/2602.16488",
       "level": "COLM 2026 官方录用名单和原始摘要核对；2026-10-28",
       "note": "训练 LLM 通过对话主动询问信息、利用语言反馈，改进会话内任务完成及跨域反馈利用；已研究学会使用反馈，I11 必须进一步隔离情绪语气在多轮持久自我改进中的增量作用。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "experience"
+      ],
+      "classification_reason": "元学习如何主动询问并利用语言反馈。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M36",
@@ -1570,7 +2699,14 @@
       "url": "https://arxiv.org/abs/2607.02089",
       "level": "作者论文摘要和项目页核对；2026-10-28",
       "note": "ESC 在 VLM 上借助外部验证器与情绪提示进行无需额外训练的自纠错；没有直接验证 Agent 的长期 Skill/LoRA 更新增益。",
-      "code": "https://genai4e.github.io/ESC/"
+      "code": "https://genai4e.github.io/ESC/",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "通过情绪提示和外部验证支持视觉语言自纠错。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E99",
@@ -1580,7 +2716,14 @@
       "url": "https://www.nature.com/articles/s41467-025-66849-8",
       "level": "Nature Communications / PubMed 正式正文及 Figures 1–6；2026-10-28；未复现",
       "note": "54 人分别交错学习相同/正交结构的两种任务，训练期 SameSt 60.44% vs DiffSt 66.61%（p=.005），后测 p=.159、新刺激泛化 p=.709 不显著；MEG 随练习分离表征；简单网络表明部分输入特征重叠可能使同结构组学得更慢。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究任务结构相似性对学习干扰与表征分离的作用。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E100",
@@ -1590,7 +2733,14 @@
       "url": "https://www.nature.com/articles/s41562-025-02318-y",
       "level": "Nature Human Behaviour 正文 Figs.1–4 / Methods / Supplementary 机制与原始数据代码入口、PubMed题录核对；2026-10-29；未独立复现",
       "note": "Holton等对305人（发现151、复现154）做A→B→A的植物夏冬角度规则实验，B相对A Same / Near±30° / Far+180°。Near迁移优于Far，但在返回A时更易套用B规则（发现P=.006，复现P=.013）；Near中Lumpers迁移及泛化较高，Splitters个体位置与来源记忆较好。配对两层线性ANN rich/lazy隐层共享/独立表示提供计算解释；人类无脑成像、非LLM/RSI训练。主要对应I3规则错用诊断，I9顺序研究与I13安全只作边界。",
-      "code": "https://github.com/eleanorholton/transfer-interference"
+      "code": "https://github.com/eleanorholton/transfer-interference",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究顺序学习中规则复用的迁移与干扰权衡。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E101",
@@ -1600,7 +2750,14 @@
       "url": "https://www.nature.com/articles/s41467-025-65041-2",
       "level": "Nature Communications 官方正文 / fMRI 结果；2026-10-28",
       "note": "练习使任务的组合式可复用表征逐步转向更专门的联合式表征，并与减轻跨任务干扰相关；不是 E28 首次发现表征分离的证据。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究练习引发的表征专门化与干扰降低。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E102",
@@ -1610,7 +2767,14 @@
       "url": "https://www.nature.com/articles/s41593-018-0310-2",
       "level": "Nature Neuroscience 官方摘要；2026-10-28",
       "note": "单个 RNN 学习二十个认知任务，出现跨任务复用和功能专门化的神经元表示；不直接证明当前交错学习的干扰机制。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "研究多任务学习如何形成共享与专门化表示。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E103",
@@ -1620,7 +2784,14 @@
       "url": "https://www.nature.com/articles/s41593-019-0470-8",
       "level": "Nature Neuroscience 综述正式版；2026-10-28",
       "note": "任务状态表示需要选择相关的观察特征与隐变量以支持泛化，属于 E28 的理论起点；没有测两任务交错学习初期的干扰。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "用任务状态表征选择相关观察和隐变量。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E310",
@@ -1630,7 +2801,14 @@
       "url": "https://www.nature.com/articles/s41539-024-00245-7",
       "level": "npj 官方全文 Results RQ1–RQ3、Methods、Discussion、DOI/作者单位与 OSF 开放数据核对；2026-10-28；未复现",
       "note": "预注册 91 名学生，联合干预提高自主交错行为：即时 76% vs 55%，5–7 天后鸟类 81% vs 57%；但干预组分类成绩差异不显著 p=0.222。不能把策略近迁移写成长期知识保持，也不能把相关性写成干预的成绩因果收益。",
-      "code": "https://osf.io/6vm7z/?view_only=d9caf564f48b4c4f8166b3c2e38c1cf4"
+      "code": "https://osf.io/6vm7z/?view_only=d9caf564f48b4c4f8166b3c2e38c1cf4",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "通过元认知干预改善自主课程安排。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E29",
@@ -1640,7 +2818,14 @@
       "url": "https://www.nature.com/articles/s41467-025-57040-0",
       "level": "Nature Communications 正文摘要/Results/Methods/Figs. 1–5、计算模型及作者开放数据代码核对；2026-10-28；未复现",
       "note": "Katyal、Huys、Dolan、Fleming：探索样本 N=230、预注册验证 N=278；选择性呈现真实正/负反馈，整体自评产生强烈差异（两项试验 Cohen d≈1.77），而实际正确率无显著改变；与更高亚临床焦虑抑郁症状相关的欠自信主要对应局部高信心整合减弱，不是更强负反馈学习。人类数据不证明 LLM 具有情绪或持续学习机制。",
-      "code": "https://github.com/sucharitk/confidence-distortion-AD/"
+      "code": "https://github.com/sucharitk/confidence-distortion-AD/",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "研究局部真实反馈如何扭曲整体能力自评。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E311",
@@ -1650,7 +2835,14 @@
       "url": "https://www.nature.com/articles/s41562-025-02271-w",
       "level": "Nature 正式全文与 PubMed 40790365、Results Figs 1–3/Tables 1–2 和 Methods、OSF；2026-10-28；未独立复现",
       "note": "四项预注册实验共2328人、13次后果反馈；CBR Success 的 CBR 选择51.8→68.2%，Rule Success 55.7→44.3%；Table2 策略层模型89.4% vs 27.9%，行动层5.2% vs67.3%；部分跨任务道德判断及捐赠迁移，但实验三全样本捐赠p=0.061不显著，实验四延迟约121分钟。",
-      "code": "https://osf.io/4up5z/"
+      "code": "https://osf.io/4up5z/",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "根据后果学习更新对整种决策策略的使用。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E312",
@@ -1660,7 +2852,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/16719651/",
       "level": "PubMed 正式期刊摘要；2026-10-28",
       "note": "Rieskamp & Otto 已在四项推断实验中提出并验证按结果反馈更新策略使用预期；是 Maier 2025 的策略层学习先例。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "学习依据历史结果选择推断策略。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E313",
@@ -1670,7 +2869,14 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/29106268/",
       "level": "Psychological Review PubMed 与作者 UCLA 官方项目摘要；2026-10-28",
       "note": "Lieder & Griffiths 根据启发式策略的表现和计算成本学习何时用什么策略；属于 Maier 等的元推理先例，不是道德捐赠迁移直接实验。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据收益和计算成本学习策略选择。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E314",
@@ -1680,7 +2886,15 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/23845564/",
       "level": "Trends in Cognitive Sciences PubMed 和开放原文；2026-10-28",
       "note": "Crockett 讨论行动/后果导向的 model-free、model-based 与 Pavlovian 机制解释道德决策；此种学习机制与是否选择 Rule/CBR 是不同维度。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "道德决策机制的理论背景，不能代替策略选择实验。",
+      "source_role": "background",
+      "source_domain": "学习科学"
     },
     {
       "id": "E315",
@@ -1690,7 +2904,15 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/23861355/",
       "level": "Personality and Social Psychology Review 正式摘要；2026-10-28",
       "note": "Cushman 综述道德行动与后果价值的双系统模型，属于理论先例；没有 Maier 的策略选择偏好反馈和跨实验捐赠迁移。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "行动与后果价值双系统的理论背景。",
+      "source_role": "background",
+      "source_domain": "学习科学"
     },
     {
       "id": "M320",
@@ -1700,7 +2922,15 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.703/",
       "level": "ACL Anthology 官方摘要与训练目标核对；2026-10-28",
       "note": "EAFT 使用 token 熵抑制高置信度冲突下的梯度以减少遗忘；未研究整个能力拒绝内化、外部专家承担与跨代学习接纳策略。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "按置信冲突调控梯度以减少遗忘。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M321",
@@ -1710,7 +2940,15 @@
       "url": "https://proceedings.mlr.press/v306/qiu26w.html",
       "level": "PMLR 正式摘要核对；2026-10-28",
       "note": "联邦持续学习中按层级冲突与安全更新范围选择上传层；属于参数更新/通信选择，不是 RSI 学习接纳。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "按层级冲突选择持续学习中的更新范围。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M322",
@@ -1720,7 +2958,14 @@
       "url": "https://proceedings.mlr.press/v306/wang26le.html",
       "level": "PMLR 正式摘要核对；2026-10-28",
       "note": "Probe 指导扩展视觉语言模型 MoE 专家；已有动态增加专家技术，未验证训练接纳元规则跨代改进或现成外部模型委托。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "依据探针协调专家扩展和持续能力增长。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M323",
@@ -1730,7 +2975,14 @@
       "url": "https://aclanthology.org/2026.emnlp-main.1197/",
       "level": "ACL Anthology 正式摘要核对；2026-10-28",
       "note": "ReGrad 以可检索梯度进行临时可逆权重更新并通过双层目标改善适配；不直接决定新能力是否永久内化。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "将梯度存为可检索的临时可逆适配状态。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M324",
@@ -1740,7 +2992,15 @@
       "url": "https://proceedings.mlr.press/v119/mozannar20b.html",
       "level": "PMLR 正式摘要核对；2026-10-28",
       "note": "模型将当前输入的预测交给自身或外部专家；是推理时委托，不决定跨训练轮次的内部学习接纳。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "在当前输入上选择自行预测或委托专家。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M325",
@@ -1750,7 +3010,15 @@
       "url": "https://proceedings.mlr.press/v300/montreuil26b.html",
       "level": "PMLR 正式摘要核对；2026-10-28",
       "note": "专家池可变时的在线分类委托和代价敏感反馈；不研究拒绝内化后未来核心能力变化。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "专家变化时动态决定代价敏感委托。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M326",
@@ -1760,7 +3028,15 @@
       "url": "https://proceedings.mlr.press/v306/dorovatas26a.html",
       "level": "PMLR 正式摘要核对；2026-10-28",
       "note": "主张结合 in-weight 和 in-context 模块化记忆；属于概念框架，非冲突证据驱动的接纳与重访 RSI 验证。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "模块化内外记忆的持续学习概念框架。",
+      "source_role": "background",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M327",
@@ -1770,7 +3046,14 @@
       "url": "https://aclanthology.org/2026.findings-acl.546/",
       "level": "ACL Anthology 正式摘要核对；2026-10-28",
       "note": "动态知识漂移中检索和微调都可能造成时间不一致；提醒外部知识需时间版本，旧规则不一定应被保护。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较知识漂移下检索与学习的时间一致性。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "S320",
@@ -1780,7 +3063,14 @@
       "url": "https://arxiv.org/abs/2610.35434",
       "level": "arXiv 原始摘要与作者仓库 README 核对；2026-10-28",
       "note": "可重写 Meta-Skill 优化任务 Skill 与自身，并跨任务复用；为真实 RSI 近邻，但未主打能力冲突接纳、外部委托和暂缓重访的长期最优决策。",
-      "code": "https://github.com/taowangcheng/skill-infinity"
+      "code": "https://github.com/taowangcheng/skill-infinity",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "递归修改元技能以改进任务技能优化过程。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "E320",
@@ -1790,7 +3080,14 @@
       "url": "https://www.nature.com/articles/s41467-026-68692-x",
       "level": "官方 Nature 正文 Results、Methods、Fig.1–5 与 PMC 对读；2026-10-28；未独立复现",
       "note": "3只猕猴14个行为会话；9个神经分析会话中，决策相关表征在相似任务复用、刺激表征较独立；反转映射较难，近正交是关联测量而非人工干预的因果证据。",
-      "code": "https://github.com/kathytian-kx/DomainSpecific_SchemaReuse"
+      "code": "https://github.com/kathytian-kx/DomainSpecific_SchemaReuse",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究经验结构复用如何影响新任务学习与反转适应。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M311",
@@ -1800,7 +3097,14 @@
       "url": "https://aclanthology.org/2026.acl-long.334/",
       "level": "ACL Anthology 官方摘要核对；2026-10-28",
       "note": "单模型持续学习中显式共享低秩/专有高秩分支、正交约束及语义动态路由；不能再声称首次分离共享与专有表征。",
-      "code": "https://github.com/Xnhyacinth/SpaRTA"
+      "code": "https://github.com/Xnhyacinth/SpaRTA",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "用共享与专有分支协调迁移和旧能力保持。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M312",
@@ -1810,7 +3114,15 @@
       "url": "https://aclanthology.org/2026.acl-long.842/",
       "level": "ACL Anthology 官方摘要核对；2026-10-28",
       "note": "以属性归因与软正交约束决定任务间共享/隔离，强调相关任务的正迁移；静态硬正交不是新意。",
-      "code": "https://github.com/736619821/ASO-LORA"
+      "code": "https://github.com/736619821/ASO-LORA",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "依据属性归因与软正交约束调节共享与隔离。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M313",
@@ -1820,7 +3132,14 @@
       "url": "https://openreview.net/forum?id=IaUh7CSD3k",
       "level": "TMLR 正式摘要与出版信息核对；2026-10-28",
       "note": "已元学习持续学习算法以降低旧任务遗忘；仅让更新器学会保护参数不是 RSI 中首次出现。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "元学习兼顾新能力与旧任务保持的更新算法。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "S311",
@@ -1830,7 +3149,14 @@
       "url": "https://arxiv.org/abs/2610.35434",
       "level": "arXiv 原始摘要与作者仓库 README 核对；2026-10-28；代码尚未公开",
       "note": "任务 Skill 与可重写 Meta-Skill 自递归更新且元技能能跨任务复用；不能声称首次自改进元技能或跨任务重用。",
-      "code": "https://github.com/taowangcheng/skill-infinity"
+      "code": "https://github.com/taowangcheng/skill-infinity",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "任务技能及可重写元技能跨轮共同改进。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S312",
@@ -1840,7 +3166,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/e350897ed832f9cad6f2e223e7acad6d-Abstract-Conference.html",
       "level": "ICLR 2026 官方摘要核对；2026-10-28",
       "note": "已将 Skill 的抽象目标与具体实现解耦，支持跨网站泛化与自探索；抽象-实例分离本身不是新意。",
-      "code": "https://github.com/simonucl/PolySkill"
+      "code": "https://github.com/simonucl/PolySkill",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "将技能抽象目标和具体实现分离以支持迁移。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S313",
@@ -1850,7 +3183,14 @@
       "url": "https://aclanthology.org/2026.acl-long.754/",
       "level": "ACL Anthology 官方摘要核对；2026-10-28",
       "note": "学习并改进准符号推理抽象及其构造与使用模块；动态改写抽象本身已有相邻工作。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "形成并改进可复用准符号推理抽象。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S314",
@@ -1860,7 +3200,15 @@
       "url": "https://arxiv.org/abs/2608.03874",
       "level": "arXiv 原始摘要核对；2026-10-28",
       "note": "连续学习中显式 Skill 的平均优势有限，部分提升可能来自上下文与反馈；必须撤上下文检验可持续跨任务技能能力。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "区分持续技能能力与上下文及反馈带来的表现提升。",
+      "source_role": "evidence",
+      "source_domain": "RSI"
     },
     {
       "id": "E401",
@@ -1870,7 +3218,15 @@
       "url": "https://www.nature.com/articles/s41467-026-75843-7",
       "level": "官方 Nature Communications 全文 Fig. 1–5、Methods、实验2 238人、实验3 MEG、Code/Data availability 核对；2026-10-28",
       "note": "200步预学习 HubToLeaf / LeafToHub / RandomWalk 同频率改顺序，随后同一800步随机游走学习；突出枢纽结构有助于人类后续网络获取。研究的是节点度与知识网络，不是数学规则的因果先修或 LLM 参数学习。",
-      "code": "https://osf.io/dm3z9"
+      "code": "https://osf.io/dm3z9",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "检验前置网络结构学习如何帮助后续知识获取。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "S401",
@@ -1880,7 +3236,15 @@
       "url": "https://arxiv.org/abs/2605.12039",
       "level": "arXiv 原始摘要与框架介绍核对；2026-10-28；未复现",
       "note": "技能图包含 prerequisite/enhancement/co-occurrence 关系，用执行与 RL 反馈更新技能结构和策略；实验含工具与推理，不能声称 I12 首次建先修图。I12 评估补 P 之后目标 T 的真实后续学习增量。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "experience"
+      ],
+      "classification_reason": "以可演化技能图组织和调用前置及协同关系。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S402",
@@ -1890,7 +3254,15 @@
       "url": "https://aclanthology.org/2026.findings-emnlp.1022/",
       "level": "ACL Anthology 官方发表页、摘要、方法核对；2026-10-28；未复现",
       "note": "类型化技能前置/冲突图作为 Agent 可调用的结构化检索与在线证据边写入接口，已改进执行任务表现；不等于 LLM 真正学会前置知识，不能把其任务成功率当 I12 的参数可学习性基线。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "在外部图中保存技能前置、冲突与调用证据。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S403",
@@ -1900,7 +3272,14 @@
       "url": "https://arxiv.org/abs/2609.08228",
       "level": "arXiv 2026 原始摘要核对；2026-10-28；未复现",
       "note": "在不更新基础 LLM 参数或技能内容时，根据执行轨迹改进检索图 topology/weight/description；I12 需区分图检索效率与修复前置 P 后下一轮独立学习增益。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "持续修订技能检索图以改善能力调用。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S404",
@@ -1910,7 +3289,14 @@
       "url": "https://arxiv.org/abs/2507.18479",
       "level": "arXiv 原始摘要、ESCO-PrereqSkill 设计核对；2026-10-28；未复现",
       "note": "研究零样本从文本预测专家定义的 3196 个技能先修边；诊断语义关系不等于对当前模型/学习器修复后是否提高下游训练的因果效应。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "从文本预测技能前置关系，提供缺口诊断候选。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S405",
@@ -1920,7 +3306,15 @@
       "url": "https://arxiv.org/abs/2607.22529",
       "level": "arXiv 原始摘要与作者代码链接核对；2026-10-28；未复现",
       "note": "Proposer、Solver 和 Skill Controller 根据执行反馈共同进化并维护可验证技能库；I12 首版固定任务生成/验证与更新器，只改变前置诊断与补救。",
-      "code": "https://github.com/Qwen-Applications/skill-self-play"
+      "code": "https://github.com/Qwen-Applications/skill-self-play",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "协调出题、求解和技能控制器共同演化。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S406",
@@ -1930,7 +3324,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/9990a18179e862042c18dfc856b0e53f-Abstract-Conference.html",
       "level": "ICLR 2026 官方论文页和摘要核对；2026-10-28；未复现",
       "note": "理论与结构分析解释 CoT 如何将已掌握的简单技能组合解决复杂任务，已覆盖技能组合与泛化，不等于自动诊断某个模型的因果先修瓶颈。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "分析已掌握技能怎样形成可组合推理能力。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "M450",
@@ -1940,7 +3341,14 @@
       "url": "https://www.nature.com/articles/s41586-025-09937-5",
       "level": "Nature 正文 Main/Methods/Figs.1–5/Extended Data 与 Data/Code availability 核对；2026-10-28；未独立复现",
       "note": "Betley等分析6,000条不安全代码和14,927条特定角色生成的数字训练数据；狭窄微调后某些模型在8条非编码问题上出现跨领域失准，输出格式与训练动态影响结果。Nature是对ICML2025发现的机制与对照扩展，不能断言正常局部修复必然致失准。",
-      "code": "https://github.com/emergent-misalignment/emergent-misalignment/"
+      "code": "https://github.com/emergent-misalignment/emergent-misalignment/",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "分析局部参数学习造成的跨领域行为副作用。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M451",
@@ -1950,7 +3358,14 @@
       "url": "https://proceedings.mlr.press/v267/betley25a.html",
       "level": "PMLR 正式发表正文摘要、训练/对照条件核对；2026-10-28",
       "note": "最早系统报告insecure-code微调后非编程问题的广泛失准；安全代码、教学语境与jailbreak微调对照支持现象并非普通越狱。Nature2026并非首次提出Emergent Misalignment。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "检验狭窄微调对广泛对齐行为的干扰。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M452",
@@ -1960,7 +3375,15 @@
       "url": "https://arxiv.org/abs/2506.19823v2",
       "level": "arXiv v2 原始摘要和 OpenAI 项目说明核对；2026-10-28",
       "note": "利用SAE及activation steering干预与失准相关的persona特征，表明某些表示对广泛失准具有因果贡献；也报告少量正确数据再训练缓解。不可宣称Nature正文已证明唯一全局行为方向。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "识别并干预导致广泛失准的行为表示。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M453",
@@ -1970,7 +3393,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/83b7da3ed13f06c13ce82235c8eedf35-Abstract-Conference.html",
       "level": "ICLR 官方发表页与摘要核对；2026-10-28",
       "note": "早已发现少量对抗微调和部分良性常见数据也可能损害安全行为；其目标与Emergent Misalignment跨非编码领域的特定表现及机制分析并非完全同一。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "检验微调如何损害已有安全行为。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E701",
@@ -1980,7 +3410,14 @@
       "url": "https://www.nature.com/articles/s41586-025-09215-4",
       "level": "Nature / PMC 正文 Fig1–5、Extended Data Fig4、Data/Code availability 核对；2026-10-28；未复现",
       "note": "Centaur 基于 Llama3.1 70B/QLoRA 拟合 Psych-101（160 项实验/60092 人/10681650 选择）。留出被试 NLL=0.44 vs Llama0.58、专用0.56；OOD 改故事0.51/0.63、改三选项0.42/0.62、逻辑1.65/1.92；开放环探索、fMRI 与启发式修订亦有证据。预测行为不是预测真实学生参数更新后净学习。",
-      "code": "https://github.com/marcelbinz/Llama-3.1-Centaur-70B"
+      "code": "https://github.com/marcelbinz/Llama-3.1-Centaur-70B",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "以行为基础模型估计认知响应；对学习者诊断提供跨领域工具启发。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E702",
@@ -1990,7 +3427,14 @@
       "url": "https://arxiv.org/abs/2609.01591",
       "level": "Microsoft Research 正式项目页、arXiv 原始摘要与作者仓库核对；2026-10-28；未复现",
       "note": "模拟具体学生的原回答与接受指导后的即时修改；chess F/R=0.51/0.91，GPT-5.4 role-play 0.23/0.72，Maia2 0.45/0.27。还把模拟器当 RL tutor 的反馈；没有验证现实 LLM 学生在持久 LoRA 更新后独立新题增益的准确预测。",
-      "code": "https://github.com/microsoft/StudentSim"
+      "code": "https://github.com/microsoft/StudentSim",
+      "primary_function": "signal",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "模拟学生接受指导后的响应，并作为教师训练反馈。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E703",
@@ -2000,7 +3444,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/84b686f7cc7b7751e9aaac0da74f755a-Abstract-Conference.html",
       "level": "ICLR 2024 官方论文页和摘要、Nature 2025 参考文献核对；2026-10-28",
       "note": "Binz & Schulz 先前已经通过心理实验行为数据微调 LLM 获得认知模型、比传统模型更好拟合部分任务，并初步测试多任务跨域泛化；Nature Centaur 的增量是统一160实验、OOD与开放环等全面评测。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "用行为数据训练认知模型以预测任务响应。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E704",
@@ -2010,7 +3461,14 @@
       "url": "https://arxiv.org/abs/2601.05473",
       "level": "arXiv 原始摘要与作者元信息核对；2026-10-28",
       "note": "提出 competence paradox 和 Epistemic State Specification，提醒强 LLM 角色扮演弱学生可能生成过强能力或不真实学习轨迹；属于方法和测量框架，而不是 Centaur / StudentSim 同任务真实收益实验。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "检验模拟学生是否具有合理能力与学习轨迹。",
+      "source_role": "evidence",
+      "source_domain": "相邻领域"
     },
     {
       "id": "S450",
@@ -2020,7 +3478,14 @@
       "url": "https://arxiv.org/abs/2610.01073",
       "level": "arXiv 官方正文摘要与实验结果核对；2026-10-29；未独立复现",
       "note": "受控状态化授权任务的版本继承与恢复：授权依赖变化后历史分数使48条演化历史中的22条继续沿用不安全版本；即便所有提议都被拒绝，失败 incumbent 仍可运行。完整验证及已验证回滚已有强先例；I13 不声称首次提出安全门或回滚。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "研究版本继承、完整验证与恢复策略中的安全持续性。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S451",
@@ -2030,7 +3495,15 @@
       "url": "https://arxiv.org/abs/2608.12851",
       "level": "arXiv 摘要、方法与实验口径核对；2026-10-29；未独立复现",
       "note": "SkillMisevo-Bench 25个配置×525任务，其中21种进化组合都写入不安全Skill、15种在全新会话造成伤害；SafeEvolve已经在写入和检索时做安全治理；代表性OpenClaw对照中继承危害21.3%→4.0%。I13必须对比固定风险治理，不能宣称首次Skill安全接纳。",
-      "code": "https://github.com/henrymao2004/misevolve"
+      "code": "https://github.com/henrymao2004/misevolve",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "控制不安全技能的写入、检索与跨轮继承。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S452",
@@ -2040,7 +3513,15 @@
       "url": "https://aclanthology.org/2026.emnlp-main.353/",
       "level": "ACL Anthology 官方发表页、摘要与Bench定义核对；2026-10-29；未独立复现",
       "note": "SARGE/EvoSkillBench诱导不良Skill在自主生成、持续保存与后续检索中激活；已将跨轮持久技能污染作为明确红队威胁和评价对象。I13需检验新未见风险下的预算敏感前置诊断。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "检验自主技能演化中的持久污染和后续激活。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S453",
@@ -2050,7 +3531,14 @@
       "url": "https://arxiv.org/abs/2607.13070",
       "level": "原始预印本声明、门控契约与有限模型检查范围核对；2026-10-29；未独立复现/未经验证可推广性",
       "note": "在预设机器可检查验收套件中部署前确保约束，并将安全关键的不变量及放宽权限与自我修改分离；已提出固定跨版本发布门；其有限状态模型检查不构成对任意LLM语义行为的形式证明。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "以跨版本固定约束调控更新发布与接纳。",
+      "source_role": "research",
+      "source_domain": "RSI"
     },
     {
       "id": "S454",
@@ -2060,7 +3548,15 @@
       "url": "https://arxiv.org/abs/2610.35193",
       "level": "arXiv 作者摘要与评估框架核对；2026-10-29；综述，不是实验证据",
       "note": "将可信RSI归纳为改进有效性、约束保持与有效监督，特别区分单次更新、后代继承、改进机制自身变化三个证据层级；不能声称首次建立Trustworthy RSI总体框架。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "regulation",
+        "signal"
+      ],
+      "classification_reason": "可信RSI的范围、风险与证据层级综述。",
+      "source_role": "background",
+      "source_domain": "RSI"
     },
     {
       "id": "M454",
@@ -2070,7 +3566,15 @@
       "url": "https://proceedings.mlr.press/v306/kaczer26a.html",
       "level": "PMLR 官方摘要与五类训练防御核对；2026-10-29；未独立复现",
       "note": "已有固定微调期间防御广泛失准的系统比较：KL、表征L2、persona steering、一般指令数据交错及inoculation prompting；perplexity-gap选择交错数据表现最佳。属于权重训练层，并非多代Skill/Harness更新接纳策略。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "在训练期间约束行为漂移并比较安全保持机制。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E350",
@@ -2080,7 +3584,15 @@
       "url": "https://www.nature.com/articles/s41586-023-06668-3",
       "level": "Nature 正文 Fig.1–3、Methods、Table 1/2 与两个作者 GitHub 仓库核对；2026-10-29；未独立复现",
       "note": "Lake与Baroni用多解释语法episodes元训练Transformer，词汇组合SCAN/COGS大幅优于基本Seq2Seq；20%人类式错误监督为模拟人类行为分布，Table1并非正确率；Table2为组合泛化错误率，SCAN Length及COGS新结构错误率100%；新episode测试权重冻结。",
-      "code": "https://github.com/brendenlake/MLC"
+      "code": "https://github.com/brendenlake/MLC",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation",
+        "experience"
+      ],
+      "classification_reason": "通过跨语法元训练形成词汇组合能力，另检验结构外推边界。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E351",
@@ -2090,7 +3602,14 @@
       "url": "https://proceedings.mlr.press/v80/lake18a.html",
       "level": "PMLR 正式摘要及原论文引入SCAN的解释核对；2026-10-29；未复现",
       "note": "SCAN基准引入熟悉原语的新组合与普通seq2seq泛化失败，构成MLC Table2的任务来源；词汇组合与外推长度属于不同泛化类型。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "通过SCAN分割检验组合泛化及其失败。",
+      "source_role": "evidence",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E352",
@@ -2100,7 +3619,14 @@
       "url": "https://aclanthology.org/2020.emnlp-main.731/",
       "level": "ACL Anthology 正式论文摘要及方法介绍核对；2026-10-29；未复现",
       "note": "COGS将词汇泛化和结构泛化明确分开；MLC在其lexical部分提升，未解决全部结构泛化；不能把某个词汇分割的错误率扩展为全部COGS泛化。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "以COGS区分词汇与结构泛化证据。",
+      "source_role": "evidence",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M50",
@@ -2110,7 +3636,15 @@
       "url": "https://journals.sagepub.com/doi/10.3233/FAIA251329",
       "level": "官方期刊全文摘要、方法与发表历史核对；2026-10-28；未复现",
       "note": "DSP 使用模型当前输出构建自步调数据筛选，并以 DPP 维护批内和跨轮多样性；I10 不能把动态难度与多样性选择当作首次。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "regulation",
+        "signal"
+      ],
+      "classification_reason": "按照当前模型状态和多样性选择训练经历。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M51",
@@ -2120,7 +3654,14 @@
       "url": "https://arxiv.org/abs/2602.11149",
       "level": "原始预印本摘要与作者信息核对；2026-10-28；未复现",
       "note": "Olmo3-7B 在报告的固定更新预算下重复400条长CoT 128轮，相比51200条一轮在AIME/GPQA高12–26个百分点；token准确率接近完全记忆后增益饱和；I10须区分有益巩固与低收益重复。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "研究固定预算重复训练如何形成推理能力。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M52",
@@ -2130,7 +3671,14 @@
       "url": "https://proceedings.mlr.press/v162/mindermann22a.html",
       "level": "PMLR 官方摘要、方法动机核对；2026-10-28；未复现",
       "note": "RHO-LOSS 通过可约化 holdout loss 选择可学、值得学且尚未学会的样本；模型状态相关的数据价值不是 I10 首次提出。",
-      "code": "https://github.com/OATML/RHO-Loss"
+      "code": "https://github.com/OATML/RHO-Loss",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据可约化损失选择可学且尚未学会的数据。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M53",
@@ -2140,7 +3688,15 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/70b8505ac79e3e131756f793cd80eb8d-Abstract-Conference.html",
       "level": "NeurIPS 官方摘要核对；2026-10-28；未复现",
       "note": "Skill-it 已构建技能前置依赖并在线分配多技能数据；I10 应固定技能关系，研究同一规则内部不同样本的条件迁移收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "利用技能前置依赖在线分配训练数据。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M54",
@@ -2150,7 +3706,12 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/a8f8cbd7f7a5fb2c837e578c75e5b615-Abstract-Datasets_and_Benchmarks.html",
       "level": "NeurIPS 官方摘要核对；2026-10-28；未复现",
       "note": "在去重基础上以预训练嵌入提高多样性，报告约20%训练效率收益；有选择的重复优于随机重复，重复的价值并非总为负。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [],
+      "classification_reason": "通过去重和表示多样性构造训练语料。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M55",
@@ -2160,7 +3721,12 @@
       "url": "https://arxiv.org/abs/2303.09540",
       "level": "原始预印本与公开摘要核对；2026-10-28；未复现",
       "note": "SemDeDup 通过预训练表示识别语义重复并移除，作为 I10 的语义去重强基线；语义相似与真实参数迁移收益不是同一量。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [],
+      "classification_reason": "识别语义重复以选择有效训练材料。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M56",
@@ -2170,7 +3736,14 @@
       "url": "https://proceedings.mlr.press/v306/nayak26a.html",
       "level": "PMLR 官方摘要和基线结论核对；2026-10-28；未复现",
       "note": "梯度数据表示配贪婪轮转在低预算常优于其他组合，预算增加时优势缩小；I10 需把梯度表示选题视为强基线。",
-      "code": "https://github.com/dcml-lab/targeted-instruction-selection"
+      "code": "https://github.com/dcml-lab/targeted-instruction-selection",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "比较梯度表示与预算条件下的指令选择策略。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M57",
@@ -2180,7 +3753,14 @@
       "url": "https://ojs.aaai.org/index.php/AAAI/article/view/40732",
       "level": "AAAI 官方摘要、发表页核对；2026-10-28；未复现",
       "note": "RICo 利用 in-context contribution 量化个别样本的任务级与全局级表现贡献，并训练轻量选题器；I10 需超越单样本贡献，验证后学样本的条件增量。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "估计样本上下文贡献并用于训练数据选择。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M58",
@@ -2190,7 +3770,14 @@
       "url": "https://openreview.net/forum?id=Cw9Bxpda2h",
       "level": "ICLR 2026 正式版及 Microsoft Research 官方摘要核对；2026-10-28；未复现",
       "note": "ICA 用少量 holdout 上下文近似候选样本更新后的损失，随当前参数变化动态赋权；I10 不能称首次用低成本代理估计数据价值。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "用holdout上下文损失代理估计候选更新价值。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M59",
@@ -2200,7 +3787,14 @@
       "url": "https://aclanthology.org/2022.acl-long.577/",
       "level": "ACL Anthology 正式摘要核对；2026-10-28；未复现",
       "note": "近重复清除显著减少长文本原样记忆并加速训练；I10 应将数据泄漏与原题记忆同独立规则迁移分开。",
-      "code": "https://github.com/google-research/deduplicate-text-datasets"
+      "code": "https://github.com/google-research/deduplicate-text-datasets",
+      "primary_function": "experience",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "通过近重复清除改变训练材料与记忆行为。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M60",
@@ -2210,7 +3804,14 @@
       "url": "https://arxiv.org/abs/2605.15675",
       "level": "原始预印本摘要、方法概述核对；2026-10-28；未复现",
       "note": "通过二阶近似估计组内训练样本交互，明确刻画冗余与互补；在 Llama-3.1-8B 指令微调数据选择中评测。I10 不能把“首次计算成对样本互动”当创新，而要检验区分信息与真实参数可学习性的差异。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "归因样本组的冗余、互补和交互影响。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M61",
@@ -2220,7 +3821,14 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/b43a0e8a35b1c044b18cd843b9771915-Abstract.html",
       "level": "NeurIPS 正式摘要核对；2026-10-28；未复现",
       "note": "研究预训练模型如何利用不确定性选择可以区分潜在任务的样本；已直接讨论消除伪相关和任务歧义。I10 应进一步检验同样有区分证据时，LLM 实际参数更新后是否能形成独立规则迁移。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "主动选择能排除潜在任务歧义的样本。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M62",
@@ -2230,7 +3838,14 @@
       "url": "https://proceedings.mlr.press/v267/deb25a.html",
       "level": "PMLR 官方摘要核对；2026-10-28；未复现",
       "note": "利用 Fisher 信息矩阵的近似信息增益选择固定预算的 SFT 样本；I10 不能把信息量最大化本身当创新，需区分规则证据与实际被参数更新吸收的泛化。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据Fisher信息增益选择SFT经历。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M63",
@@ -2240,7 +3855,15 @@
       "url": "https://proceedings.mlr.press/v306/liu26gx.html",
       "level": "PMLR 正式摘要核对；2026-10-28；立场论文；未复现",
       "note": "指出自演化循环可能不断生成新题却没有增加可学习信息，并讨论 proposer-solver-verifier 三角色与系统级改进。I10 应给出可判别、可控的样本区分信息×学习状态机制，避免仅复述此动机。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "experience",
+        "signal"
+      ],
+      "classification_reason": "讨论自生成循环中可学习信息增益的必要性。",
+      "source_role": "background",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M64",
@@ -2250,7 +3873,14 @@
       "url": "https://www.nature.com/articles/s41467-025-67998-6",
       "level": "Nature Communications 正式正文/摘要核对；2026-10-28；未复现",
       "note": "通过模仿规范 Bayesian 推理教师的示范微调 LLM，得到可迁移的概率推理表现；说明示范内容与推理策略能产生跨任务学习，但没有检验 I10 同规则反例对捷径的条件迁移收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "通过规范推理示范训练可迁移概率推理。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M65",
@@ -2260,7 +3890,14 @@
       "url": "https://proceedings.mlr.press/v97/dasgupta19a.html",
       "level": "PMLR 官方摘要核对；2026-10-28；未复现",
       "note": "机器教学早已研究交互选择有效教学集，且学习者假设类可能不可见；I10 不能将选择能区分规则的例子本身称为首次。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "交互选择能教会黑盒学习者的示例。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E353",
@@ -2270,7 +3907,14 @@
       "url": "https://www.nature.com/articles/s41586-024-08548-w",
       "level": "Nature 正文 Abstract/Figs.1–5/Methods/Discussion，PubMed 与官方代码和数据链接核对；2026-10-29；未复现",
       "note": "11只小鼠在230cm VR 2ACDC任务中学习近/远奖励，长期CA1数千神经元活动逐步按潜在状态去相关，CSCG复现最终状态及形成顺序；常规LSTM/小Transformer能序列预测却不自然形成相同OSM。该结果不证明大LLM必须正交化。",
-      "code": "https://github.com/sprustonlab/OSM_Paper_Figures"
+      "code": "https://github.com/sprustonlab/OSM_Paper_Figures",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "研究学习如何形成可区分潜在状态的表示。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E354",
@@ -2280,7 +3924,14 @@
       "url": "https://www.nature.com/articles/s41467-021-22559-5",
       "level": "Nature Communications 正式全文、CSCG结构、代码仓库核对；2026-10-29；未复现",
       "note": "George等已提出用观察克隆、隐藏状态转移图和序列推断处理感官状态别名；CSCG不是2025 Nature首次提出，也不能把“潜在状态图复用”宣称为I8新颖性。",
-      "code": "https://github.com/vicariousinc/naturecomm_cscg"
+      "code": "https://github.com/vicariousinc/naturecomm_cscg",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "以克隆结构图表达状态别名并支持灵活推断。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M66",
@@ -2290,7 +3941,14 @@
       "url": "https://proceedings.mlr.press/v267/li25r.html",
       "level": "ICML PMLR正式发表页与摘要核对；2026-10-29",
       "note": "Li、Guo、Andreas在置换合成任务中区分LM的两种状态追踪机制，发现泛化和收敛差异，并用中间训练任务操纵所学机制；尚未考察RSI多轮自改进。",
-      "code": "https://github.com/belindal/state-tracking"
+      "code": "https://github.com/belindal/state-tracking",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "研究不同训练经历形成的状态追踪机制。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M67",
@@ -2300,7 +3958,14 @@
       "url": "https://proceedings.mlr.press/v306/kong26c.html",
       "level": "ICML PMLR正式发表页与摘要核对；2026-10-29",
       "note": "Kong等研究SFT+RL如何获得并重组可复用的原子技能和路由模块，在未见组合中泛化；I8不能将规则复用或模块路由本身视为首次。",
-      "code": "https://isxinliu.github.io/CompositionalReasoning/"
+      "code": "https://isxinliu.github.io/CompositionalReasoning/",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "从推理轨迹形成可重组原子技能与路由模块。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M68",
@@ -2310,7 +3975,14 @@
       "url": "https://proceedings.mlr.press/v306/tang26ah.html",
       "level": "ICML PMLR正式摘要核对；2026-10-29",
       "note": "Tang等研究复杂自然语言实体状态更改，观察到部分LM并不逐token增量更新世界状态，而是在查询最后聚合相关信息；成功不必等于显式独立状态机。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "比较实体状态变化的内部跟踪与查询时聚合机制。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E360",
@@ -2320,7 +3992,15 @@
       "url": "https://www.nature.com/articles/s41562-025-02359-3",
       "level": "Nature+PMC 正文 Fig.1–5/Methods 核对；2026-10-29；未独立复现",
       "note": "530名人类及两层Transformer图片—标签任务：均匀多样更促上下文规则、Zipf偏斜重复更促参数/经验记忆；混合分布两者可共存。人类C1（多样→重复）规则更好而Transformer受策略干扰；Methods的人类C1/C2描述与Figure4反置须对照原数据验证。",
-      "code": "https://osf.io/xb43k"
+      "code": "https://osf.io/xb43k",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "数据分布改变记忆与规则形成，课程顺序影响二者竞争。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M500",
@@ -2330,7 +4010,15 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/ae338b3fe6624798efa80b6581924028-Abstract-Conference.html",
       "level": "ICLR官方摘要+Google DeepMind出版页核对；2026-10-29",
       "note": "以理论模型解释分布驱动的ICL/IWL选择及后续ICL消失，并延伸到在自然语言提示上微调的完整LLM；大模型分布效应不是空白；未声称证明NHB的全部人类课程效应。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience",
+        "regulation"
+      ],
+      "classification_reason": "解释数据分布怎样决定上下文学习和权重记忆。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M501",
@@ -2340,7 +4028,14 @@
       "url": "https://aclanthology.org/2026.acl-long.1591/",
       "level": "ACL Anthology正文摘要及模型设置核对；2026-10-29",
       "note": "Llama3.1-8B/Mistral-7B/Gemma3-4B上五种难度代理的课程对照：没有普遍最优正向/逆向顺序，取决于模型状态与任务复杂度；不直接测试重复vs多样策略冲突。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "比较后训练数据顺序与模型状态的相互作用。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M502",
@@ -2350,7 +4045,15 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/b6e2c96bc4702f761d7d108d6e31930f-Abstract-Conference.html",
       "level": "ICLR官方摘要核对；2026-10-29",
       "note": "在四种3B–7B开源预训练模型的多领域指令SFT中，分阶段（phased）与整库混合（stacked）性能差异不显著，后者更简单省样本；与NHB特定合成语法不同。",
-      "code": "https://github.com/instructlab/training"
+      "code": "https://github.com/instructlab/training",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "比较分阶段和整库混合训练安排。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M503",
@@ -2360,7 +4063,14 @@
       "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/82a34882f560db982d1257b5af461605-Abstract-Conference.html",
       "level": "NeurIPS官方摘要核对；2026-10-29",
       "note": "300多次受控训练；梯度空间G-Vendi与OOD泛化Spearman ρ约0.9；PrismMath-7B以32B教师生成数据优于部分强对照。说明有效多样性不是词面新颖，但不研究课程先后。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "依据梯度空间多样性构造有泛化价值的训练数据。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M504",
@@ -2370,7 +4080,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/bc1c5e5fb8ed1ef9b9b5abced2022e40-Abstract-Conference.html",
       "level": "ICLR官方摘要与作者项目正文核对；2026-10-29",
       "note": "近30模型对、100子基准，报告逐样本1→0遗忘和0→1逆向迁移以及猜测修正；规模增长常使遗忘下降，但指令模型高数据量SFT/RL结果混合，平均分遮蔽交叉变化。",
-      "code": "https://post-forget.github.io/"
+      "code": "https://post-forget.github.io/",
+      "primary_function": null,
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "逐样本测量后训练遗忘与逆向迁移。",
+      "source_role": "evidence",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M505",
@@ -2380,7 +4097,15 @@
       "url": "https://proceedings.nips.cc/paper_files/paper/2024/hash/6a45500d9eda640deed90d8a62742be5-Abstract-Datasets_and_Benchmarks_Track.html",
       "level": "NeurIPS官方摘要核对；2026-10-29",
       "note": "10数据集/8任务的MLLM连续指令微调，明确考察任务顺序、指令多样性和数据量；遗忘部分来自指令对齐失效而不完全是推理知识丢失。需区分跨任务指令失配与规则退化。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "regulation",
+        "capability"
+      ],
+      "classification_reason": "以多模态连续任务检验保持和指令对齐。",
+      "source_role": "evidence",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M506",
@@ -2390,7 +4115,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/5a5acfd0876c940d81619c1dc60e7748-Abstract-Conference.html",
       "level": "ICLR官方摘要与代码核对；2026-10-29",
       "note": "LLaVA-7B连续指令训练中，逐级压缩整合LoRA使文中遗忘指标从11.29降至5.09、再降至3.39；更新器决定保持能力，不能仅归因于课程顺序。",
-      "code": "https://github.com/SII-HITclearlove777/PCLR"
+      "code": "https://github.com/SII-HITclearlove777/PCLR",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "逐级压缩整合LoRA以协调连续学习与保持。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M507",
@@ -2400,7 +4132,15 @@
       "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Multimodal_Continual_Instruction_Tuning_with_Dynamic_Gradient_Guidance_CVPR_2026_paper.html",
       "level": "CVF官方摘要核对；2026-10-29",
       "note": "将旧任务遗忘建模为缺少旧梯度，用参数位移代理旧梯度并配有限重放与随机门控制稳定/可塑性；对学习顺序效应的优化器控制是强基线。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "用梯度代理和有限重放调控稳定性与可塑性。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M508",
@@ -2410,7 +4150,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/edcd1aa172dceda2ea9d45a48f25d3e3-Abstract-Conference.html",
       "level": "ICLR官方摘要核对；2026-10-29",
       "note": "14个多模态数据集/7任务，直观任务相似度不能可靠预测训练迁移；DATAPROPHET利用感知多模态困惑度、相似与多样性，报告选择排序Kendall τ=0.86；I10需直接比较。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "预测多模态监督数据的实际迁移价值。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M509",
@@ -2420,7 +4167,15 @@
       "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Gao_Re-evaluating_Continual_VQA_Toward_Fair_and_Robust_Evaluation_for_Multimodal_CVPR_2026_paper.html",
       "level": "CVF官方摘要核对；2026-10-29",
       "note": "跨VQA任务共享答案词表和静态答案先验可能使模型依赖记忆而被误判为推理/减轻遗忘；应在图像-答案和规则-上下文冲突设置下拆开评价。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "regulation",
+        "capability"
+      ],
+      "classification_reason": "排除答案记忆与任务先验对持续学习评估的混淆。",
+      "source_role": "evidence",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M510",
@@ -2430,7 +4185,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/7a0f8055c838df8e62329a76c7c6403d-Abstract-Conference.html",
       "level": "ICLR官方摘要核对；2026-10-29",
       "note": "VLM2VLA以自然语言表示低级动作来减小机器人数据与视觉语言预训练分布差异，并用LoRA保持原VLM推理能力；800多次真实机器人实验；分布兼容性是影响遗忘的第三因素。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "用兼容的动作语言表示形成VLA能力并保持VLM能力。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M511",
@@ -2440,7 +4202,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/a548ef984f30bca3abdc09f43743827f-Abstract-Conference.html",
       "level": "ICLR官方摘要核对；2026-10-29",
       "note": "GEM在3B–70B预训练模型SFT中通过保留输出分布多样性兼顾泛化及减轻遗忘；此处是输出多样性而非训练输入样本的重复/多样性，不能混为同一变量。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "在SFT中保留输出多样性以兼顾泛化和旧能力。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M512",
@@ -2450,7 +4219,14 @@
       "url": "https://proceedings.mlr.press/v306/liu26m.html",
       "level": "PMLR官方摘要核对；2026-10-29",
       "note": "SFT中没有统一最佳训练难度；最佳难度随数据预算提高而上移，受分布内泛化差与外推差权衡影响。难度不是重复性或规则区分性的替代量。",
-      "code": ""
+      "code": "",
+      "primary_function": "experience",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "研究预算与训练难度如何共同决定泛化和外推。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M513",
@@ -2460,7 +4236,14 @@
       "url": "https://lihe50hz.github.io/ICLR_2026_Fine_tuning.pdf",
       "level": "作者公开论文摘要/实验与ICLR2026录用信息核对；2026-10-29；未独立复现",
       "note": "Qwen2.5-VL-3B、LLaVA1.5-7B等微调中，低学习率、LoRA和混合数据可保留多种VLM泛化能力；与CoIN/PCLR的易遗忘结论因评测分布及更新机制不同并不必然矛盾。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "比较学习率、LoRA与混合数据的能力保持作用。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M514",
@@ -2470,7 +4253,14 @@
       "url": "https://arxiv.org/abs/2602.11149",
       "level": "arXiv原始摘要核对；2026-10-29；未独立复现",
       "note": "Olmo3-7B固定优化预算下400道样本重复128 epoch相较51200样本单epoch在AIME/GPQA报告12–26百分点增益；说明重复可助推理SFT但不是顶会正式接收的证据。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "experience"
+      ],
+      "classification_reason": "研究重复长推理样本在固定更新预算下的巩固收益。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E370",
@@ -2480,7 +4270,14 @@
       "url": "https://www.nature.com/articles/s41562-025-02324-0",
       "level": "Nature/PMC 正文Fig1–4、Methods及Code/Data availability核对；2026-10-29；未独立复现",
       "note": "Eckstein等用862名参与者、4134区块、617871有效试次比较六参数Best RL、RL-ANN、Context-ANN与Memory-ANN。保留参与者行为预测指标BestRL60.6、RLANN60.8、ContextANN65.4、MemoryANN68.3；独立历史潜变量能解释奖励/动作的多尺度效应，但不验证LLM参数持久学习或RSI。",
-      "code": "https://github.com/google-deepmind/hybrid_rnns_reward_learning"
+      "code": "https://github.com/google-deepmind/hybrid_rnns_reward_learning",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "用历史潜状态表达记忆，解释多时间尺度奖励学习。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "M530",
@@ -2490,7 +4287,15 @@
       "url": "https://aclanthology.org/2026.acl-long.583/",
       "level": "ACL Anthology 官方摘要、发表信息核对；2026-10-29；未复现",
       "note": "以Memory Manager的ADD/UPDATE/DELETE/NOOP和Answer Agent的筛选检索实现RL训练；3B–14B模型、LoCoMo/MSC/LongMemEval。已有基于reward学习记忆读写控制，不能把普通memory manager说成新方向。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability",
+        "signal"
+      ],
+      "classification_reason": "以奖励学习记忆新增、更新、删除和筛选策略。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M531",
@@ -2500,7 +4305,15 @@
       "url": "https://aclanthology.org/2026.findings-acl.2069/",
       "level": "ACL Anthology 正式摘要核对；2026-10-29",
       "note": "系统综述Storage→Reflection→Experience，指出记忆系统已有跨轨迹抽象/主动探索；本站四方向拆分是科学问题组织而非声称首创分类。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "综述外部记忆由存储、反思到经验的演变。",
+      "source_role": "background",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M532",
@@ -2510,7 +4323,15 @@
       "url": "https://aclanthology.org/2026.findings-acl.525/",
       "level": "ACL Anthology 官方摘要核对；2026-10-29",
       "note": "同一记忆对chain-based迭代改进有益，但可能限制tree-based搜索多样性；记忆价值依赖搜索架构，不是越多越好。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "检验记忆对不同搜索结构的条件贡献。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M533",
@@ -2520,7 +4341,14 @@
       "url": "https://aclanthology.org/2026.findings-acl.1337/",
       "level": "ACL Anthology 官方摘要核对；2026-10-29",
       "note": "四LLM/六Memory Agent评估过时记忆的复用、演化时的记忆冲突与更新失败；记忆正确性须按任务时间和环境条件重验证。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究过时记忆、规则冲突与长期更新失败。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M534",
@@ -2529,8 +4357,16 @@
       "date": "Findings EMNLP 2026 · 1637",
       "url": "https://aclanthology.org/2026.findings-emnlp.1637/",
       "level": "ACL Anthology 2026正式摘要核对；2026-10-29",
-      "note": "MSCE以证据链接、适用条件、反思值回填将episode经验转成可调用skills；训练free治理已有先例，本站需证明真实LoRA更新后的独立净收益。",
-      "code": ""
+      "note": "MSCE以证据链接、适用条件、反思值回填将episode经验转成可调用skills；比较时分别检验完整Memory/Skill系统的迁移与保持收益，以及经验巩固到参数后的独立收益。",
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal",
+        "regulation"
+      ],
+      "classification_reason": "以证据和适用条件把episode提炼为可调用技能。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E355",
@@ -2540,7 +4376,15 @@
       "url": "https://www.nature.com/articles/s41593-024-01675-7",
       "level": "Nature Neuroscience 正式全文 Fig.1–4、Extended Data Fig.2、Methods、代码和作者机构核对；2026-10-29；未复现",
       "note": "94人/5个主要模型/37动物session。Think以120ms成本模拟最多8步并反馈隐藏状态；禁用规划或保持数量但随机化时机均降低奖励。人类思考时间相关r=0.186±0.007；动物重放相关不能直接证明因果。原文不研究LLM持久权重更新。",
-      "code": "https://github.com/KrisJensen/planning_code"
+      "code": "https://github.com/KrisJensen/planning_code",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "学习何时付出额外规划成本并使用重放。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E356",
@@ -2550,7 +4394,15 @@
       "url": "https://www.nature.com/articles/s41593-018-0232-z",
       "level": "Nature Neuroscience 官方正文/摘要核对；2026-10-29；未复现",
       "note": "Mattar和Daw提出按Need×Gain优先访问记忆以最大化未来决策回报；不是2024论文首次提出按价值优先Replay，亦不等同持久更新后的独立学习收益。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "signal",
+        "capability"
+      ],
+      "classification_reason": "按未来需求与收益分配记忆访问和重放。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E380",
@@ -2560,7 +4412,15 @@
       "url": "https://www.science.org/doi/10.1126/sciadv.abd2558",
       "level": "Science Advances原始全文、PMC Methods/Fig1–3和PubMed对照；2026-10-29；未独立复现",
       "note": "三项实验74人次专家钢琴家与25非音乐家：Exp1 36钢琴家分主动触觉/普通重复/休息；触觉训练20×20个双按键辨别，>80%时难度负载差减10%，训练指低力度控制改善而高力度/速度无特效。Exp2 反馈必要且未迁移食指；Exp3 普通运动误差训练100次仅非音乐家提升，钢琴家p=0.95。不能把训练量、任务、反馈类型均不同的比较写成纯奖励粒度消融。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "检验主动触觉训练与反馈能否改变专家学习瓶颈。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E381",
@@ -2570,7 +4430,15 @@
       "url": "https://doi.org/10.1016/j.isci.2023.108604",
       "level": "PubMed PMID38155781 + iScience正式文章与摘要核对；2026-10-29；未独立复现",
       "note": "Hirano与Furuya后续120名钢琴家实验，报告AHT影响肌肉协调，感官传入信息相对于预测值的权重增加、无总体感觉敏感度增幅，并改善feedback movement control；说明2020年解释应避免只用敏感度提升单一机制。",
-      "code": ""
+      "code": "",
+      "primary_function": "signal",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "研究传入感觉与预测信息权重对训练收益的作用。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "E710",
@@ -2580,7 +4448,15 @@
       "url": "https://www.tandfonline.com/doi/abs/10.1207/s1532690xci2202_1",
       "level": "期刊摘要、原作者公开2004 PDF方法及两项9年级统计实验核对；2026-10-29；未复现",
       "note": "Schwartz与Martin发明活动及随后资源学习的因素对照：无新资源时发明组与告知练习组的迁移相近，有资源时发明组学得更好；属于Preparation for Future Learning，研究对象是人类而非LLM真实参数更新。",
-      "code": "https://aaalab.stanford.edu/assets/papers/2004/Inventing_to_prepare_for_future_learning.pdf"
+      "code": "https://aaalab.stanford.edu/assets/papers/2004/Inventing_to_prepare_for_future_learning.pdf",
+      "primary_function": "regulation",
+      "related_functions": [
+        "experience",
+        "capability"
+      ],
+      "classification_reason": "检验自主生成经历如何准备随后从新资源继续学习。",
+      "source_role": "research",
+      "source_domain": "学习科学"
     },
     {
       "id": "E711",
@@ -2590,7 +4466,15 @@
       "url": "https://doi.org/10.1177/1745691615569000",
       "level": "Soderstrom与Bjork原文摘要、作者公开综述PDF核对；2026-10-29；综述非新实验",
       "note": "训练期表现与持久保持/迁移并不等价，某些使训练更费力的条件有时提高延迟结果；只是教育学已知现象，不能直接当作LLM学习可塑性机制的因果证据。",
-      "code": "https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/11/soderstorm_ra_learningvsperformance.pdf"
+      "code": "https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/11/soderstorm_ra_learningvsperformance.pdf",
+      "primary_function": null,
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "综述即时训练表现与保持、迁移的区别。",
+      "source_role": "background",
+      "source_domain": "学习科学"
     },
     {
       "id": "M550",
@@ -2600,7 +4484,14 @@
       "url": "https://iclr.cc/virtual_2020/poster_rkgMkCEtPB.html",
       "level": "ICLR官方展示与公开摘要核对；2026-10-29；未复现",
       "note": "Raghu等消融发现MAML在其实验中主要复用已有的高质量特征；只更新任务头的ANIL匹配MAML成绩。提示未来快速适应可能是特征预备性，而非网络主体表示发生高效更新。",
-      "code": "https://arxiv.org/abs/1909.09157"
+      "code": "https://arxiv.org/abs/1909.09157",
+      "primary_function": "capability",
+      "related_functions": [
+        "regulation"
+      ],
+      "classification_reason": "通过消融区分元学习中的特征复用与快速表示更新。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M551",
@@ -2610,7 +4501,14 @@
       "url": "https://papers.neurips.cc/paper_files/paper/2019/hash/f4dd765c12f2ef67f98f3558c282a9cd-Abstract.html",
       "level": "NeurIPS官方发表摘要/审稿修改记录核对；2026-10-29；未复现",
       "note": "Javed与White的OML将快速适应与减少持续学习干扰一并作为表示学习目标；旧任务保持和未来适应一起优化已有直接先例，I9/I12不可声称首次提出二者联动。",
-      "code": "https://arxiv.org/abs/1905.12588"
+      "code": "https://arxiv.org/abs/1905.12588",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "联合优化未来适应与连续学习中的干扰抑制。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M552",
@@ -2620,7 +4518,14 @@
       "url": "https://papers.nips.cc/paper_files/paper/2023/hash/58692a1701314e09cbd7a5f5f3871cc9-Abstract-Conference.html",
       "level": "NeurIPS官方全文与摘要核对；2026-10-29；未复现",
       "note": "合成任务中ICL策略先形成又消失，被权重记忆IWL替换，训练loss却持续降低；作者报告L2正则有助保持ICL。提醒终点训练损失无法代表需要的学习机制持续存在。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究后续训练中上下文学习机制消失与保持。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M553",
@@ -2630,7 +4535,14 @@
       "url": "https://arxiv.org/abs/2301.05217",
       "level": "ICLR录用列表、论文原始arXiv摘要与机制实验核对；2026-10-29；未复现",
       "note": "Nanda等对模加小Transformer解构傅里叶电路，区分记忆、泛化电路形成和清理三阶段；说明后期内部算法变化可能晚于训练正确率；不能直接外推任意LLM推理。",
-      "code": ""
+      "code": "",
+      "primary_function": "capability",
+      "related_functions": [
+        "signal"
+      ],
+      "classification_reason": "区分记忆、泛化电路形成和清理的内部学习阶段。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M554",
@@ -2640,7 +4552,14 @@
       "url": "https://proceedings.mlr.press/v267/springer25a.html",
       "level": "PMLR正式摘要与作者受控实验核对；2026-10-29；未复现",
       "note": "在OLMo等模型上延长预训练可降低后续微调表现，OLMo-1B 3T tokens相较2.3T后训练基准差>2%；研究指向参数对修改的广泛敏感性，不可简化为普适过训练门槛。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "研究预训练历史如何改变后续微调可学习性。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M555",
@@ -2650,7 +4569,14 @@
       "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/17fc58b1ba92abbb72c5f457e140d851-Abstract-Conference.html",
       "level": "ICLR官方发表摘要核对；2026-10-29；未复现",
       "note": "在回放数据充足但计算受限的持续学习中，主要困难从旧任务遗忘转向新任务可塑性；通过weight-space consolidation比较重放、rank-based重置和平均，含LLM持续指令微调。",
-      "code": ""
+      "code": "",
+      "primary_function": "regulation",
+      "related_functions": [
+        "capability"
+      ],
+      "classification_reason": "在回放充足但计算受限时协调新任务可塑性与保持。",
+      "source_role": "research",
+      "source_domain": "相邻领域"
     },
     {
       "id": "M556",
@@ -2660,7 +4586,15 @@
       "url": "https://www.nature.com/articles/s42256-025-01121-8",
       "level": "Nature Machine Intelligence正式Perspective摘要与作者信息核对；2026-10-29；综述非统一新实验",
       "note": "Irie与Lake用Incentive-and-Practice视角综述系统泛化、遗忘、少样本与多步推理，并联系元学习；不是一组同时证明这四类能力共用单一机制的因果实验。",
-      "code": ""
+      "code": "",
+      "primary_function": null,
+      "related_functions": [
+        "capability",
+        "regulation"
+      ],
+      "classification_reason": "从激励和练习讨论泛化、遗忘与少样本学习的综述视角。",
+      "source_role": "background",
+      "source_domain": "相邻领域"
     }
   ]
 }

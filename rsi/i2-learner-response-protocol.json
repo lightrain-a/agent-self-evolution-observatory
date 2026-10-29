@@ -143,5 +143,12 @@
     "E704",
     "S47",
     "S106"
-  ]
+  ],
+  "primary_function": "regulation",
+  "related_functions": [
+    "experience",
+    "signal",
+    "capability"
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29"
 }

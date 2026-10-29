@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'tmp'/'rsi-qa-20261021'
-PAGES=sorted(path.stem for path in (ROOT/'rsi').glob('*.html'))
+from test_rsi_site import PAGES
 
 def port():
     with socket.socket() as sock:
@@ -60,7 +60,7 @@ def main():
         for slug in PAGES:
             nav('rsi/'+slug+'.html')
             stats=js("""const groups=[...document.querySelectorAll('#research-nav details.nav-group')];return {title:document.title,h1:document.querySelectorAll('h1').length,active:document.querySelectorAll('#research-nav a[aria-current="page"]').length,nav:document.querySelectorAll('#research-nav .nav-level2').length,groups:groups.length,expanded:groups.filter(g=>g.open).length,activeParents:groups.filter(g=>g.classList.contains('active-group')&&g.open).length,overflow:document.documentElement.scrollWidth>innerWidth+1,cites:document.querySelectorAll('.cite').length,sections:document.querySelectorAll('.research-section').length};""")
-            check(stats['h1']==1 and stats['active']==1 and stats['nav']==expected_nav_links and stats['groups']==4 and stats['expanded']==1 and stats['activeParents']==1,slug+': two-level navigation or title integrity '+str(stats))
+            check(stats['h1']==1 and stats['active']==1 and stats['nav']==expected_nav_links and stats['groups']==len(nav_data) and stats['expanded']==1 and stats['activeParents']==1,slug+': two-level navigation or title integrity '+str(stats))
             check(not stats['overflow'],slug+': desktop page overflow')
             summaries.append({'page':slug,**stats})
         nav('rsi/index.html')
@@ -195,17 +195,19 @@ def main():
             check(js("return document.querySelector("+selector+"+' .reading-question-details').children.length===5"),
                   'Five-question details incomplete: '+paper['id'])
         js("const q=document.querySelector('#reading-card-filter');q.value='';q.dispatchEvent(new Event('input',{bubbles:true}));")
-        for question,level in [('signal','core'),('novelty','partial'),('reach','core'),('retention','core'),('safety','addressed'),('safety','not_addressed')]:
-            js(f"const q=document.querySelector('#reading-question-filter');q.value={json.dumps(question)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
-            js(f"const q=document.querySelector('#reading-coverage-filter');q.value={json.dumps(level)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
-            expected=sorted(p['id'] for p in cards if (
-                p['research_coverage'][question]['level']!='not_addressed' if level=='addressed'
-                else p['research_coverage'][question]['level']==level
-            ))
-            actual=js("return [...document.querySelectorAll('.reading-card:not([hidden])')].map(c=>c.id).sort()")
-            check(actual==expected,f'Coverage filter mismatch {question}/{level}: {actual} vs {expected}')
-        js("const q=document.querySelector('#reading-question-filter');q.value='all';q.dispatchEvent(new Event('change',{bubbles:true}));")
-        js("const q=document.querySelector('#reading-coverage-filter');q.value='addressed';q.dispatchEvent(new Event('change',{bubbles:true}));")
+        for function_id in ['experience','signal','capability','regulation']:
+            for relation in ['primary','related','all']:
+                js(f"const q=document.querySelector('#reading-function-filter');q.value={json.dumps(function_id)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
+                js(f"const q=document.querySelector('#reading-relation-filter');q.value={json.dumps(relation)};q.dispatchEvent(new Event('change',{{bubbles:true}}));")
+                expected=sorted(p['id'] for p in cards if (
+                    p['primary_function']==function_id if relation=='primary'
+                    else function_id in p['related_functions'] if relation=='related'
+                    else p['primary_function']==function_id or function_id in p['related_functions']
+                ))
+                actual=js("return [...document.querySelectorAll('.reading-card:not([hidden])')].map(c=>c.id).sort()")
+                check(actual==expected,f'Functional filter mismatch {function_id}/{relation}: {actual} vs {expected}')
+        js("const q=document.querySelector('#reading-function-filter');q.value='all';q.dispatchEvent(new Event('change',{bubbles:true}));")
+        js("const q=document.querySelector('#reading-relation-filter');q.value='primary';q.dispatchEvent(new Event('change',{bubbles:true}));")
         js("document.querySelectorAll('.reading-expand').forEach(d=>d.open=false)")
         expected_first=sorted(cards,key=lambda p:(bool(p.get('deep_read')),p['read_on']),reverse=True)[0]['id']
         check(js("return document.querySelector('.reading-card').id")==expected_first,

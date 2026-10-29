@@ -1,7 +1,20 @@
 PAGE = {
 "slug":"learning-science", "title":"教育学与学习科学：如何转成机器机制", "en":"Human evidence → operational variables → machine experiments", "lead":"教育学提供提出假设的依据，不是 LLM 上已成立的结论。区分学习过程、即时表现、保持与迁移，再设计模型能够实际经历的干预。",
-"updated":"2026-10-28",
+"updated":"2026-10-29",
+"page_role":"mechanism-source",
+"related_functions":["experience","signal","capability","regulation"],
 "sections":[
+("framework-position","机制来源 · 按四项学习功能归位",'''
+<p>教育学、认知科学和神经科学提供现象、机制解释与可检验假设；它们作为文献来源领域记录。每项材料按主要学习问题连接到四功能正文，AI 系统中的效果另行检验。</p>
+<div class="table-wrap"><table><thead><tr><th>功能</th><th>借鉴的具体问题</th><th>对应研究入口</th></tr></thead><tbody>
+<tr><td><a href="experience.html">第3章 · 经验获取</a></td><td>哪些例子、反例或交互，能够让学习者区分当前混淆的规则？</td><td><a href="idea-i10-learning-novelty.html">I10 · 规则区分与组合学习</a></td></tr>
+<tr><td><a href="signals.html">第4章 · 学习信号</a></td><td>同样的错误或反馈，为什么具有不同的诊断价值和纠错收益？</td><td><a href="idea-i6-failure-value.html">I6</a> · <a href="i8.html">I8</a> · <a href="idea-i11-emotional-rsi.html">I11</a></td></tr>
+<tr><td><a href="capabilities.html">第5章 · 能力形成</a></td><td>原始经验、抽象规则与外部支持怎样影响知识的保存、吸收与调用？</td><td><a href="ideas.html#idea-1">I1</a> · <a href="experience-consolidation.html">经验巩固</a></td></tr>
+<tr><td><a href="regulation.html">第6章 · 学习调控</a></td><td>学习顺序、前置知识、伙伴与学习规则怎样影响多轮学习？</td><td><a href="idea-i7-learning-order.html">I7</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i12-prerequisite-bottleneck.html">I12</a> · <a href="learning-rule-evolution.html">I14</a></td></tr>
+</tbody></table></div>
+<p><b>每条跨领域推理都保留五步：</b>原领域观察 → 可能机制 → AI 对应条件与差异 → 可检验假设 → 能区分解释的实验。当前表现、延迟保持、直接迁移和未来可学习性的证据分别在<a href="evidence.html">第7章</a>及<a href="generalization-learnability.html">泛化专题</a>中比较。</p>
+'''),
+
 ("future-learning","研究主线｜Preparation for Future Learning：以前的学习使下一次教学更有效吗？",'''
 <p><b>源头：Schwartz 与 Martin（2004）</b>并未只测“发明练习后能不能马上做对”，还在测试时随机提供可用于继续学习的资源。在无新资源时两类教学的迁移表现可相近，有新资源时先前发明经历的收益更明显，形成 Preparation for Future Learning 的实验思路。[[E710]]</p>
 <p><b>迁移到 RSI 的独立证据要求：</b>从同一模型状态随机分配不同学习经历H，之后给全部分支相同的全新C教学/梯度更新。比较C学习前测L(C,0)、真实更新的全部曲线L(C,b)及旧任务回归；区分当前掌握、直接迁移和未来可学习性。<a href="generalization-learnability.html">完整跨 Idea 泛化专题与P0–P3 →</a>。</p>

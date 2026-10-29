@@ -235,5 +235,14 @@
     "E401",
     "E350"
   ],
-  "note": "本JSON是研究协议草案；不是用户项目已完成的数据、实验计划批准或已验证结果。"
+  "note": "本JSON是研究协议草案；不是用户项目已完成的数据、实验计划批准或已验证结果。",
+  "page_role": "cross-cutting-evidence",
+  "chapter": 7,
+  "learning_functions": [
+    "experience",
+    "signal",
+    "capability",
+    "regulation"
+  ],
+  "taxonomy_version": "learning-functions-2026-10-29"
 }

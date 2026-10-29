@@ -1,9 +1,38 @@
+"""RSI research content organized by the four learning functions."""
 PAGE = {
-"slug":"index", "title":"RSI × 自主学习研究", "en":"Research on how agents learn · I1–I14",
-"lead":"I1–I14 研究 Agent 的持续学习、学习规则与安全继承。新增 I14：固定学习者、任务与预算，检验从历史学习结果中改进更新规则，是否使模型真正更会学习。",
-"updated":"2026-10-29",
-"sections":[
-("decision","当前研究池：I1–I14 · 十四个研究方向", '''<p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
+    'slug': 'index',
+    'title': 'RSI · 从经验获取到能力积累',
+    'en': 'Learning Mechanisms for Recursive Self-Improvement',
+    'lead': '系统如何把不断获得的经历，转化为能够迁移、能够保留，并且支持后续学习的能力？',
+    'updated': '2026-10-29',
+    'page_role': 'overview',
+    'chapter': 1,
+    "sections": [
+        ('framework', '四项学习功能 · 一条共同主线', '''
+<div class="route-grid">
+<a href="experience.html"><b>03 · 经验获取</b><span>下一步经历什么，才可能学到有用的东西？识别缺口、构造任务、获得新信息、选择有学习价值的经历。</span></a>
+<a href="signals.html"><b>04 · 学习信号</b><span>这次经历说明了什么，应该改进哪里？比较反馈可靠性、失败诊断、贡献归因与实际学习收益。</span></a>
+<a href="capabilities.html"><b>05 · 能力形成</b><span>怎样把经历变成未来能够使用的能力？连接经验抽象、外部记忆、技能和参数更新。</span></a>
+<a href="regulation.html"><b>06 · 学习调控</b><span>怎样使多次改进相互支持？研究知识冲突、学习顺序、预算分配与学习机制自身的改进。</span></a>
+</div>
+<p>四项功能共同解释一次经历如何产生变化，以及多次变化怎样累积。它们在实际系统中相互反馈；方法、能力载体、组织方式与来源领域作为描述字段。</p>
+<div class="links"><a class="link-btn" href="research-map.html">打开四功能研究地图 →</a><a class="link-btn" href="generalization-learnability.html">贯穿专题 · 泛化与未来可学习性</a><a class="link-btn" href="memory-research-map.html">机制专题 · 记忆的形成、使用与修订</a></div>
+'''),
+        ('review-outline', '综述的八章结构', '''
+<details><summary><b>展开完整八章目录：定义范围 → 四项学习功能 → 检验证据 → 研究议程</b></summary>
+<div class="table-wrap"><table><thead><tr><th>章节</th><th>核心问题</th><th>入口</th></tr></thead><tbody>
+<tr><td>1 · 引言</td><td>为什么持续自我改进需要把经验转化为可积累的能力？</td><td><a href="#framework">本页总览</a></td></tr>
+<tr><td>2 · 范围与基础</td><td>区分本轮改进、持久状态变化与学习机制改进。</td><td><a href="foundations.html">范围、分析字段与综述方法</a></td></tr>
+<tr><td>3 · 经验获取</td><td>系统应该获得什么经历，才可能产生有价值的学习？</td><td><a href="experience.html">经验获取</a></td></tr>
+<tr><td>4 · 学习信号</td><td>怎样从经历中得到可信、可用于改进的信号？</td><td><a href="signals.html">学习信号、评价与归因</a></td></tr>
+<tr><td>5 · 能力形成</td><td>一次经历如何成为以后能够调用、迁移和组合的能力？</td><td><a href="capabilities.html">知识形成与能力更新</a></td></tr>
+<tr><td>6 · 学习调控</td><td>怎样协调多次更新，让收益能够持续积累？</td><td><a href="regulation.html">跨轮学习的协调与调控</a></td></tr>
+<tr><td>7 · 证据与评价</td><td>哪些测试能够检验泛化、保持、未来可学习性与长期成本？</td><td><a href="evidence.html">主张与证据</a></td></tr>
+<tr><td>8 · 开放问题</td><td>哪些跨功能问题决定下一步研究？</td><td><a href="agenda.html">研究议程</a></td></tr>
+</tbody></table></div></details>
+'''),
+        ('decision', '研究方案 · 稳定索引 I1–I14', '''
+<p>I1–I14 保留为稳定的研究管理索引；每项方案按主要科学问题归入一个功能，相关功能通过交叉链接连接。<a href="ideas.html">按四功能浏览全部方案</a> · <a href="idea-prioritization.html">查看优先级与决定性实验</a></p><details><summary><b>展开 I1–I14 全部研究卡片与近期进展</b></summary><div class="section-body"><p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
 <div class="idea-board">
 <a class="idea-board-card" href="ideas.html#idea-1"><span class="idea-id">I1 · 脚手架学习</span><b>哪些该自己学会，哪些用时再查？</b></a>
 <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生越来越会做题，教师也能越来越会教吗？</b></a>
@@ -25,8 +54,10 @@ PAGE = {
 <p><b>I14 · 正式编号：</b><a href="learning-rule-evolution.html">Learning Rule Evolution</a> 已纳入研究池，固定同一学生、数据、训练顺序和教师，研究更新规则 η 能否提高未见任务 C 的真实学习曲线。<a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori 2023</a> 提供快/慢机制和干预范式，<a href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL 2025</a> 提供可学习目标生成先例。编号不代表已经完成 P0；结果不足可降级合并。</p>
 <p><b>I2 最新合并：</b>保留因材施教与小预算试学，增加教师自身的教学更新；分别证明学生独立能力和教师教学能力增长。<a href="idea-i2.html">进入师生共进化方案</a>。</p>
 <p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I10</b> 在同一规则下比较区分性反例能否经真实参数更新产生组合泛化；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益；<b>I12</b> 固定学习器、反馈与后续目标题流，研究修复共同因果前置知识能否解锁新一轮学习。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i10-learning-novelty.html">I10</a> · <a href="idea-i11-emotional-rsi.html">I11</a> · <a href="idea-i12-prerequisite-bottleneck.html">I12</a> · <a href="learning-admission.html">I13</a> · <a href="learning-rule-evolution.html">I14</a></p>
-<p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
-("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
+<p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p></div></details>
+'''),
+        ('reading', '近期入口 · 精读与研究进展', '''
+<div class="route-grid"><a href="timeline.html"><b>研究时间轴</b><span>会议倒计时、双列月历与可折叠精读记录。</span></a><a href="reading-cards.html"><b>论文精读</b><span>按四功能查找论文，从速览卡片进入完整笔记。</span></a><a href="learning-rule-evolution.html"><b>I14 · 学习规则自进化</b><span>固定学生、材料与教学顺序，检验更新规则能否改善未来学习。</span></a><a href="generalization-learnability.html"><b>泛化与未来可学习性</b><span>把当下表现、规则掌握、后续学习与长期保持分别检验。</span></a></div><details><summary><b>展开完整精读导航、研究候选与历史记录</b></summary><div class="route-grid">
 <a href="generalization-learnability.html"><b>总专题：泛化与未来可学习性</b><span>从当前做对、规则真正掌握、无辅助直接迁移，到下一轮未见C真实学习曲线；串联I3/I8/I9/I10/I12/I14、顶刊顶会及统一P0–P3。</span></a>
 <a href="idea-i2.html"><b>I2：因材施教的师生共进化</b><span>教师从学生真实学习收益中改进教法；学生持续获得独立能力。</span></a>
 <a href="idea-i2.html#learner-response-question"><b>I2 扩展：训练前预测学习者对教学的真实响应</b><span>Centaur × StudentSim：下一次回答与真实 LoRA 更新后的独立能力不同；已设计 LR-P0/P1/P2、强基线与成本账本。</span></a>
@@ -55,8 +86,8 @@ PAGE = {
 <a href="learning-admission.html"><b>I13：Safe to Inherit？RSI 安全更新接纳</b><span>已核对跨代故障与 Skill 持久风险；固定独立硬门，学习风险诊断和选择性测试，比较漏放、误拒及长期安全净能力。</span></a>
 <a href="reading-notes.html#deep-nc2025-metacognition-underconfidence-katyal"><b>NC 2025 · 局部信心与整体自评</b><span>真实反馈选择如何改变总体自评？全文精读、D1/D2/D3 与 I11 实验。[[E29]]</span></a>
 <a href="idea-i6.html"><b>历史草案：跨轮瓶颈切换</b><span>原版 I6 研究记录单独保留，不再使用当前 I6 编号。</span></a>
-<a href="literature.html#rsi-landscape-20261003"><b>RSI 领域全景与竞争边界</b><span>新增 2026-10-03 综述导读：改什么、固定什么，四问 + 安全与一手证据。</span></a>
-<a href="reading-cards.html"><b>论文精读卡片</b><span>按信号、新信息、可采样性、保持和安全五问检索。</span></a>
+<a href="literature.html#rsi-landscape-20261003"><b>RSI 领域全景与竞争边界</b><span>新增 2026-10-03 综述导读：用四项学习功能组织文献，保留历史诊断问题与一手证据。</span></a>
+<a href="reading-cards.html"><b>论文精读卡片</b><span>按经验获取、学习信号、能力形成、学习调控检索；来源领域与证据类型单独标注。</span></a>
 <a href="reading-notes.html#deep-lake-baroni-mlc-nature2023"><b>Nature 2023 · MLC 元学习与系统性组合泛化</b><span>10节完整精读、20%错误监督为什么存在、Table1与Table2的不同指标及外推边界。[[E350]]</span></a>
 <a href="reading-notes.html#deep-nn2024-planning-replay-jensen"><b>Nature Neuroscience 2024 · Planning &amp; Hippocampal Replay 完整精读</b><span>Think vs Act；94人/5模型/37动物session；Figure 3 同数量随机时机对照，迁移到I4/I6的多采样 vs 立即更新 P0。[[E355]]</span></a>
 <a href="reading-notes.html"><b>论文完整精读</b><span>保留方法细节、例子和已核实的论文信息。</span></a>
@@ -72,25 +103,33 @@ PAGE = {
 <a href="cross-domain.html"><b>相邻领域方法</b><span>元学习、课程、知识追踪、双重控制与持续学习。</span></a>
 <a href="learning-science.html"><b>教育学与学习科学</b><span>哪些教育学机制有实证支持，哪些迁移仍是猜想。</span></a>
 <a href="experiments.html"><b>实验执行方案</b><span>版本控制、持久更新、数据隔离与元学习评估。</span></a>
-<a href="references.html"><b>来源与核验记录</b><span>[[SOURCE_COUNT]] 条论文和官方资源，保留原始链接与阅读深度。</span></a></div>'''),
-("claims","必须分开的三个研究主张",'''<div class="table-wrap"><table><thead><tr><th>主张</th><th>应观察什么</th><th>不能据什么下结论</th></tr></thead><tbody>
+<a href="references.html"><b>来源与核验记录</b><span>[[SOURCE_COUNT]] 条论文和官方资源，保留原始链接与阅读深度。</span></a></div></details>
+'''),
+        ('claims', '必须分开的三个研究主张', '''
+<div class="table-wrap"><table><thead><tr><th>主张</th><th>应观察什么</th><th>不能据什么下结论</th></tr></thead><tbody>
 <tr><td>眼前任务做得更好</td><td>有人帮忙、提示或额外执行后的成功率。</td><td>当前题目答对，就说自己学会。</td></tr>
 <tr><td>Agent 获得了持久能力</td><td>只保留版本化 Skill / Memory / Harness / 参数，清空临时上下文，在新任务上仍进步。</td><td>答案、同伴或教师仍在上下文里。</td></tr>
 <tr><td>Agent 更会自我改进</td><td>保留学到的学习策略，重置任务 Agent，在新的任务流中能否更快改进。</td><td>迭代次数更多、模型更大或训练预算更多。</td></tr>
 </tbody></table></div>
 <p>只要设计了循环，就能叫自我迭代，但<strong>要声称“递归地改进改进器”还需要额外证据</strong>。如 MetaSkill-Evolve 已研究元技能进化，不能再把“有两个循环”本身作为创新。[[S06]]</p>
-<div class="note">独立评测必须固定并与训练数据隔离；能力提升不会自动扩大 Agent 的真实工具权限。即便改进器学习，安全审计仍应独立。</div>'''),
-("method","从教育学概念到论文问题，怎么做？",'''<ol class="research-steps">
+<div class="note">独立评测必须固定并与训练数据隔离；能力提升不会自动扩大 Agent 的真实工具权限。即便改进器学习，安全审计仍应独立。</div>
+'''),
+        ('method', '从教育学概念到论文问题，怎么做？', '''
+<ol class="research-steps">
 <li><b>先说一个生活中的具体例子。</b>例如为什么新 Skill 影响旧 Skill，或为何同样 Bug 有人看示范就会、有人不会。</li>
 <li><b>说清最近邻研究了什么。</b>不能因为前人没用“费曼”“温故知新”这些词，就认定没人研究机制。</li>
 <li><b>问一个更具体的差异。</b>别人研究哪个失败值得修，我们研究失败后下一次试验何时该做、什么时候可以归纳。</li>
 <li><b>定义 Agent 真的学到了什么。</b>明确 Skill / Memory / Harness / 权重的可持久写入与回滚。</li>
 <li><b>先做最小对照。</b>同预算比较固定简单策略与我们的方法，排除更多尝试、更多 token、外部答案泄漏。</li>
 <li><b>再检验长期进步。</b>连续多轮、新任务、旧能力回归，最后才评价改进策略本身有没有变好。</li>
-</ol>'''),
-("scope","网站范围、历史方案与证据状态",'''<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：<a href="idea-i5.html">I5 主线</a>为“十模型按双向独立学习收益动态配对与决定换伴”；目前 <a href="idea-i6-failure-value.html">I6</a> 聚焦失败轨迹，<a href="idea-i7-learning-order.html">I7</a> 聚焦学习顺序。<a href="idea-i6.html">旧版瓶颈切换</a>已归档，不再占用 I6 编号。</p>
+</ol>
+'''),
+        ('scope', '网站范围、历史方案与证据状态', '''
+<p>这是聚焦 RSI 选题的定向研究站，不是穷尽全领域的系统综述。<a href="ideas.html"><b>I1–I5 最新描述</b></a>以 2026-10-27 的问题表述为准：<a href="idea-i5.html">I5 主线</a>为“十模型按双向独立学习收益动态配对与决定换伴”；目前 <a href="idea-i6-failure-value.html">I6</a> 聚焦失败轨迹，<a href="idea-i7-learning-order.html">I7</a> 聚焦学习顺序。<a href="idea-i6.html">旧版瓶颈切换</a>已归档，不再占用 I6 编号。</p>
 <p><a href="idea-i5.html#teaching-feedback">I5 统一详情页</a>同时保留“教学反馈诊断”作为历史研究支线：学生的误解能否暴露教师自己的隐性缺陷。它与当前的“动态伙伴选择”有不同的研究问题，因此在详情页中区分，不再在左侧目录重复出现。</p>
 <p><a href="idea-i9-practice-switching.html">I9</a> 固定教材，研究跨主题集中/交错的切换，并增加同材料不同顺序的第三任务学习曲线实验；<a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
-<div class="status-strip"><b>截至 2026-10-28</b><span>I1–I14 已整理，I14 P0/P1 待实验</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>''')]
+<div class="status-strip"><b>截至 2026-10-29</b><span>I1–I14 已整理，I14 P0/P1 待实验</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
+'''),
+    ]
 }

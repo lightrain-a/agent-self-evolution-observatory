@@ -156,6 +156,26 @@ PAGE = {
 <div class="idea-step"><h3>Design <small>（如何做）</small></h3><p>从多任务失败簇提候选 P → 用独立知识探针和少量试训核查 → 固定 LoRA 更新器补 P → 再用相同 T 任务流训练 → 清空辅助，在未见题上测第二段独立增益。对比随机 P、高频非先修 P、更多直接练 T 和 SOAR 式中间题，全部计入预算。</p><div class="flow"><div><b>失败任务簇</b><small>共享错误但未必同一缺口</small></div><div><b>主动核验 P</b><small>因果前置 vs 相关图边</small></div><div><b>持久学习 P</b><small>固定 LoRA / 验证器</small></div><div><b>再次学习 T</b><small>独立增益 × 多任务族</small></div></div></div>
 <div class="idea-step"><h3>实验设计 <small>（怎么验证）</small></h3><p><b>P0：</b>可验证规则 DAG，匹配因果前置与高频非前置，并设已经会 P 的负对照；<b>P1：</b>真实前置图对 Agent 隐藏，从失败中提案，比较 SkillGraph、SkillDAG、ESCO-PrereqSkill 和 SOAR 相关强基线；<b>P2：</b>两级依赖链中检验学习机会是否跨轮解锁。主指标是<strong>补 P 后再学 T 的第二阶段净学习增量</strong>、解锁任务族数量、旧能力回归和总成本。只提高当前题准确率就不独立立题。</p><p class="idea-side-note"><b>正交边界：</b>I8 纠正一个错误后测同规则迁移；I12 要证明补前置 P 后<strong>不同 T 的后续学习潜力增加</strong>；I9 只改课程顺序，I2 改教学方式。<a href="idea-i12-prerequisite-bottleneck.html">I12 完整论文定位、公式、P0–P2 与 Go/Merge/Stop →</a></p></div>
 </div>'''),
+ ("idea-13", "I13：安全更新接纳——哪些自我修改值得继承？", '''
+<div class="idea-focus"><p><b>一句话：</b>验证预算有限时，怎样从历史修改后果中学会识别下一次更新的风险？</p></div>
+<div class="idea-steps">
+<div class="idea-step"><h3>Challenge <small>（科学问题）</small></h3><p>局部功能提高、常规回归通过的更新，仍可能在未来授权或技能组合中触发风险；全部拒绝又会误拒有益更新，甚至继续运行已不安全的旧版本。</p></div>
+<div class="idea-step"><h3>现有工作 <small>（直接近邻）</small></h3><p>Safety Must Survive Self-Improvement 已研究故障保留与恢复；SafeEvolve 已有技能读写治理。I13 进一步研究同预算的事前风险诊断与测试选择。[[S450]][[S451]]</p></div>
+<div class="idea-step"><h3>Insight <small>（待验关系）</small></h3><p>历史修改的实际后果，可能揭示哪些结构性变化最需要额外验证；价值取决于能否迁移到未见风险家族。</p></div>
+<div class="idea-step"><h3>Design <small>（研究设计）</small></h3><p>固定编辑器、候选池与独立安全发布门，只让诊断策略选择有限测试，并建议接纳、隔离、暂缓或拒绝。分别记录候选、实际部署版本与回退目标。</p></div>
+<div class="idea-step"><h3>实验设计 <small>（决定性证据）</small></h3><p>先匹配局部收益比较后代风险；再同预算对照固定、随机与历史驱动测试，测危险漏放、安全误拒和净能力。重置学习者、冻结新旧诊断器后，在未见风险家族检验跨代进步。</p><p class="idea-side-note">提案待实验。<a href="learning-admission.html">I13 完整方案、P0–P2与近邻对照 →</a></p></div>
+</div>
+'''),
+("idea-14", "I14：学习规则自进化——怎样让后代真正更会学习？", '''
+<div class="idea-focus"><p><b>一句话：</b>学生、教材和顺序相同时，从历史学习效果改进更新规则，能否让新任务学得更快、更稳？</p></div>
+<div class="idea-steps">
+<div class="idea-step"><h3>Challenge <small>（科学问题）</small></h3><p>当前任务得分相近，可能掩盖不同的未来学习能力；需要区分更新规则的作用与更多数据、教学顺序、教师提示或优化器状态。</p></div>
+<div class="idea-step"><h3>现有工作 <small>（直接近邻）</small></h3><p><a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori 2023</a>提供快慢学习机制的分阶段干预；<a href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL</a>学习训练目标。学习优化器和元强化学习已有先例。[[M01]][[M02]]</p></div>
+<div class="idea-step"><h3>Insight <small>（待验关系）</small></h3><p>过去真实学习结果可能帮助更新规则识别当前知识状态，形成适合后续任务的学习操作；这种收益须在新任务中独立检验。</p></div>
+<div class="idea-step"><h3>Design <small>（研究设计）</small></h3><p>固定学生起点、材料、顺序、反馈与预算，只改变目标生成或更新规则η；用过去学习后果形成新η，再冻结规则、重置同一起点学生。</p></div>
+<div class="idea-step"><h3>实验设计 <small>（决定性证据）</small></h3><p>在未见任务C执行相同真实更新，比较新旧η、强固定更新器及打乱历史对照的完整学习曲线、旧能力保持和总成本；分阶段冻结检验收益来自何处。</p><p class="idea-side-note">提案待实验；与I2改教法、I9改顺序分别管理。<a href="learning-rule-evolution.html">I14 完整方案与P0/P1 →</a></p></div>
+</div>
+'''),
  ("orthogonal", "I6–I14：每个方向只研究一个变量", '''
 <div class="table-wrap"><table><thead><tr><th>Idea</th><th>改变什么</th><th>固定什么</th><th>决定性结果</th></tr></thead><tbody>
 <tr><td><a href="idea-i6-failure-value.html">I6 · 失败轨迹价值</a></td><td>同题失败过程</td><td>模型检查点、错误终点、正确反馈、学习顺序、预算</td><td>不同轨迹产生的后续独立学习增益</td></tr>
