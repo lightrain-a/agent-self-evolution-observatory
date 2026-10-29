@@ -2571,6 +2571,96 @@
       "level": "PubMed PMID38155781 + iScience正式文章与摘要核对；2026-10-29；未独立复现",
       "note": "Hirano与Furuya后续120名钢琴家实验，报告AHT影响肌肉协调，感官传入信息相对于预测值的权重增加、无总体感觉敏感度增幅，并改善feedback movement control；说明2020年解释应避免只用敏感度提升单一机制。",
       "code": ""
+    },
+    {
+      "id": "E710",
+      "group": "学习科学",
+      "title": "Inventing to Prepare for Future Learning: The Hidden Efficiency of Encouraging Original Student Production in Statistics Instruction",
+      "date": "Cognition and Instruction 22(2):129–184 (2004)",
+      "url": "https://www.tandfonline.com/doi/abs/10.1207/s1532690xci2202_1",
+      "level": "期刊摘要、原作者公开2004 PDF方法及两项9年级统计实验核对；2026-10-29；未复现",
+      "note": "Schwartz与Martin发明活动及随后资源学习的因素对照：无新资源时发明组与告知练习组的迁移相近，有资源时发明组学得更好；属于Preparation for Future Learning，研究对象是人类而非LLM真实参数更新。",
+      "code": "https://aaalab.stanford.edu/assets/papers/2004/Inventing_to_prepare_for_future_learning.pdf"
+    },
+    {
+      "id": "E711",
+      "group": "学习科学",
+      "title": "Learning Versus Performance: An Integrative Review",
+      "date": "Perspectives on Psychological Science 10(2):176–199 (2015)",
+      "url": "https://doi.org/10.1177/1745691615569000",
+      "level": "Soderstrom与Bjork原文摘要、作者公开综述PDF核对；2026-10-29；综述非新实验",
+      "note": "训练期表现与持久保持/迁移并不等价，某些使训练更费力的条件有时提高延迟结果；只是教育学已知现象，不能直接当作LLM学习可塑性机制的因果证据。",
+      "code": "https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/11/soderstorm_ra_learningvsperformance.pdf"
+    },
+    {
+      "id": "M550",
+      "group": "相邻领域",
+      "title": "Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML",
+      "date": "ICLR 2020 · Conference",
+      "url": "https://iclr.cc/virtual_2020/poster_rkgMkCEtPB.html",
+      "level": "ICLR官方展示与公开摘要核对；2026-10-29；未复现",
+      "note": "Raghu等消融发现MAML在其实验中主要复用已有的高质量特征；只更新任务头的ANIL匹配MAML成绩。提示未来快速适应可能是特征预备性，而非网络主体表示发生高效更新。",
+      "code": "https://arxiv.org/abs/1909.09157"
+    },
+    {
+      "id": "M551",
+      "group": "相邻领域",
+      "title": "Meta-Learning Representations for Continual Learning",
+      "date": "NeurIPS 2019 · Main Conference",
+      "url": "https://papers.neurips.cc/paper_files/paper/2019/hash/f4dd765c12f2ef67f98f3558c282a9cd-Abstract.html",
+      "level": "NeurIPS官方发表摘要/审稿修改记录核对；2026-10-29；未复现",
+      "note": "Javed与White的OML将快速适应与减少持续学习干扰一并作为表示学习目标；旧任务保持和未来适应一起优化已有直接先例，I9/I12不可声称首次提出二者联动。",
+      "code": "https://arxiv.org/abs/1905.12588"
+    },
+    {
+      "id": "M552",
+      "group": "相邻领域",
+      "title": "The Transient Nature of Emergent In-Context Learning in Transformers",
+      "date": "NeurIPS 2023 · Main Conference",
+      "url": "https://papers.nips.cc/paper_files/paper/2023/hash/58692a1701314e09cbd7a5f5f3871cc9-Abstract-Conference.html",
+      "level": "NeurIPS官方全文与摘要核对；2026-10-29；未复现",
+      "note": "合成任务中ICL策略先形成又消失，被权重记忆IWL替换，训练loss却持续降低；作者报告L2正则有助保持ICL。提醒终点训练损失无法代表需要的学习机制持续存在。",
+      "code": ""
+    },
+    {
+      "id": "M553",
+      "group": "相邻领域",
+      "title": "Progress measures for grokking via mechanistic interpretability",
+      "date": "ICLR 2023 · Conference; arXiv 2301.05217",
+      "url": "https://arxiv.org/abs/2301.05217",
+      "level": "ICLR录用列表、论文原始arXiv摘要与机制实验核对；2026-10-29；未复现",
+      "note": "Nanda等对模加小Transformer解构傅里叶电路，区分记忆、泛化电路形成和清理三阶段；说明后期内部算法变化可能晚于训练正确率；不能直接外推任意LLM推理。",
+      "code": ""
+    },
+    {
+      "id": "M554",
+      "group": "相邻领域",
+      "title": "Overtrained Language Models Are Harder to Fine-Tune",
+      "date": "ICML 2025 · PMLR 267:56719–56789",
+      "url": "https://proceedings.mlr.press/v267/springer25a.html",
+      "level": "PMLR正式摘要与作者受控实验核对；2026-10-29；未复现",
+      "note": "在OLMo等模型上延长预训练可降低后续微调表现，OLMo-1B 3T tokens相较2.3T后训练基准差>2%；研究指向参数对修改的广泛敏感性，不可简化为普适过训练门槛。",
+      "code": ""
+    },
+    {
+      "id": "M555",
+      "group": "相邻领域",
+      "title": "Forget Forgetting: Continual Learning in a World of Abundant Memory",
+      "date": "ICLR 2026 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/17fc58b1ba92abbb72c5f457e140d851-Abstract-Conference.html",
+      "level": "ICLR官方发表摘要核对；2026-10-29；未复现",
+      "note": "在回放数据充足但计算受限的持续学习中，主要困难从旧任务遗忘转向新任务可塑性；通过weight-space consolidation比较重放、rank-based重置和平均，含LLM持续指令微调。",
+      "code": ""
+    },
+    {
+      "id": "M556",
+      "group": "相邻领域",
+      "title": "Overcoming classic challenges for artificial neural networks by providing incentives and practice",
+      "date": "Nature Machine Intelligence 7:1602–1611 (2025-10-20) · Perspective",
+      "url": "https://www.nature.com/articles/s42256-025-01121-8",
+      "level": "Nature Machine Intelligence正式Perspective摘要与作者信息核对；2026-10-29；综述非统一新实验",
+      "note": "Irie与Lake用Incentive-and-Practice视角综述系统泛化、遗忘、少样本与多步推理，并联系元学习；不是一组同时证明这四类能力共用单一机制的因果实验。",
+      "code": ""
     }
   ]
 }

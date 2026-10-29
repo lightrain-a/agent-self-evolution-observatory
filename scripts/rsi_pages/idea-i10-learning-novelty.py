@@ -10,6 +10,7 @@ PAGE = {
  "updated": "2026-10-28",
  "sections": [
  ("question", "Observable Phenomenon｜同一条规则，为什么有些练习只强化捷径？", '''
+<p class="note"><b>泛化专题入口：</b><a href="generalization-learnability.html">从当前表现到真实掌握，再到未来可学习性</a>。I10仅操纵区分信息D与组合覆盖K，检验真实规则内化；不能仅凭这一步声明模型下一轮会学得更快。<a href="generalization-learnability.html#p0">共享P0规则分歧实验 →</a></p>
 <p class="thesis"><b>一句话：</b>模型连续做对十道不同的题，仍可能依靠一个恰好在训练分布里成立的错误捷径。新的一道题即使题面很像，却可能让正确规则和错误捷径给出不同答案。<strong>I10 想知道：这道题提供了能区分规则的证据吗？即使提供了，模型能否通过真实参数更新把它变成可迁移能力？</strong></p>
 <div class="card-grid">
 <article class="research-card"><h3>重复巩固</h3><p>数字、叙述不断变化，但正确规则与捷径在所有训练题上的答案都相同。模型更熟悉这些题，却仍不必识别真正起作用的变量。</p></article>

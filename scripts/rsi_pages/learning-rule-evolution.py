@@ -13,7 +13,7 @@ PAGE = {
 "sections":[
 ("decision","I14 · 正式研究方向：学会任务，与学会学习有什么不同？",'''
 <div class="decision"><span class="kicker">I14 · RSI META-LEARNING · P0/P1 UNVERIFIED · 2026-10-29</span>
-<h3>Same Current Ability, Different Future Learnability</h3>
+<h3>Same Current Ability, Different Future Learnability</h3><p class="note"><b>泛化与未来可学习性 · 总专题：</b><a href="generalization-learnability.html">知识结构、训练历史与未来C真实学习曲线</a>提供统一L0–L4评测语言。I14与I9区别在于固定学生、数据和顺序，<strong>唯一操纵学习规则η</strong>，然后对同一后续C任务真实更新。<a href="generalization-learnability.html#p3">跨代元规则比较 →</a></p>
 <p><b>观察问题：</b>两个 Agent 当前都能完成同样的 A/B 任务，但过去使用过不同的更新机制；即使它们在 A/B 后测能力相近、当前 C 前测也匹配，后续学习陌生规则 C 的速度是否仍然不同？如果有，这种差异是否来自<strong>学习规则本身</strong>，而不是更多样本、课程顺序、教师提示或优化器状态？</p>
 <p><b>编号与证据状态：</b><strong>I14 已正式纳入 RSI 研究池，用于独立跟踪文献、假设、实验和版本。</strong>编号不表示方法已经被验证，也不意味着元学习概念本身是首次提出。快环/慢环与自动学习训练目标都有成熟先例；研究仍须通过同预算真实学习实验。若关键现象不成立，后续允许降级、收窄或合并。I14 不改变 I2 的教学策略或 I9 的课程顺序；原 I1–I13 的历史排名暂时保留，I14 尚待单独评估。</p>
 </div>

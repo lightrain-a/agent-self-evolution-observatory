@@ -8,6 +8,7 @@ PAGE = {
  "sections":[
  ("why","现象与研究边界｜大模型不是小模型的简单放大",'''
 <p><b>源论文：</b>Pesnot Lerousseau 与 Summerfield（<i>Nature Human Behaviour</i>，2025年在线、2026年卷期）在530名人类与两层单头Transformer的图片—标签规则任务中，发现重复与多样分别促进历史记忆和上下文规则；随机混合能让双策略共存；人类先多样后重复能较好保留规则，而Transformer分阶段会覆盖早期策略。<b>这里的Transformer不是现代7B LLM</b>。[[E360]] <a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">10节精读与原始数值 →</a></p>
+<div class="note"><b>跨学科总专题：</b><a href="generalization-learnability.html">从规则真正掌握到未来可学习性</a>将本页3B–70B课程与遗忘证据放到更宽的PFL/元学习/学习结构脉络里，并区分零样本直接迁移与真实后续C训练增量；本页继续专注LLM/VLM模型规模、课程与样本分布的直接证据。</div>
 <div class="note"><b>调查问题：</b>大型模型中是否仍有相同策略竞争？训练顺序是否还起作用？如果依赖LoRA/低学习率/回放可被消除，真正的机制究竟是样本分布、学习阶段、知识冲突还是更新器本身？先比较原文支持到哪里，再给 I9/I10 设决定性实验。</div>
 <div class="table-wrap"><table><thead><tr><th>必须区分的变量</th><th>不能等同</th><th>适用独立测试</th></tr></thead><tbody>
 <tr><td>Data frequency / Redundancy</td><td>不等于样本难度，也不等于数据污染</td><td>旧实例、重复轮数、训练前已见性</td></tr>

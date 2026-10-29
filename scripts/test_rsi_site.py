@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -265,7 +265,7 @@ def main():
     expected_groups={
         'overview':['index.html','timeline.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
-        'methods':['cross-domain.html','theory-notes.html','learning-science.html','curriculum-scale-evidence.html'],
+        'methods':['cross-domain.html','theory-notes.html','learning-science.html','generalization-learnability.html','curriculum-scale-evidence.html'],
         'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
                     'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html','memory-research-map.html','learning-signal-bottlenecks.html','experience-consolidation.html','experiments.html'],
@@ -1221,6 +1221,33 @@ def main():
     check('id="idea-3"' in ideas_text and
           '与 I13 的事前接纳分开' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0],
           'I3 post-conflict repair was not separated from pre-update admission')
+    generalization=(ROOT/'rsi/generalization-learnability.html').read_text(encoding='utf-8')
+    sections={'question','taxonomy','history','mechanisms','evidence','new-papers',
+              'idea-map','states','metrics','controls','p0','p1','p2','p3','figures'}
+    check(all(f'id="{x}"' in generalization for x in sections),
+          'Generalization subject lost its evidence/mechanism/evaluation chapters')
+    check(all(f'href="references.html#{ref}"' in generalization for ref in
+              ('E710','E711','E360','E100','M550','M551','M552','M553',
+               'M554','M555','M556','M18','M20')),
+          'Generalization subject source registry/citations are incomplete')
+    contract=json.loads((ROOT/'rsi/generalization-protocol.json').read_text(encoding='utf-8'))
+    check(contract['status']=='research_design_not_executed'
+          and contract['is_new_numbered_idea'] is False
+          and set(contract['primary_ideas'])=={'I8','I9','I10','I12'}
+          and len(contract['outcome_hierarchy'])==5
+          and [s['id'] for s in contract['studies']]==['P0','P1','P2','P3']
+          and {x['id'] for x in contract['task_families']}=={'C1','C2','C3'},
+          'Generalization design confused direct transfer with future learnability or numbered I')
+    check(any('AdamW' in s for s in contract['shared_controls'])
+          and all('generalization-learnability.html' in
+              (ROOT/'rsi'/f'{slug}.html').read_text(encoding='utf-8')
+              for slug in ('index','ideas','learning-science','curriculum-scale-evidence',
+                          'i8','idea-i9-practice-switching','idea-i10-learning-novelty',
+                          'idea-i12-prerequisite-bottleneck','learning-rule-evolution')),
+          'Generalization program missing from RSI ideas or comparison controls')
+    check('generalization-learnability.html' in nav_text
+          and (ROOT/'_site/rsi/generalization-protocol.json').is_file(),
+          'Cross-idea subject missing from public navigation or JSON export')
     ref_ids=set(parsed[ROOT/'rsi/references.html'].ids)
     check(refs<=ref_ids,'Some source cards have no anchors')
     agent_nav=(ROOT/'data.js').read_text(encoding='utf-8')

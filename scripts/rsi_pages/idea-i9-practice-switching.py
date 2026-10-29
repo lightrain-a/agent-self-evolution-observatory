@@ -7,6 +7,7 @@ PAGE = {
   "updated": "2026-10-28",
   "sections": [
     ("question", "Observable Phenomenon｜练得顺，为什么考试反而不如人？", '''
+<p class="note"><b>跨Idea泛化总专题：</b><a href="generalization-learnability.html">知识组织与后期真实学习能力</a>明确区分C前测直接迁移和相同训练预算后的C学习曲线。I9固定训练材料与更新器，只研究课程顺序；<a href="generalization-learnability.html#p1">共同P1协议 →</a></p>
 <p class="thesis"><b>一句话：</b>模型练习 A 类题时，连续做十道可能越做越熟；一旦把 A、B、C 混合呈现，却不知道该使用哪种方法。反过来，模型基础规则尚未形成时就一直交错练习，也可能根本学不进。<strong>我们希望知道：下一阶段究竟该集中练熟一个主题，还是交错练习多个主题？模型已经学到了什么，能不能帮助我们提前判断？</strong></p>
 <div class="card-grid">
 <article class="research-card"><b>Blocked · 集中练习</b><h3>AAA → BBB → CCC</h3><p>一段时间只练同一种规则，较容易继续套用刚才的方法；但不一定学会在多种规则中做选择。</p></article>

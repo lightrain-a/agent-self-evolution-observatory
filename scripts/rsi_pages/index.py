@@ -20,12 +20,14 @@ PAGE = {
 <a class="idea-board-card" href="learning-admission.html"><span class="idea-id">I13 · RSI 安全更新接纳</span><b>哪些自我修改可以安全继承？</b></a>
 <a class="idea-board-card" href="learning-rule-evolution.html"><span class="idea-id">I14 · 学习规则自进化</span><b>学会做题后，能否越来越会学习？</b></a>
 </div>
+<p class="note"><b>跨 Idea 研究总专题：</b><a href="generalization-learnability.html">为什么当下做对了，却不一定真的掌握、更不一定下一轮学得更快？</a> 按结构掌握、直接迁移、后续可学习性和长期保持四类证据，串联 I3/I8/I9/I10/I12/I14 的对照实验，保留各自独立处理变量与安全门。</p>
 <p><b>I13 · Safety-Aware Update Admission：</b><a href="learning-admission.html">研究跨代安全风险的事前诊断与有限预算验证</a>。候选更新可以被接纳、隔离、暂缓或拒绝；最关键是同时降低不安全更新漏放和安全更新误拒，并让 Meta-Admission 的诊断策略跨代改进。安全不变量和最终发布权仍由独立验证层掌握。P0/P1/P2 均待实验。</p>
 <p><b>I14 · 正式编号：</b><a href="learning-rule-evolution.html">Learning Rule Evolution</a> 已纳入研究池，固定同一学生、数据、训练顺序和教师，研究更新规则 η 能否提高未见任务 C 的真实学习曲线。<a href="reading-notes.html#deep-hattori-ofc-metarl-nn2023">Hattori 2023</a> 提供快/慢机制和干预范式，<a href="reading-notes.html#deep-discorl-nature2025-oh">DiscoRL 2025</a> 提供可学习目标生成先例。编号不代表已经完成 P0；结果不足可降级合并。</p>
 <p><b>I2 最新合并：</b>保留因材施教与小预算试学，增加教师自身的教学更新；分别证明学生独立能力和教师教学能力增长。<a href="idea-i2.html">进入师生共进化方案</a>。</p>
 <p>I1–I5 每项都按 Challenge → 现有工作 → Insight → Design → 实验设计展开；其中 <a href="idea-i5.html"><b>I5</b></a> 专门研究十模型互教的动态配对与交换顺序，不重新设计学习方法。<b>I6</b> 固定错误终点与教学过程，比较失败轨迹的学习价值，并用它决定继续、换错题或暂缓重访；<b>I7</b> 固定教材与预算，比较尝试和示范的先后顺序；<b>I8</b> 则验证高置信度错误、前置知识与共享规则对纠错迁移的作用；<b>I9</b> 固定各主题训练材料，研究集中和交错的切换时点；<b>I10</b> 在同一规则下比较区分性反例能否经真实参数更新产生组合泛化；<b>I11</b> 固定正确反馈与更新器，只改变语气，评估学习控制决策和持久净收益；<b>I12</b> 固定学习器、反馈与后续目标题流，研究修复共同因果前置知识能否解锁新一轮学习。<a href="ideas.html">研究方向总览</a> · <a href="idea-i6-failure-value.html">I6</a> · <a href="idea-i7-learning-order.html">I7</a> · <a href="i8.html">I8</a> · <a href="idea-i9-practice-switching.html">I9</a> · <a href="idea-i10-learning-novelty.html">I10</a> · <a href="idea-i11-emotional-rsi.html">I11</a> · <a href="idea-i12-prerequisite-bottleneck.html">I12</a> · <a href="learning-admission.html">I13</a> · <a href="learning-rule-evolution.html">I14</a></p>
 <p>例如 R²Orch / PATS 已研究支架撤除；RSIFlow 已选择自改进工作流；HCL / SkillBoost 已研究回归；ActiveSaddler 已选有用的失败；PopuLoRA / OPCoD / MACE 已涉及群体教学、反馈和伙伴探索。我们需要回答比这些工作更细的问题。[[S26]][[S27]][[S28]][[S29]][[S30]][[S16]][[S32]][[S33]][[S34]]</p>'''),
 ("reading","研究导航：从证据走到可执行实验",'''<div class="route-grid">
+<a href="generalization-learnability.html"><b>总专题：泛化与未来可学习性</b><span>从当前做对、规则真正掌握、无辅助直接迁移，到下一轮未见C真实学习曲线；串联I3/I8/I9/I10/I12/I14、顶刊顶会及统一P0–P3。</span></a>
 <a href="idea-i2.html"><b>I2：因材施教的师生共进化</b><span>教师从学生真实学习收益中改进教法；学生持续获得独立能力。</span></a>
 <a href="idea-i2.html#learner-response-question"><b>I2 扩展：训练前预测学习者对教学的真实响应</b><span>Centaur × StudentSim：下一次回答与真实 LoRA 更新后的独立能力不同；已设计 LR-P0/P1/P2、强基线与成本账本。</span></a>
 <a href="reading-notes.html#deep-nature2025-centaur-binz"><b>Nature 2025 · Centaur 完整精读</b><span>Psych-101、QLoRA、未见实验 OOD、开放环、fMRI 与认知机制发现；对照 StudentSim 的直接最近邻。</span></a>

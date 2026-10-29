@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0",
+  "research_topic": "Generalization and Future Learnability",
+  "date": "2026-10-29",
+  "status": "research_design_not_executed",
+  "type": "cross_idea_common_evaluation_contract",
+  "is_new_numbered_idea": false,
+  "primary_ideas": [
+    "I8",
+    "I9",
+    "I10",
+    "I12"
+  ],
+  "secondary_ideas": [
+    "I3",
+    "I14",
+    "I2",
+    "I5",
+    "I6",
+    "I7"
+  ],
+  "safety_separate": "I13",
+  "research_question": "在已测当前能力可比的条件下，历史知识组织与训练经历能否因果改变完全未见C任务接受相同真实更新后的学习曲线？",
+  "outcome_hierarchy": [
+    {
+      "key": "L0",
+      "name": "immediate_performance",
+      "measurement": "same_task_train_and_heldout_accuracy",
+      "not_equivalent_to": "knowledge mastery"
+    },
+    {
+      "key": "L1",
+      "name": "structural_mastery",
+      "measurement": "rule_disagreement+unseen_combinations+applicability_boundaries_after_help_withdrawal",
+      "not_equivalent_to": "near_paraphrase"
+    },
+    {
+      "key": "L2",
+      "name": "direct_transfer",
+      "measurement": "L(H,C,0)",
+      "not_equivalent_to": "ability to learn C"
+    },
+    {
+      "key": "L3",
+      "name": "future_learnability",
+      "measurement": "entire L(H,C,b) curve under matched genuine training intervention",
+      "not_equivalent_to": "better C starting score"
+    },
+    {
+      "key": "L4",
+      "name": "retention_and_safety",
+      "measurement": "A/B regression+rule_intrusion+independent_policy_gate",
+      "not_equivalent_to": "single end_score"
+    }
+  ],
+  "notation": {
+    "history": "H: 训练材料、顺序、前置知识或固定定义的更新规则历史",
+    "checkpoint": "S_H: 历史 H 后冻结的主体参数/Skill状态",
+    "future_task": "C: 历史与评测开发严格隔离的未见规则家族",
+    "future_training": "U(C,b): 按共同教师/训练器/预算 b 在C上继续真实学习",
+    "absolute_learning_curve": "L(H,C,b) = Perf(U(C,b)(S_H),T_C)",
+    "future_gain": "G(H,C,b) = L(H,C,b) - L(H,C,0)",
+    "difference_in_gains": "Gamma(C,b) = G(H1,C,b) - G(H2,C,b)",
+    "warning": "高初始C分可能接近上限，必须报告绝对曲线、起点、AULC和旧任务损失，不只报Gamma。"
+  },
+  "task_families": [
+    {
+      "id": "C1",
+      "label": "compatible_new_composition",
+      "ground_truth": "共享抽象操作，未见结构组合与新实体",
+      "purpose": "结构复用"
+    },
+    {
+      "id": "C2",
+      "label": "conflicting_rule",
+      "ground_truth": "同表面条件下竞争规则结果不同，需合法情境切换",
+      "purpose": "旧规则覆盖与干扰"
+    },
+    {
+      "id": "C3",
+      "label": "weak_related_rule",
+      "ground_truth": "无预设依赖但规模与反馈结构匹配",
+      "purpose": "与一般可塑性区别"
+    }
+  ],
+  "shared_controls": [
+    "单一基础checkpoint并保留全部随机分叉",
+    "材料multiset/反馈/Token/LoRA rank/训练器/教师一致，除研究变量外不改变",
+    "开发集预注册当前能力匹配，报告覆盖率与全部历史样本",
+    "进入C主分支重置AdamW优化器状态，保留继承状态补充对照",
+    "最终C测试题/组合规则族按模板与任务结构隔离",
+    "训练过程和终测禁用外部帮助；Core-only与System-with-Experts分开报告",
+    "旧任务A/B回归、安全契约与所有Probe/验证成本计入",
+    "至少3个训练种子，独立统计单位是任务族和随机起点而非同题多次采样"
+  ],
+  "studies": [
+    {
+      "id": "P0",
+      "owner": "I10/I8",
+      "question": "规则区分信息是否提高真实结构掌握？",
+      "treatment": [
+        "Dminus/Kminus",
+        "Dplus/Kminus",
+        "Dminus/Kplus",
+        "Dplus/Kplus"
+      ],
+      "baselines": [
+        "iid matched extra data",
+        "low-loss difficulty selection",
+        "pre-memorization train accuracy curation",
+        "surface diversity",
+        "gradient diversity"
+      ],
+      "measures": [
+        "rule-disagreement heldout accuracy",
+        "new structural combinations",
+        "context-sensitive rule selection",
+        "initial C transfer"
+      ],
+      "go": "D+ effect replicates across independent rule families and survives matched information/cost; does not imply L3"
+    },
+    {
+      "id": "P1",
+      "owner": "I9",
+      "question": "相同教材的训练历史顺序是否改变下一次C的真实可学习性？",
+      "treatment": [
+        "A_then_B",
+        "B_then_A",
+        "blocked",
+        "interleaved"
+      ],
+      "conditions": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "checkpoints": [
+        0,
+        1,
+        5,
+        10,
+        20,
+        40
+      ],
+      "baselines": [
+        "fixed curriculum",
+        "random curriculum",
+        "Lie-bracket current target loss baseline",
+        "readout plasticity",
+        "ANIL-style head-only adaptation",
+        "optimizer-state reset"
+      ],
+      "measures": [
+        "L_absolute",
+        "G_incremental",
+        "AULC",
+        "steps_to_threshold",
+        "old_ability_regression",
+        "rule_intrusion"
+      ],
+      "go": "Matched measured current ability but replicated, not optimizer-only future C learning curve difference"
+    },
+    {
+      "id": "P2",
+      "owner": "I12",
+      "question": "真正先修补救是否提高第二阶段的T学习增量？",
+      "treatment": [
+        "true_prerequisite_P",
+        "semantic_nonprerequisite_H",
+        "direct_target_T",
+        "prepared_base_with_P",
+        "prompt_only_P"
+      ],
+      "controlled_second_stage": "same T tasks, same U_T and budget",
+      "measures": [
+        "immediate_transfer_after_first_stage",
+        "second_stage_incremental_learning",
+        "unlocked_families",
+        "total_budget"
+      ],
+      "go": "Prerequisite by downstream dependency interaction, positive second-stage gain over high-frequency and direct training controls"
+    },
+    {
+      "id": "P3",
+      "owner": "I8/I9/I12/I14 separately",
+      "question": "是否真正改进了元学习决策规则，而不仅模型本身更强？",
+      "treatment": [
+        "m0",
+        "m1",
+        "fixed_rules",
+        "long_history_prompt"
+      ],
+      "controls": [
+        "same student",
+        "same candidates",
+        "same budget",
+        "fixed evaluator",
+        "unseen task sequences"
+      ],
+      "measures": [
+        "future_net_learning",
+        "old_skill_regression",
+        "independent_meta_policy_improvement"
+      ],
+      "go": "New meta rule m1 outperforms m0 at same task model and budget on unseen families"
+    }
+  ],
+  "reporting_requirements": [
+    "每组本来学得会/不会的任务分母",
+    "按任务族/模型种子汇总不确定区间",
+    "匹配失败全部比例与敏感性",
+    "独立新组合与旧能力保持",
+    "完整成本和负迁移情况",
+    "正确排除C测试泄漏",
+    "所有方法失败和停止条件"
+  ],
+  "primary_sources": [
+    "E710",
+    "E711",
+    "M21",
+    "M550",
+    "M551",
+    "M552",
+    "M553",
+    "M554",
+    "M555",
+    "M556",
+    "E100",
+    "E360",
+    "M22",
+    "M18",
+    "M20",
+    "M11",
+    "E26",
+    "E401",
+    "E350"
+  ],
+  "note": "本JSON是研究协议草案；不是用户项目已完成的数据、实验计划批准或已验证结果。"
+}
