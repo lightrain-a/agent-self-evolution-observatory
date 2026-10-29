@@ -104,3 +104,34 @@ body[data-rsi-page] .footer{padding:16px 22px;font-size:11px;line-height:1.7}
  body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero{border:0;padding:0;box-shadow:none}
  body[data-rsi-page] .research-section{border:0;padding:10px 0;box-shadow:none}
 }
+
+/* Smooth same-origin page-to-page navigation (native multi-page view transitions).
+   Keep the previous document visible while the destination prepares its first paint.
+   Unsupported browsers retain normal hyperlinks and may use navigation prefetch. */
+@view-transition {
+ navigation: auto;
+}
+body[data-rsi-page] .sidebar{view-transition-name:rsi-navigation-sidebar}
+body[data-rsi-page] .topbar{view-transition-name:rsi-navigation-topbar}
+@keyframes rsi-page-out {
+ from{opacity:1}
+ to{opacity:0}
+}
+@keyframes rsi-page-in {
+ from{opacity:0;transform:translateY(5px)}
+ to{opacity:1;transform:translateY(0)}
+}
+::view-transition-old(root){animation:130ms ease-in both rsi-page-out}
+::view-transition-new(root){animation:210ms cubic-bezier(.22,1,.36,1) both rsi-page-in}
+/* The navigation chrome stays visually stable; only its active item changes. */
+::view-transition-old(rsi-navigation-sidebar),
+::view-transition-new(rsi-navigation-sidebar),
+::view-transition-old(rsi-navigation-topbar),
+::view-transition-new(rsi-navigation-topbar){animation-duration:120ms;animation-timing-function:ease-in-out}
+@media(prefers-reduced-motion:reduce){
+ ::view-transition-old(root),::view-transition-new(root),
+ ::view-transition-old(rsi-navigation-sidebar),::view-transition-new(rsi-navigation-sidebar),
+ ::view-transition-old(rsi-navigation-topbar),::view-transition-new(rsi-navigation-topbar){
+  animation-duration:.01ms!important;animation-delay:0ms!important
+ }
+}

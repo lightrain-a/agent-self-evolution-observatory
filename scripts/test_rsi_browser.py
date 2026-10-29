@@ -64,6 +64,14 @@ def main():
             check(not stats['overflow'],slug+': desktop page overflow')
             summaries.append({'page':slug,**stats})
         nav('rsi/index.html')
+        js("document.querySelector('#research-nav a[href=\"timeline.html\"]').dispatchEvent(new FocusEvent('focusin',{bubbles:true}))")
+        check(js("return [...document.querySelectorAll('head link[rel=prefetch]')].some(l=>l.getAttribute('href')==='/rsi/timeline.html')"),
+              'Keyboard navigation should prefetch the next RSI document')
+        js("document.querySelector('#research-nav a[href=\"timeline.html\"]').click()")
+        time.sleep(.5)
+        check(js("return location.pathname.endsWith('/rsi/timeline.html') && document.body.dataset.rsiPage==='timeline'"),
+              'Normal sidebar links should continue navigating to full RSI pages')
+        nav('rsi/index.html')
         rsi_switch=js("return [...document.querySelectorAll('.site-switcher__tab')].map(a=>({href:a.getAttribute('href'),active:a.getAttribute('aria-current')==='true'}));")
         check(rsi_switch==[{'href':'/','active':False},{'href':'/rsi/','active':True}],f'RSI switch destinations incorrect: {rsi_switch}')
         check(js("return [...document.querySelectorAll('#research-nav .nav-level2')].every(a=>!a.getAttribute('href').startsWith('../'))"),'RSI navigation not standalone')
@@ -413,14 +421,18 @@ def main():
         js("document.querySelector('#nav-language').click()")
         check(js("return document.querySelector('#nav-language').textContent")!=before,'Navigation language toggle failed')
         check(js("""return document.querySelector('#research-nav [data-nav-group="literature"]').open && !document.querySelector('#research-nav [data-nav-group="overview"]').open"""),'Folder expansion was lost on language toggle')
-        check(js("""return document.querySelector('#research-nav [data-nav-group="literature"] summary span').textContent==='Literature & Reading'"""),'English first-level titles are not rendered')
+        current_literature=next(g for g in nav_data if g['id']=='literature')
+        check(js("""return document.querySelector('#research-nav [data-nav-group="literature"] summary span').textContent""")==current_literature['title']['en'],
+              'English first-level titles do not match the current navigation source')
         check(js("""return document.querySelectorAll('#research-nav a[aria-current="page"]').length===1"""),'Current second-level page highlight lost')
         js("document.querySelector('#nav-language').click()")
-        check(js("""return document.querySelector('#research-nav [data-nav-group="literature"] summary span').textContent==='文献与论文精读'"""),'Chinese primary heading not restored')
+        check(js("""return document.querySelector('#research-nav [data-nav-group="literature"] summary span').textContent""")==current_literature['title']['zh'],
+              'Chinese primary heading not restored')
         nav('rsi/ideas.html')
-        ordered_links=js("return [...document.querySelectorAll('#research-nav [data-nav-group=research] .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
-        numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I')]
-        check(numbers==[f'I{i}' for i in range(1,15)],f'Published ideas duplicated or not sorted: {ordered_links}')
+        ordered_links=js("return [...document.querySelectorAll('#research-nav .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
+        numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I') and item['label'].split(' ·')[0][1:].isdigit()]
+        check(len(numbers)==14 and set(numbers)=={f'I{i}' for i in range(1,15)},
+              f'Published I1–I14 ideas should occur once across the four mechanism groups: {numbers}')
         check(not any(item['href'] in ('teaching.html','idea-i6.html') for item in ordered_links),'Historical pages should not compete in the sidebar')
         js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
         time.sleep(.3)
@@ -538,10 +550,10 @@ def main():
         js("document.querySelector('#menu-toggle').click()")
         check(js("return document.querySelector('#sidebar').classList.contains('open')&&!document.querySelector('#sidebar-overlay').hidden"),'Mobile drawer did not open')
         screenshot('navigation-mobile.png')
-        js("""document.querySelector('#research-nav [data-nav-group="methods"] summary').click()""")
-        check(js("""return document.querySelector('#research-nav [data-nav-group="methods"]').open && document.querySelector('#sidebar').classList.contains('open')"""),'Mobile expandable primary folder failed')
-        js("""document.querySelector('#research-nav [data-nav-group="methods"] summary').click()""")
-        check(not js("""return document.querySelector('#research-nav [data-nav-group="methods"]').open"""),'Mobile primary folder did not collapse')
+        js("""document.querySelector('#research-nav [data-nav-group="literature"] summary').click()""")
+        check(js("""return document.querySelector('#research-nav [data-nav-group="literature"]').open && document.querySelector('#sidebar').classList.contains('open')"""),'Mobile expandable primary folder failed')
+        js("""document.querySelector('#research-nav [data-nav-group="literature"] summary').click()""")
+        check(not js("""return document.querySelector('#research-nav [data-nav-group="literature"]').open"""),'Mobile primary folder did not collapse')
         js("document.querySelector('#sidebar-close').click()")
         check(js("return !document.querySelector('#sidebar').classList.contains('open')&&document.querySelector('#sidebar-overlay').hidden"),'Mobile drawer did not close')
         req('POST',f'/session/{session}/window/rect',{'width':1440,'height':1050})

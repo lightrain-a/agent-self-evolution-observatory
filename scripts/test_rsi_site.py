@@ -336,6 +336,8 @@ def main():
         check('lang="zh-CN"' in text,f'{slug}: wrong content language')
         check('class="site-switcher"' in text and 'href="/rsi/"' in text and 'href="/"' in text,f'{slug}: missing two-site switch')
         check('src="site-nav.js"' in text and 'src="../data.js"' not in text,f'{slug}: navigation depends on Agent')
+        check('href="compact.css"' in text,
+              f'{slug}: both ends of an RSI route need the shared view-transition stylesheet')
         fallback_groups=re.findall(r'<details class="nav-group([^"]*)" data-nav-group="([^"]+)"([^>]*)>',text)
         check(len(fallback_groups)==len(groups),f'{slug}: fallback navigation lacks primary levels')
         check([name for _,name,_ in fallback_groups]==list(expected_groups),f'{slug}: fallback group order differs')
@@ -1357,6 +1359,15 @@ def main():
         subprocess.run(['node','--check',str(ROOT/'rsi'/filename)],check=True)
     subprocess.run(['node','--check',str(ROOT/'rsi/research.js')],check=True)
     subprocess.run(['node','--check',str(ROOT/'rsi/timeline-view.js')],check=True)
+    compact_css=(ROOT/'rsi/compact.css').read_text(encoding='utf-8')
+    navigation_js=(ROOT/'rsi/research.js').read_text(encoding='utf-8')
+    check('@view-transition' in compact_css and 'navigation: auto' in compact_css,
+          'RSI pages need same-origin cross-document navigation transitions')
+    check('prefers-reduced-motion:reduce' in compact_css and 'view-transition-old(root)' in compact_css,
+          'Route transition needs reduced-motion handling')
+    check("hint.rel = 'prefetch'" in navigation_js and 'navigationTarget' in navigation_js,
+          'RSI navigation warm-up should prefetch only hovered/focused internal pages')
+    subprocess.run(['node','--check',str(ROOT/'rsi/research.js')],check=True)
     public=ROOT/'_site'
     if public.exists():
         for slug in PAGES:

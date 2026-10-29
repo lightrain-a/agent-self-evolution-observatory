@@ -127,4 +127,48 @@
     }, {rootMargin:'-60px 0px -65% 0px'});
     root.querySelectorAll('.research-section').forEach((s) => observer.observe(s));
   }
+
+  // Navigation stays native: links, deep links, back/forward, history, and
+  // page-specific JavaScript keep their standard multi-page behavior.
+  // Warm only the hovered/focused RSI document (never the whole 30-page site).
+  // In browsers without cross-document view transitions this can also reduce
+  // the time the new document takes to render.
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const reducedData = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-data: reduce)').matches;
+  if (!(connection && (connection.saveData || /2g/.test(connection.effectiveType || ''))) && !reducedData) {
+    const warmed = new Set();
+    let hoverTimer = null;
+    const navigationTarget = (element) => {
+      const anchor = element?.closest?.('a[href]');
+      if (!anchor || anchor.hasAttribute('download') || (anchor.target && anchor.target !== '_self')) return null;
+      let url;
+      try { url = new URL(anchor.href, location.href); } catch (_) { return null; }
+      if (url.origin !== location.origin || !url.pathname.startsWith('/rsi/')) return null;
+      if (!url.pathname.endsWith('.html') && url.pathname !== '/rsi/') return null;
+      if (url.pathname === location.pathname && url.search === location.search) return null;
+      return url.pathname + url.search;
+    };
+    const warm = (path) => {
+      if (!path || warmed.has(path)) return;
+      warmed.add(path);
+      const hint = document.createElement('link');
+      hint.rel = 'prefetch';
+      hint.as = 'document';
+      hint.href = path;
+      hint.fetchPriority = 'low';
+      document.head.append(hint);
+    };
+    root.addEventListener('pointerover', (event) => {
+      if (event.pointerType === 'touch') return;
+      clearTimeout(hoverTimer);
+      const path = navigationTarget(event.target);
+      if (path) hoverTimer = setTimeout(() => warm(path), 90);
+    });
+    root.addEventListener('pointerout', (event) => {
+      const anchor = event.target?.closest?.('a[href]');
+      if (anchor && !anchor.contains(event.relatedTarget)) clearTimeout(hoverTimer);
+    });
+    // Keyboard focus and click-by-keyboard warm the exact same target.
+    root.addEventListener('focusin', (event) => warm(navigationTarget(event.target)));
+  }
 })();
