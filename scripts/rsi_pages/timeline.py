@@ -8,6 +8,7 @@ from __future__ import annotations
 import html
 import json
 import re
+from collections import Counter
 from datetime import date, datetime
 from itertools import groupby
 from pathlib import Path
@@ -59,14 +60,34 @@ def event_card(event: dict) -> str:
     link = f'<a href="{safe_url(event["source_url"])}"{attrs}>{esc(event["source_label"])} ↗</a>'
     stamp = f'<time datetime="{esc(event["date"])}">{esc(event["date"][5:])}</time>'
     status = ('官方确认 · AoE' if kind == "deadline" else '阅读卡片已归档' if kind == "reading" else '站内研究记录')
+    tags = event.get("tags", [])
+    tags_html = ''.join(
+        f'<button type="button" class="rsi-tl-tag" data-filter-tag="{esc(tag)}" title="只看：{esc(tag)}">{esc(tag)}</button>'
+        for tag in tags[:4]
+    )
+    if len(tags) > 4:
+        tags_html += f'<span class="rsi-tl-tag-more" title="完整标签可在论文卡片查看">+{len(tags)-4}</span>'
+    publication = (f'<span class="rsi-tl-publication">{esc(event["publication"].split("·")[0].strip())}</span>'
+                   if kind == 'reading' else '')
+    preview = ''
+    if kind == 'reading':
+        story = event['story']
+        preview_rows = ''.join(
+            f'<div><dt>{label}</dt><dd>{esc(story[key])}</dd></div>'
+            for key, label in [('challenge', '问题'), ('design', '方法'), ('result', '作者结果')]
+        )
+        preview = ('<details class="rsi-tl-paper-preview"><summary>快速了解论文：问题、方法与结果</summary>'
+                   f'<dl>{preview_rows}</dl></details>')
     return f'''<article class="rsi-tl-item rsi-tl-item--{kind}" id="{esc(event["id"])}"
-      data-kind="{kind}" data-date="{esc(event["date"])}" data-due-at="{esc(due)}">
+      data-kind="{kind}" data-date="{esc(event["date"])}" data-due-at="{esc(due)}" data-tags="{esc('|'.join(tags))}">
       <div class="rsi-tl-item-date">{stamp}</div>
       <div class="rsi-tl-item-main">
-        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--{kind}">{kind_name(kind)}</span><span>{esc(status)}</span></div>
+        <div class="rsi-tl-item-meta"><span class="rsi-tl-kind rsi-tl-kind--{kind}">{kind_name(kind)}</span><span>{esc(status)}</span>{publication}</div>
         <h3>{esc(event["title"])}</h3>
         <p>{esc(event["description"])}</p>
-        <div class="rsi-tl-item-footer">{link}{f'<span class="rsi-tl-live" data-countdown="{esc(due)}">AoE · 23:59</span>' if due else ""}</div>
+        <div class="rsi-tl-tags" aria-label="主题标签">{tags_html}</div>
+        {preview}
+        <div class="rsi-tl-item-footer">{link}{f'<span class="rsi-tl-live" data-countdown="{esc(due)}" aria-live="off">截止时间已核验</span>' if due else ""}</div>
       </div>
     </article>'''
 
@@ -94,6 +115,7 @@ for venue in DATA["venues"]:
                 title=f'{venue["short"]} 2027 · {milestone["label"]}',
                 description=f'{milestone["note"]}。来源：{venue["full_name"]} 官方会议日程。',
                 source_url=venue["source_url"], source_label="会议官方日期",
+                tags=[venue["short"], "2027", "投稿节点"],
             ))
         else:
             assert milestone["status"] == "pending" and milestone["date"] is None and milestone["due_at"] is None
@@ -106,7 +128,8 @@ for event in research_events:
     safe_url(event["source_url"])
     events.append(dict(id=event["id"], kind="research", date=event["date"],
                        title=event["title"], description=event["description"],
-                       source_url=event["source_url"], source_label=event["source_label"]))
+                       source_url=event["source_url"], source_label=event["source_label"],
+                       tags=event.get("tags", ["RSI 研究"])))
 
 for card in PAPERS:
     check_date(card["read_on"])
@@ -115,11 +138,19 @@ for card in PAPERS:
     event_ids.add(eid)
     events.append(dict(id=eid, kind="reading", date=card["read_on"],
                        title=f'精读：{card["short_title"]}',
-                       description=card["one_sentence"],
+                       description=card["one_sentence"], tags=card["tags"],
+                       story=card["story"], publication=card["publication"],
                        source_url="reading-cards.html#" + card["id"],
                        source_label="打开精读卡片"))
 
 events.sort(key=lambda e: (e["date"], {"research":0,"reading":1,"deadline":2}[e["kind"]], e["id"]))
+# Common labels are discoverable in the toolbar; rare labels remain clickable on cards.
+tag_counts = Counter(tag for event in events for tag in event.get('tags', []))
+featured_tags = sorted(
+    (tag for tag, count in tag_counts.items() if count >= 2 or re.fullmatch(r'I(?:[1-9]|1[0-3])', tag)),
+    key=lambda tag: (-tag_counts[tag], tag.casefold()),
+)[:24]
+tag_options = ''.join(f'<option value="{esc(tag)}">{esc(tag)} · {tag_counts[tag]}</option>' for tag in featured_tags)
 months = []
 for month, items in groupby(events, key=lambda e: e["date"][:7]):
     rows = list(items)
@@ -137,7 +168,8 @@ for venue in DATA["venues"]:
         official = item["status"] == "official"
         stamp = f'{item["date"]} <small>AoE 23:59</small>' if official else "待公布"
         countdown = (
-            f'<span class="rsi-tl-countdown" data-countdown="{esc(item["due_at"])}">官方日期</span>'
+            f'<span class="rsi-tl-countdown" data-countdown="{esc(item["due_at"])}" aria-live="off">倒计时加载中</span>'
+            f'<span class="rsi-tl-beijing" data-beijing="{esc(item["due_at"])}">北京时间自动换算</span>'
             if official else '<span class="rsi-tl-pending">不显示预测倒计时</span>'
         )
         pending_id = f' id="{esc(item["id"])}"' if not official else ''
@@ -173,7 +205,7 @@ PAGE = {
     "title": "RSI 研究时间轴",
     "en": "Research Timeline · RSI learning, reading & submission deadlines",
     "lead": "按真实记录追踪 RSI 研究进展，并集中管理 CVPR、ICML、ACL 三个会议的官方投稿日期。已确认与待公布日期明确区分。",
-    "updated": DATA["verified_at"],
+    "updated": max(DATA["verified_at"], *(p["read_on"] for p in PAPERS)),
     "styles": ["timeline.css"],
     "scripts": ["timeline-view.js"],
     "sections": [
@@ -183,16 +215,28 @@ PAGE = {
          '<div class="rsi-tl-venue-grid">' + ''.join(venue_cards) + '</div>'
          '<p class="rsi-tl-notice"><b>ICML 2027:</b> 当前仅可确认会议主办方官方渠道，未确认 2027 摘要或全文截稿日。'
          'ACL 2027 的 ARR 截稿与后续 Commitment 不应混为一个节点；日历中仅对有正式日期的节点生成倒计时。</p>'),
-        ("activity", f"研究活动与投稿时间轴 · {len(events)} 个已知日期",
+        ("activity", f"研究活动与投稿时间轴 · {len(events)} 条记录",
          '''<div class="rsi-tl-toolbar"><label for="rsi-tl-kind">事件类型<select id="rsi-tl-kind">
            <option value="all">全部事件</option><option value="deadline">会议 DDL</option>
            <option value="reading">论文精读</option><option value="research">研究记录</option></select></label>
            <label for="rsi-tl-time">时间范围<select id="rsi-tl-time">
            <option value="all">全部时间</option><option value="upcoming">尚未截止</option>
            <option value="past">已结束／已发生</option></select></label>
+           <label for="rsi-tl-topic">研究标签<select id="rsi-tl-topic"><option value="all">全部主题</option>''' + tag_options + '''</select></label>
            <label class="rsi-tl-search" for="rsi-tl-query">检索记录<input type="search" id="rsi-tl-query" placeholder="例如 CVPR、R²Orch、实验、ARR"></label>
            <button type="button" id="rsi-tl-reset">重置</button>
            <output id="rsi-tl-count" aria-live="polite">显示全部</output></div>'''
+         '<div class="rsi-tl-calendar-panel" id="rsi-tl-calendar-panel">'
+         '<div class="rsi-tl-calendar-head"><div><span class="rsi-tl-kicker">MONTHLY RESEARCH CALENDAR</span>'
+         '<h3>研究月历 · 点击日期查看记录</h3><p>保留每月日期和研究活动密度；彩色标记区分 DDL、精读与研究方案。筛选标签后，月历同步更新。</p></div>'
+         '<div class="rsi-tl-calendar-legend" aria-label="事件类型图例">'
+         '<span><i class="rsi-tl-dot rsi-tl-dot--deadline"></i>会议 DDL</span>'
+         '<span><i class="rsi-tl-dot rsi-tl-dot--reading"></i>论文精读</span>'
+         '<span><i class="rsi-tl-dot rsi-tl-dot--research"></i>研究记录</span></div></div>'
+         '<div class="rsi-tl-calendar-grid" id="rsi-tl-calendar-grid" aria-label="研究活动月历"></div>'
+         '<div class="rsi-tl-date-selection" id="rsi-tl-date-selection" hidden><span id="rsi-tl-selected-label"></span>'
+         '<button type="button" id="rsi-tl-clear-day">清除日期筛选</button></div></div>'
+         '<div class="rsi-tl-list-heading"><h3>日期记录</h3><span>按月查看；论文可展开研究内容摘要</span></div>'
          '<div class="rsi-tl-months" id="rsi-tl-months">' + ''.join(months) + '</div>'
          '<p class="rsi-tl-no-results" id="rsi-tl-empty" hidden>该筛选条件下没有时间轴记录，请调整类型、时间范围或检索词。</p>'),
         ("provenance", "来源、时间口径与后续扩展",

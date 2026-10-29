@@ -75,6 +75,8 @@ NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human rewar
 - `research_events` 仅纳入有证据链接的研究记录；不得把方案、预期结果当成已完成实验。
 - 论文阅读事件不需要重复记录：`scripts/rsi_pages/timeline.py` 自动读取 `rsi/reading-cards.json` 的 `read_on` 和一句话结论，并生成可点击记录。
 - 设计和交互代码分别在 `rsi/timeline.css`、`rsi/timeline-view.js`，无需从 Agent 主站的复杂时间轴依赖。
+- **2026-10-29 交互版本**：官方 AoE 日期倒计时每秒更新、同步换算北京时间；待公布节点仍显示“待公布”且不生成计时器。月历连续覆盖有记录的月份（包括无记录的中间月份），日期格显示记录量和三类事件标记；点击日期进入该日记录，再次点击或“清除日期筛选”恢复。事件类型、截止状态、主题标签、全文关键词可组合筛选，研究标签可点按；研究事件可在 `research_events[].tags` 中追加明确标签，阅读事件自动继承论文的全部 `tags`。精读时间轴条目可展开原始 `story.challenge/design/result`，且精读卡片回链 `timeline.html#reading-<paper-id>`。用户可据此快速理解论文内容，不能把本站的研究设想写成作者实验结论。
+- 自动化检查：`scripts/test_rsi_site.py` 保证结构/来源/锚点；`scripts/test_rsi_browser.py` 覆盖日历切换、标签筛选、跳秒、北京时间与移动端（需先完成 Agent 和 RSI 两站静态构建）。
 - 新增会议时更新 `venues` 与经过核验的日期，执行 `python3 scripts/build_rsi_research.py` 重新生成静态时间轴与全站检索索引。
 
 ## 已公开 I1–I9 与 I11 研究卡片的统一写作结构

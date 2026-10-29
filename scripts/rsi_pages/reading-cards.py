@@ -130,7 +130,7 @@ def reading_card(p: dict) -> str:
         else 'arXiv:'+p['arxiv'] if p.get('arxiv') else p['publication'].split('·')[0].strip())
     return f'''<article class="reading-card" id="{esc(p['id'])}" data-paper-tags="{esc('|'.join(p['tags']))}" data-question-coverage="{esc(coverage)}">
   <div class="reading-card-head">
-    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>{esc(publication_badge)}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}</div>
+    <div class="reading-metadata"><span class="reading-paper-id">{esc(p['short_title'])}</span><span>{esc(publication_badge)}</span><span>阅读 {esc(p['read_on'])}</span>{'<span class="reading-deep-available">含完整精读</span>' if p.get("deep_read") else ""}<a class="reading-timeline-link" href="timeline.html#reading-{esc(p['id'])}" title="返回时间轴中的该次论文精读记录">在研究时间轴中查看 ↗</a></div>
     <h3>{esc(p['short_title'])}</h3>
     <p class="reading-full-title">{esc(p['title'])}</p>
     <p class="reading-institution"><b>发表单位（作者署名）</b> {organization_line}</p>

@@ -84,6 +84,36 @@ def main():
         check(js("return document.querySelectorAll('.rsi-tl-pending').length")==pending_deadlines,'Unknown dates incorrectly assigned timers')
         check(js("return document.querySelectorAll('.rsi-tl-item').length")==all_events,'Timeline event count does not match source registry')
         check(js("return [...document.querySelectorAll('.rsi-tl-countdown')].every(e=>e.dataset.countdown.endsWith('-12:00') && Number.isFinite(Date.parse(e.dataset.countdown)))"),'AoE timestamps not parsed consistently')
+        check(js("return [...document.querySelectorAll('.rsi-tl-countdown')].every(e=>e.textContent.includes('秒') || e.textContent.includes('已截止'))"),
+              'Official countdown must show seconds or indicate an elapsed deadline')
+        active_clock=js("return [...document.querySelectorAll('.rsi-tl-countdown')].find(e=>e.textContent.includes('秒'))?.dataset.countdown || null")
+        if active_clock:
+            before=js("return [...document.querySelectorAll('.rsi-tl-countdown')].find(e=>e.dataset.countdown==="+json.dumps(active_clock)+").textContent")
+            time.sleep(1.25)
+            after=js("return [...document.querySelectorAll('.rsi-tl-countdown')].find(e=>e.dataset.countdown==="+json.dumps(active_clock)+").textContent")
+            check(before!=after,'Countdown should update every second')
+        check(js("return document.querySelectorAll('.rsi-tl-beijing').length")==expected_deadlines,
+              'Beijing time conversions missing on official deadlines')
+        check(js("return document.querySelectorAll('.rsi-tl-calendar-grid .rsi-tl-cal-month').length")>=4,
+              'Calendar must cover at least Oct 2026 through Jan 2027')
+        check(js("return document.querySelector('[data-calendar-month=\"2026-12\"]')!==null"),
+              'Calendar must include months with zero records')
+        check(js("return document.querySelectorAll('.rsi-tl-paper-preview').length")==len(reading_papers),
+              'Each reading event needs a paper-content preview')
+        day_count=sum(e['date']=='2026-10-27' for e in timeline['research_events'])+sum(p['read_on']=='2026-10-27' for p in reading_papers)
+        js("document.querySelector('[data-calendar-day=\"2026-10-27\"]').click()")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==day_count,
+              'Calendar click failed to select the requested day')
+        check(js("return document.querySelector('[data-calendar-day=\"2026-10-27\"]').getAttribute('aria-pressed')")=='true',
+              'Calendar selected day should be accessible')
+        js("document.querySelector('#rsi-tl-clear-day').click()")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==all_events,
+              'Clear day should show all events')
+        expected_i9=sum('I9' in p['tags'] for p in reading_papers)+sum('I9' in e.get('tags',[]) for e in timeline['research_events'])
+        js("const t=document.querySelector('#rsi-tl-topic');t.value='I9';t.dispatchEvent(new Event('change',{bubbles:true}))")
+        check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==expected_i9,
+              'Topic filter should match real reading and research tags')
+        js("document.querySelector('#rsi-tl-reset').click()")
         js("const k=document.querySelector('#rsi-tl-kind');k.value='deadline';k.dispatchEvent(new Event('change',{bubbles:true}))")
         check(js("return document.querySelectorAll('.rsi-tl-item:not([hidden])').length")==expected_deadlines,'Deadline filter failed')
         js("const k=document.querySelector('#rsi-tl-kind');k.value='reading';k.dispatchEvent(new Event('change',{bubbles:true}))")
@@ -102,6 +132,8 @@ def main():
         check(js("return document.querySelectorAll('.reading-card:not([hidden])').length===0"),'Paper-card filtering failed')
         cards=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))['papers']
         check(js("return document.querySelectorAll('.reading-card').length")==len(cards),'Rendered card count does not match registry')
+        check(js("return document.querySelectorAll('.reading-timeline-link').length")==len(cards),
+              'Every paper card needs a backlink to its timeline entry')
         for paper in cards:
             query=json.dumps(paper['short_title'],ensure_ascii=False)
             selector=json.dumps('#'+paper['id'])
@@ -343,7 +375,7 @@ def main():
         nav('rsi/ideas.html')
         ordered_links=js("return [...document.querySelectorAll('#research-nav [data-nav-group=research] .nav-level2')].map(a=>({label:a.textContent.trim(),href:a.getAttribute('href')}));")
         numbers=[item['label'].split(' ·')[0] for item in ordered_links if item['label'].startswith('I')]
-        check(numbers==[f'I{i}' for i in range(1,14)],f'Published ideas duplicated or not sorted: {ordered_links}')
+        check(numbers==[f'I{i}' for i in range(1,15)],f'Published ideas duplicated or not sorted: {ordered_links}')
         check(not any(item['href'] in ('teaching.html','idea-i6.html') for item in ordered_links),'Historical pages should not compete in the sidebar')
         js("document.querySelector('#research-nav a[href=\"ideas.html#idea-3\"]').click()")
         time.sleep(.3)
