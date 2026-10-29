@@ -31,6 +31,566 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "nhb2026-hybrid-memory-eckstein",
+      "short_title": "NHB 2026 · Hybrid Memory-ANN",
+      "title": "Hybrid neural–cognitive models reveal how memory shapes human reward learning",
+      "authors": "Maria K. Eckstein; Christopher Summerfield; Nathaniel D. Daw; Kevin J. Miller",
+      "lead_institution": "Google DeepMind, London, UK",
+      "institutions": [
+        "Google DeepMind, London, UK",
+        "Department of Experimental Psychology, University of Oxford, UK",
+        "Princeton University, USA",
+        "University College London, UK"
+      ],
+      "institution_source": "Nature Human Behaviour 10, 972–987 (2026), Authors and Affiliations；2026-10-29核验",
+      "publication": "Nature Human Behaviour 10, 972–987 (2026), online 2026-02-05",
+      "doi": "10.1038/s41562-025-02324-0",
+      "official_url": "https://www.nature.com/articles/s41562-025-02324-0",
+      "first_posted": "2026-02-05",
+      "version": "Nature Human Behaviour 正式论文 · 2026-02-05",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature/PMC正文、Figure 1–4、Methods、官方代码/数据声明核对；未运行独立复现",
+      "tags": [
+        "Nature Human Behaviour 2026",
+        "Memory",
+        "Hybrid Cognitive Models",
+        "Reward Learning",
+        "Latent State",
+        "History Dependence",
+        "Memory-ANN",
+        "RSI",
+        "I9",
+        "Learner State"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "对留出人类参与者行为做似然预测，比较Best RL、RL-ANN、Context-ANN、Memory-ANN和Vanilla RNN；又用轨迹模拟及滞后回归检验行为结构。",
+          "open_question": "行为拟合比下一动作的真实收益优化弱，指标不是LLM未来参数更新的可学习性。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "显示历史可被独立、多尺度记忆变量总结并影响下一次反馈解释，增量Q值并不包含所有有用历史。",
+          "open_question": "并未分析新的训练样本是否提供可排除竞争规则的信息；历史压缩的信息效用不能直接当作新知识量。"
+        },
+        "reach": {
+          "level": "not_addressed",
+          "contribution": "比较人类既有动作集中的奖励学习过程，不研究新问题、新解法的可达性或LLM解空间。",
+          "open_question": "没有验证记忆帮助模型到达以前未能产生的解法。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "模型包含不直接驱动决策的reward/action循环记忆，分别影响反馈到Q-value或动作偏好的映射，并保留多个过去时间尺度。",
+          "open_question": "人类认知拟合不等于模型权重的长期知识保持或RSI跨版本遗忘改善。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "研究受控四臂老虎机的奖励学习行为，不包含实际工具授权、版本门控或记忆污染。",
+          "open_question": "RSI若引用历史决策，需要单独验证过时经验、权限条件和错误记忆的风险。"
+        }
+      },
+      "one_sentence": "多时间尺度的独立历史记忆，比仅增加Q值更新函数的灵活性更能解释人类奖励决策；但不能直接推出LLM记忆提升持久自我学习。",
+      "story": {
+        "challenge": "同样当前奖励预测值可能来自不同历史，人们的后续探索和反馈反应为何不能用几个标量解释？",
+        "insight": "历史记忆不仅用于生成决策，还会调节下一次奖励如何转成动作价值；应将记忆状态和当前选择状态分开。",
+        "design": "862人四臂非平稳bandit，比较六参数Best RL、RL-ANN、Context-ANN、Memory-ANN和自由RNN，并检验潜变量及行为序列。",
+        "result": "行为预测指标Best RL 60.6%、RL-ANN60.8%、Context-ANN65.4%、Memory-ANN与Vanilla RNN约68.3%；后者更能再现奖励趋势/重复/循环。"
+      },
+      "problem": "常见强化学习把过去选择/奖励更新为少量Q-values。为何其预测人类行为的能力不及拥有独立历史记忆的混合神经–认知模型？哪些行为模式迫使我们额外表示历史？",
+      "setup": "880人参与/862人合格、4134任务区块、617871有效选择、4臂非平稳奖励、每区块150试次。严格按参与者划分train/validation/test，留出测试含86人413个区块；每轮从四个动作中选择一个观察1–100分的奖励。",
+      "updates": "被拟合的ANN模型通过监督拟合人类选择序列的概率；任务内的reward-learning只是模型模拟的认知动态。论文没有更新LLM或自主Skill，不是RSI。",
+      "key_ideas": [
+        {
+          "name": "受限增量学习与多尺度记忆",
+          "summary": "单个Q-value丢弃奖励趋势/时间结构；加非线性更新器仍可能因状态摘要不足失败。",
+          "formula": "Q_{t+1}(a_t) = Q_t(a_t) + alpha (r_t-Q_t(a_t)) (classical baseline)"
+        },
+        {
+          "name": "上下文竞争选项",
+          "summary": "一次奖励的意义与其他可选动作相关；Context-ANN利用所有动作的Q/c值改善行为预测。",
+          "formula": "Q_{t+1}(a_t) = f(r_t,a_t,Q_t(all actions),c_t) (illustrative)"
+        },
+        {
+          "name": "可分离的记忆调节",
+          "summary": "Memory-ANN的奖励与动作历史循环状态独立于浅层选择变量；可影响下次Q映射和持续/切换偏好。",
+          "formula": "s_t^r=F_r(s_{t-1}^r,r_t); s_t^a=F_a(s_{t-1}^a,a_t) (schematic; separate reward/action histories)"
+        },
+        {
+          "name": "历史时间尺度",
+          "summary": "某些隐藏主成分对应近几次奖励，另一些反映长时程背景；顺序及奖赏上升趋势不可仅靠平均值复原。",
+          "formula": "lagged regression: choice_t ~ sum_{k=1..K} beta_k reward_{t-k} + gamma_k action_{t-k}"
+        },
+        {
+          "name": "RSI外延（未证实）",
+          "summary": "记录历史是否额外预测下一轮LoRA净收益必须做配对未来更新实验；若历史只是当前权重状态的代理，不能称独立因果机制。",
+          "formula": "value(history)=Gain_real_update(history) - Gain_baseline_given_current_state"
+        }
+      ],
+      "evidence": [
+        "Fig.1：880参与者中862通过纳入标准；4134区块/617871有效试次；各动作奖励以随机过程随时间漂移。",
+        "Fig.2d：传统Best RL约60.6%与RL-ANN约60.8%，虽更灵活地学习非线性更新器，但未接近Vanilla RNN约68.3%。百分比为论文的行为选择概率拟合口径，不是Top-1分类准确率。",
+        "Fig.3d：Context-ANN 65.4%（CI 63.9–66.9）高于RL-ANN60.8%（CI59.4–62.3），p<0.001；Memory-ANN约68.3%，与Vanilla RNN表现相近，p=0.75。",
+        "Fig.3f–i：Memory-ANN奖励映射随reward memory state不同而变化，PC1控制敏感度；部分PC对近期奖励敏感，部分保留较长时间历史；这属于模型潜变量探针而非直接人脑测量。",
+        "Fig.4：人类连续重复同动作平均长度6.9，Memory-ANN约7.5（p=0.075）；行动序列可压缩性人类1.73，Memory-ANN1.74（p=0.49），比RL-ANN1.45更接近；循环探索次数仍存在显著差异，不能说全部行为完全一致。",
+        "Fig.4g：基于历史选择和奖励的滞后回归中，人类呈现浅而非单调的历史影响，Memory-ANN能定性复现而受限模型难以复现。",
+        "Code/Data：作者声明OSF 8xz3w保存人类数据，github.com/google-deepmind/hybrid_rnns_reward_learning提供模型实现。"
+      ],
+      "boundaries": [
+        "论文目标是拟合人的行为选择，不是训练一个奖励最大化的Agent；将两者当成一个学习过程会产生错误解释。",
+        "68.3%模型预测口径来自试次负对数似然的转换，不是每题贪心预测的Top-1正确率；模型间应在同一统计口径比较。",
+        "Memory-ANN行为拟合更好不等于其潜在状态与人脑真实表征一一对应；模型内干预只是模型机制证据。",
+        "研究人类四臂非平稳bandit，不能直接证明在7B LLM或VLM上保存更多日志就能提高持久参数学习。",
+        "历史日志对未来学习可以作为估计当前参数状态的代理；同一参数、同一优化器状态和同一训练流上的确定性更新不会因为没有被读取的日志发生改变。",
+        "RSI近邻已有Memory-R1学习读写、ACL2026的memory管理误召回、MSCE memory-to-skill；单纯增加RNN或Memory Manager不具备足够新颖性。",
+        "不要将原文的奖励/动作记忆与长期存储Episode的外部Memory当成同一对象；两者属于内部学习状态与外部证据存储的不同层次。"
+      ],
+      "our_relevance": [
+        "I9：在A→B/B→A当前能力匹配的检查点增加历史表征诊断，并比较未来第三任务C的实际LoRA学习曲线；用仅当前分数/手工时序统计/序列编码/当前梯度与优化器状态做强基线。",
+        "I2：在学生当前成功率相近时对照最近趋势、尝试切换和知识修复轨迹是否额外预测何种教学方式更有效，不能把学生自报用于直接判定真实学会。",
+        "I8/I10：相同错误类型或同样高规则区分性的例题，面对不同训练历史的模型可能被吸收为规则也可能只是例外记忆；需要真实参数更新与未见题独立后测。",
+        "经验巩固候选：该文研究隐藏学习状态，不直接比较External Memory Raw/Abstract/Skill/LoRA；另一个页面已经独立设计此类巩固/吸收实验。",
+        "RSI记忆研究池：先正交拆成历史状态预测、外部记忆反事实检索、经验抽象/写回、历史影响学习策略；用户尚未正式编号，新方向均需第一性实验机制验证。",
+        "Figure 3i/4g 是两种图形设计参考：短/长时间尺度潜状态解码、滞后历史系数曲线；均要求每lag的真实系数、被试/seed及置信区间。"
+      ],
+      "next_test": "P0：同起点、同A/B任务multiset/更新预算制造不同训练历史，匹配最终A/B正确率和C前测区间；预注册在未见C任务上作相同LoRA更新，比较B0当前表现、B1手工历史趋势、B2序列encoder、B3梯度+参数/优化器等强基线，对真实净收益预测与选择后验效用。历史顺序打乱/事件删除作反事实表示消融；下一轮显式依赖外部记忆的决策与仅预测隐藏参数状态分开测。",
+      "deep_read": {
+        "focus": "从传统Q-learning只用少量值概括历史，到Memory-ANN把对反馈的解释与当前选择状态分离；核心并非简单的RNN优于RL，而是历史状态的表征约束及其在多尺度行为中的证据。",
+        "summary": "Eckstein等用862名人类在非平稳四臂bandit上的617871次有效选择，证明在其模型对照中只增加更新器的神经网络非线性不足；加入竞争动作上下文与独立多时间尺度记忆，逐步提升对人的决策拟合。RSI需验证这些诊断能否预测真实LoRA之后的未来净学习，不能当现成结果。",
+        "terms": [
+          {
+            "name": "Q-value",
+            "meaning": "由历史奖励估计某个动作当前期望收益的标量，不一定保留历史的波动与趋势。"
+          },
+          {
+            "name": "Perseveration",
+            "meaning": "过去选择某动作会独立强化其被再次选择的倾向；与该动作奖励的影响分开。"
+          },
+          {
+            "name": "Context-ANN",
+            "meaning": "在非线性更新中额外输入所有已选/未选动作的当前价值与选择偏好。"
+          },
+          {
+            "name": "Memory-ANN",
+            "meaning": "利用与决策变量分离的奖励记忆和动作记忆循环状态，调节奖励及选择历史如何改变下一次选择。"
+          },
+          {
+            "name": "Vanilla RNN",
+            "meaning": "自由循环神经网络预测人的动作，拟合强但可解释性比结构化模型弱。"
+          },
+          {
+            "name": "Open-loop simulation",
+            "meaning": "不强制使用人的动作而让拟合模型自己在同样奖励日程上产生整段选择序列，再比较结构。"
+          },
+          {
+            "name": "Lagged regression",
+            "meaning": "估计第k轮之前的奖励/动作对当前选择的影响，而不是只看最近一次奖励。"
+          },
+          {
+            "name": "RSI learner state",
+            "meaning": "本站待验证概念：参数/优化器/历史/外部记忆的更新前可观测代理，不能把日志本身当参数变化的因果来源。"
+          }
+        ],
+        "metric_summary_title": "五个实验读数：是什么、有什么改进、在哪里失效",
+        "metric_summary_intro": "原论文为留出人类动作行为的拟合结果，不是大模型任务正确率。请用固定的人类测试口径读这五组数字。",
+        "metric_summary": [
+          {
+            "family": "Fig.1 · 数据",
+            "metrics": "participants, blocks, trials",
+            "meaning": "样本划分按人，动作随各独立奖励日程漂移",
+            "result": "862名有效参与者；4134区块；617871有效试次"
+          },
+          {
+            "family": "Fig.2 · 更新器非线性",
+            "metrics": "behavioural predictive score",
+            "meaning": "同样Q/c记忆状态上把手写更新换成MLP",
+            "result": "Best RL约60.6% → RL-ANN约60.8%"
+          },
+          {
+            "family": "Fig.3 · 可选动作上下文",
+            "metrics": "predictive score, paired test",
+            "meaning": "把未选动作状态也作为当前更新的条件",
+            "result": "RL-ANN60.8% → Context-ANN65.4%；p<0.001"
+          },
+          {
+            "family": "Fig.3 · 独立历史记忆",
+            "metrics": "predictive score, paired test",
+            "meaning": "增加独立潜在记忆，可编码多时间尺度奖励/动作",
+            "result": "Memory-ANN约68.3% ≈ Vanilla RNN约68.3%；两者p=0.75"
+          },
+          {
+            "family": "Fig.4 · 行为模式",
+            "metrics": "streak length, compressibility, lagged effect",
+            "meaning": "开放环生成行为是否在结构层面像人",
+            "result": "连续动作长度人类6.9 vs Memory-ANN7.5；压缩比1.73 vs 1.74"
+          }
+        ],
+        "sections": [
+          {
+            "id": "question",
+            "stage": "challenge",
+            "title": "为什么当前Q值无法讲清楚同样奖励背后的不同学习历史？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "非平稳bandit中的一次50分可能意味着过去分数正在上升，或从过去较高水平下降；两个当前Q值相同的人的探索和坚持策略不一定一样。经典Q-learning将历史逐步压缩到Q-values，丢掉哪些波动、变化和选择顺序可能仍影响行为，是作者研究的起点。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "历史特征",
+                  "压缩成均值后的问题",
+                  "需要独立测什么"
+                ],
+                "rows": [
+                  [
+                    "均值相同、趋势不同",
+                    "无法区分连续改善与突然退化",
+                    "新奖励增减后坚持选择的概率"
+                  ],
+                  [
+                    "记忆相同、切换模式不同",
+                    "无法恢复AAAA重复和ABCD循环",
+                    "行为序列与切换时点"
+                  ],
+                  [
+                    "当前状态相同、过去时间尺度不同",
+                    "丢掉短期与长期奖励背景的相互作用",
+                    "滞后奖励/动作对决策的贡献"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "protocol",
+            "stage": "design",
+            "title": "862人、四臂非平稳任务：该论文到底训练了什么？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "880人参与、862人达纳入标准，合计4134区块、617871个有效试次。每个区块150轮，人选择四个动作之一获得1–100分，奖励随时间独立漂移；作者按参与者拆分数据，使用留出86名参与者和413区块比较模型。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "监督拟合 vs 任务内奖励学习",
+                "text": "论文训练神经网络来拟合人下一步动作的概率；人作为真实参与者在游戏中奖励学习。两者不是一件事。不能将行为预测器拟合成功说成模型学会更高效的自主RL。"
+              }
+            ]
+          },
+          {
+            "id": "q-learning",
+            "stage": "design",
+            "title": "Best RL与RL-ANN：更新规则变灵活，为什么还不够？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "经典增量式Q-value更新（理解用基线）",
+                "expression": "Q_{t+1}(a_t)=Q_t(a_t)+α[r_t−Q_t(a_t)]",
+                "meaning": "动作价值按观察奖励与旧预期的预测误差更新；Best RL另有遗忘与重复选择偏好。",
+                "boundary": "这是传统Q-learning原理式，不是论文Best RL所有6个参数及其完整遗忘/动作更新公式。"
+              },
+              {
+                "type": "prose",
+                "text": "Best RL含奖励通道Q和无奖励的动作偏好c。RL-ANN用神经网络替代这两个通道的手工更新，但不增加可保存历史的独立状态。行为预测60.6%→60.8%，提升很小；学出的奖励映射仍接近单调线性。说明仅增加函数复杂度可能不足。"
+              }
+            ]
+          },
+          {
+            "id": "context-ann",
+            "stage": "design",
+            "title": "Context-ANN：同样50分，竞争选项是10分还是90分很重要",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "Context-ANN的奖励处理额外收到全部四个动作的旧Q值，动作处理还收到全部动作旧c值。于是同一个奖励可以在竞争选项很差/很好时产生不同更新。留出行为预测指标从RL-ANN60.8%提高到Context-ANN65.4%，配对p<0.001，但仍低于Vanilla RNN。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "模型",
+                  "可读取历史/当前信息",
+                  "留出行为预测"
+                ],
+                "rows": [
+                  [
+                    "Best RL",
+                    "当前动作Q、奖励、偏好；手写更新",
+                    "60.6%"
+                  ],
+                  [
+                    "RL-ANN",
+                    "同样受限状态，但学习非线性更新",
+                    "60.8%"
+                  ],
+                  [
+                    "Context-ANN",
+                    "加所有其他动作的Q/c状态",
+                    "65.4%"
+                  ],
+                  [
+                    "Vanilla RNN",
+                    "自由循环历史特征",
+                    "68.3%"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "memory-ann",
+            "stage": "insight",
+            "title": "Memory-ANN：记忆状态不直接驱动选择，而是调节如何学习",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "Memory-ANN加入奖励历史循环状态s_r和动作历史循环状态s_a，保留与浅层选择变量Q/c不同的信息。它们影响把奖励映射为Q、把选择历史映射成动作偏好的计算，但不直接进入softmax下一动作决策。其行为拟合约68.3%，与自由RNN约68.3%无显著差异（p=0.75）。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "模块",
+                  "传统受限状态",
+                  "Memory-ANN新增"
+                ],
+                "rows": [
+                  [
+                    "Reward",
+                    "旧Q与新奖励，逐次增量融合",
+                    "独立reward history state控制奖励映射的斜率和背景"
+                  ],
+                  [
+                    "Action",
+                    "最近一次选择的动作偏好",
+                    "独立action history state捕捉重复、切换与更长选择模式"
+                  ],
+                  [
+                    "Decision",
+                    "Q+c直接控制选择",
+                    "仍保留浅层可解释决策变量"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "本篇真正改变的建模假设",
+                "text": "对这组人类行为来说，历史应如何调节更新，比仅仅保存更精细的当前动作价值重要。这只是计算建模证据，未证明人脑内存在完全同构的记忆变量。"
+              }
+            ]
+          },
+          {
+            "id": "fig3",
+            "stage": "result",
+            "title": "Figure 3f/i：潜在记忆编码了短期、长期与奖励敏感度",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者沿Memory-ANN的记忆主成分扰动输入，观察奖励到Q-value的sigmoid型映射；PC1改变奖励敏感度。一些主成分由近几个试次预测，另一些关联更长历史。该模型的当前奖励价值不从前一Q值递推，区别于标准RPE更新。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "机制检验的证据边界",
+                "text": "这里干预的是训练好的模拟网络隐藏状态，不是在人的大脑中施加同样干预。潜变量可解释不是生物同构的证明。"
+              }
+            ]
+          },
+          {
+            "id": "fig4",
+            "stage": "result",
+            "title": "Figure 4：行为长序列与历史滞后效应提供额外验证",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "除了持有人类真实选择的似然预测，作者还让模型在同等奖励日程上独立采样完整动作序列，测奖励趋势、AAAA重复、ABCD循环、Lempel-Ziv-Welch可压缩性以及lagged regression。Memory-ANN更接近人的连续重复与整体序列结构。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "现象",
+                  "人类",
+                  "Memory-ANN",
+                  "应如何解读"
+                ],
+                "rows": [
+                  [
+                    "同动作连续长度",
+                    "6.9",
+                    "7.5 (p=0.075)",
+                    "数值差异未显著，不能称完全一样"
+                  ],
+                  [
+                    "行动序列压缩比",
+                    "1.73",
+                    "1.74 (p=0.49)",
+                    "能匹配一些长序列结构"
+                  ],
+                  [
+                    "循环探索次数",
+                    "5.37",
+                    "4.62 (p<0.001)",
+                    "虽接近但仍显著不同"
+                  ],
+                  [
+                    "长期奖励滞后效应",
+                    "非单调的浅历史效应",
+                    "定性复现",
+                    "不意味着所有lag因果作用已识别"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "rsi-experiment",
+            "stage": "next",
+            "title": "RSI P0：当前成绩接近时，历史是否预测后续真实LoRA净收益？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "固定一组规则任务A/B和实际更新预算，在不同多样/重复/交错顺序下创建模型快照。分层匹配A/B新题分数、C前测等后，固定下一任务C的训练流并执行真实LoRA更新。预测器只允许读分叉前的训练轨迹，最终C测试必须保密。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "对照",
+                  "训练前可用信息",
+                  "关键排除项"
+                ],
+                "rows": [
+                  [
+                    "B0 Snapshot",
+                    "当前正确率、平均奖励、短窗口loss",
+                    "只是在挑本来就强的模型"
+                  ],
+                  [
+                    "B1 Handcrafted History",
+                    "最近窗口趋势、波动、历史错误/重试顺序",
+                    "简单统计已经足够"
+                  ],
+                  [
+                    "B2 Learned Sequence State",
+                    "先前反馈、尝试、版本切换的RNN/Transformer编码",
+                    "数据泄漏或历史长度优势"
+                  ],
+                  [
+                    "B3 Strong Current State",
+                    "梯度/曲率/表示探针、优化器状态及历史盲预测",
+                    "历史只是代理参数状态"
+                  ],
+                  [
+                    "B4 Ablation",
+                    "打乱历史顺序或删除关键修复事件",
+                    "是否利用真实时间结构"
+                  ]
+                ]
+              },
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P0A｜预测真实训练收益",
+                    "design": "同一模型起点，同一C训练流，在U/S/M掌握状态及多个规则族真实更新，模型状态和训练预算匹配；记录C未见题增益、旧能力回归和总成本。",
+                    "decisive": "B2在完全隔离测试族中是否稳定超过B0/B1/B3？若只比B0好，说明历史描述可能仅是更好的状态代理。"
+                  },
+                  {
+                    "name": "P0B｜让历史实际影响学习选择",
+                    "design": "让相同预算的meta-controller选择C前试训、复习、验证或暂缓；固定验证器、更新器和候选操作，执行后测。",
+                    "decisive": "使用历史是否改善多轮净学习收益而非仅提高行为预测；不能借额外探针偷看测试。"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "关键反事实限制",
+                "text": "两个完全相同的模型参数、优化器状态和未来数据，其确定性梯度更新结果不会因为控制器没有读取的旧日志而不同。必须分清历史对参数状态的预测信息，与把历史作为控制器输入造成的真实策略改变。"
+              }
+            ]
+          },
+          {
+            "id": "idea-decomposition",
+            "stage": "next",
+            "title": "潜在RSI记忆Idea：先正交拆分，不急着正式编号",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "候选轴",
+                  "单独改变的因素",
+                  "需要验证的新增证据"
+                ],
+                "rows": [
+                  [
+                    "A 历史状态预测",
+                    "仅增加前次过程记录，不更改下一轮更新器",
+                    "对未来LoRA独立收益的增量可预测性和外测校准"
+                  ],
+                  [
+                    "B 记忆选择/检索",
+                    "固定已有记忆库，仅改变哪条记录在下次任务可见",
+                    "随机有/无检索对未来执行与误用的因果效应"
+                  ],
+                  [
+                    "C 经验巩固",
+                    "固定入选Episode，改Raw/Abstract/Skill/LoRA存放形式",
+                    "相同总成本下的未来迁移、适用条件保真和长期净收益"
+                  ],
+                  [
+                    "D 元记忆调控",
+                    "固定候选操作/成本，改变是否读取历史以选择写入/弃置/隔离/复习",
+                    "新任务族与后代上的策略净收益"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "A与I9关联最紧密；C已有本站experience-consolidation独立候选；B已与Memory-R1及ACL2026记忆管理高度相邻；D与I1脚手架、I13安全更新接纳局部交叉，因此只有找到清楚的机制现象后才考虑单独编号。"
+              }
+            ]
+          },
+          {
+            "id": "fig-inspiration",
+            "stage": "next",
+            "title": "图形素材：Figure 3i / 4g 的历史敏感性曲线",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "论文图",
+                  "可迁移的表达",
+                  "作图必须提供的数据"
+                ],
+                "rows": [
+                  [
+                    "Figure 3i · PC history decoding",
+                    "多条latent PC在不同历史滞后上的解码强度；对照短期峰和长尾",
+                    "model_id,seed,PC_id,lag,decode_coefficient,fit_split,confidence"
+                  ],
+                  [
+                    "Figure 4g · Lagged regression",
+                    "人类/模型在lag维度上的历史reward/action回归系数曲线及95%CI",
+                    "participant_id/model_id,lag,feature_type,regression_beta,bootstrap_CI,cohort"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这两类图用于说明历史中的哪个时间范围仍影响行为，不能照搬人类论文的曲线作为LLM实测结果；需自行收集逐轮checkpoint/feedback轨迹并独立重画。"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41562-025-02324-0",
+        "code": "https://github.com/google-deepmind/hybrid_rnns_reward_learning",
+        "data": "https://osf.io/8xz3w/",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13212159/"
+      }
+    },
+    {
       "id": "nhb2025-distribution-curriculum-pesnot-lerousseau",
       "short_title": "NHB · Repetition × Diversity × Curriculum",
       "title": "Shared sensitivity to data distribution during learning in humans and transformer networks",

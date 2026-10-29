@@ -30,6 +30,10 @@ PAGE = {
 </tbody></table></div>
 <p><b>相关的更早工作：</b><a href="https://ojs.aaai.org/index.php/AAAI/article/view/29936" target="_blank" rel="noopener noreferrer">ExpeL（AAAI 2024）</a>已从成功/失败轨迹提炼经验；<a href="https://proceedings.mlr.press/v306/wu26bf.html" target="_blank" rel="noopener noreferrer">EvolveR（ICML 2026）</a>已研究经验效用评分、原则整理和下游学习。因此“总结失败经验”“删除低质量Memory”“Auto决定是否抽象”均不是可独立主张的创新。</p>
 '''),
+ ("learning-history-vs-episode", "NHB 2026｜学习历史状态，与外部Episode巩固不是同一问题", '''
+<p><b>新的机制参照：</b>Nature Human Behaviour 2026的Memory-ANN研究“奖励和选择历史怎样影响人类下一次反馈的解释”，其独立潜在状态不直接进入动作softmax。它没有比较把Agent一次工具轨迹存储为Raw Memory、Abstract、Skill还是LoRA。不能将历史状态预测的收益自动当作外部记忆巩固的收益。[[E370]]</p>
+<p><b>研究边界：</b>本页固定原始Episode、比较如何巩固与验证适用条件；新增<a href="memory-research-map.html">RSI记忆研究地图</a>将这一条与“历史预测未来真实学习收益”明确拆开。若模型只是根据旧日志预测状态，仍须证明未来任务C经过固定参数更新后真的学得更好。<a href="reading-notes.html#deep-nhb2026-hybrid-memory-eckstein">论文精读 →</a></p>
+'''),
  ("mechanism", "机制假设｜真正的冲突不只发生在“是否保留”，还发生在“如何使用和改写”", '''
 <div class="flow"><div><b>Episode 生成</b><small>一次成功/失败及可靠反馈，保留原始出处</small></div><div><b>候选价值估计</b><small>未来何时会用、规则关系、前置条件、潜在风险</small></div><div><b>巩固动作选择</b><small>Raw / Abstract / Skill / Parameter / Defer</small></div><div><b>独立未来验收</b><small>迁移、误传播、旧能力、总成本</small></div><div><b>学习决策规则</b><small>能否跨任务/模型代际提高实际选择质量</small></div></div>
 <div class="table-wrap"><table><thead><tr><th>机制变量</th><th>为什么要单独测</th><th>容易混淆的结果</th></tr></thead><tbody>

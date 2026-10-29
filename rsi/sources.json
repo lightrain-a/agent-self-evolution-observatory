@@ -2471,6 +2471,66 @@
       "level": "arXiv原始摘要核对；2026-10-29；未独立复现",
       "note": "Olmo3-7B固定优化预算下400道样本重复128 epoch相较51200样本单epoch在AIME/GPQA报告12–26百分点增益；说明重复可助推理SFT但不是顶会正式接收的证据。",
       "code": ""
+    },
+    {
+      "id": "E370",
+      "group": "学习科学",
+      "title": "Hybrid neural–cognitive models reveal how memory shapes human reward learning",
+      "date": "Nature Human Behaviour 10:972–987 (2026); 2026-02-05",
+      "url": "https://www.nature.com/articles/s41562-025-02324-0",
+      "level": "Nature/PMC 正文Fig1–4、Methods及Code/Data availability核对；2026-10-29；未独立复现",
+      "note": "Eckstein等用862名参与者、4134区块、617871有效试次比较六参数Best RL、RL-ANN、Context-ANN与Memory-ANN。保留参与者行为预测指标BestRL60.6、RLANN60.8、ContextANN65.4、MemoryANN68.3；独立历史潜变量能解释奖励/动作的多尺度效应，但不验证LLM参数持久学习或RSI。",
+      "code": "https://github.com/google-deepmind/hybrid_rnns_reward_learning"
+    },
+    {
+      "id": "M530",
+      "group": "相邻领域",
+      "title": "Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning",
+      "date": "ACL 2026 · Long 583",
+      "url": "https://aclanthology.org/2026.acl-long.583/",
+      "level": "ACL Anthology 官方摘要、发表信息核对；2026-10-29；未复现",
+      "note": "以Memory Manager的ADD/UPDATE/DELETE/NOOP和Answer Agent的筛选检索实现RL训练；3B–14B模型、LoCoMo/MSC/LongMemEval。已有基于reward学习记忆读写控制，不能把普通memory manager说成新方向。",
+      "code": ""
+    },
+    {
+      "id": "M531",
+      "group": "相邻领域",
+      "title": "From Storage to Experience: A Survey on the Evolution of LLM Agent Memory Mechanisms",
+      "date": "Findings ACL 2026 · 2069",
+      "url": "https://aclanthology.org/2026.findings-acl.2069/",
+      "level": "ACL Anthology 正式摘要核对；2026-10-29",
+      "note": "系统综述Storage→Reflection→Experience，指出记忆系统已有跨轨迹抽象/主动探索；本站四方向拆分是科学问题组织而非声称首创分类。",
+      "code": ""
+    },
+    {
+      "id": "M532",
+      "group": "相邻领域",
+      "title": "Demystify the Role of Memory in Machine Learning Engineering Agents",
+      "date": "Findings ACL 2026 · 525",
+      "url": "https://aclanthology.org/2026.findings-acl.525/",
+      "level": "ACL Anthology 官方摘要核对；2026-10-29",
+      "note": "同一记忆对chain-based迭代改进有益，但可能限制tree-based搜索多样性；记忆价值依赖搜索架构，不是越多越好。",
+      "code": ""
+    },
+    {
+      "id": "M533",
+      "group": "相邻领域",
+      "title": "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents",
+      "date": "Findings ACL 2026 · 1337",
+      "url": "https://aclanthology.org/2026.findings-acl.1337/",
+      "level": "ACL Anthology 官方摘要核对；2026-10-29",
+      "note": "四LLM/六Memory Agent评估过时记忆的复用、演化时的记忆冲突与更新失败；记忆正确性须按任务时间和环境条件重验证。",
+      "code": ""
+    },
+    {
+      "id": "M534",
+      "group": "相邻领域",
+      "title": "From Memory to Skills: Evidence-Grounded Governance for Long-Horizon LLM Agents",
+      "date": "Findings EMNLP 2026 · 1637",
+      "url": "https://aclanthology.org/2026.findings-emnlp.1637/",
+      "level": "ACL Anthology 2026正式摘要核对；2026-10-29",
+      "note": "MSCE以证据链接、适用条件、反思值回填将episode经验转成可调用skills；训练free治理已有先例，本站需证明真实LoRA更新后的独立净收益。",
+      "code": ""
     }
   ]
 }

@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','experience-consolidation','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','experience-consolidation','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -217,7 +217,7 @@ def main():
         'methods':['cross-domain.html','theory-notes.html','learning-science.html','curriculum-scale-evidence.html'],
         'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
-                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experience-consolidation.html','experiments.html'],
+                    'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','memory-research-map.html','experience-consolidation.html','experiments.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')
     visible_slugs=[]
@@ -981,6 +981,31 @@ def main():
           'Figure4 paper reading lacks effect strength, sample evidence or curriculum-label warning')
     check((ROOT/'figure-reference-assets/nhb-fig4-bce-inputs.json').is_file(),
           'NHB figure reproduction contract missing')
+    # NHB 2026: rich history-state evidence, distinct RSI-memory candidate pool.
+    memory_paper=next((p for p in cards if p['id']=='nhb2026-hybrid-memory-eckstein'),None)
+    check(memory_paper is not None and memory_paper.get('doi')=='10.1038/s41562-025-02324-0'
+          and len(memory_paper['deep_read']['sections'])==10
+          and len(memory_paper['deep_read']['metric_summary'])==5,
+          'Hybrid Memory-ANN Nature deep read or journal DOI missing')
+    check({'E370'}<=refs and {f'M{i}' for i in range(530,535)}<=refs,
+          'NHB memory or closest ACL memory-management references missing')
+    memory_map=(ROOT/'rsi/memory-research-map.html').read_text(encoding='utf-8')
+    check(all(f'id="{anchor}"' in memory_map for anchor in
+              ('phenomenon','layers','candidates','p0','literature','visuals','route')),
+          'Unnumbered memory research map must retain four orthogonal axes, P0 and figure notes')
+    check(all(s in memory_map for s in ('A · 历史状态诊断', 'B · 记忆检索', 'C · 原始经验', 'D · 记忆与学习控制')),
+          'Memory candidate pool missing state/retrieval/consolidation/meta-control alternatives')
+    check('id="deep-nhb2026-hybrid-memory-eckstein"' in notes_html
+          and 'id="nhb2026-memory-reward-state"' in learn_sci
+          and 'id="nhb2026-history-state"' in (ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8'),
+          'NHB deep read or learner-state I9/science cross-reference missing')
+    check('href="memory-research-map.html"' in overview
+          and 'href="reading-notes.html#deep-nhb2026-hybrid-memory-eckstein"' in overview
+          and 'id="learning-history-vs-episode"' in (ROOT/'rsi/experience-consolidation.html').read_text(encoding='utf-8')
+          and 'id="nhb2026-student-history"' in (ROOT/'rsi/idea-i2.html').read_text(encoding='utf-8'),
+          'RSI memory map/experience/I2 links not integrated')
+    check(all(s in notes_html for s in ('60.6%', '60.8%', '65.4%', '68.3%', 'Figure 3', 'Figure 4')),
+          'Hybrid Memory-ANN model comparison and multi-timescale figures missing')
     rote = next((p for p in cards if p['id']=='rote-learning-iclr2026-wu'), None)
     check(rote is not None and rote.get('arxiv')=='2507.21914' and rote.get('conference_official_primary') is True,
           'ICLR 2026 Rote Learning reading note must link the official published version')

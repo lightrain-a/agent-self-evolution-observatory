@@ -41,6 +41,14 @@
 - **第三批理论（2026-10-29）**：Science 2024 Yang 等小鼠海马清醒 SPW-R—事后睡眠选择性重放，理论链接 `#awake-ripple-memory-tagging`，另有明确标为本站假设的经验标签 vs 真实巩固效用 `#experience-tag-vs-consolidation-utility`。务必写出分析层级：6只小鼠/26会话/4,469细胞；Fig.4H为5只/16会话，R=0.86。原文没直接测长期行为能力也没对不同成功/失败类型做随机选择实验。I6以 `science2024-memory-tagging` 章节建立入口；本次仅发表该 Science 精读，ACL2026 与 arXiv2026 作为最近邻指路。
 - **验证**：执行 `python3 scripts/build_rsi_research.py && python3 scripts/build_rsi_site.py && python3 scripts/test_rsi_site.py`，会检测唯一 ID、公式/LaTeX、论文锚点、双向链接以及公开输出。
 
+## RSI 记忆研究地图：暂不编号（2026-10-29）
+
+NHB 2026《Hybrid neural–cognitive models reveal how memory shapes human reward learning》已纳入完整十节精读 `nhb2026-hybrid-memory-eckstein`（正式 Nature DOI、Google DeepMind 代码、OSF 数据均有链接）。作者用862名人的四臂奖励行为对照传统Q、Context-ANN、Memory-ANN；得到的是**人类行为拟合**，并未测LLM未来LoRA净学习。Figure 3i / 4g 的历史滞后系数设计已留绘图字段，不能拿人类数据冒充本站LLM成果。
+
+`scripts/rsi_pages/memory-research-map.py` 为未编号研究候选池，按正交控制变量整理：A 学习历史作为**状态预测信号**（最接近I9）；B 外部Episode的**随机检索因果收益**；C 正确经验的**Raw/Abstract/Skill/LoRA巩固方式**（保留已有 `experience-consolidation.py`）；D Meta-Agent依据历史做**读写/检索/停止/写回选择**。这些不是新发布的I14–I17。候选拆分只有在独立现象、可证伪机制、明确最近邻和同预算真实更新结果成立时进行。
+
+特别注意：历史日志帮助预测当前参数状态，与Meta-controller**实际读取历史并改变学习动作**是两条不同因果路径；必须保留当前梯度、优化器状态、简单窗口统计等强基线。Memory-R1（ACL 2026）已有学习记忆读写；Memory→Skill相关系统亦有先例，不因换一个记忆名称声明创新。
+
 ## 经验到长期能力研究候选（2026-10-29 新增）
 
 - **两篇原论文精读**：`memory-management-acl2026-xiong` 是 ACL 2026 正式论文（4 Agent 的 Add/Delete、严格评估Oracle、历史效用与误召回）；`faulty-memory-arxiv2026-zhang` 是 arXiv:2605.12978v2（固定正确轨迹的压缩日程、Force/Auto、ARC 19/33任务、Table 5 固定输入消融）。两者必须标明外部Memory而非权重更新。

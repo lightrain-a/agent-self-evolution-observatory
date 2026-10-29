@@ -35,6 +35,15 @@ PAGE = {
 <p><b>不能推广成大模型配方：</b>ICLR 2025、ACL 2026和NeurIPS 2024–ICLR 2026的LLM/VLM研究表明，任务分布、模型能力、训练顺序及更新器都影响策略偏好与遗忘；不能直接假设“先多样后重复”适用于所有LLM。[[M500]][[M501]][[M502]][[M505]][[M506]]</p>
 <p><a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">十节精读、Figure4原文指标 →</a> · <a href="curriculum-scale-evidence.html">LLM/VLM顶会证据矩阵 →</a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html#nhb-f4-patterns">F4b/c/e绘图素材 →</a></p>
 '''),
+("nhb2026-memory-reward-state","Nature Human Behaviour 2026｜奖励历史是怎样影响下一次学习反应的？",'''
+<p><b>原论文：</b>Eckstein等研究862人的四臂非平稳奖励选择，提出结合可解释Q/c决策变量与独立、灵活的多尺度记忆潜变量的Memory-ANN。五组同口径人类行为预测：Best RL约60.6%、RL-ANN60.8%、Context-ANN65.4%、Memory-ANN68.3%、Vanilla RNN68.3%。只给更新公式增加非线性帮助很小，竞争选项上下文与独立历史记忆带来更强的行为拟合。[[E370]]</p>
+<div class="table-wrap"><table><thead><tr><th>原文真实证据</th><th>不能直接推出</th><th>我们要做的独立检验</th></tr></thead><tbody>
+<tr><td>潜状态能保留远近奖励、动作模式并调节当前reward→Q映射</td><td>LLM把历史日志塞进上下文就会真正提高未来参数学习</td><td>历史序列对未来LoRA净收益预测的增量，控制当前正确率/梯度/优化器状态</td></tr>
+<tr><td>模型能再现部分人类AAAA重复、ABCD探索及非单调滞后影响</td><td>这些人类序列模式是LLM必须模仿的最优训练策略</td><td>在固定训练流和总预算下，区分历史诊断与真实学习动作选择</td></tr>
+<tr><td>Memory-ANN与自由RNN拟合相近（p=0.75）</td><td>所有模型/环境中这种架构都最优，也无需进一步验证</td><td>是否存在跨新任务族、跨模型的可复现收益；强简单历史特征是否已足够</td></tr>
+</tbody></table></div>
+<p>这篇文章启发我们研究学习历史如何调节更新，而非只存更多Memory。已有的<a href="experience-consolidation.html">经验巩固候选</a>研究存放形式；新的<a href="memory-research-map.html">RSI记忆研究地图</a>整理内部历史状态、外部Episode检索、经验→Skill/参数及元记忆控制四类暂未编号的研究问题。<a href="reading-notes.html#deep-nhb2026-hybrid-memory-eckstein">完整十节精读及Figure3i/4g →</a></p>
+'''),
 ("moral-strategy-learning","Nature Human Behaviour 2025｜从动作纠错，到学习依赖哪种决策策略",'''
 <p><b>Challenge：</b>一次好结果究竟强化了“这个动作”，还是强化了产生动作的<strong>整个决策方法</strong>？Maier、Cheung 与 Lieder 将二者拆开：13 次道德两难题中，遵循规则（Rule）和成本—收益推理（CBR）有时对应行动、有时对应不行动，反馈条件则随机控制哪种策略持续得到好结果。四项预注册实验共 <b>2,328 人</b>。[[E311]]</p>
 <p><b>Insight &amp; Design：</b>结果可以更新具体动作的价值，也可能更新上层“下一题依赖 Rule 还是 CBR”的信任。作者比较 model-free / model-based / 无学习 × 行动层 / 策略层的六种计算模型；并用新道德问题、态度量表、真实经济激励捐赠和看似独立的后续实验判断转移。<b>CBR 是被选的策略，不等于元控制器的 model-based 学习</b>。[[E311]]</p>
