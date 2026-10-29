@@ -137,10 +137,25 @@ def main():
               'The current timeline month should start open, future months folded')
         check(js("return document.querySelector('#rsi-tl-calendar-grid .rsi-tl-cal-month').open"),
               'The first calendar month should start visible')
+        check(js("""return getComputedStyle(document.querySelector('#rsi-tl-calendar-grid')).gridTemplateColumns.trim().split(/\\s+/).length===3"""),
+              'Wide desktop must place three calendar months per row')
+        check(js("""return (()=>{const m=[...document.querySelectorAll('#rsi-tl-calendar-grid .rsi-tl-cal-month')];return m.length>=3 && m.slice(0,3).every(x=>x.open && Math.abs(x.getBoundingClientRect().top-m[0].getBoundingClientRect().top)<2)})()"""),
+              'The first desktop row should show three open months side by side')
+        req('POST',f'/session/{session}/window/rect',{'width':1100,'height':1050})
+        check(js("""return getComputedStyle(document.querySelector('#rsi-tl-calendar-grid')).gridTemplateColumns.trim().split(/\\s+/).length===2"""),
+              'Narrow desktop must retain a readable two-column month grid')
+        req('POST',f'/session/{session}/window/rect',{'width':1440,'height':1050})
         check(js("return document.querySelectorAll('.rsi-rt-day').length>=4"),
               'Daily summary rows should be present')
-        check(js("return document.querySelector('#rsi-rt-next-countdown').textContent.includes('秒')"),
-              'Top briefing is missing the live seconds timer')
+        check(js("""return (()=>{const c=[...document.querySelectorAll('.rsi-cvpr-deadline')];return c.length===2 && c[0].dataset.cvprDeadline==='registration' && c[1].dataset.cvprDeadline==='paper' && Math.abs(c[0].getBoundingClientRect().top-c[1].getBoundingClientRect().top)<2 && c[0].getBoundingClientRect().left < c[1].getBoundingClientRect().left})()"""),
+              'CVPR must show registration on the left and full paper submission on the right')
+        check(js("""return [...document.querySelectorAll('.rsi-cvpr-countdown')].length===2 && [...document.querySelectorAll('.rsi-cvpr-countdown')].every(n=>n.textContent.includes('秒') || n.textContent.includes('已截止'))"""),
+              'Both CVPR countdowns must update independently in seconds')
+        clocks_before=js("return [...document.querySelectorAll('.rsi-cvpr-countdown')].map(n=>n.textContent)")
+        time.sleep(1.2)
+        clocks_after=js("return [...document.querySelectorAll('.rsi-cvpr-countdown')].map(n=>n.textContent)")
+        check(all(b!=a for b,a in zip(clocks_before,clocks_after)),
+              'The two CVPR deadlines must both tick every second')
         js("document.querySelector('#rsi-rt-venue-toggle').open=true")
         check(js("return document.querySelector('#rsi-rt-venue-toggle').open"), 'Conference fold does not expand')
         js("document.querySelector('#rsi-rt-venue-toggle').open=false")
@@ -159,6 +174,15 @@ def main():
         reading_papers=json.loads((ROOT/'rsi/reading-cards.json').read_text(encoding='utf-8'))['papers']
         all_events=expected_deadlines+len(timeline['research_events'])+len(reading_papers)
         check(js("return document.querySelectorAll('.rsi-tl-venue').length")==3,'Missing target conference cards')
+        cvpr=next(v for v in timeline['venues'] if v['short']=='CVPR')
+        for typ in ('registration','paper'):
+            milestone=next(d for d in cvpr['deadlines'] if d['type']==typ)
+            check(js("return document.querySelector("+json.dumps('#rsi-cvpr-'+typ+'-clock')+").dataset.countdown")==milestone['due_at'],
+                  'CVPR '+typ+' countdown differs from verified conference registry')
+            check(js("return document.querySelector("+json.dumps('.rsi-cvpr-deadline--'+typ+' time')+").getAttribute('datetime')")==milestone['date'],
+                  'CVPR '+typ+' displayed date differs from official source')
+        check(js("return [...document.querySelectorAll('.rsi-cvpr-beijing')].every(n=>n.textContent.startsWith('北京时间') && n.textContent.includes('19:59'))"),
+              'Both AoE submission deadlines must show Beijing 19:59 equivalent')
         check(js("return document.querySelectorAll('.rsi-tl-countdown').length")==expected_deadlines,'Wrong number of official countdowns')
         check(js("return document.querySelectorAll('.rsi-tl-pending').length")==pending_deadlines,'Unknown dates incorrectly assigned timers')
         check(js("return document.querySelectorAll('.rsi-tl-item').length")==all_events,'Timeline event count does not match source registry')
@@ -522,6 +546,10 @@ def main():
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/timeline.html')
+        check(js("""return getComputedStyle(document.querySelector('#rsi-tl-calendar-grid')).gridTemplateColumns.trim().split(/\\s+/).length===1"""),
+              'Mobile calendar must use one readable column')
+        check(js("return [...document.querySelectorAll('.rsi-tl-cal-month')].filter(m=>m.open).length===1"),
+              'Only the current month should start open on narrow phones')
         screenshot('timeline-v4-mobile-initial.png')
         check(js("return !document.querySelector('#rsi-rt-venue-toggle').open"),
               'Mobile timeline should start with compact folded conference details')

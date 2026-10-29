@@ -383,13 +383,26 @@
 
 ## RSI 研究时间轴 / 研究与投稿速览
 
-<div class="rsi-rt-briefing rt-iclr-deadlines" data-official-deadlines="[{&quot;iso&quot;:&quot;2026-11-10T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;论文注册 / 摘要&quot;,&quot;date&quot;:&quot;2026-11-10&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2026-11-16T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;主会全文投稿&quot;,&quot;date&quot;:&quot;2026-11-16&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2026-11-23T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;CVPR&quot;,&quot;label&quot;:&quot;补充材料&quot;,&quot;date&quot;:&quot;2026-11-23&quot;,&quot;url&quot;:&quot;https://cvpr.thecvf.com/Conferences/2027/Dates&quot;},{&quot;iso&quot;:&quot;2027-01-04T23:59:00-12:00&quot;,&quot;venue&quot;:&quot;ACL&quot;,&quot;label&quot;:&quot;ARR 投稿截止&quot;,&quot;date&quot;:&quot;2027-01-04&quot;,&quot;url&quot;:&quot;https://2027.aclweb.org/calls/main/&quot;}]">
-  <div class="rsi-rt-next"><span class="rsi-rt-small-label">NEXT DEADLINE · OFFICIAL / AoE</span>
-    <div class="rsi-rt-next-title"><b id="rsi-rt-next-label">下一官方投稿节点</b><time id="rsi-rt-next-date"></time></div>
-    <div class="rsi-rt-next-foot"><span id="rsi-rt-next-beijing">北京时间自动换算</span>
-      <a id="rsi-rt-next-source" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方来源 ↗</a></div></div>
-  <strong class="rt-ddl-countdown" id="rsi-rt-next-countdown" aria-live="off">读取已确认时间…</strong>
-  <div class="rsi-rt-queue"><span>投稿窗口</span><span class="rsi-rt-queue-chip">CVPR <b>11-10</b></span><span class="rsi-rt-queue-chip">CVPR <b>11-16</b></span><span class="rsi-rt-queue-chip">CVPR <b>11-23</b></span><span class="rsi-rt-queue-chip">ACL <b>01-04</b></span></div>
+<div class="rsi-rt-briefing rt-iclr-deadlines rsi-cvpr-briefing">
+  <div class="rsi-cvpr-briefing-head"><span class="rsi-rt-small-label">CVPR 2027 · TWO OFFICIAL DEADLINES</span>
+    <div><span>论文注册与全文投稿分别计时 · 23:59 AoE</span>
+      <a href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方日程 ↗</a></div></div>
+  <div class="rsi-cvpr-deadline-grid">
+    <article class="rsi-cvpr-deadline rsi-cvpr-deadline--registration" data-cvpr-deadline="registration">
+      <div class="rsi-cvpr-deadline-head"><span class="rsi-cvpr-deadline-index">01</span>
+        <strong>论文注册 / 摘要</strong><time datetime="2026-11-10">2026-11-10 · AoE 23:59</time></div>
+      <strong class="rsi-cvpr-countdown rt-ddl-countdown" id="rsi-cvpr-registration-clock"
+        data-countdown="2026-11-10T23:59:00-12:00" aria-live="off">读取官方截止时间…</strong>
+      <span class="rsi-cvpr-beijing" data-beijing="2026-11-10T23:59:00-12:00">北京时间自动换算</span>
+    </article>
+    <article class="rsi-cvpr-deadline rsi-cvpr-deadline--paper" data-cvpr-deadline="paper">
+      <div class="rsi-cvpr-deadline-head"><span class="rsi-cvpr-deadline-index">02</span>
+        <strong>主会全文投稿</strong><time datetime="2026-11-16">2026-11-16 · AoE 23:59</time></div>
+      <strong class="rsi-cvpr-countdown rt-ddl-countdown" id="rsi-cvpr-paper-clock"
+        data-countdown="2026-11-16T23:59:00-12:00" aria-live="off">读取官方截止时间…</strong>
+      <span class="rsi-cvpr-beijing" data-beijing="2026-11-16T23:59:00-12:00">北京时间自动换算</span>
+    </article>
+  </div>
 </div>
 
 ## RSI 研究时间轴 / CVPR · ICML · ACL 2027

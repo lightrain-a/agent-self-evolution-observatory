@@ -144,12 +144,12 @@ def main():
         click('timeline.html')
         wait_for("return document.body.dataset.rsiPage==='timeline'", 'timeline')
         wait_for("return document.querySelectorAll('[data-calendar-day]').length>0", 'calendar')
-        check(js("return document.querySelector('#rsi-rt-next-countdown').textContent.includes('秒')"),
-              'Timeline timers did not initialize after a soft route')
-        now = js("return document.querySelector('#rsi-rt-next-countdown').textContent")
+        check(js("return [...document.querySelectorAll('.rsi-cvpr-countdown')].length===2 && [...document.querySelectorAll('.rsi-cvpr-countdown')].every(c=>c.textContent.includes('秒') || c.textContent.includes('已截止'))"),
+              'Two independent CVPR clocks did not initialize after a soft route')
+        now = js("return [...document.querySelectorAll('.rsi-cvpr-countdown')].map(c=>c.textContent)")
         time.sleep(1.15)
-        later = js("return document.querySelector('#rsi-rt-next-countdown').textContent")
-        check(now != later, 'Countdown stopped ticking after soft nav')
+        later = js("return [...document.querySelectorAll('.rsi-cvpr-countdown')].map(c=>c.textContent)")
+        check(all(a!=b for a,b in zip(now,later)), 'Both CVPR clocks must keep ticking after soft nav')
 
         # Research map: filters, collapsible chapters and colored outline.
         click('research-map.html')

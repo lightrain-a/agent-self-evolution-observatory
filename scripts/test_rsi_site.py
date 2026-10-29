@@ -262,6 +262,18 @@ def main():
     check(len(all_deadlines)==7 and len(exact['cvpr-2027'])+len(exact['acl-2027'])==4,
           'Timeline DDL snapshot mismatch')
     timeline_html=(ROOT/'rsi/timeline.html').read_text(encoding='utf-8')
+    # CVPR registration and full submission are two separate official clocks,
+    # not a changing "next deadline" that hides the second important date.
+    for typ,identifier in (('registration','cvpr-2027-registration'),('paper','cvpr-2027-paper')):
+        d=all_deadlines[identifier]
+        check(f'id="rsi-cvpr-{typ}-clock"' in timeline_html and
+              f'data-cvpr-deadline="{typ}"' in timeline_html and
+              f'data-countdown="{d["due_at"]}"' in timeline_html,
+              'CVPR '+typ+' spotlight must use the verified official timestamp')
+    check(timeline_html.index('data-cvpr-deadline="registration"') < timeline_html.index('data-cvpr-deadline="paper"'),
+          'CVPR registration belongs on the left, full paper deadline on the right')
+    check('grid-template-columns:repeat(3,minmax(0,1fr))' in (ROOT/'rsi/timeline.css').read_text(encoding='utf-8'),
+          'Wide desktop timeline calendar should use three monthly columns')
     for identifier in all_deadlines:
         check(f'id="{identifier}"' in timeline_html,
               'Deadline missing from timeline page: '+identifier)

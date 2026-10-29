@@ -21,18 +21,25 @@ body[data-rsi-page="timeline"] #overview>h2,body[data-rsi-page="timeline"] #dead
 body[data-rsi-page="timeline"] #provenance{padding:13px 16px;margin-top:16px}
 body[data-rsi-page="timeline"] #provenance>h2{font-size:14px;margin-bottom:8px}
 .rsi-rt-small-label{display:block;font-size:9px;line-height:1.4;color:#77649d;letter-spacing:.075em;font-weight:850}
-.rsi-rt-briefing.rt-iclr-deadlines{display:grid;grid-template-columns:minmax(255px,1fr) auto minmax(215px,.7fr);align-items:center;gap:14px;margin:0;padding:12px 16px;border-radius:11px;border-left-width:4px}
-.rsi-rt-next-title{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0}
-.rsi-rt-next-title b{font-size:12px;color:#40465e}
-.rsi-rt-next-title time{font-size:10px;color:#8790a1}
-.rsi-rt-next-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:10px;color:#8490a3}
-.rsi-rt-next-foot a{font-size:10px;font-weight:750}
-#rsi-rt-next-countdown.rt-ddl-countdown{font-size:24px;margin:0;white-space:nowrap;color:#514282;line-height:1.4;letter-spacing:-.02em}
-#rsi-rt-next-countdown.is-urgent{color:#a5692f}#rsi-rt-next-countdown.is-passed{color:#8c96a6}
-.rsi-rt-queue{display:flex;justify-content:flex-end;align-items:center;gap:5px;flex-wrap:wrap}
-.rsi-rt-queue>span:first-child{font-size:9px;color:#8f87a3;width:100%;text-align:right;line-height:1.3}
-.rsi-rt-queue-chip{padding:3px 6px;border:1px solid #e4dff0;border-radius:6px;color:#76639a;font-size:9px;background:#fff;white-space:nowrap;line-height:1.4}
-.rsi-rt-queue-chip b{font-size:9px;color:#625487}
+/* Two independent, officially verified CVPR submission checkpoints.
+   Both use the generic [data-countdown] ticker, not a synthetic "next" date. */
+.rsi-rt-briefing.rt-iclr-deadlines.rsi-cvpr-briefing{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch;gap:9px;margin:0;padding:11px 13px 13px;border-left:4px solid #416fa7;border-color:#d8e2ef;background:linear-gradient(125deg,#f5f8fd,#fff 70%);border-radius:11px}
+.rsi-cvpr-briefing-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 14px;padding:0 2px}
+.rsi-cvpr-briefing-head>.rsi-rt-small-label{font-size:10px;letter-spacing:.055em;color:#365e8d}
+.rsi-cvpr-briefing-head>div{display:flex;align-items:center;gap:13px;flex-wrap:wrap;color:#7b8ca4;font-size:10px}
+.rsi-cvpr-briefing-head a{font-weight:800;color:#3c6695;text-decoration:none}
+.rsi-cvpr-briefing-head a:hover{text-decoration:underline}
+.rsi-cvpr-deadline-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rsi-cvpr-deadline{--cvpr-accent:#356fa5;min-width:0;display:grid;gap:7px;padding:12px 14px;border:1px solid #dce5f0;border-left:3px solid var(--cvpr-accent);border-radius:9px;background:#fff}
+.rsi-cvpr-deadline--paper{--cvpr-accent:#705ab2;background:linear-gradient(115deg,#fbfaff,#fff 65%);border-color:#e1dbf1;border-left-color:var(--cvpr-accent)}
+.rsi-cvpr-deadline-head{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap}
+.rsi-cvpr-deadline-index{display:grid;place-items:center;width:23px;height:23px;border-radius:6px;color:#fff;background:var(--cvpr-accent);font-size:10px;font-weight:850;flex:none}
+.rsi-cvpr-deadline-head strong{font-size:13px;line-height:1.35;color:#354a66}
+.rsi-cvpr-deadline-head time{font-size:10px;color:#7587a0;font-variant-numeric:tabular-nums;margin-left:auto;white-space:nowrap}
+.rsi-cvpr-countdown.rt-ddl-countdown{display:block;min-width:0;white-space:nowrap;font-variant-numeric:tabular-nums;margin:1px 0 0;font-size:clamp(19px,1.85vw,25px);line-height:1.3;letter-spacing:-.03em;color:var(--cvpr-accent)}
+.rsi-cvpr-countdown.is-urgent{color:#a46c2c}
+.rsi-cvpr-countdown.is-passed{color:#8998ae}
+.rsi-cvpr-beijing{display:block;font-size:10px;line-height:1.4;color:#8190a5;font-variant-numeric:tabular-nums}
 .rsi-rt-fold-icon{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid #dce3ee;border-radius:6px;background:#fff;color:#738299;font-size:14px;line-height:1;flex:none}
 .rsi-rt-fold-icon:before{content:"+"}details[open]>summary .rsi-rt-fold-icon:before{content:"−"}
 .rsi-rt-venue-toggle{border:1px solid #dce3ee;border-radius:10px;background:#fff;overflow:hidden}
@@ -52,13 +59,13 @@ body[data-rsi-page="timeline"] #deadlines .rsi-tl-venue h3{font-size:11px;line-h
 .rsi-tl-ddl-name{font-size:11px;font-weight:750;color:#51657f}.rsi-tl-ddl-date{font-size:10px;text-align:right;color:#5a789e;font-variant-numeric:tabular-nums}.rsi-tl-ddl-date small{display:block;font-size:9px;color:#96a1b2}
 .rsi-tl-countdown,.rsi-tl-beijing,.rsi-tl-pending{grid-column:1/-1;text-align:right;font-variant-numeric:tabular-nums}.rsi-tl-countdown{color:#746299;font-size:12px;font-weight:800}.rsi-tl-countdown.is-passed{color:#8c98aa}.rsi-tl-countdown.is-urgent{color:#a5692f}.rsi-tl-beijing{font-size:10px;color:#91a0b2}.rsi-tl-pending{font-size:10px;color:#9d865f}
 .rsi-tl-venue-context{font-size:11px!important;line-height:1.7;flex:1;color:#70829a;margin:0!important}.rsi-tl-source-link{font-size:11px;font-weight:750}.rsi-tl-validation{font-size:10px;color:#8a97a9;margin:10px 0 0!important}
-/* Exactly the reference two-up calendar rhythm, with functional folded future months. */
+/* Three calendar months per row on wide screens; preserve folded future months. */
 .rsi-tl-calendar-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:15px 1px 10px}
 body[data-rsi-page="timeline"] #activity .rsi-tl-calendar-head h3{font-size:15px;margin:2px 0 3px;line-height:1.3}
 .rsi-tl-calendar-head p{font-size:11px;color:#8694a6;margin:0!important;line-height:1.5}
 .rsi-tl-calendar-legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:#8493a8;font-size:10px}.rsi-tl-calendar-legend>span{display:flex;gap:5px;align-items:center}
 .rsi-tl-dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:#7b89a2;flex:none}.rsi-tl-dot--reading{background:var(--rt-reading)}.rsi-tl-dot--research{background:var(--rt-research)}.rsi-tl-dot--deadline{background:var(--rt-deadline)}
-.rsi-tl-calendar-grid.rt-heat-months{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;align-items:start}
+.rsi-tl-calendar-grid.rt-heat-months{grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;align-items:start}
 .rsi-tl-cal-month.rt-heat-month{padding:0;border-radius:11px;overflow:hidden}
 .rsi-tl-cal-head.rt-heat-month-header{display:flex;align-items:center;justify-content:space-between;margin:0;padding:10px 13px;list-style:none;cursor:pointer}
 .rsi-tl-cal-head::-webkit-details-marker{display:none}.rsi-tl-cal-head:hover{background:#fafbfe}
@@ -109,3 +116,7 @@ body[data-rsi-page="timeline"] [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){body[data-rsi-page="timeline"]{scroll-behavior:auto}}
 
 #rsi-tl-calendar-mode{border:1px solid #d7deec;border-radius:6px;padding:5px 8px;background:#fff;color:#6c7c9a;font-size:10px;font-weight:750;cursor:pointer}#rsi-tl-calendar-mode[aria-pressed="true"]{background:#eef2fc;color:#526ba0;border-color:#b7c6e4}
+/* Three-up on normal desktop, two-up on narrow laptops, one-up on phones. */
+@media(min-width:821px) and (max-width:1239px){.rsi-tl-calendar-grid.rt-heat-months{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:820px){.rsi-tl-calendar-grid.rt-heat-months{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:640px){.rsi-cvpr-deadline-grid{grid-template-columns:minmax(0,1fr)}.rsi-cvpr-briefing-head>div{gap:7px}.rsi-cvpr-countdown.rt-ddl-countdown{font-size:22px}}

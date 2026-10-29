@@ -49,11 +49,6 @@
   let fullCalendar = false;
   const calendarMode = $('#rsi-tl-calendar-mode');
 
-  const deadlineData = (() => {
-    try { return JSON.parse($('.rsi-rt-briefing')?.dataset.officialDeadlines || '[]'); }
-    catch (_) { return []; }
-  })();
-
   const create = (tag, className, text) => {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -85,23 +80,6 @@
       node.classList.toggle('is-urgent', due > now && due - now < 7 * 86400000);
       node.title = '正式截止：' + node.dataset.countdown + '（AoE / UTC−12）';
     });
-    const next = deadlineData.find((value) => Date.parse(value.iso) > now)
-      || deadlineData[deadlineData.length - 1];
-    const label = $('#rsi-rt-next-label');
-    const date = $('#rsi-rt-next-date');
-    const counterNode = $('#rsi-rt-next-countdown');
-    const local = $('#rsi-rt-next-beijing');
-    const source = $('#rsi-rt-next-source');
-    if (next && label && date && counterNode && local && source) {
-      const due = Date.parse(next.iso);
-      label.textContent = next.venue + ' 2027 · ' + next.label;
-      date.textContent = next.date + ' AoE';
-      counterNode.textContent = countdownText(due - now);
-      counterNode.classList.toggle('is-passed', due <= now);
-      counterNode.classList.toggle('is-urgent', due > now && due - now < 7 * 86400000);
-      local.textContent = '北京时间 ' + fmtChina.format(new Date(due)).replace(/\//g, '-');
-      source.href = next.url;
-    }
   }
 
   beijingNodes.forEach((node) => {
@@ -153,7 +131,9 @@
 
       const panel = create('details', 'rsi-tl-cal-month rt-heat-month');
       panel.dataset.calendarMonth = key;
-      panel.open = monthDetails.has(key) ? monthDetails.get(key) : index < 2;
+      const firstRow = matchMedia('(min-width: 1240px)').matches ? 3
+        : matchMedia('(min-width: 821px)').matches ? 2 : 1;
+      panel.open = monthDetails.has(key) ? monthDetails.get(key) : index < firstRow;
 
       const head = create('summary', 'rsi-tl-cal-head rt-heat-month-header');
       const title = create('div', 'rsi-tl-cal-title');

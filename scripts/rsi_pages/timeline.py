@@ -104,7 +104,6 @@ def event_card(event: dict) -> str:
 venue_ids, event_ids = set(), set()
 events: list[dict] = []
 known = 0
-official_targets = []
 for venue in DATA["venues"]:
     assert venue["id"] not in venue_ids
     venue_ids.add(venue["id"])
@@ -119,8 +118,6 @@ for venue in DATA["venues"]:
             assert instant.utcoffset().total_seconds() == -12 * 3600
             assert instant.date().isoformat() == milestone["date"]
             known += 1
-            official_targets.append((milestone["due_at"], venue["short"], milestone["label"],
-                                     milestone["date"], venue["source_url"]))
             events.append(dict(
                 id=milestone["id"], kind="deadline", date=milestone["date"],
                 due_at=milestone["due_at"],
@@ -270,14 +267,22 @@ for venue in DATA["venues"]:
         f'</article>'
     )
 
-targets_json = json.dumps(
-    [dict(iso=t[0], venue=t[1], label=t[2], date=t[3], url=t[4])
-     for t in sorted(official_targets)], ensure_ascii=False, separators=(",", ":")
-)
-queue = "".join(
-    f'<span class="rsi-rt-queue-chip">{esc(t[1])} <b>{esc(t[3][5:])}</b></span>'
-    for t in sorted(official_targets)
-)
+# The compact CVPR spotlight uses the two distinct confirmed deadlines
+# from the same reviewed source as the expandable conference table.
+cvpr = next(venue for venue in DATA["venues"] if venue["short"] == "CVPR" and venue["year"] == 2027)
+cvpr_deadlines = {d["type"]: d for d in cvpr["deadlines"] if d["type"] in ("registration", "paper")}
+assert set(cvpr_deadlines) == {"registration", "paper"}
+assert all(d["status"] == "official" and d["due_at"] and d["date"] for d in cvpr_deadlines.values())
+
+def cvpr_spotlight(kind: str, label: str, number: str) -> str:
+    d = cvpr_deadlines[kind]
+    return f'''<article class="rsi-cvpr-deadline rsi-cvpr-deadline--{kind}" data-cvpr-deadline="{kind}">
+      <div class="rsi-cvpr-deadline-head"><span class="rsi-cvpr-deadline-index">{number}</span>
+        <strong>{label}</strong><time datetime="{esc(d["date"])}">{esc(d["date"])} · AoE 23:59</time></div>
+      <strong class="rsi-cvpr-countdown rt-ddl-countdown" id="rsi-cvpr-{kind}-clock"
+        data-countdown="{esc(d["due_at"])}" aria-live="off">读取官方截止时间…</strong>
+      <span class="rsi-cvpr-beijing" data-beijing="{esc(d["due_at"])}">北京时间自动换算</span>
+    </article>'''
 
 updated = max(DATA["verified_at"], *(p["read_on"] for p in PAPERS))
 research_day_count = len({e["date"] for e in events if e["kind"] != "deadline"})
@@ -294,13 +299,14 @@ header_html = f'''<header class="research-hero rt-hero rsi-timeline-hero">
     <div class="rsi-tl-header-links"><a href="reading-cards.html">论文卡片 ↗</a><a href="ideas.html">研究方向 ↗</a></div></aside>
 </header>'''
 
-overview = f'''<div class="rsi-rt-briefing rt-iclr-deadlines" data-official-deadlines="{esc(targets_json)}">
-  <div class="rsi-rt-next"><span class="rsi-rt-small-label">NEXT DEADLINE · OFFICIAL / AoE</span>
-    <div class="rsi-rt-next-title"><b id="rsi-rt-next-label">下一官方投稿节点</b><time id="rsi-rt-next-date"></time></div>
-    <div class="rsi-rt-next-foot"><span id="rsi-rt-next-beijing">北京时间自动换算</span>
-      <a id="rsi-rt-next-source" href="https://cvpr.thecvf.com/Conferences/2027/Dates" target="_blank" rel="noopener noreferrer">官方来源 ↗</a></div></div>
-  <strong class="rt-ddl-countdown" id="rsi-rt-next-countdown" aria-live="off">读取已确认时间…</strong>
-  <div class="rsi-rt-queue"><span>投稿窗口</span>{queue}</div>
+overview = f'''<div class="rsi-rt-briefing rt-iclr-deadlines rsi-cvpr-briefing">
+  <div class="rsi-cvpr-briefing-head"><span class="rsi-rt-small-label">CVPR 2027 · TWO OFFICIAL DEADLINES</span>
+    <div><span>论文注册与全文投稿分别计时 · 23:59 AoE</span>
+      <a href="{safe_url(cvpr["source_url"])}" target="_blank" rel="noopener noreferrer">官方日程 ↗</a></div></div>
+  <div class="rsi-cvpr-deadline-grid">
+    {cvpr_spotlight("registration", "论文注册 / 摘要", "01")}
+    {cvpr_spotlight("paper", "主会全文投稿", "02")}
+  </div>
 </div>'''
 
 deadlines = (
