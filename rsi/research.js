@@ -20,7 +20,7 @@
     if (page === 'ideas.html' && window.location.hash === '#idea-5') return 'idea-i5.html';
     return page;
   }
-  function renderNavigation() {
+  function renderNavigation(resetToActive = false) {
     if (!Array.isArray(window.NAV_GROUPS)) return;
     const nav = $('#research-nav');
     const current = activeNavHref();
@@ -34,7 +34,7 @@
       const details = root.createElement('details');
       details.className = 'nav-group' + (active ? ' active-group' : '');
       details.dataset.navGroup = group.id;
-      details.open = expanded.has(group.id) ? expanded.get(group.id) : active || Boolean(group.open);
+      details.open = resetToActive ? active : expanded.has(group.id) ? expanded.get(group.id) : active || Boolean(group.open);
       const summary = root.createElement('summary');
       summary.className = 'nav-level1';
       const heading = root.createElement('span');
@@ -119,14 +119,26 @@
       indexPromise = null;
     }
   });
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
+  let tocObserver;
+  function observePageSections() {
+    tocObserver?.disconnect();
+    if (!('IntersectionObserver' in window)) return;
+    tocObserver = new IntersectionObserver((entries) => {
       const active = entries.filter((e) => e.isIntersecting).sort((a,b) => a.boundingClientRect.top-b.boundingClientRect.top)[0];
       if (!active) return;
       root.querySelectorAll('.toc-links a').forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + active.target.id));
     }, {rootMargin:'-60px 0px -65% 0px'});
-    root.querySelectorAll('.research-section').forEach((s) => observer.observe(s));
+    root.querySelectorAll('.research-section').forEach((s) => tocObserver.observe(s));
   }
+  observePageSections();
+  window.RSIShellRefresh = () => {
+    renderNavigation(true);
+    observePageSections();
+    input.value='';
+    results.hidden=true;
+    results.replaceChildren();
+    ++sequence;
+  };
 
   // Navigation stays native: links, deep links, back/forward, history, and
   // page-specific JavaScript keep their standard multi-page behavior.
@@ -152,11 +164,15 @@
       if (!path || warmed.has(path)) return;
       warmed.add(path);
       const hint = document.createElement('link');
-      hint.rel = 'prefetch';
-      hint.as = 'document';
-      hint.href = path;
-      hint.fetchPriority = 'low';
-      document.head.append(hint);
+      if (window.RSIPageRouter?.prefetch) {
+        window.RSIPageRouter.prefetch(path);
+      } else {
+        hint.rel = 'prefetch';
+        hint.as = 'document';
+        hint.href = path;
+        hint.fetchPriority = 'low';
+        document.head.append(hint);
+      }
     };
     root.addEventListener('pointerover', (event) => {
       if (event.pointerType === 'touch') return;

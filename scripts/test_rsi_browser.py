@@ -65,8 +65,8 @@ def main():
             summaries.append({'page':slug,**stats})
         nav('rsi/index.html')
         js("document.querySelector('#research-nav a[href=\"timeline.html\"]').dispatchEvent(new FocusEvent('focusin',{bubbles:true}))")
-        check(js("return [...document.querySelectorAll('head link[rel=prefetch]')].some(l=>l.getAttribute('href')==='/rsi/timeline.html')"),
-              'Keyboard navigation should prefetch the next RSI document')
+        check(js("return window.RSIPageRouter?.isCached('/rsi/timeline.html')===true"),
+              'Keyboard navigation should warm the next RSI document in the soft navigation cache')
         js("document.querySelector('#research-nav a[href=\"timeline.html\"]').click()")
         time.sleep(.5)
         check(js("return location.pathname.endsWith('/rsi/timeline.html') && document.body.dataset.rsiPage==='timeline'"),

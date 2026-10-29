@@ -336,6 +336,8 @@ def main():
         check('lang="zh-CN"' in text,f'{slug}: wrong content language')
         check('class="site-switcher"' in text and 'href="/rsi/"' in text and 'href="/"' in text,f'{slug}: missing two-site switch')
         check('src="site-nav.js"' in text and 'src="../data.js"' not in text,f'{slug}: navigation depends on Agent')
+        check('src="page-router.js"' in text,
+              f'{slug}: every RSI page must load the persistent-shell navigation controller')
         check('href="compact.css"' in text,
               f'{slug}: both ends of an RSI route need the shared view-transition stylesheet')
         fallback_groups=re.findall(r'<details class="nav-group([^"]*)" data-nav-group="([^"]+)"([^>]*)>',text)
@@ -1408,14 +1410,22 @@ def main():
           'RSI pages need same-origin cross-document navigation transitions')
     check('prefers-reduced-motion:reduce' in compact_css and 'view-transition-old(root)' in compact_css,
           'Route transition needs reduced-motion handling')
-    check("hint.rel = 'prefetch'" in navigation_js and 'navigationTarget' in navigation_js,
-          'RSI navigation warm-up should prefetch only hovered/focused internal pages')
-    subprocess.run(['node','--check',str(ROOT/'rsi/research.js')],check=True)
+    check('window.RSIPageRouter.prefetch(path)' in navigation_js,
+          'Navigation hover/focus should warm the actual soft-navigation HTML cache')
+    router_js=(ROOT/'rsi/page-router.js').read_text(encoding='utf-8')
+    check('history.pushState' in router_js and "addEventListener('popstate'" in router_js and
+          'document.startViewTransition' in router_js and 'fetchDocument(url)' in router_js and
+          'window.RSIFrameworkInitialize' in router_js and 'RSIShellRefresh' in router_js,
+          'Persistent shell navigation must preserve browser history and reinitialize page controls')
+    check('window.RSITimelineCleanup' in router_js and 'window.RSIResearchMapCleanup' in router_js,
+          'Per-page timeline and map scripts must clean up before a soft navigation')
+    for asset in ('research.js','framework.js','research-map.js','timeline-view.js','page-router.js'):
+        subprocess.run(['node','--check',str(ROOT/'rsi'/asset)],check=True)
     public=ROOT/'_site'
     if public.exists():
         for slug in PAGES:
             check((public/'rsi'/f'{slug}.html').is_file(),f'Not exported: {slug}')
-        for filename in ['timeline-data.json','timeline-view.js','timeline.css','timeline-reference.css','compact.css']:
+        for filename in ['timeline-data.json','timeline-view.js','timeline.css','timeline-reference.css','compact.css','page-router.js']:
             check((public/'rsi'/filename).is_file(),f'RSI timeline asset not exported: {filename}')
             check((public/'rsi'/filename).read_text(encoding='utf-8')==(ROOT/'rsi'/filename).read_text(encoding='utf-8'),
                   f'RSI timeline export differs from source: {filename}')

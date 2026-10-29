@@ -1,6 +1,12 @@
 /* Progressive enhancement: all content and anchors work without JavaScript. */
 (() => {
   'use strict';
+  let activeController;
+  function initialize() {
+  // Rebind page-specific controls after a soft navigation. Global listeners
+  // from the previous page must never accumulate across visits.
+  activeController?.abort();
+  activeController=new AbortController();
   const params=new URLSearchParams(location.search);
   function revealTarget(){
     if(!location.hash)return;
@@ -11,7 +17,7 @@
       if(node.tagName==='DETAILS')node.open=true;
     }
   }
-  revealTarget();addEventListener('hashchange',revealTarget);
+  revealTarget();addEventListener('hashchange',revealTarget,{signal:activeController.signal});
   const query=document.querySelector('#reference-query');
   const scope=document.querySelector('#reference-function');
   if(query&&scope){
@@ -37,7 +43,7 @@
       const target=document.getElementById(id);
       if(target?.classList.contains('source-card')&&target.hidden){scope.value='all';query.value='';refresh();}
     };
-    showSource();addEventListener('hashchange',showSource);
+    showSource();addEventListener('hashchange',showSource,{signal:activeController.signal});
   }
   const readingQuery=document.querySelector('#reading-card-filter');
   const readingFunction=document.querySelector('#reading-function-filter');
@@ -68,6 +74,10 @@
       const target=document.getElementById(id);
       if(target?.classList.contains('reading-card')&&target.hidden){readingFunction.value='all';readingQuery.value='';refresh();}
     };
-    showCard();addEventListener('hashchange',showCard);
+    showCard();addEventListener('hashchange',showCard,{signal:activeController.signal});
   }
+  }
+  window.RSIFrameworkInitialize=initialize;
+  window.RSIFrameworkCleanup=()=>{activeController?.abort();activeController=null;};
+  initialize();
 })();

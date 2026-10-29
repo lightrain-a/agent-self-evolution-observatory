@@ -1,5 +1,6 @@
 (() => {
   'use strict';
+  window.RSIResearchMapCleanup?.();
   const query = document.getElementById('rm-search');
   const select = document.getElementById('rm-function');
   if (!query || !select) return;
@@ -62,6 +63,8 @@
     const group = groups.find(item => item.dataset.function === select.value);
     if (group) { group.open = true; group.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'start'}); }
   }));
-  window.addEventListener('popstate', () => { const next = new URL(location.href); select.value = valid(next.searchParams.get('function')) ? next.searchParams.get('function') : 'all'; query.value = next.searchParams.get('q') || ''; apply(false); });
+  const onPopState = () => { const next = new URL(location.href); select.value = valid(next.searchParams.get('function')) ? next.searchParams.get('function') : 'all'; query.value = next.searchParams.get('q') || ''; apply(false); };
+  window.addEventListener('popstate', onPopState);
+  window.RSIResearchMapCleanup = () => window.removeEventListener('popstate',onPopState);
   apply(false);
 })();

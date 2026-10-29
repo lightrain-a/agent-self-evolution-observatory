@@ -1,6 +1,7 @@
 /* RSI timeline v4: reference-template monthly tables, accessible folds, live AoE clocks. */
 (() => {
   'use strict';
+  window.RSITimelineCleanup?.();
   if (document.body.dataset.rsiPage !== 'timeline') return;
 
   const $ = (selector) => document.querySelector(selector);
@@ -414,12 +415,19 @@
   refresh();
   openHashTarget();
   window.addEventListener('hashchange', openHashTarget);
-  window.setInterval(updateCountdowns, 1000);
-  window.setInterval(() => { if (timeRange.value !== 'all') refresh(); }, 60000);
-  document.addEventListener('visibilitychange', () => {
+  const secondTimer = window.setInterval(updateCountdowns, 1000);
+  const filterTimer = window.setInterval(() => { if (timeRange.value !== 'all') refresh(); }, 60000);
+  const onVisibilityChange=()=>{
     if (!document.hidden) {
       updateCountdowns();
       if (timeRange.value !== 'all') refresh();
     }
-  });
+  };
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  window.RSITimelineCleanup = () => {
+    window.clearInterval(secondTimer);
+    window.clearInterval(filterTimer);
+    window.removeEventListener('hashchange', openHashTarget);
+    document.removeEventListener('visibilitychange',onVisibilityChange);
+  };
 })();

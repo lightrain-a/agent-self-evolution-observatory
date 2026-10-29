@@ -4,6 +4,9 @@ body[data-rsi-page]{--rsi-page-gutter:22px;--rsi-page-top:18px;--rsi-topbar-heig
 @media(min-width:821px){body[data-rsi-page] .layout{grid-template-columns:276px minmax(0,1fr)}}
 body[data-rsi-page] .content{max-width:var(--rsi-page-width);padding:var(--rsi-page-top) var(--rsi-page-gutter) 28px;margin:0 auto;width:100%}
 body[data-rsi-page] .topbar{min-height:var(--rsi-topbar-height);padding:8px 22px;gap:10px;background:rgba(250,251,254,.97)}
+/* Loading never hides the old article or blanks the navigation shell. */
+body[data-rsi-page].rsi-soft-pending .topbar:after{content:"";position:absolute;bottom:0;left:0;width:38%;height:2px;background:linear-gradient(90deg,#315fa8,#7860bd,#2b9377);animation:rsi-soft-loading 1s ease-in-out infinite alternate;pointer-events:none}
+@keyframes rsi-soft-loading{from{transform:translateX(-90%)}to{transform:translateX(270%)}}
 body[data-rsi-page] .search{max-width:900px}
 body[data-rsi-page] .search input{height:36px;padding:7px 13px 7px 34px;border-radius:9px;font-size:13px;line-height:20px}
 body[data-rsi-page] .search:before{left:12px;top:0;font-size:21px;line-height:34px}
@@ -121,14 +124,18 @@ body[data-rsi-page] .topbar{view-transition-name:rsi-navigation-topbar}
  from{opacity:0;transform:translateY(5px)}
  to{opacity:1;transform:translateY(0)}
 }
-::view-transition-old(root){animation:130ms ease-in both rsi-page-out}
-::view-transition-new(root){animation:210ms cubic-bezier(.22,1,.36,1) both rsi-page-in}
+/* The new document is fully visible beneath the old snapshot. Only the old
+   snapshot fades away: two simultaneous fade-to/from-transparent layers caused
+   the pale blank flash in the previous version. */
+::view-transition-old(root){animation:175ms ease-out both rsi-page-out;z-index:1}
+::view-transition-new(root){animation:none;opacity:1}
 /* The navigation chrome stays visually stable; only its active item changes. */
 ::view-transition-old(rsi-navigation-sidebar),
 ::view-transition-new(rsi-navigation-sidebar),
 ::view-transition-old(rsi-navigation-topbar),
 ::view-transition-new(rsi-navigation-topbar){animation-duration:120ms;animation-timing-function:ease-in-out}
 @media(prefers-reduced-motion:reduce){
+ body[data-rsi-page].rsi-soft-pending .topbar:after{animation:none;transform:none;width:100%}
  ::view-transition-old(root),::view-transition-new(root),
  ::view-transition-old(rsi-navigation-sidebar),::view-transition-new(rsi-navigation-sidebar),
  ::view-transition-old(rsi-navigation-topbar),::view-transition-new(rsi-navigation-topbar){
