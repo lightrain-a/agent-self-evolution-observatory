@@ -1290,7 +1290,10 @@ def main():
           'I3 post-conflict repair was not separated from pre-update admission')
     generalization=(ROOT/'rsi/generalization-learnability.html').read_text(encoding='utf-8')
     sections={'tradeoffs','tradeoff-solutions','question','taxonomy','history','mechanisms','evidence','new-papers',
-              'idea-map','states','metrics','controls','p0','p1','p2','p3','figures'}
+              'idea-map','states','metrics','controls','design-lessons','paper-method','method-rule-engine',
+              'method-signature','method-intervention','method-analysis','p0','p1','p2','p3',
+              'experiment-master','experiment-resources','experiment-statistics',
+              'experiment-mentor','figures'}
     check(all(f'id="{x}"' in generalization for x in sections),
           'Generalization subject lost its evidence/mechanism/evaluation chapters')
     check(all(f'href="references.html#{ref}"' in generalization for ref in
@@ -1351,6 +1354,19 @@ def main():
           and [s['id'] for s in contract['studies']]==['P0','P1','P2','P3']
           and {x['id'] for x in contract['task_families']}=={'C1','C2','C3'},
           'Generalization design confused direct transfer with future learnability or numbered I')
+    method_v2=contract.get('paper_level_design_v2',{})
+    check(method_v2.get('status')=='proposed_not_executed' and
+          {c['id'] for c in method_v2['method']['components']}=={'D1','D2','D3','D4'} and
+          [e['id'] for e in method_v2['paper_experiments']]==['E0','E1_Pilot','E1_Main','E2','E3','E4','E5'] and
+          method_v2['paper_experiments'][1]['C_learning_curves']==54 and
+          method_v2['paper_experiments'][2]['C_learning_curves']==240 and
+          'query_by_committee' in method_v2['method']['components'][2]['baselines'],
+          'Generalization v2 must contain concrete methods, real C-update budgets and QBC control')
+    review_file=ROOT/'rsi/generalization-mentor-brief.md'
+    check(review_file.is_file() and '师兄评议稿' in review_file.read_text(encoding='utf-8') and
+          'generalization-mentor-brief.md' in generalization and 'RCP' in generalization and
+          'Lie-bracket' in generalization and 'F6' in generalization,
+          'Mentor-ready design and mechanistic exclusions not integrated')
     check(any('AdamW' in s for s in contract['shared_controls'])
           and all('generalization-learnability.html' in
               (ROOT/'rsi'/f'{slug}.html').read_text(encoding='utf-8')

@@ -322,14 +322,45 @@ PAGE = {
 <p><b>F3：</b>补P、相关H、直接学T及已会P的第二阶段T新增学习增量，排除直接迁移。</p>
 <p><b>F4：</b>学B的迁移收益与返回A时错用B规则的比例，展现收益—干扰权衡。</p>
 <p><b>F5：</b>学习状态、规则可辨识性、知识准备与学习率/优化器的分层分析，检验解释是否稳定。</p>
+<p><b>F6：</b>针对性规则反例vs QBC、难度、多样性、随机与无效反例；配对报告未来C曲线、规则错用和同预算成本。</p>
 </div>
 <p><b>GO：</b>真实C更新增量的差异跨种子、规则族、预算重复出现，能够排除近重复、旧题起点和优化器的解释。</p>
 <p><b>MERGE：</b>已有ANIL/readout或简单直接迁移完全解释结果，回到已有 I，而不独立开发大方法。</p>
 <p><b>STOP：</b>只有事后挑选的几个模型或更多训练时间有效，或者C测试泄漏到试训过程；保留负结果，停止复杂化。</p>
 </details>
 <p class="g-small"><strong>研究状态：</strong>本站已整理既有文献及受控实验提案；P0–P3 仍<strong>尚待实验</strong>，这里的图表是待采集数据清单，不是已经画出的实测结果。保留 I1–I14 的独立编号，不新增“泛化 I”。</p>
-<div class="g-quicklinks"><a href="generalization-protocol.json" download>下载完整实验计划</a><a href="idea-prioritization.html">查看现有 I 的研究优先级</a><a href="references.html">核对所有引用文献</a></div>
+<div class="g-quicklinks"><a href="generalization-mentor-brief.md" download>师兄评议稿 · 可直接转发</a><a href="generalization-protocol.json" download>下载完整实验计划</a><a href="idea-prioritization.html">查看现有 I 的研究优先级</a><a href="references.html">核对所有引用文献</a></div>
 '''),
 
     ],
 }
+
+# Keep the original evidence-first narrative and add the separately reviewed,
+# mechanism-led method and executable experimental plan at their proper positions.
+import runpy as _runpy
+from pathlib import Path as _Path
+
+_v2 = _runpy.run_path(str(_Path(__file__).with_name("generalization-supplement.py")))
+_fold_summaries = {
+    "design-lessons": "展开：七篇顶刊顶会的实验结构怎样迁移到本研究",
+    "method-rule-engine": "展开：竞争规则图、具体示例和三类分歧样本",
+    "method-signature": "展开：规则状态指纹、诊断方程和信息权限",
+    "method-intervention": "展开：规则对照式补救算法与QBC/SOAR等强基线",
+    "method-analysis": "展开：直接迁移、梯度几何与可塑性等替代机制的对照",
+    "experiment-resources": "展开：具体模型、训练分支数、LoRA合同和成本",
+    "experiment-statistics": "展开：主终点、独立统计单位、分层分析与审稿风险",
+    "experiment-mentor": "展开：师兄评议提纲与可直接转发的材料",
+}
+def _review_readability(entries):
+    for sid, title, body in entries:
+        if sid in _fold_summaries:
+            body = ('<details class="g-depth"><summary>' +
+                    _fold_summaries[sid] + '</summary>' + body + '</details>')
+        yield sid, title, body
+
+def _insert_before(anchor, entries):
+    idx = next(i for i, row in enumerate(PAGE["sections"]) if row[0] == anchor)
+    PAGE["sections"][idx:idx] = list(_review_readability(entries))
+
+_insert_before("p0", _v2["METHOD_SECTIONS"])
+_insert_before("figures", _v2["EXPERIMENT_SECTIONS"])

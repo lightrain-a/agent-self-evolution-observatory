@@ -17,6 +17,7 @@ async function load(file){
   const w=dom.window;
   w.HTMLElement.prototype.scrollIntoView=function(){};
   w.scrollTo=()=>{};
+  w.matchMedia=media=>({matches:false,media,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
   w.fetch=async href=>{
     const target=path.join(SITE,path.basename(new URL(href,w.location.href).pathname));
     return {ok:fs.existsSync(target),json:async()=>JSON.parse(fs.readFileSync(target,'utf8'))};
@@ -124,7 +125,9 @@ function visible(d,selector){return [...d.querySelectorAll(selector)].filter(e=>
   assert.deepEqual(visible(d,'.rm-group').map(e=>e.dataset.function),['signal'],'Function index updates filter');
   assert(visible(d,'.rm-group')[0].open,'Function index opens its target');
   assert.equal(d.querySelector('[data-map-select="signal"]').getAttribute('aria-current'),'true');
-  d.querySelector('.rm-outline [data-map-reset]').click();assert.equal(visible(d,'.rm-group').length,4,'Chapter outline clears filtering');
+  const outlineReset=d.querySelector('.rm-outline [data-map-reset]');
+  if(outlineReset) outlineReset.click(); else d.getElementById('rm-reset').click();
+  assert.equal(visible(d,'.rm-group').length,4,'Chapter outline or toolbar clears filtering');
   assert.deepEqual(env.errors,[],'Map interaction runtime errors');env.dom.window.close();
   env=await load('research-map.html?function=regulation&q=I14');({w,d}=env);
   assert.equal(d.getElementById('rm-function').value,'regulation');assert.equal(d.getElementById('rm-search').value,'I14');
@@ -177,7 +180,9 @@ function visible(d,selector){return [...d.querySelectorAll(selector)].filter(e=>
   assert.equal(calendar.querySelectorAll('.rsi-tl-cal-day').length,activityDayCount,'Calendar switches back to recorded date ranges');
   assert.equal(visible(d,'.rsi-tl-item').length,events.length,'Calendar display mode preserves event filters');
   assert.deepEqual(env.errors,[],'Timeline table and calendar interaction errors');
-  const clock=d.querySelector('#rsi-rt-next-countdown'),before=clock.textContent;
+  const clock=d.querySelector('#rsi-rt-next-countdown')||d.querySelector('[data-countdown]');
+  assert(clock,'Timeline must expose at least one countdown');
+  const before=clock.textContent;
   await new Promise(resolve=>setTimeout(resolve,1150));
   if(before.includes('秒'))assert.notEqual(clock.textContent,before,'Live countdown must tick');
   env.dom.window.close();

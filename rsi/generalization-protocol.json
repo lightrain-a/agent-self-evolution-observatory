@@ -205,6 +205,322 @@
       "go": "New meta rule m1 outperforms m0 at same task model and budget on unseen families"
     }
   ],
+  "paper_level_design_v2": {
+    "status": "proposed_not_executed",
+    "framing": "mechanism-led phenomenon paper with an active intervention, not a general RSI optimizer",
+    "core_claim": "训练历史会改变规则选择/适用边界；在当前任务表现接近的情况下，这可能影响随后同一新规则C的真实更新响应。",
+    "research_questions": [
+      {
+        "id": "Q1",
+        "question": "同样会做A/B是否掩盖不同规则状态？",
+        "evidence": "RD/BI/CR on heldout no-feedback probes"
+      },
+      {
+        "id": "Q2",
+        "question": "规则状态能解释新C的未来学习曲线吗？",
+        "evidence": "history-by-C relation with gradient/readout and plasticity controls"
+      },
+      {
+        "id": "Q3",
+        "question": "针对性规则区分补救能否改变未来C学习？",
+        "evidence": "randomized same-checkpoint RCP versus QBC, random, null witnesses"
+      }
+    ],
+    "method": {
+      "name": "Rule-Contrastive Preparation and Future-Learning Assay",
+      "components": [
+        {
+          "id": "D1",
+          "name": "executable_rule_graph",
+          "description": "有限程序规则库R；目标程序r*；竞争捷径r_i；版本空间V(D)由训练样本一致性定义，程序和正确标签仅供独立生成器使用。",
+          "probes": [
+            "Wsep: hypotheses disagree",
+            "Wbind: context selects distinct rule",
+            "Wnull: surface varies but hypotheses agree"
+          ],
+          "illustration": {
+            "correct": "deduplicate_keep_first",
+            "shortcut": "identity_on_unique_lists",
+            "train": {
+              "input": [
+                2,
+                1,
+                3
+              ],
+              "target": [
+                2,
+                1,
+                3
+              ]
+            },
+            "witness": {
+              "input": [
+                2,
+                1,
+                2
+              ],
+              "target": [
+                2,
+                1
+              ],
+              "shortcut_output": [
+                2,
+                1,
+                2
+              ]
+            }
+          },
+          "audit": [
+            "executable oracle and alternative outputs verified",
+            "balanced labels, depth, format and token length",
+            "AST and template family-disjoint final tests",
+            "rule generator inaccessible to learner"
+          ]
+        },
+        {
+          "id": "D2",
+          "name": "learner_rule_signature",
+          "measures": {
+            "RD": "accuracy on rule-disagreement witnesses",
+            "BI": "misapplication probability of other context rule",
+            "CR": "heldout compositional accuracy",
+            "update_response": "forked A/B micro-update on dev-only data (optional)"
+          },
+          "no_feedback": true,
+          "no_C_test_access": true
+        },
+        {
+          "id": "D3",
+          "name": "rule_contrastive_preparation",
+          "selection": "maximize rule disagreement among version-space candidates, prioritizing diagnosed context intrusion, with redundancy and budget constraints",
+          "default_k": 16,
+          "dose_ablation": [
+            8,
+            32
+          ],
+          "oracle_version": "synthetic mechanism upper bound; uses known executable rules",
+          "non_oracle_version": "candidate rules induced from previous traces, independently verified, reported separately",
+          "baselines": [
+            "query_by_committee",
+            "hard_or_uncertainty",
+            "embedding_or_surface_diversity",
+            "random",
+            "Wnull_matched",
+            "grounded_student_gain_SOAR_style"
+          ],
+          "forbidden_data": [
+            "heldout_C_test",
+            "C_labels_for_C_unknown_condition"
+          ]
+        },
+        {
+          "id": "D4",
+          "name": "future_learning_assay",
+          "C_types": [
+            "C1 compatible composition",
+            "C2 near but conflicting context rule",
+            "C3 weakly related / negative control"
+          ],
+          "same_C_support_set": true,
+          "genuine_weight_update": true,
+          "steps": [
+            0,
+            1,
+            5,
+            10,
+            20,
+            40
+          ],
+          "separate_core_only_and_system_support": true
+        }
+      ],
+      "closest_work_guardrails": [
+        {
+          "work": "Seung et al. COLT 1992 Query by Committee",
+          "url": "https://doi.org/10.1145/130385.130417",
+          "not_novel": "maximizing version-space disagreement"
+        },
+        {
+          "work": "Gebreegziabher et al. Findings ACL 2025 Variation Theory",
+          "url": "https://aclanthology.org/2025.findings-acl.50/",
+          "not_novel": "counterfactual examples based on concept variations"
+        },
+        {
+          "work": "Hermann et al. ICLR 2024 Shortcut Learning",
+          "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/bf215fa7fe70a38c5e967e59c44a99d0-Abstract-Conference.html",
+          "lesson": "factorize predictive shortcut versus core feature"
+        },
+        {
+          "work": "Sweeney ICML 2026 Lie Bracket",
+          "url": "https://proceedings.mlr.press/v306/sweeney26a.html",
+          "not_novel": "order effects on a known target"
+        },
+        {
+          "work": "SOAR ICML 2026",
+          "url": "https://proceedings.mlr.press/v306/sundaram26a.html",
+          "not_novel": "real student improvement as teacher reward"
+        }
+      ]
+    },
+    "paper_experiments": [
+      {
+        "id": "E0",
+        "title": "Rule generator audit",
+        "study": "3 DSL families; >=4 contrasting rule pairs per family; test oracle uniqueness, shortcut disagreement, length/label/depth matching and AST-disjoint splits",
+        "outcome": "grounded rule-disagreement evidence"
+      },
+      {
+        "id": "E1_Pilot",
+        "title": "Learning history phenomenon",
+        "model": [
+          "Qwen3-1.7B"
+        ],
+        "rule_families": 2,
+        "seeds": 3,
+        "histories": [
+          "A_then_B",
+          "B_then_A",
+          "Interleaved"
+        ],
+        "C_types": [
+          "C1",
+          "C2",
+          "C3"
+        ],
+        "C_learning_curves": 54,
+        "C_steps_per_curve": 40,
+        "total_nominal_C_steps": 2160,
+        "outcome": "history × C relation and effect variability"
+      },
+      {
+        "id": "E1_Main",
+        "title": "Independent confirmatory repetition",
+        "models": [
+          "Qwen3-1.7B",
+          "Qwen3-4B"
+        ],
+        "rule_families": 4,
+        "seeds": 5,
+        "histories": [
+          "Blocked",
+          "Interleaved"
+        ],
+        "C_types": [
+          "C1",
+          "C2",
+          "C3"
+        ],
+        "C_learning_curves": 240,
+        "C_steps_per_curve": 40,
+        "total_nominal_C_steps": 9600,
+        "outcome": "predefined replication across families, models and seeds"
+      },
+      {
+        "id": "E2",
+        "title": "Mechanism comparisons",
+        "baselines": [
+          "A/B accuracy alone",
+          "training loss",
+          "gradient norm/alignment",
+          "Lie bracket target-support known",
+          "readout future learnability",
+          "head-only adaptation",
+          "optimizer state reset / inherit",
+          "continued versus fresh LoRA after merging old weights"
+        ],
+        "outcome": "rule intrusion and future learning interaction not explained by simpler alternatives"
+      },
+      {
+        "id": "E3",
+        "title": "Causal rule-rescue intervention",
+        "design": "same S_H randomly forked into k=16 matched-step interventions; RCP/QBC/Hard-Diverse/Random/Wnull/Oracle upper bound; C2 main contrast; k=8,32 only ablations",
+        "outcome": "change future C AULG and rule intrusion at same total budget"
+      },
+      {
+        "id": "E4",
+        "title": "Boundary and falsification",
+        "tests": [
+          "C1/C2/C3",
+          "reversed context boundary",
+          "vocabulary-only variation",
+          "low/medium/high LoRA rank",
+          "reset versus inherited AdamW",
+          "prompt leakage audit"
+        ],
+        "outcome": "delineate direct transfer, shortcut, plasticity and rule-state claims"
+      },
+      {
+        "id": "E5",
+        "title": "Scaling and external validity",
+        "extension": "Qwen3-8B if capacity permits, extra heldout rule families, executable tool call and unit-tested coding tasks, 5-10 task learning sequence",
+        "outcome": "replicated or bounded mechanism on realistic tasks"
+      }
+    ],
+    "initial_training_contract": {
+      "architecture": "Qwen3 family; choose either Base or Instruct consistently, report them separately if both",
+      "optimizer": "AdamW",
+      "adaptation": "QLoRA/LoRA rank=16 proposal",
+      "effective_batch_size": 32,
+      "max_sequence_tokens": 512,
+      "learning_rate": "tune once on pilot development groups, freeze before confirmatory tests",
+      "C_step_grid": [
+        0,
+        1,
+        5,
+        10,
+        20,
+        40
+      ],
+      "decoding": "greedy / temperature 0, controlled structured answers",
+      "optimizer_state": "reset at main C; inherited state as separate deployment control",
+      "matched_materials": "exact A/B multiset for history-only experiment; same number of supervised tokens and effective steps for intervention study",
+      "cost_note": "2,160 pilot and 9,600 main C updates exclude A/B training, interventions, diagnostics, evaluation, and reruns; GPU hours must be measured on target hardware"
+    },
+    "primary_endpoints": {
+      "AULC": "mean over fixed C update budget of absolute L(H,C,b)",
+      "AULG": "mean over fixed C update budget of L(H,C,b)-L(H,C,0)",
+      "historical_main_contrast": "Blocked versus Interleaved on C2 AULG and AULC, with history-by-C relation interaction",
+      "interventional_main_contrast": "RCP versus Random on C2 AULG, compared against QBC",
+      "required_secondary": [
+        "C0 zero-update accuracy",
+        "C1/C3 effects",
+        "steps to threshold with right censoring",
+        "old A/B retention",
+        "rule intrusion",
+        "total GPU wall time, tokens and probe/teacher cost"
+      ],
+      "ceiling_warning": "AULG can prefer low starting scores due to headroom; always show the absolute C curve and pre-test."
+    },
+    "statistics": {
+      "independent_units": [
+        "rule family",
+        "training seed",
+        "model family"
+      ],
+      "nested_units": [
+        "instances",
+        "paraphrases",
+        "repeated decoding"
+      ],
+      "recommended_analysis": "hierarchical bootstrap by rule family or mixed-effects history × C relation, 95% intervals; preregister primary contrasts and multiplicity hierarchy",
+      "current_ability_matching": "randomize histories first; report entire sample; development-only preregistered sensitivity subset; never postselect successful C test branches",
+      "power_note": "pilot estimates variance; main extension from 4 to 8–12 rule families decided by power/precision, not test performance"
+    },
+    "scientific_go_stop": {
+      "go": "E1 matched-current-ability future learning effect replicates and E3 randomized rescue alters learning trajectory beyond QBC / cost controls across heldout families",
+      "mechanism_only": "E1 effect replicates but RCP is no better than QBC; submit phenomenon and mechanism without new algorithm novelty",
+      "merge_I9": "only A/B order endpoint/known C target loss differs, no distinct future response after direct-transfer and optimizer controls",
+      "merge_I10": "only Wsep or original task generalization improves; C future learning does not",
+      "stop": "effect depends on oracle leakage, posthoc seed selection, unequal budget or a single template"
+    },
+    "mentor_review_questions": [
+      "是否有足够独立于I9/I10的论文级核心问题？",
+      "RCP是否相对于QBC有可验证的机制增量，若没有是否回归现象文章？",
+      "当前行为级规则边界证据是否足够，是否需要表示层干预？",
+      "先扩更多独立规则族还是先加入真实代码/工具任务？",
+      "是否先以E1完整曲线与E3随机补救图作为下一次Go/Merge/Stop评审门槛？"
+    ]
+  },
   "reporting_requirements": [
     "每组本来学得会/不会的任务分母",
     "按任务族/模型种子汇总不确定区间",
