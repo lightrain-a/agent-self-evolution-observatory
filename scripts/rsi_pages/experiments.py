@@ -45,6 +45,16 @@ PAGE = {
 <p><b>避免泄漏：</b>如果 C 在 A/B 顺序决策前未知，则不得使用任何 C 梯度和最终测试答案决定顺序；目标 C 已知并允许少量开发示例时，可以单独报告目标条件化的几何预测，绝不能混成未知 C 的泛化结果。</p>
 <p><b>Go 门槛：</b>当前能力相近且优化器状态重置后，未来 C 学习曲线仍有跨种子/跨规则族顺序差异；若差异仅是 C 初始 loss、历史遗忘或优化器动量，则保留现象并退回 I9，不增加新的调度器。<a href="idea-i9-practice-switching.html#future-p0">详细协议、公式与强基线 →</a></p>
 '''),
+("nhb2026-strategy-retention","NHB 2026 → I9/I10 P0：同一数据，多样与重复的顺序究竟改变什么？",'''
+<p><b>原文现象：</b>NHB Figure4在双层Transformer中发现持续混合与分块课程会产生不同的记忆/规则保持，而人类C1先多样后重复相对有利；但不能把该结论当作预训练大模型的固定配方。[[E360]]</p>
+<div class="table-wrap"><table><thead><tr><th>对照</th><th>必须固定</th><th>独立指标</th></tr></thead><tbody>
+<tr><td>Mix / Diverse→Repeat / Repeat→Diverse / Short Interleave</td><td>同训练multiset、频次、总token、LoRA层、学习率、随机种子</td><td>旧图片/文本实例记忆、未见规则、冲突仲裁、逐checkpoint的记忆↔规则轨迹</td></tr>
+<tr><td>更新器对照</td><td>同样材料与顺序，标准/小LR、有限replay、保留adapter</td><td>早期学到的能力是否仍在后续阶段退化？可否被简单更新器缓解？</td></tr>
+<tr><td>后续C任务</td><td>匹配A/B当前能力、优化器重置、冻结最终C测试</td><td>第三种未见规则的学习曲线与旧能力回归</td></tr>
+<tr><td>I10的区分性信息D</td><td>同重复/多样分布、相同规则和预算</td><td>高D正确反馈是否能额外推动参数级新组合泛化</td></tr>
+</tbody></table></div>
+<p>已有大模型强基线及VLM遗忘证据见<a href="curriculum-scale-evidence.html">跨规模调研页</a>。<a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">论文精读</a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html#nhb-f4-patterns">Figure4b/c/e 数据结构与绘图参考</a>。</p>
+'''),
 ("i10-rule-learning","I10：从区分性例题到真正的规则组合迁移",'''
 <p><b>研究依据：</b>MLC（Nature 2023）已在部分 SCAN/COGS 词汇组合基准显著优于普通Seq2Seq，但元测试时权重冻结，且结构/长度泛化失败。它没有研究新规则的持续参数更新。<a href="reading-notes.html#deep-lake-baroni-mlc-nature2023">完整精读、Table1/2与20%错误监督解释</a>。[[E350]][[E351]][[E352]]</p>
 <div class="table-wrap"><table><thead><tr><th>实验</th><th>固定与改变</th><th>决定性检验</th></tr></thead><tbody>

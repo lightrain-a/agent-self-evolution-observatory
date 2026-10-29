@@ -7,7 +7,7 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
     '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
   }[char]));
-  const allowedHosts = new Set(['github.com', 'raw.githubusercontent.com', 'proceedings.iclr.cc']);
+  const allowedHosts = new Set(['github.com', 'raw.githubusercontent.com', 'proceedings.iclr.cc', 'www.nature.com', 'osf.io', 'pmc.ncbi.nlm.nih.gov']);
   const localFigureAsset = url => /^figure-reference-assets\/[a-z0-9-]+\.(?:svg|json)$/.test(String(url || ''));
   const safe = url => {
     if (localFigureAsset(url)) return String(url);
@@ -40,9 +40,9 @@
       if (note) note.hidden = false;
     }, {once:true}));
   }
-  function sourceLabel(entry) { return entry.source_name === 'Figures4Papers' ? 'FIGURES4PAPERS' : 'ICLR 2026 · FIGURE 1'; }
+  function sourceLabel(entry) { return entry.source_name === 'Figures4Papers' ? 'FIGURES4PAPERS' : entry.source_name; }
   function referenceLabel(entry) {
-    return entry.preview_origin ? pick('概念重绘 · 点击查看要求', 'Independent diagram · input requirements') :
+    return entry.preview_origin ? pick(entry.numeric_data_required ? '原创结构示意 · 需要实测数据' : '概念重绘 · 点击查看要求', entry.numeric_data_required ? 'Independent layout · measurements required' : 'Independent diagram · input requirements') :
       pick('参考原图 · 点击放大', 'Original reference · enlarge');
   }
   function codeLabel(entry) {
@@ -75,8 +75,8 @@
         </span><button data-select="${esc(entry.id)}" aria-pressed="${selected.has(entry.id)}">${selected.has(entry.id) ? pick('✓ 已选','✓ Selected') : pick('选作参考','Select reference')}</button></div>
       </div>
     </article>`).join('') || '<p>' + pick('没有符合条件的精选项。', 'No matching curated reference.') + '</p>';
-    el('result-count').textContent = pick(`${visible.length} 个精选参考 · 六张定量图与一张两阶段方法图`,
-      `${visible.length} curated references · quantitative plots and a method schematic`);
+    el('result-count').textContent = pick(`${visible.length} 个精选参考 · 原创F4b/c/e结构示意仅供绘图设计`,
+      `${visible.length} curated references · original Fig4b/c/e layout sketches are design-only`);
     el('selection-count').textContent = pick(`已选 ${selected.size} / 2 个参考`, `${selected.size} / 2 references selected`);
     bindImages(el('curated-grid'));
   }
@@ -85,8 +85,8 @@
     el('language-toggle').textContent = pick('English','中文');
     el('gallery-title').innerHTML = pick('少量好图，<br>让比较关系更清楚。','Fewer references.<br>Clearer scientific narratives.');
     el('gallery-intro').textContent = pick(
-      '从完整目录中挑选有明确用途的科研图：定量比较、实验趋势，以及 ICLR 2026 的两阶段方法总图。先明确要讲的科学问题，再看需要什么数据。',
-      'A compact gallery of quantitative plots and a two-stage ICLR 2026 method schematic. Start with the question and the data needed.');
+      '精选定量图、ICLR 2026 两阶段方法总图，以及 Nature Human Behaviour Figure 4b/c/e 的三种数据可视化结构。所有独立示意图均不是原论文数据。',
+      'A compact gallery with quantitative references, an ICLR method diagram and three original NHB Figure 4b/c/e layout studies. Illustrations are not experimental results.');
     el('references-title').textContent = pick('论文里真正用得上的结构','Structures that serve a paper');
     el('selection-heading').textContent = pick('这张图要回答什么？','What should this figure answer?');
     el('selection-help').textContent = pick('例如：如何展示“先记忆、后学习语义”，再到三种泛化？','How to show memorization, semantic alignment, and three probes?');
@@ -105,10 +105,10 @@
     const measured = Object.entries(entry.optional_measured_fields || {})
       .map(([category,fields]) => `<li><b>${esc(category)}</b>: <code>${esc(fields.join(', '))}</code></li>`).join('');
     return `<section class="figure-contract">
-      <h3>${pick('画出这类 F1，需要哪些数据？','What input data is needed to draw this F1-like diagram?')}</h3>
-      <p class="figure-schema-note">${pick('不需要实验准确率：这是机制说明图。画图只需两阶段的结构化例子与三种评价提问；示意答案不是模型实测输出。','No measured accuracy is needed. Provide structured examples for the two phases and three test prompts; the shown answers are illustrative.')}</p>
+      <h3>${entry.numeric_data_required ? pick('绘制此类结果图，需要哪些真实数据？','Measured inputs required for this result-figure pattern') : pick('画出这类 F1，需要哪些数据？','What input data is needed to draw this F1-like diagram?')}</h3>
+      <p class="figure-schema-note">${entry.numeric_data_required ? pick('必须使用自己的逐样本或逐checkpoint实测数据；本卡的散点、均值和箭头均是排版示意，不代表原论文或本站的结果。','Actual per-individual or per-checkpoint measurements are required; all preview dots and trajectories are illustrative.') : pick('不需要实验准确率：这是机制说明图。画图只需两阶段的结构化例子与三种评价提问；示意答案不是模型实测输出。','No measured accuracy is needed. Provide structured examples for the two phases and three test prompts; the shown answers are illustrative.')}</p>
       <table class="schema-table"><thead><tr><th>${pick('数据组及字段','Data and fields')}</th><th>${pick('用来画什么','Purpose')}</th></tr></thead><tbody>${rows}</tbody></table>
-      <p><a href="${esc(safe(entry.input_contract_url))}" download>${pick('下载可直接改写的数据格式样例 JSON','Download editable JSON input example')}</a></p>
+      <p><a href="${esc(safe(entry.input_contract_url))}" download>${entry.numeric_data_required ? pick('查看真实绘图字段合同 JSON','View measured-data contract JSON') : pick('下载可直接改写的数据格式样例 JSON','Download editable JSON input example')}</a></p>
       <details><summary>${pick('若要把“泛化有效”画成实验结果，还要增加哪些实测数据？','Additional measured fields needed to claim generalization results')}</summary>
         <ul>${measured}</ul><p>${pick('必须标记 Phase 1 已见、Phase 2 未见的事实；独立验证的模型输出不能用示意答案代替。','Record Phase-1 exposure and Phase-2 holdout; do not replace actual model predictions with illustrative answers.')}</p>
       </details>
@@ -117,9 +117,7 @@
   function detail(id) {
     const entry = records.get(id); if (!entry) return;
     const isRedraw = Boolean(entry.preview_origin);
-    const sourceNote = isRedraw ?
-      pick('本卡预览是依据论文思想独立绘制的解释图，并非作者原 Figure 1 的截图。点击“原始 Figure 1”查看 ICLR 官方 PDF 第 2 页。',
-           'The preview is a separate explanatory redraw, not the authors’ Figure 1. Open the official PDF (page 2) for the original.') :
+    const sourceNote = isRedraw ? (entry.numeric_data_required ? pick('本卡是独立绘制的图形布局草图：散点位置、组均值、置信区间和箭头均为示意，请打开论文官方 Figure 4 查阅实测图。','Original layout sketch only: no original panel pixels or measured values. Open official Figure 4 for the paper result.') : pick('本卡预览是依据论文思想独立绘制的解释图，并非作者原 Figure 1 的截图。点击“原始 Figure 1”查看 ICLR 官方 PDF 第 2 页。','The preview is a separate explanatory redraw, not the authors’ Figure 1. Open the official PDF (page 2) for the original.')) :
       pick('这是上游设计参考，不是本项目的实验结果；不可照抄坐标、误差条或数值。',
            'This is a design reference, not project evidence; do not copy axes, uncertainties or values.');
     el('figure-detail').innerHTML = `<h2>${esc(pick(entry.title,entry.title_en))}</h2>

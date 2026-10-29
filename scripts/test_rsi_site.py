@@ -10,7 +10,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','experience-consolidation','teaching','idea-i6','experiments','references']
+PAGES = ['index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','experience-consolidation','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -214,7 +214,7 @@ def main():
     expected_groups={
         'overview':['index.html','timeline.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','references.html'],
-        'methods':['cross-domain.html','theory-notes.html','learning-science.html'],
+        'methods':['cross-domain.html','theory-notes.html','learning-science.html','curriculum-scale-evidence.html'],
         'research':['ideas.html','idea-prioritization.html','ideas.html#idea-1','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4',
                     'idea-i5.html','idea-i6-failure-value.html','idea-i7-learning-order.html',
                     'i8.html','idea-i9-practice-switching.html','idea-i10-learning-novelty.html','idea-i11-emotional-rsi.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','experience-consolidation.html','experiments.html'],
@@ -927,6 +927,33 @@ def main():
           'id="systematic-generalization-mlc"' in learn_sci and
           'id="i10-rule-learning"' in experiments_html,
           'MLC deep-read or related RSI experimentation missing')
+    # NHB 2026: paper reading, Figure 4b/c/e design references and larger-model evidence.
+    nhb=next((p for p in cards if p['id']=='nhb2025-distribution-curriculum-pesnot-lerousseau'),None)
+    check(nhb is not None and nhb.get('doi')=='10.1038/s41562-025-02359-3'
+          and len(nhb['deep_read']['sections'])==10
+          and len(nhb['deep_read']['metric_summary'])==5,
+          'Missing original NHB paper, ten-section deep read or five-metric summary')
+    check('E360' in refs and set(f'M{i}' for i in range(500,515))<=refs,
+          'Larger-model source map and original NHB source missing')
+    nhb_anchor='deep-nhb2025-distribution-curriculum-pesnot-lerousseau'
+    survey=(ROOT/'rsi/curriculum-scale-evidence.html').read_text(encoding='utf-8')
+    i9=(ROOT/'rsi/idea-i9-practice-switching.html').read_text(encoding='utf-8')
+    check(f'id="{nhb_anchor}"' in notes_html and 'id="nhb2026-distribution-curriculum"' in i9
+          and 'id="nhb2026-frequency-vs-rule"' in i10
+          and 'id="nhb2026-repetition-diversity"' in learn_sci,
+          'NHB research mechanism must appear in I9, I10, learning-science and deep read')
+    check('id="nhb2026-strategy-retention"' in experiments_html and
+          all(f'href="references.html#M{i}"' in survey for i in range(500,515)),
+          'LLM/VLM survey or preregistered P0 protocol not source-linked')
+    check('curriculum-scale-evidence.html' in overview and
+          nhb_anchor in overview and
+          'Figure4' in survey,
+          'Larger-model study and NHB Figure4 must be findable from homepage')
+    nhb_text=notes_html.split('id="'+nhb_anchor+'"',1)[1]
+    check(all(z in nhb_text for z in ('31/50','17/50','0.969','Figure 4','C1','C2')),
+          'Figure4 paper reading lacks effect strength, sample evidence or curriculum-label warning')
+    check((ROOT/'figure-reference-assets/nhb-fig4-bce-inputs.json').is_file(),
+          'NHB figure reproduction contract missing')
     rote = next((p for p in cards if p['id']=='rote-learning-iclr2026-wu'), None)
     check(rote is not None and rote.get('arxiv')=='2507.21914' and rote.get('conference_official_primary') is True,
           'ICLR 2026 Rote Learning reading note must link the official published version')

@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0",
+  "figure_id": "nhb26-figure4-bce",
+  "source": {
+    "title": "Shared sensitivity to data distribution during learning in humans and transformer networks",
+    "authors": "Jacques Pesnot Lerousseau; Christopher Summerfield",
+    "journal": "Nature Human Behaviour 10, 601–614 (2026)",
+    "doi": "10.1038/s41562-025-02359-3",
+    "figure_url": "https://www.nature.com/articles/s41562-025-02359-3/figures/4",
+    "paper_url": "https://www.nature.com/articles/s41562-025-02359-3",
+    "experiment_code_url": "https://osf.io/xb43k",
+    "license": "CC BY 4.0 (article; check credit line for third-party assets)"
+  },
+  "original_figure_not_mirrored": true,
+  "illustrative_assets_have_no_observed_values": true,
+  "original_data_required_for_real_plot": true,
+  "figure4_visual_patterns": {
+    "b": {
+      "title": "individual-plus-group strip plots",
+      "query": "How did two curricula change rule, memory and arbitration performance?",
+      "required_fields": [
+        "learner_id",
+        "curriculum_id",
+        "test_type",
+        "correct_count",
+        "trial_count",
+        "accuracy",
+        "replicate_group",
+        "is_preregistered_contrast"
+      ],
+      "statistics": [
+        "group_mean",
+        "group_uncertainty_type",
+        "interval_low",
+        "interval_high",
+        "chance_level",
+        "contrast_test",
+        "adjusted_p_value",
+        "bayes_factor"
+      ],
+      "style": [
+        "faint individual points",
+        "opaque group mean",
+        "uncertainty whisker",
+        "faceted independent tests",
+        "pre-registered comparison bracket"
+      ],
+      "pitfall": "Figure 4b in-context and arbitration have pre-registered contrasts; do not borrow star annotations without recalculating."
+    },
+    "c": {
+      "title": "joint-learning index strip-and-estimate",
+      "query": "Did the same individual retain both memory and rule strategies?",
+      "required_fields": [
+        "learner_id",
+        "curriculum_id",
+        "context_correct",
+        "context_trials",
+        "memory_correct",
+        "memory_trials",
+        "chance_accuracy",
+        "dli",
+        "summary_mean",
+        "interval_method"
+      ],
+      "statistics": [
+        "group_n",
+        "adjusted_p_value",
+        "bayes_factor",
+        "standard_error_or_CI"
+      ],
+      "style": [
+        "same-scale index across curricula",
+        "light individual marks",
+        "clear group estimate",
+        "separate panel for combined score"
+      ],
+      "pitfall": "DLI uses ((a-.1)/.9)*((b-.1)/.9). Negative empirical estimates may occur; original Figure 4c p=.036 and BF≈.969, not uniformly strong evidence."
+    },
+    "e": {
+      "title": "two-ability training trajectory",
+      "query": "Which strategy appeared first, then disappeared during later training?",
+      "required_fields": [
+        "model_id",
+        "seed",
+        "curriculum_id",
+        "phase",
+        "training_step",
+        "rule_test_accuracy",
+        "memory_test_accuracy",
+        "checkpoint_id"
+      ],
+      "statistics": [
+        "per_checkpoint_mean",
+        "n_models",
+        "trajectory_aggregation_method",
+        "chance_accuracy",
+        "phase_change_step",
+        "CI_or_SEM_if_shown"
+      ],
+      "style": [
+        "rule accuracy x-axis",
+        "memory accuracy y-axis",
+        "color by curriculum",
+        "chronological arrows",
+        "chance crosshair",
+        "reference upper-right joint success"
+      ],
+      "pitfall": "Line connects actual checkpoint means in chronological order. Never infer that a direct straight trajectory is measured if checkpoints were not saved."
+    }
+  },
+  "minimum_controls": [
+    "The same training multiset and step/token budget across curriculum orders",
+    "Independent rule tests vs memory tests vs conflict/arbitrage tests",
+    "Model checkpoint and optimizer-state provenance",
+    "Pre-registered seed/subject inclusion and uncertainty",
+    "Distinguish human n=50 per C1/C2 from transformer n=20 per trace",
+    "Resolve paper Methods C1/C2 label reversal using source trial logs"
+  ],
+  "figure4_original_caption_recap": "C1=uniform→skewed, C2=skewed→uniform according to main text and Fig.4a; Methods human block-order list reverses this notation.",
+  "doi_source_timestamp": "2026-10-29"
+}

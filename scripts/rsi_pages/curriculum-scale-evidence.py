@@ -1,0 +1,60 @@
+"""Source-checked evidence map: bigger LLM/VLM curriculum, diversity, repetition and forgetting."""
+PAGE = {
+ "slug":"curriculum-scale-evidence",
+ "title":"大模型证据｜训练顺序、重复多样性与规则遗忘",
+ "en":"Scaling curriculum effects to LLMs and VLMs",
+ "lead":"从 Nature Human Behaviour 2025/2026 的两层Transformer出发，核对 ICLR/ACL/ICML/NeurIPS/CVPR 在3B–70B LLM与多模态模型上的真实证据。重点不是泛化小模型结论，而是分离训练分布、样本顺序、更新器与评测协议的贡献。",
+ "updated":"2026-10-29",
+ "sections":[
+ ("why","现象与研究边界｜大模型不是小模型的简单放大",'''
+<p><b>源论文：</b>Pesnot Lerousseau 与 Summerfield（<i>Nature Human Behaviour</i>，2025年在线、2026年卷期）在530名人类与两层单头Transformer的图片—标签规则任务中，发现重复与多样分别促进历史记忆和上下文规则；随机混合能让双策略共存；人类先多样后重复能较好保留规则，而Transformer分阶段会覆盖早期策略。<b>这里的Transformer不是现代7B LLM</b>。[[E360]] <a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">10节精读与原始数值 →</a></p>
+<div class="note"><b>调查问题：</b>大型模型中是否仍有相同策略竞争？训练顺序是否还起作用？如果依赖LoRA/低学习率/回放可被消除，真正的机制究竟是样本分布、学习阶段、知识冲突还是更新器本身？先比较原文支持到哪里，再给 I9/I10 设决定性实验。</div>
+<div class="table-wrap"><table><thead><tr><th>必须区分的变量</th><th>不能等同</th><th>适用独立测试</th></tr></thead><tbody>
+<tr><td>Data frequency / Redundancy</td><td>不等于样本难度，也不等于数据污染</td><td>旧实例、重复轮数、训练前已见性</td></tr>
+<tr><td>Surface / Gradient diversity</td><td>不等于正确规则排除竞争捷径的辨识力 D</td><td>梯度覆盖、规则分歧题</td></tr>
+<tr><td>Learning order / Curriculum</td><td>不等于学习率、Adam动量、训练时间增加</td><td>配对重排+重置优化器</td></tr>
+<tr><td>ICL / IWL</td><td>不等于参数内化/知识持久保持的充分证据</td><td>清空Study再测试、对照是否梯度更新</td></tr>
+<tr><td>Forgetting / Failure to align</td><td>多模态指令对齐失败不必等于视觉规则被擦除</td><td>文本/视觉正交OOD、指令释义和冲突测试</td></tr>
+</tbody></table></div>
+'''),
+ ("llm","LLM｜已有3B–70B的对照：分布效应存在，却没有通用课程配方",'''
+<div class="table-wrap"><table><thead><tr><th>工作与规模</th><th>论文已经做了什么</th><th>I9/I10的未解决关系</th></tr></thead><tbody>
+<tr><td><b>ICLR 2025 · <a href="https://proceedings.iclr.cc/paper_files/paper/2025/hash/ae338b3fe6624798efa80b6581924028-Abstract-Conference.html">Chan et al.</a></b><small>从理论到完整LLM微调</small> [[M500]]</td><td>从策略选择的理论分析延伸到自然语言prompt的完整LLM，发现训练分布可改变ICL/IWL倾向。</td><td>“更大LLM是否存在记忆/上下文分布竞争”不是空白；仍要检验真实多轮顺序、清空提示后的规则内化。</td></tr>
+<tr><td><b>ACL 2026 · <a href="https://aclanthology.org/2026.acl-long.1591/">Jia et al.</a></b><small>Llama3.1-8B、Mistral-7B、Gemma3-4B</small> [[M501]]</td><td>比较5类难度测量与正向/逆向课程；最优方向依赖模型和题目，没有统一最优顺序。</td><td>难度代理未直接区分重复、规则信息及旧策略的逐checkpoint保持。</td></tr>
+<tr><td><b>ICLR 2025 · <a href="https://proceedings.iclr.cc/paper_files/paper/2025/hash/b6e2c96bc4702f761d7d108d6e31930f-Abstract-Conference.html">Pareja et al.</a></b><small>3B–7B，4模型</small> [[M502]]</td><td>多领域指令SFT中phased和stacked差异不显著；stacked更简洁、样本效率较高。</td><td>不能把NHB的先多样后重复当大模型默认方法；这一研究未用NHB的仲裁策略测试。</td></tr>
+<tr><td><b>NeurIPS 2025 · <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/82a34882f560db982d1257b5af461605-Abstract-Conference.html">Prismatic Synthesis</a></b><small>300+训练、PrismMath-7B</small> [[M503]]</td><td>梯度多样性G-Vendi与OOD推理表现强相关（Spearman ρ≈0.9），大幅超越简单词面多样性代理。</td><td>若I10的规则辨识D没有超出梯度覆盖的解释力，就应合并而非重复发明数据选择器。</td></tr>
+<tr><td><b>ICML 2026 · <a href="https://proceedings.mlr.press/v306/liu26m.html">Data Difficulty</a></b> [[M512]]</td><td>在固定SFT预算下，较优难度随数据量变化；机制解释为分布内泛化差与外推差。</td><td>难度、重复、信息区分性不是同一个自变量；要固定难度控制I9课程效应。</td></tr>
+<tr><td><b>ICLR 2026 · <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/bc1c5e5fb8ed1ef9b9b5abced2022e40-Abstract-Conference.html">Post-Training Forgetting</a></b><small>近30模型对、100子基准</small> [[M504]]</td><td>用1→0遗忘、0→1逆迁移取代平均分；模型规模和数据量对遗忘作用因训练阶段不同。</td><td>强烈推荐把逐题遗忘/转移转变作为每轮训练结果，而不只报一个总体正确率。</td></tr>
+<tr><td><b>ICLR 2025 · <a href="https://proceedings.iclr.cc/paper_files/paper/2025/hash/a548ef984f30bca3abdc09f43743827f-Abstract-Conference.html">Preserving Diversity</a></b><small>3B–70B</small> [[M511]]</td><td>GEM保留的是模型输出分布多样性，带来更好的测试时探索及较少遗忘。</td><td>不能把输出熵多样性与输入课程多样性混淆；是可以加入的训练目标对照。</td></tr>
+<tr><td><b>2026 · <a href="https://arxiv.org/abs/2602.11149">Long-CoT Repetition</a></b><small>Olmo3-7B、仅预印本</small> [[M514]]</td><td>固定更新预算下400条训练128轮相较51200条训练1轮，AIME/GPQA报告12–26 pp差异；重复可能助推理泛化。</td><td>重复并非普遍有害，但此证据尚非已确认顶会录用；需要单独验证是否可迁移到规则分歧任务。</td></tr>
+</tbody></table></div>
+<p><b>结论：</b>在大LLM中，分布变化、重复、多样性与课程顺序均可能重要，但不存在可以直接从NHB推广的通用方向。需要在<b>相同的训练multiset</b>下比较时间顺序，并独立观察记忆和规则两条曲线。</p>
+'''),
+ ("vlm","VLM/MLLM｜遗忘、指令对齐失效与数据混合不能混为一谈",'''
+<div class="table-wrap"><table><thead><tr><th>工作与模型</th><th>已报告证据</th><th>对视觉规则课程的要求</th></tr></thead><tbody>
+<tr><td><b>NeurIPS 2024 · <a href="https://proceedings.nips.cc/paper_files/paper/2024/hash/6a45500d9eda640deed90d8a62742be5-Abstract-Datasets_and_Benchmarks_Track.html">CoIN</a></b><small>10数据集 / 8任务</small> [[M505]]</td><td>系统研究多模态连续指令微调的顺序、指令多样性及数据量；指出遗忘很多发生在instruction alignment而非reasoning knowledge。</td><td>必须将“不会执行新指令”和“视觉关系本身学错”拆开测。</td></tr>
+<tr><td><b>ICLR 2026 · <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/5a5acfd0876c940d81619c1dc60e7748-Abstract-Conference.html">PCLR</a></b><small>LLaVA-7B</small> [[M506]]</td><td>压缩—整合—学习LoRA与渐进参数管理报告遗忘11.29→5.09→3.39。</td><td>更新器容量、适配器结构与课程顺序需控制，不能只归因训练分布。</td></tr>
+<tr><td><b>CVPR 2026 · <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Li_Multimodal_Continual_Instruction_Tuning_with_Dynamic_Gradient_Guidance_CVPR_2026_paper.html">Dynamic Gradient Guidance</a></b> [[M507]]</td><td>利用过去最优参数方向近似旧任务缺失梯度，结合有限replay及随机门减轻遗忘。</td><td>把简单重放/小学习率/参数隔离加入强基线；否则课程增益可能仅补偿旧梯度缺失。</td></tr>
+<tr><td><b>ICLR 2026 · <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/edcd1aa172dceda2ea9d45a48f25d3e3-Abstract-Conference.html">DATAPROPHET</a></b><small>14数据集 / 7任务</small> [[M508]]</td><td>数据集语义任务相似度不能准确预测训练增益；基于多模态困惑度/相似/多样性的选择与真实增益排序报告τ=0.86。</td><td>I10应与现有训练前迁移预测器直接竞争，而不是仅使用视觉embedding相似度。</td></tr>
+<tr><td><b>CVPR 2026 · <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Gao_Re-evaluating_Continual_VQA_Toward_Fair_and_Robust_Evaluation_for_Multimodal_CVPR_2026_paper.html">Continual VQA Re-evaluation</a></b> [[M509]]</td><td>共享答案词表和静态答案先验会鼓励模型背答案，掩盖真实分布偏移与遗忘。</td><td>视觉规则推断应使用未见对象/位置和人为冲突答案先验，不要只报同答案表VQA准确率。</td></tr>
+<tr><td><b>ICLR 2026 · <a href="https://lihe50hz.github.io/ICLR_2026_Fine_tuning.pdf">Fine-Tuning VLMs Without Forgetting</a></b><small>Qwen2.5-VL-3B、LLaVA1.5-7B等</small> [[M513]]</td><td>在受控视觉/文本2×2分布下，适当低学习率/LoRA/混合数据可以减轻多种遗忘；与CoIN/PCLR并非同一评测协议。</td><td>必须报告ID图×ID文、OOD图×ID文、ID图×OOD文、OOD图×OOD文，不以一个准确率代表全部保持。</td></tr>
+<tr><td><b>ICLR 2026 · <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/7a0f8055c838df8e62329a76c7c6403d-Abstract-Conference.html">VLM2VLA</a></b><small>800+真实机器人实验</small> [[M510]]</td><td>把动作表述成自然语言并利用LoRA减少视觉语言预训练与机器人训练间的分布错配，可更好保持原有视觉语言技能。</td><td>跨模态输出编码的兼容性也可改变忘记程度，不能只调整训练顺序。</td></tr>
+</tbody></table></div>
+<p><b>真正的研究空间：</b>现有工作已证明VLM连续学习存在顺序依赖，也证明一些微调配方可明显缓解遗忘；但在<b>相同视觉规则、相同图片/答案出现频次、相同参数更新预算</b>下，同时衡量“新组合正确率、旧实例记忆、规则冲突偏好、未来学习速度”的系统比较仍是值得先做P0核验的具体问题，不宣称绝对无人研究。</p>
+'''),
+ ("experiment","I9/I10跨规模P0｜从机制证据到可推翻的LoRA实验",'''
+<div class="table-wrap"><table><thead><tr><th>阶段</th><th>受控设计</th><th>需要的独立证据</th></tr></thead><tbody>
+<tr><td><b>P0-L · 3B–8B LLM</b></td><td>同一模型checkpoint、4课程（均匀/重复交错混合、先多样后重复、先重复后多样、短周期交替）、同训练multiset、同LoRA/优化器/Token；每条件≥3随机种子。</td><td>各checkpoint独立规则/记忆/冲突三测试 + 逐题1→0、0→1 + 旧能力；若完全无顺序效应则不继续设计课程控制器。</td></tr>
+<tr><td><b>P0-V · 3B–7B VLM</b></td><td>给相同真实视觉规则生成新图、重复图及冲突图；固定视觉编码器、答案词表、prompt格式与update recipe。</td><td>四象限ID/OOD图×文本、未见组合、同图先验冲突、指令释义，分离视觉规律和语言格式记忆。</td></tr>
+<tr><td><b>机制消融</b></td><td>课程 × 小学习率/标准LoRA/有限replay 或保留不同adapter；记录优化器动量并在预注册位置重置。</td><td>若顺序效应消失，说明受更新机制解释；若仍有相同表现但不同未来可学性，再测A/B→C与B/A→C。</td></tr>
+<tr><td><b>I10区分性检验</b></td><td>在规则相同前提下将训练频次、表面多样性与正确规则/捷径分歧指标D交叉控制。</td><td>高D证据在同难度/同预算/同覆盖度下是否带来额外未见分歧题净增益；与Gradient diversity、DATAPROPHET比较。</td></tr>
+</tbody></table></div>
+<p><b>每轮保存：</b><code>model_id, modality, seed, checkpoint, phase, sample_id, occurrence_count, data_rule_id, conflicting_rule_id, input_domain, prompt_variant, update_step, optimizer_state_tag, heldout_split, memory_accuracy, rule_accuracy, arbitrage_choice, forgetting_1to0, transfer_0to1, compute_cost</code>。Figure4e 要求每个checkpoint分别保存两类能力，而不是只存最终模型分数。</p>
+<p><b>最短实验决策：</b>先在单一3B–8B LLM的2个规则族运行匹配的4课程 ×3种子；观察到持续双策略和分块干扰差异，再上第二架构和VLM。其余工作列为相关强基线，不提前训练大规模控制器。<a href="idea-i9-practice-switching.html">I9方案</a> · <a href="idea-i10-learning-novelty.html">I10方案</a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html">F4b/c/e图表模板素材</a></p>
+'''),
+ ("sources","来源精度与当前结论",'''
+<p>一手来源和原论文链接已按 <b>[[E360]]、[[M500]]–[[M514]]</b> 归档。对于只有预印本的重复训练文章，不提升为“顶会结果”；对于ICLR VLM不遗忘论文与CoIN/PCLR不同看法，记录其训练器及视觉/文本OOD定义的差异而不是简单平均结果；对于纯推理ICL与参数LoRA的分布竞争，分别报告模型状态和证据适用范围。</p>
+<div class="note"><b>结论：</b>“数据频次改变策略”和“规则遗忘可能发生”已被研究；大模型的难点不是证明这两点第一次出现，而是找出在<b>固定材料、多种更新器、不同模型掌握状态</b>下，何时能兼得旧实例和新规则，并且未来持续学习更快。<a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">返回NHB Figure4精读</a>。</div>
+''')
+ ]
+}

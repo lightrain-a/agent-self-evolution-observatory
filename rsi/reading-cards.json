@@ -31,6 +31,449 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "nhb2025-distribution-curriculum-pesnot-lerousseau",
+      "short_title": "NHB · Repetition × Diversity × Curriculum",
+      "title": "Shared sensitivity to data distribution during learning in humans and transformer networks",
+      "authors": "Jacques Pesnot Lerousseau; Christopher Summerfield",
+      "lead_institution": "Department of Experimental Psychology, University of Oxford",
+      "institutions": [
+        "Department of Experimental Psychology, University of Oxford",
+        "Institut de Neurosciences des Systèmes, Aix-Marseille Université, Inserm",
+        "Institute for Language, Communication, and the Brain, Aix-Marseille Université"
+      ],
+      "institution_source": "Nature Human Behaviour Authors and Affiliations 1–3（2025-12-23）",
+      "publication": "Nature Human Behaviour 10, 601–614 (2026), online 2025-12-23",
+      "doi": "10.1038/s41562-025-02359-3",
+      "official_url": "https://www.nature.com/articles/s41562-025-02359-3",
+      "first_posted": "2025-12-23",
+      "version": "Nature Human Behaviour Version of Record · 2025-12-23；2026 卷期",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature/PMC 正文、Methods、Figs. 1–5、Extended Data 2–9 和公开代码入口核对；未复现",
+      "tags": [
+        "Nature Human Behaviour 2026",
+        "In-context Learning",
+        "In-weights Learning",
+        "Zipf Distribution",
+        "Curriculum Ordering",
+        "Human–Transformer Comparison",
+        "I9",
+        "I10",
+        "Catastrophic Interference"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "设计三种测试：未见图片的上下文规则、无当前线索的历史配对记忆，以及历史配对与当前线索冲突时的策略归因。",
+          "open_question": "三测试是人工闭合规则的行为代理；正确回答不能直接读取模型内部规则表征，人类行为更不能直接称为参数记忆。"
+        },
+        "novelty": {
+          "level": "core",
+          "contribution": "控制 Zipf α 和混合概率 Pc，将相同预算中的实例重复与不同实例覆盖分开，再操纵均匀/偏斜区块顺序。",
+          "open_question": "词面多样不等于逻辑区分性；研究没有直接比较同规则的关键反例和非区分变体。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "两层注意力 Transformer 和人类均可在混合分布下同时具有某种上下文规则与历史记忆策略。",
+          "open_question": "该任务不证明大型预训练 LLM/VLM 的任何新规则都可以通过相同课程吸收。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "Figure 4e 记录模型先形成一种策略，再在后续区块训练中丧失该策略的二维测试轨迹。",
+          "open_question": "尚未验证 LoRA/Replay/低学习率可否消除这种干扰，也未说明所有模型都必然遗忘。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "研究受控符号任务和人类行为，不涉及模型自改写的风险或安全发布门。",
+          "open_question": "在 RSI 中使用课程时，需另行设置旧能力和越权安全回归。"
+        }
+      },
+      "one_sentence": "重复与多样性会改变人和小 Transformer 的记忆/规则选择；混合两类样本能兼顾两者，但人类的先多样后重复收益并未在该两层 Transformer 上重现。",
+      "story": {
+        "challenge": "训练表现相近的模型，可能分别靠背答案和用规则作答；同样一份重复与多样材料，不同顺序是否改变学到的策略？",
+        "insight": "训练实例频次诱导两种可竞争的策略；必须在无上下文记忆题、全新例子规则题和冲突题中分别辨别，再沿训练时间跟踪遗忘。",
+        "design": "530 名人类与小型双注意力层 Transformer 完成图片/标签任务；操纵 Zipf α、50/50 混合分布和 C1/C2 区块顺序，记录各策略测试。",
+        "result": "混合分布下 31/50 Transformer、17/50 人类具备双策略；人类 C1 的规则测试较 C2 好（校正 p=0.019），而 Transformer 分阶段训练中双策略指标接近零。"
+      },
+      "problem": "为什么相同训练数据分布会让人类和 Transformer 分别形成规则推断或实例记忆？把多样样本和重复样本分批呈现，为什么对二者并不等效？",
+      "setup": "训练单元由圆环图片与数字标签组成；目标位于查询图片顺时针3位置；人类530名参与者，网络为2层、每层单注意力头的小Transformer，Adam学习率0.01、batch 128、5000训练步；训练图片采样Zipf α∈{0,1,2,4}、混合均匀/偏斜 Pc=0.5 与 C1/C2 等课程。",
+      "updates": "模型的训练过程更新参数；评测时不更新参数。人类的历史记忆对应经验检索，不能等同神经网络权重。MLC式in-context是从当下输入应用规则，并非测试阶段LoRA学习。",
+      "key_ideas": [
+        {
+          "name": "三测试拆解策略",
+          "summary": "同一训练正确率可掩盖记忆/规则策略；评测要有规则单测、记忆单测、冲突仲裁三种场景。",
+          "formula": "Rule = novel item with valid context; Memory = trained item without its old context; Conflict = known item + contradictory context"
+        },
+        {
+          "name": "Zipf采样",
+          "summary": "增大α让少数项目高频出现，偏向记忆；α≈0维持多样，更利于上下文规则。",
+          "formula": "P(k)∝k^{-α}"
+        },
+        {
+          "name": "混合分布",
+          "summary": "训练材料混合均匀与偏斜部分，可让两种策略同时存在，而不只是机械折衷。",
+          "formula": "P_mix = 0.5 P_uniform + 0.5 P_skewed(αs=2)"
+        },
+        {
+          "name": "双学习指标",
+          "summary": "两种测试正确率以随机猜测10%为参照作缩放后相乘；其负值在极低表现时可能出现，不应强行裁剪原文观测。",
+          "formula": "D = ((Acc_IC−0.1)/0.9) × ((Acc_IW−0.1)/0.9)"
+        },
+        {
+          "name": "学习历史的非交换性",
+          "summary": "相同组成不同区块顺序会改变哪种策略最终保留；对人类和两层Transformer效果不同。",
+          "formula": "Update_skew(Update_uniform(θ)) ≠ Update_uniform(Update_skew(θ)) (research abstraction)"
+        }
+      ],
+      "evidence": [
+        "Experiment 1：人类训练末期平均85.6%±2.3%，分布α对训练正确率未显著影响；但不同α导致上下文/记忆两类独立测试显著逆转，预注册重复实验成功。",
+        "Experiment 2：混合分布下Transformer 31/50(62%)同时学两种；人类17/50(34%)，人类群体上下文65.6%±5.9、历史记忆57.4%±5.0；与单一分布比较有显著DLI差异。",
+        "Experiment 3：人类C1（先均匀/多样后偏斜/重复）相对C2，in-context β=−2.635±0.784、Bonferroni p=0.019；冲突仲裁p=0.004；in-weights差异p=1.0。",
+        "Experiment 3：Transformer在C1/C2两种区块课程下双学习指标接近零；Figure 4e 显示C1先进入规则策略后向记忆策略偏移，C2反向。每课程轨迹平均n=20。",
+        "Figure 4c：人类两课程DLI的回归差异β=−0.162±0.076、p=0.036、BF=0.969。Bayes factor接近1提示证据并不强，不能把该指标称为决定性优胜。",
+        "Models：原文的网络为2层注意力、每层1头、训练5000步，并不是现代7B/13B的预训练大型LLM。另在传递推理简化任务上观察类似分布效应。"
+      ],
+      "boundaries": [
+        "严格区分2025-12-23在线与2026正式卷期；530人是全论文合计，不是每个课程组人数。Experiments 1/2/3的分组样本量各不相同。",
+        "正文及Figure4给C1=先均匀后偏斜、C2=反向；Methods内Experiment3人类区块列表反置。复现必须以原代码/数据核验分组标签，本站按Figure4主文命名。",
+        "Figure4b对预注册群体对照显著，Figure4c的DLI p=0.036而BF≈0.969；不要将所有图上星号合并为同一种统计证据。",
+        "NHB的in-weights/in-context是特定行为策略分类，不能与神经记忆模块或任意Transformer的内部权重角色直接等同。",
+        "只研究小型从头训练模型；未控制现代大模型的预训练、LoRA/全参、replay、学习率和指令对齐；不能把“人类能Transformer不能”概括成所有LLM。",
+        "Figure4b/c/e的图库示意独立重新设计且无测量数值；论文的实际数据、原图可在作者OSF/官网查证，展示用图需提供原始逐样本/逐checkpoint数据。",
+        "已有ICLR2025在完整LLM中观察分布驱动策略变化，ACL2026、ICLR2025和VLM持续学习又发现条件依赖；大模型复现本身不是新研究空白。"
+      ],
+      "our_relevance": [
+        "I9：优先比较持续混合 vs 多样→重复 vs 重复→多样 vs 短周期交替；固定同一训练样本多重集合、总token和更新预算，沿训练测两个策略的发生、消失与返回。",
+        "I9：训练结果匹配后接入原A/B→C未来任务测试，测新任务学习曲线，分离当前分布适配与长期可塑性；对照LoRA、低LR、replay与freeze。",
+        "I10：数据多样性不等于分歧信息 D；交叉控制α/重复度与f/g可区分性，测真实参数更新撤掉提示后的未见分歧题、未见组合与捷径偏好。",
+        "VLM：图像与答案分布可诱发记忆捷径；必须构造同图不同标签条件、同规则不同图像及视觉—文本冲突，区分指令对齐丢失与视觉规则丢失。",
+        "论文F4b/c/e已经积累入主站 Figures4Papers精选图库，用独立SVG示意、真实数据字段合同和官方Figure4回链；不直接镜像出版社原图。"
+      ],
+      "next_test": "P0：3B–8B LLM及3B–7B VLM从相同checkpoint出发，配对同一训练multiset与固定优化器；混合/先多样/先重复/交替四课程 × 低LR或LoRA与简易Replay，至少3种随机种子，每个checkpoint分别测旧实例、未见规则、新结构、冲突仲裁和未来C学习曲线。P1仅在看见规则-记忆冲突后，再以I10的区分性反例在同预算下测试额外解释力。",
+      "deep_read": {
+        "focus": "同样的学习材料，为什么混合训练可以让两种策略共存，而小Transformer的分段课程会丢旧策略？本篇的Fig4b（个体+组均值）、4c（双学习指数）、4e（二维能力轨迹）可转为I9/I10的图形契约；大模型证据须另查。",
+        "summary": "人类和小Transformer均受图片查询频次影响：重复偏向历史记忆，多样偏向上下文规则；混合分布可能同时学到两种策略。人类先多样后重复能保留规则和记忆，但小Transformer同样分阶段时容易策略相互干扰。主实验只使用两层注意力网络。",
+        "terms": [
+          {
+            "name": "In-context learning (ICL)",
+            "meaning": "不依赖当前任务的额外梯度更新，利用输入中的图片排列和 +3 位置规则作答。"
+          },
+          {
+            "name": "In-weights learning (IWL)",
+            "meaning": "由过去训练形成的图片与数字关联来回答；人类对应经验记忆策略，不是字面上的神经网络参数。"
+          },
+          {
+            "name": "Arbitrage test",
+            "meaning": "让当前上下文提示与历史图片—数字关联冲突，从输出辨别模型选哪种策略。"
+          },
+          {
+            "name": "Zipf skew α",
+            "meaning": "α=0近均匀；越大越偏向反复出现少数项目，不应等同难度。"
+          },
+          {
+            "name": "Composite distribution",
+            "meaning": "同时混合均匀项目与高频项目；不同于先各训练一半的分阶段课程。"
+          },
+          {
+            "name": "Double Learning Index (DLI)",
+            "meaning": "两种独立正确率各减去10%随机猜测后标准化并相乘，报告两个策略是否同时高于随机。"
+          },
+          {
+            "name": "Curriculum C1/C2",
+            "meaning": "按正文和Figure4：C1多样→重复；C2重复→多样。Methods人类段落反置，复现需核对代码。"
+          }
+        ],
+        "metric_summary_title": "五个指标先辨别：训练分数无法证明学到了规则",
+        "metric_summary_intro": "分布、混合、时间顺序和保留结果分开报告；下列数字来自原论文，不是本站复现实验。",
+        "metric_summary": [
+          {
+            "family": "Exp 1 · 训练表现",
+            "metrics": "Training accuracy",
+            "meaning": "当前题目能做对多少，不能区分调用历史记忆与上下文规则",
+            "result": "人类最终85.6%±2.3%；不同α训练末期未观察到显著差异"
+          },
+          {
+            "family": "Exp 2 · 人类双策略",
+            "metrics": "ICL, IWL, DLI",
+            "meaning": "相同人是否在两类独立测试均会做，而不是人群平均各会一种",
+            "result": "ICL 65.6%±5.9%；IWL 57.4%±5.0%；17/50双学习者"
+          },
+          {
+            "family": "Exp 2 · Transformer双策略",
+            "metrics": "Double learner proportion",
+            "meaning": "混合训练能让两个独立测试都优于随机水平",
+            "result": "31/50=62%"
+          },
+          {
+            "family": "Fig 4b/c · 人类C1/C2",
+            "metrics": "Strategy-specific accuracy and DLI",
+            "meaning": "预注册正确率与综合DLI分开解释",
+            "result": "ICL校正p=0.019；仲裁校正p=0.004；DLI p=0.036但BF≈0.969"
+          },
+          {
+            "family": "Fig 4e · 网络干扰",
+            "metrics": "Two-axis checkpoint trajectories",
+            "meaning": "过程里先形成的能力是否在后期区块被覆盖",
+            "result": "C1/C2的双学习指标都接近零；每组轨迹平均n=20"
+          }
+        ],
+        "sections": [
+          {
+            "id": "problem",
+            "stage": "challenge",
+            "title": "Challenge｜相同训练正确率，可能分别靠背答案和理解规则",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "人类与Transformer都可能从频繁出现的图片中记住特定数字，也可能从当前圆环中读取“顺时针 +3”的通用规则。同样一个正确输出可以由两套机制产生。因此必须把训练正确率和不同来源的独立测试分开。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "测试",
+                  "输入安排",
+                  "判断什么"
+                ],
+                "rows": [
+                  [
+                    "记忆测试IWL",
+                    "老图片出现，但本次缺少原来匹配线索",
+                    "能否检索历史配对"
+                  ],
+                  [
+                    "规则测试ICL",
+                    "只给从未训练的新图片，但保留可计算的当前环",
+                    "能否依上下文使用 +3 规则"
+                  ],
+                  [
+                    "冲突仲裁Arbitrage",
+                    "老图片的记忆答案与当前环中规则答案不同",
+                    "更相信当前规则还是过去答案"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "distribution",
+            "stage": "design",
+            "title": "Design｜Zipf训练分布如何改变重复与多样性？",
+            "blocks": [
+              {
+                "type": "formula",
+                "label": "采样频次模型（本站整理）",
+                "expression": "P(k) = k^(−α) / sum_j j^(−α)",
+                "meaning": "α=0均匀抽样；α越大越多次抽到少数项目，历史关联就越值得记住。",
+                "boundary": "频次不同不等于问题更难；α分布只是这一人工任务的统计操纵。"
+              },
+              {
+                "type": "prose",
+                "text": "作者让模型与人类在0、1、2、4的α条件下训练。随着频次偏斜增强，同样的规则测试会下降而记忆测试上升。模型为从头训练的双层单头注意力网络（Adam、batch128、lr0.01、5000步），不是7B/13B预训练LLM。"
+              }
+            ]
+          },
+          {
+            "id": "exp1",
+            "stage": "result",
+            "title": "Result 1｜人和Transformer对数据分布敏感，但训练分数看不出",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "人类Exp1每个分布条件30人，训练末期群体正确率约85.6%±2.3%，分布系数对训练准确率不显著；独立策略测试却存在清晰切换。作者另用预注册的人类新队列复现主要分布效应。"
+              },
+              {
+                "type": "evidence",
+                "items": [
+                  {
+                    "domain": "人类与模型策略对比",
+                    "setup": "Zipf α∈{0,1,2,4}、不同试验类型分开评分",
+                    "result": "规则/记忆策略的占优性随α出现相反变化。",
+                    "supports": "任务内分数不是规则机制的充分证据。",
+                    "not_proven": "一般LLM具备同样的α相变临界点，或人脑与模型具有相同内部机制。"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "exp2",
+            "stage": "result",
+            "title": "Result 2｜混合频次结构允许两种能力共存",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者将均匀图片与偏斜图片按50/50混合（Pc=0.5、αs=2）。Transformer有31/50≈62%同时在两种测试优秀，人类有17/50≈34%；群体准确率分别是上下文65.6%±5.9、记忆57.4%±5.0。不能凭群体两项平均都高就说每个人都学会两种，作者因此还看个体散点和DLI。"
+              },
+              {
+                "type": "formula",
+                "label": "双学习指数DLI",
+                "expression": "D = ((Acc_context−0.1)/0.9) × ((Acc_memory−0.1)/0.9)",
+                "meaning": "各减随机猜测10%，再相乘；只有两种策略均在随机以上时才形成显著正值。",
+                "boundary": "观察中的个别DLI组平均可略小于0，说明实际估计未必裁剪至[0,1]；绘图不得私自截断或把负值涂成零。"
+              }
+            ]
+          },
+          {
+            "id": "exp3-human",
+            "stage": "result",
+            "title": "Result 3a｜人类先多样、后重复能较好保留规则能力",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "正文/图4把C1定义为均匀→均匀→偏斜→偏斜，C2定义为反向，每组50人；两组总题组成相同、只改分块先后。C1上下文规则测试优于C2（Bonferroni校正p=0.019），冲突测试更依赖当前规则（p=0.004），记忆测试没有显著差异（p=1.0）。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是普适教学法",
+                "text": "这只是有闭合正确规则和150个训练例子的人工实验。作者测试其他排列/交替课程后，其他组间对照没有显著结果；不能直接说“人类永远应该先多样后重复”。"
+              }
+            ]
+          },
+          {
+            "id": "exp3-model",
+            "stage": "result",
+            "title": "Result 3b｜小Transformer先学会一种策略，后续又覆盖掉它",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "相同C1/C2区块课程训练两层Transformer时，双策略保留指数均接近零。C1起初沿上下文规则方向上升，后在偏斜阶段转向记忆并丢规则；C2相反。Figure4e用二维相图描出轨迹，并以箭头指出checkpoint方向。作者将其称为catastrophic interference。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "同一训练材料",
+                  "人类",
+                  "NHB两层Transformer"
+                ],
+                "rows": [
+                  [
+                    "C1 多样→重复",
+                    "ICL更高而IWL未明显受损",
+                    "先ICL、后IWL，ICL下降"
+                  ],
+                  [
+                    "C2 重复→多样",
+                    "晚期规则形成相对困难",
+                    "先IWL、后ICL，IWL下降"
+                  ],
+                  [
+                    "混合打乱",
+                    "部分双策略",
+                    "31/50模型双策略"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "figure4",
+            "stage": "insight",
+            "title": "Figure 4b/c/e｜三类高级论文图如何呈现过程、个体与机制",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "图型",
+                  "结构技巧",
+                  "真实绘制需要"
+                ],
+                "rows": [
+                  [
+                    "F4b 个体散点+组均值+预注册对照",
+                    "三类策略测试并排，小点表示个体，大点表示组均值/误差，虚线标随机水平；显著性括号标事先约定对照",
+                    "每人test_type×curriculum×correct，随机水平、置信区间方法、预注册比较"
+                  ],
+                  [
+                    "F4c 双学习指数的个体/组图",
+                    "综合指标单独占面板，避免遮盖上一图多个准确率；小样本散点及均值+置信区间同时展示",
+                    "同一个体两类测试的原始正确数，DLI定义、模型统计、Bayes因子"
+                  ],
+                  [
+                    "F4e 两维训练轨迹+方向箭头",
+                    "以规则正确率为横轴、记忆正确率为纵轴；按checkpoint绘点并连线，在关键位置标箭头，不用一条总体正确率曲线",
+                    "模型seed、课程组、训练步数、两测试正确率、均值/SEM或bootstrap、切换时点"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "以上三类结构已分别加入本网站根站 Figures4Papers 精选图库，附独立原创示意 SVG 和JSON真实数据字段合同。不要复制出版社Figure4原图到稿件，也不要将图库示意点当成实测结果。"
+              }
+            ]
+          },
+          {
+            "id": "pitfall",
+            "stage": "challenge",
+            "title": "必记复现风险｜Methods中的C1/C2标签有反转",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "NHB Figure 4与正文把C1=均匀先、偏斜后，C2=偏斜先、均匀后；但Methods人类Experiment3段落却标记C1=偏斜先、C2=均匀先。正式复现时必须查原始OSF代码和每个参与者的真实分组日志，不能只按单段文字配置。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "Figure 4c 证据强度",
+                "text": "人类两课程双学习指数p=0.036，但BF=0.969，提示综合指标对差异并无强贝叶斯支持。应以预注册的ICL/仲裁对照作为主要证据，不能将c图星号当同一强度结论。"
+              }
+            ]
+          },
+          {
+            "id": "larger-models",
+            "stage": "next",
+            "title": "更大LLM/VLM证据｜哪些已经被研究，哪些还需要因果实验？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "ICLR2025已在自然语言大模型中研究分布驱动的ICL/IWL竞争；ACL2026的Llama3.1-8B、Mistral-7B、Gemma3-4B课程没有统一最佳方向；ICLR2025在3B–7B SFT中phased与stacked差异不显著；NeurIPS2025梯度空间多样性与7B推理泛化相关。[[M500]][[M501]][[M502]][[M503]]"
+              },
+              {
+                "type": "prose",
+                "text": "NeurIPS2024 CoIN、ICLR2026 PCLR、CVPR2026动态梯度与评测去偏文献共同表明VLM的顺序遗忘存在，但受到对齐、低秩更新、重放及答案先验影响。不能直接从合成小网络外推到现代VLM，更不能简单重复“视觉模型会遗忘”就视为新颖。[[M505]][[M506]][[M507]][[M509]]"
+              },
+              {
+                "type": "prose",
+                "text": "完整跨规模对照、模型规模、证据类型、最小实验推荐见独立页：curriculum-scale-evidence.html。"
+              }
+            ]
+          },
+          {
+            "id": "i9-i10",
+            "stage": "next",
+            "title": "转化为I9/I10｜数据频次、规则区分与顺序必须正交控制",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "I9 P0｜混合 vs 分块",
+                    "design": "固定同一multiset和正确反馈，比较持续混合、多样→重复、重复→多样、短周期交替；每组同样token、更新器、LoRA和种子。",
+                    "decisive": "能否观察到策略切换/覆盖？在低学习率、少量replay后是否仍存在？"
+                  },
+                  {
+                    "name": "I9 P1｜当前能力匹配后学习未来C",
+                    "design": "在A/B训练后按预注册容差匹配规则与记忆准确率，给相同第三规则任务和训练步数。",
+                    "decisive": "未来C学习速度是否仍不同，且不只来自最初test loss或当前学习率？"
+                  },
+                  {
+                    "name": "I10 P0｜频次×规则区分信息",
+                    "design": "固定学习顺序；将训练例子在表面多样/重复与能否排除竞争规则D正交交叉，执行真实参数更新。",
+                    "decisive": "同样多样性的样本中，只有高D是否在撤辅后的未见规则分歧题与组合题带来增益？"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41562-025-02359-3",
+        "pdf": "https://ora.ox.ac.uk/objects/uuid%3Aa42ab670-3973-4f24-9b82-0f81edf67857/files/rx346d6425",
+        "code": "https://osf.io/xb43k",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13017502/"
+      }
+    },
+    {
       "id": "nhb2025-transfer-interference-holton",
       "short_title": "Transfer × Interference · NHB 2025/26",
       "title": "Humans and neural networks show similar patterns of transfer and interference during continual learning",

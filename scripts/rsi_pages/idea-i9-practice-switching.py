@@ -23,6 +23,18 @@ PAGE = {
 <p><b>SOAR，ICML 2026：</b>作者还比较了先用64步合成题再转真实困难题，与从一开始混合两类题的训练安排：在MATH中前者较合适，在HARP/OlympiadBench中混合更稳定。<strong>这说明训练安排可能依赖任务分布，但还不是按“规则掌握—规则选择”状态切换的实验</strong>。<a href="reading-notes.html#deep-soar-2601-18778">SOAR完整精读（含Appendix B.6）</a>。[[S47]]</p>
 <div class="note"><b>共同启发：</b>练习组织的收益取决于任务的结构和学习者已有的知识。<strong>集中与交错并没有一个永远正确的固定答案</strong>。将这一条件性结论迁移到 LLM 的真实参数更新，需要重新验证。</div>
 '''),
+    ("nhb2026-distribution-curriculum", "NHB 2026｜同样的数据，混合与分块为何形成不同的学习策略？", '''
+<p><b>原始发现：</b>Pesnot Lerousseau 与 Summerfield（<i>Nature Human Behaviour</i>，2025在线/2026卷期）比较530名人类与两层单注意力头Transformer的记忆—规则图片任务。频繁重复出现的图片让学习者偏向记住历史标签，均匀多样的图片更促使从当前上下文推断位置规则；<b>训练正确率接近，学习机制却可以不同</b>。[[E360]]</p>
+<p><b>本篇最重要的受控反转：</b>均匀/偏斜样本各占一半的持续混合训练，使31/50小Transformer和17/50人类同时通过两种策略测试；把相同组成按C1（多样→重复）或C2（重复→多样）分块以后，人类C1规则测试及冲突仲裁较好（校正p=0.019 / 0.004），但小Transformer在第二阶段转向当前更受强化的策略，早期策略退化。Figure4c双能力指标p=0.036、Bayes factor≈0.969：该综合指标的贝叶斯证据并不强。原文Methods对C1/C2人类列表的命名与图注反向，复现须核验原始数据。[[E360]]</p>
+<div class="table-wrap"><table><thead><tr><th>课程与测量</th><th>对 I9 的额外作用</th><th>必须控制</th></tr></thead><tbody>
+<tr><td>持续混合 vs 先多样后重复 vs 反向 vs 短周期交替</td><td>检验是否产生“双策略”及其被覆盖的时间，而不只报最终分数</td><td>同一训练样本multiset、出现次数、Token与优化器</td></tr>
+<tr><td>历史事实题、未见规则题、冲突仲裁题</td><td>区分表面答对、回忆旧实例和真正使用规则</td><td>旧答案与当前规则冲突的可验证测试集</td></tr>
+<tr><td>真实LoRA / 低学习率 / 简单replay</td><td>检验分块顺序的失败是否来自更新器干扰，而非课程本身</td><td>相同模型起点、计算预算与逐checkpoint记录</td></tr>
+<tr><td>未来任务C</td><td>在两策略当前表现匹配时再问后续规则可学习性是否不同</td><td>冻结C测试、优化器状态重置及既有几何/塑性基线</td></tr>
+</tbody></table></div>
+<p><b>顶会最近邻已有大模型证据：</b>ICLR2025 已将训练分布驱动的 in-context/in-weight 策略变化延伸到LLM；ACL2026 在Llama3.1-8B、Mistral-7B、Gemma3-4B发现课程顺序没有统一最优；ICLR2025多领域3B–7B SFT的分段/混合差异不显著。因此不能把“把此现象移植到7B”本身当作创新。[[M500]][[M501]][[M502]]</p>
+<p><a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau"><b>NHB原文十节精读、Figure4b/c/e与数据要求 →</b></a> · <a href="curriculum-scale-evidence.html"><b>LLM/VLM顶会跨规模证据、P0实验矩阵 →</b></a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html#nhb-f4-patterns">F4图型图库 →</a></p>
+'''),
     ("nc2025-task-similarity", "NC 2025｜相同规则为什么交错学习初期反而更慢？", '''
 <p><b>Observable Phenomenon：</b>Menghi 等（<i>Nature Communications</i> 2025）让两组人交错学习概念和空间分类；两任务底层决策结构相同（SameSt）时，训练期平均正确率 <b>60.44%</b>，低于结构正交组（DiffSt）的 <b>66.61%</b>（p=0.005）。但测试期两组 p=0.159，新刺激泛化 p=0.709，均未发现显著组间差异。结论是<strong>暂时性干扰及随练习缓解</strong>，不是长期泛化变差。[[E99]]</p>
 <div class="table-wrap"><table><thead><tr><th>研究控制了什么</th><th>实证结果</th><th>对 I9 的含义</th></tr></thead><tbody>

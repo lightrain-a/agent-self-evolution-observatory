@@ -102,6 +102,64 @@ def build(root: Path = ROOT) -> dict:
         'review':{'scope':'visually checked official Figure 1 (PDF page 2); independent redraw',
                   'reviewer':'assistant','human_requested':True,'human_approved':False,'final_size_qa':'NOT_RUN'}
     })
+    # Nature Human Behaviour 2026 Figure 4b/c/e: three distinct visual grammars.
+    # SVGs are original layout sketches with illustrative points, never the paper's measured values or pixels.
+    nhb_contract_path = root / 'figure-reference-assets/nhb-fig4-bce-inputs.json'
+    nhb_contract = json.loads(nhb_contract_path.read_text(encoding='utf-8'))
+    if nhb_contract['figure_id'] != 'nhb26-figure4-bce' or not nhb_contract['original_data_required_for_real_plot']:
+        raise ValueError('NHB Figure 4 must require real experimental measurements')
+    nhb_panels = [
+        ('b','nhb26-f4b-individual-strips','个体散点 + 三指标均值对照','Individual distributions and three-outcome comparisons',
+         'comparison','为什么两种课程在规则、记忆与冲突选择上不同？',
+         'Which strategy tests reveal a curriculum difference?',
+         '小点呈现全部个体、大点/须呈现统计量；分面按同一概率尺度；预注册检验单独标明。',
+         'Show raw individuals and clear group estimates on a shared scale; flag preregistered contrasts.',
+         'nhb-fig4b-strip.svg','individual_strip_plus_group_estimate',
+         ['learner_id','curriculum_id','test_type','accuracy','contrast_test']),
+        ('c','nhb26-f4c-joint-learning','双能力指数 · 个体与组统计','Joint-learning index with individuals and group estimate',
+         'comparison','一个学习者是否真的同时掌握记忆与规则？',
+         'Does each learner retain both memory and rule use?',
+         '综合指标须由同一个体两个独立测试计算，个体散点与组估计分开展示；不能只用群体平均。',
+         'Derive joint index per participant; plot individuals and group estimates separately.',
+         'nhb-fig4c-index.svg','individual_joint_metric',
+         ['learner_id','context_accuracy','memory_accuracy','chance_accuracy','dli']),
+        ('e','nhb26-f4e-state-trajectory','二维能力轨迹 · 沿训练方向观察遗忘','Two-ability training trajectories with temporal arrows',
+         'trend','模型先学会一种策略，再学另一种时，旧策略什么时候消失？',
+         'When does training the second strategy erase the first?',
+         '规则正确率横轴、历史记忆正确率纵轴，按checkpoint连线并用箭头标时序；不能用示意点替代训练日志。',
+         'Plot measured checkpoint sequences in rule-vs-memory space, with arrowed temporal direction.',
+         'nhb-fig4e-trajectory.svg','two_ability_checkpoint_trajectory',
+         ['model_id','seed','curriculum_id','training_step','rule_test_accuracy','memory_test_accuracy'])
+    ]
+    nhb_version = hashlib.sha256(nhb_contract_path.read_bytes()).hexdigest()
+    for pos,(panel,id_,title,title_en,group,question,question_en,learn,learn_en,svg,chart,fields) in enumerate(nhb_panels,1):
+        preview = root / 'figure-reference-assets' / svg
+        if not preview.is_file(): raise FileNotFoundError(preview)
+        contract_panel=nhb_contract['figure4_visual_patterns'][panel]
+        entries.insert(pos,{
+            'id':id_,'title':title,'title_en':title_en,'group':group,
+            'question':question,'question_en':question_en,'learn':learn,'learn_en':learn_en,
+            'required_fields':fields,'chart':chart,
+            'source_name':'Nature Human Behaviour 2026 · Figure 4'+panel,
+            'source_path':'Figure 4'+panel,'source_url':nhb_contract['source']['figure_url'],
+            'paper_url':nhb_contract['source']['paper_url'],
+            'commit':'NHB2026-SOURCE-FIGURE-4'+panel.upper(),
+            'preview_url':'figure-reference-assets/'+svg,
+            'preview_origin':'INDEPENDENT_ILLUSTRATIVE_LAYOUT_NOT_ORIGINAL_FIGURE_OR_DATA',
+            'preview_blob_sha':hashlib.sha256(preview.read_bytes()).hexdigest(),
+            'code_url':nhb_contract['source']['experiment_code_url'],
+            'code_role':'EXPERIMENT_CODE_NOT_FIGURE_SOURCE',
+            'license':'Original paper is open access CC BY 4.0; preview is a separate illustrative schematic, no measured datapoints.',
+            'license_url':nhb_contract['source']['paper_url'],
+            'content_version':hashlib.sha256((nhb_version+preview.name+str(preview.stat().st_size)).encode()).hexdigest(),
+            'reference_only':True,'input_contract_url':'figure-reference-assets/nhb-fig4-bce-inputs.json',
+            'input_contract':[{'name':k,'fields':v,'reason':contract_panel['query']}
+                              for k,v in [('observations',contract_panel['required_fields']),('statistics',contract_panel['statistics'])]],
+            'numeric_data_required':True,
+            'visual_pitfalls':contract_panel['pitfall'],
+            'review':{'scope':'Nature Figure4 b/c/e layout inspected; independent schematic and measured-data schema',
+                      'reviewer':'assistant','human_requested':True,'human_approved':False,'final_size_qa':'NOT_RUN'}
+        })
     selected = {e['id'] for e in entries if e['source_name']=='Figures4Papers'}
     audit = []
     for e in raw['entries']:
@@ -117,11 +175,11 @@ def build(root: Path = ROOT) -> dict:
         else: reason = 'REDUNDANT_OR_SPECIALIZED_FOR_THIS_SCOPE'
         audit.append({'id': e['id'], 'path': e['path'], 'reason': reason})
     counts = dict(Counter(x['reason'] for x in audit))
-    payload = {'schema_version': '2.1', 'curated_on': '2026-10-28',
-        'scope': 'Six Figures4Papers quantitative references plus one ICLR 2026 method schematic; not a universal chart taxonomy',
+    payload = {'schema_version': '2.1', 'curated_on': '2026-10-29',
+        'scope': 'Six Figures4Papers references, an ICLR 2026 method schematic, and three independent NHB 2026 Figure 4b/c/e pattern sketches; not a universal chart taxonomy',
         'source_archive_sha256': hashlib.sha256(raw_path.read_bytes()).hexdigest(),
         'summary': {'active_examples': len(entries), 'archived_entries': len(audit)-len(selected),
-                    'original_entries': len(audit), 'additional_paper_figures': 1, 'primary_sources': 2},
+                    'original_entries': len(audit), 'additional_paper_figures': 4, 'primary_sources': 3},
         'policy': {'archive_loaded_by_default': False, 'recommendations_default': 2,
                    'recommendations_max': 3, 'references_max': 2, 'force_four_candidates': False,
                    'reference_scope_not_experimental_scope': True,

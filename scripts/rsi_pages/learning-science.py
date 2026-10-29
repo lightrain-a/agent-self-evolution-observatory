@@ -29,6 +29,12 @@ PAGE = {
 </tbody></table></div>
 <p><b>迁移到 <a href="idea-i10-learning-novelty.html#mlc-nature2023">I10</a>：</b>进一步区分训练样本是否能排除竞争捷径 D、真实参数是否吸收 L，以及撤除Study以后能否处理未见组合 C。I10 使用完全可验证的正确训练目标，不把模拟人类错答当训练策略。<a href="reading-notes.html#deep-lake-baroni-mlc-nature2023">进入 Nature 2023 论文十节精读、T1/T2完整数据 →</a></p>
 '''),
+("nhb2026-repetition-diversity","Nature Human Behaviour 2026｜同样的数据，为什么不同课程训练出不同策略？",'''
+<p><b>原始受控结果：</b>Pesnot Lerousseau 与 Summerfield（<i>Nature Human Behaviour</i>，2025年12月在线、2026年卷期）研究530名人类与两层Transformer。Zipf偏斜的高频重复有利于旧图片—标签记忆，更多不同图片有利于利用当前上下文的“+3”位置规则。相同训练正确率并不能证明学习机制相同。[[E360]]</p>
+<p><b>课程机制：</b>50%均匀 + 50%偏斜的随机混合让31/50 Transformer和17/50人类同时形成两种策略。人类C1（多样后重复）相对C2规则/冲突仲裁更好；但小Transformer分阶段学习会覆盖先学策略。Figure4b展示个体与组效应，4c组合双学习指标（p=0.036但BF≈0.969），4e沿训练时间展示两种能力的二维迁移。Methods的C1/C2列表与主文/图注不一致，复现前核对原始日志。[[E360]]</p>
+<p><b>不能推广成大模型配方：</b>ICLR 2025、ACL 2026和NeurIPS 2024–ICLR 2026的LLM/VLM研究表明，任务分布、模型能力、训练顺序及更新器都影响策略偏好与遗忘；不能直接假设“先多样后重复”适用于所有LLM。[[M500]][[M501]][[M502]][[M505]][[M506]]</p>
+<p><a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">十节精读、Figure4原文指标 →</a> · <a href="curriculum-scale-evidence.html">LLM/VLM顶会证据矩阵 →</a> · <a href="https://agent-evolution.lightrain.asia/figure-knowledge-base.html#nhb-f4-patterns">F4b/c/e绘图素材 →</a></p>
+'''),
 ("moral-strategy-learning","Nature Human Behaviour 2025｜从动作纠错，到学习依赖哪种决策策略",'''
 <p><b>Challenge：</b>一次好结果究竟强化了“这个动作”，还是强化了产生动作的<strong>整个决策方法</strong>？Maier、Cheung 与 Lieder 将二者拆开：13 次道德两难题中，遵循规则（Rule）和成本—收益推理（CBR）有时对应行动、有时对应不行动，反馈条件则随机控制哪种策略持续得到好结果。四项预注册实验共 <b>2,328 人</b>。[[E311]]</p>
 <p><b>Insight &amp; Design：</b>结果可以更新具体动作的价值，也可能更新上层“下一题依赖 Rule 还是 CBR”的信任。作者比较 model-free / model-based / 无学习 × 行动层 / 策略层的六种计算模型；并用新道德问题、态度量表、真实经济激励捐赠和看似独立的后续实验判断转移。<b>CBR 是被选的策略，不等于元控制器的 model-based 学习</b>。[[E311]]</p>

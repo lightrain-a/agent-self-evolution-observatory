@@ -61,7 +61,7 @@ def main() -> None:
         base=f'http://127.0.0.1:{host_port}'
         wd('POST',f'/session/{session}/url',{'url':base+'/figure-knowledge-base.html'})
         time.sleep(.8)
-        check(js("return document.querySelectorAll('.reference-card').length") == 7,'Missing curated reference cards')
+        check(js("return document.querySelectorAll('.reference-card').length") == 10,'Missing curated reference cards')
         check(js("return document.querySelectorAll('#curated-grid [data-id=iclr26-rote-learning-fig1]').length") == 1,
               'ICLR Figure 1 must be featured in gallery')
         js("document.querySelector('#ref-iclr26-rote-learning-fig1').scrollIntoView({block:'center'})")
@@ -73,7 +73,7 @@ def main() -> None:
               'Locally authored method-figure preview did not load after lazy-load exposure: '+str(image_state))
         check(js("return document.querySelector('#rote-fig1-inputs').textContent.includes('不需要模型准确率')"),
               'Input guide must explain conceptual vs measured inputs')
-        check(js("return document.querySelector('#curated-metrics').textContent.includes('7')"),
+        check(js("return document.querySelector('#curated-metrics').textContent.includes('10')"),
               'Gallery source count incorrect')
         js("document.querySelector('[data-open=iclr26-rote-learning-fig1]').click()")
         time.sleep(.35)

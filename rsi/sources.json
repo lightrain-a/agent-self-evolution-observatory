@@ -2311,6 +2311,166 @@
       "level": "ICML PMLR正式摘要核对；2026-10-29",
       "note": "Tang等研究复杂自然语言实体状态更改，观察到部分LM并不逐token增量更新世界状态，而是在查询最后聚合相关信息；成功不必等于显式独立状态机。",
       "code": ""
+    },
+    {
+      "id": "E360",
+      "group": "学习科学",
+      "title": "Shared sensitivity to data distribution during learning in humans and transformer networks",
+      "date": "Nature Human Behaviour 10,601–614 (2026); online 2025-12-23",
+      "url": "https://www.nature.com/articles/s41562-025-02359-3",
+      "level": "Nature+PMC 正文 Fig.1–5/Methods 核对；2026-10-29；未独立复现",
+      "note": "530名人类及两层Transformer图片—标签任务：均匀多样更促上下文规则、Zipf偏斜重复更促参数/经验记忆；混合分布两者可共存。人类C1（多样→重复）规则更好而Transformer受策略干扰；Methods的人类C1/C2描述与Figure4反置须对照原数据验证。",
+      "code": "https://osf.io/xb43k"
+    },
+    {
+      "id": "M500",
+      "group": "相邻领域",
+      "title": "Toward Understanding In-context vs. In-weight Learning",
+      "date": "ICLR 2025 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/ae338b3fe6624798efa80b6581924028-Abstract-Conference.html",
+      "level": "ICLR官方摘要+Google DeepMind出版页核对；2026-10-29",
+      "note": "以理论模型解释分布驱动的ICL/IWL选择及后续ICL消失，并延伸到在自然语言提示上微调的完整LLM；大模型分布效应不是空白；未声称证明NHB的全部人类课程效应。",
+      "code": ""
+    },
+    {
+      "id": "M501",
+      "group": "相邻领域",
+      "title": "What Makes a Good Curriculum? Disentangling the Effects of Data Ordering on LLM Mathematical Reasoning",
+      "date": "ACL 2026 · Long 1591",
+      "url": "https://aclanthology.org/2026.acl-long.1591/",
+      "level": "ACL Anthology正文摘要及模型设置核对；2026-10-29",
+      "note": "Llama3.1-8B/Mistral-7B/Gemma3-4B上五种难度代理的课程对照：没有普遍最优正向/逆向顺序，取决于模型状态与任务复杂度；不直接测试重复vs多样策略冲突。",
+      "code": ""
+    },
+    {
+      "id": "M502",
+      "group": "相邻领域",
+      "title": "Unveiling the Secret Recipe: A Guide For Supervised Fine-Tuning Small LLMs",
+      "date": "ICLR 2025 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/b6e2c96bc4702f761d7d108d6e31930f-Abstract-Conference.html",
+      "level": "ICLR官方摘要核对；2026-10-29",
+      "note": "在四种3B–7B开源预训练模型的多领域指令SFT中，分阶段（phased）与整库混合（stacked）性能差异不显著，后者更简单省样本；与NHB特定合成语法不同。",
+      "code": "https://github.com/instructlab/training"
+    },
+    {
+      "id": "M503",
+      "group": "相邻领域",
+      "title": "Prismatic Synthesis: Gradient-based Data Diversification Boosts Generalization in LLM Reasoning",
+      "date": "NeurIPS 2025 · Main",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/82a34882f560db982d1257b5af461605-Abstract-Conference.html",
+      "level": "NeurIPS官方摘要核对；2026-10-29",
+      "note": "300多次受控训练；梯度空间G-Vendi与OOD泛化Spearman ρ约0.9；PrismMath-7B以32B教师生成数据优于部分强对照。说明有效多样性不是词面新颖，但不研究课程先后。",
+      "code": ""
+    },
+    {
+      "id": "M504",
+      "group": "相邻领域",
+      "title": "Mapping Post-Training Forgetting in Language Models at Scale",
+      "date": "ICLR 2026 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/bc1c5e5fb8ed1ef9b9b5abced2022e40-Abstract-Conference.html",
+      "level": "ICLR官方摘要与作者项目正文核对；2026-10-29",
+      "note": "近30模型对、100子基准，报告逐样本1→0遗忘和0→1逆向迁移以及猜测修正；规模增长常使遗忘下降，但指令模型高数据量SFT/RL结果混合，平均分遮蔽交叉变化。",
+      "code": "https://post-forget.github.io/"
+    },
+    {
+      "id": "M505",
+      "group": "相邻领域",
+      "title": "CoIN: A Benchmark of Continual Instruction Tuning for Multimodal Large Language Models",
+      "date": "NeurIPS 2024 · Datasets & Benchmarks",
+      "url": "https://proceedings.nips.cc/paper_files/paper/2024/hash/6a45500d9eda640deed90d8a62742be5-Abstract-Datasets_and_Benchmarks_Track.html",
+      "level": "NeurIPS官方摘要核对；2026-10-29",
+      "note": "10数据集/8任务的MLLM连续指令微调，明确考察任务顺序、指令多样性和数据量；遗忘部分来自指令对齐失效而不完全是推理知识丢失。需区分跨任务指令失配与规则退化。",
+      "code": ""
+    },
+    {
+      "id": "M506",
+      "group": "相邻领域",
+      "title": "PCLR: Progressively Compressed LoRA for Multimodal Continual Instruction Tuning",
+      "date": "ICLR 2026 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/5a5acfd0876c940d81619c1dc60e7748-Abstract-Conference.html",
+      "level": "ICLR官方摘要与代码核对；2026-10-29",
+      "note": "LLaVA-7B连续指令训练中，逐级压缩整合LoRA使文中遗忘指标从11.29降至5.09、再降至3.39；更新器决定保持能力，不能仅归因于课程顺序。",
+      "code": "https://github.com/SII-HITclearlove777/PCLR"
+    },
+    {
+      "id": "M507",
+      "group": "相邻领域",
+      "title": "Multimodal Continual Instruction Tuning with Dynamic Gradient Guidance",
+      "date": "CVPR 2026 · pp.10820–10829",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Multimodal_Continual_Instruction_Tuning_with_Dynamic_Gradient_Guidance_CVPR_2026_paper.html",
+      "level": "CVF官方摘要核对；2026-10-29",
+      "note": "将旧任务遗忘建模为缺少旧梯度，用参数位移代理旧梯度并配有限重放与随机门控制稳定/可塑性；对学习顺序效应的优化器控制是强基线。",
+      "code": ""
+    },
+    {
+      "id": "M508",
+      "group": "相邻领域",
+      "title": "Demystifying Supervision Data Generalization in Multimodal LMs",
+      "date": "ICLR 2026 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/edcd1aa172dceda2ea9d45a48f25d3e3-Abstract-Conference.html",
+      "level": "ICLR官方摘要核对；2026-10-29",
+      "note": "14个多模态数据集/7任务，直观任务相似度不能可靠预测训练迁移；DATAPROPHET利用感知多模态困惑度、相似与多样性，报告选择排序Kendall τ=0.86；I10需直接比较。",
+      "code": ""
+    },
+    {
+      "id": "M509",
+      "group": "相邻领域",
+      "title": "Re-evaluating Continual VQA: Toward Fair and Robust Evaluation for Multimodal Continual Learning",
+      "date": "CVPR 2026 · pp.18021–18031",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Gao_Re-evaluating_Continual_VQA_Toward_Fair_and_Robust_Evaluation_for_Multimodal_CVPR_2026_paper.html",
+      "level": "CVF官方摘要核对；2026-10-29",
+      "note": "跨VQA任务共享答案词表和静态答案先验可能使模型依赖记忆而被误判为推理/减轻遗忘；应在图像-答案和规则-上下文冲突设置下拆开评价。",
+      "code": ""
+    },
+    {
+      "id": "M510",
+      "group": "相邻领域",
+      "title": "Actions as Language: Fine-Tuning VLMs into VLAs Without Catastrophic Forgetting",
+      "date": "ICLR 2026 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/7a0f8055c838df8e62329a76c7c6403d-Abstract-Conference.html",
+      "level": "ICLR官方摘要核对；2026-10-29",
+      "note": "VLM2VLA以自然语言表示低级动作来减小机器人数据与视觉语言预训练分布差异，并用LoRA保持原VLM推理能力；800多次真实机器人实验；分布兼容性是影响遗忘的第三因素。",
+      "code": ""
+    },
+    {
+      "id": "M511",
+      "group": "相邻领域",
+      "title": "Preserving Diversity in Supervised Fine-Tuning of Large Language Models",
+      "date": "ICLR 2025 · Conference",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/a548ef984f30bca3abdc09f43743827f-Abstract-Conference.html",
+      "level": "ICLR官方摘要核对；2026-10-29",
+      "note": "GEM在3B–70B预训练模型SFT中通过保留输出分布多样性兼顾泛化及减轻遗忘；此处是输出多样性而非训练输入样本的重复/多样性，不能混为同一变量。",
+      "code": ""
+    },
+    {
+      "id": "M512",
+      "group": "相邻领域",
+      "title": "Data Difficulty and the Generalization–Extrapolation Tradeoff in LLM Fine-Tuning",
+      "date": "ICML 2026 · PMLR 306:75649–75664",
+      "url": "https://proceedings.mlr.press/v306/liu26m.html",
+      "level": "PMLR官方摘要核对；2026-10-29",
+      "note": "SFT中没有统一最佳训练难度；最佳难度随数据预算提高而上移，受分布内泛化差与外推差权衡影响。难度不是重复性或规则区分性的替代量。",
+      "code": ""
+    },
+    {
+      "id": "M513",
+      "group": "相邻领域",
+      "title": "Fine-Tuning VLMs Without Forgetting Is Easier Than You Think",
+      "date": "ICLR 2026 · accepted; author open manuscript",
+      "url": "https://lihe50hz.github.io/ICLR_2026_Fine_tuning.pdf",
+      "level": "作者公开论文摘要/实验与ICLR2026录用信息核对；2026-10-29；未独立复现",
+      "note": "Qwen2.5-VL-3B、LLaVA1.5-7B等微调中，低学习率、LoRA和混合数据可保留多种VLM泛化能力；与CoIN/PCLR的易遗忘结论因评测分布及更新机制不同并不必然矛盾。",
+      "code": ""
+    },
+    {
+      "id": "M514",
+      "group": "相邻领域",
+      "title": "Data Repetition Beats Data Scaling in Long-CoT Supervised Fine-Tuning",
+      "date": "arXiv 2602.11149 · 2026预印本；未核实顶会接收",
+      "url": "https://arxiv.org/abs/2602.11149",
+      "level": "arXiv原始摘要核对；2026-10-29；未独立复现",
+      "note": "Olmo3-7B固定优化预算下400道样本重复128 epoch相较51200样本单epoch在AIME/GPQA报告12–26百分点增益；说明重复可助推理SFT但不是顶会正式接收的证据。",
+      "code": ""
     }
   ]
 }

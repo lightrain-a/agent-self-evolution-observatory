@@ -80,6 +80,11 @@ PAGE = {
 <div class="links"><a class="link-btn" href="reading-notes.html#deep-lake-baroni-mlc-nature2023">Nature 2023 · 10节完整精读、Table1/2与20%解释</a><a class="link-btn" href="reading-cards.html#lake-baroni-mlc-nature2023">论文 C-I-D-R 卡片</a><a class="link-btn" href="https://github.com/brendenlake/MLC" target="_blank" rel="noopener noreferrer">作者元学习人类实验仓库</a><a class="link-btn" href="https://github.com/brendenlake/MLC-ML" target="_blank" rel="noopener noreferrer">SCAN / COGS 代码</a></div>
 <p class="status">上述 D×C 的参数更新及后续 RSI 收益尚为本站设计，原文没有测量持续 LoRA 更新。</p>
 '''),
+ ("nhb2026-frequency-vs-rule", "NHB 2026｜样本频次、表面多样性与规则区分信息不是同一种变量", '''
+<p><b>可借鉴现象：</b>Nature Human Behaviour 2025/2026 的 530人/双层Transformer 实验中，同一图片频繁重现会强化历史标签记忆，更多不同图片倾向促进上下文规则；混合数据能让两种策略共存，而分块训练的小模型会出现策略覆盖。<strong>此文控制的是样本频次与顺序，并没有操纵训练标签是否排除正确规则的竞争捷径</strong>。[[E360]]</p>
+<p>对I10必须额外控制：在<b>相同Zipf频次/表面多样度</b>下，用规则生成器制造D=0（正确规则f与捷径g预测一致）和D&gt;0（f/g预测不一致）的正确监督。经过同预算LoRA更新撤掉课堂提示，测未见分歧题、未见组合及旧能力。这是待验证的因果检验；原论文的in-context能力不等于新知识已被持续写入参数。</p>
+<p><b>最近邻强对照：</b>NeurIPS2025已直接以梯度空间多样性预测7B推理迁移；ICLR2026多模态数据选择已结合相似性/多样性预测训练收益；如果I10的区分性证据D无法超出这些解释，就不独立包装数据选择策略。[[M503]][[M508]] <a href="curriculum-scale-evidence.html">大模型与VLM综述</a> · <a href="reading-notes.html#deep-nhb2025-distribution-curriculum-pesnot-lerousseau">NHB原文精读</a></p>
+'''),
  ("insight", "Insight｜信息能够区分规则，不代表模型能吸收规则", '''
 <p>四个层次应分别测量：<b>表面新颖性</b>（词面/语义表示不同）、<b>规则身份</b>（真实规则及其适用边界）、<b>规则区分证据 D</b>（样本能排除预定义候选捷径多少）、<b>实际学习增益 L</b>（真实参数更新后的无提示独立迁移）。<b>D 是由任务生成器定义的逻辑可辨识性，L 是模型经更新后的行为改变；两者既不等价，也不应互相充当标签。</b></p>
 <div class="note"><b>可复验的规则区分指标：</b>对研究者在训练前冻结的有限候选规则集 C（含真实规则 f），定义 <code>D(x;C)=Σ(g∈C,g≠f) 1[g(x)≠f(x)]/(|C|−1)</code>；也可报告每个候选规则被排除的比例。它刻画给定标签的理论区分性，<strong>不宣称 C 是 LLM 内部真实假设空间</strong>，也不使用最终未见测试题挑选训练样本。多个规则族需要独立预设竞争捷径。</div>
