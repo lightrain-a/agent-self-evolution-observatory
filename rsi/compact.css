@@ -26,6 +26,44 @@ body[data-rsi-page] .page-toc{margin:12px 5px 0;padding:11px 6px}
 body[data-rsi-page] .toc-title{margin-bottom:5px;font-size:9px}
 body[data-rsi-page] .toc-links{gap:1px}
 body[data-rsi-page] .toc-links a{padding:5px 8px;font-size:11px;line-height:1.55}
+/* RSI reading navigation: chapters -> topic folders -> pages, without a fourth level. */
+body[data-rsi-page] #research-nav .nav-subgroup{margin:2px 0 3px 3px;border-radius:8px;border:1px solid transparent;min-width:0}
+body[data-rsi-page] #research-nav .nav-subgroup[open]{background:rgba(92,119,156,.065);border-color:rgba(135,161,197,.14)}
+body[data-rsi-page] #research-nav .nav-folder-title{list-style:none;display:flex;align-items:center;justify-content:space-between;min-height:34px;gap:7px;padding:7px 9px;color:#9fb5d1;cursor:pointer;font-size:11px;line-height:1.5;font-weight:740;border-radius:7px}
+body[data-rsi-page] #research-nav .nav-folder-title::-webkit-details-marker{display:none}
+body[data-rsi-page] #research-nav .nav-folder-title>span:first-child{min-width:0;overflow-wrap:anywhere}
+body[data-rsi-page] #research-nav .nav-folder-title:hover{background:#24364b;color:#f0f6ff}
+body[data-rsi-page] #research-nav .active-subgroup>.nav-folder-title{background:#21354e;color:#eaf4ff;border-left:2px solid #6194cc}
+body[data-rsi-page] #research-nav .nav-subgroup .nav-chevron{font-size:13px}
+body[data-rsi-page] #research-nav .nav-subgroup[open]>.nav-folder-title .nav-chevron{transform:rotate(180deg)}
+body[data-rsi-page] #research-nav .nav-subgroup-children{margin:0 3px 5px 11px;padding:2px 0 2px 8px;border-left:1px solid #425c7d;display:flex;flex-direction:column;min-width:0}
+body[data-rsi-page] #research-nav .nav-subgroup .nav-level2{padding:7px 7px 7px 10px;font-size:11.5px;line-height:1.5;overflow-wrap:anywhere}
+body[data-rsi-page] #research-nav .nav-folder-title:focus-visible{outline:2px solid #88bdfb;outline-offset:1px}
+/* Long reads get an editorial two-level outline; short pages stay flat. */
+body[data-rsi-page] .page-toc--grouped{margin-top:14px}
+body[data-rsi-page] .page-toc .toc-count{font-size:9px;font-weight:500;opacity:.72;margin-left:5px}
+body[data-rsi-page] .toc-links--grouped{display:block}
+body[data-rsi-page] .toc-group{border:1px solid transparent;border-radius:8px;margin:3px 0 4px;min-width:0}
+body[data-rsi-page] .toc-group[open]{border-color:rgba(116,151,197,.15);background:rgba(255,255,255,.02)}
+body[data-rsi-page] .toc-group-heading{display:flex;align-items:center;justify-content:space-between;gap:7px;min-height:35px;padding:7px 8px;list-style:none;cursor:pointer;border-radius:7px;font-size:11px;line-height:1.5;color:#a2bad5;font-weight:720}
+body[data-rsi-page] .toc-group-heading::-webkit-details-marker{display:none}
+body[data-rsi-page] .toc-group-heading>span:first-child{min-width:0}
+body[data-rsi-page] .toc-group-heading:hover{background:#23344b;color:#fff}
+body[data-rsi-page] .toc-group.current-group>.toc-group-heading{color:#f0f6ff;background:#253a54}
+body[data-rsi-page] .toc-group-heading:focus-visible{outline:2px solid #88bdfb;outline-offset:1px}
+body[data-rsi-page] .toc-group-chevron{font-size:12px;transition:transform .15s;color:#91a9c8;flex-shrink:0}
+body[data-rsi-page] .toc-group[open]>.toc-group-heading .toc-group-chevron{transform:rotate(180deg)}
+body[data-rsi-page] .toc-group-items{margin:0 4px 6px 12px;padding:1px 0 2px 8px;border-left:1px solid #405775;display:flex;flex-direction:column}
+body[data-rsi-page] .toc-links--grouped .toc-item{color:#b0c2d7;font-size:11px;line-height:1.5;padding:6px 7px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
+body[data-rsi-page] .toc-links--grouped .toc-item:hover{color:#fff;background:#243953;border-radius:6px}
+body[data-rsi-page] .toc-links--grouped .toc-item.active{color:#fff;background:#294767;border-radius:6px;box-shadow:inset 2px 0 #8fbcef}
+body[data-rsi-page] .toc-links a:focus-visible{outline:2px solid #88bdfb;outline-offset:1px}
+@media(max-width:820px){
+ body[data-rsi-page] #research-nav .nav-folder-title,
+ body[data-rsi-page] .toc-group-heading{min-height:38px;padding-top:9px;padding-bottom:9px}
+ body[data-rsi-page] #research-nav .nav-subgroup .nav-level2,
+ body[data-rsi-page] .toc-links--grouped .toc-item{font-size:12px;padding-top:8px;padding-bottom:8px}
+}
 body[data-rsi-page] .sidebar-note{margin:14px 5px 0;padding:11px;font-size:10px;line-height:1.75}
 /* One concise title panel, shared by overview, literature, ideas and long reads. */
 body[data-rsi-page]:not([data-rsi-page="timeline"]) .research-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 16px;padding:13px 17px 13px 20px;margin:0 0 14px;border:1px solid #dce3ee;border-radius:12px;background:#fff;box-shadow:0 3px 14px #20385804}

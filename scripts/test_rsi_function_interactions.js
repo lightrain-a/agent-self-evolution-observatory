@@ -194,6 +194,49 @@ function visible(d,selector){return [...d.querySelectorAll(selector)].filter(e=>
   input(w,d,'research-search','学习调控');await new Promise(resolve=>setTimeout(resolve,20));
   assert(d.querySelectorAll('#search-results .search-hit').length>0,'Search should include functional taxonomy');
   env.dom.window.close();
+  // Nested navigation: site chapters -> optional folders -> pages, and a
+  // separate two-level outline for research articles with many sections.
+  env=await load('generalization-learnability.html#method-intervention');({w,d}=env);
+  assert.equal(d.querySelectorAll('.toc-group').length,6,'Generalization groups 28 sections into six reading stages');
+  assert.equal(d.querySelectorAll('.toc-links a.toc-item').length,28,'Every generalization section is reachable');
+  const methodLink=d.querySelector('.toc-links a[href="#method-intervention"]');
+  assert(methodLink && methodLink.closest('.toc-group').open,'Hashed design section expands its reading group');
+  assert(!d.querySelector('.toc-group').open,'Hashed subsection collapses the unrelated default reading group');
+  assert(methodLink.classList.contains('active'),'Hashed method section receives current link style');
+  const evidenceFolder=d.querySelector('#research-nav [data-nav-subgroup="evidence-topics"]');
+  assert(evidenceFolder?.open,'Current research subtopic is visible on initial page load');
+  assert.equal(evidenceFolder.querySelectorAll('.nav-level2').length,3,'Evidence topic folder has exactly three pages');
+  const headingBefore=evidenceFolder.querySelector('summary span').textContent;
+  d.getElementById('nav-language').click();
+  assert.notEqual(d.querySelector('#research-nav [data-nav-subgroup="evidence-topics"] summary span').textContent,headingBefore,
+    'Subtopic titles change language without changing classification');
+  assert(d.querySelector('#research-nav [data-nav-subgroup="evidence-topics"]').open,
+    'Active subtopic stays expanded after language toggle');
+  w.history.replaceState(null,'','#experiment-master');
+  w.dispatchEvent(new w.HashChangeEvent('hashchange'));
+  assert(d.querySelector('.toc-links a[href="#experiment-master"]').closest('.toc-group').open,
+    'Changing hash auto-expands the experiment stage');
+  assert(d.querySelector('.toc-links a[href="#experiment-master"]').classList.contains('active'),
+    'Hash navigation updates current TOC subsection');
+  assert.deepEqual(env.errors,[],'Generalization nested menu errors');
+  env.dom.window.close();
+  env=await load('regulation.html');({w,d}=env);
+  const ideaFolder=d.querySelector('#research-nav [data-nav-subgroup="regulation-ideas"]');
+  assert(ideaFolder && !ideaFolder.open,'Nine regulation ideas remain collapsed on chapter landing page');
+  ideaFolder.querySelector('summary').click();
+  assert(ideaFolder.open && ideaFolder.querySelectorAll('a.nav-level2').length===9,
+    'Research idea folder opens with all nine stable destinations');
+  env.dom.window.close();
+  env=await load('idea-i9-practice-switching.html');({w,d}=env);
+  assert(d.querySelector('#research-nav [data-nav-subgroup="regulation-ideas"]').open,
+    'Current idea is revealed inside its nested research folder');
+  assert.equal(d.querySelectorAll('.toc-group').length,4,'Long Idea uses structured in-page outline');
+  env.dom.window.close();
+  env=await load('experience.html');({w,d}=env);
+  assert.equal(d.querySelectorAll('.toc-group').length,0,'Short chapters do not gain artificial folding');
+  assert.equal(d.querySelectorAll('.toc-links a.toc-item').length,d.querySelectorAll('.research-section').length,
+    'Short chapter outline retains every section');
+  env.dom.window.close();
   // Every page executes its own scripts against its actual generated DOM.
   const pages=fs.readdirSync(SITE).filter(f=>f.endsWith('.html'));
   for(const filename of pages){

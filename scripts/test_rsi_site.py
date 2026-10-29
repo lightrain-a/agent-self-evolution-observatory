@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
+from rsi_toc import TOC_GROUPS
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ['research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda','index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
@@ -312,6 +313,13 @@ def main():
         check(hrefs==expected_groups[group['id']],f'Incorrect ordered submenu: {group["id"]}')
         check(group['title']['zh'] and group['title']['en'],f'Missing bilingual parent title: {group["id"]}')
         visible_slugs.extend(urlsplit(href).path.removesuffix('.html') for href in hrefs)
+        previous_end=0
+        for folder in group.get('folders',[]):
+            check(previous_end<=folder['start']<folder['end']<=len(hrefs),
+                  f'{group["id"]}: invalid/overlapping nested navigation folder')
+            check(folder['title'].get('zh') and folder['title'].get('en'),
+                  f'{group["id"]}: untranslated navigation folder')
+            previous_end=folder['end']
     check(set(visible_slugs)==set(PAGES)-{'teaching','idea-i6'},
           'Visible RSI pages must exclude only linked historical research')
     research_links=[item for g in groups if g['id'] in ('experience','signal','capability','regulation') for item in g['pages']]
@@ -360,6 +368,28 @@ def main():
         check(active_parents==[page_parent[slug]] and open_parents==[page_parent[slug]],
               f'{slug}: current page parent must be active and expanded')
         check(text.count('class="nav-level2 active"')==1,f'{slug}: only one current submenu link is expected')
+        nav_link=next((href for g in groups for href,_ in g['pages']
+                       if urlsplit(href).path==slug+'.html' and '#' not in href),None)
+        if nav_link:
+            active_folder=next((f for g in groups for f in g.get('folders',[])
+                                if nav_link in [href for href,_ in g['pages'][f['start']:f['end']]]),None)
+            if active_folder:
+                check(re.search(r'<details class="nav-subgroup active-subgroup" data-nav-subgroup="'
+                                +re.escape(active_folder['id'])+r'" open>',text) is not None,
+                      f'{slug}: nested active page must be visible before JS starts')
+        section_ids=re.findall(r'<section class="panel research-section" id="([^"]+)">',text)
+        toc_ids=re.findall(r'class="toc-item" href="#([^"]+)"',text)
+        check(toc_ids==section_ids,f'{slug}: outline links must cover all sections in reading order')
+        outline_count=len(re.findall(r'<details class="toc-group"',text))
+        if slug in TOC_GROUPS:
+            check(outline_count==len(TOC_GROUPS[slug]) and
+                  'class="page-toc page-toc--grouped"' in text,
+                  f'{slug}: missing semantic two-level outline')
+            check(re.search(r'<details class="toc-group" data-toc-group="[^"]+" open>',text) is not None,
+                  f'{slug}: first outline band must start expanded for non-JS readers')
+        else:
+            check(outline_count==0 and 'class="toc-links toc-links--flat"' in text,
+                  f'{slug}: short page must keep its flat outline')
     for path,p in parsed.items():
         for href in p.links:
             u=urlsplit(href)

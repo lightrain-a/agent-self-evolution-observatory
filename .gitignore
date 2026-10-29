@@ -20,3 +20,6 @@ generated/final-method-refinement-*.json
 
 # Frontend-only Pages build output
 _site/
+
+# Local real-browser navigation QA screenshots (not part of the website)
+tmp/rsi-navigation-hierarchy/

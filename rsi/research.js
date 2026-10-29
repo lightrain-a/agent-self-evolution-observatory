@@ -28,6 +28,8 @@
     // Without JavaScript, the same grouped <details> navigation remains usable.
     const expanded = new Map([...nav.querySelectorAll('details.nav-group[data-nav-group]')]
       .map((item) => [item.dataset.navGroup, item.open]));
+    const expandedFolders = new Map([...nav.querySelectorAll('details.nav-subgroup[data-nav-subgroup]')]
+      .map((item) => [item.dataset.navSubgroup, item.open]));
     nav.replaceChildren();
     window.NAV_GROUPS.forEach((group) => {
       const active = group.pages.some(([href]) => href === current);
@@ -46,13 +48,40 @@
       summary.append(heading, chevron);
       const children = root.createElement('div');
       children.className = 'nav-children';
-      group.pages.forEach(([href, label]) => {
+      const foldersByStart = new Map((group.folders || []).map((folder) => [folder.start, folder]));
+      let nestedContent = null;
+      let nestedEnd = -1;
+      group.pages.forEach(([href, label], i) => {
+        if (i === nestedEnd) { nestedContent = null; nestedEnd = -1; }
+        const folder = foldersByStart.get(i);
+        if (folder) {
+          const subgroup = root.createElement('details');
+          const folderActive = group.pages.slice(folder.start, folder.end).some(([link]) => link === current);
+          subgroup.className = 'nav-subgroup' + (folderActive ? ' active-subgroup' : '');
+          subgroup.dataset.navSubgroup = folder.id;
+          subgroup.open = resetToActive ? folderActive : expandedFolders.has(folder.id)
+            ? expandedFolders.get(folder.id) : folderActive || Boolean(folder.open);
+          const subheading = root.createElement('summary');
+          subheading.className = 'nav-folder-title';
+          const name = root.createElement('span');
+          name.textContent = text(folder.title);
+          const icon = root.createElement('span');
+          icon.className = 'nav-chevron';
+          icon.setAttribute('aria-hidden', 'true');
+          icon.textContent = '⌄';
+          subheading.append(name, icon);
+          nestedContent = root.createElement('div');
+          nestedContent.className = 'nav-subgroup-children';
+          subgroup.append(subheading, nestedContent);
+          children.append(subgroup);
+          nestedEnd = folder.end;
+        }
         const link = root.createElement('a');
         link.href = href;
         link.className = 'nav-level2' + (href === current ? ' active' : '');
         if (href === current) link.setAttribute('aria-current', 'page');
         link.textContent = text(label);
-        children.append(link);
+        (nestedContent || children).append(link);
       });
       details.append(summary, children);
       nav.append(details);
@@ -65,7 +94,7 @@
     renderNavigation();
   });
   renderNavigation();
-  window.addEventListener('hashchange', renderNavigation);
+  window.addEventListener('hashchange', () => { renderNavigation(); activateTocFromHash(); });
   function setMenu(open) {
     sidebar.classList.toggle('open', open);
     overlay.hidden = !open;
@@ -79,7 +108,7 @@
   overlay.addEventListener('click', () => setMenu(false));
   root.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sidebar.classList.contains('open')) setMenu(false); });
   sidebar.addEventListener('click', (e) => {
-    if (e.target.closest('a.nav-level2[href]') && innerWidth <= 820) setMenu(false);
+    if (e.target.closest('a.nav-level2[href], .toc-links a[href]') && innerWidth <= 820) setMenu(false);
   });
   // A local search corpus; never sends research queries to an external service.
   let indexPromise;
@@ -120,13 +149,43 @@
     }
   });
   let tocObserver;
+  function activateTocSection(id) {
+    const links = [...root.querySelectorAll('.toc-links a.toc-item')];
+    const activeLink = links.find((a) => a.getAttribute('href') === '#' + id);
+    if (!activeLink) return;
+    links.forEach((a) => a.classList.toggle('active', a === activeLink));
+    const activeGroup = activeLink.closest('details.toc-group');
+    if (!activeGroup) return;
+    root.querySelectorAll('.toc-group').forEach((group) => {
+      group.classList.toggle('current-group', group === activeGroup);
+      if (group !== activeGroup && group.dataset.tocManual !== 'true') {
+        group.open = false;
+        delete group.dataset.tocAuto;
+      }
+    });
+    activeGroup.open = true;
+    activeGroup.dataset.tocAuto = 'true';
+  }
+  function activateTocFromHash() {
+    let id = '';
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+    if (!id) return;
+    const target = root.getElementById(id);
+    const section = target?.closest('.research-section');
+    if (section) activateTocSection(section.id);
+  }
+  // Explicit folds remain open while reading; automatic folds follow the reader.
+  root.addEventListener('click', (event) => {
+    const summary = event.target.closest('.toc-group-heading');
+    if (summary) summary.parentElement.dataset.tocManual = 'true';
+  });
   function observePageSections() {
     tocObserver?.disconnect();
+    activateTocFromHash();
     if (!('IntersectionObserver' in window)) return;
     tocObserver = new IntersectionObserver((entries) => {
       const active = entries.filter((e) => e.isIntersecting).sort((a,b) => a.boundingClientRect.top-b.boundingClientRect.top)[0];
-      if (!active) return;
-      root.querySelectorAll('.toc-links a').forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + active.target.id));
+      if (active) activateTocSection(active.target.id);
     }, {rootMargin:'-60px 0px -65% 0px'});
     root.querySelectorAll('.research-section').forEach((s) => tocObserver.observe(s));
   }

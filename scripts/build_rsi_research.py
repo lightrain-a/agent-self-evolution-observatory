@@ -10,6 +10,7 @@ from collections import Counter
 from pathlib import Path
 from rsi_framework import (FUNCTIONS, IDEAS, BY_ID, FUNCTION_SLUGS, function_badges, source_assignment,
                            enrich_registries, framework_pages, apply_page_metadata, organize_ideas)
+from rsi_toc import render_page_toc
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
@@ -51,6 +52,26 @@ def build_navigation(pages):
         {'id':'literature','title':{'zh':'文献与机制资料','en':'Literature & Mechanisms'},'open':False,
          'pages':[entry(s) for s in ('literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','references')]}
     ])
+    # Three levels where a chapter has many destinations: chapter > topic folder > page.
+    # Preserve group.pages as the canonical ordered link list for older nav consumers.
+    folder_spec = {
+        'overview': [(3,6,'research-tools','研究工具与 Idea','Research tools & ideas')],
+        'signal': [(1,4,'signal-ideas','独立研究方向 · I6 / I8 / I11','Research ideas · I6 / I8 / I11')],
+        'capability': [(2,4,'capability-notes','记忆与巩固专题','Memory and consolidation')],
+        'regulation': [(1,10,'regulation-ideas','独立研究方向 · 9 项','Research ideas · 9')],
+        'evidence': [(1,4,'evidence-topics','专题研究与实验方案','Research topics & experiments')],
+        'literature': [(1,3,'literature-reading','论文精读','Paper reading'),
+                       (3,6,'literature-theory','机制、理论与学习科学','Mechanisms and theory')],
+    }
+    for group in groups:
+        folders = []
+        prev_end = 0
+        for start,end,fid,zh,en in folder_spec.get(group['id'], []):
+            assert 0 <= prev_end <= start < end <= len(group['pages']), group['id']
+            prev_end=end
+            folders.append({'id':fid,'start':start,'end':end,
+                            'title':{'zh':zh,'en':en}})
+        group['folders']=folders
     covered=[href[:-5] for g in groups for href,_ in g['pages'] if '#' not in href]
     assert len(covered)==len(set(covered)), 'Duplicate navigation page'
     assert set(covered)|set(NAV_ARCHIVED_PAGES)==set(by_slug), ('Uncovered navigation pages',set(by_slug)-set(covered)-set(NAV_ARCHIVED_PAGES))
@@ -61,20 +82,42 @@ def render_navigation(groups: list[dict], current: str) -> str:
     selected = NAV_ARCHIVED_PAGES.get(current, current + '.html')
     for group in groups:
         has_active = any(href == selected for href, _ in group['pages'])
-        links = ''.join(
-            '<a class="nav-level2' + (' active' if href == selected else '') +
-            '" href="' + html.escape(href, quote=True) + '"' +
-            (' aria-current="page"' if href == selected else '') + '>' +
-            html.escape(label['zh']) + '</a>'
-            for href, label in group['pages']
-        )
+        parts = []
+        folders = {fold['start']:fold for fold in group.get('folders', [])}
+        close_at = None
+        for i, (href, label) in enumerate(group['pages']):
+            if close_at == i:
+                parts.append('</div></details>')
+                close_at = None
+            fold = folders.get(i)
+            if fold:
+                assert close_at is None, ('Overlapping nav folders', group['id'])
+                fold_active = any(link == selected for link, _ in group['pages'][fold['start']:fold['end']])
+                parts.append(
+                    '<details class="nav-subgroup' + (' active-subgroup' if fold_active else '') +
+                    '" data-nav-subgroup="' + html.escape(fold['id']) + '"' +
+                    (' open' if fold_active else '') +
+                    '><summary class="nav-folder-title"><span>' + html.escape(fold['title']['zh']) +
+                    '</span><span class="nav-chevron" aria-hidden="true">⌄</span></summary>' +
+                    '<div class="nav-subgroup-children">'
+                )
+                close_at = fold['end']
+            parts.append(
+                '<a class="nav-level2' + (' active' if href == selected else '') +
+                '" href="' + html.escape(href, quote=True) + '"' +
+                (' aria-current="page"' if href == selected else '') + '>' +
+                html.escape(label['zh']) + '</a>'
+            )
+        if close_at is not None:
+            assert close_at == len(group['pages']), group['id']
+            parts.append('</div></details>')
         blocks.append(
             '<details class="nav-group' + (' active-group' if has_active else '') +
             '" data-nav-group="' + html.escape(group['id']) + '"' +
             (' open' if has_active else '') +
             '><summary class="nav-level1"><span>' + html.escape(group['title']['zh']) +
             '</span><span class="nav-chevron" aria-hidden="true">⌄</span></summary>' +
-            '<div class="nav-children">' + links + '</div></details>'
+            '<div class="nav-children">' + ''.join(parts) + '</div></details>'
         )
     return ''.join(blocks)
 
@@ -138,11 +181,9 @@ def main() -> None:
         slug = p['slug']
         page_date = p.get('updated', DATE)
         body_parts = []
-        toc = []
         for sid, title, body in p['sections']:
             body = expand(body)
             body_parts.append(f'<section class="panel research-section" id="{sid}"><h2>{html.escape(title)}</h2><div class="section-body">{body}</div></section>')
-            toc.append(f'<a href="#{sid}">{html.escape(title)}</a>')
             if slug != 'references':
                 search.append({'title':p['title'] + ' · ' + title, 'url':slug + '.html#' + sid, 'text':plain(body)+' '+BY_ID.get(p.get('primary_function'),{}).get('title',''), 'primary_function':p.get('primary_function')})
             notes.append(f'## {p["title"]} / {title}\n\n{body}\n')
@@ -171,7 +212,7 @@ def main() -> None:
         header_html = p.get('header_html') or f'''<header class="research-hero"><div class="eyebrow">{eyebrow}</div><p class="research-en">{html.escape(p['en'])}</p><h1>{title}</h1>{category_badges}<p class="lead">{html.escape(p['lead'])}</p><div class="hero-meta"><span>更新 {page_date}</span><span>四功能统一分类</span><a href="research-map.html">研究地图 ↗</a></div></header>'''
         doc = f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{html.escape(p['lead'], quote=True)}"><meta name="theme-color" content="#101827"><title>{title} | RSI Self-Improvement Observatory</title><link rel="canonical" href="https://agent-evolution.lightrain.asia/rsi/{slug}.html"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site-base.css"><link rel="stylesheet" href="research.css"><link rel="stylesheet" href="site-switch.css"><link rel="stylesheet" href="framework.css">{extra_styles}<link rel="stylesheet" href="compact.css"></head>
-<body data-rsi-page="{slug}" data-primary-function="{page_function}"><a class="skip-link" href="#research-main">跳转到正文</a><div class="layout"><aside class="sidebar" id="sidebar"><button class="sidebar-close" id="sidebar-close" aria-label="关闭目录">×</button><nav class="site-switcher" aria-label="研究网站切换"><span class="site-switcher__caption">研究站点 · SITES</span><div class="site-switcher__tabs"><a class="site-switcher__tab" href="/" title="切换到 Agent 自进化研究站">Agent <span aria-hidden="true">↗</span></a><a class="site-switcher__tab active" href="/rsi/" aria-current="true" title="当前：RSI 自主学习研究站">RSI</a></div></nav><a class="brand" href="index.html"><span class="logo">RSI</span><span><strong>RSI × 自主学习</strong><span>Recursive Self-Improvement</span></span></a><nav class="nav" id="research-nav" aria-label="RSI 专题目录">{nav}</nav><div class="page-toc"><div class="toc-title">本页目录</div><nav class="toc-links">{''.join(toc)}</nav></div><div class="sidebar-note">证据综述与待验证假设分开。<br>核验日期：{DATE}<br>本专题详文为中文，保留英文术语与原始文献标题。</div></aside><button class="sidebar-overlay" id="sidebar-overlay" aria-label="关闭目录遮罩" hidden></button><main class="main" id="research-main"><div class="topbar"><button class="mobile-toggle" id="menu-toggle" aria-label="打开目录" aria-controls="sidebar" aria-expanded="false">☰</button><div class="search"><label class="sr-only" for="research-search">搜索本专题的章节与来源</label><input id="research-search" type="search" placeholder="搜索功能、研究问题、I 编号或论文…" autocomplete="off"></div><button class="language-toggle" id="nav-language" title="只切换目录语言；研究详文为中文">EN navigation</button></div><div class="content"><section class="search-results panel" id="search-results" aria-live="polite" hidden></section>{header_html}{''.join(body_parts)}<nav class="page-pagination" aria-label="专题翻页">{previous}{following}</nav></div><footer class="footer">RSI × 自主学习研究 · {page_date} · <a href="references.html">来源与核验口径</a> · <a href="research-notes.md" download>研究笔记</a><br>文献结论、研究推断和实验计划分别标注；未运行实验，不展示模拟结果。</footer></main></div><script src="site-nav.js"></script><script src="research.js"></script><script src="framework.js"></script>{extra_scripts}<script src="page-router.js"></script></body></html>'''
+<body data-rsi-page="{slug}" data-primary-function="{page_function}"><a class="skip-link" href="#research-main">跳转到正文</a><div class="layout"><aside class="sidebar" id="sidebar"><button class="sidebar-close" id="sidebar-close" aria-label="关闭目录">×</button><nav class="site-switcher" aria-label="研究网站切换"><span class="site-switcher__caption">研究站点 · SITES</span><div class="site-switcher__tabs"><a class="site-switcher__tab" href="/" title="切换到 Agent 自进化研究站">Agent <span aria-hidden="true">↗</span></a><a class="site-switcher__tab active" href="/rsi/" aria-current="true" title="当前：RSI 自主学习研究站">RSI</a></div></nav><a class="brand" href="index.html"><span class="logo">RSI</span><span><strong>RSI × 自主学习</strong><span>Recursive Self-Improvement</span></span></a><nav class="nav" id="research-nav" aria-label="RSI 专题目录">{nav}</nav>{render_page_toc(p)}<div class="sidebar-note">证据综述与待验证假设分开。<br>核验日期：{DATE}<br>本专题详文为中文，保留英文术语与原始文献标题。</div></aside><button class="sidebar-overlay" id="sidebar-overlay" aria-label="关闭目录遮罩" hidden></button><main class="main" id="research-main"><div class="topbar"><button class="mobile-toggle" id="menu-toggle" aria-label="打开目录" aria-controls="sidebar" aria-expanded="false">☰</button><div class="search"><label class="sr-only" for="research-search">搜索本专题的章节与来源</label><input id="research-search" type="search" placeholder="搜索功能、研究问题、I 编号或论文…" autocomplete="off"></div><button class="language-toggle" id="nav-language" title="只切换目录语言；研究详文为中文">EN navigation</button></div><div class="content"><section class="search-results panel" id="search-results" aria-live="polite" hidden></section>{header_html}{''.join(body_parts)}<nav class="page-pagination" aria-label="专题翻页">{previous}{following}</nav></div><footer class="footer">RSI × 自主学习研究 · {page_date} · <a href="references.html">来源与核验口径</a> · <a href="research-notes.md" download>研究笔记</a><br>文献结论、研究推断和实验计划分别标注；未运行实验，不展示模拟结果。</footer></main></div><script src="site-nav.js"></script><script src="research.js"></script><script src="framework.js"></script>{extra_scripts}<script src="page-router.js"></script></body></html>'''
         (OUT / (slug + '.html')).write_text(doc, encoding='utf-8')
     # Save public, portable research records; authoring Python remains outside public output.
     metadata = {'taxonomy_version':'learning-functions-2026-10-29','review_date':DATE,'scope':'RSI、学习型改进器、相邻领域与学习科学；定向证据地图，非穷尽性综述。','sources':sources}
