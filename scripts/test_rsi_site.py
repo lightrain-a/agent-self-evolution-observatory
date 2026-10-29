@@ -1277,7 +1277,7 @@ def main():
           '与 I13 的事前接纳分开' in ideas_text.split('id="idea-3"',1)[1].split('</section>',1)[0],
           'I3 post-conflict repair was not separated from pre-update admission')
     generalization=(ROOT/'rsi/generalization-learnability.html').read_text(encoding='utf-8')
-    sections={'question','taxonomy','history','mechanisms','evidence','new-papers',
+    sections={'tradeoffs','tradeoff-solutions','question','taxonomy','history','mechanisms','evidence','new-papers',
               'idea-map','states','metrics','controls','p0','p1','p2','p3','figures'}
     check(all(f'id="{x}"' in generalization for x in sections),
           'Generalization subject lost its evidence/mechanism/evaluation chapters')
@@ -1285,13 +1285,35 @@ def main():
               ('E710','E711','E360','E100','M550','M551','M552','M553',
                'M554','M555','M556','M18','M20')),
           'Generalization subject source registry/citations are incomplete')
-    # Editorial readability contract: begin with a concrete problem, not a
-    # taxonomy or the site's internal organizational classification. Keep
-    # technical tables accessible, but collapsed in the first reading path.
+    # Start with evidenced metric trade-offs and practical response ideas.
+    # The illustrative example and technical taxonomy follow the findings;
+    # source evidence and proposed LLM/RSI experiments must stay distinct.
     first_reading_section=re.search(
         r'<section class="panel research-section" id="([^"]+)"',generalization)
-    check(first_reading_section is not None and first_reading_section.group(1)=='question',
-          'Generalization must start with an intuitive problem, not a research taxonomy')
+    check(first_reading_section is not None and first_reading_section.group(1)=='tradeoffs',
+          'Generalization must begin with concrete trade-off insights, not a taxonomy')
+    insight_ids=['insight-speed-rule','insight-similar-rules','insight-practice-test',
+                 'insight-now-future','insight-prepare-learn']
+    opening=element_fragment(generalization,'tradeoffs')
+    solutions=element_fragment(generalization,'tradeoff-solutions')
+    check(opening.count('<table>')==0 and all(f'href="#{iid}"' in opening for iid in insight_ids),
+          'All five plain-language insights need working first-screen links, not a dense matrix')
+    check(solutions.count('class="g-tradeoff-story"')==5,
+          'Trade-off solutions must cover five distinct findings without invented results')
+    for iid in insight_ids:
+        story=element_fragment(generalization,iid)
+        check('class="g-tradeoff-metrics"' in story
+              and 'data-evidence-status="paper-plus-proposal"' in story
+              and all(f'data-layer="{layer}"' in story for layer in
+                      ('other-fields','llm-proposal','rsi-proposal'))
+              and '一起测' in story and '待检验' in story,
+              'Insight lost metrics, cross-domain response, LLM/RSI proposals or evaluation: '+iid)
+    check(all(f'href="references.html#{ref}"' in solutions for ref in
+              ('E26','E99','E100','E20','M22','M554','E710')),
+          'Opening trade-off statements must retain precise primary-study citations')
+    check('没有直接测量快速/慢速脑回路' in solutions
+          and '一个是初期一起学更难，一个是新任务学得快却损害旧规则' in solutions,
+          'Do not conflate behavioral shortcuts with measured brain circuits or the two conflict protocols')
     intro=element_fragment(generalization,'question')
     check('(3, 2, 5)' in intro and '正确规则' in intro
           and '完全相同的新训练' in intro

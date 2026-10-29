@@ -6,14 +6,90 @@ on demand. Not a numbered RSI Idea or an experimental result.
 """
 PAGE = {
     "slug": "generalization-learnability",
-    "title": "真正学会之后，会不会更会学？｜泛化与未来可学习性",
-    "en": "Learning, Mastery, and Future Learnability · An Accessible Research Guide",
-    "lead": "两个模型今天做题都很准，可能一个记住了答案，另一个学会了规则。更值得追问的是：给它们同一批新题、同样的训练机会，谁以后学得更多？这页从具体例子讲起，再解释相关论文、我们的 I 和验证方法。",
+    "title": "学得快，为什么不一定学得好？｜泛化与未来可学习性",
+    "en": "Learning Trade-offs · From Scientific Insights to LLM and RSI Experiments",
+    "lead": "原题进步快，换个情境却不会；新旧任务很相似，反而容易互相干扰；练习时觉得更难，后来可能学得更好。先看五组具体的指标权衡，再看其他领域怎样应对，以及 LLM、RSI 可以怎样检验和改进。",
     "updated": "2026-10-29",
     "page_role": "cross-cutting-evidence",
     "chapter": 7,
     "related_functions": ["experience", "signal", "capability", "regulation"],
     "sections": [
+        ("tradeoffs", "先看五个发现：一个指标变好，另一个可能变差", '''
+<p><strong>我们想找的不是一个笼统的“泛化分数”，而是这些具体矛盾：</strong>现在学得快不快、换情境会不会、旧规则还能不能用、下一轮还学不学得动。下面先把洞见说清楚，再往下看原文和实验。</p>
+<nav class="g-tradeoff-index" aria-label="五个学习权衡">
+<a href="#insight-speed-rule"><span class="g-tradeoff-number">01</span><span><b>原题学得快，换个情境却不会</b><small>眼前学习速度 ↔ 真正规则的泛化</small><span>能迅速解决练习，可能只是找到了局部有效的捷径。</span></span></a>
+<a href="#insight-similar-rules"><span class="g-tradeoff-number">02</span><span><b>新旧规则越像，越可能互相帮忙，也互相干扰</b><small>复用旧知识的收益 ↔ 新旧规则的区分与保持</small><span>一起学时可能更费劲；先后学时也可能 B 学得快，却把 A 用错。</span></span></a>
+<a href="#insight-practice-test"><span class="g-tradeoff-number">03</span><span><b>练习时感觉更难，后来反而更会独立解题</b><small>练习时的顺手感 ↔ 延迟记忆与新题解法选择</small><span>把不同题型穿插起来，可能比一路套同一公式更能训练“何时用哪种方法”。</span></span></a>
+<a href="#insight-now-future"><span class="g-tradeoff-number">04</span><span><b>今天的模型更强，明天却可能更难继续学</b><small>当前训练表现 ↔ 后续适应性与旧能力保持</small><span>继续训练不一定只带来收益，也可能让下一次参数修改更困难或更容易破坏已有能力。</span></span></a>
+<a href="#insight-prepare-learn"><span class="g-tradeoff-number">05</span><span><b>准备阶段看不出多强，下一次教学才显出优势</b><small>眼前产出与准备成本 ↔ 下一阶段真正学到多少</small><span>有些经历的价值，不在当场多答对几题，而在后来接受相同教学时学得更多。</span></span></a>
+</nav>
+<p class="g-thesis"><strong>研究目标不是一律“学慢一点”或“少复用旧知识”。</strong>我们要找出什么时候出现代价，能否通过改例题、分清规则适用条件、调整练习顺序，尽量同时改善多个指标。这些关系也不一定是无法突破的取舍。</p>
+'''),
+        ("tradeoff-solutions", "从发现到办法：其他领域怎样处理，LLM／RSI 可以怎样做？", '''
+<p>每条都沿着同一个顺序读：<strong>观察到了什么 → 哪两个指标在牵制 → 原领域有什么办法或线索 → LLM 怎么试 → RSI 学会怎样选择。</strong>原论文的结果与下面标出的 LLM／RSI 提案分开；提案还没有在本项目中运行。</p>
+<article class="g-tradeoff-story" id="insight-speed-rule" data-evidence-status="paper-plus-proposal">
+<header><span class="g-tradeoff-number">01</span><h3>学得快，可能是找到了捷径；学得慢一点，反而学对了规则</h3></header>
+<p class="g-tradeoff-metrics"><span>原目标学习速度</span><b>↔</b><span>新位置的规则泛化</span></p>
+<p><b>原研究发现：</b>在光标旋转任务中，某组训练位置允许“旋转”和局部“平移”等不同方法都做对。参与者进步较快，换到新位置却常暴露错误策略；另一组位置更能排除错误解释，前期较慢，之后更一致地使用正确旋转规则。[[E26]]</p>
+<dl class="g-tradeoff-actions">
+<div data-layer="other-fields"><dt>原领域的办法</dt><dd><strong>改变练习位置，让捷径不再好用；用不给答案的新位置检验。</strong>关键不是故意让人学慢，而是让训练真正区分不同解释。</dd></div>
+<div data-layer="llm-proposal"><dt>LLM 怎么试<span>待检验</span></dt><dd>少加一些换词重复题，多加<strong>正确规则和错误捷径会给出不同答案的反例</strong>。在相同训练量下，同时看原题进步与未见条件题的正确率。</dd></div>
+<div data-layer="rsi-proposal"><dt>RSI 进一步做什么<span>待检验</span></dt><dd>Agent 根据过去的纠错结果，逐步学会挑出“能揭穿当前错误规律”的下一道题，而不是总挑最容易涨分的题。对应 <a href="idea-i10-learning-novelty.html">I10</a> 与 <a href="i8.html">I8</a>。</dd></div>
+</dl>
+<p class="g-tradeoff-check"><b>一起测：</b>训练进步速度、新条件正确率、总采样与训练成本。</p>
+<details class="g-depth"><summary>证据说明：这里的“捷径”不是已经测到的“快脑回路”</summary><p>对应 Ding 等 <i>npj Science of Learning</i> 2026 的行为实验，不是 Nature Communications，也没有直接测量快速/慢速脑回路。实验改变的是哪些错误假设在训练中仍可成功，不说明“所有慢学者都更理解”，也不说明主动增加无效尝试能提高学习效率。<a href="reading-notes.html#deep-hypothesis-testing-2026-ding">读完整实验 →</a></p></details>
+</article>
+<article class="g-tradeoff-story" id="insight-similar-rules" data-evidence-status="paper-plus-proposal">
+<header><span class="g-tradeoff-number">02</span><h3>旧知识能帮新任务上手，也可能把两套规则搅在一起</h3></header>
+<p class="g-tradeoff-metrics"><span>共享规律带来的迁移</span><b>↔</b><span>新旧任务的区分与保持</span></p>
+<p><b>先分清两种观察：</b>NC 2025 的交错训练中，共享结构的任务反而出现更大的初期干扰，继续练习后差距缩小；NHB 2025/26 的 A→B→A 实验则发现，Near 规则使 B 更容易上手，但返回 A 时更容易误用 B。<strong>一个是初期一起学更难，一个是新任务学得快却损害旧规则。</strong>[[E99]][[E100]]</p>
+<dl class="g-tradeoff-actions">
+<div data-layer="other-fields"><dt>原领域的线索</dt><dd>NC 中练习后的表征逐渐分开，干扰减轻；NHB 的计算模型中，较独立的表示减少干扰，却牺牲部分迁移。启发是<strong>共享相同部分，明确区分不同规则的使用条件</strong>，而非全部混合或全部隔离。</dd></div>
+<div data-layer="llm-proposal"><dt>LLM 怎么试<span>待检验</span></dt><dd>对相似但答案不同的任务，补充“什么条件下用 A、什么条件下用 B”的成对例子；与普通混合训练、旧题回放、独立 Adapter 比较，检查 A/B 以及混合情境。</dd></div>
+<div data-layer="rsi-proposal"><dt>RSI 进一步做什么<span>待检验</span></dt><dd>Agent 在发现规则错用后，学习判断应该<strong>补适用条件、重学旧规则，还是拆成独立 Skill</strong>。以实际修复结果改进下一轮判断，对应 <a href="ideas.html#idea-3">I3</a>，而不是只给每个任务新增一个模块。</dd></div>
+</dl>
+<p class="g-tradeoff-check"><b>一起测：</b>B 的学习速度、返回 A 的规则错用率、新组合泛化、隔离与修复成本。</p>
+<details class="g-depth"><summary>证据说明：相似不一定冲突，也没有“越相似越难学”的通则</summary><p>完全相同的规则可以直接复用；真正需要区分的是输入/情境相近而输出或适用条件不兼容的情况。Menghi 的 NC 实验不是直接操纵“新规则与旧规则矛盾”，后期泛化也没有显著组间差异。Holton 的人类结果并非“慢者泛化更好”：其中共享规则的 Lumpers 迁移和泛化较好，代价是旧任务干扰。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">NC 精读</a> · <a href="reading-notes.html#deep-nhb2025-transfer-interference-holton">NHB 精读</a></p></details>
+</article>
+<article class="g-tradeoff-story" id="insight-practice-test" data-evidence-status="paper-plus-proposal">
+<header><span class="g-tradeoff-number">03</span><h3>一路练同类题很顺，打乱以后反而更会自己选方法</h3></header>
+<p class="g-tradeoff-metrics"><span>练习时的顺手感</span><b>↔</b><span>延迟记忆与新题解法选择</span></p>
+<p><b>原研究发现：</b>本科物理学生练同一批题，只改变集中或交错安排。交错组觉得更难、以为自己学得更少，却在之后不预告、包含新组合的测试中表现更好。这里首先分离的是<strong>主观学习感受与真实后测</strong>，不能把它改写成“训练速度一定更慢”。[[E20]]</p>
+<dl class="g-tradeoff-actions">
+<div data-layer="other-fields"><dt>原领域的办法</dt><dd><strong>穿插不同题型，并延迟检验。</strong>学习者需要辨别这道题该用哪种方法，不能依赖上一题的公式一直做下去。原物理研究保持总题目不变。</dd></div>
+<div data-layer="llm-proposal"><dt>LLM 怎么试<span>待检验</span></dt><dd>固定数据总量，比较集中练习、完全交错和先集中后交错；先后检验单类题、混合题及未见组合。不能因为人类受益，就预定交错对 LLM 也最好。</dd></div>
+<div data-layer="rsi-proposal"><dt>RSI 进一步做什么<span>待检验</span></dt><dd>当 Agent“单类会做、混合会选错”时，尝试改变课程；基础规则都没学会时，先试集中练习。让真实后测而非当前训练 Loss 决定何时切换，对应 <a href="idea-i9-practice-switching.html">I9</a>。</dd></div>
+</dl>
+<p class="g-tradeoff-check"><b>一起测：</b>练习表现/学习感受、延迟新题成绩、混合题规则选择、同预算学习收益。</p>
+<details class="g-depth"><summary>证据与方案边界</summary><p>Samani 与 Pan，<i>npj Science of Learning</i> 2021，是课程作业顺序的对照研究；“先集中后交错”和按模型状态自主切换是我们的候选方案，不是该论文已验证的结论。<a href="https://www.nature.com/articles/s41539-021-00110-x" target="_blank" rel="noopener noreferrer">查看原论文</a>。</p></details>
+</article>
+<article class="g-tradeoff-story" id="insight-now-future" data-evidence-status="paper-plus-proposal">
+<header><span class="g-tradeoff-number">04</span><h3>当前训练更充分，不代表下一轮更容易学</h3></header>
+<p class="g-tradeoff-metrics"><span>当前能力与训练投入</span><b>↔</b><span>未来适应速度、旧能力损失</span></p>
+<p><b>原研究发现：</b>Nature 2024 在持续训练的深度网络中观察到，后来学习新任务的能力逐渐下降；ICML 2025 的语言模型研究则发现，部分预训练更久的模型微调后结果更差。<strong>学不进去，与一改参数就破坏更多旧能力，是需要分别检查的两种解释。</strong>[[M22]][[M554]]</p>
+<dl class="g-tradeoff-actions">
+<div data-layer="other-fields"><dt>已有机器学习办法</dt><dd>Nature 的 Continual Backpropagation 少量重置低使用价值单元，为新特征保留空间，在所测网络中缓解退化。它不是对大型 Transformer 或旧知识保持的通用保证。</dd></div>
+<div data-layer="llm-proposal"><dt>LLM 怎么试<span>待检验</span></dt><dd>从冻结检查点复制模型，给相同新任务与监督，比较学习曲线；控制学习率和优化器状态，再比较继续更新、新 Adapter、已有塑性保持方法，同时测旧能力。</dd></div>
+<div data-layer="rsi-proposal"><dt>RSI 进一步做什么<span>待检验</span></dt><dd>版本选择不仅看本轮涨分，还看下一轮是否更难学；学习器若已经迟钝，可检验换更新方式或隔离学习，而非继续盲目加步数。<a href="learning-rule-evolution.html">I14</a>研究更新规则本身，<a href="idea-i9-practice-switching.html">I9</a>仍只改变课程顺序。</dd></div>
+</dl>
+<p class="g-tradeoff-check"><b>一起测：</b>当前成绩、未来 C 的完整学习曲线、旧能力保持、所有试训和恢复成本。</p>
+<details class="g-depth"><summary>哪些已经有证据，哪些仍待验证？</summary><p>参数网络的塑性损失不能直接解释只修改 Prompt/Skill 的 Agent。后者需要独立研究规则冲突、错误记忆或编辑器限制。外接专家可以维持系统表现，却不等于核心模型恢复了学习能力。<a href="reading-notes.html#deep-nature2024-loss-plasticity-dohare">Nature 精读</a> · <a href="https://proceedings.mlr.press/v267/springer25a.html" target="_blank" rel="noopener noreferrer">ICML 论文</a>。</p></details>
+</article>
+<article class="g-tradeoff-story" id="insight-prepare-learn" data-evidence-status="paper-plus-proposal">
+<header><span class="g-tradeoff-number">05</span><h3>有些准备现在看不出收益，却让下一次教学更有效</h3></header>
+<p class="g-tradeoff-metrics"><span>眼前产出与准备成本</span><b>↔</b><span>接受相同新教学后的学习增量</span></p>
+<p><b>原研究发现：</b>Schwartz 与 Martin 的人类统计教学研究中，先做发明式探索与直接讲授练习两组，在无新资源的迁移测试中表现相近；给出可供继续学习的新资源后，前者学得更好。它提示<strong>某段经历的价值可能要在下一次学习才显现</strong>，并不是已经证明一种因果前置补救算法。[[E710]]</p>
+<dl class="g-tradeoff-actions">
+<div data-layer="other-fields"><dt>教育学的办法</dt><dd>先让学习者接触需要解释的差异，再提供正式讲解；评估时允许两组使用同样的新资源，看谁更能从中受益，而不只考已经知道的答案。</dd></div>
+<div data-layer="llm-proposal"><dt>LLM 怎么试<span>待检验</span></dt><dd>把“先探索”“补关键基础”“直接练目标题”分成不同实验，不混作同一机制。第一阶段花相同预算，第二阶段给相同新任务训练，分别记录即时收益与后续新增收益。</dd></div>
+<div data-layer="rsi-proposal"><dt>RSI 进一步做什么<span>待检验</span></dt><dd>Agent 从失败里判断是否缺少可核验的基础 P；只有补 P 后真的提高多个新任务的第二阶段学习增量，才继续投入。对应 <a href="idea-i12-prerequisite-bottleneck.html">I12</a>；先试后教的顺序则归 <a href="idea-i7-learning-order.html">I7</a>。</dd></div>
+</dl>
+<p class="g-tradeoff-check"><b>一起测：</b>准备成本、准备后立刻会做多少、下一段训练额外学会多少、跨多个后续任务的总收益。</p>
+<details class="g-depth"><summary>效率限制：不是要求每题都先失败很久</summary><p>这里保留的是“评估后续学习收益”的思路，不是把昂贵多样化探索设为默认策略。若直接纠错、直接练目标题在总预算下更好，就不走准备路线。研究者要区分原文的发明活动、我们提出的先修知识补救，以及真正的长期成本收益。</p></details>
+</article>
+<p class="g-thesis"><strong>LLM 层先检验“哪一种处理真的有效”，RSI 层再研究“系统能否从历史后果中学会选择合适的处理”。</strong>不要在基础现象还没有复现时，先把五种做法拼成一个大控制器。</p>
+<div class="g-quicklinks"><a href="#question">用一道小题理解“捷径”</a><a href="#idea-map">这些权衡分别归哪个 I？</a><a href="#p0">进入三组决定性实验</a></div>
+'''),
         ("question", "先看一个例子：两个人都做对题，为什么我们还说学得不同？", '''
 <div class="g-story">
   <div><span class="g-eyebrow">同一道训练题</span><h3>两个模型都答对了</h3>

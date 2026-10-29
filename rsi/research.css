@@ -335,4 +335,35 @@ body[data-rsi-page="generalization-learnability"] .g-example-table th,body[data-
  body[data-rsi-page="generalization-learnability"] .g-steps-short>div{gap:13px}
 }
 
+/* Evidence-led opening: concrete trade-offs, then cross-domain responses. */
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:17px 0}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index>a{display:flex;align-items:flex-start;gap:12px;min-width:0;padding:14px 16px;border:1px solid #dce5ef;border-radius:10px;background:#f8fafc;text-decoration:none}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index>a:last-child{grid-column:1/-1}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index>a:hover{background:#eff5fb;border-color:#b2c7db}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-number{flex:none;display:block;font-size:12px;font-weight:750;color:#5c7b99;font-variant-numeric:tabular-nums;line-height:1.8}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index b{display:block;font-size:15px;line-height:1.65;color:#233f5c}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index small{display:block;font-size:12px;line-height:1.6;font-weight:650;color:#496a87;margin:5px 0}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-index>a>span>span{display:block;font-size:13px;line-height:1.75;color:#5c6b7d;font-weight:400}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-story{border-top:1px solid #dce5ef;padding:24px 0 9px;margin:19px 0;scroll-margin-top:80px}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-story>header{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-story>header h3{font-size:18px;line-height:1.6;margin:0;color:#1e3d5d}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-story>p{font-size:14px;line-height:1.85;margin:11px 0}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-metrics{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:10px 0 15px!important}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-metrics>span{border:1px solid #d6e2ee;border-radius:6px;padding:3px 9px;background:#f4f8fc;color:#3a5b79;font-size:12px;line-height:1.7}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-metrics>b{font-size:16px;font-weight:500;color:#8294a7}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions{margin:15px 0;padding:0;border:1px solid #e0e7ef;border-radius:9px;overflow:hidden;background:#fcfdff}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions>div{display:grid;grid-template-columns:128px minmax(0,1fr);gap:14px;padding:12px 15px;border-bottom:1px solid #e7edf3}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions>div:last-child{border-bottom:0}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions dt{font-size:12px;font-weight:750;color:#426480;line-height:1.8}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions dt>span{display:inline-block;font-size:10px;font-weight:500;margin-left:5px;color:#717e8a}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions dd{margin:0;font-size:14px;line-height:1.8;color:#384b60}
+body[data-rsi-page="generalization-learnability"] .g-tradeoff-check{font-size:12px!important;color:#5a6c80;border-left:2px solid #a6b9ca;padding-left:12px}
+@media(max-width:730px){
+ body[data-rsi-page="generalization-learnability"] .g-tradeoff-index{grid-template-columns:1fr;gap:9px}
+ body[data-rsi-page="generalization-learnability"] .g-tradeoff-index>a{padding:12px 13px}
+ body[data-rsi-page="generalization-learnability"] .g-tradeoff-story>header h3{font-size:16px}
+ body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions>div{grid-template-columns:1fr;gap:4px;padding:11px 12px}
+ body[data-rsi-page="generalization-learnability"] .g-tradeoff-actions dd{font-size:13px}
+}
+
 @media print{[data-rsi-page] .sidebar,[data-rsi-page] .topbar,.page-pagination,.search-results,.skip-link{display:none!important}[data-rsi-page] .layout{display:block}[data-rsi-page] .content{padding:0;max-width:none}.research-section{box-shadow:none;border:0;padding:10px 0;break-inside:auto}.table-wrap{overflow:visible}.table-wrap table{min-width:0;font-size:10px}.flow{flex-wrap:wrap}.research-hero{padding:0 0 20px}.source-card{break-inside:avoid}.decision{background:#f5f5f5}.equation{white-space:normal;color:#222;background:#eee}}
