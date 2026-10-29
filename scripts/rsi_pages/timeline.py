@@ -89,10 +89,8 @@ def event_card(event: dict) -> str:
       </summary>
       <div class="rsi-tl-event-extra">
         <div class="rsi-tl-tags" aria-label="论文与研究主题">{tag_buttons}</div>
-        {preview}
-        <div class="rsi-tl-item-footer">
-          <a href="{safe_url(event["source_url"])}"{attrs}>{esc(event["source_label"])} ↗</a>
-          {f'<span class="rsi-tl-live" data-countdown="{esc(due)}" aria-live="off">AoE 正式截止</span>' if due else ""}
+        {preview}<div class="rsi-tl-item-footer">
+          <a href="{safe_url(event["source_url"])}"{attrs}>{esc(event["source_label"])} ↗</a>{f'<span class="rsi-tl-live" data-countdown="{esc(due)}" aria-live="off">AoE 正式截止</span>' if due else ""}
         </div>
       </div>
     </details>'''

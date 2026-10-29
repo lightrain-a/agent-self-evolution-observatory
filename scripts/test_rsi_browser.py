@@ -466,6 +466,9 @@ def main():
         js("document.querySelector('[data-calendar-day=\"2026-10-27\"]').click()")
         check(js("return document.querySelector('[data-day=\"2026-10-27\"]').open"),
               'Mobile calendar selection should unfold the target day')
+        time.sleep(.85)
+        check(js("return (()=>{const r=document.querySelector('[data-day=\"2026-10-27\"]').getBoundingClientRect();return r.top<innerHeight && r.bottom>0})()"),
+              'Selected day should scroll into the mobile viewport')
         screenshot('timeline-v3-mobile-selected-day.png')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
         time.sleep(.5)
