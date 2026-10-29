@@ -31,6 +31,691 @@
   "description": "RSI 论文阅读卡片数据源：支持 arXiv 预印本或带 DOI 的正式期刊论文。新增论文只需追加 papers 条目并重新构建。",
   "papers": [
     {
+      "id": "nhb2025-transfer-interference-holton",
+      "short_title": "Transfer × Interference · NHB 2025/26",
+      "title": "Humans and neural networks show similar patterns of transfer and interference during continual learning",
+      "authors": "Eleanor Holton, Lukas Braun, Jessica AF Thompson, Jan Grohn, Christopher Summerfield",
+      "lead_institution": "University of Oxford · Department of Experimental Psychology",
+      "institutions": [
+        "University of Oxford · Department of Experimental Psychology",
+        "Princeton Neuroscience Institute · Princeton University",
+        "Allen Institute for Neural Dynamics"
+      ],
+      "institution_source": "Nature Human Behaviour 正式署名/Author Affiliations，PubMed PMID 41168425；Eleanor Holton Oxford/Princeton，Lukas Braun Oxford/Allen，其他作者 Oxford",
+      "publication": "Nature Human Behaviour · 10, 111–125 (January 2026); online 2025-10-30",
+      "doi": "10.1038/s41562-025-02318-y",
+      "official_url": "https://www.nature.com/articles/s41562-025-02318-y",
+      "first_posted": "2025-10-30",
+      "version": "Nature Human Behaviour 正式期刊文章；2025-10-30 online / 2026 January issue",
+      "read_on": "2026-10-29",
+      "reading_level": "Nature Human Behaviour 正文 Fig.1–4、Methods、Supplementary 说明、PubMed 作者与代码/数据声明；未独立运行复现",
+      "tags": [
+        "Transfer-Interference Trade-off",
+        "Representational Reuse",
+        "Catastrophic Interference",
+        "Rich vs Lazy Learning",
+        "I3",
+        "I9",
+        "I13",
+        "Nature Human Behaviour"
+      ],
+      "research_coverage": {
+        "signal": {
+          "level": "core",
+          "contribution": "将学新B时的迁移与回到旧A时使用B规则的概率分开测，后者通过von Mises双峰混合模型而非普通准确率定义。",
+          "open_question": "人类A→B→A短时规则错用未能区分神经表示的彻底擦除与检索/上下文选择失败。"
+        },
+        "novelty": {
+          "level": "partial",
+          "contribution": "Same/Near/Far 控制任务规则相似性；网络表示共享和分离关联迁移与干扰。",
+          "open_question": "并未研究LLM真实形成的新知识、新任务搜索或自生成信息是否足够。"
+        },
+        "reach": {
+          "level": "partial",
+          "contribution": "人类Near lumpers跨任务迁移与未训练刺激泛化较高；splitters更善保留个体和来源信息。",
+          "open_question": "不能将规则泛化直接概括为LLM多任务或Agent工具调用的通用迁移。"
+        },
+        "retention": {
+          "level": "core",
+          "contribution": "Near规则比Far获得更多正迁移，却对旧A带来更明显干扰；rich/lazy线性网络不同表示策略产生一致的行为权衡。",
+          "open_question": "没有证明持续多代的旧规则永久被擦除，也没有检验真实参数/Skill更新的修复机制。"
+        },
+        "safety": {
+          "level": "not_addressed",
+          "contribution": "对规则错用/保持提供科研机制动机。",
+          "open_question": "实验未涉及授权违例、部署风险、跨代安全接纳或策略门控；I13只能保留交叉说明。"
+        }
+      },
+      "one_sentence": "A→B→A顺序学习中，相似但不相同的规则更便于迁移，也更易让B规则干扰旧A；人类行为可与rich/lazy网络的共享/独立表征机制对应。",
+      "story": {
+        "challenge": "已学会旧规则之后，相似新规则为什么更容易学会，却反而会在回到旧任务时用错？",
+        "insight": "复用低维共享结构促使正迁移，也让新更新作用于旧规则；分离较高维表示有利于旧任务保持，却损害泛化。",
+        "design": "植物夏/冬圆盘位置任务 A→B→A，Same/Near/Far 规则角度对照；两批305人和一一匹配的两层线性ANN；Near再区分lumpers/splitters。",
+        "result": "Near相对Far有更多迁移也有更多规则干扰；Near人类中的lumpers迁移与泛化较好、splitters个体位置与来源记忆更好；rich/lazy模拟重现差异。"
+      },
+      "problem": "人类和人工神经网络能否在顺序学习中呈现相似的迁移-干扰权衡？同一个成功学会A/B的行为外表下，是否存在不同的共享或分离表示策略？",
+      "setup": "在线人类实验先学6种植物的夏/冬圆盘位置及共同旋转规则（A，120 trials），再学6种新植物和规则B（120 trials），最后回到A，冬季回答不再反馈。Same B=A，Near B=A±30°，Far B=A+180°。发现研究202招募/151合格、独立复现215招募/154合格，共305人；每位有相同试次顺序和反馈的两层线性ANN。迁移测B第一轮相对A最后一轮冬季正确率差，干扰测返回A后采用B规则的von Mises概率。",
+      "updates": "人类通过逐题反馈掌握规则；两层ANN真正进行在线梯度更新并跨A/B保留参数，Near组另对初始化embedding尺度σ=10^-3 rich、σ=2 lazy分组。实验没有更新LLM、Agent Skill/Memory/Harness，亦无递归Meta-Admission更新。",
+      "key_ideas": [
+        {
+          "name": "同一共享结构的正负两面",
+          "summary": "当B与A近似却并非完全相同时，复用A所建立的结构加速B，也可能在A复测时错误套用B规则。",
+          "formula": "Near: high transfer(B|A) + high p(rule B | retest A)"
+        },
+        {
+          "name": "策略差异并不是谁更努力",
+          "summary": "Lumpers共享结构而跨题泛化高；Splitters较善保存独特刺激/任务来源，但B迁移较弱。",
+          "formula": "lumpers ≈ rich; splitters ≈ lazy (behavioural analogy)"
+        },
+        {
+          "name": "任务内正确不等于边界正确",
+          "summary": "同样学会两任务时，旧规则错用是否出现要在A→B→A返回测试中观察，混合题/新刺激进一步测边界。",
+          "formula": "RuleMisuse_A = P(apply B rule | A context)"
+        },
+        {
+          "name": "I3扩展是假设而不是论文结果",
+          "summary": "修复Agent需要识别是规则擦除还是适用条件/检索错误，比较补边界、隔离Skill、普通replay与重学。",
+          "formula": "same task gain; different rule-interference/retention"
+        }
+      ],
+      "evidence": [
+        "人类两个独立样本招募202与215、经预定排除后分别151/154，总305人；Same N=103、Near N=101、Far N=101，各120 A、120 B训练试次。",
+        "Near 比 Far 有更强B迁移（合并样本t(200)=6.63，P<0.001，d=0.93）；A复测Near对B规则的干扰高于Far（发现组P=0.006，d=0.55；独立复现P=0.013，d=0.50）。干扰分析只保留学会B的被试，约14%排除。",
+        "Near内部按照A复测使用规则分类：Lumpers 38人，Splitters 42人；Lumpers迁移−0.06 vs −0.21、未训练刺激泛化81% vs 69%；Splitters个体夏季位置67.1% vs 60.0%、任务来源回忆90.2% vs 75.5%。",
+        "Near组rich/lazy ANN：干扰概率rich1.00 vs lazy0.20；泛化rich0.94 vs lazy0.59；rich任务表示主角度约0.49°、lazy约75.10°；embedding初始化σ分别为10^-3与2。",
+        "原文比较 replay/EWC/模块化网络，但这些对照没有复现人类Splitters完整行为谱；并非证明这些方法不能降低所有干扰。"
+      ],
+      "boundaries": [
+        "人类实验只观测行为，没有脑内神经子空间记录；0.49°和75.10°是ANN隐层表示角度，不是人脑测量。",
+        "人类Lumpers/Splitters根据A复测结果事后划分；发现对其他行为的预测关联，但不能视为稳定终生学习人格或先验可识别类型。",
+        "Same条件两条规则没有矛盾，无法像Near/Far那样计算规则B对A的替代使用概率。",
+        "短时间A→B→A规则误用未证明旧知识永久遗忘；应该区分旧知识实际被更新覆盖、情境检索失败、任务门控失误。",
+        "简单两层线性ANN + rich/lazy初始化控制不等于现代Transformer/LLM的已验证机制，也没有研究Agent RSI的递归更新。",
+        "本文与NC2025 Menghi的A/B同时交错学习研究时序不同；NC2026 Tian研究schema复用/反转。不能直接将结论混合当一个实验。"
+      ],
+      "our_relevance": [
+        "I3主归属：把“新旧能力退化”进一步区分成旧规则真的学不会 vs 依然存在但任务边界不清、错误套用B规则；对应针对性上下文边界测试与修复。",
+        "I3 P0：用Same/Near/Far规则关系，在真实Agent Skill或可训练LoRA分轨里固定更新器与材料做A→B→A，按规则来源定义Rule Misuse Rate而非只报总体正确率。",
+        "I3 P1：若Near出现迁移-干扰权衡，分别比较上下文提示恢复、重新切分适用条件、隔离Skill/Adapter、普通Replay/EWC和重学；保持相同监督/计算预算。",
+        "I9只作为相关文献：固定跨主题顺序/交错操作是I9自变量；Holton只有A→B→A，未直接比较B→A或未来C的学习速度。",
+        "I13仅作风险诊断的间接启发：原论文不含安全合同或越权执行，也不能将干扰率自动称为安全违规率；不改变I13 Safety-first主线。"
+      ],
+      "next_test": "在可程序核验的三类规则Same/Near/Far中，从相同模型/Skill版本做等预算真实A→B→A；复测A时区分B规则错用、随机错误和旧规则可被提示恢复。若Near明显表现为迁移更好但规则错用更多，才比较低预算适用范围修复、隔离与replay；跨代元策略需额外在未见规则族验证，不能直接宣布RSI。",
+      "deep_read": {
+        "focus": "原论文最值得迁移的不是某种正交网络模块，而是同时测 B 学习迁移和 A 复测时具体错用 B 规则的能力；同样现在都学会 A/B，内部规则组织方式可能完全不同。",
+        "summary": "Holton等（NHB 2025在线/2026刊期）在305名合格人类参与者的A→B→A植物旋转规则任务及一一匹配的两层线性网络中发现：相似但不完全相同的规则促进迁移，也更易干扰旧任务。Near组人类的lumpers与splitters在跨题泛化与个体/来源记忆上形成权衡，rich/lazy网络表征提供计算解释；它不是LLM或RSI实验。",
+        "terms": [
+          {
+            "name": "Transfer",
+            "meaning": "引入B后相对A最后一轮的冬季位置正确率变化；越少掉分说明越能复用原来的规则。"
+          },
+          {
+            "name": "Interference",
+            "meaning": "从B返回A时使用B规则的倾向，以两个von Mises概率分布拟合规则来源，而非简单错误总数。"
+          },
+          {
+            "name": "Rich Representation",
+            "meaning": "低维、任务结构相关的共享表示；有利于迁移和泛化但近似新规则容易覆盖旧用法。"
+          },
+          {
+            "name": "Lazy Representation",
+            "meaning": "高维、相对独立的个别输入表示，较少干扰但可能失去跨任务迁移与泛化。"
+          },
+          {
+            "name": "Lumper / Splitter",
+            "meaning": "依据Near组复测规则使用事后分类的人类行为分组，类似Rich/Lazy模型机制但不是人脑表示直接测量。"
+          }
+        ],
+        "sections": [
+          {
+            "id": "challenge-transfer-interference",
+            "stage": "challenge",
+            "title": "Challenge｜为什么已有知识能让B学得更快，却可能让A重新变错？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "传统持续学习常把正迁移（已有知识帮新任务）和旧知识干扰（新训练令旧任务退化）当成两个竞争目标。Holton等问的是：二者是否由同一表示复用机制产生？只测A/B学习末尾准确率，可能把内部完全不同的规则组织方式看成同一个解。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "常见观测",
+                  "为什么不够",
+                  "作者增加的诊断"
+                ],
+                "rows": [
+                  [
+                    "B很快学会",
+                    "可能正确复用旧规则，也可能把任务边界合并",
+                    "B第一轮表现与A最后一轮比较，量化迁移"
+                  ],
+                  [
+                    "回到A正确率降低",
+                    "可能不记得位置、规则混淆或输出噪声",
+                    "把A复测回答归因于A/B两条旋转规则"
+                  ],
+                  [
+                    "A/B都学会了",
+                    "不同策略可能在训练终点表现一样",
+                    "比较未训练刺激泛化、个体位置记忆、来源记忆和隐层表示"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最关键的理论张力",
+                "text": "当B与A具有相似却不完全相同的规律时，复制旧结构可能更快，但这也是A与B最容易相互改写的条件。完全相同的Same没有相互矛盾的规则，不能和Near/Far等价讨论干扰。"
+              }
+            ]
+          },
+          {
+            "id": "experiment-aba-protocol",
+            "stage": "design",
+            "title": "Figure 1｜305人的A→B→A实验，怎样改变相似度而不改变任务框架？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "每个参与者学习6种植物的夏季位置和冬季位置。植物各有独特的夏季圆盘角度；冬季位置由同一个季节旋转规则计算。例如A为顺时针120°。每个试次先回答夏季位置并获反馈，再回答冬季位置。训练A后换6种从未出现的植物作为B，参与者不会被告知切换任务。最后返回A的植物，仍给夏季位置反馈，但不再为冬季回答提供反馈，使原规则是否保留可独立检验。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "阶段",
+                  "规则设置",
+                  "需要测量"
+                ],
+                "rows": [
+                  [
+                    "A：旧任务学习",
+                    "6种植物、120个试次，个体夏季位置不同，但相同季节角度偏移",
+                    "学会规则A与个体位置"
+                  ],
+                  [
+                    "B：新植物学习",
+                    "6个全新植物、120个试次；Same: θB=θA；Near: θB=θA±30°；Far: θB=θA+180°",
+                    "新任务是否利用A的结构"
+                  ],
+                  [
+                    "A Re-test",
+                    "重新出现A植物，不反馈冬季位置",
+                    "是否仍能使用A规则而非新学的B规则"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "发现研究从202人招募，排除后151人；独立复现从215人招募，排除后154人。最终总N=305：Same=103，Near=101，Far=101。任务规则具体角度在参与者间随机化，120°只是示例，不能写成所有人的固定任务规则。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "顺序的重要边界",
+                "text": "这是A→B→A固定顺序，操纵的是A/B规则相似度，不是Blocked/Interleaved随机对照，也没有B→A反向课程或学习第三个未见任务C。"
+              }
+            ]
+          },
+          {
+            "id": "metrics-von-mises",
+            "stage": "design",
+            "title": "Methods｜作者怎样把“忘记A”区分为“错误套用B”？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "测量指标",
+                  "精确定义",
+                  "解读与限制"
+                ],
+                "rows": [
+                  [
+                    "Transfer (B | A)",
+                    "B最初6个冬季定位准确率 − A最后6个冬季定位准确率",
+                    "越接近0代表学习B的初始代价越小，不能直接当训练收敛速度"
+                  ],
+                  [
+                    "Interference (B→A)",
+                    "复测A时，由双von Mises混合模型估计响应遵循规则B的概率p(rule B)",
+                    "识别系统性规则错用，比单纯正确率下降具体"
+                  ],
+                  [
+                    "Generalization",
+                    "A中未训练冬季规则的测试刺激，只有夏季位置反馈",
+                    "能否应用共享规则到没学过的输入"
+                  ],
+                  [
+                    "Unique position / Source memory",
+                    "分别测每种植物夏季位置、其最初属于A还是B",
+                    "检验学习者是否注重独特信息和任务来源"
+                  ]
+                ]
+              },
+              {
+                "type": "formula",
+                "label": "作者的干扰概率可概念化为",
+                "expression": "p(response angle) = (1-w) VM(theta_A, kappa_A) + w VM(theta_B, kappa_B)",
+                "meaning": "VM表示圆周von Mises分布。权重w可被解释为A复测时遵循B规则的概率，θA/θB为原有规则。",
+                "boundary": "此式为帮助理解的简化表达；论文有模型辨识、参数恢复及单分布对照，不能用总体错误率直接替代。"
+              },
+              {
+                "type": "prose",
+                "text": "由于Same条件根本没有两个互相矛盾的规则，不能定义A复测时的B规则入侵。对Near/Far干扰比较，作者排除了未真正学会B的参与者（约14%），避免未更新B被误认为成功保护A。"
+              }
+            ]
+          },
+          {
+            "id": "figure-2-network-reuse",
+            "stage": "result",
+            "title": "Figure 2｜相似任务为什么在神经网络中形成共享表示？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者为每位人类参与者配一个twin ANN，使用同样的刺激顺序、A/B旋转规则和反馈轨迹。网络是两层前馈线性模型，输入为区分不同植物的一位有效向量，输出是夏/冬位置的笛卡尔坐标；以MSE在线梯度训练，A→B期间不重置参数。这不是在预训练大语言模型上做微调。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "条件",
+                  "B阶段训练曲线",
+                  "A/B隐层表征"
+                ],
+                "rows": [
+                  [
+                    "Same",
+                    "B直接沿既有规则快速收敛",
+                    "同一共享规则可复用；无相互矛盾的旋转规则"
+                  ],
+                  [
+                    "Near",
+                    "B学习较快，旧A的表示被调整",
+                    "A/B容易使用重叠的任务子空间，A复测可发生严重规则干扰"
+                  ],
+                  [
+                    "Far",
+                    "B起初存在较长平台期",
+                    "逐步形成不同任务子空间，B规则对旧A干扰很低"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "作者以隐层活动的PCA维度与两个任务子空间的principal angle来检验表示共享程度；两个子空间角度越大、越接近正交，意味着两个任务在计算表示中越分离。这里的表示分析只发生在ANN，而不是人类大脑记录。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不是所有正迁移都造成遗忘",
+                "text": "当新旧规则完全相同（Same），复用旧表示是合理而有利的。明确的权衡主要出现在Near——两个规则近似却互不相同、需要同时保留不同上下文的情况。"
+              }
+            ]
+          },
+          {
+            "id": "figure-3-replication",
+            "stage": "result",
+            "title": "Figure 3｜两批人类实验都出现Near迁移好、旧A干扰高",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "对照",
+                  "原文统计量",
+                  "可支持的结论"
+                ],
+                "rows": [
+                  [
+                    "进入B：Near vs Far",
+                    "合并数据 t(200)=6.63、P<0.001、d=0.93",
+                    "Near初始B迁移优于Far"
+                  ],
+                  [
+                    "A复测干扰：Near vs Far，发现样本",
+                    "t(86)=2.56、P=0.006、d=0.55",
+                    "Near更可能在A上错误使用B规则"
+                  ],
+                  [
+                    "A复测干扰：Near vs Far，独立复现",
+                    "t(84)=2.27、P=0.013、d=0.50",
+                    "与发现组方向一致"
+                  ],
+                  [
+                    "合并干扰分析",
+                    "Near N=80，Far N=94（学不会B者排除）",
+                    "统计分母不是所有Near/Far受试者，也非Same组"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "Same条件的B第一轮定位最准确，Near次之，Far最差；但Same不具有两规则冲突。Near组在人类与模拟ANN中复测A更倾向采用B规则，Far则较多回到A。网络的Near干扰尤其明显，不能把网络接近完全覆盖的结果直接当成人类个体的平均表现。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "证据比‘旧任务正确率变差’更具体",
+                "text": "作者以规则B的使用概率作为因变量，能够指出错误方向。如果只测总体准确率，就不容易区分随机遗忘和新规则入侵，后者恰好是I3应该优先诊断的机制。"
+              }
+            ]
+          },
+          {
+            "id": "figure-4-individuals",
+            "stage": "result",
+            "title": "Figure 4｜Lumpers 与 Splitters，不是好学生和差学生",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "在Near条件，学会B后，有人仍能返回A规则，有人则沿用B规则。作者根据A复测时两个概率模型拟合优劣，将符合干扰分析条件的人事后分为Lumpers（合并者，38人）和Splitters（区分者，42人），然后检验独立的行为变量。"
+              },
+              {
+                "type": "table",
+                "headers": [
+                  "人类Near组行为",
+                  "Lumpers (n=38)",
+                  "Splitters (n=42)",
+                  "解释"
+                ],
+                "rows": [
+                  [
+                    "B迁移：Δ冬季准确率",
+                    "−0.06",
+                    "−0.21",
+                    "Lumpers较能利用A规则"
+                  ],
+                  [
+                    "A未训练刺激冬季泛化",
+                    "81%",
+                    "69%",
+                    "Lumpers更会使用共享规则"
+                  ],
+                  [
+                    "独特夏季位置记忆",
+                    "60.0%",
+                    "67.1%",
+                    "Splitters更保留个体信息"
+                  ],
+                  [
+                    "植物最初属于A/B的来源回忆",
+                    "75.5%",
+                    "90.2%",
+                    "Splitters更会区别任务来源"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "相应迁移比较P<0.001，泛化P=0.008，独特位置记忆P=0.001，来源回忆P<0.001。Splitters虽然在规则泛化上较弱，却在独立位置与来源记忆上更好，因此不能简单解释为不努力或学习失败。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "避免反向因果与标签泄漏",
+                "text": "Lumpers/Splitters是用A复测是否发生干扰事后划分的，不是训练前已知的稳定人群类型，也不能把同一干扰标签既当输入预测器又当独立目标来证明能提前预测。作者的独立泛化、位置和来源指标才使这一分组有额外解释价值。"
+              }
+            ]
+          },
+          {
+            "id": "rich-lazy-experiments",
+            "stage": "result",
+            "title": "Figure 4 的机制对照｜Rich vs Lazy 表示如何再现人类的权衡？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "网络指标（Near）",
+                  "Rich (σ=10^-3)",
+                  "Lazy (σ=2)"
+                ],
+                "rows": [
+                  [
+                    "复测A时使用B规则的概率",
+                    "1.00",
+                    "0.20"
+                  ],
+                  [
+                    "A未训练刺激泛化",
+                    "0.94",
+                    "0.59"
+                  ],
+                  [
+                    "B迁移准确率变化",
+                    "−0.17",
+                    "−0.43"
+                  ],
+                  [
+                    "A/B隐层表示主角度",
+                    "0.49°",
+                    "75.10°"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "网络输入嵌入权重初始化规模是主要操作变量；读出层权重保持可训练且设置相同。小初始化促进rich的共享低维结构，大初始化促进lazy的高维、相对独立表征。两个网络都能学到目标任务，但rich优于迁移与泛化、lazy降低B→A干扰。主角度0.49°与75.10°是ANN隐藏层PCA子空间测量，不是人脑成像结果。"
+              },
+              {
+                "type": "prose",
+                "text": "作者还比较replay、Elastic Weight Consolidation（EWC）和模块化网络。这些方法可在一般持续学习中减轻遗忘，但在这套短时规则任务里没有像lazy网络那样同时复现人类Splitters的行为特征；这不意味着它们在其他任务一律无效。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "最重要的机制推论",
+                "text": "低维共享规则使新任务学习更快，却可能带来规则覆盖；更独立的表示保护任务边界，却在新刺激泛化与迁移上付出代价。不能把低干扰的lazy策略包装成全面更优。"
+              }
+            ]
+          },
+          {
+            "id": "graded-update-vs-swap",
+            "stage": "insight",
+            "title": "补充机制｜Near 的旧规则是被渐变改写，还是偶然选择错了？",
+            "blocks": [
+              {
+                "type": "prose",
+                "text": "作者不止对比平均正确率，还对人类误差分布拟合了不同模型，区分“一个规则分布逐渐朝B移动”的graded updating，与“在两个离散规则之间切换”的swap error。补充分析中Lumpers更符合渐变更新的单分布模型，Far组残余错误则更接近偶然交换规则。"
+              },
+              {
+                "type": "prose",
+                "text": "这给I3很具体的研究判断：如果旧A的规则在参数中实际被B覆盖，单纯增加规则检索提示可能不能修复；如果旧规则仍在但被错用，则修订触发条件、上下文辨别或路由可能比重新训练全部知识更直接。两者必须通过复制checkpoint、相同监督预算与后续独立任务来区别。"
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "不要把行为模型拟合当作神经因果证明",
+                "text": "人类数据中的graded/swap是对响应分布的统计解释，不意味着作者记录到了个体神经元的参数被覆盖，也不能自动推断LLM内部的具体机制。"
+              }
+            ]
+          },
+          {
+            "id": "closest-work-boundary",
+            "stage": "related",
+            "title": "Closest Work｜与NC 2025、NC 2026及现有持续学习机制怎样对齐？",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "工作",
+                  "已有发现",
+                  "本研究对I3的增量用途"
+                ],
+                "rows": [
+                  [
+                    "Holton et al. · Nature Human Behaviour 2025/26",
+                    "依次A→B→A：Same/Near/Far规则相似度影响迁移与旧A干扰，rich/lazy网络复现策略差异",
+                    "为I3提供诊断规则来源的精确指标，不意味着首次发现表征干扰"
+                  ],
+                  [
+                    "Menghi et al. · Nature Communications 2025",
+                    "A/B同时交错学习、相同/正交结构：训练初期共享结构可能产生干扰，终测差异不显著",
+                    "时序不同，不能将这两篇视为相互矛盾，也不能把交错当Holton的处理变量"
+                  ],
+                  [
+                    "Tian et al. · Nature Communications 2026",
+                    "灵长类任务相似时更能复用Schema，反转关系较难，观测决策与刺激表示近正交",
+                    "为规则复用/局部修订边界提供补充，但没有证明LLM修复器"
+                  ],
+                  [
+                    "Replay、EWC、Modular Continual Learning",
+                    "长期学习中早已存在旧知识重放、参数重要性保护、任务专属模块",
+                    "I3不能把“为不同任务保存独立模块”或正交表示本身当作首次方法"
+                  ],
+                  [
+                    "I13 · RSI Safety",
+                    "从历史版本安全后果中提升发布前风险验证与接纳",
+                    "与I3规则修复不同；本论文不含授权违例，也没有安全版本验收"
+                  ]
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "这篇与I9的区别必须写清",
+                "text": "Holton操纵的是A/B规则角度、始终按A→B→A训练；I9操纵blocked/interleaved或A→B/B→A顺序，目标之一是能力匹配后的未来C学习速度。不能把Holton当作已经做过I9的实验。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-i3-insight",
+            "stage": "next",
+            "title": "I3 机制备注｜学得快可能是在重复改写一条共享规则",
+            "blocks": [
+              {
+                "type": "table",
+                "headers": [
+                  "当前观测",
+                  "候选解释",
+                  "最好先做的诊断"
+                ],
+                "rows": [
+                  [
+                    "B很快学会，A变错",
+                    "任务相似导致对共享规则的更新",
+                    "A复测是否有明确B规则特征"
+                  ],
+                  [
+                    "给A明确上下文后可恢复",
+                    "A规则可能仍在但任务边界或调用选择失败",
+                    "同模型冻结参数，只改变规则标记与候选Skill路由"
+                  ],
+                  [
+                    "提供上下文也不能恢复A",
+                    "共享规则可能被覆盖、或原有技能本身缺失",
+                    "固定Probe重训/隔离旧Skill，测A/B联合回归"
+                  ],
+                  [
+                    "A/B各自正确但混合题错",
+                    "没有掌握规则适用范围",
+                    "构造仅改变一个关键上下文条件的组合测试"
+                  ],
+                  [
+                    "分离Skill降低干扰但未见题变差",
+                    "隔离减少共享迁移",
+                    "同时测独立A/B、未见同规则泛化和整体成本"
+                  ]
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "这提示I3将修复目标从“使旧任务准确率回升”推进到“辨别旧规则是否真实失去，以及什么时候该选择A还是B”。如果一条新规则与旧规则只是近似，正确答案不仅是保护参数，也可能是修订规则适用域。"
+              },
+              {
+                "type": "callout",
+                "kind": "insight",
+                "label": "对I3真正的新研究假设",
+                "text": "Agent若能检测到“近似规则带来的高迁移 + 高规则错用”模式，是否能通过少量条件对照示例，比全面回放更有效地修复A/B任务边界，同时保留新任务B的真实学习收益？原论文没有做LLM/Agent这一实验。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-p0-aba",
+            "stage": "next",
+            "title": "P0｜在真实Agent上复现迁移—规则干扰权衡",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "规则族与场景",
+                    "design": "用程序生成同规则Same、相似但有条件差异Near、明确不同Far三类A/B工具或推理任务。保持相同底座Agent、训练器、教师反馈、总任务token与每类试次；分离任务规则、表面字符串与难度。",
+                    "decisive": "新B最初学习收益是否随相似度变大？复测A的错误是否沿着B规则的确定方向系统偏移？"
+                  },
+                  {
+                    "name": "真实更新而非仅提示",
+                    "design": "初版选择可版本化Skill，固定写入/读取/执行逻辑；独立分轨用相同LoRA参数量做真实SFT，撤除演示/教师提示后测试。不要让B的上下文直接留在A复测中。",
+                    "decisive": "当B局部能力相近时，Near是否比Far表现出更高的旧A规则错用，而不是仅有随机错误？"
+                  },
+                  {
+                    "name": "区分擦除与错误路由",
+                    "design": "对同一checkpoint的A复测用无提示、明确任务上下文、独立条件标记和冻结模型候选Skill列表分别评估；记录A/B规则调用轨迹以及正确率。",
+                    "decisive": "如果简单提醒A就能恢复，优先解释为路由/检索问题；若所有冻结恢复无效且必须再训练，才进一步检验参数覆盖可能。"
+                  }
+                ]
+              },
+              {
+                "type": "prose",
+                "text": "核心指标至少是 B Transfer、A Rule-Misuse、A独立保持、A/B混合任务规则选择、同规则新刺激泛化及全成本。若B尚未学会就“不会干扰A”，必须单列学习失败分母；不能将失败者当成成功抗干扰。"
+              }
+            ]
+          },
+          {
+            "id": "rsi-p1-p2",
+            "stage": "next",
+            "title": "P1/P2｜从诊断结果走到真正可跨代改进的修复规则",
+            "blocks": [
+              {
+                "type": "tests",
+                "items": [
+                  {
+                    "name": "P1 · 低成本修复",
+                    "design": "只在P0确认Near冲突后比较旧任务均匀replay、MIR风格挑题、明确规则适用条件的少量对照示例、独立Skill分支与旧模型回滚。匹配有效训练样本、测试调用、总FLOPs与任务容量。",
+                    "decisive": "在A/B都必须独立掌握的前提下，哪类修复能保持B进步，同时更少错用A规则、更多泛化到组合和未见刺激？"
+                  },
+                  {
+                    "name": "P2 · RSI修复规则进化",
+                    "design": "用历史A/B修复的真实成功与失败证据迭代版本化Meta-Repair Skill；锁定任务生成器/更新器/校验器，比较m0和m1在新规则族、不同Near角度和长序列A→B→C→A上的策略与实际收益。",
+                    "decisive": "m1是否比m0更善决定什么时候该重用、局部修订或隔离规则，而非只是累积更多Replay或更长上下文？"
+                  }
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "boundary",
+                "label": "Go / Merge / Stop",
+                "text": "GO：Near稳定产生迁移与规则入侵，独立后测支持条件化修复的真实增益；MERGE：普通replay/清晰任务标签就完全解释收益；STOP：真实Agent中没有这种现象，或所谓新能力只是未撤掉外部提示的ICL收益。"
+              }
+            ]
+          },
+          {
+            "id": "cross-idea-and-limits",
+            "stage": "next",
+            "title": "研究边界｜I3为主，I9与I13只做必要交叉引用",
+            "blocks": [
+              {
+                "type": "bullets",
+                "items": [
+                  "主归属I3：要区分旧规则擦除、上下文选择错误与新规则过度复用，不是直接发明新的正交网络结构。",
+                  "I9：该论文只有顺序A→B→A，未测随机交错/集中切换，也未测匹配当前能力后学习C的速度。仅共享Same/Near/Far规则关系作为受控因素。",
+                  "I13：当前RSI Safety主线是更新提交前的授权风险预测、独立验收与后代继承；本论文没有安全合同或真实越权执行，不能把规则错用概率直接视作安全违规率。",
+                  "神经层证据来自两层线性ANN而非现代LLM；人类splitter/lumper是事后行为分组，不证明任何稳定的人脑表示结构。",
+                  "与NC2025 Menghi交错训练形成的干扰不同；与NC2026 Tian的灵长类Schema复用不同；实验之间的正交性/共享机制只是可能相通的机制假设。"
+                ]
+              },
+              {
+                "type": "callout",
+                "kind": "proposal",
+                "label": "笔记的最终科学问题",
+                "text": "面对近似却不完全一致的两套规则，Agent 能否通过判断“应共享的部分”和“必须明确区分的上下文边界”，在保留迁移收益的同时减少旧规则错用，并让这条修复原则在下一代继续改善？"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "html": "https://www.nature.com/articles/s41562-025-02318-y",
+        "full_text": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12846915/",
+        "code": "https://github.com/eleanorholton/transfer-interference",
+        "data": "https://github.com/eleanorholton/transfer-interference"
+      }
+    },
+    {
       "id": "faulty-memory-arxiv2026-zhang",
       "short_title": "Faulty Consolidated Memory · 2026",
       "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",

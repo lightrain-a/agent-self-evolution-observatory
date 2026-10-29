@@ -100,7 +100,7 @@ PAGE = {
 <tr><td>输入特征的跨情境重叠程度（神经网络 Figure 6）</td><td>完全正交时两组接近，部分重叠时 DiffSt 更快，完全相同时 SameSt 更快</td><td>“越相似越干扰”不是单调规律；结构相似与特征重叠要分开</td></tr>
 <tr><td>训练顺序</td><td>人类两组都交错训练；没有直接比较 Blocked vs Interleaved</td><td>不能据此宣布“先集中再交错最好”</td></tr>
 </tbody></table></div>
-<p><b>Related Work：</b><a href="https://www.nature.com/articles/s41562-025-02318-y" target="_blank" rel="noopener noreferrer">Holton 等（NHB 2025 在线/2026 期刊）</a>的 <b>A→B→A</b> 顺序训练发现相似任务更易迁移、但也更易遗忘先前 A；Menghi 研究的是 A/B <b>共同形成表示</b>时的短期干扰，两种实验时序不同。[[E100]]</p>
+<p><b>Related Work：</b><a href="reading-notes.html#deep-nhb2025-transfer-interference-holton">Holton 等（NHB 2025 在线/2026 期刊；305 人及配对线性网络，完整精读）</a>的 <b>A→B→A</b> 顺序训练发现相似任务更易迁移、但也更易遗忘先前 A；Menghi 研究的是 A/B <b>共同形成表示</b>时的短期干扰，两种实验时序不同。[[E100]]</p>
 <p><b>更早的表征研究：</b><b>Niv（Nature Neuroscience 2019）</b>讨论任务状态应该保留哪些特征与隐变量；<b>Yang 等（Nature Neuroscience 2019）</b>在多任务 RNN 观察共享与专门化表示；<b>Mill &amp; Cole（Nature Communications 2025）</b>发现练习伴随从可复用组合表示转向任务特定联合表示。Menghi 的增量是将任务结构关系作为实验变量，结合交错训练行为、MEG 与输入重叠的神经网络模拟来解释初期干扰。[[E103]][[E102]][[E101]]</p>
 <p><b>对应我们 I9：</b>在固定 A/B 材料和 LoRA 预算的集中/交错试验里，可同时操纵任务底层结构是否相同。后测区分单题规则掌握、混合题规则选择和学习 C 的曲线。对 <a href="ideas.html#idea-3">I3</a>，应区分旧规则真的丢了与混合场景选错规则；对 <a href="i8.html">I8</a>，同一题修复不等于不同情境能选对规则。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi"><b>阅读 C-I-D-R 完整精读（Figures 2 / 4–6）</b></a>。</p>
 '''),

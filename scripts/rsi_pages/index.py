@@ -32,6 +32,7 @@ PAGE = {
 <a href="idea-i6-failure-value.html"><b>I6：哪些失败值得学，何时该停？</b><span>同题同错误终点的轨迹为什么学习价值不同；何时换错题、暂缓和重访？</span></a>
 <a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
 <a href="i8.html"><b>I8：错误规则的跨题可学习性</b><span>从 Hypercorrection 出发，分析前置知识、共同错误规则与净学习收益。</span></a>
+<a href="reading-notes.html#deep-nhb2025-transfer-interference-holton"><b>Nature Human Behaviour 2025/2026 · 迁移与干扰</b><span>305人的A→B→A和Rich/Lazy神经网络：学B更快为何容易错用旧A规则？I3规则边界修复P0/P1/P2。[[E100]]</span></a>
 <a href="reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun"><b>Nature 2025 · 海马体学习潜在状态机（完整精读）</b><span>CA1 正交化随学习形成；CSCG、LSTM、Transformer 的反例；关联 I8 的状态别名与 I9 的未来学习。[[E353]]</span></a>
 <a href="idea-i9-practice-switching.html"><b>I9：课程顺序与未来可学习性</b><span>保留集中/交错切换；新增 A→B 与 B→A 当前能力相近时，学习 C 的速度是否不同。</span></a>
 <a href="idea-i10-learning-novelty.html"><b>I10：规则区分、参数吸收与组合泛化</b><span>Nature 2023 MLC、100%正确监督与20%人类式错误标签的区别；T1/T2对照及受控 P0。</span></a>

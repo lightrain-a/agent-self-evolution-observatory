@@ -30,7 +30,7 @@ PAGE = {
 <tr><td>神经网络的特征重叠程度（Figure 6）</td><td>完全正交时两组接近；部分重叠时 DiffSt 更快；完全相同特征时 SameSt 更快</td><td>必须把题目外观相似、底层规则是否相同分开控制</td></tr>
 <tr><td>训练顺序</td><td>论文的人类参与者都采取交错训练</td><td>尚无它自己的 Blocked/Interleaved 直接对照；正好是 I9 可以验证的实验空缺</td></tr>
 </tbody></table></div>
-<p><b>最相近 Related Work：</b><a href="https://www.nature.com/articles/s41562-025-02318-y" target="_blank" rel="noopener noreferrer">Holton 等（NHB 2025 在线/2026 期刊）</a>采用 <b>A→B→A</b> 顺序学习，相似任务通常更快迁移但也干扰旧 A；Menghi 研究 A/B <b>从零交错共同形成表示</b>的初期干扰。两者的任务顺序和测量时间不同，不能直接当成相反结果。[[E100]]</p>
+<p><b>最相近 Related Work：</b><a href="reading-notes.html#deep-nhb2025-transfer-interference-holton">Holton 等（NHB 2025 在线/2026 期刊；305 人及配对线性网络，完整精读）</a>采用 <b>A→B→A</b> 顺序学习，相似任务通常更快迁移但也干扰旧 A；Menghi 研究 A/B <b>从零交错共同形成表示</b>的初期干扰。两者的任务顺序和测量时间不同，不能直接当成相反结果。[[E100]]</p>
 <p><b>建议只给 I9 增一个最小受控因素：</b>保持题目池、正确答案、训练 Token、LoRA 更新器不变，以任务规则关系（相同 / 条件相近但不同）×课程顺序（集中 / 交错）做 2×2 分叉；先测独立 A、独立 B、混合规则选择，再在 A/B 当前能力可比时测新 C 的同预算学习曲线。没有稳定的结构×顺序交互，就不增加新的课程 Router。<a href="reading-notes.html#deep-nc2025-task-similarity-menghi">查看完整精读与 Figure 2、4–6</a>。</p>
 <div class="note"><b>不应归因过度：</b>原论文使用 MEG / 简单神经网络分析表征，不能直接证明现代 LLM 参数的表示机制，也不证明“部分相似”会造成不可恢复的遗忘。[[E99]]</div>
 '''),

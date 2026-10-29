@@ -1586,11 +1586,11 @@
       "id": "E100",
       "group": "学习科学",
       "title": "Humans and neural networks show similar patterns of transfer and interference during continual learning",
-      "date": "Nature Human Behaviour · 2025 online / 2026 issue",
+      "date": "Nature Human Behaviour 10:111–125 (Jan 2026) · online 2025-10-30",
       "url": "https://www.nature.com/articles/s41562-025-02318-y",
-      "level": "Nature Human Behaviour 正式原文/ PubMed；2026-10-28",
-      "note": "顺序 A→B→A 时相似规则促进 B 学习，却可能干扰旧 A 保持；与 E28 的 A/B 同时交错学习和短时干扰属于不同训练时序。",
-      "code": ""
+      "level": "Nature Human Behaviour 正文 Figs.1–4 / Methods / Supplementary 机制与原始数据代码入口、PubMed题录核对；2026-10-29；未独立复现",
+      "note": "Holton等对305人（发现151、复现154）做A→B→A的植物夏冬角度规则实验，B相对A Same / Near±30° / Far+180°。Near迁移优于Far，但在返回A时更易套用B规则（发现P=.006，复现P=.013）；Near中Lumpers迁移及泛化较高，Splitters个体位置与来源记忆较好。配对两层线性ANN rich/lazy隐层共享/独立表示提供计算解释；人类无脑成像、非LLM/RSI训练。主要对应I3规则错用诊断，I9顺序研究与I13安全只作边界。",
+      "code": "https://github.com/eleanorholton/transfer-interference"
     },
     {
       "id": "E101",

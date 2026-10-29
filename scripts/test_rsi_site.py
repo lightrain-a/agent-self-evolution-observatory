@@ -410,6 +410,36 @@ def main():
     check('reading-notes.html#deep-nature2025-orthogonalized-state-machine-sun'
           in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
           'Nature OSM long-form reading absent from RSI homepage')
+    holton=next((p for p in cards if p['id']=='nhb2025-transfer-interference-holton'),None)
+    check(holton is not None and holton['doi']=='10.1038/s41562-025-02318-y'
+          and holton['official_url']=='https://www.nature.com/articles/s41562-025-02318-y'
+          and holton['links']['code']=='https://github.com/eleanorholton/transfer-interference',
+          'NHB transfer/interference primary source, journal identity or author code missing')
+    holton_sections={s['id'] for s in holton['deep_read']['sections']}
+    check({'challenge-transfer-interference','experiment-aba-protocol','metrics-von-mises',
+           'figure-2-network-reuse','figure-3-replication','figure-4-individuals',
+           'rich-lazy-experiments','graded-update-vs-swap','closest-work-boundary',
+           'rsi-i3-insight','rsi-p0-aba','rsi-p1-p2','cross-idea-and-limits'}
+          <=holton_sections,
+          'NHB reading missing human protocol, ANN mechanisms, figures or RSI P0/P1/P2')
+    holton_text=json.dumps(holton,ensure_ascii=False)
+    check('E100' in refs and all(k in holton_text for k in
+          ('305','151','154','120','Near','Far','0.006','0.013',
+           '0.49°','75.10°','Lumpers','Splitters','Rich','Lazy',
+           'Rule-Misuse','I3','I9','I13','人脑','因果')),
+          'NHB original sample, transfer metrics, causal limits or idea boundary lost')
+    holton_note=(ROOT/'rsi/reading-notes.html').read_text(encoding='utf-8')
+    hurl='reading-notes.html#deep-nhb2025-transfer-interference-holton'
+    check('id="deep-nhb2025-transfer-interference-holton"' in holton_note
+          and 'id="deep-nhb2025-transfer-interference-holton--rsi-p0-aba"' in holton_note
+          and 'id="deep-nhb2025-transfer-interference-holton--figure-4-individuals"' in holton_note,
+          'NHB complete reading or decisive P0 and figure anchors not built')
+    check(all(hurl in (ROOT/'rsi'/f'{p}.html').read_text(encoding='utf-8')
+              for p in ('index','ideas','idea-i9-practice-switching',
+                        'learning-science','learning-admission')),
+          'NHB paper not cross-linked from homepage, I3, I9, I13 or learning science')
+    check('href="references.html#E100"' in (ROOT/'rsi/ideas.html').read_text(encoding='utf-8'),
+          'NHB primary source registry E100 not cited from I3')
     schema=next((p for p in cards if p['id']=='nc2026-schema-reuse-tian'),None)
     check(schema is not None
           and schema['doi']=='10.1038/s41467-026-68692-x'

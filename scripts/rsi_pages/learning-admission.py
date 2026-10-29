@@ -131,6 +131,7 @@ PAGE = {
 <p><b>当前论文主线：</b>初版只在可执行的 Skill/Harness RSI 中检验历史风险诊断、有限预算的安全接纳与跨代继承。参数层非局部失准是 Motivation 和后续扩展，不是已经完成的实验证据。</p>
 '''),
  ("boundaries","研究定位与 Go / Merge / Stop｜安全层也必须学会安全地改进",'''
+<p class="note"><b>NHB 2025/2026 · 机制交叉引用：</b>Holton 等的人类 A→B→A 实验说明相似规则的正迁移可能伴随旧规则错用。这个现象可作为更新前风险假设的基础研究，但原文未测试授权、越权或 Agent 发布流程；I13 仍要求独立权限验收与跨代安全效果，不能将 Rule-Misuse Rate 直接充当安全违规率。<a href="reading-notes.html#deep-nhb2025-transfer-interference-holton">阅读论文 Fig.1–4 与 I3 机制 →</a>。[[E100]]</p>
 <div class="table-wrap"><table><thead><tr><th>相邻 Idea / 方法</th><th>与 I13 的独立边界</th></tr></thead><tbody>
 <tr><td><a href="ideas.html#idea-1">I1 · 脚手架与外置</a></td><td>重点是学习哪类知识应该内化，撤除帮助后能否独立完成；I13 优先关注跨版本安全准入，外部模型同样受硬约束。</td></tr>
 <tr><td><a href="ideas.html#idea-3">I3 · 温故知新</a></td><td>旧规则与新规则发生冲突后如何修复；I13 关注变更提交前的风险识别，同时核验 incumbent 是否已不安全。</td></tr>
