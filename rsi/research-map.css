@@ -7,3 +7,148 @@
 @media(max-width:1100px){.rm-outline{grid-template-columns:repeat(3,minmax(0,1fr))}.rm-stats{gap:13px;padding-left:15px}.rm-stats b{font-size:23px}}
 @media(max-width:760px){.rm-brief{grid-template-columns:1fr;padding:16px;gap:14px}.rm-stats{border-left:0;border-top:1px solid #dde7ee;padding:13px 0 0;justify-content:space-between}.rm-stats span{display:flex;align-items:baseline;gap:6px}.rm-group-index{grid-template-columns:1fr}.rm-group-content{grid-template-columns:1fr}.rm-block{grid-column:1!important;grid-row:auto!important;padding:16px;border-right:0}.rm-literature,.rm-ideas{border-top:1px solid #e3eaf0}.rm-group summary{padding:14px 12px;gap:10px}.rm-group-heading strong{font-size:16px}.rm-count{display:none}.rm-group-heading small{font-size:11px}.rm-toolbar{padding:12px}.rm-toolbar>label{flex:1 1 100%}.rm-toolbar input,.rm-toolbar select{width:100%}.rm-actions{width:100%}.rm-actions button{flex:1}.rm-outline{grid-template-columns:1fr 1fr}.rm-outline a:last-child{grid-column:1 / -1}.rm-index-item{padding:12px}.rm-block p{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.rm-index-item,.rm-chevron{transition:none}}
+
+/* Chapter palette — mirrors the original Agent research map's one-color-per-
+   category language. Ch.3–6 reuse the canonical RSI functional colors. */
+body[data-rsi-page="research-map"] .rm-index-item[data-map-select="experience"],
+body[data-rsi-page="research-map"] .rm-group[data-function="experience"],
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="03"]{--rm-theme:var(--function-experience,#2563eb)}
+body[data-rsi-page="research-map"] .rm-index-item[data-map-select="signal"],
+body[data-rsi-page="research-map"] .rm-group[data-function="signal"],
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="04"]{--rm-theme:var(--function-signal,#b66b17)}
+body[data-rsi-page="research-map"] .rm-index-item[data-map-select="capability"],
+body[data-rsi-page="research-map"] .rm-group[data-function="capability"],
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="05"]{--rm-theme:var(--function-capability,#7655b5)}
+body[data-rsi-page="research-map"] .rm-index-item[data-map-select="regulation"],
+body[data-rsi-page="research-map"] .rm-group[data-function="regulation"],
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="06"]{--rm-theme:var(--function-regulation,#167568)}
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="01"]{--rm-theme:#536b83}
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="02"]{--rm-theme:#247da2}
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="07"]{--rm-theme:#bc4464}
+body[data-rsi-page="research-map"] .rm-outline [data-chapter="08"]{--rm-theme:#a43e39}
+
+/* Overview: colored chapter chips, top stripes and gentle tints, not loud fills. */
+body[data-rsi-page="research-map"] .rm-index-item{
+  position:relative;min-width:0;
+  border:1px solid color-mix(in srgb,var(--rm-theme,#536b83) 26%,#dce6ec);
+  border-top:4px solid var(--rm-theme,#536b83);
+  padding:10px 14px 12px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--rm-theme,#536b83) 5%,#fff),#fff 82%);
+  transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+body[data-rsi-page="research-map"] .rm-index-no{
+  display:grid;place-items:center;
+  width:32px;height:32px;border-radius:8px;
+  color:#fff;background:var(--rm-theme,#536b83);
+  font-size:13px;font-weight:850;letter-spacing:.02em;
+}
+body[data-rsi-page="research-map"] .rm-index-item strong{color:#2d3e55}
+body[data-rsi-page="research-map"] .rm-index-item>b{color:var(--rm-theme,#536b83)}
+body[data-rsi-page="research-map"] .rm-index-item:hover,
+body[data-rsi-page="research-map"] .rm-index-item[aria-current="true"]{
+  border-color:var(--rm-theme,#536b83);
+  background:color-mix(in srgb,var(--rm-theme,#536b83) 9%,#fff);
+  box-shadow:0 6px 18px #1722360c;transform:translateY(-1px);
+}
+
+/* Chapter bodies: same hierarchy as research-map.css on the Agent site. */
+body[data-rsi-page="research-map"] .rm-group{
+  border:1px solid color-mix(in srgb,var(--rm-theme,#536b83) 27%,#dce2e9);
+  border-left:5px solid var(--rm-theme,#536b83);
+  border-radius:12px;
+  box-shadow:0 3px 13px #142e4c06;
+}
+body[data-rsi-page="research-map"] .rm-group[open]{box-shadow:0 7px 20px #142e4c0a}
+body[data-rsi-page="research-map"] .rm-group>summary{
+  background:linear-gradient(100deg,color-mix(in srgb,var(--rm-theme,#536b83) 9%,#fff),color-mix(in srgb,var(--rm-theme,#536b83) 3%,#fff));
+  border-bottom:1px solid color-mix(in srgb,var(--rm-theme,#536b83) 17%,#e9eff4);
+}
+body[data-rsi-page="research-map"] .rm-group>summary:hover{
+  background:color-mix(in srgb,var(--rm-theme,#536b83) 13%,#fff);
+}
+body[data-rsi-page="research-map"] .rm-chapter{
+  display:grid;place-items:center;
+  min-width:53px;min-height:35px;padding:7px 9px;
+  color:#fff;border:0;border-radius:9px;
+  background:var(--rm-theme,#536b83);
+  font-size:11px;letter-spacing:.04em;font-weight:900;
+}
+body[data-rsi-page="research-map"] .rm-group-heading strong{color:#263c56}
+body[data-rsi-page="research-map"] .rm-count,
+body[data-rsi-page="research-map"] .rm-chevron{color:var(--rm-theme,#536b83)}
+body[data-rsi-page="research-map"] .rm-block h3{
+  color:var(--rm-theme,#536b83)!important;
+  border-left:3px solid var(--rm-theme,#536b83);
+  padding-left:9px;
+}
+body[data-rsi-page="research-map"] .rm-text-link,
+body[data-rsi-page="research-map"] .rm-idea-id{color:var(--rm-theme,#536b83)!important}
+body[data-rsi-page="research-map"] .rm-idea-id{
+  display:grid;place-items:center;min-height:24px;min-width:30px;
+  padding:3px;border-radius:6px;
+  background:color-mix(in srgb,var(--rm-theme,#536b83) 10%,#fff);
+}
+body[data-rsi-page="research-map"] .rm-idea:hover,
+body[data-rsi-page="research-map"] .rm-paper:hover{
+  background:color-mix(in srgb,var(--rm-theme,#536b83) 3%,#fff);
+}
+body[data-rsi-page="research-map"] .rm-evidence{
+  background:color-mix(in srgb,var(--rm-theme,#536b83) 4%,#fff);
+  border-top-color:color-mix(in srgb,var(--rm-theme,#536b83) 20%,#e3eaf0);
+}
+body[data-rsi-page="research-map"] .rm-evidence>strong{color:var(--rm-theme,#536b83)}
+
+/* Every review chapter now has its own numbered, linked color card. */
+body[data-rsi-page="research-map"] .rm-outline{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+body[data-rsi-page="research-map"] .rm-outline a{
+  min-width:0;min-height:94px;
+  align-items:flex-start;gap:10px;
+  padding:13px 12px;
+  border:1px solid color-mix(in srgb,var(--rm-theme,#536b83) 25%,#dce6ed);
+  border-top:4px solid var(--rm-theme,#536b83);
+  border-radius:10px;
+  color:#31445d!important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--rm-theme,#536b83) 5%,#fff),#fff);
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+body[data-rsi-page="research-map"] .rm-outline a>b{
+  display:grid;place-items:center;flex:0 0 32px;
+  width:32px;height:32px;border-radius:8px;
+  color:#fff;background:var(--rm-theme,#536b83);
+  font-size:12px;font-weight:850;line-height:1;
+}
+body[data-rsi-page="research-map"] .rm-outline a span{font-weight:750;line-height:1.5}
+body[data-rsi-page="research-map"] .rm-outline a small{font-weight:450}
+body[data-rsi-page="research-map"] .rm-outline a:hover,
+body[data-rsi-page="research-map"] .rm-outline a:focus-visible{
+  border-color:var(--rm-theme,#536b83);
+  box-shadow:0 5px 16px #17223612;transform:translateY(-2px);
+}
+body[data-rsi-page="research-map"] .rm-outline a:last-child{grid-column:auto}
+
+/* On the map itself, sidebar chapter markers repeat the same functional hues. */
+body[data-rsi-page="research-map"] #research-nav [data-nav-group="experience"]{--rm-nav-theme:var(--function-experience,#2563eb)}
+body[data-rsi-page="research-map"] #research-nav [data-nav-group="signal"]{--rm-nav-theme:var(--function-signal,#b66b17)}
+body[data-rsi-page="research-map"] #research-nav [data-nav-group="capability"]{--rm-nav-theme:var(--function-capability,#7655b5)}
+body[data-rsi-page="research-map"] #research-nav [data-nav-group="regulation"]{--rm-nav-theme:var(--function-regulation,#167568)}
+body[data-rsi-page="research-map"] #research-nav [data-nav-group="evidence"]{--rm-nav-theme:#bc4464}
+body[data-rsi-page="research-map"] #research-nav [data-nav-group="overview"]{--rm-nav-theme:#536b83}
+body[data-rsi-page="research-map"] #research-nav [data-nav-group]>.nav-level1{
+  border-left:3px solid var(--rm-nav-theme,transparent);
+  padding-left:8px;
+}
+@media(max-width:1080px){
+  body[data-rsi-page="research-map"] .rm-outline{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  body[data-rsi-page="research-map"] .rm-outline{grid-template-columns:1fr}
+  body[data-rsi-page="research-map"] .rm-outline a{min-height:76px}
+  body[data-rsi-page="research-map"] .rm-index-item{padding:11px 12px}
+  body[data-rsi-page="research-map"] .rm-group>summary{gap:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  body[data-rsi-page="research-map"] .rm-index-item,
+  body[data-rsi-page="research-map"] .rm-outline a{transition:none}
+  body[data-rsi-page="research-map"] .rm-index-item:hover,
+  body[data-rsi-page="research-map"] .rm-outline a:hover{transform:none}
+}

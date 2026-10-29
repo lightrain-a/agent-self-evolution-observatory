@@ -123,11 +123,20 @@ def _group(function):
       <section class="rm-block rm-evidence"><h3>证据与缺口</h3><strong>{_e(proof_title)}</strong><p>{_e(proof)}</p><a class="rm-text-link" href="evidence.html">对照第 7 章证据框架 →</a></section></div>
     </details>'''
 
-INDEX = "".join(f'<a class="rm-index-item" href="#map-{_e(f["id"])}" data-map-select="{_e(f["id"])}"><span class="rm-index-no">0{i+1}</span><span><strong>{_e(f.get("title", f["id"]))}</strong><small>{_e(f.get("question", ""))}</small></span><b>{len(_papers(f["id"]))}<small>条来源</small></b></a>' for i, f in enumerate(FUNCS))
+INDEX = "".join(f'<a class="rm-index-item" href="#map-{_e(f["id"])}" data-map-select="{_e(f["id"])}"><span class="rm-index-no">{int(f["chapter"]):02d}</span><span><strong>{_e(f.get("title", f["id"]))}</strong><small>{_e(f.get("question", ""))}</small></span><b>{len(_papers(f["id"]))}<small>条来源</small></b></a>' for f in FUNCS)
 OPTIONS = "".join(f'<option value="{_e(f["id"])}">{_e(f.get("title", f["id"]))}</option>' for f in FUNCS)
 OVERVIEW = f'''<div class="rm-brief"><div><span class="rm-eyebrow">RSI · LEARNING MECHANISMS</span><p class="rm-central-question">经历怎样转化为能够迁移、能够保留，并支持后续学习的能力？</p><p>四项学习功能组织文献与研究想法。泛化贯穿各环节；记忆按保存、归因和修订等实际作用归位。</p></div><div class="rm-stats"><span><b>4</b>学习功能</span><span><b>{len(SOURCES)}</b>来源条目</span><span><b>{len(IDEA_ROWS)}</b>研究想法</span></div></div><nav class="rm-group-index" aria-label="四项学习功能">{INDEX}</nav><p class="rm-boundary"><strong>阅读方式</strong> 每篇工作有一个主要归属，其他功能通过关联链接连接；方法、载体、组织方式与评价结果作为独立描述字段。</p>'''
 MAP = f'''<div class="rm-toolbar"><label class="rm-search-label">搜索地图<input id="rm-search" type="search" placeholder="论文、Idea、科学问题…" autocomplete="off"></label><label>学习功能<select id="rm-function"><option value="all">全部四项功能</option>{OPTIONS}</select></label><div class="rm-actions"><button type="button" id="rm-expand">全部展开</button><button type="button" id="rm-collapse">全部收起</button><button type="button" id="rm-reset">重置</button></div></div><p class="rm-result" id="rm-result" role="status" aria-live="polite">显示全部四项学习功能</p><div class="rm-groups">{"".join(_group(f) for f in FUNCS)}</div><div id="rm-empty" class="rm-empty" hidden><strong>没有找到匹配内容</strong><p>试试论文标题、I 编号，或切换到全部学习功能。</p><button type="button" data-map-reset>清除筛选</button></div>'''
-OUTLINE = '''<div class="rm-outline"><a href="index.html"><b>01</b><span>引言<small>中心问题与研究动机</small></span></a><a href="foundations.html"><b>02</b><span>范围与基础<small>概念边界与统一框架</small></span></a><a href="#map-explore" data-map-reset><b>03–06</b><span>四项学习功能<small>唯一的主体分类</small></span></a><a href="evidence.html"><b>07</b><span>证据与评价<small>泛化、保持、未来可学习性</small></span></a><a href="agenda.html"><b>08</b><span>开放问题<small>跨环节的研究议程</small></span></a></div>'''
+OUTLINE = '''<nav class="rm-outline" aria-label="研究综述八章目录">
+  <a data-chapter="01" href="index.html"><b>01</b><span>引言<small>中心问题与研究动机</small></span></a>
+  <a data-chapter="02" href="foundations.html"><b>02</b><span>范围与基础<small>概念边界与统一框架</small></span></a>
+  <a data-chapter="03" href="#map-experience" data-map-select="experience"><b>03</b><span>经验获取<small>有价值的经历从哪里来？</small></span></a>
+  <a data-chapter="04" href="#map-signal" data-map-select="signal"><b>04</b><span>学习信号<small>怎样从经历中获得反馈？</small></span></a>
+  <a data-chapter="05" href="#map-capability" data-map-select="capability"><b>05</b><span>能力形成<small>如何把经验变成长期能力？</small></span></a>
+  <a data-chapter="06" href="#map-regulation" data-map-select="regulation"><b>06</b><span>学习调控<small>多轮更新怎样持续积累？</small></span></a>
+  <a data-chapter="07" href="evidence.html"><b>07</b><span>证据与评价<small>泛化、保持、未来可学习性</small></span></a>
+  <a data-chapter="08" href="agenda.html"><b>08</b><span>开放问题<small>跨环节的研究议程</small></span></a>
+</nav>'''
 
 PAGE = {
     "slug": "research-map", "title": "RSI 研究地图", "en": "Learning Mechanisms for Recursive Self-Improvement",

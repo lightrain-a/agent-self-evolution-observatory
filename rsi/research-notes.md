@@ -150,7 +150,7 @@
 
 ## RSI 研究地图 / 从经历到持续能力
 
-<div class="rm-brief"><div><span class="rm-eyebrow">RSI · LEARNING MECHANISMS</span><p class="rm-central-question">经历怎样转化为能够迁移、能够保留，并支持后续学习的能力？</p><p>四项学习功能组织文献与研究想法。泛化贯穿各环节；记忆按保存、归因和修订等实际作用归位。</p></div><div class="rm-stats"><span><b>4</b>学习功能</span><span><b>266</b>来源条目</span><span><b>14</b>研究想法</span></div></div><nav class="rm-group-index" aria-label="四项学习功能"><a class="rm-index-item" href="#map-experience" data-map-select="experience"><span class="rm-index-no">01</span><span><strong>经验获取</strong><small>下一步经历什么，才可能学到有用的东西？</small></span><b>29<small>条来源</small></b></a><a class="rm-index-item" href="#map-signal" data-map-select="signal"><span class="rm-index-no">02</span><span><strong>学习信号</strong><small>这次经历说明了什么，应该改进哪里？</small></span><b>42<small>条来源</small></b></a><a class="rm-index-item" href="#map-capability" data-map-select="capability"><span class="rm-index-no">03</span><span><strong>能力形成</strong><small>如何把经历变成以后能够使用的能力？</small></span><b>49<small>条来源</small></b></a><a class="rm-index-item" href="#map-regulation" data-map-select="regulation"><span class="rm-index-no">04</span><span><strong>学习调控</strong><small>如何使多次改进相互支持，并持续积累？</small></span><b>115<small>条来源</small></b></a></nav><p class="rm-boundary"><strong>阅读方式</strong> 每篇工作有一个主要归属，其他功能通过关联链接连接；方法、载体、组织方式与评价结果作为独立描述字段。</p>
+<div class="rm-brief"><div><span class="rm-eyebrow">RSI · LEARNING MECHANISMS</span><p class="rm-central-question">经历怎样转化为能够迁移、能够保留，并支持后续学习的能力？</p><p>四项学习功能组织文献与研究想法。泛化贯穿各环节；记忆按保存、归因和修订等实际作用归位。</p></div><div class="rm-stats"><span><b>4</b>学习功能</span><span><b>266</b>来源条目</span><span><b>14</b>研究想法</span></div></div><nav class="rm-group-index" aria-label="四项学习功能"><a class="rm-index-item" href="#map-experience" data-map-select="experience"><span class="rm-index-no">03</span><span><strong>经验获取</strong><small>下一步经历什么，才可能学到有用的东西？</small></span><b>29<small>条来源</small></b></a><a class="rm-index-item" href="#map-signal" data-map-select="signal"><span class="rm-index-no">04</span><span><strong>学习信号</strong><small>这次经历说明了什么，应该改进哪里？</small></span><b>42<small>条来源</small></b></a><a class="rm-index-item" href="#map-capability" data-map-select="capability"><span class="rm-index-no">05</span><span><strong>能力形成</strong><small>如何把经历变成以后能够使用的能力？</small></span><b>49<small>条来源</small></b></a><a class="rm-index-item" href="#map-regulation" data-map-select="regulation"><span class="rm-index-no">06</span><span><strong>学习调控</strong><small>如何使多次改进相互支持，并持续积累？</small></span><b>115<small>条来源</small></b></a></nav><p class="rm-boundary"><strong>阅读方式</strong> 每篇工作有一个主要归属，其他功能通过关联链接连接；方法、载体、组织方式与评价结果作为独立描述字段。</p>
 
 ## RSI 研究地图 / 探索研究地图
 
@@ -182,7 +182,16 @@
 
 ## RSI 研究地图 / 综述的八章结构
 
-<div class="rm-outline"><a href="index.html"><b>01</b><span>引言<small>中心问题与研究动机</small></span></a><a href="foundations.html"><b>02</b><span>范围与基础<small>概念边界与统一框架</small></span></a><a href="#map-explore" data-map-reset><b>03–06</b><span>四项学习功能<small>唯一的主体分类</small></span></a><a href="evidence.html"><b>07</b><span>证据与评价<small>泛化、保持、未来可学习性</small></span></a><a href="agenda.html"><b>08</b><span>开放问题<small>跨环节的研究议程</small></span></a></div>
+<nav class="rm-outline" aria-label="研究综述八章目录">
+  <a data-chapter="01" href="index.html"><b>01</b><span>引言<small>中心问题与研究动机</small></span></a>
+  <a data-chapter="02" href="foundations.html"><b>02</b><span>范围与基础<small>概念边界与统一框架</small></span></a>
+  <a data-chapter="03" href="#map-experience" data-map-select="experience"><b>03</b><span>经验获取<small>有价值的经历从哪里来？</small></span></a>
+  <a data-chapter="04" href="#map-signal" data-map-select="signal"><b>04</b><span>学习信号<small>怎样从经历中获得反馈？</small></span></a>
+  <a data-chapter="05" href="#map-capability" data-map-select="capability"><b>05</b><span>能力形成<small>如何把经验变成长期能力？</small></span></a>
+  <a data-chapter="06" href="#map-regulation" data-map-select="regulation"><b>06</b><span>学习调控<small>多轮更新怎样持续积累？</small></span></a>
+  <a data-chapter="07" href="evidence.html"><b>07</b><span>证据与评价<small>泛化、保持、未来可学习性</small></span></a>
+  <a data-chapter="08" href="agenda.html"><b>08</b><span>开放问题<small>跨环节的研究议程</small></span></a>
+</nav>
 
 ## 范围与统一分析框架 / 2.1 自我改进与递归自我改进的范围
 

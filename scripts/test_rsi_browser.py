@@ -75,6 +75,40 @@ def main():
         rsi_switch=js("return [...document.querySelectorAll('.site-switcher__tab')].map(a=>({href:a.getAttribute('href'),active:a.getAttribute('aria-current')==='true'}));")
         check(rsi_switch==[{'href':'/','active':False},{'href':'/rsi/','active':True}],f'RSI switch destinations incorrect: {rsi_switch}')
         check(js("return [...document.querySelectorAll('#research-nav .nav-level2')].every(a=>!a.getAttribute('href').startsWith('../'))"),'RSI navigation not standalone')
+        nav('rsi/research-map.html')
+        check(js("return document.querySelectorAll('.rm-outline [data-chapter]').length") == 8,
+              'Research map must show eight individually colored review chapters')
+        palette=js("""const keys=['experience','signal','capability','regulation'];return keys.map(key=>{
+          const group=document.querySelector('.rm-group[data-function="'+key+'"]');
+          const index=document.querySelector('.rm-index-item[data-map-select="'+key+'"]');
+          const outline=document.querySelector('.rm-outline [data-map-select="'+key+'"]');
+          return {key,group:getComputedStyle(group).borderLeftColor,
+             heading:getComputedStyle(group.querySelector('summary')).backgroundImage,
+             index:getComputedStyle(index).borderTopColor,
+             outline:getComputedStyle(outline).borderTopColor,
+             badge:getComputedStyle(group.querySelector('.rm-chapter')).backgroundColor};
+        });""")
+        check(len({entry['group'] for entry in palette})==4 and
+              all(entry['group']==entry['index']==entry['outline']==entry['badge'] for entry in palette) and
+              len({entry['heading'] for entry in palette})==4,
+              'Distinct chapter colors must continue from index through full section: '+str(palette))
+        chapter_colors=js("""return [...document.querySelectorAll('.rm-outline [data-chapter]')].map(
+          node=>getComputedStyle(node).borderTopColor);""")
+        check(len(chapter_colors)==8 and len(set(chapter_colors))==8,
+              'Each of the eight review chapters should have a distinct palette color: '+str(chapter_colors))
+        screenshot('rsi-research-map-colored-index-desktop.png')
+        js("document.querySelector('#map-outline').scrollIntoView({block:'start',behavior:'instant'})")
+        time.sleep(.4)
+        screenshot('rsi-research-map-eight-chapter-colors-desktop.png')
+        js("document.querySelector('.rm-outline [data-chapter=\"04\"]').click()")
+        check(js("""return document.querySelector('#rm-function').value==='signal' &&
+          !document.querySelector('#map-signal').hidden &&
+          [...document.querySelectorAll('.rm-group:not([data-function=signal])')].every(g=>g.hidden);"""),
+          'Clicking chapter 4 in the outline should filter to learning signals')
+        screenshot('rsi-research-map-colored-group-desktop.png')
+        js("document.querySelector('#rm-reset').click()")
+        check(js("""return [...document.querySelectorAll('.rm-group')].every(g=>!g.hidden)"""),
+              'Reset must reveal all four colored research chapters')
         nav('rsi/literature.html')
         check(js("return document.querySelectorAll('#rsi-landscape-20261003 table tbody tr').length===5"),
               'Curated overview must present four research questions and safety')
@@ -484,7 +518,7 @@ def main():
         time.sleep(.4)
         screenshot('idea-i11-five-stage-desktop.png')
         req('POST',f'/session/{session}/window/rect',{'width':390,'height':844})
-        for slug in ['index','timeline','reading-cards','reading-notes','curriculum-scale-evidence','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','idea-i6','teaching','experiments','references']:
+        for slug in ['research-map','index','timeline','reading-cards','reading-notes','curriculum-scale-evidence','ideas','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','idea-i6','teaching','experiments','references']:
             nav('rsi/'+slug+'.html')
             check(not js('return document.documentElement.scrollWidth>innerWidth+1'),slug+': mobile horizontal overflow')
         nav('rsi/timeline.html')
@@ -498,6 +532,15 @@ def main():
         check(js("return (()=>{const r=document.querySelector('[data-day=\"2026-10-27\"]').getBoundingClientRect();return r.top<innerHeight && r.bottom>0})()"),
               'Selected day should scroll into the mobile viewport')
         screenshot('timeline-v4-mobile-selected-day.png')
+        nav('rsi/research-map.html')
+        screenshot('rsi-research-map-colored-mobile.png')
+        check(js("return document.querySelectorAll('.rm-outline [data-chapter]').length") == 8,
+              'The eight color-coded chapter links must remain visible on mobile')
+        js("document.querySelector('#map-capability').scrollIntoView({block:'start'})")
+        time.sleep(.35)
+        screenshot('rsi-research-map-colored-group-mobile.png')
+        check(not js('return document.documentElement.scrollWidth>innerWidth+1'),
+              'Mobile chapter color styling must not introduce horizontal overflow')
         nav('rsi/ideas.html'); js("document.querySelector('#idea-1').scrollIntoView({block:'start'})")
         time.sleep(.5)
         screenshot('idea-framework-mobile.png')

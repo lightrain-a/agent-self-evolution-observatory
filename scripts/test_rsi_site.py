@@ -1353,6 +1353,25 @@ def main():
     check('data-functions=' in timeline_html,'Timeline events lack functional metadata')
     for slug in ['research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda']:
         check(slug in PAGES and (ROOT/'rsi'/f'{slug}.html').exists(),'Missing review chapter or map: '+slug)
+    # The reference Agent research map colors each research category separately.
+    # RSI's four main chapters must use the canonical function palette, and the
+    # eight-chapter outline must make every chapter independently recognizable.
+    rsi_map=(ROOT/'rsi/research-map.html').read_text(encoding='utf-8')
+    map_css=(ROOT/'rsi/research-map.css').read_text(encoding='utf-8')
+    check(rsi_map.count('data-chapter="')==8,'RSI map must expose all eight separately colored chapter cards')
+    for n in range(1,9):
+        check(f'data-chapter="{n:02d}"' in rsi_map,
+              f'RSI chapter {n} lacks a separate visual card')
+        check(f'.rm-outline [data-chapter="{n:02d}"]' in map_css,
+              f'RSI chapter {n} has no chapter-specific color token')
+    for fid,chapter in (('experience',3),('signal',4),('capability',5),('regulation',6)):
+        check(f'data-function="{fid}"' in rsi_map and f'data-map-select="{fid}"' in rsi_map,
+              f'RSI {fid} map category or index missing')
+        check(f'<span class="rm-index-no">{chapter:02d}</span>' in rsi_map,
+              f'RSI {fid} quick index must use its real chapter number')
+        check(f'.rm-group[data-function="{fid}"]' in map_css and
+              f'--rm-theme:var(--function-{fid}' in map_css,
+              f'RSI {fid} category color must match shared functional taxonomy')
     check('泛化' in (ROOT/'rsi/evidence.html').read_text(encoding='utf-8')
           and '未来可学习性' in (ROOT/'rsi/evidence.html').read_text(encoding='utf-8'),'Evaluation questions missing')
     for filename in ('framework.js','research-map.js'):

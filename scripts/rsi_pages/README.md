@@ -8,6 +8,7 @@
 - 新文献先按主要科学贡献填写唯一primary与可选related，再追加原始来源/精读数据。方法、载体、组织方式、来源领域和结果标签不作为并列主类。
 - 综述、独立评估和官方实验资源可以没有主功能，作为第2/7章或研究资源的支撑材料；必须写role与归类理由。
 - 全站生成由 `scripts/build_rsi_research.py` 协调，章节逻辑在 `scripts/rsi_framework.py`，网站导出由 `scripts/build_rsi_site.py` 完成。地图、来源表、精读、Idea、导航、时间轴与搜索共用分类。
+- **研究地图章节配色（2026-10-29）**：`rsi/research-map.css` 参照 Agent 研究地图的“类别主色贯穿编号、索引、边框和正文标题”方式，CH3–CH6 直接使用 `rsi/framework.css` 的 `--function-experience/signal/capability/regulation` 颜色，不另造一套容易漂移的四功能配色；第1、2、7、8章使用独立辅助色。八章目录在 `scripts/rsi_pages/research-map.py` 按 `data-chapter=01..08` 生成八张可点击卡片；主体仍然只有四个学习功能组，避免将八章误当八个并列科学分类。改动后运行 `scripts/test_rsi_site.py` 与 `scripts/test_rsi_browser.py` 检查颜色一致性、筛选、链接及移动端。
 - I编号和原详情URL/section锚点保持稳定；原I6跨轮瓶颈草案与当前I6失败价值不是同一项，前者继续归档。
 - reading-cards.json中的research_questions/research_coverage是已保留的补充诊断记录，不再驱动主体分类或主筛选。筛选使用primary_function/related_functions。
 - 引用仍以sources.tsv的稳定来源ID展开；group保留来源领域，primary_function用于功能分类。
