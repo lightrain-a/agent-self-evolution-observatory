@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "updated": "2026-10-30",
+  "status": "research-proposals",
+  "mainline_count": 16,
+  "reserve_count": 2,
+  "section_codes": {
+    "A": "experience",
+    "B": "signal",
+    "C": "capability",
+    "D": "regulation"
+  },
+  "source_records": [
+    {
+      "id": "P601",
+      "title": "R-Zero: Self-Evolving Reasoning LLM from Zero Data",
+      "date": "arXiv v4 · 2026-02-13",
+      "url": "https://arxiv.org/html/2508.05004v4",
+      "primary": "experience",
+      "related": [
+        "signal",
+        "capability"
+      ],
+      "note": "挑战者与求解者交替学习；分析后期退化、难度与标签可靠性。§4.3 已对演化检查点使用共同 math12k 后续训练，不能把后续课程评测本身作为新贡献。",
+      "reason": "通过自博弈构造后续学习经验，并研究自生成数据可靠性。",
+      "group": "RSI",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    },
+    {
+      "id": "P602",
+      "title": "CREAM: Consistency Regularized Self-Rewarding Language Models",
+      "date": "arXiv v5 · 2025-04-26",
+      "url": "https://arxiv.org/html/2410.12735v5",
+      "primary": "signal",
+      "related": [
+        "regulation"
+      ],
+      "note": "在多轮自奖励中用跨代偏好一致性正则化。持续一致的判断仍可能共同错误；正确性与后继学习收益需分别验证。",
+      "reason": "约束跨代自反馈的偏好一致性与可靠性。",
+      "group": "RSI",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    },
+    {
+      "id": "P603",
+      "title": "Agent Plasticity: Measuring Self-Improvement Through Experience",
+      "date": "arXiv v1 · 2026-10-06",
+      "url": "https://arxiv.org/abs/2610.08902",
+      "primary": "capability",
+      "related": [
+        "regulation"
+      ],
+      "note": "固定基础权重，借助持久工具、技能和记忆衡量经验带来的性能增益及学习成本。产物保存、调用和有效使用须区分；产物使用分析为观察性诊断。",
+      "reason": "评估持久产物形成的能力与经验学习效率。",
+      "group": "RSI",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    },
+    {
+      "id": "P604",
+      "title": "Are Self-Evolving Agents Continual Learners?",
+      "date": "arXiv v1 · 2026-10-19",
+      "url": "https://arxiv.org/html/2610.25858",
+      "primary": "capability",
+      "related": [
+        "regulation"
+      ],
+      "note": "在自演化任务流中研究全局提示/工作区修改的干扰和相似输入下的检索冲突。该观察不能直接证明参数学习中的条件绑定机制。",
+      "reason": "研究持续自演化中知识和工作流程的保留与冲突。",
+      "group": "RSI",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    },
+    {
+      "id": "P605",
+      "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",
+      "date": "arXiv v2 · 2026-08-29",
+      "url": "https://arxiv.org/html/2605.12978v2",
+      "primary": "regulation",
+      "related": [
+        "capability",
+        "signal"
+      ],
+      "note": "反复更新外部记忆可能损失条件、形成错误归纳；原始轨迹是重要基线。不同于参数遗忘，也未直接验证新能力使旧证据产生新监督。",
+      "reason": "研究多轮记忆修订过程中的信息失真。",
+      "group": "RSI",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    },
+    {
+      "id": "P606",
+      "title": "Search over Self-Edit Strategies for LLM Adaptation",
+      "date": "arXiv v1 · 2026-01-20",
+      "url": "https://arxiv.org/html/2601.14532v1",
+      "primary": "regulation",
+      "related": [
+        "capability"
+      ],
+      "note": "在固定 NTP 算子下搜索模板、数据与超参数，考察有限适应中的档案帮助和后期受限表现；部分退化解释仍属作者假设。",
+      "reason": "研究自编辑候选的搜索与经验复用。",
+      "group": "相邻领域",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    },
+    {
+      "id": "P607",
+      "title": "Recursive self-improvement of AI research agents",
+      "date": "arXiv v1 · 2026-09-22",
+      "url": "https://arxiv.org/html/2609.26457",
+      "primary": "regulation",
+      "related": [
+        "capability"
+      ],
+      "note": "AIDE² 对代码与研究流程持续自修改。§3.6 用同一起点内层代理比较旧新外层改进器；作者指出噪声和验证成本，未给出确定的加速结论。",
+      "reason": "通过相同起点检验改进器自身是否改善后续改进。",
+      "group": "RSI",
+      "level": "原始论文方法与实验边界核对；2026-10-30；未独立复现",
+      "code": ""
+    }
+  ]
+}

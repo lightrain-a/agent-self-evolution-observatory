@@ -1,0 +1,32 @@
+/* Current paper proposals use the site's existing four-function palette. */
+.pi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.pi-card,.pi-pretest{display:block;min-width:0;border:1px solid var(--border,#dce3eb);border-radius:12px;padding:18px;background:var(--panel,#fff);overflow-wrap:anywhere}
+.pi-card{border-top:3px solid var(--pi-color,#5578a8);color:inherit;text-decoration:none;transition:border-color .15s,box-shadow .15s}
+.pi-card:hover,.pi-card:focus-visible{border-color:var(--pi-color,#5578a8);box-shadow:0 3px 14px #183b5610}
+.pi-card[data-function=experience]{--pi-color:var(--function-experience,#177e89)}
+.pi-card[data-function=signal]{--pi-color:var(--function-signal,#9a6a16)}
+.pi-card[data-function=capability]{--pi-color:var(--function-capability,#6c52a0)}
+.pi-card[data-function=regulation]{--pi-color:var(--function-regulation,#b94e53)}
+.pi-card-meta,.pi-meta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;font-size:12px;color:var(--muted,#64748b);margin-bottom:10px}
+.pi-card-meta b{font-size:14px;color:var(--pi-color,#5578a8)}
+.pi-card>strong{display:block;font-size:16px;line-height:1.65}
+.pi-card p,.pi-pretest p{margin:10px 0;line-height:1.8}
+.pi-card small,.pi-pretest>small{display:block;color:var(--muted,#64748b);line-height:1.75}
+.pi-claim{border-left:3px solid var(--accent,#3c73ab);background:var(--panel-soft,#f3f7fb);padding:14px 18px;line-height:1.85;margin:14px 0}
+.pi-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:18px 0}
+.pi-pair>div,.pi-pair>article{min-width:0}
+.pi-idea h3,.pi-pretest h3{font-size:16px;margin:18px 0 8px;line-height:1.65}
+.pi-steps{padding-left:25px;line-height:1.9;margin:12px 0}
+.pi-steps li{margin:10px 0;padding-left:4px}
+.pi-inheritance{border:1px solid var(--border,#dce3eb);border-radius:10px;padding:14px 18px;margin:18px 0;background:var(--panel-soft,#f7f9fc)}
+.pi-inheritance p{margin:7px 0 0}
+.pi-depth{border:1px solid var(--border,#dce3eb);border-radius:10px;padding:0 16px;margin:12px 0;min-width:0}
+.pi-depth>summary{cursor:pointer;padding:13px 0;font-weight:650;line-height:1.7}
+.pi-depth[open]{padding-bottom:13px}
+.pi-related{padding:12px 0;border-top:1px solid var(--border,#e2e8f0)}
+.pi-related>a{font-weight:650;overflow-wrap:anywhere}
+.pi-related p{margin:8px 0;line-height:1.85}
+.pi-boundary,.pi-archive-note{color:var(--muted,#64748b);font-size:13px;line-height:1.85}
+.pi-boundary{padding-top:12px;border-top:1px solid var(--border,#dce3eb);margin-top:18px}
+.pi-history{background:var(--panel-soft,#fafbfd)}
+@media(max-width:760px){.pi-grid,.pi-pair{grid-template-columns:1fr;gap:12px}.pi-card,.pi-pretest{padding:14px}.pi-claim{padding:12px 14px}.pi-steps{padding-left:21px}.pi-depth{padding-left:12px;padding-right:12px}.pi-card>strong{font-size:15px}}

@@ -11,17 +11,21 @@ from pathlib import Path
 from rsi_framework import (FUNCTIONS, IDEAS, BY_ID, FUNCTION_SLUGS, function_badges, source_assignment,
                            enrich_registries, framework_pages, apply_page_metadata, organize_ideas)
 from rsi_toc import render_page_toc
+from rsi_taxonomy import PAPER_SECTION_SLUGS
+from rsi_paper_portfolio import apply_portfolio, merge_portfolio_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
-DATE = '2026-10-29'
+DATE = '2026-10-30'
 BASE_ORDER = ['index','research-map','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','learning-rule-evolution','memory-research-map','learning-signal-bottlenecks','experience-consolidation','teaching','idea-i6','experiments']
 CHAPTER_ORDER = ['index','research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda']
 NAV_ARCHIVED_PAGES = {'teaching':'idea-i5.html','idea-i6':'ideas.html'}
 
 def page_label(p):
     labels={'index':'第1章 · 研究总览','research-map':'四功能研究地图','foundations':'第2章 · 范围与框架',
-            'timeline':'研究时间轴 · 会议 DDL','ideas':'I1–I14 · 研究方向总览',
+            'timeline':'研究时间轴 · 会议 DDL','ideas':'论文主线 · 16＋2',
+            'ideas-experience':'A · 经验获取的四条主线','ideas-signals':'B · 学习信号的三条主线＋探索',
+            'ideas-capability':'C · 能力形成的五条主线','ideas-regulation':'D · 学习调控的四条主线＋探索',
             'idea-prioritization':'方案优先级与决定性实验','evidence':'第7章 · 证据与评价',
             'agenda':'第8章 · 开放问题与研究议程','experiments':'实验执行方案',
             'learning-admission':'I13 · 安全更新接纳','learning-rule-evolution':'I14 · 学习规则自进化'}
@@ -40,7 +44,7 @@ def build_navigation(pages):
     extras={'experience':[],'signal':['learning-signal-bottlenecks'],
             'capability':['memory-research-map','experience-consolidation'],'regulation':[]}
     for f in FUNCTIONS:
-        links=[entry(FUNCTION_SLUGS[f['id']])]
+        links=[entry(FUNCTION_SLUGS[f['id']]),entry(PAPER_SECTION_SLUGS[f['id']])]
         for iid,idea in IDEAS.items():
             if idea['primary']==f['id']:
                 links.append([idea['href'],{'zh':iid+' · '+idea['title'],'en':iid+' · '+idea.get('en',idea['title'])}])
@@ -52,25 +56,22 @@ def build_navigation(pages):
         {'id':'literature','title':{'zh':'文献与机制资料','en':'Literature & Mechanisms'},'open':False,
          'pages':[entry(s) for s in ('literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','references')]}
     ])
-    # Three levels where a chapter has many destinations: chapter > topic folder > page.
-    # Preserve group.pages as the canonical ordered link list for older nav consumers.
     folder_spec = {
         'overview': [(3,6,'research-tools','研究工具与 Idea','Research tools & ideas')],
-        'signal': [(1,4,'signal-ideas','独立研究方向 · I6 / I8 / I11','Research ideas · I6 / I8 / I11')],
-        'capability': [(2,4,'capability-notes','记忆与巩固专题','Memory and consolidation')],
-        'regulation': [(1,10,'regulation-ideas','独立研究方向 · 9 项','Research ideas · 9')],
         'evidence': [(1,4,'evidence-topics','专题研究与实验方案','Research topics & experiments')],
         'literature': [(1,3,'literature-reading','论文精读','Paper reading'),
                        (3,6,'literature-theory','机制、理论与学习科学','Mechanisms and theory')],
     }
     for group in groups:
-        folders = []
-        prev_end = 0
-        for start,end,fid,zh,en in folder_spec.get(group['id'], []):
-            assert 0 <= prev_end <= start < end <= len(group['pages']), group['id']
-            prev_end=end
-            folders.append({'id':fid,'start':start,'end':end,
-                            'title':{'zh':zh,'en':en}})
+        specs = folder_spec.get(group['id'], [])
+        if group['id'] in PAPER_SECTION_SLUGS and len(group['pages']) > 2:
+            specs = [(2,len(group['pages']),group['id']+'-archive','原始思路与文献专题','Original ideas & supporting studies')]
+        folders=[]
+        previous_end=0
+        for start,end,fid,zh,en in specs:
+            assert 0 <= previous_end <= start < end <= len(group['pages']), group['id']
+            previous_end=end
+            folders.append({'id':fid,'start':start,'end':end,'title':{'zh':zh,'en':en}})
         group['folders']=folders
     covered=[href[:-5] for g in groups for href,_ in g['pages'] if '#' not in href]
     assert len(covered)==len(set(covered)), 'Duplicate navigation page'
@@ -132,6 +133,7 @@ def main() -> None:
         (ROOT / "research-timeline.css").read_text(encoding="utf-8"), encoding="utf-8")
     with (OUT / 'sources.tsv').open(encoding='utf-8', newline='') as stream:
         sources = list(csv.DictReader(stream, delimiter='\t'))
+    sources = merge_portfolio_sources(sources)
     refmap = {r['id']: r for r in sources}
     assert len(refmap) == len(sources)
     assert all(r['url'].startswith('https://') for r in sources)
@@ -139,7 +141,8 @@ def main() -> None:
     pages = [runpy.run_path(str(ROOT / 'scripts' / 'rsi_pages' / (slug + '.py')))['PAGE'] for slug in BASE_ORDER]
     pages.extend(framework_pages(sources))
     organize_ideas(next(p for p in pages if p['slug']=='ideas'))
-    source_sections = [('protocol', '核验口径与检索范围', '''<p>本专题的基础综述始于 2026-10-21；I1–I5 新增最近邻于 2026-10-27 增量核验。定向覆盖 RSI、学习型改进器、课程/元学习、学习科学及实验资源。用论文标题、方法词与引用链交叉检索，优先 arXiv、会议页面、作者机构和官方仓库。</p><p><b>阅读深度不同：</b>“正文方法”表示核对了方法/实验设置，不等于逐条复现全部结果；“摘要”只支持摘要范围的陈述；“官方资源”只确认资产与文档存在。代码入口存在不等于依赖安装、运行、原表重现成功。</p><p><b>原始材料与本次研究：</b>用户分享的推文用于确定入口和问题，不把推文统计或数字自动当作原论文结论。新提案、框架与优先级属于本专题分析，均非文献已经证明的结果。</p><p><b>搜索主题：</b>recursive self-improvement / harness optimization / meta-learning / automated curriculum / learning progress / learner modeling / assistance dilemma / fading / retrieval practice / productive failure / interference replay / skill withdrawal / learning response / selective rehearsal / active failure probing / partner selection / co-distillation。</p><div class="note">这是针对选题的证据地图，不是穷尽全部文献的系统综述。未能核对的作者、发表状态、代码可运行性不补写；预印本标注月份。链接会随论文修订与仓库更新变化，实验须另锁 commit / revision。</div><div class="links"><a class="link-btn" href="sources.json" download>下载来源 JSON</a><a class="link-btn" href="sources.tsv" download>下载来源 TSV</a><a class="link-btn" href="research-notes.md" download>下载整篇研究笔记</a></div>''')]
+    apply_portfolio(pages)
+    source_sections = [('protocol', '核验口径与检索范围', '''<p>本专题的基础综述始于 2026-10-21；I1–I5 最近邻于 2026-10-27 增量核验，2026-10-30 进一步核对 RSI 瓶颈与当前 16＋2 方案的原始论文依据。定向覆盖 RSI、学习型改进器、课程/元学习、学习科学及实验资源。用论文标题、方法词与引用链交叉检索，优先 arXiv、会议页面、作者机构和官方仓库。</p><p><b>阅读深度不同：</b>“正文方法”表示核对了方法/实验设置，不等于逐条复现全部结果；“摘要”只支持摘要范围的陈述；“官方资源”只确认资产与文档存在。代码入口存在不等于依赖安装、运行、原表重现成功。</p><p><b>原始材料与本次研究：</b>用户分享的推文用于确定入口和问题，不把推文统计或数字自动当作原论文结论。新提案、框架与优先级属于本专题分析，均非文献已经证明的结果。</p><p><b>搜索主题：</b>recursive self-improvement / harness optimization / meta-learning / automated curriculum / learning progress / learner modeling / assistance dilemma / fading / retrieval practice / productive failure / interference replay / skill withdrawal / learning response / selective rehearsal / active failure probing / partner selection / co-distillation。</p><div class="note">这是针对选题的证据地图，不是穷尽全部文献的系统综述。未能核对的作者、发表状态、代码可运行性不补写；预印本标注月份。链接会随论文修订与仓库更新变化，实验须另锁 commit / revision。</div><div class="links"><a class="link-btn" href="sources.json" download>下载来源 JSON</a><a class="link-btn" href="sources.tsv" download>下载来源 TSV</a><a class="link-btn" href="research-notes.md" download>下载整篇研究笔记</a></div>''')]
     filter_options = ''.join(f'<option value="{f["id"]}">{html.escape(f["title"])}</option>' for f in FUNCTIONS)
     source_sections[0] = (source_sections[0][0], source_sections[0][1],
         '<span id="group-rsi"></span><span id="group-methods"></span><span id="group-education"></span><span id="group-assets"></span>'
@@ -159,6 +162,7 @@ def main() -> None:
     pages.append({'slug':'references','title':'来源与文献分类','en':'References by Learning Function','lead':f'{len(sources)} 项来源按四项学习功能组织，保留来源领域、阅读深度与原始链接。','sections':source_sections})
     apply_page_metadata(pages)
     order=CHAPTER_ORDER+[s for s in BASE_ORDER if s not in CHAPTER_ORDER]+['references']
+    order[order.index('ideas')+1:order.index('ideas')+1] = list(PAPER_SECTION_SLUGS.values())
     page_map={p['slug']:p for p in pages}
     assert set(order)==set(page_map)
     pages=[page_map[s] for s in order]
@@ -222,7 +226,7 @@ def main() -> None:
     (OUT / 'research-notes.md').write_text('\n'.join(line.rstrip() for line in '\n'.join(notes).splitlines()) + '\n', encoding='utf-8')
     fieldnames = list(sources[0])
     with (OUT/'sources.tsv').open('w',encoding='utf-8',newline='') as stream:
-        writer=csv.DictWriter(stream,fieldnames=fieldnames,delimiter='\t')
+        writer=csv.DictWriter(stream,fieldnames=fieldnames,delimiter='\t',lineterminator='\n')
         writer.writeheader()
         writer.writerows({k:('|'.join(v) if isinstance(v,list) else v) for k,v in r.items()} for r in sources)
     print(f'Built {len(pages)} pages; {len(sources)} sources; {len(used)} inline-cited sources; {len(search)} search records.')

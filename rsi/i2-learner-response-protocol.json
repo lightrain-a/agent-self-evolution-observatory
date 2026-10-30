@@ -144,10 +144,10 @@
     "S47",
     "S106"
   ],
-  "primary_function": "regulation",
+  "primary_function": "signal",
   "related_functions": [
+    "regulation",
     "experience",
-    "signal",
     "capability"
   ],
   "taxonomy_version": "learning-functions-2026-10-29"

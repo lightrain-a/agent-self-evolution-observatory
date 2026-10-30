@@ -153,6 +153,22 @@ TOC_LABELS = {
 }
 
 
+# Current paper introductions precede retained earlier technical sections.
+# They belong to the first reading band, while historical anchors stay stable.
+for _slug in ('idea-i2','idea-i5','idea-i6-failure-value',
+              'idea-i7-learning-order','i8','idea-i9-practice-switching',
+              'idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck',
+              'learning-admission','learning-rule-evolution','memory-research-map',
+              'learning-signal-bottlenecks','experience-consolidation'):
+    if _slug in TOC_GROUPS:
+        TOC_GROUPS[_slug][0] = ('current-paper-links','01 · 当前主线与研究背景')
+TOC_GROUPS['idea-prioritization'][0] = ('current-priority','01 · 当前推进顺序')
+TOC_GROUPS['experiments'][0] = ('current-paper-plan','01 · 当前计划与共用平台')
+TOC_GROUPS['ideas'] = [('current-portfolio','01 · 当前 16＋2'),
+                      ('orthogonality-current','02 · 分解与共用实验'),
+                      ('classification','03 · 原始 I 思路与文献')]
+
+
 def short_title(title: str) -> str:
     """Avoid unreadable wraparound in a 276px sidebar; retain full title in aria-label."""
     title = html.unescape(re.sub(r"<[^>]+>", "", title)).strip()

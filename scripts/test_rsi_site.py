@@ -11,7 +11,7 @@ from urllib.parse import urlsplit, unquote
 from rsi_toc import TOC_GROUPS
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda','index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
+PAGES = ['ideas-experience','ideas-signals','ideas-capability','ideas-regulation','research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda','index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -231,7 +231,7 @@ def main():
     check('href="literature.html#rsi-landscape-20261003"'
           in (ROOT/'rsi/index.html').read_text(encoding='utf-8'),
           'RSI homepage lacks a clear entry to curated panorama')
-    check(source['review_date']=='2026-10-29','Review date drift')
+    check(source['review_date']=='2026-10-30','Review date drift')
     timeline=json.loads((ROOT/'rsi/timeline-data.json').read_text(encoding='utf-8'))
     check(timeline['schema_version']=='1.0','Timeline schema incompatible')
     date.fromisoformat(timeline['verified_at'])
@@ -299,10 +299,10 @@ def main():
     groups=json.loads(nav_text[len('window.NAV_GROUPS = '):].strip().removesuffix(';'))
     expected_groups={
         'overview':['index.html','research-map.html','foundations.html','timeline.html','ideas.html','idea-prioritization.html'],
-        'experience':['experience.html','idea-i10-learning-novelty.html'],
-        'signal':['signals.html','idea-i6-failure-value.html','i8.html','idea-i11-emotional-rsi.html','learning-signal-bottlenecks.html'],
-        'capability':['capabilities.html','ideas.html#idea-1','memory-research-map.html','experience-consolidation.html'],
-        'regulation':['regulation.html','idea-i2.html','ideas.html#idea-3','ideas.html#idea-4','idea-i5.html','idea-i7-learning-order.html','idea-i9-practice-switching.html','idea-i12-prerequisite-bottleneck.html','learning-admission.html','learning-rule-evolution.html'],
+        'experience':['experience.html','ideas-experience.html','ideas.html#idea-4','idea-i6-failure-value.html','i8.html','idea-i10-learning-novelty.html'],
+        'signal':['signals.html','ideas-signals.html','idea-i2.html','idea-i11-emotional-rsi.html','learning-signal-bottlenecks.html'],
+        'capability':['capabilities.html','ideas-capability.html','ideas.html#idea-1','ideas.html#idea-3','idea-i12-prerequisite-bottleneck.html','learning-rule-evolution.html','memory-research-map.html','experience-consolidation.html'],
+        'regulation':['regulation.html','ideas-regulation.html','idea-i5.html','idea-i7-learning-order.html','idea-i9-practice-switching.html','learning-admission.html'],
         'evidence':['evidence.html','generalization-learnability.html','curriculum-scale-evidence.html','experiments.html','agenda.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','cross-domain.html','theory-notes.html','learning-science.html','references.html'],
     }
@@ -1509,11 +1509,23 @@ def main():
     functions={f['id']:f for f in taxonomy['functions']}
     check(list(functions)==['experience','signal','capability','regulation'],'Exactly four learning functions are required')
     check([f['chapter'] for f in functions.values()]==[3,4,5,6],'Functional chapters must be 3–6')
-    expected_ideas={'I1':'capability','I2':'regulation','I3':'regulation','I4':'regulation','I5':'regulation',
-                    'I6':'signal','I7':'regulation','I8':'signal','I9':'regulation','I10':'experience',
-                    'I11':'signal','I12':'regulation','I13':'regulation','I14':'regulation'}
+    expected_ideas={'I1':'capability','I2':'signal','I3':'capability','I4':'experience','I5':'regulation',
+                    'I6':'experience','I7':'regulation','I8':'experience','I9':'regulation','I10':'experience',
+                    'I11':'signal','I12':'capability','I13':'regulation','I14':'capability'}
     check({iid:v['primary'] for iid,v in taxonomy['ideas'].items()}==expected_ideas,
           'Idea scientific contribution mapping changed unexpectedly')
+    portfolio=json.loads((ROOT/'rsi/paper-ideas.json').read_text(encoding='utf-8'))
+    current=taxonomy['paper_ideas']
+    expected_papers={'A1+A4','A2','A3','A5','B1','B2','B3','B4','C1','C2','C3','C4','C5','D1+D2','D3','D4','D5','D6'}
+    check(set(current)==expected_papers and len(portfolio['items'])==18,'Current 16+2 portfolio incomplete')
+    check(sum(p['status']=='mainline' for p in current.values())==16
+          and {i for i,p in current.items() if p['status']=='reserve'}=={'B3','D6'},'Mainline/reserve distinction lost')
+    for iid,item in current.items():
+        u=urlsplit(item['href']); path=ROOT/'rsi'/u.path
+        check(path in parsed and u.fragment in parsed[path].ids,'Current paper URL missing: '+iid)
+        check(any(r['url']==item['href'] for r in records),'Current paper absent from search: '+iid)
+    check(taxonomy['ideas']['I5']['current_papers']==['B2','D3']
+          and taxonomy['ideas']['I14']['current_papers']==['C5','D6'],'Split idea lineage drift')
     check(set(taxonomy['sources'])==refs,'Every source must have one reviewed classification record')
     check(set(taxonomy['papers'])=={p['id'] for p in cards},'Every deep-read paper needs a functional assignment')
     for paper in cards:

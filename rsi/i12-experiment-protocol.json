@@ -103,10 +103,10 @@
     "M27",
     "R04"
   ],
-  "primary_function": "regulation",
+  "primary_function": "capability",
   "related_functions": [
     "experience",
-    "capability",
+    "regulation",
     "signal"
   ],
   "taxonomy_version": "learning-functions-2026-10-29"

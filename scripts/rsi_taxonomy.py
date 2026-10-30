@@ -44,6 +44,40 @@ IDEAS = {
  "I14":{"title":"学习规则自进化","href":"learning-rule-evolution.html","primary":"regulation","section":"6.4","related":["signal","capability"],"tags":["元学习","更新规则","实际学习收益","未来可学习性"],"reason":"固定学生、材料与顺序，研究更新机制能否从实际学习效果中改进。"},
 }
 
+# The current papers are loaded here so navigation, chapters, maps and exports
+# share the same placement. I identifiers remain stable historical entry points.
+import json as _json
+from pathlib import Path as _Path
+_PAPER_DIR = _Path(__file__).resolve().parent / 'rsi_pages'
+PAPER_PORTFOLIO = _json.loads((_PAPER_DIR / 'paper-ideas-meta.json').read_text(encoding='utf-8'))
+_PAPER_ITEMS = sum((_json.loads((_PAPER_DIR / ('paper-ideas-' + code + '.json')).read_text(encoding='utf-8')) for code in ('a', 'b', 'c', 'd')), [])
+PAPER_PORTFOLIO['items'] = _PAPER_ITEMS
+PAPER_SECTION_SLUGS = {'experience':'ideas-experience','signal':'ideas-signals','capability':'ideas-capability','regulation':'ideas-regulation'}
+PAPER_IDEAS = {}
+for _item in _PAPER_ITEMS:
+    _primary = PAPER_PORTFOLIO['section_codes'][_item['section']]
+    _chapter = next(f['chapter'] for f in FUNCTIONS if f['id'] == _primary)
+    PAPER_IDEAS[_item['id']] = {**_item, 'primary': _primary, 'related': [], 'section_code': _item['section'],
+        'section': str(_chapter) + ' · ' + ('论文主线' if _item['status'] == 'mainline' else '探索方向'),
+        'tags': _item['origins'],
+        'href': PAPER_SECTION_SLUGS[_primary] + '.html#' + _item['slug']}
+assert len(PAPER_IDEAS) == 18 and sum(p['status'] == 'mainline' for p in PAPER_IDEAS.values()) == 16
+_LEGACY_PLACEMENTS = {
+    'I2': ('signal', '4.4', ['regulation','experience','capability']),
+    'I3': ('capability', '5.1', ['regulation','signal']),
+    'I4': ('experience', '3.2', ['regulation','signal']),
+    'I6': ('experience', '3.4', ['signal','regulation']),
+    'I8': ('experience', '3.4', ['signal','capability']),
+    'I12': ('capability', '5.4', ['experience','regulation','signal']),
+    'I14': ('capability', '5.3', ['regulation','signal']),
+}
+for _iid, _origin in IDEAS.items():
+    _origin['current_papers'] = [p['id'] for p in PAPER_IDEAS.values() if _iid in p['origins']]
+    if _iid in _LEGACY_PLACEMENTS:
+        _primary, _section, _related = _LEGACY_PLACEMENTS[_iid]
+        _origin.update(primary=_primary, section=_section, related=_related,
+                       reason='原始思路按本轮主要贡献归位；当前论文主线：' + '、'.join(_origin['current_papers']))
+
 _SOURCE_ROWS = """
 S01|background||综述用于界定自我改进范围与修改对象。
 S02|capability|regulation,signal|将执行经验写入可继承代码，版本搜索提供持续更新。
@@ -335,6 +369,10 @@ for _line in _SOURCE_ROWS.strip().splitlines():
     SOURCE_MAP[_id] = {"primary": _placement if _role == "research" else None,
                        "related": _related.split(",") if _related else [],
                        "role": _role, "reason": _reason}
+for _source in PAPER_PORTFOLIO['source_records']:
+    SOURCE_MAP[_source['id']] = {'primary': _source['primary'], 'related': _source['related'],
+                               'role': 'research', 'reason': _source['reason']}
+
 _PAPER_ROWS = """
 scienceadv2020-expert-haptic-ceiling-hirano|signal|4.1|experience,capability|E380|主动触觉与反馈改变专家可用的训练信号；不是单纯增加练习量。
 hattori-ofc-metarl-nn2023|regulation|6.4|capability||跨时间尺度区分快速任务适应与慢速学习机制的形成。

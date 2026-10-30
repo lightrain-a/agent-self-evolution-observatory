@@ -73,6 +73,7 @@ def build(output: Path = DEFAULT_OUTPUT) -> Path:
         "index.html", "timeline.html", "timeline-data.json", "timeline.css", "timeline-view.js",
         "reading-cards.html", "reading-notes.html", "generalization-learnability.html", "generalization-protocol.json", "theory-notes.html", "theory-notes.json", "theory-notes.css", "ideas.html", "curriculum-scale-evidence.html", "idea-prioritization.html", "idea-i5.html", "idea-i6.html", "i8.html", "idea-i9-practice-switching.html", "idea-i10-learning-novelty.html", "idea-i12-prerequisite-bottleneck.html", "i12-experiment-protocol.json", "i2-learner-response-protocol.json", "learning-admission.html", "memory-research-map.html", "learning-signal-bottlenecks.html", "experience-consolidation.html", "learning-rule-evolution.html", "site-nav.js",
 
+        "ideas-experience.html", "ideas-signals.html", "ideas-capability.html", "ideas-regulation.html", "paper-ideas.css", "paper-ideas.json",
         "research.js", "page-router.js", "research.css", "compact.css", "timeline-reference.css", "site-base.css", "site-switch.css",
         "favicon.svg", "sources.json", "reading-cards.json", "deployment-manifest.json",
     )

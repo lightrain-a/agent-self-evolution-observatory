@@ -31,8 +31,8 @@ PAGE = {
 <tr><td>8 · 开放问题</td><td>哪些跨功能问题决定下一步研究？</td><td><a href="agenda.html">研究议程</a></td></tr>
 </tbody></table></div></details>
 '''),
-        ('decision', '研究方案 · 稳定索引 I1–I14', '''
-<p>I1–I14 保留为稳定的研究管理索引；每项方案按主要科学问题归入一个功能，相关功能通过交叉链接连接。<a href="ideas.html">按四功能浏览全部方案</a> · <a href="idea-prioritization.html">查看优先级与决定性实验</a></p><details><summary><b>展开 I1–I14 全部研究卡片与近期进展</b></summary><div class="section-body"><p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
+        ('decision', '原始思路 · 稳定索引 I1–I14', '''
+<p>I1–I14 保留为原始思路的稳定索引；当前按独立问题拆分、合并为 16 条论文主线和 2 条探索方向。原编号与当前方案的对应关系见总览。<a href="ideas.html">按四功能浏览全部方案</a> · <a href="idea-prioritization.html">查看优先级与决定性实验</a></p><details><summary><b>展开原始 I1–I14 研究卡片与文献记录</b></summary><div class="section-body"><p>我们关心的不只是 Agent 能不能在一次任务里拿到更高分，而是：<strong>它能不能通过改写自身 Skill、Memory、Harness 或参数，真正学会下一次如何学得更好？</strong></p>
 <div class="idea-board">
 <a class="idea-board-card" href="ideas.html#idea-1"><span class="idea-id">I1 · 脚手架学习</span><b>哪些该自己学会，哪些用时再查？</b></a>
 <a class="idea-board-card" href="idea-i2.html"><span class="idea-id">I2 · 因材施教</span><b>学生越来越会做题，教师也能越来越会教吗？</b></a>
@@ -63,8 +63,8 @@ PAGE = {
 <a href="idea-i2.html#learner-response-question"><b>I2 扩展：训练前预测学习者对教学的真实响应</b><span>Centaur × StudentSim：下一次回答与真实 LoRA 更新后的独立能力不同；已设计 LR-P0/P1/P2、强基线与成本账本。</span></a>
 <a href="reading-notes.html#deep-nature2025-centaur-binz"><b>Nature 2025 · Centaur 完整精读</b><span>Psych-101、QLoRA、未见实验 OOD、开放环、fMRI 与认知机制发现；对照 StudentSim 的直接最近邻。</span></a>
 <a href="timeline.html"><b>研究时间轴 · 可折叠月历</b><span>紧凑会议倒计时、双列月历、按月按日折叠记录；展开论文可查看完整研究内容。</span></a>
-<a href="idea-prioritization.html"><b>I1–I14 · 优先级与决定性实验（2026-10-29）</b><span>I1–I13 保留历史双排名，I14 已编号但分数待评估；列出 P0、强基线、Go/降级标准与原始论文依据。</span></a>
-<a href="ideas.html"><b>I1–I14：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
+<a href="idea-prioritization.html"><b>16＋2 · 主线优先级与决定性实验（2026-10-30）</b><span>先验证 A2、B4、C2、C4、D3、D5；列出各自最小预实验、可区分对照与共用平台，历史排序折叠保留。</span></a>
+<a href="ideas.html"><b>16 条主线＋2 条探索：具体学习机制</b><span>Challenge、现有工作、Insight、Design 与实验设计，统一为可直接讨论的研究卡片。</span></a>
 <a href="idea-i5.html"><b>I5：十模型互教与交换舞伴</b><span>Nature 群体学习、Jigsaw 与双向共进化的动态伙伴网络。</span></a>
 <a href="idea-i6-failure-value.html"><b>I6：哪些失败值得学，何时该停？</b><span>同题同错误终点的轨迹为什么学习价值不同；何时换错题、暂缓和重访？</span></a>
 <a href="idea-i7-learning-order.html"><b>I7：先自主尝试还是先看例题？</b><span>相同教材的学习顺序是否改变未来独立解题和可探索路径？</span></a>
@@ -129,7 +129,7 @@ PAGE = {
 <p><a href="idea-i5.html#teaching-feedback">I5 统一详情页</a>同时保留“教学反馈诊断”作为历史研究支线：学生的误解能否暴露教师自己的隐性缺陷。它与当前的“动态伙伴选择”有不同的研究问题，因此在详情页中区分，不再在左侧目录重复出现。</p>
 <p><a href="idea-i9-practice-switching.html">I9</a> 固定教材，研究跨主题集中/交错的切换，并增加同材料不同顺序的第三任务学习曲线实验；<a href="i8.html">I8</a> 研究不同知识准备程度和共享错误规则的跨题迁移；<a href="idea-i6-failure-value.html">I6</a> 则保持同题同错误终点，研究失败过程本身。两者可复用对照平台，但主张不能混用；所有研究都尚待真实训练验证。</p>
 <p>原 <a href="/">Agent 自进化研究站</a>与本 RSI 站互相跳转。旧研究池中已经存在 Delayed Regression Exams 等关于回归测试的方案；I3 必须研究主动巩固操作本身，不能重新包装“多测一次”。</p>
-<div class="status-strip"><b>截至 2026-10-29</b><span>I1–I14 已整理，I14 P0/P1 待实验</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
+<div class="status-strip"><b>截至 2026-10-30</b><span>16 条论文主线＋2 条探索，预实验待开展</span><span>最近邻来源已列出</span><span>独立实验待开展</span><span>不声称首次或已验证</span></div>
 '''),
     ]
 }

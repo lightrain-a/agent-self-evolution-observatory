@@ -2,7 +2,7 @@
 from __future__ import annotations
 import html, json, re, runpy
 from pathlib import Path
-from rsi_taxonomy import FUNCTIONS, IDEAS, SOURCE_MAP, PAPER_MAP
+from rsi_taxonomy import FUNCTIONS, IDEAS, SOURCE_MAP, PAPER_MAP, PAPER_IDEAS, PAPER_PORTFOLIO
 
 ROOT = Path(__file__).resolve().parents[1]
 FUNCTION_SLUGS = {'experience':'experience','signal':'signals','capability':'capabilities','regulation':'regulation'}
@@ -77,9 +77,10 @@ def enrich_registries(sources):
     path.write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     export={'schema_version':1,'version':data['taxonomy_version'],
             'central_question':'系统如何把不断获得的经历，转化为能够迁移、能够保留，并且支持后续学习的能力？',
-            'functions':FUNCTIONS,'ideas':IDEAS,'sources':{s['id']:source_assignment(s) for s in sources},'papers':PAPER_MAP,
+            'functions':FUNCTIONS,'ideas':IDEAS,'paper_ideas':PAPER_IDEAS,'portfolio_updated':PAPER_PORTFOLIO['updated'],'sources':{s['id']:source_assignment(s) for s in sources},'papers':PAPER_MAP,
             'classification_rule':'按主要科学贡献确定唯一主归属；方法、载体、组织方式、评价目标另作描述字段。',
             'cross_cutting':{'generalization':'贯穿四功能，第7章集中评价','memory':'第4章归因、第5章保存与抽象、第6章修订、第7章检验'}}
+    (ROOT/'rsi/paper-ideas.json').write_text(json.dumps(PAPER_PORTFOLIO,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (ROOT/'rsi/taxonomy.json').write_text(json.dumps(export,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     return data['papers']
 
@@ -116,7 +117,7 @@ def representative_table(key,sources):
     return '<div class="table-wrap"><table><thead><tr><th>代表工作</th><th>主要解决的问题</th><th>已有研读记录与证据范围</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
 
 def idea_links(key):
-    return ''.join(f'<a class="framework-idea" href="{esc(v["href"])}"><b>{esc(k)} · {esc(v["title"])}</b><span>主要问题 · {esc(v.get("section",""))}</span></a>' for k,v in IDEAS.items() if v['primary']==key)
+    return ''.join(f'<a class="framework-idea" href="{esc(v["href"])}"><b>{esc(k)} · {esc(v["title"])}</b><span>主要问题 · {esc(v.get("section",""))}</span></a>' for k,v in PAPER_IDEAS.items() if v['primary']==key)
 
 def framework_pages(sources):
     pages=[]
@@ -142,7 +143,7 @@ def framework_pages(sources):
         ('scope','2.1 自我改进与递归自我改进的范围','<div class="table-wrap"><table><thead><tr><th>观察层次</th><th>发生的变化</th><th>应记录的因素</th></tr></thead><tbody><tr><td>当前输出改善</td><td>反思、搜索或修订使一次任务表现改善。</td><td>推理计算、上下文和外部帮助。</td></tr><tr><td>持久系统学习</td><td>经验进入参数、记忆、技能等持久状态，影响未来任务。</td><td>改变的状态、后续使用条件、收益和保持。</td></tr><tr><td>学习机制改进</td><td>获取经验、评价或更新的机制本身变化。</td><td>新任务和未见学习者上的真实效果。</td></tr></tbody></table></div><p>外部记忆带来的持久系统改进同样属于研究对象。是否更新参数是机制差异；移除外部支持有助于定位收益，完整系统仍须独立评估。</p>'),
         ('framework','2.2 四项学习功能','<div class="framework-function-grid">'+''.join(f'<a class="framework-function" data-function="{f["id"]}" href="{FUNCTION_SLUGS[f["id"]]}.html"><small>第{f["chapter"]}章</small><h3>{esc(f["title"])}</h3><p>{esc(f["question"])}</p></a>' for f in FUNCTIONS)+'</div><p>前三项说明一次改进如何发生，学习调控协调它们在多轮学习中的相互作用。这是带有反馈关系的功能划分，不是严格单向流水线。</p>'),
         ('classification','分类规则与交叉描述','<div class="table-wrap"><table><thead><tr><th>字段</th><th>回答的问题</th><th>示例</th></tr></thead><tbody><tr><td>唯一主分类</td><td>主要解决什么学习问题？</td><td>经验获取、学习信号、能力形成、学习调控。</td></tr><tr><td>方法</td><td>怎样实现改变？</td><td>RL、SFT、蒸馏、元学习。</td></tr><tr><td>载体</td><td>变化保存在哪里？</td><td>参数、记忆、技能、工具代码。</td></tr><tr><td>组织方式</td><td>哪些系统参与？</td><td>教师—学生、多智能体、工具。</td></tr><tr><td>结果与评价</td><td>形成怎样的能力？</td><td>泛化、保持、未来可学习性、成本。</td></tr><tr><td>机制来源</td><td>假设从哪里得到启发？</td><td>机器学习、教育学、认知科学、神经科学。</td></tr></tbody></table></div><p>一项工作在最能体现主要贡献的章节完整介绍，其余章节交叉引用。I1–I14用于稳定管理，分类改变不会改变其编号或原始链接。</p>'),
-        ('method','2.3 文献范围与综述方法',f'<p>当前来源库有{len(sources)}项记录。基础研读自2026年10月21日开始，沿已有问题、论文引用链、会议期刊原文与作者官方资源增量补充；本次分类更新截至2026年10月29日。</p><p>现有材料是定向研读形成的证据地图。按与持续学习功能、机制解释和研究设计的相关性纳入，保留每项发表日期、阅读深度和原始链接；预印本与正式发表状态沿用逐篇核验记录。</p><p>跨领域迁移依次说明：原领域现象 → 可能机制 → AI对应条件与差异 → 可检验假设 → 能够区分解释的实验。</p><div class="links"><a class="link-btn" href="references.html#protocol">来源与检索记录</a><a class="link-btn" href="taxonomy.json">分类数据</a><a class="link-btn" href="research-map.html">统一研究地图</a></div>')
+        ('method','2.3 文献范围与综述方法',f'<p>当前来源库有{len(sources)}项记录。基础研读自2026年10月21日开始，沿已有问题、论文引用链、会议期刊原文与作者官方资源增量补充；四功能框架于2026年10月29日统一，论文主线与对应来源于10月30日增量更新。</p><p>现有材料是定向研读形成的证据地图。按与持续学习功能、机制解释和研究设计的相关性纳入，保留每项发表日期、阅读深度和原始链接；预印本与正式发表状态沿用逐篇核验记录。</p><p>跨领域迁移依次说明：原领域现象 → 可能机制 → AI对应条件与差异 → 可检验假设 → 能够区分解释的实验。</p><div class="links"><a class="link-btn" href="references.html#protocol">来源与检索记录</a><a class="link-btn" href="taxonomy.json">分类数据</a><a class="link-btn" href="research-map.html">统一研究地图</a></div>')
     ]})
     pages.append({'slug':'evidence','title':'泛化、保持与持续改进的证据','en':'Evidence and Evaluation','lead':'用与主张对应的独立证据，判断经历是否形成可迁移、可保留并支持后续学习的能力。','chapter':7,'page_role':'evidence','sections':[
         ('attribution','7.1 改进来自哪里','<p>分别检查额外推理计算、上下文支持、持久记忆和参数更新的贡献。同信息、同预算配对比较，记录训练、推理、交互和验证成本。移除支持可以定位收益来源，也应保留完整系统的评价。</p><p class="note">第4章的评价器参与学习，提供诊断与更新信号；第7章独立检查改进主张。两者可以使用相似工具，但承担不同职责。</p>'),

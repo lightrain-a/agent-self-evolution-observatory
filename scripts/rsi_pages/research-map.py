@@ -4,7 +4,7 @@ import json
 from html import escape
 from pathlib import Path
 from rsi_framework import FUNCTIONS, IDEAS, BY_ID, FUNCTION_SLUGS, source_assignment
-from rsi_taxonomy import FEATURED_SOURCE_IDS
+from rsi_taxonomy import FEATURED_SOURCE_IDS, PAPER_IDEAS
 
 def _e(value):
     return escape(str(value or ""), quote=True)
@@ -20,7 +20,7 @@ with (ROOT / "rsi" / "sources.tsv").open(encoding="utf-8-sig", newline="") as st
     SOURCES = list(csv.DictReader(stream, delimiter="\t"))
 READINGS = json.loads((ROOT / "rsi" / "reading-cards.json").read_text(encoding="utf-8-sig"))
 FUNCS = list(FUNCTIONS.values()) if isinstance(FUNCTIONS, dict) else list(FUNCTIONS)
-IDEA_ROWS = list(IDEAS.items()) if isinstance(IDEAS, dict) else [(x.get("id", ""), x) for x in IDEAS]
+IDEA_ROWS = list(PAPER_IDEAS.items())
 ALIASES = {"signals": "signal", "capabilities": "capability"}
 
 def _same(a, b):
@@ -119,14 +119,14 @@ def _group(function):
       <summary><span class="rm-chapter">CH. {_e(function.get("chapter", ""))}</span><span class="rm-group-heading"><strong>{_e(title)}</strong><small>{_e(question)}</small></span><span class="rm-count">{len(papers)} 条来源 · {len(ideas)} 个 Idea</span><span class="rm-chevron" aria-hidden="true">⌄</span></summary>
       <div class="rm-group-content"><section class="rm-block rm-question"><h3>科学问题</h3><p>{_e(function.get("summary", question))}</p><ol>{"".join(labels)}</ol><a class="rm-text-link" href="{_e(_slug(fid))}.html">进入本章 →</a></section>
       <section class="rm-block rm-literature"><h3>代表文献 <span>按主要贡献归属</span></h3>{paper_html}<a class="rm-text-link" href="references.html?function={_e(fid)}">查看本组全部文献 →</a></section>
-      <section class="rm-block rm-ideas"><h3>研究想法 <span>I 编号保持不变</span></h3>{idea_html}</section>
+      <section class="rm-block rm-ideas"><h3>当前论文方向 <span>主线与探索分开标明</span></h3>{idea_html}</section>
       <section class="rm-block rm-evidence"><h3>证据与缺口</h3><strong>{_e(proof_title)}</strong><p>{_e(proof)}</p><a class="rm-text-link" href="evidence.html">对照第 7 章证据框架 →</a></section></div>
     </details>'''
 
 INDEX = "".join(f'<a class="rm-index-item" href="#map-{_e(f["id"])}" data-map-select="{_e(f["id"])}"><span class="rm-index-no">{int(f["chapter"]):02d}</span><span><strong>{_e(f.get("title", f["id"]))}</strong><small>{_e(f.get("question", ""))}</small></span><b>{len(_papers(f["id"]))}<small>条来源</small></b></a>' for f in FUNCS)
 OPTIONS = "".join(f'<option value="{_e(f["id"])}">{_e(f.get("title", f["id"]))}</option>' for f in FUNCS)
-OVERVIEW = f'''<div class="rm-brief"><div><span class="rm-eyebrow">RSI · LEARNING MECHANISMS</span><p class="rm-central-question">经历怎样转化为能够迁移、能够保留，并支持后续学习的能力？</p><p>四项学习功能组织文献与研究想法。泛化贯穿各环节；记忆按保存、归因和修订等实际作用归位。</p></div><div class="rm-stats"><span><b>4</b>学习功能</span><span><b>{len(SOURCES)}</b>来源条目</span><span><b>{len(IDEA_ROWS)}</b>研究想法</span></div></div><nav class="rm-group-index" aria-label="四项学习功能">{INDEX}</nav><p class="rm-boundary"><strong>阅读方式</strong> 每篇工作有一个主要归属，其他功能通过关联链接连接；方法、载体、组织方式与评价结果作为独立描述字段。</p>'''
-MAP = f'''<div class="rm-toolbar"><label class="rm-search-label">搜索地图<input id="rm-search" type="search" placeholder="论文、Idea、科学问题…" autocomplete="off"></label><label>学习功能<select id="rm-function"><option value="all">全部四项功能</option>{OPTIONS}</select></label><div class="rm-actions"><button type="button" id="rm-expand">全部展开</button><button type="button" id="rm-collapse">全部收起</button><button type="button" id="rm-reset">重置</button></div></div><p class="rm-result" id="rm-result" role="status" aria-live="polite">显示全部四项学习功能</p><div class="rm-groups">{"".join(_group(f) for f in FUNCS)}</div><div id="rm-empty" class="rm-empty" hidden><strong>没有找到匹配内容</strong><p>试试论文标题、I 编号，或切换到全部学习功能。</p><button type="button" data-map-reset>清除筛选</button></div>'''
+OVERVIEW = f'''<div class="rm-brief"><div><span class="rm-eyebrow">RSI · LEARNING MECHANISMS</span><p class="rm-central-question">经历怎样转化为能够迁移、能够保留，并支持后续学习的能力？</p><p>四项学习功能组织文献与研究想法。泛化贯穿各环节；记忆按保存、归因和修订等实际作用归位。</p></div><div class="rm-stats"><span><b>4</b>学习功能</span><span><b>{len(SOURCES)}</b>来源条目</span><span><b>16＋2</b>主线＋探索</span></div></div><nav class="rm-group-index" aria-label="四项学习功能">{INDEX}</nav><p class="rm-boundary"><strong>阅读方式</strong> 每篇工作有一个主要归属，其他功能通过关联链接连接；方法、载体、组织方式与评价结果作为独立描述字段。</p>'''
+MAP = f'''<div class="rm-toolbar"><label class="rm-search-label">搜索地图<input id="rm-search" type="search" placeholder="论文、Idea、科学问题…" autocomplete="off"></label><label>学习功能<select id="rm-function"><option value="all">全部四项功能</option>{OPTIONS}</select></label><div class="rm-actions"><button type="button" id="rm-expand">全部展开</button><button type="button" id="rm-collapse">全部收起</button><button type="button" id="rm-reset">重置</button></div></div><p class="rm-result" id="rm-result" role="status" aria-live="polite">显示全部四项学习功能</p><div class="rm-groups">{"".join(_group(f) for f in FUNCS)}</div><div id="rm-empty" class="rm-empty" hidden><strong>没有找到匹配内容</strong><p>试试论文标题、A/B/C/D 或原始 I 编号，或切换到全部学习功能。</p><button type="button" data-map-reset>清除筛选</button></div>'''
 OUTLINE = '''<nav class="rm-outline" aria-label="研究综述八章目录">
   <a data-chapter="01" href="index.html"><b>01</b><span>引言<small>中心问题与研究动机</small></span></a>
   <a data-chapter="02" href="foundations.html"><b>02</b><span>范围与基础<small>概念边界与统一框架</small></span></a>
