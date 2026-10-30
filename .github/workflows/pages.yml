@@ -39,7 +39,9 @@ jobs:
         run: python3 scripts/build_rsi_site.py
 
       - name: Verify two-site navigation and RSI export
-        run: python3 scripts/test_rsi_site.py
+        run: |
+          python3 scripts/test_rsi_site.py
+          python3 scripts/test_experimental_atlas.py
 
       - name: Verify curated figure entry and bounded export
         run: node scripts/test_curated_figure_frontend.js

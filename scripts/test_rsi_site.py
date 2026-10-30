@@ -12,7 +12,7 @@ from urllib.parse import urlsplit, unquote
 from rsi_toc import TOC_GROUPS
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['ideas-experience','ideas-signals','ideas-capability','ideas-regulation','research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda','index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
+PAGES = ['experimental-atlas','ideas-experience','ideas-signals','ideas-capability','ideas-regulation','research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda','index','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','memory-research-map','learning-signal-bottlenecks','experience-consolidation','learning-rule-evolution','teaching','idea-i6','experiments','references']
 
 
 class Parsed(HTMLParser):
@@ -304,7 +304,7 @@ def main():
         'signal':['signals.html','ideas-signals.html','idea-i2.html','idea-i11-emotional-rsi.html','learning-signal-bottlenecks.html'],
         'capability':['capabilities.html','ideas-capability.html','ideas.html#idea-1','ideas.html#idea-3','idea-i12-prerequisite-bottleneck.html','learning-rule-evolution.html','memory-research-map.html','experience-consolidation.html'],
         'regulation':['regulation.html','ideas-regulation.html','idea-i5.html','idea-i7-learning-order.html','idea-i9-practice-switching.html','learning-admission.html'],
-        'evidence':['evidence.html','generalization-learnability.html','curriculum-scale-evidence.html','experiments.html','agenda.html'],
+        'evidence':['evidence.html','generalization-learnability.html','curriculum-scale-evidence.html','experimental-atlas.html','experiments.html','agenda.html'],
         'literature':['literature.html','reading-cards.html','reading-notes.html','cross-domain.html','theory-notes.html','learning-science.html','references.html'],
     }
     check([g['id'] for g in groups]==list(expected_groups),'Incorrect first-level RSI menu order')

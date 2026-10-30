@@ -17,7 +17,7 @@ from rsi_paper_portfolio import apply_portfolio, merge_portfolio_sources
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'rsi'
 DATE = '2026-10-30'
-BASE_ORDER = ['index','research-map','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','learning-rule-evolution','memory-research-map','learning-signal-bottlenecks','experience-consolidation','teaching','idea-i6','experiments']
+BASE_ORDER = ['index','research-map','timeline','literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','generalization-learnability','curriculum-scale-evidence','ideas','idea-prioritization','idea-i2','idea-i5','idea-i6-failure-value','idea-i7-learning-order','i8','idea-i9-practice-switching','idea-i10-learning-novelty','idea-i11-emotional-rsi','idea-i12-prerequisite-bottleneck','learning-admission','learning-rule-evolution','memory-research-map','learning-signal-bottlenecks','experience-consolidation','teaching','idea-i6','experiments','experimental-atlas']
 CHAPTER_ORDER = ['index','research-map','foundations','experience','signals','capabilities','regulation','evidence','agenda']
 NAV_ARCHIVED_PAGES = {'teaching':'idea-i5.html','idea-i6':'ideas.html'}
 
@@ -28,6 +28,7 @@ def page_label(p):
             'ideas-capability':'C · 能力形成的五条主线','ideas-regulation':'D · 学习调控的四条主线＋探索',
             'idea-prioritization':'方案优先级与决定性实验','evidence':'第7章 · 证据与评价',
             'agenda':'第8章 · 开放问题与研究议程','experiments':'实验执行方案',
+            'experimental-atlas':'实验资源 · 数据集与论文',
             'learning-admission':'I13 · 安全更新接纳','learning-rule-evolution':'I14 · 学习规则自进化'}
     for iid,idea in IDEAS.items():
         if idea['href']==p['slug']+'.html' and p['slug'] not in labels:
@@ -52,13 +53,13 @@ def build_navigation(pages):
         groups.append({'id':f['id'],'title':{'zh':f'第{f["chapter"]}章 · '+f['title'],'en':f.get('en',f['title'])},'open':False,'pages':links})
     groups.extend([
         {'id':'evidence','title':{'zh':'证据与研究议程','en':'Evidence & Agenda'},'open':False,
-         'pages':[entry(s) for s in ('evidence','generalization-learnability','curriculum-scale-evidence','experiments','agenda')]},
+         'pages':[entry(s) for s in ('evidence','generalization-learnability','curriculum-scale-evidence','experimental-atlas','experiments','agenda')]},
         {'id':'literature','title':{'zh':'文献与机制资料','en':'Literature & Mechanisms'},'open':False,
          'pages':[entry(s) for s in ('literature','reading-cards','reading-notes','cross-domain','theory-notes','learning-science','references')]}
     ])
     folder_spec = {
         'overview': [(3,6,'research-tools','研究工具与 Idea','Research tools & ideas')],
-        'evidence': [(1,4,'evidence-topics','专题研究与实验方案','Research topics & experiments')],
+        'evidence': [(1,5,'evidence-topics','专题研究与实验方案','Research topics & experiments')],
         'literature': [(1,3,'literature-reading','论文精读','Paper reading'),
                        (3,6,'literature-theory','机制、理论与学习科学','Mechanisms and theory')],
     }

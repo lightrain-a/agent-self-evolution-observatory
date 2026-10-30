@@ -100,7 +100,7 @@
     const scripts = [...nextDoc.querySelectorAll('script[src]')]
       .map((node) => new URL(node.getAttribute('src'), location.href))
       .filter((url) => url.origin === location.origin &&
-             /^\/rsi\/(?:research-map|timeline-view)\.js$/.test(url.pathname));
+             /^\/rsi\/(?:research-map|timeline-view|experimental-atlas)\.js$/.test(url.pathname));
     for (const url of scripts) {
       await new Promise((resolve, reject) => {
         const node = document.createElement('script');

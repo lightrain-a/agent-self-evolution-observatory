@@ -67,6 +67,7 @@ def build(output: Path = DEFAULT_OUTPUT) -> Path:
         )
 
     required = (
+        "experimental-atlas.html", "experimental-atlas.css", "experimental-atlas.js", "experiment-catalog.json",
         "research-map.html", "research-map.css", "research-map.js", "taxonomy.json",
         "foundations.html", "experience.html", "signals.html", "capabilities.html",
         "regulation.html", "evidence.html", "agenda.html", "framework.css", "framework.js",
