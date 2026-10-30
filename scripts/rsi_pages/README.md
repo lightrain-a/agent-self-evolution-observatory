@@ -4,6 +4,7 @@
 
 - 当前方案为 **16 条论文主线＋2 条探索方向**，按经验获取 A、学习信号 B、能力形成 C、学习调控 D 组织。A1+A4 与 D1+D2 分别合并；B3/D6 保留探索身份。
 - 内容唯一源：本目录的 `paper-ideas-a/b/c/d.json`，共同元信息与新核验来源在 `paper-ideas-meta.json`。分类仍由 `scripts/rsi_taxonomy.py` 统一加载为 `PAPER_IDEAS`；I1–I14 保留原链接与溯源，`current_papers` 记录拆分/合并关系。
+- 当前方案 JSON 的 `related` 是最近工作文献；加载到 `PAPER_IDEAS` 时保存在 `related_work`，分类对象的 `related` 仍专用于跨板块关联，二者不能覆盖。
 - `scripts/rsi_paper_portfolio.py` 生成当前总览、四板块详情、推进顺序、共用预实验和旧页到当前主线的入口。自动导出 `rsi/paper-ideas.json`，不能直接编辑生成的 HTML/导出 JSON。
 - 当前主线优先展示；旧方案、排序、前期协议保留为历史推导与文献记录。网站中的所有 design 仍是待验证方案，不把引用论文的结果说成自己的实验结果。
 - 新功能页和旧链接一起进入导航、研究地图、章节入口与全站搜索。发布前继续执行完整静态构建与 `scripts/test_rsi_site.py`；检查旧 I 锚点和新 18 个方向均可到达。

@@ -442,6 +442,14 @@
       "falsifier": "若高复用规则修复没有改善后续材料，或材料质量变化不能带来共同学生的额外学习增益，核心跨轮传播假设不获支持。",
       "priority": "normal",
       "primary": "experience",
+      "related_work": [
+        {
+          "title": "R-Zero: Self-Evolving Reasoning LLM from Zero Data",
+          "url": "https://arxiv.org/html/2508.05004v4",
+          "finding": "挑战者与求解者交替更新；论文分析了后续轮次退化以及生成难度与标签可靠性的关系。",
+          "gap": "我们的待检验问题是：针对某类错误的局部修复，是否通过改善后继材料产生额外学习收益；不能把这一因果链视为已有结论。"
+        }
+      ],
       "section_code": "A",
       "tags": [
         "I6",
@@ -478,6 +486,14 @@
       "falsifier": "若优势完全由技能覆盖、难度或额外验证次数解释，或者学习者记住反例但仍沿用原规则，则尚未建立本方向的机制。",
       "priority": "first",
       "primary": "experience",
+      "related_work": [
+        {
+          "title": "R-Diverse: Mitigating Diversity Illusion in Self-Play LLM Training",
+          "url": "https://arxiv.org/html/2602.13103v2",
+          "finding": "论文针对自博弈中的多样性假象，结合跨轮记忆惩罚、求解过程相似性与回放。",
+          "gap": "历史记忆和技能层面多样性已有直接工作；本方向须在相同技能覆盖下证明，针对当前错误规则的反驳证据及其吸收过程带来独立价值。"
+        }
+      ],
       "section_code": "A",
       "tags": [
         "I10"
@@ -513,6 +529,14 @@
       "falsifier": "若新经验只提高已见故障的识别，或相同预算下无法改善新故障的归因及修复，便不足以支持可继承的诊断能力。",
       "priority": "normal",
       "primary": "experience",
+      "related_work": [
+        {
+          "title": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+          "url": "https://arxiv.org/html/2505.22954v2",
+          "finding": "系统修改代码与工具，保留候选档案；论文展示了自我修改和开放探索的作用，并使用外部模型提供诊断。",
+          "gap": "我们研究诊断能力本身如何从验证过的修改后果中继承并改进；不能将一般的自我修改成功等同于因果诊断已经学会。"
+        }
+      ],
       "section_code": "A",
       "tags": [
         "I4"
@@ -548,6 +572,14 @@
       "falsifier": "若定向保留的优势完全由目标初始得分解释，或在替换支持组件后仍无法定位机制，则需要缩小关于自举能力损伤的主张。",
       "priority": "normal",
       "primary": "experience",
+      "related_work": [
+        {
+          "title": "Huxley-Gödel Machine: Human-Level Coding Agent Development by an Approximation of the Optimal Self-Improving Machine",
+          "url": "https://arxiv.org/html/2510.21614v3",
+          "finding": "论文区分当前表现与后代改进潜力，并用后代分支表现引导探索。",
+          "gap": "这一差异支持研究未来改进价值的动机，但并未证明领域专化会损伤特定支持能力；本方向需要直接的能力干预和双模式后续学习实验。"
+        }
+      ],
       "section_code": "A",
       "tags": [
         "跨域学习专题"
@@ -583,6 +615,14 @@
       "falsifier": "若同信息的当前状态教师已解释全部收益，或历史条件并未改善升级后的教学，便不能把经验继承作为主要创新。",
       "priority": "normal",
       "primary": "signal",
+      "related_work": [
+        {
+          "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability",
+          "url": "https://arxiv.org/html/2601.18778v3",
+          "finding": "SOAR 已包含学生晋升、教师重新适应以及对新学生的评价；其主要教师设置用固定提示接收黑箱进步奖励。",
+          "gap": "教师随学生升级而适应本身已有工作。此处须验证显式学习反应与适用条件如何改变固定材料的教法，并设置同信息基线。"
+        }
+      ],
       "section_code": "B",
       "tags": [
         "I2"
@@ -618,6 +658,14 @@
       "falsifier": "若收益只来自学生更强或增加验证次数，或教师独立能力未改变，则不足以支持通过互补学生修正教师知识的解释。",
       "priority": "normal",
       "primary": "signal",
+      "related_work": [
+        {
+          "title": "Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback",
+          "url": "https://arxiv.org/abs/2606.14368",
+          "finding": "OPCoD 已研究模型交替担任教师与学生，并用机制限制不可靠同伴反馈对训练的污染。",
+          "gap": "交替互教和学生更新后再次教学已有工作。本方向须识别错误互补性如何产生可验证的教师知识修正，而非把分歧自动当成正确监督。"
+        }
+      ],
       "section_code": "B",
       "tags": [
         "I5"
@@ -653,6 +701,20 @@
       "falsifier": "若新评价器仅提高判别分数，却没有改善监督质量或后继学习，便不能支持它解除 RSI 反馈瓶颈的主张。",
       "priority": "first",
       "primary": "signal",
+      "related_work": [
+        {
+          "title": "CREAM: Consistency Regularized Self-Rewarding Language Models",
+          "url": "https://arxiv.org/html/2410.12735v5",
+          "finding": "CREAM 研究多轮自奖励，并用跨代偏好一致性进行正则化。",
+          "gap": "一致性可以约束变化，却不能独立证明判断正确；本方向针对持续一致的共同错误和随求解升级出现的新错误。"
+        },
+        {
+          "title": "R-Zero: Self-Evolving Reasoning LLM from Zero Data",
+          "url": "https://arxiv.org/html/2508.05004v4",
+          "finding": "论文分析了生成难度、标签准确性和后续训练退化之间的关系。",
+          "gap": "这里要进一步通过共同轨迹与共同学生的替换实验，检验评价器升级是否带来后继学习收益。"
+        }
+      ],
       "section_code": "B",
       "tags": [
         "学习信号瓶颈专题"
@@ -688,6 +750,14 @@
       "falsifier": "若差异只存在于即时回答、自报信心或表达风格，或者未通过任何被继承状态影响后续学习，应停止将其作为 RSI 论文主线。",
       "priority": "explore",
       "primary": "signal",
+      "related_work": [
+        {
+          "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+          "url": "https://arxiv.org/html/2608.12851v2",
+          "finding": "论文展示了生成 Skill、后续检索与执行后果需要分阶段测量，持久产物可以影响新会话中的行为。",
+          "gap": "该工作提供持久状态影响后续行为的相邻证据，并未证明反馈语气具有这种效应；B3 的语气因果链仍是待探索问题。"
+        }
+      ],
       "section_code": "B",
       "tags": [
         "I11"
@@ -724,6 +794,14 @@
       "falsifier": "若控制访问机会与成本后，载体只影响当前检索或答题，修订后的自产材料和未来学习没有差异，则错误传播这一主张缺乏支持。",
       "priority": "normal",
       "primary": "capability",
+      "related_work": [
+        {
+          "title": "Agent Plasticity: Measuring Self-Improvement Through Experience",
+          "url": "https://arxiv.org/abs/2610.08902",
+          "finding": "以经验学习的性能增益和成本衡量塑性，并区分留下产物、实际调用和有效使用。",
+          "gap": "这里进一步干预载体，检验一次错误与修订怎样影响下一轮自产材料；产物使用的观察性关联本身不能证明因果机制。"
+        }
+      ],
       "section_code": "C",
       "tags": [
         "I1",
@@ -760,6 +838,14 @@
       "falsifier": "若收益来自直接重放答案、更多存储或测试时检索，且新能力没有提高旧证据的监督价值，就不能支持成长后重释这一核心机制。",
       "priority": "first",
       "primary": "capability",
+      "related_work": [
+        {
+          "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",
+          "url": "https://arxiv.org/html/2605.12978v2",
+          "finding": "反复更新记忆可能损失条件或形成错误归纳；保留原始经历是重要比较方案。",
+          "gap": "保存原始轨迹本身已有先例。这里的核心是新能力与旧证据的交互：成长后能否产生此前无法得到的新监督，并真正改善后续学习。"
+        }
+      ],
       "section_code": "C",
       "tags": [
         "记忆研究地图专题"
@@ -795,6 +881,14 @@
       "falsifier": "若同量边界证据即可解释全部收益，或冻结材料生成后与自主生成时无传播差异，需缩小为条件学习问题，不能据此宣称发现 RSI 放大机制。",
       "priority": "normal",
       "primary": "capability",
+      "related_work": [
+        {
+          "title": "Are Self-Evolving Agents Continual Learners?",
+          "url": "https://arxiv.org/html/2610.25858",
+          "finding": "在自演化任务流中观察到全局修改的干扰，以及相似输入对应冲突工作流程时的检索碰撞。",
+          "gap": "这些现象提示边界问题；本题进一步检验条件绑定的因果作用及错误经自产训练材料的传播，不把已有观察直接等同于参数机制。"
+        }
+      ],
       "section_code": "C",
       "tags": [
         "I3"
@@ -830,6 +924,20 @@
       "falsifier": "若补课只直接教会目标答案，或等预算直接练习具有同样后续效果，便不能支持前置知识改变可学习性的解释。",
       "priority": "first",
       "primary": "capability",
+      "related_work": [
+        {
+          "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability",
+          "url": "https://arxiv.org/html/2601.18778v3",
+          "finding": "SOAR 已研究稀疏奖励下的有用踏脚石课程，以及学生晋升后的教师再适应。",
+          "gap": "这里需证明具体前置项的因果必要性或促进作用，并观察它怎样打开后续自举；较容易的课程本身不是新意。"
+        },
+        {
+          "title": "R-Zero: Self-Evolving Reasoning LLM from Zero Data",
+          "url": "https://arxiv.org/html/2508.05004v4",
+          "finding": "第 4.3 节已对演化后的模型进行共同有标签课程训练，检查后续训练效果。",
+          "gap": "后续课程评估已有先例；本题需进一步区分前置知识、初始成绩、学习曲线和准备成本。"
+        }
+      ],
       "section_code": "C",
       "tags": [
         "I12"
@@ -865,6 +973,20 @@
       "falsifier": "若优势只来自减小有效训练量、换取更低当前能力或额外搜索预算，且在共同新学习者上不能重现，更新规则保留可塑性的主张就未获支持。",
       "priority": "normal",
       "primary": "capability",
+      "related_work": [
+        {
+          "title": "Overtrained Language Models Are Harder to Fine-Tune",
+          "url": "https://proceedings.mlr.press/v267/springer25a.html",
+          "finding": "在所研究设置中，更长预训练可能提高参数对修改的敏感性，使后续微调更困难。",
+          "gap": "它为当前表现与后续适应性的分离提供依据，但没有证明这里提出的多轮更新规则有效。"
+        },
+        {
+          "title": "Search over Self-Edit Strategies for LLM Adaptation",
+          "url": "https://arxiv.org/html/2601.14532v1",
+          "finding": "在固定 NTP 更新算子下探索训练数据模板与超参数，主要评价单次适应。",
+          "gap": "本题固定经验与信号，将有限更新规则的选择目标延伸到后续学习；可学习优化器或元学习本身不能作为新颖性。"
+        }
+      ],
       "section_code": "C",
       "tags": [
         "I14"
@@ -901,6 +1023,14 @@
       "falsifier": "若顺序差异完全由准备阶段分数或优化器状态解释，且自产课程没有额外放大效应，RSI 特有的路径形成主张不成立。",
       "priority": "normal",
       "primary": "regulation",
+      "related_work": [
+        {
+          "title": "R-Diverse: Mitigating Diversity Illusion in Self-Play LLM Training",
+          "url": "https://arxiv.org/html/2602.13103v2",
+          "finding": "研究跨轮自博弈中的技能重复，并用历史记忆和求解程序相似性促进多样性。",
+          "gap": "本方向检验相同初始材料的顺序如何改变后续自产课程；顺序造成路径放大仍是待验证假设。"
+        }
+      ],
       "section_code": "D",
       "tags": [
         "I7",
@@ -937,6 +1067,20 @@
       "falsifier": "若 B 的后续教学收益可由共享材料、当前能力或当轮配对收益完全解释，面向未来教师的独立调度依据不足。",
       "priority": "first",
       "primary": "regulation",
+      "related_work": [
+        {
+          "title": "PopuLoRA: Co-Evolving LLM Populations for Reasoning Self-Play",
+          "url": "https://arxiv.org/html/2605.16727v1",
+          "finding": "已有教师与学生子群体、动态配对和跨成员求解评价。",
+          "gap": "需比较实际训练后的教学增益与未来第三方教学价值；多模型或动态匹配本身不能作为贡献。"
+        },
+        {
+          "title": "Be My Tutor: On-Policy Co-Distillation for Mutual LLM Improvement via Peer Feedback",
+          "url": "https://arxiv.org/abs/2606.14368",
+          "finding": "两个互补模型已能轮流充当教师和学生，多轮更新改变后续反馈。",
+          "gap": "新主张应由受控 A→B→C 实验建立，并证明用该价值调度优于只优化当轮收益。"
+        }
+      ],
       "section_code": "D",
       "tags": [
         "I5"
@@ -973,6 +1117,14 @@
       "falsifier": "若触发收益不超过等预算周期重试，或所谓改善主要是直接解题、遗忘恢复和噪声，不能支持针对新增学习机会的调控主张。",
       "priority": "normal",
       "primary": "regulation",
+      "related_work": [
+        {
+          "title": "Teaching Models to Teach Themselves: Reasoning at the Edge of Learnability",
+          "url": "https://arxiv.org/html/2601.18778v3",
+          "finding": "SOAR 中学生晋升后，先前课程的效果会变化，教师需要重新适应。",
+          "gap": "本方向把学习价值的非平稳性用于暂停任务的选择性重访，检验何种能力变化足以触发新投入。"
+        }
+      ],
       "section_code": "D",
       "tags": [
         "I4",
@@ -1009,6 +1161,14 @@
       "falsifier": "若收益只来自更多检查或更多拒绝，或学到的检查偏好在新组合上失效，就不能支持可继承的风险发现能力提升。",
       "priority": "first",
       "primary": "regulation",
+      "related_work": [
+        {
+          "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+          "url": "https://arxiv.org/html/2608.12851v2",
+          "finding": "区分不安全 Skill 的写入、检索和后续执行；其中 SafeEvolve 已结合写入与复用检查，并报告安全与效用的权衡。",
+          "gap": "新问题是从延迟后果学会分配下一轮检查。增加静态双重检查本身已有先例，须同时评估有益修改被拒的代价。"
+        }
+      ],
       "section_code": "D",
       "tags": [
         "I13"
@@ -1044,6 +1204,14 @@
       "falsifier": "若统一档案、预算与起始状态后新 π 无优势，或优势仅来自直接复用历史最好规则，就没有改进发现程序的证据。",
       "priority": "explore",
       "primary": "regulation",
+      "related_work": [
+        {
+          "title": "Search over Self-Edit Strategies for LLM Adaptation",
+          "url": "https://arxiv.org/html/2601.14532v1",
+          "finding": "在有限自适应设置中研究模板与超参数搜索，报告档案早期帮助和后期受限表现；部分退化解释仍属假设。",
+          "gap": "该结果不足以证明长期递归搜索固化。这里要求同档案、同预算检验发现程序的迁移，并以 C5 的可操作规则空间为前提。"
+        }
+      ],
       "section_code": "D",
       "tags": [
         "I14"

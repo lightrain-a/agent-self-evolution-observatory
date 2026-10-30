@@ -57,7 +57,8 @@ PAPER_IDEAS = {}
 for _item in _PAPER_ITEMS:
     _primary = PAPER_PORTFOLIO['section_codes'][_item['section']]
     _chapter = next(f['chapter'] for f in FUNCTIONS if f['id'] == _primary)
-    PAPER_IDEAS[_item['id']] = {**_item, 'primary': _primary, 'related': [], 'section_code': _item['section'],
+    PAPER_IDEAS[_item['id']] = {**_item, 'primary': _primary, 'related': [],
+        'related_work': _item['related'], 'section_code': _item['section'],
         'section': str(_chapter) + ' · ' + ('论文主线' if _item['status'] == 'mainline' else '探索方向'),
         'tags': _item['origins'],
         'href': PAPER_SECTION_SLUGS[_primary] + '.html#' + _item['slug']}

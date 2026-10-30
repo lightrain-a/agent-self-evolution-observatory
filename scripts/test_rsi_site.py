@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Dependency-free integrity checks for the separately scoped RSI dossier."""
 from __future__ import annotations
+import html
 import json
 import re
 import subprocess
@@ -1520,10 +1521,24 @@ def main():
     check(set(current)==expected_papers and len(portfolio['items'])==18,'Current 16+2 portfolio incomplete')
     check(sum(p['status']=='mainline' for p in current.values())==16
           and {i for i,p in current.items() if p['status']=='reserve'}=={'B3','D6'},'Mainline/reserve distinction lost')
+    authored={item['id']:item for item in portfolio['items']}
     for iid,item in current.items():
         u=urlsplit(item['href']); path=ROOT/'rsi'/u.path
         check(path in parsed and u.fragment in parsed[path].ids,'Current paper URL missing: '+iid)
-        check(any(r['url']==item['href'] for r in records),'Current paper absent from search: '+iid)
+        indexed=next((r for r in records if r['url']==item['href']),None)
+        check(indexed is not None,'Current paper absent from search: '+iid)
+        related=authored[iid]['related']
+        check(related and item.get('related_work')==related,
+              'Closest-work records must survive taxonomy conversion: '+iid)
+        fragment=element_fragment(path.read_text(encoding='utf-8'),u.fragment)
+        detail=re.search(r'<details class="pi-depth"><summary>最近工作 · 已有贡献与本方案区别</summary>(.*?)</details>',fragment,re.S)
+        check(detail is not None,'Closest-work disclosure missing: '+iid)
+        for work in related:
+            check(all(html.escape(work[key],quote=True) in detail.group(1)
+                      for key in ('title','url','finding','gap')),
+                  'Closest-work disclosure lost source or comparison: '+iid+' / '+work['title'])
+            check(work['finding'] in indexed['text'] and work['gap'] in indexed['text'],
+                  'Closest-work comparison missing from search: '+iid+' / '+work['title'])
     check(taxonomy['ideas']['I5']['current_papers']==['B2','D3']
           and taxonomy['ideas']['I14']['current_papers']==['C5','D6'],'Split idea lineage drift')
     check(set(taxonomy['sources'])==refs,'Every source must have one reviewed classification record')

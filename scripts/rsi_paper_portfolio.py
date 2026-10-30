@@ -71,7 +71,7 @@ RELATIONSHIPS = {
 def idea_body(item):
     refs = ''.join('<article class="pi-related"><a href="' + esc(r['url']) + '" target="_blank" rel="noopener noreferrer">'
                    + esc(r['title']) + ' ↗</a><p><b>原文已经做到：</b>' + esc(r['finding']) + '</p><p><b>本方案进一步检验：</b>'
-                   + esc(r['gap']) + '</p></article>' for r in item['related'])
+                   + esc(r['gap']) + '</p></article>' for r in item['related_work'])
     return ('<article class="pi-idea" data-paper-id="' + esc(item['id']) + '">'
             '<div class="pi-meta"><span>' + esc(STATUS[item['status']]) + '</span><span>来源：' + originals(item) + '</span></div>'
             '<p class="pi-claim"><b>核心假设</b> ' + esc(item['lead']) + '</p>'
