@@ -5,6 +5,7 @@ window.NAV_GROUPS = [
     ["system-overview.html",{en:"Research System",zh:"科研系统"}],
     ["auto-research-architecture.html",{en:"Auto Research · Interactive Architecture",zh:"Auto Research · 交互式架构"}],
     ["experiment-costs.html",{en:"Experiment Costs",zh:"实验成本"}],
+    ["gpu-monitor.html",{en:"GPU Resource Monitor · Live",zh:"GPU 资源实时监控"}],
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:false, pages:[
     ["agent-safety-atlas.html",{en:"Agent Safety · Research Problems",zh:"Agent安全 · 研究难点地图"}],

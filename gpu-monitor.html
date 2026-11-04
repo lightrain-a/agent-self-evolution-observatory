@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="69、42、52 服务器 GPU 利用率、显存、温度与功耗实时监控。只读采集，不执行训练管理操作。">
+  <title>GPU 资源监控 · Agent 自进化科研站</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="gpu-monitor.css">
+</head>
+<body data-page="gpu-monitor">
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <div class="logo">AE</div>
+      <div><strong>Agent 自进化</strong><span>Research Observatory</span></div>
+    </a>
+    <nav class="nav" aria-label="网站导航">
+      <details class="nav-group" open>
+        <summary class="nav-level1">科研观测</summary>
+        <div class="nav-children">
+          <a class="nav-level2" href="index.html">研究站首页</a>
+          <a class="nav-level2 active" aria-current="page" href="gpu-monitor.html">GPU 实时监控</a>
+          <a class="nav-level2" href="research-timeline.html">研究时间轴</a>
+          <a class="nav-level2" href="experiments.html">实验进展</a>
+          <a class="nav-level2" href="system-overview.html">科研系统</a>
+        </div>
+      </details>
+    </nav>
+    <div class="sidebar-note">只读遥测 · 不获取 SSH 凭据 · 不触碰训练进程 · 10 秒采集，5 秒刷新</div>
+  </aside>
+  <main class="main">
+    <div class="topbar monitor-topbar">
+      <div class="topbar-title"><span class="monitor-kicker">INFRASTRUCTURE / LIVE TELEMETRY</span><b>GPU Resource Monitor</b></div>
+      <div class="connection" id="connection" role="status" aria-live="polite"><span class="connection-dot"></span><span id="connection-label">正在连接</span></div>
+    </div>
+    <div class="content monitor-content">
+      <header class="monitor-hero">
+        <div>
+          <p class="monitor-overline">RESEARCH COMPUTE CLUSTER</p>
+          <h1>GPU 资源监控<span class="hero-accent">.</span></h1>
+          <p class="monitor-lead">统一查看 69、42、52 三台服务器上的 GPU 利用率、显存、温度与功耗。数据由服务器本地只读采集；不会唤起 CUDA 任务。</p>
+        </div>
+        <div class="monitor-timing">
+          <span>数据采集 <b>10s</b></span><span>页面刷新 <b>5s</b></span>
+          <span id="last-updated">等待首个采样</span>
+        </div>
+      </header>
+
+      <div class="monitor-warning" id="monitor-warning" role="alert" hidden></div>
+      <section class="stats-grid" id="cluster-summary" aria-label="集群总览">
+        <article class="stat"><span>在线服务器</span><strong>—</strong><small>三台采集节点</small></article>
+        <article class="stat"><span>可见 GPU 数量</span><strong>—</strong><small>当前已发现设备</small></article>
+        <article class="stat"><span>平均 GPU 利用率</span><strong>—</strong><small>仅统计在线节点</small></article>
+        <article class="stat"><span>已分配显存</span><strong>—</strong><small>在线节点合计</small></article>
+      </section>
+
+      <div class="section-heading">
+        <div><span class="monitor-overline">NODE DETAIL</span><h2>逐卡状态</h2></div>
+        <div class="legend"><span><i class="legend-green"></i>在线</span><span><i class="legend-orange"></i>采集超时</span></div>
+      </div>
+      <section class="nodes" id="server-grid" aria-label="各服务器 GPU 状态">
+        <div class="node-skeleton">正在读取 GPU 数据…</div>
+      </section>
+      <footer class="monitor-footer">
+        监控只显示 GPU 聚合指标，不公开任务命令行、进程 PID、用户名、SSH 凭据或实验目录。采样超过 35 秒自动标记为离线。
+        <a href="index.html">返回研究站首页</a>
+      </footer>
+    </div>
+  </main>
+</div>
+<script src="gpu-monitor-config.js"></script>
+<script defer src="gpu-monitor.js"></script>
+</body>
+</html>
